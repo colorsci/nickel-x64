@@ -1,0 +1,782 @@
+<categoryPublicationManifest
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  xmlns="http://schemas.microsoft.com/2008/09/sip/categoryPublicationManifest"
+  minSupportedClientVersion="2.0.0.0">
+  <publicationList>
+    <publicationRule ruleType="transformation" categoryName="state" containerId="2" preferredSelfConsumption="true" />
+    <publicationRule ruleType="transformation" categoryName="state" containerId="3">
+      <categoryData>
+        <![CDATA[
+<xsl:stylesheet
+   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+   version="1.0"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xmlns:ct="http://schemas.microsoft.com/2006/09/sip/commontypes"
+   xmlns:tns="http://schemas.microsoft.com/2006/09/sip/state"
+   exclude-result-prefixes="tns ct">
+      <xsl:output method="xml" encoding="utf-8" indent="yes"/>
+      <xsl:strip-space elements="*"/>
+      <xsl:template match="node()">
+         <xsl:apply-templates select="//tns:state"/>
+      </xsl:template>
+      <xsl:template match="tns:state">
+         <xsl:copy>
+            <xsl:copy-of select="@*" />
+            <xsl:choose>
+               <xsl:when test="@xsi:type='userState' and tns:availability>=9000 and 11999>=tns:availability and @manual='true'">
+                  <xsl:element name="availability" xmlns="http://schemas.microsoft.com/2006/09/sip/state">6900</xsl:element>
+                  <xsl:element name="activity" xmlns="http://schemas.microsoft.com/2006/09/sip/state">
+                     <xsl:attribute name="token">urgent-interruptions-only</xsl:attribute>
+                     <xsl:attribute name="minAvailability">6900</xsl:attribute>
+                     <xsl:attribute name="maxAvailability">8999</xsl:attribute>
+                  </xsl:element>
+               </xsl:when>
+               <xsl:otherwise>
+                  <xsl:copy-of select="tns:availability" />
+                  <xsl:copy-of select="tns:activity" />
+               </xsl:otherwise>
+            </xsl:choose>
+            <xsl:copy-of select="tns:endpointLocation" />
+            <xsl:copy-of select="tns:meetingSubject" />
+            <xsl:copy-of select="tns:meetingLocation" />
+            <xsl:choose>
+               <xsl:when test="count(ct:delimiter) > 0">
+                  <xsl:copy-of select="ct:delimiter[1]" />
+                  <xsl:copy-of select="tns:timeZoneBias" />
+                  <xsl:copy-of select="tns:timeZoneName" />
+                  <xsl:copy-of select="tns:timeZoneAbbreviation" />
+                  <xsl:copy-of select="tns:device" />
+               </xsl:when>
+            </xsl:choose>
+            <xsl:choose>
+               <xsl:when test="count(ct:delimiter) > 1">
+                  <xsl:copy-of select="ct:delimiter[2]" />
+                  <xsl:copy-of select="ct:delimiter[2]/following-sibling::*" />
+               </xsl:when>
+               <xsl:otherwise>
+                  <xsl:copy-of select="ct:end" />
+                  <xsl:copy-of select="ct:extension" />
+               </xsl:otherwise>
+            </xsl:choose>
+         </xsl:copy>
+      </xsl:template>
+</xsl:stylesheet>
+      ]]>
+      </categoryData>
+    </publicationRule>
+    <publicationRule ruleType="transformation" categoryName="device" containerId="2" preferredSelfConsumption="true" />
+    <publicationRule ruleType="transformation" categoryName="contactCard" containerId="100">
+      <categoryData>
+        <![CDATA[
+<xsl:stylesheet
+   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+   version="1.0"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xmlns:ct="http://schemas.microsoft.com/2006/09/sip/commontypes"
+   xmlns:tns="http://schemas.microsoft.com/2006/09/sip/contactcard"
+   exclude-result-prefixes="tns ct">
+      <xsl:output method="xml" encoding="utf-8" indent="yes"/>
+      <xsl:strip-space elements="*"/>
+      <xsl:template match="node()">
+         <xsl:apply-templates select="//tns:contactCard"/>
+      </xsl:template>
+      <xsl:template match="tns:name">
+         <xsl:copy>
+            <xsl:copy-of select="@*" />
+            <xsl:copy-of select="tns:displayName" />
+            <xsl:choose>
+               <xsl:when test="count(ct:delimiter) > 0">
+                  <xsl:copy-of select="ct:delimiter[1]" />
+                  <xsl:copy-of select="ct:delimiter[1]/following-sibling::*" />
+               </xsl:when>
+               <xsl:otherwise>
+                  <xsl:copy-of select="ct:end" />
+                  <xsl:copy-of select="ct:extension" />
+               </xsl:otherwise>
+            </xsl:choose>
+         </xsl:copy>
+      </xsl:template>
+      <xsl:template match="tns:identity">
+         <xsl:copy>
+            <xsl:copy-of select="@*" />
+            <xsl:apply-templates select="tns:name" />
+            <xsl:copy-of select="tns:email" />
+            <xsl:choose>
+               <xsl:when test="count(ct:delimiter) > 0">
+                  <xsl:copy-of select="ct:delimiter[1]" />
+                  <xsl:copy-of select="ct:delimiter[1]/following-sibling::*" />
+               </xsl:when>
+               <xsl:otherwise>
+                  <xsl:copy-of select="ct:end" />
+                  <xsl:copy-of select="ct:extension" />
+               </xsl:otherwise>
+            </xsl:choose>
+         </xsl:copy>
+      </xsl:template>
+      <xsl:template match="tns:contactCard">
+         <xsl:copy>
+            <xsl:copy-of select="@*" />
+            <xsl:apply-templates select="tns:identity" />
+            <xsl:copy-of select="tns:company" />
+            <xsl:copy-of select="tns:department" />
+            <xsl:copy-of select="tns:title" />
+            <xsl:copy-of select="tns:url[@type='voicemail']" />
+            <xsl:choose>
+               <xsl:when test="count(ct:delimiter) > 0">
+                  <xsl:copy-of select="ct:delimiter[1]" />
+               </xsl:when>
+            </xsl:choose>
+            <xsl:choose>
+               <xsl:when test="count(ct:delimiter) > 1">
+                  <xsl:copy-of select="ct:delimiter[2]" />
+                  <xsl:copy-of select="tns:displayADPhoto" />
+                  <xsl:copy-of select="tns:photo" />
+               </xsl:when>
+            </xsl:choose>
+            <xsl:choose>
+               <xsl:when test="count(ct:delimiter) > 2">
+                  <xsl:copy-of select="ct:delimiter[3]" />
+                  <xsl:copy-of select="ct:delimiter[3]/following-sibling::*" />
+               </xsl:when>
+               <xsl:otherwise>
+                  <xsl:copy-of select="ct:end" />
+                  <xsl:copy-of select="ct:extension" />
+               </xsl:otherwise>
+            </xsl:choose>
+         </xsl:copy>
+      </xsl:template>
+</xsl:stylesheet>
+      ]]>
+      </categoryData>
+    </publicationRule>
+    <publicationRule ruleType="transformation" categoryName="contactCard" containerId="200">
+      <categoryData>
+        <![CDATA[
+<xsl:stylesheet
+   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+   version="1.0"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xmlns:ct="http://schemas.microsoft.com/2006/09/sip/commontypes"
+   xmlns:tns="http://schemas.microsoft.com/2006/09/sip/contactcard"
+   exclude-result-prefixes="tns ct">
+      <xsl:output method="xml" encoding="utf-8" indent="yes"/>
+      <xsl:strip-space elements="*"/>
+      <xsl:template match="node()">
+         <xsl:apply-templates select="//tns:contactCard"/>
+      </xsl:template>
+      <xsl:template match="tns:name">
+         <xsl:copy>
+            <xsl:copy-of select="@*" />
+            <xsl:copy-of select="tns:displayName" />
+            <xsl:choose>
+               <xsl:when test="count(ct:delimiter) > 0">
+                  <xsl:copy-of select="ct:delimiter[1]" />
+                  <xsl:copy-of select="ct:delimiter[1]/following-sibling::*" />
+               </xsl:when>
+               <xsl:otherwise>
+                  <xsl:copy-of select="ct:end" />
+                  <xsl:copy-of select="ct:extension" />
+               </xsl:otherwise>
+            </xsl:choose>
+         </xsl:copy>
+      </xsl:template>
+      <xsl:template match="tns:identity">
+         <xsl:copy>
+            <xsl:copy-of select="@*" />
+            <xsl:apply-templates select="tns:name" />
+            <xsl:copy-of select="tns:email" />
+            <xsl:choose>
+               <xsl:when test="count(ct:delimiter) > 0">
+                  <xsl:copy-of select="ct:delimiter[1]" />
+                  <xsl:copy-of select="ct:delimiter[1]/following-sibling::*" />
+               </xsl:when>
+               <xsl:otherwise>
+                  <xsl:copy-of select="ct:end" />
+                  <xsl:copy-of select="ct:extension" />
+               </xsl:otherwise>
+            </xsl:choose>
+         </xsl:copy>
+      </xsl:template>
+      <xsl:template match="tns:address">
+         <xsl:copy>
+            <xsl:copy-of select="@*" />
+            <xsl:copy-of select="tns:street" />
+            <xsl:copy-of select="tns:city" />
+            <xsl:copy-of select="tns:state" />
+            <xsl:copy-of select="tns:zipcode" />
+            <xsl:copy-of select="tns:countryCode" />
+            <xsl:choose>
+               <xsl:when test="count(ct:delimiter) > 0">
+                  <xsl:copy-of select="ct:delimiter[1]" />
+                  <xsl:copy-of select="ct:delimiter[1]/following-sibling::*" />
+               </xsl:when>
+               <xsl:otherwise>
+                  <xsl:copy-of select="ct:end" />
+                  <xsl:copy-of select="ct:extension" />
+               </xsl:otherwise>
+            </xsl:choose>
+         </xsl:copy>
+      </xsl:template>
+      <xsl:template match="tns:phone">
+         <xsl:copy>
+            <xsl:copy-of select="@*" />
+            <xsl:copy-of select="tns:uri" />
+            <xsl:copy-of select="tns:displayString" />
+            <xsl:choose>
+               <xsl:when test="count(ct:delimiter) > 0">
+                  <xsl:copy-of select="ct:delimiter[1]" />
+                  <xsl:copy-of select="ct:delimiter[1]/following-sibling::*" />
+               </xsl:when>
+               <xsl:otherwise>
+                  <xsl:copy-of select="ct:end" />
+                  <xsl:copy-of select="ct:extension" />
+               </xsl:otherwise>
+            </xsl:choose>
+         </xsl:copy>
+      </xsl:template>
+      <xsl:template match="tns:contactCard">
+         <xsl:copy>
+            <xsl:copy-of select="@*" />
+            <xsl:apply-templates select="tns:identity" />
+            <xsl:apply-templates select="tns:address[@type='work']" />
+            <xsl:copy-of select="tns:company" />
+            <xsl:copy-of select="tns:department" />
+            <xsl:copy-of select="tns:title" />
+            <xsl:copy-of select="tns:office" />
+            <xsl:copy-of select="tns:url" />
+            <xsl:apply-templates select="tns:phone[@type='work']" />
+            <xsl:copy-of select="tns:automaton" />
+            <xsl:choose>
+               <xsl:when test="count(ct:delimiter) > 0">
+                  <xsl:copy-of select="ct:delimiter[1]" />
+                  <xsl:copy-of select="tns:type" />
+                  <xsl:copy-of select="tns:description" />
+               </xsl:when>
+            </xsl:choose>
+            <xsl:choose>
+               <xsl:when test="count(ct:delimiter) > 1">
+                  <xsl:copy-of select="ct:delimiter[2]" />
+                  <xsl:copy-of select="tns:displayADPhoto" />
+                  <xsl:copy-of select="tns:photo" />
+               </xsl:when>
+            </xsl:choose>
+            <xsl:choose>
+               <xsl:when test="count(ct:delimiter) > 2">
+                  <xsl:copy-of select="ct:delimiter[3]" />
+                  <xsl:copy-of select="ct:delimiter[3]/following-sibling::*" />
+               </xsl:when>
+               <xsl:otherwise>
+                  <xsl:copy-of select="ct:end" />
+                  <xsl:copy-of select="ct:extension" />
+               </xsl:otherwise>
+            </xsl:choose>
+         </xsl:copy>
+      </xsl:template>
+</xsl:stylesheet>
+      ]]>
+      </categoryData>
+    </publicationRule>
+    <publicationRule ruleType="transformation" categoryName="contactCard" containerId="300">
+      <categoryData>
+        <![CDATA[
+<xsl:stylesheet
+   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+   version="1.0"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xmlns:ct="http://schemas.microsoft.com/2006/09/sip/commontypes"
+   xmlns:tns="http://schemas.microsoft.com/2006/09/sip/contactcard"
+   exclude-result-prefixes="tns ct">
+      <xsl:output method="xml" encoding="utf-8" indent="yes"/>
+      <xsl:strip-space elements="*"/>
+      <xsl:template match="node()">
+         <xsl:apply-templates select="//tns:contactCard"/>
+      </xsl:template>
+      <xsl:template match="tns:name">
+         <xsl:copy>
+            <xsl:copy-of select="@*" />
+            <xsl:copy-of select="tns:displayName" />
+            <xsl:choose>
+               <xsl:when test="count(ct:delimiter) > 0">
+                  <xsl:copy-of select="ct:delimiter[1]" />
+                  <xsl:copy-of select="ct:delimiter[1]/following-sibling::*" />
+               </xsl:when>
+               <xsl:otherwise>
+                  <xsl:copy-of select="ct:end" />
+                  <xsl:copy-of select="ct:extension" />
+               </xsl:otherwise>
+            </xsl:choose>
+         </xsl:copy>
+      </xsl:template>
+      <xsl:template match="tns:identity">
+         <xsl:copy>
+            <xsl:copy-of select="@*" />
+            <xsl:apply-templates select="tns:name" />
+            <xsl:copy-of select="tns:email" />
+            <xsl:choose>
+               <xsl:when test="count(ct:delimiter) > 0">
+                  <xsl:copy-of select="ct:delimiter[1]" />
+                  <xsl:copy-of select="ct:delimiter[1]/following-sibling::*" />
+               </xsl:when>
+               <xsl:otherwise>
+                  <xsl:copy-of select="ct:end" />
+                  <xsl:copy-of select="ct:extension" />
+               </xsl:otherwise>
+            </xsl:choose>
+         </xsl:copy>
+      </xsl:template>
+      <xsl:template match="tns:address">
+         <xsl:copy>
+            <xsl:copy-of select="@*" />
+            <xsl:copy-of select="tns:street" />
+            <xsl:copy-of select="tns:city" />
+            <xsl:copy-of select="tns:state" />
+            <xsl:copy-of select="tns:zipcode" />
+            <xsl:copy-of select="tns:countryCode" />
+            <xsl:choose>
+               <xsl:when test="count(ct:delimiter) > 0">
+                  <xsl:copy-of select="ct:delimiter[1]" />
+                  <xsl:copy-of select="ct:delimiter[1]/following-sibling::*" />
+               </xsl:when>
+               <xsl:otherwise>
+                  <xsl:copy-of select="ct:end" />
+                  <xsl:copy-of select="ct:extension" />
+               </xsl:otherwise>
+            </xsl:choose>
+         </xsl:copy>
+      </xsl:template>
+      <xsl:template match="tns:phone">
+         <xsl:copy>
+            <xsl:copy-of select="@*" />
+            <xsl:copy-of select="tns:uri" />
+            <xsl:copy-of select="tns:displayString" />
+            <xsl:choose>
+               <xsl:when test="count(ct:delimiter) > 0">
+                  <xsl:copy-of select="ct:delimiter[1]" />
+                  <xsl:copy-of select="ct:delimiter[1]/following-sibling::*" />
+               </xsl:when>
+               <xsl:otherwise>
+                  <xsl:copy-of select="ct:end" />
+                  <xsl:copy-of select="ct:extension" />
+               </xsl:otherwise>
+            </xsl:choose>
+         </xsl:copy>
+      </xsl:template>
+      <xsl:template match="tns:contactCard">
+         <xsl:copy>
+            <xsl:copy-of select="@*" />
+            <xsl:apply-templates select="tns:identity" />
+            <xsl:apply-templates select="tns:address[@type='work']" />
+            <xsl:copy-of select="tns:company" />
+            <xsl:copy-of select="tns:department" />
+            <xsl:copy-of select="tns:title" />
+            <xsl:copy-of select="tns:office" />
+            <xsl:copy-of select="tns:url" />
+            <xsl:apply-templates select="tns:phone[@type='work']" />
+            <xsl:apply-templates select="tns:phone[@type='mobile']" />
+            <xsl:copy-of select="tns:automaton" />
+            <xsl:choose>
+               <xsl:when test="count(ct:delimiter) > 0">
+                  <xsl:copy-of select="ct:delimiter[1]" />
+                  <xsl:copy-of select="tns:type" />
+                  <xsl:copy-of select="tns:description" />
+               </xsl:when>
+            </xsl:choose>
+            <xsl:choose>
+               <xsl:when test="count(ct:delimiter) > 1">
+                  <xsl:copy-of select="ct:delimiter[2]" />
+                  <xsl:copy-of select="tns:displayADPhoto" />
+                  <xsl:copy-of select="tns:photo" />
+               </xsl:when>
+            </xsl:choose>
+            <xsl:choose>
+               <xsl:when test="count(ct:delimiter) > 2">
+                  <xsl:copy-of select="ct:delimiter[3]" />
+                  <xsl:copy-of select="ct:delimiter[3]/following-sibling::*" />
+               </xsl:when>
+               <xsl:otherwise>
+                  <xsl:copy-of select="ct:end" />
+                  <xsl:copy-of select="ct:extension" />
+               </xsl:otherwise>
+            </xsl:choose>
+         </xsl:copy>
+      </xsl:template>
+</xsl:stylesheet>
+      ]]>
+      </categoryData>
+    </publicationRule>
+    <publicationRule ruleType="transformation" categoryName="contactCard" containerId="400" preferredSelfConsumption="true" />
+    <publicationRule ruleType="transformation" categoryName="contactCard" containerId="32000">
+      <categoryData>
+        <![CDATA[
+<xsl:stylesheet
+   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+   version="1.0"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xmlns:ct="http://schemas.microsoft.com/2006/09/sip/commontypes"
+   xmlns:tns="http://schemas.microsoft.com/2006/09/sip/contactcard"
+   exclude-result-prefixes="tns ct">
+      <xsl:output method="xml" encoding="utf-8" indent="yes"/>
+      <xsl:strip-space elements="*"/>
+      <xsl:template match="node()">
+         <xsl:apply-templates select="//tns:contactCard"/>
+      </xsl:template>
+      <xsl:template match="tns:name">
+         <xsl:copy>
+            <xsl:copy-of select="@*" />
+            <xsl:copy-of select="tns:displayName" />
+            <xsl:choose>
+               <xsl:when test="count(ct:delimiter) > 0">
+                  <xsl:copy-of select="ct:delimiter[1]" />
+                  <xsl:copy-of select="ct:delimiter[1]/following-sibling::*" />
+               </xsl:when>
+               <xsl:otherwise>
+                  <xsl:copy-of select="ct:end" />
+                  <xsl:copy-of select="ct:extension" />
+               </xsl:otherwise>
+            </xsl:choose>
+         </xsl:copy>
+      </xsl:template>
+      <xsl:template match="tns:identity">
+         <xsl:copy>
+            <xsl:copy-of select="@*" />
+            <xsl:apply-templates select="tns:name" />
+            <xsl:copy-of select="tns:email" />
+            <xsl:choose>
+               <xsl:when test="count(ct:delimiter) > 0">
+                  <xsl:copy-of select="ct:delimiter[1]" />
+                  <xsl:copy-of select="ct:delimiter[1]/following-sibling::*" />
+               </xsl:when>
+               <xsl:otherwise>
+                  <xsl:copy-of select="ct:end" />
+                  <xsl:copy-of select="ct:extension" />
+               </xsl:otherwise>
+            </xsl:choose>
+         </xsl:copy>
+      </xsl:template>
+      <xsl:template match="tns:contactCard">
+         <xsl:copy>
+            <xsl:copy-of select="@*" />
+            <xsl:apply-templates select="tns:identity" />
+            <xsl:choose>
+               <xsl:when test="count(ct:delimiter) > 0">
+                  <xsl:copy-of select="ct:delimiter[1]" />
+               </xsl:when>
+            </xsl:choose>
+            <xsl:choose>
+               <xsl:when test="count(ct:delimiter) > 1">
+                  <xsl:copy-of select="ct:delimiter[2]" />
+               </xsl:when>
+            </xsl:choose>
+            <xsl:choose>
+               <xsl:when test="count(ct:delimiter) > 2">
+                  <xsl:copy-of select="ct:delimiter[3]" />
+                  <xsl:copy-of select="ct:delimiter[3]/following-sibling::*" />
+               </xsl:when>
+               <xsl:otherwise>
+                  <xsl:copy-of select="ct:end" />
+                  <xsl:copy-of select="ct:extension" />
+               </xsl:otherwise>
+            </xsl:choose>
+         </xsl:copy>
+      </xsl:template>
+</xsl:stylesheet>
+      ]]>
+      </categoryData>
+    </publicationRule>
+    <publicationRule ruleType="transformation" categoryName="calendarData" containerId="1">
+      <categoryData>
+        <![CDATA[
+<xsl:stylesheet
+   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+   version="1.0"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xmlns:t="http://schemas.microsoft.com/exchange/services/2006/types"
+   xmlns:ct="http://schemas.microsoft.com/2006/09/sip/commontypes"
+   xmlns:tns="http://schemas.microsoft.com/2006/09/sip/calendarData"
+   exclude-result-prefixes="tns ct t">
+  <xsl:output method="xml" encoding="utf-8" indent="yes"/>
+  <xsl:strip-space elements="*"/>
+  <xsl:template match="node()">
+    <xsl:apply-templates select="//tns:calendarData"/>
+  </xsl:template>
+  <xsl:template match="tns:calendarData">
+    <xsl:copy>
+      <xsl:copy-of select="@*" />
+      <xsl:copy-of select="t:WorkingHours" />
+      <xsl:choose>
+        <xsl:when test="count(ct:delimiter) > 0">
+          <xsl:copy-of select="ct:delimiter[1]" />
+          <xsl:copy-of select="ct:delimiter[1]/following-sibling::*" />
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:copy-of select="ct:end" />
+          <xsl:copy-of select="ct:extension" />
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:copy>
+  </xsl:template>
+</xsl:stylesheet>
+      ]]>
+      </categoryData>
+    </publicationRule>
+    <publicationRule ruleType="transformation" categoryName="calendarData" containerId="100">
+      <categoryData>
+        <![CDATA[
+<xsl:stylesheet
+   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+   version="1.0"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xmlns:t="http://schemas.microsoft.com/exchange/services/2006/types" 
+   xmlns:ct="http://schemas.microsoft.com/2006/09/sip/commontypes"
+   xmlns:tns="http://schemas.microsoft.com/2006/09/sip/calendarData"
+   exclude-result-prefixes="tns ct t">
+      <xsl:output method="xml" encoding="utf-8" indent="yes"/>
+      <xsl:strip-space elements="*"/>
+      <xsl:template match="node()">
+         <xsl:apply-templates select="//tns:calendarData"/>
+      </xsl:template>
+      <xsl:template match="tns:calendarData">
+         <xsl:copy />
+      </xsl:template>
+</xsl:stylesheet>
+      ]]>
+      </categoryData>
+    </publicationRule>
+    <publicationRule ruleType="transformation" categoryName="calendarData" containerId="200">
+      <categoryData>
+        <![CDATA[
+<xsl:stylesheet
+   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+   version="1.0"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xmlns:t="http://schemas.microsoft.com/exchange/services/2006/types" 
+   xmlns:ct="http://schemas.microsoft.com/2006/09/sip/commontypes"
+   xmlns:tns="http://schemas.microsoft.com/2006/09/sip/calendarData"
+   exclude-result-prefixes="tns ct t">
+      <xsl:output method="xml" encoding="utf-8" indent="yes"/>
+      <xsl:strip-space elements="*"/>
+      <xsl:template match="node()">
+         <xsl:apply-templates select="//tns:calendarData"/>
+      </xsl:template>
+      <xsl:template match="tns:calendarData">
+         <xsl:copy>
+            <xsl:copy-of select="@*" />
+            <xsl:copy-of select="t:WorkingHours" />
+            <xsl:copy-of select="tns:freeBusy" />
+            <xsl:choose>
+               <xsl:when test="count(ct:delimiter) > 0">
+                  <xsl:copy-of select="ct:delimiter[1]" />
+                  <xsl:copy-of select="ct:delimiter[1]/following-sibling::*" />
+               </xsl:when>
+               <xsl:otherwise>
+                  <xsl:copy-of select="ct:end" />
+                  <xsl:copy-of select="ct:extension" />
+               </xsl:otherwise>
+            </xsl:choose>
+         </xsl:copy>
+      </xsl:template>
+</xsl:stylesheet>
+      ]]>
+      </categoryData>
+    </publicationRule>
+    <publicationRule ruleType="transformation" categoryName="calendarData" containerId="300">
+      <categoryData>
+        <![CDATA[
+<xsl:stylesheet
+   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+   version="1.0"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xmlns:t="http://schemas.microsoft.com/exchange/services/2006/types" 
+   xmlns:ct="http://schemas.microsoft.com/2006/09/sip/commontypes"
+   xmlns:tns="http://schemas.microsoft.com/2006/09/sip/calendarData"
+   exclude-result-prefixes="tns ct t">
+      <xsl:output method="xml" encoding="utf-8" indent="yes"/>
+      <xsl:strip-space elements="*"/>
+      <xsl:template match="node()">
+         <xsl:apply-templates select="//tns:calendarData"/>
+      </xsl:template>
+      <xsl:template match="tns:calendarData">
+         <xsl:copy>
+            <xsl:copy-of select="@*" />
+            <xsl:copy-of select="t:WorkingHours" />
+            <xsl:copy-of select="tns:freeBusy" />
+            <xsl:choose>
+               <xsl:when test="count(ct:delimiter) > 0">
+                  <xsl:copy-of select="ct:delimiter[1]" />
+                  <xsl:copy-of select="ct:delimiter[1]/following-sibling::*" />
+               </xsl:when>
+               <xsl:otherwise>
+                  <xsl:copy-of select="ct:end" />
+                  <xsl:copy-of select="ct:extension" />
+               </xsl:otherwise>
+            </xsl:choose>
+         </xsl:copy>
+      </xsl:template>
+</xsl:stylesheet>
+      ]]>
+      </categoryData>
+    </publicationRule>
+    <publicationRule ruleType="transformation" categoryName="calendarData" containerId="400" preferredSelfConsumption="true" />
+    <publicationRule ruleType="transformation" categoryName="calendarData" containerId="32000">
+      <categoryData>
+        <![CDATA[
+<xsl:stylesheet
+   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+   version="1.0"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xmlns:t="http://schemas.microsoft.com/exchange/services/2006/types" 
+   xmlns:ct="http://schemas.microsoft.com/2006/09/sip/commontypes"
+   xmlns:tns="http://schemas.microsoft.com/2006/09/sip/calendarData"
+   exclude-result-prefixes="tns ct t">
+      <xsl:output method="xml" encoding="utf-8" indent="yes"/>
+      <xsl:strip-space elements="*"/>
+      <xsl:template match="node()">
+         <xsl:apply-templates select="//tns:calendarData"/>
+      </xsl:template>
+      <xsl:template match="tns:calendarData">
+         <xsl:copy />
+      </xsl:template>
+</xsl:stylesheet>
+      ]]>
+      </categoryData>
+    </publicationRule>
+    <publicationRule ruleType="transformation" categoryName="note" containerId="100">
+      <categoryData>
+        <![CDATA[
+<xsl:stylesheet
+   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+   version="1.0"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xmlns:ct="http://schemas.microsoft.com/2006/09/sip/commontypes"
+   xmlns:tns="http://schemas.microsoft.com/2006/09/sip/note"
+   exclude-result-prefixes="tns ct">
+      <xsl:output method="xml" encoding="utf-8" indent="yes"/>
+      <xsl:strip-space elements="*"/>
+      <xsl:template match="node()">
+         <xsl:apply-templates select="//tns:note"/>
+      </xsl:template>
+      <xsl:template match="tns:note">
+         <xsl:copy />
+      </xsl:template>
+</xsl:stylesheet>
+      ]]>
+      </categoryData>
+    </publicationRule>
+    <publicationRule ruleType="transformation" categoryName="note" containerId="200" />
+    <publicationRule ruleType="transformation" categoryName="note" containerId="300" />
+    <publicationRule ruleType="transformation" categoryName="note" containerId="400" preferredSelfConsumption="true" />
+    <publicationRule ruleType="transformation" categoryName="note" containerId="32000">
+      <categoryData>
+        <![CDATA[
+<xsl:stylesheet
+   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+   version="1.0"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xmlns:ct="http://schemas.microsoft.com/2006/09/sip/commontypes"
+   xmlns:tns="http://schemas.microsoft.com/2006/09/sip/note"
+   exclude-result-prefixes="tns ct">
+      <xsl:output method="xml" encoding="utf-8" indent="yes"/>
+      <xsl:strip-space elements="*"/>
+      <xsl:template match="node()">
+         <xsl:apply-templates select="//tns:note"/>
+      </xsl:template>
+      <xsl:template match="tns:note">
+         <xsl:copy />
+      </xsl:template>
+</xsl:stylesheet>
+      ]]>
+      </categoryData>
+    </publicationRule>
+    <publicationRule ruleType="transformation" categoryName="noteHistory" containerId="200" />
+    <publicationRule ruleType="transformation" categoryName="noteHistory" containerId="300" />
+    <publicationRule ruleType="transformation" categoryName="noteHistory" containerId="400" preferredSelfConsumption="true" />
+    <publicationRule ruleType="transformation" categoryName="services" containerId="2" preferredSelfConsumption="true" />
+    <publicationRule ruleType="transformation" categoryName="routing" containerId="0" preferredSelfConsumption="true" />
+    <publicationRule ruleType="transformation" categoryName="routing" containerId="100" />
+    <publicationRule ruleType="transformation" categoryName="routing" containerId="200" />
+    <publicationRule ruleType="transformation" categoryName="routing" containerId="300" />
+    <publicationRule ruleType="transformation" categoryName="routing" containerId="400" />
+    <publicationRule ruleType="transformation" categoryName="userProperties" containerId="1" preferredSelfConsumption="true" />
+    <publicationRule ruleType="transformation" categoryName="userInformation" containerId="1" preferredSelfConsumption="true" />
+    <publicationRule ruleType="transformation" categoryName="alerts" containerId="1" preferredSelfConsumption="true" />
+    <publicationRule ruleType="transformation" categoryName="mwi" containerId="1" preferredSelfConsumption="true" />
+    <publicationRule ruleType="transformation" categoryName="mobility" containerId="1" preferredSelfConsumption="true" />
+    <publicationRule ruleType="transformation" categoryName="rccOptions" containerId="1" preferredSelfConsumption="true" />
+    <publicationRule ruleType="transformation" categoryName="otherOptions" containerId="1" preferredSelfConsumption="true" />
+    <publicationRule ruleType="transformation" categoryName="categoryPublicationManifest" containerId="1" preferredSelfConsumption="true" />
+    <publicationRule ruleType="bootstrap" categoryName="state" containerId="32000">
+      <instanceId type="constant" value="0" />
+      <expireType type="static" />
+      <categoryData>
+        <![CDATA[
+<state xmlns="http://schemas.microsoft.com/2006/09/sip/state"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       manual="false"
+       xsi:type="aggregateState">
+  <availability>18500</availability>
+</state>
+      ]]>
+      </categoryData>
+    </publicationRule>
+    <publicationRule ruleType="bootstrap" categoryName="services" containerId="32000">
+      <instanceId type="constant" value="0" />
+      <expireType type="static" />
+      <categoryData>
+        <![CDATA[
+<services xmlns="http://schemas.microsoft.com/2006/09/sip/service" />
+      ]]>
+      </categoryData>
+    </publicationRule>
+    <publicationRule ruleType="bootstrap" categoryName="routing" containerId="32000">
+      <instanceId type="constant" value="0" />
+      <expireType type="static" />
+      <categoryData>
+        <![CDATA[
+<routing name="rtcdefault" version="1"
+         xmlns="http://schemas.microsoft.com/02/2006/sip/routing">
+  <preamble>
+    <flags name="clientflags" value="block" />
+  </preamble>
+</routing>
+      ]]>
+      </categoryData>
+    </publicationRule>
+    <publicationRule ruleType="bootstrap" categoryName="routing" containerId="0">
+      <instanceId type="constant" value="0" />
+      <expireType type="static" />
+      <categoryData>
+        <![CDATA[
+<routing name="rtcdefault" version="1" minSupportedClientVersion="4.0.0.0"
+         xmlns="http://schemas.microsoft.com/02/2006/sip/routing">
+  <preamble>
+    <flags name="clientflags" value="" />
+    <wait name="total" seconds="20" />
+  </preamble>
+</routing>
+      ]]>
+      </categoryData>
+    </publicationRule>
+    <publicationRule ruleType="bootstrap" categoryName="noteHistory" containerId="100">
+      <instanceId type="constant" value="0" />
+      <expireType type="static" />
+      <categoryData>
+        <![CDATA[
+<note xmlns="http://schemas.microsoft.com/2006/09/sip/note" />
+      ]]>
+      </categoryData>
+    </publicationRule>
+    <publicationRule ruleType="bootstrap" categoryName="noteHistory" containerId="32000">
+      <instanceId type="constant" value="0" />
+      <expireType type="static" />
+      <categoryData>
+        <![CDATA[
+<note xmlns="http://schemas.microsoft.com/2006/09/sip/note" />
+      ]]>
+      </categoryData>
+    </publicationRule>
+  </publicationList>
+</categoryPublicationManifest>
+
+
+

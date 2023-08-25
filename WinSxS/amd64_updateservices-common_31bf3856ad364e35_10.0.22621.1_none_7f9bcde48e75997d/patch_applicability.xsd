@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<xs:schema id="Applicability" targetNamespace="http://www.microsoft.com/msi/patch_applicability.xsd" elementFormDefault="qualified" xmlns="http://www.microsoft.com/msi/patch_applicability.xsd" xmlns:mstns="http://www.microsoft.com/msi/patch_applicability.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:element name="MsiPatch">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="TargetProduct" minOccurs="1" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="TargetProductCode" type="ValidateGUID" />
+							<xs:element name="UpdatedProductCode" type="GUID" minOccurs="0" maxOccurs="1" />
+							<xs:element name="TargetVersion" type="ValidateVersion" />
+							<xs:element name="UpdatedVersion" type="Version" minOccurs="0" maxOccurs="1" />
+							<xs:element name="TargetLanguage" type="ValidateLanguage" />
+							<xs:element name="UpdatedLanguages" type="intList" />
+							<xs:element name="UpgradeCode" type="ValidateGUID" />
+						</xs:sequence>
+						<xs:attribute name="MinMsiVersion" type="xs:int" />
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="TargetProductCode" type="GUID" minOccurs="1" maxOccurs="unbounded" />
+				<xs:element name="ObsoletedPatch" minOccurs="0" maxOccurs="unbounded" type="GUID" />
+				<xs:element name="SequenceData" minOccurs="0" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="PatchFamily" type="xs:string" />
+							<xs:element name="ProductCode" type="GUID" minOccurs="0" maxOccurs="1" />
+							<xs:element name="Sequence" type="Version" />
+							<xs:element name="Attributes" type="xs:int" minOccurs="0" maxOccurs="1" />
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="SchemaVersion" type="Version" />
+			<xs:attribute name="PatchGUID" type="GUID" />
+			<xs:attribute name="MinMsiVersion" type="xs:int" />
+                        <xs:attribute name="TargetsRTM" type="xs:boolean" use="optional" />
+		</xs:complexType>
+	</xs:element>
+	<xs:simpleType name="GUID">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="\{[0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{12}\}" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Version">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[0-9]{1,5}(\.[0-9]{1,5}){0,3}" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="ValidateGUID">
+		<xs:simpleContent>
+			<xs:extension base="GUID">
+				<xs:attribute name="Validate" type="xs:boolean" />
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="ValidateVersion">
+		<xs:simpleContent>
+			<xs:extension base="Version">
+				<xs:attribute name="ComparisonType">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:enumeration value="LessThan" />
+							<xs:enumeration value="LessThanOrEqual" />
+							<xs:enumeration value="Equal" />
+							<xs:enumeration value="GreaterThanOrEqual" />
+							<xs:enumeration value="GreaterThan" />
+							<xs:enumeration value="None" />
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:attribute>
+				<xs:attribute name="ComparisonFilter">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:enumeration value="Major" />
+							<xs:enumeration value="MajorMinor" />
+							<xs:enumeration value="MajorMinorUpdate" />
+							<xs:enumeration value="None" />
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:attribute>
+				<xs:attribute name="Validate" type="xs:boolean" />
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="ValidateLanguage">
+		<xs:simpleContent>
+			<xs:extension base="xs:int">
+				<xs:attribute name="Validate" type="xs:boolean" />
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="intList">
+		<xs:list itemType="xs:int" />
+	</xs:simpleType>
+
+    <xs:simpleType name="MsiType">
+        <xs:annotation>
+            <xs:documentation>An enumeration defining the target type of an MSI operation. </xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:token">
+            <xs:enumeration value="MsiProduct" />
+            <xs:enumeration value="MsiPatch" />
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="RepairPath">
+    	<xs:annotation>
+            <xs:documentation>Representation of a MSI repair path for an arbitrary GUID and type. </xs:documentation>
+        </xs:annotation>
+            <xs:attribute name="TargetId" type="GUID" use="required">
+                <xs:annotation>
+                    <xs:documentation>Indicates the target ProductCode or PatchCode of the repair path. </xs:documentation>
+                </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="TargetType" type="MsiType" use="optional" default="MsiProduct">
+                <xs:annotation>
+                    <xs:documentation>Indicates whether the GUID referenced by TargetGUID is for a MSI Product or MSP Patch.</xs:documentation>
+                </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="RelativePathToExe" type="xs:string" use="required">
+                <xs:annotation>
+                    <xs:documentation>Indicates the relative path with file name of this Msi to its setup exe.</xs:documentation>
+                </xs:annotation>
+            </xs:attribute>
+    </xs:complexType>
+</xs:schema>

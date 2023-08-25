@@ -1,0 +1,40 @@
+// **************************************************************************
+// Copyright (c)  Microsoft Corporation, All Rights Reserved
+//
+// File:  WmiPerfClass.mof
+//
+// Description:  WmiPerf class provider registration
+//
+// History:
+//
+// **************************************************************************
+
+#pragma autorecover
+#pragma namespace("\\\\.\\root\\cimv2")
+
+instance of __Win32Provider as $P
+{
+    Name          = "WmiPerfClass";
+    ClsId         = "{661FF7F6-F4D1-4593-B59D-4C54C1ECE68B}";
+    UnloadTimeout = "00000000001500.000000:000";
+    HostingModel  = "LocalSystemHost";
+    Version       = 3;
+};
+
+instance of __ClassProviderRegistration
+{
+    Provider = $P;
+
+    //read-only
+    SupportsPut = FALSE;
+    SupportsDelete = FALSE;
+    SupportsGet = TRUE;
+    SupportsEnumeration = TRUE;
+
+    ResultSetQueries = {
+        "select * from meta_class where __Dynasty = 'CIM_StatisticalInformation'"
+    };
+
+};
+
+

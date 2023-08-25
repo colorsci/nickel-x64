@@ -1,0 +1,378 @@
+// **************************************************************************
+//
+// Copyright (c)  Microsoft Corporation, All Rights Reserved
+//
+// File:  tsallow.mof
+//
+// Description:
+//
+// History:
+//
+// **************************************************************************
+
+// automatically recompile during a repository rebuild
+#PRAGMA AUTORECOVER
+
+//
+//qualifiers to be localized through .mfl
+//
+
+#pragma classflags("forceupdate")
+
+Qualifier Description : ToSubClass Amended; 
+Qualifier Values : ToSubClass Amended; 
+
+// Create the root\cimv2\TerminalServices namespace
+#pragma namespace("\\\\.\\ROOT\\cimv2")
+
+// For RDS_MANAGEMENT_SERVERS we set all wmi permission Administrator has - WBEM_ENABLE, WBEM_METHOD_EXECUTE , WEB_FULL_WRITE_REP, 
+//								WBEM_PARTIAL_WRITE_REP, WBEM_ENABLE, WBEM_EXECUTE, 
+//								WBEM_REMOTE_ACCESS, READ_CONTROL, WRITE_DAC
+// For RDS_ENDPOINT_SERVERS and RDS_REMOTE_ACCESS_SERVERS we set only wmi permission :- WBEM_ENABLE, WBEM_METHOD_EXECUTE, WBEM_REMOTE_ACCESS
+// WBEM_ENABLE				= 0x1
+// WBEM_METHOD_EXECUTE 	= 0x2
+// WBEM_FULL_WRITE_REP		= 0x4
+// WBEM_PARTIAL_WRITE_REP	= 0x8
+// WBEM_WRITE_PROVIDER		= 0x10
+// WBEM_REMOTE_ACCESS		= 0x20
+// READ_CONTROL			= 0x20000
+// WRITE_DAC				= 0x40000
+// RDS Management Servers group - S-1-5-32-577
+//RDS Endpoint Servers group S-1-5-32-576
+// RDS Remote Access Servers group S-1-5-32-575
+[NamespaceSecuritySDDL ("O:BAG:BAD:(A;CI;0x6003F;;;S-1-5-32-577)(A;CI;0x23;;;S-1-5-32-575)(A;CI;0x23;;;S-1-5-32-576)")]
+
+Instance of __Namespace
+{
+  Name = "TerminalServices";
+};
+
+// Place the TSPubWMI provider in the root\cimv2\TerminalServices namespace
+#pragma namespace("\\\\.\\ROOT\\cimv2\\TerminalServices")
+
+// Require all clients to use Pkt_Privacy or higher
+[RequiresEncryption(TRUE)]
+instance of __systemSecurity
+{
+};
+
+/////////////////////////////////////////////////////////////////////
+// Declare an instance of the __Win32Provider so as to "register" the
+// provider
+instance of __Win32Provider as $P
+{
+    Name    = "Win32_TSPublishedApplication_Prov" ;
+    ClsId   = "{643B0017-1AAE-4AFA-B921-4BE3FB8308A2}" ;
+    HostingModel = "NetworkServiceHost";
+} ;    
+
+instance of __InstanceProviderRegistration
+{
+    Provider = $P;
+    SupportsPut = TRUE;
+    SupportsGet = TRUE;
+    SupportsDelete = TRUE;
+    SupportsEnumeration = TRUE;
+};
+
+instance of __MethodProviderRegistration
+{
+	Provider = $P;
+};
+
+[Description("This event represents a change to RemoteApp settings on this terminal server.")]
+class Win32_RemoteAppChangeEvent : __ExtrinsicEvent
+{
+    [read, Description("Object changed by the operation corresponding to the event")]
+        object TargetInstance;
+    [read, Description("Type of operation corresponding to the event"), Values { "Create", "Delete", "Modify"}]
+        uint32 OperationType;
+};
+
+Instance of __EventProviderRegistration
+{
+  Provider = $P;
+  EventQueryList = {
+	"SELECT * FROM Win32_RemoteAppChangeEvent"
+   };
+};
+
+// ================================================================== 
+//    CIM
+// ==================================================================
+
+[Abstract,Locale(1033) : ToInstance,UUID("{8502C517-5FBB-11D2-AAC1-006008C78BC7}") : ToInstance] 
+class CIM_ManagedSystemElement
+{
+  [MaxLen(64) : ToSubclass,Read : ToSubclass] string Caption;
+  [Read : ToSubclass] string Description;
+  [Mappingstrings{"MIF.DMTF|ComponentID|001.5"} : ToSubclass,Read : ToSubclass] datetime InstallDate;
+  [Read : ToSubclass] string Name;
+  [Read : ToSubclass,MaxLen(10) : ToSubclass,ValueMap{"OK", "Error", "Degraded", "Unknown", "Pred Fail", "Starting", "Stopping", "Service"} : ToSubclass] string Status;
+};
+
+
+[Abstract,Locale(1033) : ToInstance,UUID("{8502C518-5FBB-11D2-AAC1-006008C78BC7}") : ToInstance] 
+class CIM_LogicalElement : CIM_ManagedSystemElement
+{
+};
+
+//**************************************************************************
+//* Class: Win32_RDFileAssociation
+//**************************************************************************
+[Description("Info for a file extension associated with a RemoteApp"), dynamic, provider("Win32_TSPublishedApplication_Prov")]
+class Win32_RDFileAssociation
+{
+  [read, Description("Name of the extension (e.g. .txt)"), key]
+		string ExtName;
+  [read, Description("Hint to help open documents with this file association")]
+		string ProgIdHint;
+  [read, Description("The path to the icon for this file association")]
+		string IconPath;
+  [read, Description("Index of the icon for this file association")]
+		sint32 IconIndex;
+  [read, Description("Contents of the icon for this file association")]
+		uint8 IconContents[];
+  [read, Description("Whether this association is for a primary handler")]
+		boolean PrimaryHandler;
+};
+
+//**************************************************************************
+//* Class: Win32_RDAllowListFileAssociation
+//**************************************************************************
+[Description("Allow-List info for a file extension associated with a RemoteApp"), dynamic, provider("Win32_TSPublishedApplication_Prov")]
+class Win32_RDAllowListFileAssociation
+{
+  [read, write, Description("Name of the extension (e.g. .txt)"), key]
+		string ExtName;
+  [read, write, Description("Alias of this file association's RemoteApp")]
+		string AppAlias;
+  [read, write, Description("Hint to help open documents with this file association")]
+		string ProgIdHint;
+};
+
+//**************************************************************************
+//* Class: Win32_TSPublishedApplication
+//**************************************************************************
+[Description("Application published for remote use through Terminal Services"), dynamic, provider("Win32_TSPublishedApplication_Prov")]
+class Win32_TSPublishedApplication : CIM_LogicalElement
+{
+	[read, write, Description("Name of the application")]
+		string Name;
+	[read, write, Description("Alias of the application"), key]
+		string Alias;
+	[read, write, optional, Description("Security Descriptor controlling access to the application, in SDDL Format. Empty string implies allow all access. Does not support DENY ACEs, or ACEs referring to non-domain users or groups.")]
+	       string SecurityDescriptor;
+	[read, write, Description("Path to the application")]
+		string Path;
+	[read, Description("Whether application path is valid")]
+		boolean PathExists;
+       [read, write, Description("Virtual Path to the application")]
+              string VPath;
+	[read, write, Description("Path to the application icon")]
+		string IconPath;
+	[read, write, Description("Index of the icon")]
+		sint32 IconIndex;
+	[read, Description("Contents of the icon corresponding to the application")]
+		uint8 IconContents[];
+	[read, write, Description("Command Line Arguments setting"), Values { "DoNotAllow", "Allow", "Require"}]
+		uint32 CommandLineSetting;
+	[read, write, Description("Command Line Arguments required for this application")]
+		string RequiredCommandLine;
+	[read, write, Description("Whether this application should be shown in the TS Web Access")]
+		boolean ShowInPortal;
+	[read, write, Description("Contents of the RDP file corresponding to the application")]
+		string RDPFileContents;
+};
+
+
+//**************************************************************************
+//* Class: Win32_TSPublishedApplicationList
+//**************************************************************************
+[Description("The List of Published Applications available on a Terminal Server"), provider("Win32_TSPublishedApplication_Prov"), dynamic, singleton]
+class Win32_TSPublishedApplicationList : CIM_LogicalElement
+{
+	[read, write, Description("Whether the Terminal Server restricts remote applications to those on the list.")]
+		boolean Disabled;
+
+	[read,
+	     Description("Indicates whether the property Disabled "
+                 "is configured by Server (0),Group Policy (1), Default (2) ")
+	]
+	uint32 PolicySourceDisabled;
+
+
+};
+
+//**************************************************************************
+//* Class: Win32_TSRemoteDesktop
+//**************************************************************************
+[Description("Application published for remote use through Terminal Services"), dynamic, provider("Win32_TSPublishedApplication_Prov")]
+class Win32_TSRemoteDesktop : CIM_LogicalElement
+{
+	[read, write, Description("Name of the Desktop")]
+		string Name;
+	[read, write, Description("Alias of the Desktop"), key]
+		string Alias;
+	[read, write, optional, Description("Security Descriptor controlling access to the application, in SDDL Format. Empty string implies allow all access. Does not support DENY ACEs, or ACEs referring to non-domain users or groups.")]
+		string SecurityDescriptor;
+	[read, write, Description("Path to the Desktop icon")]
+		string IconPath;
+	[read, write, Description("Index of the icon")]
+		sint32 IconIndex;
+	[read, Description("Contents of the icon corresponding to the application")]
+		uint8 IconContents[];
+	[read, write, Description("Whether this application should be shown in the TS Web Access")]
+		boolean ShowInPortal;
+	[read, write, Description("Contents of the RDP file corresponding to the desktop")]
+		string RDPFileContents;
+	[read, write, optional, Description("Whether this Remote Desktop is meant for a virtual machine farm")]
+		boolean IsVmFarm;
+	[read, write, optional, Description("Virtual machine farm settigns corresponding to the desktop")]
+		string VmFarmSettings;
+};
+
+//**************************************************************************
+//* Class: Win32_TSDeploymentSettings
+//**************************************************************************
+[Description("Deployment Settings for the Remote Programs Wizard"), provider("Win32_TSPublishedApplication_Prov"), dynamic, singleton]
+class Win32_TSDeploymentSettings : CIM_LogicalElement
+{
+	[read, write, Description("RDP Port")]
+		sint32 Port;
+	[read, write, Description("Farm Name")]
+		string FarmName;
+	[read,write, Description("How Gateway is Used"), Values {"NoGateway", "UseGatewayBypassLocal", "UseGateway", "DetectGateway"}]
+		sint32 GatewayUsage;
+       [read, write, Description("Gateway Name")]
+              string GatewayName;
+	[read, write, Description("Gateway Authentication Mode"), Values {"Password(0)", "Smartcard(1)", "Allow User to Choose(4)"}]
+		sint32 GatewayAuthMode;
+	[read, write, Description("Use the same user credentials for TS Gateway and TS Server when possible")]
+	       boolean GatewayUseCachedCreds;
+	[read, write, Description("Require Server Authentication (DEPRECATED)")]
+		boolean RequireServerAuth;
+	[read, write, Description("Color Bit Depth"), Values {"4", "8", "15", "16", "24", "32"}]
+	       sint32 ColorBitDepth;
+	[read, write, Description("Allow Font Smoothing")]
+	      boolean AllowFontSmoothing;
+	[read, write, Description("Enable Multi-Monitor for desktop (not RAIL)")]
+	      boolean UseMultimon;
+	[read, write, Description("Redirection Options "
+	"is configured by adding the following flags  None(0), Drives(1), Printers(2), Clipboard(4), Plug and Play(8), Smart Card(16)")]
+	      sint32 RedirectionOptions;
+	[read, write, Description("Use a Certificate to Sign the RDP Files")]
+	       boolean HasCertificate;
+	[read, write, Description("Certificate used to sign RDP files")]
+	       uint8 CertificateHash[];
+	[read, write, Description("Certificate Issued To")]
+	       string CertificateIssuedTo;
+	[read, write, Description("Certificate Issued By")]
+	       string CertificateIssuedBy;
+	[read, write, Description("Certificate Expires On, stored as a 64bit FILETIME format")]
+	       string CertificateExpiresOn;
+	[read, write, Description("Contents of the RDP file corresponding to the Custom RDP Settings")]
+	       string CustomRDPSettings;
+	[read, write, Description("Contents of the RDP file corresponding to the Deployment Settings, if this is set the corresponding Redirection settings and other Deployment settings are ignored and this RDP file is used.")]
+	       string DeploymentRDPSettings;
+};
+
+//**************************************************************************
+//* Class: Win32_TSSystemInfo
+//**************************************************************************
+[Description("Centralized Publishing Server Information Service"), provider("Win32_TSPublishedApplication_Prov"), dynamic, singleton]
+class Win32_TSSystemInfo : CIM_LogicalElement
+{
+	[read, Description("The Remote Desktop Users group, in SDDL format")]
+		string RDUGroup;
+	[read, Description("The version number of this WMI Provider")]
+		uint32 ProviderVersion;
+};
+
+//**************************************************************************
+//* Class: Win32_TSStartMenuApplication
+//**************************************************************************
+[Description("Application on the Start Menu of a Terminal Server"), dynamic, provider("Win32_TSPublishedApplication_Prov")]
+class Win32_TSStartMenuApplication : CIM_LogicalElement
+{
+	[read, Description("Name of the application")]
+		string Name;
+	[read, Description("Path to the application"), key]
+		string Path;
+       [read, Description("Virtual Path to the application (includes Environment Variables)")]
+              string VPath;
+	[read, Description("Path to the application icon")]
+		string IconPath;
+	[read, Description("Index of the icon")]
+		sint32 IconIndex;
+	[read, Description("Command line arguments")]
+		string CommandLineArguments;
+
+};
+
+//**************************************************************************
+//* Class: Win32_TSApplicationFileExtensions
+//**************************************************************************
+[Description("File Extensions owned by an Application on a Terminal Server"), dynamic, singleton, provider("Win32_TSPublishedApplication_Prov")]
+class Win32_TSApplicationFileExtensions : CIM_LogicalElement
+{
+	[Description("Gives the list of file extensions owned by an application"), Implemented, Static]
+		uint32 FileExtensions(
+			[Description("Path to the application"), IN]
+				string AppPath,
+			[Description("File extensions owned by the application"), OUT]
+				string Extensions[]);
+
+	[implemented, Static, Description("Scans the registry to get the current file associations for an application.")]
+		uint32 FileAssociations(
+			[Description("Path to the application"), IN]
+				string AppPath,
+			[Description("File associations for this application"), OUT]
+				Win32_RDFileAssociation FileAssociations[]);
+};
+
+//**************************************************************************
+//* Class: Win32_TSExpandEnvironmentVariables
+//**************************************************************************
+[Description("Expands System Defined Environment Variables"), dynamic, singleton, provider("Win32_TSPublishedApplication_Prov")]
+class Win32_TSExpandEnvironmentVariables : CIM_LogicalElement
+{
+	[Description("Expands System Defined Environment Variables"), Implemented, Static]
+		uint32 EnvironmentVariables(
+			[Description("String that contains the environment variables to expand"), IN]
+				string OriginalString,
+			[Description("String with the environment variables expanded"), OUT]
+				string ExpandedString);
+};
+
+//**************************************************************************
+//* Class: Win32_TSGetIcon
+//**************************************************************************
+[Description("Returns the contents of the Icon specified by filepath and index"), dynamic, singleton, provider("Win32_TSPublishedApplication_Prov")]
+class Win32_TSGetIcon : CIM_LogicalElement
+{
+	[Description("Returns the contents of the Icon in the filepath using the icon index"), Implemented, Static]
+		uint32 GetIcon(
+			[Description("String that contains the path to the file that contains the icon"), IN]
+				string FilePath,
+			[Description("Index for the Icon wanted"), IN]
+				sint32 Index,
+			[Description("Contents of the Icon"), OUT]
+		                uint8 IconContents[]);
+};
+
+//**************************************************************************
+//* Class: Win32_TSDeploymentLicensing
+//**************************************************************************
+[Description("Licensing Settings for the RDV Deployment"), provider("Win32_TSPublishedApplication_Prov"), dynamic, singleton]
+class Win32_TSDeploymentLicensing : CIM_LogicalElement
+{
+	[read, write, Description("Use deployment-wide licensing settings, as opposed to setting them per-server.  If this is set to false, all other licensing settings are ignored.")]
+	boolean UseCentralLicensingSettings;
+
+	[read, write, Description("License Servers to use")]
+	String LicenseServers[];
+
+	[read, write, Description ( " Licensing Mode"), ValueMap { "2", "4", "5" }, Values { "Per Device", "Per User", "Not Yet Configured" }]
+	uint32 LicensingType;
+};

@@ -1,0 +1,182 @@
+<containerManifestList
+  xmlns="http://schemas.microsoft.com/2008/09/sip/ContainerManifest"
+  xmlns:ct="http://schemas.microsoft.com/2006/09/sip/commontypes"
+  minSupportedClientVersion="2.0.0.0">
+
+  <containerManifest>
+
+    <containers>
+      <container id="0">
+        <visible>false</visible>
+        <avoidRedundantMembers>false</avoidRedundantMembers>
+      </container>
+      
+      <container id="100">
+        <visible>true</visible>
+        <avoidRedundantMembers>true</avoidRedundantMembers>
+      </container>
+
+      <container id="200">
+        <visible>true</visible>
+        <avoidRedundantMembers>true</avoidRedundantMembers>
+      </container>
+
+      <container id="300">
+        <visible>true</visible>
+        <avoidRedundantMembers>true</avoidRedundantMembers>
+      </container>
+
+      <container id="400">
+        <visible>true</visible>
+        <avoidRedundantMembers>true</avoidRedundantMembers>
+      </container>
+
+      <container id="32000">
+        <visible>true</visible>
+        <avoidRedundantMembers>false</avoidRedundantMembers>
+        <blocked>true</blocked>
+      </container>
+    </containers>
+
+    <members>
+      <member role="buddy">
+        <allowedContainers type="visibleContainers"/>
+        <defaultContainer id="100"/>
+        <occurrenceConstraint type="one"/>
+        <ct:delimiter/>
+        <sourceNetworks>
+          <sourceNetwork type="publicCloud"/>
+          <sourceNetwork type="federated"/>
+        </sourceNetworks>
+        <resolutionRules>
+          <resolutionRule type="moveToDefaultContainer"/>
+        </resolutionRules>
+        <ct:end/>
+      </member>
+
+      <member role="buddy">
+        <allowedContainers type="visibleContainers"/>
+        <defaultContainer id="200"/>
+        <occurrenceConstraint type="one"/>
+        <ct:delimiter/>
+        <sourceNetworks>
+          <sourceNetwork type="sameEnterprise"/>
+        </sourceNetworks>
+        <resolutionRules>
+          <resolutionRule type="moveToDefaultContainer"/>
+        </resolutionRules>
+        <ct:end/>
+      </member>
+      
+      <member type="domain">
+        <allowedContainers type="custom">
+          <container id="32000"/>
+        </allowedContainers>
+        <ct:delimiter/>
+        <resolutionRules>
+          <resolutionRule type="removeFromContainer"/>
+        </resolutionRules>
+        <ct:end/>
+      </member>
+
+      <member type="user">
+        <allowedContainers type="custom">
+          <container id="32000"/>
+        </allowedContainers>
+        <ct:delimiter/>
+        <resolutionRules>
+          <resolutionRule type="forceRole" role="buddy"/>
+        </resolutionRules>
+        <ct:end/>
+      </member>
+      
+      <member type="sameEnterprise">
+        <allowedContainers type="custom">
+          <container id="32000"/>
+        </allowedContainers>
+        <occurrenceConstraint type="zeroOrOne"/>
+        <ct:delimiter/>
+        <resolutionRules>
+          <resolutionRule type="removeFromContainer"/>
+        </resolutionRules>
+        <ct:end/>
+      </member>
+      
+      <member type="federated">
+        <allowedContainers type="custom">
+          <container id="32000"/>
+        </allowedContainers>
+        <occurrenceConstraint type="zeroOrOne"/>
+        <ct:delimiter/>
+        <resolutionRules>
+          <resolutionRule type="removeFromContainer"/>
+        </resolutionRules>
+        <ct:end/>
+      </member>
+
+      <member type="publicCloud">
+        <allowedContainers type="custom">
+          <container id="32000"/>
+        </allowedContainers>
+        <occurrenceConstraint type="zeroOrOne"/>
+        <ct:delimiter/>
+        <resolutionRules>
+          <resolutionRule type="removeFromContainer"/>
+        </resolutionRules>
+        <ct:end/>
+      </member>
+      
+      <member role="delegate">
+        <allowedContainers type="custom">
+          <container id="300"/>
+        </allowedContainers>
+        <defaultContainer id="300"/>
+        <occurrenceConstraint type="one"/>
+        <ct:delimiter/>
+        <resolutionRules>
+          <resolutionRule type="moveToDefaultContainer"/>
+        </resolutionRules>
+        <ct:end/>
+      </member>
+    </members>
+    
+    <ct:delimiter/>
+    <blockRules>
+
+      <blockRule type="invites">
+        <containers type="custom">
+          <container id="0"/>
+        </containers>
+        <sourceNetworks>
+          <sourceNetwork type="publicCloud"/>
+        </sourceNetworks>
+      </blockRule>
+
+      <blockRule type="invites">
+        <maxAvailability>11999</maxAvailability>
+        <minAvailability>9000</minAvailability>
+      </blockRule>
+      
+      <blockRule type="invites">
+        <containers type="custom">
+          <container id="32000"/>
+        </containers>
+      </blockRule>
+
+      <blockRule type="subscriberPrompt">
+        <containers type="custom">
+          <container id="32000"/>
+        </containers>
+      </blockRule>
+           
+    </blockRules>
+
+    <rolePrecedence>
+      <rolePrecedenceEntry type="delegate"/>
+      <rolePrecedenceEntry type="buddy"/>
+    </rolePrecedence>
+    <ct:end/>
+    
+  </containerManifest>
+
+</containerManifestList>

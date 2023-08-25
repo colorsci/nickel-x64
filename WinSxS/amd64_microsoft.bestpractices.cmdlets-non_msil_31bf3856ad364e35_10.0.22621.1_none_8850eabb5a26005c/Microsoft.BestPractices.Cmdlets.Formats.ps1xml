@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Configuration>
+  <ViewDefinitions>
+    
+    <View>
+      <Name>Microsoft.BestPractices.Result</Name>
+      <ViewSelectedBy>
+        <TypeName>Microsoft.BestPractices.CoreInterface.Result</TypeName>
+      </ViewSelectedBy>
+      <ListControl>
+        <ListEntries>
+          <ListEntry>
+            <ListItems>
+              <ListItem>
+                <PropertyName>ResultNumber</PropertyName>
+              </ListItem>
+              <ListItem>
+                <PropertyName>ResultId</PropertyName>
+              </ListItem>
+              <ListItem>
+                <PropertyName>ModelId</PropertyName>
+              </ListItem>
+              <ListItem>
+                <PropertyName>SubModelId</PropertyName>
+              </ListItem>
+              <ListItem>
+                <PropertyName>RuleId</PropertyName>
+              </ListItem>
+              <ListItem>
+                <PropertyName>ComputerName</PropertyName>
+              </ListItem>
+              <ListItem>
+                <PropertyName>Context</PropertyName>
+              </ListItem>
+              <ListItem>
+                <PropertyName>Source</PropertyName>
+              </ListItem>
+              <ListItem>
+                <PropertyName>Severity</PropertyName>
+              </ListItem>
+              <ListItem>
+                <PropertyName>Category</PropertyName>
+              </ListItem>
+              <ListItem>
+                <PropertyName>Title</PropertyName>
+              </ListItem>
+              <ListItem>
+                <PropertyName>Problem</PropertyName>
+              </ListItem>
+              <ListItem>
+                <PropertyName>Impact</PropertyName>
+              </ListItem>
+              <ListItem>
+                <PropertyName>Resolution</PropertyName>
+              </ListItem>
+              <ListItem>
+                <PropertyName>Compliance</PropertyName>
+              </ListItem>
+              <ListItem>
+                <PropertyName>Help</PropertyName>
+              </ListItem>
+              <ListItem>
+                <PropertyName>Excluded</PropertyName>
+              </ListItem>
+            </ListItems>
+          </ListEntry>
+        </ListEntries>
+      </ListControl>
+    </View>
+    
+    <View>
+      <Name>Microsoft.BestPractices.ParameterMetadata</Name>
+      <ViewSelectedBy>
+        <TypeName>System.Management.Automation.ParameterMetadata</TypeName>
+      </ViewSelectedBy>
+
+      <Controls>
+        <Control>
+          <Name>AttributesControl</Name>
+          <CustomControl>
+            <CustomEntries>
+              <CustomEntry>
+                <CustomItem>
+                  <Frame>
+                    <LeftIndent>24</LeftIndent>
+                    <CustomItem>
+                      <Text>Attribute : </Text>
+                      <ExpressionBinding>
+                        <PropertyName>TypeId</PropertyName>
+                      </ExpressionBinding>
+                      <NewLine/>
+                      <ExpressionBinding>
+                        <ScriptBlock>
+                          $properties = $_ | Get-Member | Where-Object -FilterScript {$_.MemberType -eq 'Property'}
+                          <!-- If we have only a single property then it is the TypeId, we have already printed it  -->
+                          <!-- so the loop below will skip it and the formatting table will produce an empty line   -->
+                          <!-- which disturbs the formatting                                                        -->
+                          if ($properties -eq $null -or $properties.GetEnumerator -eq $null)
+                          {
+                            $null
+                          }
+                          
+                          foreach($property in $properties)
+                          {
+                            $propertyName = $property.Name
+                            <!-- Skip the TypeId we already displayed it -->
+                            if ($propertyName -eq 'TypeId')
+                            {
+                              continue
+                            }
+                            
+                            $propertyIsEnumeration = ($_.($propertyName)).GetEnumerator
+                            if ($propertyIsEnumeration -eq $null)
+                            {
+                              $propertyName + ": " + $_.($propertyName)
+                            }
+                            else
+                            {
+                              $propertyName +
+                              ": {" + [String]::Join([System.Threading.Thread]::CurrentThread.CurrentUICulture.TextInfo.ListSeparator, $_.($propertyName)) +
+                              "}"
+                            }
+                          }
+                        </ScriptBlock>
+                        <EnumerateCollection/>
+                        <CustomControlName>AttributeControl</CustomControlName>
+                      </ExpressionBinding>
+                      <NewLine/>
+                    </CustomItem>
+                  </Frame>
+                </CustomItem>
+              </CustomEntry>
+            </CustomEntries>
+          </CustomControl>
+        </Control>
+
+        <Control>
+          <Name>AttributeControl</Name>
+          <CustomControl>
+            <CustomEntries>
+              <CustomEntry>
+                <CustomItem>
+                  <Frame>
+                    <LeftIndent>12</LeftIndent>
+                    <CustomItem>
+                      <ExpressionBinding/>
+                      <NewLine/>
+                    </CustomItem>
+                  </Frame>
+                </CustomItem>
+              </CustomEntry>
+            </CustomEntries>
+          </CustomControl>
+        </Control>
+
+        <Control>
+          <Name>ParameterSetControl</Name>
+          <CustomControl>
+            <CustomEntries>
+              <CustomEntry>
+                <CustomItem>
+                  <Text>{</Text>
+                  <ExpressionBinding>
+                    <ScriptBlock>$_.ParameterSets.Keys</ScriptBlock>
+                  </ExpressionBinding>
+                  <Text>}</Text>
+                </CustomItem>
+              </CustomEntry>
+            </CustomEntries>
+          </CustomControl>
+        </Control>
+      </Controls>
+
+      <CustomControl>
+        <CustomEntries>
+          <CustomEntry>
+            <CustomItem>
+              <Text>Name                  : </Text>
+              <ExpressionBinding>
+                <PropertyName>Name</PropertyName>
+              </ExpressionBinding>
+              <NewLine/>
+              <Text>ParameterType         : </Text>
+              <ExpressionBinding>
+                <PropertyName>ParameterType</PropertyName>
+              </ExpressionBinding>
+              <NewLine/>
+              <Text>AcceptMultipleValues  : </Text>
+              <ExpressionBinding>
+                <ScriptBlock>
+                  if ($_.ParameterType.BaseType.GetInterface("IEnumerable") -ne $null)
+                  {
+                    "Yes"
+                  }
+                  else
+                  {
+                    "No"
+                  }
+                </ScriptBlock>
+              </ExpressionBinding>
+              <NewLine/>
+              <Text>IsDynamic             : </Text>
+              <ExpressionBinding>
+                <PropertyName>IsDynamic</PropertyName>
+              </ExpressionBinding>
+              <NewLine/>
+              <Text>SwitchParameter       : </Text>
+              <ExpressionBinding>
+                <PropertyName>SwitchParameter</PropertyName>
+              </ExpressionBinding>
+              <NewLine/>
+              <Text>ParameterSets         : </Text>
+              <ExpressionBinding>
+                <CustomControlName>ParameterSetControl</CustomControlName>
+              </ExpressionBinding>
+              <NewLine/>
+              <Text>Attributes</Text>
+              <NewLine/>
+              <ExpressionBinding>
+                <PropertyName>Attributes</PropertyName>
+                <EnumerateCollection/>
+                <CustomControlName>AttributesControl</CustomControlName>
+              </ExpressionBinding>
+            </CustomItem>
+          </CustomEntry>
+        </CustomEntries>
+      </CustomControl>
+    </View>
+    
+  </ViewDefinitions>
+</Configuration>

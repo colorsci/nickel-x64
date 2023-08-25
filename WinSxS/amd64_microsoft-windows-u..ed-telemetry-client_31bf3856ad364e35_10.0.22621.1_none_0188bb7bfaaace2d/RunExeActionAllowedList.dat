@@ -1,0 +1,902 @@
+{
+  "appidtel.exe": {
+    "path": "%windir%\\system32\\appidtel.exe",
+    "inspectors": [{
+        "type": "orgroup",
+        "invert": false,
+        "inspectors": [{
+            "type": "regex",
+            "matchstring": "^start -timeout [0-9]+$",
+            "invert": false
+          }, {
+            "type": "regex",
+            "matchstring": "^start -mionly -timeout [0-9]+$",
+            "invert": false
+          }, {
+            "type": "regex",
+            "matchstring": "^stop$",
+            "invert": false
+          }
+        ]
+      }
+    ]
+  },
+  "bcdedit.exe": {
+    "path": "%windir%\\system32\\bcdedit.exe",
+    "inspectors": [{
+        "type": "equal",
+        "matchstring": "/enum all",
+        "invert": false
+      }
+    ]
+  },
+  "certutil.exe": {
+    "path": "%windir%\\system32\\certutil.exe",
+    "inspectors": [{
+        "type": "orgroup",
+        "invert": false,
+        "inspectors": [{
+            "type": "equal",
+            "matchstring": "-store root",
+            "invert": false
+          }, {
+            "type": "equal",
+            "matchstring": "-silent -v -store \"Homegroup Machine Certificates\"",
+            "invert": false
+          }, {
+            "type": "equal",
+            "matchstring": "-silent -v -user -store MY",
+            "invert": false
+          }
+        ]
+      }
+    ]
+  },
+  "cidiag.exe": {
+    "path": "%windir%\\system32\\cidiag.exe",
+    "inspectors": [{
+        "type": "orgroup",
+        "invert": false,
+        "inspectors": [{
+            "type": "equal",
+            "matchstring": "/stop /nologs",
+            "invert": false
+          }, {
+            "type": "equal",
+            "matchstring": "/stop /nologs %DiagtrackStorageRoot%\\Temp",
+            "invert": false
+          }
+        ]
+      }
+    ]
+  },
+  "cmdkey.exe": {
+    "path": "%windir%\\system32\\cmdkey.exe",
+    "inspectors": [{
+        "type": "regex",
+        "matchstring": "[-\/][l](ist){0,1}",
+        "invert": false
+      }
+    ]
+  },
+  "datastorecachedumptool.exe": {
+    "path": "%windir%\\system32\\datastorecachedumptool.exe",
+    "inspectors": [{
+        "type": "equal",
+        "matchstring": "-o %diagtrack_action_output%\\out.txt",
+        "invert": false
+      }
+    ]
+  },
+  "ddodiag.exe": {
+    "path": "%windir%\\system32\\ddodiag.exe",
+    "inspectors": [{
+        "type": "orgroup",
+        "invert": false,
+        "inspectors": [{
+            "type": "regex",
+            "matchstring": "-o %temp%\\\\DiagOutputDir\\\\.*?[.]xml",
+            "invert": false
+          }, {
+            "type": "regex",
+            "matchstring": "-o %diagtrack_action_output%\\\\.*?[.]xml",
+            "invert": false
+          }
+        ]
+      }
+    ]
+  },
+  "disksnapshot.exe": {
+    "path": "%windir%\\system32\\disksnapshot.exe",
+    "inspectors": [{
+        "type": "orgroup",
+        "invert": false,
+        "inspectors": [{
+            "type": "equal",
+            "matchstring": "",
+            "invert": false
+          }, {
+            "type": "equal",
+            "matchstring": "-c",
+            "invert": false
+          }
+        ]
+      }
+    ]
+  },
+  "dism.exe": {
+    "path": "%windir%\\system32\\dism.exe",
+    "inspectors": [{
+        "type": "orgroup",
+        "invert": false,
+        "inspectors": [{
+            "type": "equal",
+            "matchstring": "/online /get-packages",
+            "invert": false
+          }, {
+            "type": "equal",
+            "matchstring": "/online /get-features",
+            "invert": false
+          }
+        ]
+      }
+    ]
+  },
+  "dispdiag.exe": {
+    "path": "%windir%\\system32\\dispdiag.exe",
+    "inspectors": [{
+        "type": "like",
+        "matchstring": "-out",
+        "invert": false
+      }
+    ]
+  },
+  "driverquery.exe": {
+    "path": "%windir%\\system32\\driverquery.exe",
+    "inspectors": [{
+        "type": "equal",
+        "matchstring": "/fo table /v",
+        "invert": false
+      }
+    ]
+  },
+  "dsregcmd.exe": {
+    "path": "%windir%\\system32\\dsregcmd.exe",
+    "inspectors": [{
+        "type": "equal",
+        "matchstring": "/status /debug",
+        "invert": false
+      }
+    ]
+  },
+  "dxdiag.exe": {
+    "path": "%windir%\\system32\\dxdiag.exe",
+    "inspectors": [{
+        "type": "orgroup",
+        "invert": false,
+        "inspectors": [{
+            "type": "like",
+            "matchstring": "/x",
+            "invert": false
+          }, {
+            "type": "like",
+            "matchstring": "/t",
+            "invert": false
+          }
+        ]
+      }
+    ]
+  },
+  "findstr.exe": {
+    "path": "%windir%\\system32\\findstr.exe",
+    "inspectors": [{
+        "type": "equal",
+        "matchstring": "\"SYSPREP HVCI:\" %windir%\\panther\\setupact.log",
+        "invert": false
+      }
+    ]
+  },
+  "hcsdiag.exe": {
+    "path": "%windir%\\system32\\hcsdiag.exe",
+    "inspectors": [{
+        "type": "orgroup",
+        "invert": false,
+        "inspectors": [{
+            "type": "equal",
+            "matchstring": "list",
+            "invert": false
+          } ,{
+            "type": "regex",
+            "matchstring": "^exec (-user \\\"NT AUTHORITY\\\\SYSTEM\\\" )?(%HvsiContainerId%|[-0-9A-Fa-f]{36}|\\$\\([0-9A-Za-z]+,_containerid\\)) netsh\\.exe trace start scenario=InternetClient(_dbg|,InternetClient_dbg)? overwrite=yes (maxsize=\\d{1,4} )?(capture=yes )?(report=disabled )?(correlation=disabled )?tracefile=(%ProgramData%\\\\Microsoft\\\\Diagnosis|%SystemDrive%\\\\WDAG\\\\AuditLogs)\\\\ContainerShare\\\\DiagtrackNetTrace\\.etl$",
+            "invert": false
+          }, {
+            "type": "regex",
+            "matchstring": "^exec (-user \\\"NT AUTHORITY\\\\SYSTEM\\\" )?(%HvsiContainerId%|[-0-9A-Fa-f]{36}|\\$\\([0-9A-Za-z]+,_containerid\\)) netsh\\.exe trace stop$",
+            "invert": false
+          }, {
+            "type": "regex",
+            "matchstring": "^exec (-user \\\"NT AUTHORITY\\\\SYSTEM\\\" )?(%HvsiContainerId%|[-0-9A-Fa-f]{36}|\\$\\([0-9A-Za-z]+,_containerid\\)) wpr\\.exe -start .+ -instancename DiagtrackContainerLogger$",
+            "invert": false
+          }, {
+            "type": "regex",
+            "matchstring": "^exec (-user \\\"NT AUTHORITY\\\\SYSTEM\\\" )?(%HvsiContainerId%|[-0-9A-Fa-f]{36}|\\$\\([0-9A-Za-z]+,_containerid\\)) wpr\\.exe -stop (%ProgramData%\\\\Microsoft\\\\Diagnosis|%SystemDrive%\\\\WDAG\\\\AuditLogs)\\\\ContainerShare\\\\DiagtrackContainerTrace.etl -instancename DiagtrackContainerLogger$",
+            "invert": false
+          }, {
+            "type": "regex",
+            "matchstring": "^read (-user \\\"NT AUTHORITY\\\\SYSTEM\\\" )?(%HvsiContainerId%|[-0-9A-Fa-f]{36}|\\$\\([0-9A-Za-z]+,_containerid\\)) (%ProgramData%\\\\Microsoft\\\\Diagnosis|%SystemDrive%\\\\WDAG\\\\AuditLogs)\\\\ContainerShare\\\\[a-zA-Z0-9\\._]+ %diagtrack_action_output%\\\\[a-zA-Z0-9\\._]+$",
+            "invert": false
+          }, {
+            "type": "regex",
+            "matchstring": "^read (-user \\\"NT AUTHORITY\\\\SYSTEM\\\" )?(%HvsiContainerId%|[-0-9A-Fa-f]{36}|\\$\\([0-9A-Za-z]+,_containerid\\)) %SystemRoot%\\\\System32\\\\LogFiles\\\\WMI\\\\\\w+\\.etl(\\.00\\d)? %diagtrack_action_output%\\\\\\w+\\.etl(\\.00\\d)?$",
+            "invert": false
+          }, {
+            "type": "regex",
+            "matchstring": "^exec (-user \\\"NT AUTHORITY\\\\SYSTEM\\\" )?(%HvsiContainerId%|[-0-9A-Fa-f]{36}|\\$\\([0-9A-Za-z]+,_containerid\\)) logman\\.exe query( .+)? -ets$",
+            "invert": false
+          }, {
+            "type": "regex",
+            "matchstring": "^exec (-user \\\"NT AUTHORITY\\\\SYSTEM\\\" )?(%HvsiContainerId%|[-0-9A-Fa-f]{36}|\\$\\([0-9A-Za-z]+,_containerid\\)) reg\\.exe query .+$",
+            "invert": false
+          }, {
+            "type": "regex",
+            "matchstring": "^exec (-user \\\"NT AUTHORITY\\\\SYSTEM\\\" )?(%HvsiContainerId%|[-0-9A-Fa-f]{36}|\\$\\([0-9A-Za-z]+,_containerid\\)) wevtutil\\.exe epl .+ (%ProgramData%\\\\Microsoft\\\\Diagnosis|%SystemDrive%\\\\WDAG\\\\AuditLogs)\\\\ContainerShare\\\\\\w+\\.evtx( -ow)?$",
+            "invert": false
+          }, {
+            "type": "regex",
+            "matchstring": "^exec (-user \\\"NT AUTHORITY\\\\SYSTEM\\\" )?(%HvsiContainerId%|[-0-9A-Fa-f]{36}|\\$\\([0-9A-Za-z]+,_containerid\\)) ipconfig\\.exe -allcompartments$",
+            "invert": false
+          }, {
+            "type": "regex",
+            "matchstring": "^exec (-user \\\"NT AUTHORITY\\\\SYSTEM\\\" )?(%HvsiContainerId%|[-0-9A-Fa-f]{36}|\\$\\([0-9A-Za-z]+,_containerid\\)) dxdiag\\.exe \\/t (%ProgramData%\\\\Microsoft\\\\Diagnosis|%SystemDrive%\\\\WDAG\\\\AuditLogs)\\\\ContainerShare\\\\[a-zA-Z0-9\\._]+$",
+            "invert": false
+          }, {
+            "type": "regex",
+            "matchstring": "^exec (-user \\\"NT AUTHORITY\\\\SYSTEM\\\" )?(%HvsiContainerId%|[-0-9A-Fa-f]{36}|\\$\\([0-9A-Za-z]+,_containerid\\)) dispdiag\\.exe -out (%ProgramData%\\\\Microsoft\\\\Diagnosis|%SystemDrive%\\\\WDAG\\\\AuditLogs)\\\\ContainerShare\\\\[a-zA-Z0-9\\._]+$",
+            "invert": false
+          }, {
+            "type": "regex",
+            "matchstring": "^exec (-user \\\"NT AUTHORITY\\\\SYSTEM\\\" )?(%HvsiContainerId%|[-0-9A-Fa-f]{36}|\\$\\([0-9A-Za-z]+,_containerid\\)) stordiag\\.exe -out (%ProgramData%\\\\Microsoft\\\\Diagnosis|%SystemDrive%\\\\WDAG\\\\AuditLogs)\\\\ContainerShare(\\\\[a-zA-Z0-9\\._]+)?$",
+            "invert": false
+          }, {
+            "type": "regex",
+            "matchstring": "^exec (-user \\\"NT AUTHORITY\\\\SYSTEM\\\" )?(%HvsiContainerId%|[-0-9A-Fa-f]{36}|\\$\\([0-9A-Za-z]+,_containerid\\)) icacls\\.exe [^\\/]+((\\/[Ll]\\s+)|(\\/[cC]\\s+)|(\\/[qQ]\\s+)){0,2}((\\/[Ll]\\s*)|(\\/[cC]\\s*)|(\\/[qQ]\\s*))?$",
+            "invert": false
+          }, {
+            "type": "regex",
+            "matchstring": "^exec (-user \\\"NT AUTHORITY\\\\SYSTEM\\\" )?(%HvsiContainerId%|[-0-9A-Fa-f]{36}|\\$\\([0-9A-Za-z]+,_containerid\\)) licensingdiag\\.exe \\/cab (%ProgramData%\\\\Microsoft\\\\Diagnosis|%SystemDrive%\\\\WDAG\\\\AuditLogs)\\\\ContainerShare\\\\\\w+\\.cab( \\/q)?$",
+            "invert": false
+          }, {
+            "type": "regex",
+            "matchstring": "^write (-user \\\"NT AUTHORITY\\\\SYSTEM\\\" )?(%HvsiContainerId%|[-0-9A-Fa-f]{36}|\\$\\([0-9A-Za-z]+,_containerid\\)) .+\\\\TraceProfile\\.wprp %ProgramData%\\\\Microsoft\\\\Diagnosis\\\\ContainerShare\\\\TraceProfile\\.wprp$",
+            "invert": false
+          }
+        ]
+      }
+    ]
+  },
+  "hnsdiag.exe": {
+    "path": "%windir%\\system32\\hnsdiag.exe",
+    "inspectors": [{
+        "type": "orgroup",
+        "invert": false,
+        "inspectors": [{
+            "type": "equal",
+            "matchstring": "list all",
+            "invert": false
+          }, {
+            "type": "equal",
+            "matchstring": "list guestnetworkservices -d",
+            "invert": false
+          }, {
+            "type": "equal",
+            "matchstring": "list flowsteering",
+            "invert": false
+          }
+        ]
+      }
+    ]
+  },
+  "icacls.exe": {
+    "path": "%windir%\\system32\\icacls.exe",
+    "inspectors": [{
+        "type": "regex",
+        "matchstring": "^[^\\/]+((\\/[Ll]\\s+)|(\\/[cC]\\s+)|(\\/[qQ]\\s+)){0,2}((\\/[Ll]\\s*)|(\\/[cC]\\s*)|(\\/[qQ]\\s*))?$",
+        "invert": false
+      }
+    ]
+  },
+  "iediagcmd.exe": {
+    "path": "%programfiles%\\internet explorer\\iediagcmd.exe",
+    "inspectors": [{
+        "type": "orgroup",
+        "invert": false,
+        "inspectors": [{
+            "type": "regex",
+            "matchstring": "^\\/profile:(full|min|roaming) \\/out:(?!.*(\\.\\.).*)(?!.*\\/.*).*?$",
+            "invert": false
+          }, {
+            "type": "regex",
+            "matchstring": "^\\/out:(?!.*(\\.\\.).*)(?!.*\\/.*).*?$",
+            "invert": false
+          }, {
+            "type": "regex",
+            "matchstring": "^\\/profile:(full|min|roaming)$",
+            "invert": false
+          }
+        ]
+      }
+    ]
+  },
+  "ipconfig.exe": {
+    "path": "%windir%\\system32\\ipconfig.exe",
+    "inspectors": [{
+        "type": "orgroup",
+        "invert": false,
+        "inspectors": [{
+            "type": "equal",
+            "matchstring": "/all",
+            "invert": false
+          }, {
+            "type": "equal",
+            "matchstring": "/allcompartments",
+            "invert": false
+          }, {
+            "type": "equal",
+            "matchstring": "/allcompartments /all",
+            "invert": false
+          }
+        ]
+      }
+    ]
+  },
+  "licensingdiag.exe": {
+    "path": "%windir%\\system32\\licensingdiag.exe",
+    "inspectors": [{
+        "type": "orgroup",
+        "invert": false,
+        "inspectors": [{
+            "type": "regex",
+            "matchstring": "^\\/cab [\"]?%temp%\\\\DiagOutputDir\\\\[0-9a-zA-Z_]+[.]cab[\"]?[ ]+(\\/q)$",
+            "invert": false
+          }, {
+            "type": "regex",
+            "matchstring": "^\\/cab [\"]?%diagtrack_action_output%\\\\[0-9a-zA-Z_]+[.]cab[\"]?[ ]+(\\/q)$",
+            "invert": false
+          }
+        ]
+      }
+    ]
+  },
+  "logman.exe": {
+    "path": "%windir%\\system32\\logman.exe",
+    "inspectors": [{
+        "type": "orgroup",
+        "invert": false,
+        "inspectors": [{
+            "type": "regex",
+            "matchstring": "^update .* -fd -ets$",
+            "invert": false
+          }, {
+            "type": "regex",
+            "matchstring": "^query [a-zA-Z0-9-_]+ -ets$",
+            "invert": false
+          }, {
+            "type": "regex",
+            "matchstring": "^query \"[a-zA-Z0-9-_ ]+\" -ets$",
+            "invert": false
+          }, {
+            "type": "regex",
+            "matchstring": "^query -ets$",
+            "invert": false
+          }
+        ]
+      }, {
+        "type": "custom",
+        "matchstring": "qualcomminternalonlyrings",
+        "invert": false
+      }
+    ]
+  },
+  "manage-bde.exe": {
+    "path": "%windir%\\system32\\manage-bde.exe",
+    "inspectors": [{
+        "type": "equal",
+        "matchstring": "-status -debug",
+        "invert": false
+      }
+    ]
+  },
+  "mdmdiagnosticstool.exe": {
+    "path": "%windir%\\system32\\mdmdiagnosticstool.exe",
+    "inspectors": [{
+        "type": "like",
+        "matchstring": "%diagtrack_action_output%\\",
+        "invert": false
+      }
+    ]
+  },
+  "mpcmdrun.exe": {
+    "path": "%programfiles%\\windows defender\\mpcmdrun.exe",
+    "inspectors": [{
+        "type": "equal",
+        "matchstring": "-GetFilesDiagTrack",
+        "invert": false
+      }
+    ]
+  },
+  "msinfo32.exe": {
+    "path": "%windir%\\system32\\msinfo32.exe",
+    "inspectors": [{
+        "type": "orgroup",
+        "invert": false,
+        "inspectors": [{
+            "type": "like",
+            "matchstring": "/report",
+            "invert": false
+          }, {
+            "type": "like",
+            "matchstring": "/nfo",
+            "invert": false
+          }
+        ]
+      }
+    ]
+  },
+  "net.exe": {
+    "path": "%windir%\\system32\\net.exe",
+    "inspectors": [{
+        "type": "equal",
+        "matchstring": "sessions",
+        "invert": false
+      }
+    ]
+  },
+  "netcfg.exe": {
+    "path": "%windir%\\system32\\netcfg.exe",
+    "inspectors": [{
+        "type": "equal",
+        "matchstring": "-m",
+        "invert": false
+      }
+    ]
+  },
+  "netsh.exe": {
+    "path": "%windir%\\system32\\netsh.exe",
+    "inspectors": [{
+        "type": "orgroup",
+        "invert": false,
+        "inspectors": [{
+            "type": "like",
+            "matchstring": "dump",
+            "invert": false
+          }, {
+            "type": "equal",
+            "matchstring": "wlan show d",
+            "invert": false
+          }, {
+            "type": "equal",
+            "matchstring": "winhttp show proxy",
+            "invert": false
+          }, {
+            "type": "equal",
+            "matchstring": "wlan show I",
+            "invert": false
+          }, {
+            "type": "equal",
+            "matchstring": "wlan show wlanreport",
+            "invert": false
+          }, {
+            "type": "regex",
+            "matchstring": "^wfp show netevents -$",
+            "invert": false
+          }, {
+            "type": "regex",
+            "matchstring": "^wfp show filters -$",
+            "invert": false
+          }, {
+            "type": "regex",
+            "matchstring": "^wfp show state -$",
+            "invert": false
+          }, {
+            "type": "equal",
+            "matchstring": "ras diagnostics set rastracing * enabled",
+            "invert": false
+          }, {
+            "type": "equal",
+            "matchstring": "ras diagnostics set rastracing * disabled",
+            "invert": false
+          }, {
+            "type": "regex",
+            "matchstring": "^trace diagnose scenario=NetworkSnapshot mode=Telemetry saveSessionTrace=yes report=yes reportfile=[\"]?%diagtrack_action_output%\\\\[0-9a-zA-Z_\\\\]+[.]cab[\"]?$",
+            "invert": false
+          }, {
+            "type": "equal",
+            "matchstring": "advfirewall show allprofiles",
+            "invert": false
+          }, {
+            "type": "equal",
+            "matchstring": "advfirewall show currentprofile",
+            "invert": false
+          }, {
+            "type": "equal",
+            "matchstring": "advfirewall show global",
+            "invert": false
+          }, {
+            "type": "equal",
+            "matchstring": "int ipv4 show global",
+            "invert": false
+          }, {
+            "type": "equal",
+            "matchstring": "int ipv6 show global",
+            "invert": false
+          }, {
+            "type": "equal",
+            "matchstring": "int tcp show global",
+            "invert": false
+          }, {
+            "type": "equal",
+            "matchstring": "int ipv4 show neighbors",
+            "invert": false
+          }, {
+            "type": "equal",
+            "matchstring": "int ipv4 show interface level=verbose",
+            "invert": false
+          }, {
+            "type": "equal",
+            "matchstring": "int ipv4 show route",
+            "invert": false
+          }, {
+            "type": "equal",
+            "matchstring": "int ipv6 show route",
+            "invert": false
+          }, {
+            "type": "regex",
+            "matchstring": "^nlm query.*$",
+            "invert": false
+          }
+        ]
+      }, {
+        "type": "regex",
+        "matchstring": "^.*add.*$",
+        "invert": true
+      }, {
+        "type": "regex",
+        "matchstring": "^.*exec.*$",
+        "invert": true
+      }
+    ]
+  },
+  "netstat.exe": {
+    "path": "%windir%\\system32\\netstat.exe",
+    "inspectors": [{
+        "type": "equal",
+        "matchstring": "-an",
+        "invert": false
+      }
+    ]
+  },
+  "nmbind.exe": {
+    "path": "%windir%\\system32\\nmbind.exe",
+    "inspectors": [{
+        "type": "equal",
+        "matchstring": "",
+        "invert": false
+      }
+    ]
+  },
+  "nmscrub.exe": {
+    "path": "%windir%\\system32\\nmscrub.exe",
+    "inspectors": [{
+        "type": "equal",
+        "matchstring": "-a -n -t",
+        "invert": false
+      }
+    ]
+  },
+  "nvspinfo.exe": {
+    "path": "%windir%\\system32\\nvspinfo.exe",
+    "inspectors": [{
+        "type": "orgroup",
+        "invert": false,
+        "inspectors": [{
+            "type": "equal",
+            "matchstring": "-a -i -h -D -p -d -m -q",
+            "invert": false
+          }, {
+            "type": "equal",
+            "matchstring": "-a -i -h -D -p -d -m -q -b",
+            "invert": false
+          }
+        ]
+      }
+    ]
+  },
+  "powercfg.exe": {
+    "path": "%windir%\\system32\\powercfg.exe",
+    "inspectors": [{
+        "type": "orgroup",
+        "invert": false,
+        "inspectors": [{
+                "type": "equal",
+                "matchstring": "/a",
+                "invert": false
+            }, {
+                "type": "like",
+                "matchstring": "/batteryreport",
+                "invert": false
+            }, {
+                "type": "like",
+                "matchstring": "/energyreport",
+                "invert": false
+            }, {
+                "type": "equal",
+                "matchstring": "/list",
+                "invert": false
+            }, {
+                "type": "equal",
+                "matchstring": "/qh",
+                "invert": false
+            }, {
+                "type": "equal",
+                "matchstring": "/qha",
+                "invert": false
+            }, {
+                "type": "like",
+                "matchstring": "/requests",
+                "invert": false
+            }, {
+                "type": "like",
+                "matchstring": "/sleepstudy",
+                "invert": false
+            }, {
+                "type": "like",
+                "matchstring": "/srumutil",
+                "invert": false
+            }, {
+                "type": "like",
+                "matchstring": "/systemsleepdiagnostics",
+                "invert": false
+            }, {
+                "type": "equal",
+                "matchstring": "/adaptivestandby",
+                "invert": false
+            }
+        ]
+      }
+    ]
+  },
+  "pnputil.exe": {
+    "path": "%windir%\\system32\\pnputil.exe",
+    "inspectors": [{
+        "type": "orgroup",
+        "invert": false,
+        "inspectors": [{
+            "type": "regex",
+            "matchstring": "^\\/export-pnpstate [\"]?%temp%\\\\DiagOutputDir\\\\[0-9a-zA-Z_]+[.]pnp[\"]? \\/force$",
+            "invert": false
+          }, {
+            "type": "regex",
+            "matchstring": "^\\/export-pnpstate [\"]?%diagtrack_action_output%\\\\[0-9a-zA-Z_]+[.]pnp[\"]? \\/force$",
+            "invert": false
+          }, {
+            "type": "regex",
+            "matchstring": "^\\/export-pnpstate [\"]?%temp%\\\\DiagOutputDir\\\\[0-9a-zA-Z_]+[.]cab[\"]? \\/force$",
+            "invert": false
+          }, {
+            "type": "regex",
+            "matchstring": "^\\/export-pnpstate [\"]?%diagtrack_action_output%\\\\[0-9a-zA-Z_]+[.]cab[\"]? \\/force$",
+            "invert": false
+          }
+        ]
+      }
+    ]
+  },
+  "route.exe": {
+    "path": "%windir%\\system32\\route.exe",
+    "inspectors": [{
+        "type": "equal",
+        "matchstring": "print",
+        "invert": false
+      }
+    ]
+  },
+  "sc.exe": {
+    "path": "%windir%\\system32\\sc.exe",
+    "inspectors": [{
+        "type": "orgroup",
+        "invert": false,
+        "inspectors": [{
+            "type": "regex",
+            "matchstring": "query.*",
+            "invert": false
+          }, {
+            "type": "regex",
+            "matchstring": "queryex.*",
+            "invert": false
+          }, {
+            "type": "regex",
+            "matchstring": "qprotection .+",
+            "invert": false
+          }
+        ]
+      }
+    ]
+  },
+  "schtasks.exe": {
+    "path": "%windir%\\system32\\schtasks.exe",
+    "inspectors": [{
+        "type": "orgroup",
+        "invert": false,
+        "inspectors": [{
+            "type": "equal",
+            "matchstring": "/HRESULT",
+            "invert": false
+          }, {
+            "type": "equal",
+            "matchstring": "/HRESULT /v",
+            "invert": false
+          }, {
+            "type": "regex",
+            "matchstring": "\\/query (\\/xml (one )?)?(\\/v )?(\\/HRESULT )?\\/tn [\"]?\\\\microsoft\\\\windows\\\\[a-zA-Z0-9\\\\ ]+[\"]?",
+            "invert": false
+          }
+        ]
+      }
+    ]
+  },
+  "stordiag.exe": {
+    "path": "%windir%\\system32\\stordiag.exe",
+    "inspectors": [{
+        "type": "orgroup",
+        "invert": false,
+        "inspectors": [{
+            "type": "equal",
+            "matchstring": "-out \"%diagtrack_action_output%\"",
+            "invert": false
+          }, {
+            "type": "equal",
+            "matchstring": "-out \"%diagtrack_action_output%\" -collectStorageBreakdown",
+            "invert": false
+          }
+        ]
+      }
+    ]
+  },
+  "systeminfo.exe": {
+    "path": "%windir%\\system32\\systeminfo.exe",
+    "inspectors": [{
+        "type": "equal",
+        "matchstring": "",
+        "invert": false
+      }
+    ]
+  },
+  "tpmtool.exe": {
+    "path": "%windir%\\system32\\tpmtool.exe",
+    "inspectors": [{
+        "type": "orgroup",
+        "invert": false,
+        "inspectors": [{
+            "type": "equal",
+            "matchstring": "getdeviceinformation",
+            "invert": false
+          }, {
+            "type": "equal",
+            "matchstring": "gatherlogs \"%diagtrack_action_output%\"",
+            "invert": false
+          }
+        ]
+      }
+    ]
+  },
+  "tracelog.exe": {
+    "path": "%windir%\\system32\\tracelog.exe",
+    "inspectors": [{
+        "type": "like",
+        "matchstring": "-flush",
+        "invert": false
+      }, {
+        "type": "custom",
+        "matchstring": "qualcomminternalonlyrings",
+        "invert": false
+      }
+    ]
+  },
+  "verifier.exe": {
+    "path": "%windir%\\system32\\verifier.exe",
+    "inspectors": [{
+        "type": "regex",
+        "matchstring": "^\\/tip.*",
+        "invert": false
+      }
+    ]
+  },
+  "wdagtool.exe": {
+    "path": "%windir%\\system32\\wdagtool.exe",
+    "inspectors": [{
+        "type": "orgroup",
+        "invert": false,
+        "inspectors": [{
+            "type": "equal",
+            "matchstring": "resume %HvsiContainerId%",
+            "invert": false
+          }, {
+            "type": "equal",
+            "matchstring": "flushcontainerlogs browser %diagtrack_action_output%",
+            "invert": false
+          }, {
+            "type": "equal",
+            "matchstring": "flushcontainerlogs platform %diagtrack_action_output%",
+            "invert": false
+          } 
+        ]
+      }
+    ]
+  },
+  "wevtutil.exe": {
+    "path": "%windir%\\system32\\wevtutil.exe",
+    "inspectors": [{
+        "type": "orgroup",
+        "invert": false,
+        "inspectors": [{
+            "type": "like",
+            "matchstring": "export-log",
+            "invert": false
+          }, {
+            "type": "like",
+            "matchstring": "epl",
+            "invert": false
+          }
+        ]
+      }
+    ]
+  },
+  "wpctok.exe": {
+    "path": "%windir%\\system32\\wpctok.exe",
+    "inspectors": [{
+        "type": "like",
+        "matchstring": "sendcontrolcode",
+        "invert": false
+      }
+    ]
+  },
+  "wscollect.exe": {
+    "path": "%windir%\\system32\\wscollect.exe",
+    "inspectors": [{
+        "type": "regex",
+        "matchstring": "^[\"]?%diagtrack_action_output%[\"]?[\\\\/].+[.]cab[\"]?$",
+        "invert": false
+      }, {
+        "type": "regex",
+        "matchstring": "^[\"]?%diagtrack_action_output%[\"]?[\\\\/].*[\\\\/].*[.]cab[\"]?$",
+        "invert": true
+      }, {
+        "type": "like",
+        "matchstring": "..",
+        "invert": true
+      }
+    ]
+  },
+  "xbdiagcap.exe": {
+    "path": "%systemdrive%\\xbdiag\\xbdiagcap.exe",
+    "inspectors": [{
+        "type": "orgroup",
+        "invert": false,
+        "inspectors": [{
+            "type": "equal",
+            "matchstring": "0 -d %diagtrack_action_output%\\XbDiagOutput -p HostAutologCapturePlugin",
+            "invert": false
+          }, {
+            "type": "equal",
+            "matchstring": "0 -d %diagtrack_action_output%\\XbDiagOutput",
+            "invert": false
+          }, {
+            "type": "equal",
+            "matchstring": "0 -p EtwFileTraceCapturePlugin -d %diagtrack_action_output%\\XbDiagOutput",
+            "invert": false
+          }
+        ]
+      }
+    ]
+  }
+}

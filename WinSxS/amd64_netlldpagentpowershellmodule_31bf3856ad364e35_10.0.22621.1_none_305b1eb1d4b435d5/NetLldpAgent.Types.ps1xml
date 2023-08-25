@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<!-- *******************************************************************
+Type information used by the NetLldpAgent WMIv2 provider.
+
+Copyright (c) 2016 Microsoft Corporation.  All rights reserved.
+
+******************************************************************** -->
+<Types>
+  <Type>
+    <Name>Microsoft.Management.Infrastructure.CimInstance#ROOT/StandardCimv2/MSFT_NetLldpAgent</Name>
+    <Members>
+      <ScriptProperty>
+        <Name>Scope</Name>
+        <GetScriptBlock>
+          $out = switch ($this.AddressScope)
+          {
+            1 {"NearestBridge"}
+            2 {"NearestNonTpmrBridge"}
+            3 {"NearestCustomerBridge"}
+            default {"Unknown"}
+          }
+          $out
+        </GetScriptBlock>
+      </ScriptProperty>
+      <ScriptProperty>
+        <Name>Status</Name>
+        <GetScriptBlock>
+          $out = switch ($this.AdminStatus)
+          {
+            0 {"Disabled"}
+            1 {"TxEnabled"}
+            2 {"RxEnabled"}
+            3 {"Enabled"}
+            default {"Unknown"}
+          }
+          $out
+        </GetScriptBlock>
+      </ScriptProperty>
+      <AliasProperty>
+        <Name>ifAlias</Name>
+        <ReferencedMemberName>InterfaceAlias</ReferencedMemberName>
+      </AliasProperty>
+      <AliasProperty>
+        <Name>ifIndex</Name>
+        <ReferencedMemberName>InterfaceIndex</ReferencedMemberName>
+      </AliasProperty>
+      <AliasProperty>
+        <Name>MacAddress</Name>
+        <ReferencedMemberName>PhysicalAddress</ReferencedMemberName>
+      </AliasProperty>
+    </Members>
+  </Type>
+</Types>

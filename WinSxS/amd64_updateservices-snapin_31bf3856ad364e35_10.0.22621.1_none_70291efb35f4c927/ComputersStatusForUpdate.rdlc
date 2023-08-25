@@ -1,0 +1,559 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Report xmlns="http://schemas.microsoft.com/sqlserver/reporting/2005/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
+  <DataSources>
+    <DataSource Name="DummyDataSource">
+      <ConnectionProperties>
+        <ConnectString />
+        <DataProvider>SQL</DataProvider>
+      </ConnectionProperties>
+      <rd:DataSourceID>0e41ded5-6857-4c47-bb7a-2af4b7f66b8c</rd:DataSourceID>
+    </DataSource>
+  </DataSources>
+  <BottomMargin>1in</BottomMargin>
+  <RightMargin>1in</RightMargin>
+  <ReportParameters>
+    <ReportParameter Name="UpdateId">
+      <DataType>String</DataType>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>Report_Parameter_0</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="IsPermittedApproveUpdate">
+      <DataType>Boolean</DataType>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>Report_Parameter_1</Prompt>
+    </ReportParameter>
+  </ReportParameters>
+  <rd:DrawGrid>true</rd:DrawGrid>
+  <InteractiveWidth>8.5in</InteractiveWidth>
+  <rd:SnapToGrid>true</rd:SnapToGrid>
+  <Body>
+    <ReportItems>
+      <Table Name="ComputerStatusTable">
+        <NoRows>=First(Fields!LabelNoItemsFound.Value, "Microsoft_UpdateServices_UI_SnapIn_Reporting_UpdateComputerLocalizationBusinessObject")</NoRows>
+        <DataSetName>Microsoft_UpdateServices_UI_SnapIn_Reporting_StatusBusinessObject</DataSetName>
+        <Details>
+          <TableRows>
+            <TableRow>
+              <TableCells>
+                <TableCell>
+                  <ReportItems>
+                    <Textbox Name="FullDomainName">
+                      <rd:DefaultName>FullDomainName</rd:DefaultName>
+                      <ZIndex>2</ZIndex>
+                      <Action>
+                        <Drillthrough>
+                          <ReportName>=Iif(Fields!ViewComputerReportIsPermitted.Value, "ComputerSummaryReport ComputerId "&amp;Fields!ComputerTargetId.Value.ToString(), Nothing)</ReportName>
+                        </Drillthrough>
+                      </Action>
+                      <Style>
+                        <BorderStyle>
+                          <Top>Solid</Top>
+                        </BorderStyle>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingBottom>2pt</PaddingBottom>
+                        <FontFamily>=First(Fields!FontFamily.Value, "Microsoft_UpdateServices_UI_SnapIn_Reporting_UpdateComputerLocalizationBusinessObject")</FontFamily>
+                        <FontSize>=First(Fields!FontNormalSize.Value, "Microsoft_UpdateServices_UI_SnapIn_Reporting_UpdateComputerLocalizationBusinessObject")</FontSize>
+                        <BorderColor>
+                          <Default>LightGrey</Default>
+                        </BorderColor>
+                        <Color>=Iif(Fields!ViewComputerReportIsPermitted.Value, "Blue", Fields!WindowTextColor.Value)</Color>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                      </Style>
+                      <CanGrow>true</CanGrow>
+                      <Value>=Fields!FullDomainName.Value</Value>
+                    </Textbox>
+                  </ReportItems>
+                </TableCell>
+                <TableCell>
+                  <ReportItems>
+                    <Textbox Name="textbox1">
+                      <ZIndex>1</ZIndex>
+                      <Action>
+                        <Drillthrough>
+                          <ReportName>=iif(Parameters!IsPermittedApproveUpdate.Value, "UpdateApprovalDialog ComputerId "&amp;Fields!ComputerTargetId.Value &amp;" UpdateId "&amp;Fields!UpdateId.Value.ToString(), Nothing)</ReportName>
+                          <Parameters>
+                            <Parameter Name="ComputerId">
+                              <Value>=Fields!ComputerTargetId.Value</Value>
+                            </Parameter>
+                            <Parameter Name="UpdateId">
+                              <Value>=Fields!UpdateId.Value</Value>
+                            </Parameter>
+                          </Parameters>
+                        </Drillthrough>
+                      </Action>
+                      <Style>
+                        <BorderStyle>
+                          <Top>Solid</Top>
+                        </BorderStyle>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingBottom>2pt</PaddingBottom>
+                        <FontFamily>=First(Fields!FontFamily.Value, "Microsoft_UpdateServices_UI_SnapIn_Reporting_UpdateComputerLocalizationBusinessObject")</FontFamily>
+                        <FontSize>=First(Fields!FontNormalSize.Value, "Microsoft_UpdateServices_UI_SnapIn_Reporting_UpdateComputerLocalizationBusinessObject")</FontSize>
+                        <BorderColor>
+                          <Default>LightGrey</Default>
+                        </BorderColor>
+                        <Color>=iif(Parameters!IsPermittedApproveUpdate.Value, "Blue", Fields!WindowTextColor.Value)</Color>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                      </Style>
+                      <CanGrow>true</CanGrow>
+                      <Value>=Fields!ApprovalAction.Value</Value>
+                    </Textbox>
+                  </ReportItems>
+                </TableCell>
+                <TableCell>
+                  <ReportItems>
+                    <Textbox Name="Status">
+                      <rd:DefaultName>Status</rd:DefaultName>
+                      <Action>
+                        <Drillthrough>
+                          <ReportName>="ComputerStatusDialog ComputerId "&amp;Fields!ComputerTargetId.Value &amp;" UpdateId "&amp;Fields!UpdateId.Value.ToString()</ReportName>
+                          <Parameters>
+                            <Parameter Name="ComputerId">
+                              <Value>=Fields!ComputerTargetId.Value</Value>
+                            </Parameter>
+                            <Parameter Name="UpdateId">
+                              <Value>=Fields!UpdateId.Value</Value>
+                            </Parameter>
+                          </Parameters>
+                        </Drillthrough>
+                      </Action>
+                      <Style>
+                        <BorderStyle>
+                          <Top>Solid</Top>
+                        </BorderStyle>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <PaddingBottom>2pt</PaddingBottom>
+                        <FontFamily>=First(Fields!FontFamily.Value, "Microsoft_UpdateServices_UI_SnapIn_Reporting_UpdateComputerLocalizationBusinessObject")</FontFamily>
+                        <FontSize>=First(Fields!FontNormalSize.Value, "Microsoft_UpdateServices_UI_SnapIn_Reporting_UpdateComputerLocalizationBusinessObject")</FontSize>
+                        <BorderColor>
+                          <Default>LightGrey</Default>
+                        </BorderColor>
+                        <Color>Blue</Color>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                      </Style>
+                      <CanGrow>true</CanGrow>
+                      <Value>=Fields!Status.Value</Value>
+                    </Textbox>
+                  </ReportItems>
+                </TableCell>
+              </TableCells>
+              <Height>0.2in</Height>
+            </TableRow>
+          </TableRows>
+          <Sorting>
+            <SortBy>
+              <SortExpression>=Fields!StatusSortOrder.Value</SortExpression>
+              <Direction>Descending</Direction>
+            </SortBy>
+            <SortBy>
+              <SortExpression>=Fields!FullDomainName.Value</SortExpression>
+              <Direction>Ascending</Direction>
+            </SortBy>
+          </Sorting>
+        </Details>
+        <Style>
+          <FontFamily>=First(Fields!FontFamily.Value, "Microsoft_UpdateServices_UI_SnapIn_Reporting_UpdateComputerLocalizationBusinessObject")</FontFamily>
+          <FontWeight>700</FontWeight>
+          <FontSize>=First(Fields!FontHeaderSize.Value, "Microsoft_UpdateServices_UI_SnapIn_Reporting_UpdateComputerLocalizationBusinessObject")</FontSize>
+          <Color>Gray</Color>
+        </Style>
+        <Header>
+          <TableRows>
+            <TableRow>
+              <TableCells>
+                <TableCell>
+                  <ReportItems>
+                    <Textbox Name="ColumnHeaderComputerName">
+                      <rd:DefaultName>ColumnHeaderComputerName</rd:DefaultName>
+                      <ZIndex>5</ZIndex>
+                      <Style>
+                        <BorderStyle>
+                          <Bottom>Solid</Bottom>
+                        </BorderStyle>
+                        <TextAlign>Left</TextAlign>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <BorderWidth>
+                          <Bottom>1pt</Bottom>
+                        </BorderWidth>
+                        <PaddingBottom>2pt</PaddingBottom>
+                        <FontFamily>=First(Fields!FontFamily.Value, "Microsoft_UpdateServices_UI_SnapIn_Reporting_UpdateComputerLocalizationBusinessObject")</FontFamily>
+                        <FontWeight>700</FontWeight>
+                        <FontSize>=First(Fields!FontHeaderSize.Value, "Microsoft_UpdateServices_UI_SnapIn_Reporting_UpdateComputerLocalizationBusinessObject")</FontSize>
+                        <BorderColor>
+                          <Bottom>LightGrey</Bottom>
+                        </BorderColor>
+                        <Color>Gray</Color>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                      </Style>
+                      <CanGrow>true</CanGrow>
+                      <UserSort>
+                        <SortExpression>=Fields!FullDomainName.Value</SortExpression>
+                      </UserSort>
+                      <Value>=First(Fields!ColumnHeaderComputerName.Value, "Microsoft_UpdateServices_UI_SnapIn_Reporting_UpdateComputerLocalizationBusinessObject")</Value>
+                    </Textbox>
+                  </ReportItems>
+                </TableCell>
+                <TableCell>
+                  <ReportItems>
+                    <Textbox Name="textbox3">
+                      <ZIndex>4</ZIndex>
+                      <Style>
+                        <BorderStyle>
+                          <Bottom>Solid</Bottom>
+                        </BorderStyle>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <BorderWidth>
+                          <Bottom>1pt</Bottom>
+                        </BorderWidth>
+                        <PaddingBottom>2pt</PaddingBottom>
+                        <FontFamily>=First(Fields!FontFamily.Value, "Microsoft_UpdateServices_UI_SnapIn_Reporting_UpdateComputerLocalizationBusinessObject")</FontFamily>
+                        <FontWeight>700</FontWeight>
+                        <FontSize>=First(Fields!FontHeaderSize.Value, "Microsoft_UpdateServices_UI_SnapIn_Reporting_UpdateComputerLocalizationBusinessObject")</FontSize>
+                        <BorderColor>
+                          <Bottom>LightGrey</Bottom>
+                        </BorderColor>
+                        <Color>Gray</Color>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                      </Style>
+                      <CanGrow>true</CanGrow>
+                      <UserSort>
+                        <SortExpression>=Fields!ApprovalActionSortOrder.Value</SortExpression>
+                      </UserSort>
+                      <Value>=First(Fields!ColumnHeaderApprovalAction.Value, "Microsoft_UpdateServices_UI_SnapIn_Reporting_UpdateComputerLocalizationBusinessObject")</Value>
+                    </Textbox>
+                  </ReportItems>
+                </TableCell>
+                <TableCell>
+                  <ReportItems>
+                    <Textbox Name="ColumnHeaderUpdateStatus">
+                      <rd:DefaultName>ColumnHeaderUpdateStatus</rd:DefaultName>
+                      <ZIndex>3</ZIndex>
+                      <Style>
+                        <BorderStyle>
+                          <Bottom>Solid</Bottom>
+                        </BorderStyle>
+                        <TextAlign>Left</TextAlign>
+                        <PaddingLeft>2pt</PaddingLeft>
+                        <BorderWidth>
+                          <Bottom>1pt</Bottom>
+                        </BorderWidth>
+                        <PaddingBottom>2pt</PaddingBottom>
+                        <FontFamily>=First(Fields!FontFamily.Value, "Microsoft_UpdateServices_UI_SnapIn_Reporting_UpdateComputerLocalizationBusinessObject")</FontFamily>
+                        <FontWeight>700</FontWeight>
+                        <FontSize>=First(Fields!FontHeaderSize.Value, "Microsoft_UpdateServices_UI_SnapIn_Reporting_UpdateComputerLocalizationBusinessObject")</FontSize>
+                        <BorderColor>
+                          <Bottom>LightGrey</Bottom>
+                        </BorderColor>
+                        <Color>Gray</Color>
+                        <PaddingRight>2pt</PaddingRight>
+                        <PaddingTop>2pt</PaddingTop>
+                      </Style>
+                      <CanGrow>true</CanGrow>
+                      <UserSort>
+                        <SortExpression>=Fields!StatusSortOrder.Value</SortExpression>
+                      </UserSort>
+                      <Value>=First(Fields!ColumnHeaderUpdateStatus.Value, "Microsoft_UpdateServices_UI_SnapIn_Reporting_UpdateComputerLocalizationBusinessObject")</Value>
+                    </Textbox>
+                  </ReportItems>
+                </TableCell>
+              </TableCells>
+              <Height>0.25in</Height>
+            </TableRow>
+          </TableRows>
+          <RepeatOnNewPage>true</RepeatOnNewPage>
+        </Header>
+        <TableColumns>
+          <TableColumn>
+            <Width>2.875in</Width>
+          </TableColumn>
+          <TableColumn>
+            <Width>1.25in</Width>
+          </TableColumn>
+          <TableColumn>
+            <Width>1.875in</Width>
+          </TableColumn>
+        </TableColumns>
+      </Table>
+    </ReportItems>
+    <Height>0.45in</Height>
+  </Body>
+  <rd:ReportID>20c1b879-a959-4b5c-9136-c4f4b0b08b46</rd:ReportID>
+  <LeftMargin>1in</LeftMargin>
+  <DataSets>
+    <DataSet Name="Microsoft_UpdateServices_UI_SnapIn_Reporting_StatusBusinessObject">
+      <rd:DataSetInfo>
+        <rd:DataSetName>Microsoft.UpdateServices.UI.SnapIn.Reporting</rd:DataSetName>
+        <rd:ObjectDataSourceType>Microsoft.UpdateServices.UI.SnapIn.Reporting.StatusBusinessObject, Microsoft.UpdateServices.UI.SnapIn, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35</rd:ObjectDataSourceType>
+        <rd:TableName>StatusBusinessObject</rd:TableName>
+      </rd:DataSetInfo>
+      <Query>
+        <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
+        <CommandText />
+        <DataSourceName>DummyDataSource</DataSourceName>
+      </Query>
+      <Fields>
+        <Field Name="WindowTextColor">
+          <rd:TypeName>System.String</rd:TypeName>
+          <DataField>WindowTextColor</DataField>
+        </Field>
+        <Field Name="ApprovalAction">
+          <rd:TypeName>System.String</rd:TypeName>
+          <DataField>ApprovalAction</DataField>
+        </Field>
+        <Field Name="ApprovalActionSortOrder">
+          <rd:TypeName>System.Int32</rd:TypeName>
+          <DataField>ApprovalActionSortOrder</DataField>
+        </Field>
+        <Field Name="ApprovalGroupId">
+          <rd:TypeName>System.Guid</rd:TypeName>
+          <DataField>ApprovalGroupId</DataField>
+        </Field>
+        <Field Name="ComputerTargetId">
+          <rd:TypeName>System.String</rd:TypeName>
+          <DataField>ComputerTargetId</DataField>
+        </Field>
+        <Field Name="FullDomainName">
+          <rd:TypeName>System.String</rd:TypeName>
+          <DataField>FullDomainName</DataField>
+        </Field>
+        <Field Name="Status">
+          <rd:TypeName>System.String</rd:TypeName>
+          <DataField>Status</DataField>
+        </Field>
+        <Field Name="StatusSortOrder">
+          <rd:TypeName>System.String</rd:TypeName>
+          <DataField>StatusSortOrder</DataField>
+        </Field>
+        <Field Name="Title">
+          <rd:TypeName>System.String</rd:TypeName>
+          <DataField>Title</DataField>
+        </Field>
+        <Field Name="UpdateClassificationTitle">
+          <rd:TypeName>System.String</rd:TypeName>
+          <DataField>UpdateClassificationTitle</DataField>
+        </Field>
+        <Field Name="UpdateId">
+          <rd:TypeName>System.Guid</rd:TypeName>
+          <DataField>UpdateId</DataField>
+        </Field>
+        <Field Name="ViewComputerReportIsPermitted">
+          <rd:TypeName>System.Boolean</rd:TypeName>
+          <DataField>ViewComputerReportIsPermitted</DataField>
+        </Field>
+        <Field Name="ViewUpdateReportIsPermitted">
+          <rd:TypeName>System.Boolean</rd:TypeName>
+          <DataField>ViewUpdateReportIsPermitted</DataField>
+        </Field>
+      </Fields>
+    </DataSet>
+    <DataSet Name="Microsoft_UpdateServices_UI_SnapIn_Reporting_UpdateComputerLocalizationBusinessObject">
+      <rd:DataSetInfo>
+        <rd:DataSetName>Microsoft.UpdateServices.UI.SnapIn.Reporting</rd:DataSetName>
+        <rd:ObjectDataSourceType>Microsoft.UpdateServices.UI.SnapIn.Reporting.UpdateComputerLocalizationBusinessObject, Microsoft.UpdateServices.UI.SnapIn, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35</rd:ObjectDataSourceType>
+        <rd:TableName>UpdateComputerLocalizationBusinessObject</rd:TableName>
+      </rd:DataSetInfo>
+      <Query>
+        <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
+        <CommandText />
+        <DataSourceName>DummyDataSource</DataSourceName>
+      </Query>
+      <Fields>
+        <Field Name="FontFamily">
+          <rd:TypeName>System.String</rd:TypeName>
+          <DataField>FontFamily</DataField>
+        </Field>
+        <Field Name="FontHeaderSize">
+          <rd:TypeName>System.String</rd:TypeName>
+          <DataField>FontHeaderSize</DataField>
+        </Field>
+        <Field Name="FontNormalSize">
+          <rd:TypeName>System.String</rd:TypeName>
+          <DataField>FontNormalSize</DataField>
+        </Field>
+        <Field Name="ColumnHeaderApprovalAction">
+          <rd:TypeName>System.String</rd:TypeName>
+          <DataField>ColumnHeaderApprovalAction</DataField>
+        </Field>
+        <Field Name="ColumnHeaderComputerName">
+          <rd:TypeName>System.String</rd:TypeName>
+          <DataField>ColumnHeaderComputerName</DataField>
+        </Field>
+        <Field Name="ColumnHeaderUpdateClassification">
+          <rd:TypeName>System.String</rd:TypeName>
+          <DataField>ColumnHeaderUpdateClassification</DataField>
+        </Field>
+        <Field Name="ColumnHeaderUpdateCountFailed">
+          <rd:TypeName>System.String</rd:TypeName>
+          <DataField>ColumnHeaderUpdateCountFailed</DataField>
+        </Field>
+        <Field Name="ColumnHeaderUpdateCountInstalled">
+          <rd:TypeName>System.String</rd:TypeName>
+          <DataField>ColumnHeaderUpdateCountInstalled</DataField>
+        </Field>
+        <Field Name="ColumnHeaderUpdateCountNeeded">
+          <rd:TypeName>System.String</rd:TypeName>
+          <DataField>ColumnHeaderUpdateCountNeeded</DataField>
+        </Field>
+        <Field Name="ColumnHeaderUpdateCountUnknown">
+          <rd:TypeName>System.String</rd:TypeName>
+          <DataField>ColumnHeaderUpdateCountUnknown</DataField>
+        </Field>
+        <Field Name="ColumnHeaderUpdateStatus">
+          <rd:TypeName>System.String</rd:TypeName>
+          <DataField>ColumnHeaderUpdateStatus</DataField>
+        </Field>
+        <Field Name="ColumnHeaderUpdateTitle">
+          <rd:TypeName>System.String</rd:TypeName>
+          <DataField>ColumnHeaderUpdateTitle</DataField>
+        </Field>
+        <Field Name="LabelComputerBIOSVersion">
+          <rd:TypeName>System.String</rd:TypeName>
+          <DataField>LabelComputerBIOSVersion</DataField>
+        </Field>
+        <Field Name="LabelComputerGroupMembership">
+          <rd:TypeName>System.String</rd:TypeName>
+          <DataField>LabelComputerGroupMembership</DataField>
+        </Field>
+        <Field Name="LabelComputerIPAddress">
+          <rd:TypeName>System.String</rd:TypeName>
+          <DataField>LabelComputerIPAddress</DataField>
+        </Field>
+        <Field Name="LabelComputerLanguage">
+          <rd:TypeName>System.String</rd:TypeName>
+          <DataField>LabelComputerLanguage</DataField>
+        </Field>
+        <Field Name="LabelComputerLastStatusReported">
+          <rd:TypeName>System.String</rd:TypeName>
+          <DataField>LabelComputerLastStatusReported</DataField>
+        </Field>
+        <Field Name="LabelComputerMake">
+          <rd:TypeName>System.String</rd:TypeName>
+          <DataField>LabelComputerMake</DataField>
+        </Field>
+        <Field Name="LabelComputerModel">
+          <rd:TypeName>System.String</rd:TypeName>
+          <DataField>LabelComputerModel</DataField>
+        </Field>
+        <Field Name="LabelComputerOperatingSystem">
+          <rd:TypeName>System.String</rd:TypeName>
+          <DataField>LabelComputerOperatingSystem</DataField>
+        </Field>
+        <Field Name="LabelComputerProcessor">
+          <rd:TypeName>System.String</rd:TypeName>
+          <DataField>LabelComputerProcessor</DataField>
+        </Field>
+        <Field Name="LabelComputerServicePack">
+          <rd:TypeName>System.String</rd:TypeName>
+          <DataField>LabelComputerServicePack</DataField>
+        </Field>
+        <Field Name="LabelNoItemsFound">
+          <rd:TypeName>System.String</rd:TypeName>
+          <DataField>LabelNoItemsFound</DataField>
+        </Field>
+        <Field Name="LabelUpdateApproval">
+          <rd:TypeName>System.String</rd:TypeName>
+          <DataField>LabelUpdateApproval</DataField>
+        </Field>
+        <Field Name="LabelUpdateApprovalDate">
+          <rd:TypeName>System.String</rd:TypeName>
+          <DataField>LabelUpdateApprovalDate</DataField>
+        </Field>
+        <Field Name="LabelUpdateClassification">
+          <rd:TypeName>System.String</rd:TypeName>
+          <DataField>LabelUpdateClassification</DataField>
+        </Field>
+        <Field Name="LabelUpdateDeadline">
+          <rd:TypeName>System.String</rd:TypeName>
+          <DataField>LabelUpdateDeadline</DataField>
+        </Field>
+        <Field Name="LabelUpdateDescription">
+          <rd:TypeName>System.String</rd:TypeName>
+          <DataField>LabelUpdateDescription</DataField>
+        </Field>
+        <Field Name="LabelUpdateKBArticleNumber">
+          <rd:TypeName>System.String</rd:TypeName>
+          <DataField>LabelUpdateKBArticleNumber</DataField>
+        </Field>
+        <Field Name="LabelUpdateLanguages">
+          <rd:TypeName>System.String</rd:TypeName>
+          <DataField>LabelUpdateLanguages</DataField>
+        </Field>
+        <Field Name="LabelUpdateMayRequestUserInput">
+          <rd:TypeName>System.String</rd:TypeName>
+          <DataField>LabelUpdateMayRequestUserInput</DataField>
+        </Field>
+        <Field Name="LabelUpdateMoreInformationUrl">
+          <rd:TypeName>System.String</rd:TypeName>
+          <DataField>LabelUpdateMoreInformationUrl</DataField>
+        </Field>
+        <Field Name="LabelUpdateMSRCNumber">
+          <rd:TypeName>System.String</rd:TypeName>
+          <DataField>LabelUpdateMSRCNumber</DataField>
+        </Field>
+        <Field Name="LabelUpdateMSRCSeverityRating">
+          <rd:TypeName>System.String</rd:TypeName>
+          <DataField>LabelUpdateMSRCSeverityRating</DataField>
+        </Field>
+        <Field Name="LabelUpdateMustBeInstalledExclusively">
+          <rd:TypeName>System.String</rd:TypeName>
+          <DataField>LabelUpdateMustBeInstalledExclusively</DataField>
+        </Field>
+        <Field Name="LabelUpdateReleaseDate">
+          <rd:TypeName>System.String</rd:TypeName>
+          <DataField>LabelUpdateReleaseDate</DataField>
+        </Field>
+        <Field Name="LabelUpdateRemovable">
+          <rd:TypeName>System.String</rd:TypeName>
+          <DataField>LabelUpdateRemovable</DataField>
+        </Field>
+        <Field Name="LabelUpdateRestartBehavior">
+          <rd:TypeName>System.String</rd:TypeName>
+          <DataField>LabelUpdateRestartBehavior</DataField>
+        </Field>
+        <Field Name="LabelUpdateUpdateId">
+          <rd:TypeName>System.String</rd:TypeName>
+          <DataField>LabelUpdateUpdateId</DataField>
+        </Field>
+        <Field Name="TitleComputerStatus">
+          <rd:TypeName>System.String</rd:TypeName>
+          <DataField>TitleComputerStatus</DataField>
+        </Field>
+        <Field Name="TitleComputerSummary">
+          <rd:TypeName>System.String</rd:TypeName>
+          <DataField>TitleComputerSummary</DataField>
+        </Field>
+        <Field Name="TitleComputerTabular">
+          <rd:TypeName>System.String</rd:TypeName>
+          <DataField>TitleComputerTabular</DataField>
+        </Field>
+        <Field Name="TitleSynchronization">
+          <rd:TypeName>System.String</rd:TypeName>
+          <DataField>TitleSynchronization</DataField>
+        </Field>
+        <Field Name="TitleUpdateStatus">
+          <rd:TypeName>System.String</rd:TypeName>
+          <DataField>TitleUpdateStatus</DataField>
+        </Field>
+        <Field Name="TitleUpdateSummary">
+          <rd:TypeName>System.String</rd:TypeName>
+          <DataField>TitleUpdateSummary</DataField>
+        </Field>
+        <Field Name="TitleUpdateTabular">
+          <rd:TypeName>System.String</rd:TypeName>
+          <DataField>TitleUpdateTabular</DataField>
+        </Field>
+      </Fields>
+    </DataSet>
+  </DataSets>
+  <Author>Microsoft Corporation</Author>
+  <Code />
+  <Width>6in</Width>
+  <InteractiveHeight>0in</InteractiveHeight>
+  <Description>Copyright (c) Microsoft Corporation.  All rights reserved.</Description>
+  <TopMargin>1in</TopMargin>
+</Report>

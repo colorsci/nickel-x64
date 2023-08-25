@@ -1,0 +1,37 @@
+#pragma namespace("\\\\.\\root\\Microsoft\\Windows")
+
+[Locale(1033) : ToInstance, NamespaceSecuritySDDL("O:NSG:BAD:P(A;;CCDCLCSWRPWPRCWD;;;BA)(A;;0x3;;;NS)")]  
+Instance of __Namespace
+{
+  Name = "DesiredStateConfigurationProxy";
+};
+
+#pragma autorecover
+#pragma classflags(64)
+#pragma namespace("\\\\.\\root\\Microsoft\\Windows\\DesiredStateConfigurationProxy")
+
+Instance of __Win32Provider as $prov
+{
+  Name = "dscproxy";
+  ClsId = "{E2AD2F90-AC32-4DF6-B47A-61458E559320}";
+  ImpersonationLevel = 1;
+  HostingModel = "NetworkServiceHost";
+  version=0x40000001;
+};
+
+Instance of __MethodProviderRegistration
+{
+  Provider = $prov;
+};
+
+[dynamic: ToInstance, provider("dscproxy"): ToInstance, ClassVersion("1.0.0"), 
+ Description("DSC proxy to get resource state from local DSC service."): ToSubClass Amended]
+class MSFT_DscProxy
+{
+    [implemented, static: DisableOverride ToSubClass, Description("Get resource state."): ToSubClass Amended] 
+    uint32 GetResourceState(
+              [In, Octetstring: DisableOverride ToSubClass] uint8 ConfigurationData[], 
+              [Out] boolean state
+           );
+};
+

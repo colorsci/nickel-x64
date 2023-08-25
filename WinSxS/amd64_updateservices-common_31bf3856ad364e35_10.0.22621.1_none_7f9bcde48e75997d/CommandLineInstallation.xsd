@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<schema targetNamespace="http://schemas.microsoft.com/wsus/2005/04/CorporatePublishing/Installers/CommandLineInstallation.xsd"
+    xmlns:cmd="http://schemas.microsoft.com/wsus/2005/04/CorporatePublishing/Installers/CommandLineInstallation.xsd"
+    xmlns:bt="http://schemas.microsoft.com/wsus/2005/04/CorporatePublishing/BaseTypes.xsd"
+    xmlns:mspblob="http://www.microsoft.com/msi/patch_applicability.xsd" 
+    xmlns:sdp="http://schemas.microsoft.com/wsus/2005/04/CorporatePublishing/SoftwareDistributionPackage.xsd"
+    xmlns="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+    <!--
+    Data specific to command line installation 
+  -->
+    <element name="CommandLineInstallerData" substitutionGroup="sdp:InstallHandlerSpecificData">
+        <complexType>
+            <annotation>
+                <documentation>Specifies the program and arguments to execute to install the package, and the possible return codes.</documentation>
+            </annotation>
+            <sequence>
+                <element name="ReturnCode" minOccurs="0" maxOccurs="unbounded">
+                    <annotation>
+                        <documentation>A possible return code from the program.</documentation>
+                    </annotation>
+                    <complexType>
+                        <sequence>
+                            <element name="LocalizedDescription" minOccurs="0" maxOccurs="unbounded">
+                                <annotation>
+                                    <documentation>The localized description of this return code.  Package authors are encouraged but not required to include descriptions of their return codes.  These descriptions are very useful when debugging failed installations. The first one listed is considered the default.</documentation>
+                                </annotation>
+                                <complexType>
+                                    <sequence>
+                                        <element name="Language" type="sdp:LocalizedPropertiesLanguage" maxOccurs="unbounded">
+                                            <annotation>
+                                                <documentation>A language that this description applies to.  A description may apply to one or more languages.</documentation>
+                                            </annotation>
+                                        </element>
+                                        <element name="Description" type="sdp:Description">
+                                            <annotation>
+                                                <documentation>The actual description of this return code.</documentation>
+                                            </annotation>
+                                        </element>
+                                    </sequence>
+                                </complexType>
+                            </element>
+                        </sequence>
+                        <attribute name="Code" type="int" use="required">
+                            <annotation>
+                                <documentation>The return code.</documentation>
+                            </annotation>
+                        </attribute>
+                        <attribute name="Result" type="cmd:InstallationResult" use="required">
+                            <annotation>
+                                <documentation>The result of the installation when the program exits with this return code.</documentation>
+                            </annotation>
+                        </attribute>
+                        <attribute name="Reboot" type="boolean" use="optional" default="false">
+                            <annotation>
+                                <documentation>Specifies whether or not a reboot should be performed when the program exits with this return code.</documentation>
+                            </annotation>
+                        </attribute>
+                    </complexType>
+                </element>
+                <element name="WindowsInstallerRepairPath" minOccurs="0" maxOccurs="unbounded" type="mspblob:RepairPath" />
+            </sequence>
+            <attribute name="Program" type="bt:FilePath" use="required">
+                <annotation>
+                    <documentation>The program to execute.  The program must be a filename such as PROGRAM.EXE, and may include an optional relative path.  The Client will download (and decompress) the files required for installation (if any) into a temporary directory, and then execute the program via Win32 CreateProcess.  This attribute specifies the file within the temporary directory to execute.  If the decompression results in subdirectories within the temporary directory, the file to execute may be within on of those subdirectories and the relative path should include that subdirectory.  Note that this means that only files within the temporary directory may be executed so the executable must be included in the files download from the server.</documentation>
+                </annotation>
+            </attribute>
+            <attribute name="Arguments" type="string" use="optional">
+                <annotation>
+                    <documentation>The command-line arguments to pass to the program.  This attribute is passed as the lpCommandLine parameter to Win32 CreateProcess.</documentation>
+                </annotation>
+            </attribute>
+            <attribute name="DefaultResult" type="cmd:InstallationResult" use="optional" default="Failed">
+                <annotation>
+                    <documentation>The result to be used when the program exits with a return code other than those listed in this element.</documentation>
+                </annotation>
+            </attribute>
+            <attribute name="RebootByDefault" type="boolean" use="optional" default="false">
+                <annotation>
+                    <documentation>Specifies whether or not a reboot should be performed when the program exits with a return code other than those listed in this element.</documentation>
+                </annotation>
+            </attribute>
+        </complexType>
+    </element>
+    <simpleType name="InstallationResult">
+        <annotation>
+            <documentation>The result of an installation or uninstallation. All installations and uninstallations must result in one of these values. This simpleType is used by schemas that derive from HandlerSpecificData.</documentation>
+        </annotation>
+        <restriction base="token">
+            <enumeration value="Failed" />
+            <enumeration value="Succeeded" />
+            <enumeration value="Cancelled" />
+        </restriction>
+    </simpleType>
+</schema>

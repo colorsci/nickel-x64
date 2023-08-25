@@ -1,0 +1,133 @@
+<Activity mc:Ignorable="sads sap" x:Class="RDManagement.Get_StartMenuApplications"
+ xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities"
+ xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+ xmlns:mpa="clr-namespace:Microsoft.PowerShell.Activities;assembly=Microsoft.PowerShell.Activities"
+ xmlns:mpua="clr-namespace:Microsoft.PowerShell.Utility.Activities;assembly=Microsoft.PowerShell.Utility.Activities"
+ xmlns:mrma="clr-namespace:Microsoft.RemoteDesktopServices.Management.Activities;assembly=Microsoft.RemoteDesktopServices.Management.Activities"
+ xmlns:mv="clr-namespace:Microsoft.VisualBasic;assembly=System"
+ xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities"
+ xmlns:s="clr-namespace:System;assembly=System.Core"
+ xmlns:s1="clr-namespace:System;assembly=System"
+ xmlns:s2="clr-namespace:System;assembly=mscorlib"
+ xmlns:s3="clr-namespace:System;assembly=System.ServiceModel"
+ xmlns:s4="clr-namespace:System;assembly=System.ComponentModel.Composition"
+ xmlns:sa="clr-namespace:System.Activities;assembly=System.Activities"
+ xmlns:sad="clr-namespace:System.Activities.Debugger;assembly=System.Activities"
+ xmlns:sads="http://schemas.microsoft.com/netfx/2010/xaml/activities/debugger"
+ xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation"
+ xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib"
+ xmlns:sma="clr-namespace:System.Management.Automation;assembly=System.Management.Automation"
+ xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <x:Members>
+    <x:Property Name="Warnings" Type="OutArgument(sma:PSDataCollection(sma:WarningRecord))" />
+    <x:Property Name="ServerName" Type="InArgument(x:String)">
+      <x:Property.Attributes>
+        <RequiredArgumentAttribute />
+      </x:Property.Attributes>
+    </x:Property>
+    <x:Property Name="AppList" Type="OutArgument(sma:PSDataCollection(sma:PSObject))" />
+  </x:Members>
+  <sap:VirtualizedContainerService.HintSize>1116,2103</sap:VirtualizedContainerService.HintSize>
+  <mva:VisualBasic.Settings>Assembly references and imported namespaces for internal implementation</mva:VisualBasic.Settings>
+  <Sequence DisplayName="Sequence1" sap:VirtualizedContainerService.HintSize="1076,2063">
+    <Sequence.Variables>
+      <Variable x:TypeArguments="sma:PSDataCollection(sma:PSObject)" Default="[New PSDataCollection(Of PSObject)]" Name="GetAppOutput" />
+      <Variable x:TypeArguments="x:String" Default="[String.Empty]" Name="PSIconPathValue" />
+      <Variable x:TypeArguments="s2:Byte[]" Name="PSIconContents" />
+      <Variable x:TypeArguments="sma:PSDataCollection(sma:ErrorRecord)" Name="PSerror" />
+      <Variable x:TypeArguments="sma:PSDataCollection(sma:WarningRecord)" Default="[New PSDataCollection(Of WarningRecord)]" Name="WarningRecords" />
+    </Sequence.Variables>
+    <mpa:GetWmiObject Amended="False" Class="Win32_TSStartMenuApplication" DirectRead="False" DisplayName="Get-StartMenuApps" EnableAllPrivileges="False" sap:VirtualizedContainerService.HintSize="1054,22" Impersonation="Impersonate" Namespace="root\cimv2\terminalservices" PSAuthenticationLevel="PacketPrivacy" PSComputerName="[{ServerName}]" PSError="[PSerror]" Result="[GetAppOutput]" />
+    <If Condition="[PSerror.Count.Equals(0)]" sap:VirtualizedContainerService.HintSize="1054,1877">
+      <If.Then>
+        <Sequence sap:VirtualizedContainerService.HintSize="829,1769">
+          <Assign sap:VirtualizedContainerService.HintSize="807,60">
+            <Assign.To>
+              <OutArgument x:TypeArguments="sma:PSDataCollection(sma:PSObject)">[AppList]</OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="sma:PSDataCollection(sma:PSObject)">[New PSDataCollection(Of PSObject)]</InArgument>
+            </Assign.Value>
+          </Assign>
+          <ForEach x:TypeArguments="sma:PSObject" DisplayName="ForEach&lt;PSObject&gt;" sap:VirtualizedContainerService.HintSize="807,1545" Values="[GetAppOutput]">
+            <ActivityAction x:TypeArguments="sma:PSObject">
+              <ActivityAction.Argument>
+                <DelegateInArgument x:TypeArguments="sma:PSObject" Name="App" />
+              </ActivityAction.Argument>
+              <Sequence sap:VirtualizedContainerService.HintSize="777,1437">
+                <Sequence.Variables>
+                  <Variable x:TypeArguments="sma:PSDataCollection(sma:PSObject)" Default="[New PSDataCollection(Of PSObject)]" Name="PSIconPath" />
+                  <Variable x:TypeArguments="x:String" Name="PSIConPathOutput" />
+                </Sequence.Variables>
+                <mpa:InvokeWmiMethod ArgumentList="[New PSDataCollection(Of PSObject) From {PSObject.AsPSObject(App.Properties(&quot;IconPath&quot;).Value.ToString())}]" Class="Win32_TSExpandEnvironmentVariables" DisplayName="Get-ExpandedPath" EnableAllPrivileges="False" sap:VirtualizedContainerService.HintSize="755,22" Impersonation="Impersonate" Name="EnvironmentVariables" Namespace="root\cimv2\terminalservices" PSAuthenticationLevel="PacketPrivacy" PSComputerName="[{ServerName}]" PSError="[PSerror]" Result="[PSIconPath]" />
+                <If Condition="[PSerror.Count.Equals(0)]" sap:VirtualizedContainerService.HintSize="755,1251">
+                  <If.Then>
+                    <Sequence sap:VirtualizedContainerService.HintSize="530,1143">
+                      <Sequence.Variables>
+                        <Variable x:TypeArguments="x:Int32" Default="0" Name="IconIndex" />
+                        <Variable x:TypeArguments="sma:PSDataCollection(sma:PSObject)" Name="GetIconContentResult" />
+                      </Sequence.Variables>
+                      <Assign sap:VirtualizedContainerService.HintSize="508,60">
+                        <Assign.To>
+                          <OutArgument x:TypeArguments="x:String">[PSIconPathValue]</OutArgument>
+                        </Assign.To>
+                        <Assign.Value>
+                          <InArgument x:TypeArguments="x:String">[PSIconPath.Item(0).Members("ExpandedString").Value.ToString()]</InArgument>
+                        </Assign.Value>
+                      </Assign>
+                      <Assign sap:VirtualizedContainerService.HintSize="508,60">
+                        <Assign.To>
+                          <OutArgument x:TypeArguments="x:Int32">[IconIndex]</OutArgument>
+                        </Assign.To>
+                        <Assign.Value>
+                          <InArgument x:TypeArguments="x:Int32">[CType(App.Properties("IconIndex").Value, int32)]</InArgument>
+                        </Assign.Value>
+                      </Assign>
+                      <mpa:InlineScript Command="import-module $env:windir\System32\ServerManagerInternal\rdmanagement;&#xD;&#xA;Get-RDIconContent -Path $using:PSIconPathValue -Index $using:IconIndex -ComputerName $using:ServerName" sap:VirtualizedContainerService.HintSize="508,139" PSError="[PSerror]" Result="[GetIconContentResult]">
+                      </mpa:InlineScript>
+                      <If Condition="[PSerror.Count.Equals(0)]" sap:VirtualizedContainerService.HintSize="508,640">
+                        <If.Then>
+                          <Sequence sap:VirtualizedContainerService.HintSize="264,532">
+                            <Assign sap:VirtualizedContainerService.HintSize="242,60">
+                              <Assign.To>
+                                <OutArgument x:TypeArguments="s2:Byte[]">[PSIconContents]</OutArgument>
+                              </Assign.To>
+                              <Assign.Value>
+                                <InArgument x:TypeArguments="s2:Byte[]">[CType(GetIconContentResult(0).BaseObject, byte())]</InArgument>
+                              </Assign.Value>
+                            </Assign>
+                            <InvokeMethod sap:VirtualizedContainerService.HintSize="242,134" MethodName="Add">
+                              <InvokeMethod.TargetObject>
+                                <InArgument x:TypeArguments="sma:PSMemberInfoCollection(sma:PSPropertyInfo)">[App.Properties]</InArgument>
+                              </InvokeMethod.TargetObject>
+                              <InArgument x:TypeArguments="sma:PSNoteProperty">[New PSNoteProperty("IconContents", PSIconContents)]</InArgument>
+                            </InvokeMethod>
+                            <InvokeMethod sap:VirtualizedContainerService.HintSize="242,134" MethodName="Add">
+                              <InvokeMethod.TargetObject>
+                                <InArgument x:TypeArguments="sma:PSDataCollection(sma:PSObject)">[AppList]</InArgument>
+                              </InvokeMethod.TargetObject>
+                              <InArgument x:TypeArguments="sma:PSObject">[App]</InArgument>
+                            </InvokeMethod>
+                          </Sequence>
+                        </If.Then>
+                        <If.Else>
+                          <TerminateWorkflow Exception="[New Exception(RDManagementResources.RDMSGetIconContentsError, PSerror.Item(0).Exception)]" sap:VirtualizedContainerService.HintSize="200,22" Reason="[RDManagementResources.RDMSGetIconContentsError]" />
+                        </If.Else>
+                      </If>
+                    </Sequence>
+                  </If.Then>
+                  <If.Else>
+                    <TerminateWorkflow Exception="[New Exception(RDManagementResources.RDMSGetExpandedPathError, PSerror.Item(0).Exception)]" sap:VirtualizedContainerService.HintSize="200,22" Reason="[RDManagementResources.RDMSGetExpandedPathError]" />
+                  </If.Else>
+                </If>
+              </Sequence>
+            </ActivityAction>
+          </ForEach>
+        </Sequence>
+      </If.Then>
+      <If.Else>
+        <TerminateWorkflow Exception="[New Exception(RDManagementResources.RDMSGetStartMenuApplicationsError, PSerror.Item(0).Exception)]" sap:VirtualizedContainerService.HintSize="200,22" Reason="[RDManagementResources.RDMSGetStartMenuApplicationsError]" />
+      </If.Else>
+    </If>
+  </Sequence>
+</Activity>

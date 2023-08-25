@@ -1,0 +1,379 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<schema targetNamespace="http://schemas.microsoft.com/wsus/2005/04/CorporatePublishing/BaseApplicabilityRules.xsd"
+    xmlns:bar="http://schemas.microsoft.com/wsus/2005/04/CorporatePublishing/BaseApplicabilityRules.xsd"
+    xmlns:bt="http://schemas.microsoft.com/wsus/2005/04/CorporatePublishing/BaseTypes.xsd"
+    xmlns:sdp="http://schemas.microsoft.com/wsus/2005/04/CorporatePublishing/SoftwareDistributionPackage.xsd"
+    xmlns="http://www.w3.org/2001/XMLSchema"
+    elementFormDefault="qualified" attributeFormDefault="unqualified">
+    
+    <!--
+  
+  Operating system checks
+    
+  -->
+    <element name="WindowsVersion" substitutionGroup="sdp:ApplicabilityRuleElement">
+        <annotation>
+            <documentation>Compare's the operating system's version information to specified values.  Implemented using Win32 VerifyVersionInfo().  The Comparison attribute applies to MajorVersion, MinorVersion, BuildNumber, ServicePackMajor, and ServicePack Minor.  If Comparison is omitted, it is assumed to be set to EqualTo.  The AllSuitesMustBePresent attribute applies to SuiteMask.  If true, all specified suites must be present.  If false or omitted, one or more suites must be present.</documentation>
+        </annotation>
+        <complexType>
+            <attribute name="Comparison" type="bt:ScalarComparison" use="optional" />
+            <attribute name="MajorVersion" type="unsignedInt" use="optional" />
+            <attribute name="MinorVersion" type="unsignedInt" use="optional" />
+            <attribute name="BuildNumber" type="unsignedInt" use="optional" />
+            <attribute name="ServicePackMajor" type="unsignedShort" use="optional" />
+            <attribute name="ServicePackMinor" type="unsignedShort" use="optional" />
+            <attribute name="AllSuitesMustBePresent" type="boolean" use="optional" default="false" />
+            <attribute name="SuiteMask" type="unsignedShort" use="optional" />
+            <attribute name="ProductType" type="unsignedShort" use="optional" />
+        </complexType>
+    </element>
+    <element name="WindowsLanguage" substitutionGroup="sdp:ApplicabilityRuleElement">
+        <annotation>
+            <documentation>Returns true if the operating system is localized to the specified language.  Always returns false if the Windows Multilanguage User Interface (MUI) is installed.</documentation>
+        </annotation>
+        <complexType>
+            <attribute name="Language" type="language" use="required" />
+        </complexType>
+    </element>
+    <element name="MuiInstalled" substitutionGroup="sdp:ApplicabilityRuleElement">
+        <annotation>
+            <documentation>Returns true if the Windows Multilanguage User Interface (MUI) is installed.</documentation>
+        </annotation>
+        <complexType />
+    </element>
+    <element name="MuiLanguageInstalled" substitutionGroup="sdp:ApplicabilityRuleElement">
+        <annotation>
+            <documentation>Returns true if the specified language is installed for the Windows Multilanguage User Interface (MUI).  Always returns false if MUI itself is not installed.</documentation>
+        </annotation>
+        <complexType>
+            <attribute name="Language" type="language" use="required" />
+        </complexType>
+    </element>
+    <element name="SystemMetric" substitutionGroup="sdp:ApplicabilityRuleElement">
+        <annotation>
+            <documentation>Calls Win32 GetSystemMetrics and compares the metric with the specified index to the specified value.</documentation>
+        </annotation>
+        <complexType>
+            <attribute name="Comparison" type="bt:ScalarComparison" use="required" />
+            <attribute name="Index" type="int" use="required" />
+            <attribute name="Value" type="int" use="required" />
+        </complexType>
+    </element>
+    <!--
+  
+  Processor checks
+    
+  -->
+    <element name="Processor" substitutionGroup="sdp:ApplicabilityRuleElement">
+        <annotation>
+            <documentation>Checks that the system's processor is the specified architecture, level, and revision.</documentation>
+        </annotation>
+        <complexType>
+            <attribute name="Architecture" type="bt:ProcessorArchitecture" use="required" />
+            <attribute name="Level" type="bt:ProcessorLevel" use="optional" />
+            <attribute name="Revision" type="bt:ProcessorRevision" use="optional" />
+        </complexType>
+    </element>
+    <element name="NumberOfProcessors" substitutionGroup="sdp:ApplicabilityRuleElement">
+        <annotation>
+            <documentation>Compares the number of processors in the system to a specified value.</documentation>
+        </annotation>
+        <complexType>
+            <attribute name="Comparison" type="bt:ScalarComparison" use="required" />
+            <attribute name="Number" type="unsignedInt" use="required" />
+        </complexType>
+    </element>
+    <!-- Need someone to research locale/language/MUI rules -->
+    <!--
+
+  Cluster related checks
+
+  -->
+    <element name="ClusteredOS" substitutionGroup="sdp:ApplicabilityRuleElement">
+        <annotation>
+            <documentation>Returns true if the operating system is part of a Windows Server Cluster.</documentation>
+        </annotation>
+        <complexType />
+    </element>
+    <element name="ClusterResourceOwner" substitutionGroup="sdp:ApplicabilityRuleElement">
+        <annotation>
+            <documentation>Returns true if the cluster resource specified by the registry value is owned by this computer (node). Returns false if the cluster resource could not be opened or it is not the owner, otherwise it results in an error.</documentation>
+        </annotation>
+        <complexType>
+            <attributeGroup ref="bt:RegistryValueAttributes" />
+            <attribute name="Prefix" type="string" use="optional" />
+            <attribute name="Suffix" type="string" use="optional" />
+        </complexType>
+    </element>
+    <!--
+  
+  File system checks
+    
+  -->
+    <complexType name="FileExistsType">
+        <attribute name="Path" type="bt:FilePath" use="required" />
+        <attribute name="Version" type="bt:Version" use="optional" />
+        <attribute name="Created" type="bt:FileDate" use="optional" />
+        <attribute name="Modified" type="bt:FileDate" use="optional" />
+        <attribute name="Size" type="bt:FileSize" use="optional" />
+        <attribute name="Language" type="unsignedShort" use="optional" />
+    </complexType>
+    <element name="FileExists" substitutionGroup="sdp:ApplicabilityRuleElement">
+        <annotation>
+            <documentation>Checks for the existence of the specified file.  If Csidl is specified, the MSUS Client will call Win32 SHGetFolderPath to retrieve the CSIDL and prepend it to Path to form the actual path to the file.  Before checking the file, the Client will canonicalize the path to remove duplicate backslashes (among other things).  If other optional metadata are specified, such as Version or Size, they must all match for this applicability rule to return true.</documentation>
+        </annotation>
+        <complexType>
+            <complexContent>
+                <extension base="bar:FileExistsType">
+                    <attribute name="Csidl" type="bt:Csidl" use="optional" />
+                </extension>
+            </complexContent>
+        </complexType>
+    </element>
+    <element name="FileExistsPrependRegSz" substitutionGroup="sdp:ApplicabilityRuleElement">
+        <annotation>
+            <documentation>Same as FileExists, but the MSUS Client will prepend the specified REG_SZ value from the registry instead of a CSIDL.</documentation>
+        </annotation>
+        <complexType>
+            <complexContent>
+                <extension base="bar:FileExistsType">
+                    <attributeGroup ref="bt:RegistryValueAttributes" />
+                </extension>
+            </complexContent>
+        </complexType>
+    </element>
+    <complexType name="FileCompareVersionType">
+        <attribute name="Path" type="bt:FilePath" use="required" />
+        <attribute name="Comparison" type="bt:ScalarComparison" use="required" />
+        <attribute name="Version" type="bt:Version" use="required" />
+    </complexType>
+    <element name="FileVersion" substitutionGroup="sdp:ApplicabilityRuleElement">
+        <annotation>
+            <documentation>Compares the specified file's version to the specified four-part version string.  If Csidl is specified, the MSUS Client will call Win32 SHGetFolderPath to retrieve the CSIDL and prepend it to Path to form the actual path to the file.  Before checking the file, the Client will canonicalize the path to remove duplicate backslashes (among other things).</documentation>
+        </annotation>
+        <complexType>
+            <complexContent>
+                <extension base="bar:FileCompareVersionType">
+                    <attribute name="Csidl" type="bt:Csidl" use="optional" />
+                </extension>
+            </complexContent>
+        </complexType>
+    </element>
+    <element name="FileVersionPrependRegSz" substitutionGroup="sdp:ApplicabilityRuleElement">
+        <annotation>
+            <documentation>Same as FileVersion, but the MSUS Client will prepend the specified REG_SZ value from the registry instead of a CSIDL.</documentation>
+        </annotation>
+        <complexType>
+            <complexContent>
+                <extension base="bar:FileCompareVersionType">
+                    <attributeGroup ref="bt:RegistryValueAttributes" />
+                </extension>
+            </complexContent>
+        </complexType>
+    </element>
+    <complexType name="FileCompareCreationDateType">
+        <attribute name="Path" type="bt:FilePath" use="required" />
+        <attribute name="Comparison" type="bt:ScalarComparison" use="required" />
+        <attribute name="Created" type="bt:FileDate" use="required" />
+    </complexType>
+    <element name="FileCreated" substitutionGroup="sdp:ApplicabilityRuleElement">
+        <annotation>
+            <documentation>Compares the specified file's creation date to the specified value.  If Csidl is specified, the MSUS Client will call Win32 SHGetFolderPath to retrieve the CSIDL and prepend it to Path to form the actual path to the file.  Before checking the file, the Client will canonicalize the path to remove duplicate backslashes (among other things).</documentation>
+        </annotation>
+        <complexType>
+            <complexContent>
+                <extension base="bar:FileCompareCreationDateType">
+                    <attribute name="Csidl" type="bt:Csidl" use="optional" />
+                </extension>
+            </complexContent>
+        </complexType>
+    </element>
+    <element name="FileCreatedPrependRegSz" substitutionGroup="sdp:ApplicabilityRuleElement">
+        <annotation>
+            <documentation>Same as FileCreated, but the MSUS Client will prepend the specified REG_SZ value from the registry instead of a CSIDL.</documentation>
+        </annotation>
+        <complexType>
+            <complexContent>
+                <extension base="bar:FileCompareCreationDateType">
+                    <attributeGroup ref="bt:RegistryValueAttributes" />
+                </extension>
+            </complexContent>
+        </complexType>
+    </element>
+    <complexType name="FileCompareModificationDateType">
+        <attribute name="Path" type="bt:FilePath" use="required" />
+        <attribute name="Comparison" type="bt:ScalarComparison" use="required" />
+        <attribute name="Modified" type="bt:FileDate" use="required" />
+    </complexType>
+    <element name="FileModified" substitutionGroup="sdp:ApplicabilityRuleElement">
+        <annotation>
+            <documentation>Compares the specified file's modification date to the specified value.  If Csidl is specified, the MSUS Client will call Win32 SHGetFolderPath to retrieve the CSIDL and prepend it to Path to form the actual path to the file.  Before checking the file, the Client will canonicalize the path to remove duplicate backslashes (among other things).</documentation>
+        </annotation>
+        <complexType>
+            <complexContent>
+                <extension base="bar:FileCompareModificationDateType">
+                    <attribute name="Csidl" type="bt:Csidl" use="optional" />
+                </extension>
+            </complexContent>
+        </complexType>
+    </element>
+    <element name="FileModifiedPrependRegSz" substitutionGroup="sdp:ApplicabilityRuleElement">
+        <annotation>
+            <documentation>Same as FileModified, but the MSUS Client will prepend the specified REG_SZ value from the registry instead of a CSIDL.</documentation>
+        </annotation>
+        <complexType>
+            <complexContent>
+                <extension base="bar:FileCompareModificationDateType">
+                    <attributeGroup ref="bt:RegistryValueAttributes" />
+                </extension>
+            </complexContent>
+        </complexType>
+    </element>
+    <complexType name="FileCompareSizeType">
+        <attribute name="Path" type="bt:FilePath" use="required" />
+        <attribute name="Comparison" type="bt:ScalarComparison" use="required" />
+        <attribute name="Size" type="bt:FileSize" use="required" />
+    </complexType>
+    <element name="FileSize" substitutionGroup="sdp:ApplicabilityRuleElement">
+        <annotation>
+            <documentation>Compares the specified file's size to the specified value.  If Csidl is specified, the MSUS Client will call Win32 SHGetFolderPath to retrieve the CSIDL and prepend it to Path to form the actual path to the file.  Before checking the file, the Client will canonicalize the path to remove duplicate backslashes (among other things).</documentation>
+        </annotation>
+        <complexType>
+            <complexContent>
+                <extension base="bar:FileCompareSizeType">
+                    <attribute name="Csidl" type="bt:Csidl" use="optional" />
+                </extension>
+            </complexContent>
+        </complexType>
+    </element>
+    <element name="FileSizePrependRegSz" substitutionGroup="sdp:ApplicabilityRuleElement">
+        <annotation>
+            <documentation>Same as FileSize, but the MSUS Client will prepend the specified REG_SZ value from the registry instead of a CSIDL.</documentation>
+        </annotation>
+        <complexType>
+            <complexContent>
+                <extension base="bar:FileCompareSizeType">
+                    <attributeGroup ref="bt:RegistryValueAttributes" />
+                </extension>
+            </complexContent>
+        </complexType>
+    </element>
+    <!--
+  
+  Registry checks
+    
+  -->
+    <element name="RegKeyExists" substitutionGroup="sdp:ApplicabilityRuleElement">
+        <annotation>
+            <documentation>Checks for the existence of the specified registry subkey.</documentation>
+        </annotation>
+        <complexType>
+            <attributeGroup ref="bt:RegistryKeyAttributes" />
+        </complexType>
+    </element>
+    <element name="RegValueExists" substitutionGroup="sdp:ApplicabilityRuleElement">
+        <annotation>
+            <documentation>Checks for the existence of the specified registry value.  Checks the existence of the default value for the subkey when no value is specified.  Checks that the value is of a specific type when a type is specified.  The type must be REG_SZ if a value is not specified (the type of the default value of a subkey is always REG_SZ).</documentation>
+        </annotation>
+        <complexType>
+            <attributeGroup ref="bt:RegistryKeyAttributes" />
+            <attribute name="Value" type="bt:RegistryValue" use="optional" />
+            <attribute name="Type" type="bt:RegistryValueType" use="optional" />
+        </complexType>
+    </element>
+    <element name="RegDword" substitutionGroup="sdp:ApplicabilityRuleElement">
+        <annotation>
+            <documentation>Compares a specified REG_DWORD registry value to a specified number.</documentation>
+        </annotation>
+        <complexType>
+            <attributeGroup ref="bt:RegistryValueAttributes" />
+            <attribute name="Comparison" type="bt:ScalarComparison" use="required" />
+            <attribute name="Data" type="bt:RegistryValueDword" use="required" />
+        </complexType>
+    </element>
+    <element name="RegExpandSz" substitutionGroup="sdp:ApplicabilityRuleElement">
+        <annotation>
+            <documentation>Compares a specified REG_EXPAND_SZ registry value to a specified string.</documentation>
+        </annotation>
+        <complexType>
+            <attributeGroup ref="bt:RegistryValueAttributes" />
+            <attribute name="Comparison" type="bt:StringComparison" use="required" />
+            <attribute name="Data" type="bt:RegistryValueExpandSz" use="required" />
+        </complexType>
+    </element>
+    <element name="RegSz" substitutionGroup="sdp:ApplicabilityRuleElement">
+        <annotation>
+            <documentation>Compares a specified REG_SZ registry value to a specified string.</documentation>
+        </annotation>
+        <complexType>
+            <attributeGroup ref="bt:RegistryValueAttributes" />
+            <attribute name="Comparison" type="bt:StringComparison" use="required" />
+            <attribute name="Data" type="bt:RegistryValueSz" use="required" />
+        </complexType>
+    </element>
+    <element name="RegSzToVersion" substitutionGroup="sdp:ApplicabilityRuleElement">
+        <annotation>
+            <documentation>Compares a specified REG_SZ registry value to a specified four-part version string.</documentation>
+        </annotation>
+        <complexType>
+            <attributeGroup ref="bt:RegistryValueAttributes" />
+            <attribute name="Comparison" type="bt:ScalarComparison" use="required" />
+            <attribute name="Data" type="bt:Version" use="required" />
+        </complexType>
+    </element>
+    <element name="RegKeyLoop" substitutionGroup="sdp:ApplicabilityRuleElement">
+        <annotation>
+            <documentation>Evaluates a rule against every subkey of the specified key.</documentation>
+        </annotation>
+        <complexType>
+            <sequence>
+                <element ref="sdp:ApplicabilityRuleElement" />
+            </sequence>
+            <attributeGroup ref="bt:RegistryKeyAttributes" />
+            <attribute name="TrueIf" type="bt:LoopLogic" use="required" />
+        </complexType>
+    </element>
+    <!--
+  
+  WMI queries
+    
+  -->
+    <element name="WmiQuery" substitutionGroup="sdp:ApplicabilityRuleElement">
+        <annotation>
+            <documentation>Executes a specified WMI query and evaluates to true if one or more results are returned, or false of zero results are returned.</documentation>
+        </annotation>
+        <complexType>
+            <attribute name="Namespace" type="bt:WmiNamespace" use="optional" />
+            <attribute name="WqlQuery" type="bt:WmiWqlQuery" use="required" />
+        </complexType>
+    </element>
+    <!--
+  
+  A psuedo-detection rule based on install history
+  
+    -->
+     <element name="InstalledOnce" substitutionGroup="sdp:ApplicabilityRuleElement">
+        <annotation>
+            <documentation>Returns TRUE if the client has successully installed the update ID once, else false.</documentation>
+        </annotation>
+    </element>
+
+    <!--
+  
+  A generic extension query for simple extensions to applicability rules.
+  
+    -->
+    <element name="GenericQuery" substitutionGroup="sdp:ApplicabilityRuleElement">
+        <annotation>
+            <documentation>Defines a generic query that can be leveraged to create simple extensions to applicability rules that can be evaluated by client servicing stacks. The Namespace attribute should be set to a string value that would prevent collisions between rules defined by different vendors.</documentation>
+        </annotation>
+        <complexType>
+            <attribute name="Namespace" type="string" use="required" />
+            <attribute name="Type" type="string" use="required" />
+            <attribute name="Parameter" type="string" use="required" />
+            <attribute name="Comparison" type="bt:ScalarComparison" use="optional" />
+            <attribute name="Value" type="string" use="optional" />
+        </complexType>
+    </element>
+
+</schema>

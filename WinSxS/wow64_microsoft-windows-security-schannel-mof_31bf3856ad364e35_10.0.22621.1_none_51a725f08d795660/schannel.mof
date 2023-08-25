@@ -1,0 +1,32 @@
+//*********************************************
+// *** Active Directory Service Provider: SChannel
+//*********************************************
+#pragma classflags("forceupdate")
+#pragma namespace ("\\\\.\\Root\\WMI")
+
+[Dynamic, 
+    Description("Security: SChannel") : amended,
+    Guid("{37D2C3CD-C5D4-4587-8531-4696C44244C8}"),
+    locale("MS\\0x409")]
+class SchannelDebugTrace : EventTrace
+{      
+    [    
+        Description ("Enable Flags") : amended,
+
+        ValueDescriptions{
+            "Error Flag", "Warning Flag", "Trace Flag", "Alloc Flag",
+            "Res Flag", "Func Flag", "Cred Flag", "Ctxt Flag", 
+            "Mapper Flag", "Buffers Flag" } : amended,
+
+        Values{"Error", "Warning", "Trace", "Alloc",
+            "Res", "Func", "Cred", "Ctxt",
+            "Mapper", "Buffers" },
+        
+        ValueMap{"0x00000001", "0x00000002", "0x00000004", "0x00000008", 
+            "0x00000010", "0x00000020", "0x00000040", "0x00000080", 
+            "0x00000100", "0x00000200" } : amended
+    ]
+
+    uint32 Flags;
+};
+

@@ -1,0 +1,269 @@
+<Activity mc:Ignorable="sads sap" x:Class="WorkflowConsoleApplication2.Activity1"
+ xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities"
+ xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+ xmlns:mpa="clr-namespace:Microsoft.PowerShell.Activities;assembly=Microsoft.PowerShell.Activities"
+ xmlns:mpua="clr-namespace:Microsoft.PowerShell.Utility.Activities;assembly=Microsoft.PowerShell.Utility.Activities"
+ xmlns:mrc="clr-namespace:Microsoft.RemoteDesktopServices.Common;assembly=Microsoft.RemoteDesktopServices.Management.Activities"
+ xmlns:mrma="clr-namespace:Microsoft.RemoteDesktopServices.Management.Activities;assembly=Microsoft.RemoteDesktopServices.Management.Activities"
+ xmlns:mv="clr-namespace:Microsoft.VisualBasic;assembly=System"
+ xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities"
+ xmlns:mvc="clr-namespace:Microsoft.VisualBasic.CompilerServices;assembly=Microsoft.VisualBasic"
+ xmlns:s="clr-namespace:System;assembly=mscorlib"
+ xmlns:s1="clr-namespace:System;assembly=System"
+ xmlns:s2="clr-namespace:System;assembly=System.Xml"
+ xmlns:s3="clr-namespace:System;assembly=System.Core"
+ xmlns:s4="clr-namespace:System;assembly=System.ServiceModel"
+ xmlns:s5="clr-namespace:System;assembly=System.ComponentModel.Composition"
+ xmlns:sa="clr-namespace:System.Activities;assembly=System.Activities"
+ xmlns:sad="clr-namespace:System.Activities.Debugger;assembly=System.Activities"
+ xmlns:sads="http://schemas.microsoft.com/netfx/2010/xaml/activities/debugger"
+ xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation"
+ xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System"
+ xmlns:scg1="clr-namespace:System.Collections.Generic;assembly=System.ServiceModel"
+ xmlns:scg2="clr-namespace:System.Collections.Generic;assembly=System.Core"
+ xmlns:scg3="clr-namespace:System.Collections.Generic;assembly=mscorlib"
+ xmlns:sd="clr-namespace:System.Data;assembly=System.Data"
+ xmlns:sg="clr-namespace:System.Globalization;assembly=mscorlib"
+ xmlns:sl="clr-namespace:System.Linq;assembly=System.Core"
+ xmlns:sma="clr-namespace:System.Management.Automation;assembly=System.Management.Automation"
+ xmlns:st="clr-namespace:System.Text;assembly=mscorlib"
+ xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <x:Members>
+    <x:Property Name="RDMSServer" Type="InArgument(x:String)">
+      <x:Property.Attributes>
+        <RequiredArgumentAttribute />
+      </x:Property.Attributes>
+    </x:Property>
+    <x:Property Name="Result" Type="OutArgument(sma:PSDataCollection(sma:PSObject))" />
+    <x:Property Name="RDVHServers" Type="InArgument(s:String[])">
+      <x:Property.Attributes>
+        <RequiredArgumentAttribute />
+      </x:Property.Attributes>
+    </x:Property>
+    <x:Property Name="VirtualNetworkName" Type="InArgument(x:String)">
+      <x:Property.Attributes>
+        <RequiredArgumentAttribute />
+      </x:Property.Attributes>
+    </x:Property>
+    <x:Property Name="NetworkAdapterName" Type="InArgument(s:String[])">
+      <x:Property.Attributes>
+        <RequiredArgumentAttribute />
+      </x:Property.Attributes>
+    </x:Property>
+  </x:Members>
+  <sap:VirtualizedContainerService.HintSize>440,706</sap:VirtualizedContainerService.HintSize>
+  <mva:VisualBasic.Settings>Assembly references and imported namespaces for internal implementation</mva:VisualBasic.Settings>
+  <sap:WorkflowViewStateService.ViewState>
+    <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+      <x:Boolean x:Key="ShouldExpandAll">False</x:Boolean>
+      <x:Boolean x:Key="ShouldCollapseAll">True</x:Boolean>
+    </scg3:Dictionary>
+  </sap:WorkflowViewStateService.ViewState>
+  <Sequence sap:VirtualizedContainerService.HintSize="264,666">
+    <Sequence.Variables>
+      <Variable x:TypeArguments="x:String" Name="LocalServer" />
+      <Variable x:TypeArguments="scg3:List(x:String)" Name="RDVHServerList" />
+      <Variable x:TypeArguments="x:Int32" Name="index" />
+      <Variable x:TypeArguments="x:Int32" Name="ServerIndex" />
+    </Sequence.Variables>
+    <sap:WorkflowViewStateService.ViewState>
+      <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+      </scg3:Dictionary>
+    </sap:WorkflowViewStateService.ViewState>
+    <Assign sap:VirtualizedContainerService.HintSize="242,60">
+      <Assign.To>
+        <OutArgument x:TypeArguments="sma:PSDataCollection(sma:PSObject)">[Result]</OutArgument>
+      </Assign.To>
+      <Assign.Value>
+        <InArgument x:TypeArguments="sma:PSDataCollection(sma:PSObject)">[New PSDataCollection(Of PSObject)]</InArgument>
+      </Assign.Value>
+    </Assign>
+    <If Condition="[(RDVHServers.Length &lt;&gt; NetworkAdapterName.Length)]" DisplayName="Input Validation" sap:VirtualizedContainerService.HintSize="242,51">
+      <sap:WorkflowViewStateService.ViewState>
+        <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+        </scg3:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+      <If.Then>
+        <Sequence sap:VirtualizedContainerService.HintSize="222,146">
+          <sap:WorkflowViewStateService.ViewState>
+            <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+              <x:Boolean x:Key="IsPinned">False</x:Boolean>
+            </scg3:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+          <TerminateWorkflow Exception="[New System.ArgumentException(Microsoft.RemoteDesktopServices.Management.Activities.RDManagementResources.ResourceManager.GetString(&quot;RDVHAndNetworkAdapterCountMismatch&quot;))]" sap:VirtualizedContainerService.HintSize="200,22" Reason="[Microsoft.RemoteDesktopServices.Management.Activities.RDManagementResources.ResourceManager.GetString(&quot;RDVHAndNetworkAdapterCountMismatch&quot;)]" />
+        </Sequence>
+      </If.Then>
+      <If.Else>
+        <Sequence sap:VirtualizedContainerService.HintSize="486,332">
+          <sap:WorkflowViewStateService.ViewState>
+            <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+              <x:Boolean x:Key="IsPinned">False</x:Boolean>
+            </scg3:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+          <If Condition="[(VirtualNetworkName Is Nothing Or VirtualNetworkName.Trim().Length = 0)]" sap:VirtualizedContainerService.HintSize="464,208">
+            <If.Then>
+              <TerminateWorkflow Exception="[New System.ArgumentException(string.Format(System.Globalization.CultureInfo.CurrentUICulture, Microsoft.RemoteDesktopServices.Management.Activities.RDManagementResources.ResourceManager.GetString(&quot;EmptyParameterError&quot;), &quot;VirtualNetworkName&quot;), &quot;VirtualNetworkName&quot;)]" sap:VirtualizedContainerService.HintSize="200,22" Reason="[string.Format(System.Globalization.CultureInfo.CurrentUICulture, Microsoft.RemoteDesktopServices.Management.Activities.RDManagementResources.ResourceManager.GetString(&quot;EmptyParameterError&quot;), &quot;VirtualNetworkName&quot;)]" />
+            </If.Then>
+          </If>
+        </Sequence>
+      </If.Else>
+    </If>
+    <Assign sap:VirtualizedContainerService.HintSize="242,60">
+      <Assign.To>
+        <OutArgument x:TypeArguments="x:String">[LocalServer]</OutArgument>
+      </Assign.To>
+      <Assign.Value>
+        <InArgument x:TypeArguments="x:String">[Microsoft.RemoteDesktopServices.Common.CommonUtility.GetLocalhostFullyQualifiedDomainname()]</InArgument>
+      </Assign.Value>
+    </Assign>
+    <Assign sap:VirtualizedContainerService.HintSize="242,60">
+      <Assign.To>
+        <OutArgument x:TypeArguments="scg3:List(x:String)">[RDVHServerList]</OutArgument>
+      </Assign.To>
+      <Assign.Value>
+        <InArgument x:TypeArguments="scg3:List(x:String)">[New List(Of String)(RDVHServers)]</InArgument>
+      </Assign.Value>
+    </Assign>
+    <Assign sap:VirtualizedContainerService.HintSize="242,60">
+      <Assign.To>
+        <OutArgument x:TypeArguments="x:Int32">[index]</OutArgument>
+      </Assign.To>
+      <Assign.Value>
+        <InArgument x:TypeArguments="x:Int32">0</InArgument>
+      </Assign.Value>
+    </Assign>
+    <While sap:VirtualizedContainerService.HintSize="242,51" Condition="[index &lt; 2]">
+      <Sequence sap:VirtualizedContainerService.HintSize="751,2179">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg3:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+        <ForEach x:TypeArguments="x:String" DisplayName="ForEach&lt;String&gt;" sap:VirtualizedContainerService.HintSize="729,1955" Values="[RDVHServers]">
+          <sap:WorkflowViewStateService.ViewState>
+            <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+              <x:Boolean x:Key="IsPinned">False</x:Boolean>
+            </scg3:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+          <ActivityAction x:TypeArguments="x:String">
+            <ActivityAction.Argument>
+              <DelegateInArgument x:TypeArguments="x:String" Name="server" />
+            </ActivityAction.Argument>
+            <If Condition="[(index = 0 and Not string.Equals(server,LocalServer,StringComparison.InvariantCultureIgnoreCase)) or (index = 1 and string.Equals(server,LocalServer,StringComparison.InvariantCultureIgnoreCase))]" sap:VirtualizedContainerService.HintSize="699,1847">
+              <If.Then>
+                <Sequence DisplayName="Add one RD Virtualization Host Server" sap:VirtualizedContainerService.HintSize="574,1739">
+                  <Sequence.Variables>
+                    <Variable x:TypeArguments="sma:PSDataCollection(sma:ErrorRecord)" Name="Errors" />
+                    <Variable x:TypeArguments="sma:PSObject" Name="Output" />
+                  </Sequence.Variables>
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                    </scg3:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <Assign sap:VirtualizedContainerService.HintSize="552,60">
+                    <Assign.To>
+                      <OutArgument x:TypeArguments="x:Int32">[ServerIndex]</OutArgument>
+                    </Assign.To>
+                    <Assign.Value>
+                      <InArgument x:TypeArguments="x:Int32">[RDVHServerList.IndexOf(server)]</InArgument>
+                    </Assign.Value>
+                  </Assign>
+                  <Assign sap:VirtualizedContainerService.HintSize="552,60">
+                    <Assign.To>
+                      <OutArgument x:TypeArguments="sma:PSObject">[Output]</OutArgument>
+                    </Assign.To>
+                    <Assign.Value>
+                      <InArgument x:TypeArguments="sma:PSObject">[New PSObject]</InArgument>
+                    </Assign.Value>
+                  </Assign>
+                  <InvokeMethod sap:VirtualizedContainerService.HintSize="552,134" MethodName="Add">
+                    <InvokeMethod.TargetObject>
+                      <InArgument x:TypeArguments="sma:PSMemberInfoCollection(sma:PSPropertyInfo)">[Output.Properties]</InArgument>
+                    </InvokeMethod.TargetObject>
+                    <InArgument x:TypeArguments="sma:PSNoteProperty">[New PSNoteProperty("ServerName",server)]</InArgument>
+                  </InvokeMethod>
+                  <Assign sap:VirtualizedContainerService.HintSize="552,60">
+                    <Assign.To>
+                      <OutArgument x:TypeArguments="sma:PSDataCollection(sma:ErrorRecord)">[Errors]</OutArgument>
+                    </Assign.To>
+                    <Assign.Value>
+                      <InArgument x:TypeArguments="sma:PSDataCollection(sma:ErrorRecord)">[New PSDataCollection(Of ErrorRecord)]</InArgument>
+                    </Assign.Value>
+                  </Assign>
+                  <mpa:InlineScript Command="import-module $env:windir\System32\ServerManagerInternal\rdmanagement;&#xA;$networkAdapters = $using:NetworkAdapterName&#xA;Add-RDVirtualizationHost -ManagementServer $using:RDMSServer -RDVHServer $using:server -VirtualNetworkName $using:VirtualNetworkName -NetworkAdapterName $networkAdapters[$using:ServerIndex] -ActivityId $using:ServerIndex" DisplayName="Add RDVH" sap:VirtualizedContainerService.HintSize="552,139" PSError="[Errors]">
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                      </scg3:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                  </mpa:InlineScript>
+                  <If Condition="[Errors.Count &gt; 0]" sap:VirtualizedContainerService.HintSize="552,788">
+                    <If.Then>
+                      <Sequence sap:VirtualizedContainerService.HintSize="309,680">
+                        <sap:WorkflowViewStateService.ViewState>
+                          <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+                            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                          </scg3:Dictionary>
+                        </sap:WorkflowViewStateService.ViewState>
+                        <InvokeMethod sap:VirtualizedContainerService.HintSize="287,134" MethodName="Add">
+                          <InvokeMethod.TargetObject>
+                            <InArgument x:TypeArguments="sma:PSMemberInfoCollection(sma:PSPropertyInfo)">[Output.Properties]</InArgument>
+                          </InvokeMethod.TargetObject>
+                          <InArgument x:TypeArguments="sma:PSNoteProperty">[New PSNoteProperty("Success", False)]</InArgument>
+                        </InvokeMethod>
+                        <InvokeMethod sap:VirtualizedContainerService.HintSize="287,134" MethodName="Add">
+                          <InvokeMethod.TargetObject>
+                            <InArgument x:TypeArguments="sma:PSMemberInfoCollection(sma:PSPropertyInfo)">[Output.Properties]</InArgument>
+                          </InvokeMethod.TargetObject>
+                          <InArgument x:TypeArguments="sma:PSNoteProperty">[New PSNoteProperty("ErrorRecord", Errors)]</InArgument>
+                        </InvokeMethod>
+                        <ForEach x:TypeArguments="sma:ErrorRecord" DisplayName="ForEach&lt;ErrorRecord&gt;" sap:VirtualizedContainerService.HintSize="287,208" Values="[Errors]">
+                          <ActivityAction x:TypeArguments="sma:ErrorRecord">
+                            <ActivityAction.Argument>
+                              <DelegateInArgument x:TypeArguments="sma:ErrorRecord" Name="errorRecord" />
+                            </ActivityAction.Argument>
+                            <mpua:WriteError DisplayName="Write-Error" ErrorRecord="[errorRecord]" sap:VirtualizedContainerService.HintSize="200,22" />
+                          </ActivityAction>
+                        </ForEach>
+                      </Sequence>
+                    </If.Then>
+                    <If.Else>
+                      <InvokeMethod sap:VirtualizedContainerService.HintSize="218,134" MethodName="Add">
+                        <InvokeMethod.TargetObject>
+                          <InArgument x:TypeArguments="sma:PSMemberInfoCollection(sma:PSPropertyInfo)">[Output.Properties]</InArgument>
+                        </InvokeMethod.TargetObject>
+                        <InArgument x:TypeArguments="sma:PSNoteProperty">[New PSNoteProperty("Success", True)]</InArgument>
+                      </InvokeMethod>
+                    </If.Else>
+                  </If>
+                  <InvokeMethod sap:VirtualizedContainerService.HintSize="552,134" MethodName="Add">
+                    <InvokeMethod.TargetObject>
+                      <InArgument x:TypeArguments="sma:PSDataCollection(sma:PSObject)">[Result]</InArgument>
+                    </InvokeMethod.TargetObject>
+                    <InArgument x:TypeArguments="sma:PSObject">[Output]</InArgument>
+                  </InvokeMethod>
+                </Sequence>
+              </If.Then>
+            </If>
+          </ActivityAction>
+        </ForEach>
+        <Assign sap:VirtualizedContainerService.HintSize="685,60">
+          <Assign.To>
+            <OutArgument x:TypeArguments="x:Int32">[index]</OutArgument>
+          </Assign.To>
+          <Assign.Value>
+            <InArgument x:TypeArguments="x:Int32">[index + 1]</InArgument>
+          </Assign.Value>
+        </Assign>
+      </Sequence>
+    </While>
+  </Sequence>
+</Activity>

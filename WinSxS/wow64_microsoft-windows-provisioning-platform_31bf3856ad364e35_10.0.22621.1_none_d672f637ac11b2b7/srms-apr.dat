@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<migration urlid="http://www.microsoft.com/systemreset/1.0/systemsettings">
+
+  <component type="System" offlineApply="No">
+    <displayName _locID="Rejuv.PrivacySettings">System Reset Privacy Settings Settings</displayName>
+    <role role="Settings">
+      <rules context="System">
+        <include>
+          <objectSet>
+            <!-- Auto install device drivers -->
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows\CurrentVersion\DriverSearching [SearchOrderConfig]</pattern>
+            <!-- Get metadata and device apps for devices -->
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows\CurrentVersion\Device Metadata [PreventDeviceMetadataFromNetwork]</pattern>
+            <!-- IE SmartScreen -->
+            <pattern type="Registry">HKLM\Software\Microsoft\Internet Explorer\PhishingFilter [EnabledV9]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Policies\Microsoft\Windows\System [EnableSmartScreen]</pattern>
+            <!-- Help make the Windows Store better by sending Microsoft info about the web content my apps use -->
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows\CurrentVersion\AppHost [EnableWebContentEvaluation]</pattern>
+            <!-- SpyNet Settings (moved from Telemetry Settings) -->
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows Defender\Spynet [SpyNetReporting]</pattern>
+            <!-- Help improve Microsoft services by sending some location data when you use location-aware apps -->
+            <pattern type="Registry">HKLM\Software\Microsoft\Sensors\LocationProvider [CSEnable]</pattern>
+            <!-- Help Make Windows Help content more relevant -->
+            <pattern type="Registry">HKLM\Software\Microsoft\Assistance\Client\1.0\Settings [GlobalImplicitFeedback]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Assistance\Client\1.0\Settings [GlobalOnlineAssist]</pattern>
+            <!-- Get latest troubleshooting packs to fix problems -->
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows\ScriptedDiagnosticsProvider\Policy [EnableQueryRemoteServer]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\MSDE\Policy [DefaultQueryRemoteServer]</pattern>
+            <!-- Use Windows Internet Explorer Compatibility View lists to help improve my experience on some sites -->
+            <pattern type="Registry">HKLM\Software\Microsoft\Internet Explorer\BrowserEmulation [MSCompatibilityMode]</pattern>
+            <!-- Let apps give me personalized content based on my name and account picture -->
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows\CurrentVersion\AccountPicture [AppsReadAccess]</pattern>
+            <!-- Let apps access my location using the Windows location platform -->
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Sensor\Overrides\{BFA794E4-F964-4FDB-90F6-51056BFE4B44} [SensorPermissionState]</pattern>
+            <!-- Windows SmartScreen -->
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows\CurrentVersion\Explorer [SmartScreenEnabled]</pattern>
+            <!-- Send a Do Not Track request to websites you visit in Internet Explorer -->
+            <pattern type="Registry">HKLM\Software\Microsoft\Internet Explorer\Main [DoNotTrack]</pattern>
+            <!-- Let apps use my advertising ID for experiences across apps -->
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows\CurrentVersion\AdvertisingInfo\* [*]</pattern>
+            <pattern type="Registry">HKLM\Software\Policies\Microsoft\Windows\AdvertisingInfo\* [*]</pattern>
+            <!-- Get To Know Me -->
+            <pattern type="Registry">HKLM\Software\Microsoft\Personalization\Settings [AcceptedPrivacyPolicy]</pattern>
+            <!-- Location services -->
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Sensor\Overrides\{BFA794E4-F964-4FDB-90F6-51056BFE4B44} [SensorPermissionState]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\lfsvc\Service\Configuration [Status]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Settings\FindMyDevice [LocationSyncEnabled]</pattern>
+            <!-- Speech recognition -->
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Personalization\Settings [AcceptedPrivacyPolicy]</pattern>
+            <!-- Diagnostics -->
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows\CurrentVersion\policies\DataCollection [AllowTelemetry]</pattern>
+            <!-- Tailored experiences -->
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows\CurrentVersion\Privacy [TailoredExperiencesWithDiagnosticDataEnabled]</pattern>
+            <!-- Relevant ads -->
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows\CurrentVersion\AdvertisingInfo [Enabled]</pattern>
+          </objectSet>
+        </include>
+        <merge script="MigXmlHelper.SourcePriority()">
+          <objectSet>
+            <!-- Windows SmartScreen -->
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows\CurrentVersion\Explorer [SmartScreenEnabled]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Policies\Microsoft\Windows\System [EnableSmartScreen]</pattern>
+          </objectSet>
+        </merge>
+      </rules>
+    </role>
+  </component>
+
+
+  <component type="System" offlineApply="No">
+    <displayName _locID="Rejuv.InternationalizationSettings">System Reset Internationalization Settings</displayName>
+    <role role="Settings">
+      <rules context="System">
+        <include>
+          <objectSet>
+            <pattern type="Registry">HKU\.Default\Keyboard Layout\* [*]</pattern>
+            <pattern type="Registry">HKU\.Default\Control Panel\International [Locale]</pattern>
+            <pattern type="Registry">HKU\.Default\Control Panel\International [LocaleName]</pattern>
+            <pattern type="Registry">HKU\.Default\Control Panel\International\Geo [Nation]</pattern>
+            <pattern type="Registry">HKU\.Default\Software\Microsoft\CTF\* [*]</pattern>
+            <!--  migrated in the reset engine in WinRE
+            <pattern type="Registry">HKLM\SYSTEM\ControlSet001\Control\Nls\* [*]\* [*]</pattern>
+            -->
+          </objectSet>
+        </include>
+      </rules>
+    </role>
+  </component>
+
+
+  <!-- Most of the data for this component is migrated offline -->
+  <component type="System" context="System" offlineApply="No">
+    <displayName _locID="Rejuv.NetworkProfiles">Network Settings</displayName>
+    <role role="Settings">
+      <rules>
+        <include>
+          <objectSet>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\NetworkList [FirstNetwork]</pattern>
+          </objectSet>
+        </include>
+        <!-- If there is a conflict for any file, this will give priority to source and will ignore the destination -->
+        <merge script="MigXmlHelper.SourcePriority()">
+          <objectSet>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\NetworkList [FirstNetwork]</pattern>
+          </objectSet>
+        </merge>
+      </rules>
+    </role>
+  </component>
+
+
+  <component type="System" context="System" offlineApply="No">
+    <displayName _locID="Rejuv.WLANUpg">WLAN Settings</displayName>
+    <role role="Settings">
+      <rules context="System">
+        <destinationCleanup>
+          <objectSet>
+            <pattern type="Registry">HKLM\Software\Microsoft\Wlansvc\MigrationData\* [*]</pattern>
+            <pattern type="File">%CSIDL_COMMON_APPDATA%\Microsoft\Wlansvc\MigrationData\* [*]</pattern>
+          </objectSet>
+        </destinationCleanup>
+        <exclude>
+          <objectSet>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\Wlansvc [Start]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Wlansvc\MigrationData\* [*]</pattern>
+          </objectSet>
+        </exclude>
+        <merge script="MigXmlHelper.SourcePriority()">
+          <!-- If there is a conflict for any file, this will give priority to source and will ignore the destination-->
+          <objectSet>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WLANSVC\Parameters\WlanAPIPermissions [*]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WLANSVC\Parameters\HostedNetworkSettings [*]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WLANSVC\Parameters\OneXAuthenticator [*]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WLANSVC\Parameters\WFDProvPlugin [*]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Wlansvc [ShowDeniedNetworks]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Wlansvc [GlobalParameters]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Wlansvc\DisableBackgroundScanOptimization [*]</pattern>
+          </objectSet>
+        </merge>
+
+        <include>
+          <objectSet>
+            <pattern type="Registry">HKLM\Software\Microsoft\Wlansvc\* [*]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Policies\Microsoft\Windows\Wireless\GPTWirelessPolicy\* [*]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Wlansvc\GroupPolicy\* [*]</pattern>
+            <pattern type="File">%CSIDL_COMMON_APPDATA%\Microsoft\Wlansvc\Profiles\* [*]</pattern>
+            <pattern type="File">%WINDIR%\wlansvc\policies\* [*]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WLANSVC\Parameters\WlanAPIPermissions [*]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WLANSVC\Parameters\HostedNetworkSettings [*]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WLANSVC\Parameters\OneXAuthenticator [*]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WLANSVC\Parameters\WFDProvPlugin [*]</pattern>
+          </objectSet>
+        </include>
+
+        <locationModify script="MigXmlHelper.RelativeMove(&apos;HKLM\Software\Microsoft\Wlansvc&apos;,&apos;HKLM\Software\Microsoft\WLANSVC\MigrationData\Migration\WLANSVC\&apos;)">
+          <objectSet>
+            <pattern type="Registry">HKLM\Software\Microsoft\Wlansvc\* [*]</pattern>
+          </objectSet>
+        </locationModify>
+        <locationModify script="MigXmlHelper.RelativeMove(&apos;HKLM\Software\Microsoft\Wlansvc [ShowDeniedNetworks]&apos;,&apos;HKLM\Software\Microsoft\WLANSVC [ShowDeniedNetworks]&apos;)">
+          <objectSet>
+            <pattern type="Registry">HKLM\Software\Microsoft\Wlansvc [ShowDeniedNetworks]</pattern>
+          </objectSet>
+        </locationModify>
+        <locationModify script="MigXmlHelper.RelativeMove(&apos;HKLM\Software\Microsoft\Wlansvc\DisableBackgroundScanOptimization&apos;,&apos;HKLM\Software\Microsoft\WLANSVC\DisableBackgroundScanOptimization&apos;)">
+          <objectSet>
+            <pattern type="Registry">HKLM\Software\Microsoft\Wlansvc\DisableBackgroundScanOptimization [*]</pattern>
+          </objectSet>
+        </locationModify>
+        <locationModify script="MigXmlHelper.RelativeMove(&apos;HKLM\SOFTWARE\Policies\Microsoft\Windows\Wireless\GPTWirelessPolicy&apos;,&apos;HKLM\Software\Microsoft\WLANSVC\MigrationData\Migration\GPTWirelessPolicy&apos;)">
+          <objectSet>
+            <pattern type="Registry">HKLM\SOFTWARE\Policies\Microsoft\Windows\Wireless\GPTWirelessPolicy\* [*]</pattern>
+          </objectSet>
+        </locationModify>
+        <locationModify script="MigXmlHelper.RelativeMove(&apos;HKLM\SOFTWARE\Microsoft\Wlansvc\GroupPolicy\Profiles&apos;,&apos;HKLM\Software\Microsoft\WLANSVC\MigrationData\Migration\GroupPolicy\Profiles&apos;)">
+          <objectSet>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Wlansvc\GroupPolicy\Profiles\* [*]</pattern>
+          </objectSet>
+        </locationModify>
+        <locationModify script="MigXmlHelper.RelativeMove(&apos;%CSIDL_COMMON_APPDATA%\Microsoft\Wlansvc\Profiles&apos;,&apos;%CSIDL_COMMON_APPDATA%\Microsoft\Wlansvc\MigrationData\Profiles&apos;)">
+          <objectSet>
+            <pattern type="File">%CSIDL_COMMON_APPDATA%\Microsoft\Wlansvc\Profiles\* [*]</pattern>
+          </objectSet>
+        </locationModify>
+        <locationModify script="MigXmlHelper.RelativeMove(&apos;%WINDIR%\wlansvc\policies&apos;,&apos;%CSIDL_COMMON_APPDATA%\Microsoft\Wlansvc\MigrationData\Policies&apos;)">
+          <objectSet>
+            <pattern type="File">%WINDIR%\wlansvc\policies\* [*]</pattern>
+          </objectSet>
+        </locationModify>
+        <merge script="MigXmlHelper.SourcePriority()">
+          <!-- If there is a conflict for any file, this will give priority to source and will ignore the destination-->
+          <objectSet>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WLANSVC\Parameters\WlanAPIPermissions [*]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WLANSVC\Parameters\HostedNetworkSettings [*]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WLANSVC\Parameters\OneXAuthenticator [*]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WLANSVC\Parameters\WFDProvPlugin [*]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Wlansvc [ShowDeniedNetworks]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Wlansvc\DisableBackgroundScanOptimization [*]</pattern>
+          </objectSet>
+        </merge>
+        <processing when="apply-success">
+          <script>MigXmlHelper.SyncSCM("wlansvc")</script>
+        </processing>
+      </rules>
+      <!-- Conditional: Migration can occur over Wireless - thus, we won't kill wlansvc unless it's an in-place upgrade -->
+      <rules context="System">
+        <processing when="pre-apply">
+          <addObjects>
+            <object>
+              <location type="Registry">HKLM\SOFTWARE\Microsoft\WLANSVC\MigrationData [WLANSVCMigrationDone] </location>
+              <attributes>dword</attributes>
+              <bytes>00000000</bytes>
+            </object>
+          </addObjects>
+          <script>MigXmlHelper.StopService("wlansvc")</script>
+        </processing>
+      </rules>
+      <!-- Conditional: Applied only if wlansvc service is set to autostart and this is an in-place upgrade -->
+      <rules context="System">
+        <detects>
+          <detect>
+            <condition>MigXmlHelper.IsUpgrade()</condition>
+          </detect>
+          <detect>
+            <condition>MigXmlHelper.DoesStringContentEqual("Registry","HKLM\SYSTEM\CurrentControlSet\Services\Wlansvc [Start]","0x00000002")</condition>
+          </detect>
+        </detects>
+        <processing when="post-apply">
+          <script>MigXmlHelper.StartService("wlansvc")</script>
+        </processing>
+      </rules>
+    </role>
+  </component>
+
+
+  <component type="System" context="System" offlineApply="No">
+    <displayName _locID="Rejuv.MachineCertificates">Machine Certificates</displayName>
+    <role role="Settings">
+      <rules>
+        <include>
+          <objectSet>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\SystemCertificates\My\* [*]</pattern>
+          </objectSet>
+        </include>
+      </rules>
+    </role>
+  </component>
+
+
+  <component type="System" offlineApply="No">
+    <displayName _locID="Rejuv.MDMConfig">MDM Configuration</displayName>
+      <role role="Settings">
+        <rules context="System">
+          <exclude>
+            <objectSet>
+              <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Enrollments\* [IsSyncDone]</pattern>
+              <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Enrollments\* [IsServerProvisioningDone]</pattern>
+              <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Enrollments\* [ProvisioningStatus]</pattern>
+              <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Enrollments\* [Timestamp]</pattern>
+            </objectSet>
+          </exclude>
+          <include>
+            <objectSet>
+              <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Enrollments\* [*]</pattern>
+              <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Provisioning\OMADM\Accounts\* [*]</pattern>
+              <pattern type="Registry">HKLM\Software\Microsoft\Provisioning\OMADM\HwDevID\* [*]</pattern>
+              <pattern type="Registry">HKLM\Software\Microsoft\Provisioning\OMADM\Logger\* [*]</pattern>
+            </objectSet>
+          </include>
+        </rules>
+      </role>
+  </component>
+
+
+  <component type="System" offlineApply="No">
+    <displayName _locID="Rejuv.Autopilot">Autopilot</displayName>
+      <role role="Settings">
+        <rules context="System">
+          <include>
+            <objectSet>
+              <!-- For Autopilot session correlation vector and established correlations, it won't change on Autopilot Reset, so keep it for reference and diagnostics. -->
+              <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Provisioning\AutopilotPolicy [AutopilotCorrelationVector]</pattern>
+              <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Provisioning\Diagnostics\AutoPilot\EstablishedCorrelations [*]</pattern>
+            </objectSet>
+          </include>
+        </rules>
+      </role>
+  </component>
+
+
+  <component type="System" offlineApply="No">
+    <displayName>Temporary Hello Policy Persistence</displayName>
+      <role role="Settings">
+        <rules context="System">
+          <include>
+            <objectSet>
+              <!-- This persists packages added with DISM.exe /Add-ProvisioningPackage. -->
+              <pattern type="File">%SYSTEMDRIVE%\Recovery\Customizations [*.ppkg]</pattern>
+              <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Provisioning\PackageLocations [*]</pattern>
+              <!-- This is a temporary migration rule to persist Hello policy settings in RS4. This should be removed in RS5 as the Hello
+              policies should be set during the user's first log on sync and the component that brings up the Hello prompt should read the
+              policies after. -->
+              <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Policies\PassportForWork\* [*]</pattern>
+              <pattern type="Registry">HKLM\SOFTWARE\Microsoft\PolicyManager\current\device\Search [AllowCortanaInAAD]</pattern>
+              <pattern type="Registry">HKLM\SOFTWARE\Microsoft\PolicyManager\current\device\Search [AllowCortanaInAAD_ProviderSet]</pattern>
+              <pattern type="Registry">HKLM\SOFTWARE\Microsoft\PolicyManager\current\device\Experience [AllowWindowsConsumerFeatures]</pattern>
+              <pattern type="Registry">HKLM\SOFTWARE\Microsoft\PolicyManager\current\device\Experience [AllowWindowsConsumerFeatures_ProviderSet]</pattern>
+            </objectSet>
+          </include>
+        </rules>
+      </role>
+  </component>
+
+</migration>

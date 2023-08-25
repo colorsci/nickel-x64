@@ -1,0 +1,30 @@
+#pragma autorecover
+#pragma classflags ("forceupdate")
+#pragma namespace ( "\\\\.\\root\\Microsoft\\Windows\\winrm")
+
+Instance of __Win32Provider as $prov
+{
+ Name = "WsmAgent";
+ ClsId = "{DA13DC3D-3F88-4A85-A89E-5735588A65E5}";
+ ImpersonationLevel = 1;
+ HostingModel = "localsystemhost";
+};
+
+
+Instance of __MethodProviderRegistration
+{
+ Provider = $prov;
+};
+
+
+
+[dynamic: ToInstance, provider("WsmAgent"): ToInstance]
+
+class WsmAgent
+
+{
+ [implemented, static: DisableOverride ToSubClass] uint32 GetData([In] string key, [In] string detail, [Out] string data);
+ [implemented, static: DisableOverride ToSubClass] uint32 SetData([In] string key, [In] string detail, [In] string data);
+ [implemented, static: DisableOverride ToSubClass] uint32 RemoveData([In] string key, [In] string detail);
+
+};

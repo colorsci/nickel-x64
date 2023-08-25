@@ -1,0 +1,1727 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates xmlns="http://schemas.microsoft.com/communicator/history.xsd">
+    <!-- All subject templates for detecting conversation types
+    
+         CAUTION: AFTER ANY CHANGES, PLEASE RUN __UTEST UNDER HISTORY
+         TO VERIFY THAT THERE ARE NOT MISSED CASES, NOT DUPLICATED AND
+         REDUNDANT TEMPLATES    
+         
+    -->
+    <template name="conversation">
+        <!--Conversation
+            Conversation with <remote participant list>  - Custom subject
+        -->
+        
+        <condition relation="or">
+            <condition relation="and">
+                <condition relation="or">
+                    <condition relation="and">
+                        <expression operator="is" operand="incoming"/>
+                    </condition>
+                    <condition relation="and">
+                        <expression operator="is" operand="accepted"/>
+                    </condition>
+                </condition>
+                <condition relation="or">
+                    <condition relation="and">
+                        <expression operator="is" operand="outgoing"/>
+                    </condition>
+                </condition>
+            </condition>
+            <condition relation="and">
+                <condition relation="or">
+                    <expression operator="has" operand="imMode"/>
+                </condition>
+                <condition relation="or">
+                    <condition relation="and">
+                        <condition relation="or">
+                        <expression operator="has" operand="legacyAppSharingMode"/>
+                        </condition>
+                        <condition relation="or">
+                            <expression operator="has" operand="appInviteMode"/>
+                        </condition>
+                        <condition relation="or">
+                            <expression operator="has" operand="applicationSessionMode"/>
+                        </condition>
+                    </condition>
+                    <condition relation="andNot">
+                        <expression operator="has" operand="audioVideoModes"/>
+                    </condition>
+                </condition>
+                 
+            </condition>
+        </condition> 
+    </template>
+
+    <template name="regularIncomingCall">
+        <!--RegularIncomingCall
+            incoming call from <RemoteParticipant>
+        -->
+        <condition relation="and">
+            <expression operator="is" operand="incoming"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="is" operand="accepted"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="imMode"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="has" operand="audioVideoModes"/>
+        </condition> 
+        <condition relation="andNot">
+            <expression operator="has" operand="localDelegate"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="localTM"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="localAcdAgent"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="remoteDelegate"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="referBy"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="deflectedTo"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="transferedTo"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="is" operand="pickupByDiffPerson"/>
+        </condition>
+    </template>
+    
+    <template name="regularOutgoingCall">
+        <!--RegularOutgoingCall
+            outgoing call to <RemoteParticipant>
+        -->
+        <condition relation="and">
+            <expression operator="is" operand="outgoing"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="imMode"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="has" operand="audioVideoModes"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="conferenceMode"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="is" operand="pickupByDiffPerson"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="localDelegate"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="localAcdAgent"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="remoteDelegate"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="deflectedTo"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="transferedTo"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="is" operand="callingVoiceMail"/>
+        </condition>
+    </template>
+    <template name="outgoingConferenceCall">
+        <!--RegularOutgoingCall
+            outgoing call to <RemoteParticipants>
+        -->
+        <condition relation="or">
+            <condition relation="and">
+                <expression operator="is" operand="outgoing"/>
+            </condition>
+            <condition relation="andNot">
+                <expression operator="has" operand="imMode"/>
+            </condition>
+            <condition relation="and">
+                <expression operator="has" operand="conferenceMode"/>
+            </condition>
+            <condition relation="and">
+                <expression operator="has" operand="audioVideoModes"/>
+            </condition>       
+        </condition> 
+    </template>
+    
+    <template name="regularOutgoingCallThenTransfered">
+        <!--
+        outgoing call to %2 transfered to %6"
+        -->
+        <condition relation="andNot">
+            <expression operator="has" operand="imMode"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="has" operand="audioVideoModes"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="is" operand="outgoing"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="localDelegate"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="remoteDelegate"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="is" operand="pickupByDiffPerson"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="has" operand="transferedTo"/>
+        </condition>
+    </template>
+
+    <template name="callToAnaAnsweredByBob">
+        <!--CallToBossAnswerByAdmin
+            outgoing call to <<Ana>> (<<phone label>>) answered by <<Bob>>  - Custom subject
+        -->
+        <condition relation="andNot">
+            <expression operator="has" operand="imMode"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="has" operand="audioVideoModes"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="conferenceMode"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="is" operand="outgoing"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="localDelegate"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="is" operand="pickupByDiffPerson"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="transferedTo"/>
+        </condition>
+    </template>
+
+    <template name="callToAnaAnsweredByBobThenTransfered">
+        <!--CallToBossAnswerByAdmin
+            outgoing call to <<Ana>> (<<phone label>>) answered by <<Bob>>  - Custom subject
+        -->
+        <condition relation="andNot">
+            <expression operator="has" operand="imMode"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="has" operand="audioVideoModes"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="conferenceMode"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="is" operand="outgoing"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="localDelegate"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="is" operand="pickupByDiffPerson"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="has" operand="transferedTo"/>
+        </condition>
+    </template>
+
+    <template name="callForBoss">
+        <!--
+        outgoing call on behalf of %1 to %2
+        -->
+        <condition relation="andNot">
+            <expression operator="has" operand="imMode"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="has" operand="audioVideoModes"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="conferenceMode"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="is" operand="outgoing"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="has" operand="localDelegate"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="is" operand="pickupByDiffPerson"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="transferedTo"/>
+        </condition>
+    </template>
+
+    <template name="anonymousCallForRgs">
+        <!--
+        Anonymous outgoing call to %2 for %1"
+        -->
+        <condition relation="andNot">
+          <expression operator="has" operand="imMode"/>
+        </condition>
+        <condition relation="and">
+          <expression operator="has" operand="audioVideoModes"/>
+        </condition>
+        <condition relation="andNot">
+          <expression operator="has" operand="conferenceMode"/>
+        </condition>
+        <condition relation="and">
+          <expression operator="is" operand="outgoing"/>
+        </condition>
+        <condition relation="and">
+          <expression operator="has" operand="localAcdAgent"/>
+        </condition>
+        <condition relation="and">
+          <expression operator="has" operand="isAnonymousResponseGroupAgent"/>
+        </condition>
+        <condition relation="andNot">
+          <expression operator="is" operand="pickupByDiffPerson"/>
+        </condition>
+        <condition relation="andNot">
+          <expression operator="has" operand="transferedTo"/>
+        </condition>
+    </template>
+  
+    <template name="callForBossThenTransfered">
+        <!--
+        outgoing call on behalf of %1 to %2
+        -->
+        <condition relation="andNot">
+            <expression operator="has" operand="imMode"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="has" operand="audioVideoModes"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="conferenceMode"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="is" operand="outgoing"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="has" operand="localDelegate"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="is" operand="pickupByDiffPerson"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="has" operand="transferedTo"/>
+        </condition>
+    </template>
+
+    <template name="callFromCustomerAnsweredForBoss">
+        <!--
+        "incoming call from %2 answered on behalf of %1"
+        -->
+        <condition relation="andNot">
+            <expression operator="has" operand="imMode"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="has" operand="audioVideoModes"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="is" operand="accepted"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="is" operand="incoming"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="remoteDelegate"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="has" operand="localDelegate"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="transferedTo"/>
+        </condition>
+    </template>
+
+    <template name="callFromCustomerAnsweredBy">
+        <!--
+        "incoming call from %2 answered by %4"
+        -->
+        <condition relation="andNot">
+            <expression operator="has" operand="imMode"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="has" operand="audioVideoModes"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="is" operand="incoming"/>
+        </condition>
+        <condition relation="andNot">
+            <condition relation="or">
+                <expression operator="is" operand="accepted"/>
+            </condition>
+            <condition relation="or">
+                <expression operator="is" operand="missed"/>
+            </condition>
+            <condition relation="or">
+                <expression operator="is" operand="deflected"/>
+            </condition>
+            <condition relation="or">
+                <expression operator="is" operand="rejected"/>
+            </condition>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="remoteDelegate"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="transferedTo"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="referBy"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="is" operand="pickupByDiffPerson"/>
+        </condition> 
+    </template>
+
+    <template name="callFromAdminAnsweredBy">
+        <!--
+        "incoming call from %2 answered by %4"
+        -->
+        <condition relation="andNot">
+            <expression operator="has" operand="imMode"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="has" operand="audioVideoModes"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="is" operand="incoming"/>
+        </condition>
+        <condition relation="andNot">
+            <condition relation="or">
+                <expression operator="is" operand="accepted"/>
+            </condition>
+            <condition relation="or">
+                <expression operator="is" operand="missed"/>
+            </condition>
+            <condition relation="or">
+                <expression operator="is" operand="deflected"/>
+            </condition>
+            <condition relation="or">
+                <expression operator="is" operand="rejected"/>
+            </condition>
+        </condition>
+        <condition relation="and">
+            <expression operator="has" operand="remoteDelegate"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="transferedTo"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="is" operand="pickupByDiffPerson"/>
+        </condition> 
+    </template>
+
+    <template name="regularCallReferByAnsweredBy">
+        <!--
+        "incoming call from %2 answered by %4"
+        -->
+        <condition relation="andNot">
+            <expression operator="has" operand="imMode"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="has" operand="audioVideoModes"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="is" operand="incoming"/>
+        </condition>
+        <condition relation="andNot">
+            <condition relation="or">
+                <expression operator="is" operand="accepted"/>
+            </condition>
+            <condition relation="or">
+                <expression operator="is" operand="missed"/>
+            </condition>
+            <condition relation="or">
+                <expression operator="is" operand="deflected"/>
+            </condition>
+            <condition relation="or">
+                <expression operator="is" operand="rejected"/>
+            </condition>
+        </condition> 
+        <condition relation="andNot">
+            <expression operator="has" operand="transferedTo"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="is" operand="pickupByDiffPerson"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="has" operand="referBy"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="remoteDelegate"/>
+        </condition>  
+    </template>
+
+    <template name="callFromCustomerAnsweredForTL">
+        <!--
+        "incoming call from %2 answered for %1"
+        -->
+        <condition relation="andNot">
+            <expression operator="has" operand="imMode"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="has" operand="audioVideoModes"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="is" operand="accepted"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="is" operand="incoming"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="remoteDelegate"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="has" operand="localTM"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="transferedTo"/>
+        </condition>
+    </template>
+
+    <template name="callFromCustomerAnsweredAnonymouslyForRgs">
+        <!--
+        Incoming call from %2 for %1 answered anonymously
+        -->
+        <condition relation="andNot">
+            <expression operator="has" operand="imMode"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="has" operand="audioVideoModes"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="is" operand="accepted"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="is" operand="incoming"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="remoteDelegate"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="has" operand="localAcdAgent"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="has" operand="isAnonymousResponseGroupAgent"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="transferedTo"/>
+        </condition>
+    </template>
+
+    <template name="callFromAdminAnsweredForBoss">
+        <!--
+        incoming call from %2 on behalf of %3 answered on behalf of %1
+        -->
+        <condition relation="andNot">
+            <expression operator="has" operand="imMode"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="has" operand="audioVideoModes"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="is" operand="accepted"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="is" operand="incoming"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="has" operand="remoteDelegate"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="has" operand="localDelegate"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="transferedTo"/>
+        </condition>
+    </template>
+
+    <template name="callFromAdminAnsweredForTL">
+        <!--
+         "incoming call from %2 on behalf of %3 answered for %1"
+        -->
+        <condition relation="andNot">
+            <expression operator="has" operand="imMode"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="has" operand="audioVideoModes"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="is" operand="accepted"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="is" operand="incoming"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="has" operand="remoteDelegate"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="has" operand="localTM"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="transferedTo"/>
+        </condition>
+    </template>
+
+    <template name="regularIncomingCallTransferedTo">
+        <!--
+        incoming call from %2 transfered to %6
+        -->
+        <condition relation="andNot">
+            <expression operator="has" operand="imMode"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="has" operand="audioVideoModes"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="is" operand="accepted"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="is" operand="incoming"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="remoteDelegate"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="localTM"/>
+        </condition>
+
+        <condition relation="andNot">
+            <expression operator="has" operand="localDelegate"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="has" operand="transferedTo"/>
+        </condition>
+    </template>
+
+    <template name="callFromCustomerAnsweredForBossTransferedTo">
+        <!--
+        incoming call from %2 answered on behalf of %1 and transfered to %6
+        -->
+        <condition relation="andNot">
+            <expression operator="has" operand="imMode"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="has" operand="audioVideoModes"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="is" operand="accepted"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="is" operand="incoming"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="remoteDelegate"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="has" operand="localDelegate"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="has" operand="transferedTo"/>
+        </condition>
+    </template>
+
+    <template name="callFromCustomerAnsweredForTLTransferedTo">
+        <!--
+        "incoming call from %2 answered for %1 and transfered to %6"
+        -->
+        <condition relation="andNot">
+            <expression operator="has" operand="imMode"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="has" operand="audioVideoModes"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="is" operand="accepted"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="is" operand="incoming"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="remoteDelegate"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="has" operand="localTM"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="has" operand="transferedTo"/>
+        </condition>
+    </template>
+
+    <template name="callFromAdminAnsweredForBossTransferedTo">
+        <!--
+        "incoming call from %2 on behalf of %3 answered on behalf of %1 and transfered to %6"
+        -->
+        <condition relation="andNot">
+            <expression operator="has" operand="imMode"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="has" operand="audioVideoModes"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="is" operand="accepted"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="is" operand="incoming"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="has" operand="remoteDelegate"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="has" operand="localDelegate"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="has" operand="transferedTo"/>
+        </condition>
+    </template>
+
+    <template name="callFromAdminAnsweredForTLTransferedTo">
+        <!--
+       incoming call from %2 on behalf of %3 answered for %1 and transfered to %6
+        -->
+        <condition relation="andNot">
+            <expression operator="has" operand="imMode"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="has" operand="audioVideoModes"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="is" operand="accepted"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="is" operand="incoming"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="has" operand="remoteDelegate"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="has" operand="localTM"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="has" operand="transferedTo"/>
+        </condition>
+    </template>
+    
+    <template name="missedConversation">
+        <!--missedConversation
+            missed conversation with <remote participant> - Custom subject
+        -->
+        <condition relation="and">
+            <expression operator="is" operand="incoming"/>
+        </condition>
+        <condition relation="and">
+            <condition relation="or">
+                <expression operator="is" operand="missed"/>
+            </condition>
+            <condition relation="or">
+                <expression operator="is" operand="rejected"/>
+            </condition>
+            <condition relation="or">
+                <expression operator="is" operand="autoAccepted"/>
+            </condition>            
+        </condition>       
+        <condition relation="and">
+            <condition relation="or"> 
+                <condition relation="and">
+                    <condition relation="or">
+                         <expression operator="is" operand="autoAccepted"/>
+                    </condition>
+                    <condition relation="or">
+                        <expression operator="is" operand="missed"/>
+                    </condition>
+                </condition>
+                <condition relation="and">
+                    <expression operator="has" operand="imMode"/>
+                </condition>
+                <condition relation="andNot">
+                    <expression operator="has" operand="conferenceMode"/>
+                </condition>
+            </condition>
+            <condition relation="or">
+                <condition relation="and">
+                    <expression operator="is" operand="rejected"/> 
+                </condition> 
+                <condition relation="and">
+                    <expression operator="has" operand="imMode"/>
+                </condition> 
+            </condition>
+            <condition relation="or">
+                <!-- missed legacy app sharing-->
+                <condition relation="andNot">
+                    <expression operator="has" operand="imMode"/>
+                </condition>
+                <condition relation="andNot">
+                    <expression operator="has" operand="audioVideoModes"/>
+                </condition>
+                <condition relation="and">
+                    <condition relation="or">
+                        <expression operator="has" operand="legacyAppSharingMode"/>
+                    </condition>
+                    <condition relation="or">
+                        <expression operator="has" operand="appInviteMode"/>
+                    </condition>
+                    <condition relation="or">
+                        <expression operator="has" operand="applicationSessionMode"/>
+                    </condition>
+                </condition> 
+            </condition>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="is" operand="pickupByDiffPerson"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="localDelegate"/>
+        </condition>
+    </template>
+
+    <template name="missedConference">
+        <!--missedConference
+            Missed conference with <remote participant>
+        -->
+        <condition relation="and">
+            <condition relation="or">
+                <expression operator="is" operand="autoAccepted"/>
+            </condition>
+            <condition relation="or">
+                <expression operator="is" operand="missed"/>
+            </condition>
+        </condition>  
+        <condition relation="and">
+            <expression operator="is" operand="incoming"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="has" operand="conferenceMode"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="has" operand="imMode"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="is" operand="pickupByDiffPerson"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="localDelegate"/>
+        </condition>
+    </template>
+
+    
+    <template name="rejectedRegularIncomingCall">
+        <!--RegularIncomingCall
+            incoming call from <RemoteParticipant>
+        -->
+        
+        <condition relation="and">
+            <expression operator="is" operand="incoming"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="is" operand="rejected"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="has" operand="audioVideoModes"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="conferenceMode"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="imMode"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="localDelegate"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="localTM"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="remoteDelegate"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="referBy"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="deflectedTo"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="transferedTo"/>
+        </condition> 
+    </template>
+    
+    <template name="deflectedRegularIncomingCall">
+        <!--RegularIncomingCall
+            incoming call from <RemoteParticipant>
+        -->
+        <condition relation="and">
+            <expression operator="is" operand="incoming"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="is" operand="deflected"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="has" operand="audioVideoModes"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="imMode"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="localDelegate"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="localTM"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="remoteDelegate"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="referBy"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="has" operand="deflectedTo"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="transferedTo"/>
+        </condition>
+    </template>
+    
+    <template name="incomingCallReferedBy">
+        <!--RegularIncomingCall
+            incoming call from <RemoteParticipant> transferred by <refer>
+        -->
+        <condition relation="and">
+            <expression operator="is" operand="incoming"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="is" operand="accepted"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="has" operand="audioVideoModes"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="imMode"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="localDelegate"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="localTM"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="remoteDelegate"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="has" operand="referBy"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="deflectedTo"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="transferedTo"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="is" operand="pickupByDiffPerson"/>
+        </condition>
+    </template>
+    
+    <template name="rejectedIncomingCallReferedBy">
+        <!--RegularIncomingCall
+            Rejected call from <RemoteParticipant> transferred by <refer>
+        -->
+        <condition relation="and">
+            <expression operator="is" operand="incoming"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="is" operand="rejected"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="has" operand="audioVideoModes"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="conferenceMode"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="imMode"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="localDelegate"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="localTM"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="remoteDelegate"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="has" operand="referBy"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="deflectedTo"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="transferedTo"/>
+        </condition> 
+    </template>
+    
+    <template name="deflectIncomingCallReferedBy">
+        <!--RegularIncomingCall
+            incoming call from <RemoteParticipant> transferred by <refer>
+            deflected to <deflectedto>
+        -->
+        <condition relation="and">
+            <expression operator="is" operand="incoming"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="is" operand="deflected"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="has" operand="audioVideoModes"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="imMode"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="localDelegate"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="localTM"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="remoteDelegate"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="has" operand="referBy"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="has" operand="deflectedTo"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="transferedTo"/>
+        </condition>
+    </template>
+    
+    <template name="callFromAdmin">
+        <!--CallFromAdmin
+            incoming call from <<admin>> (<<phone label>>) on behalf of <<boss>>  - Custom subject
+        -->
+        <condition relation="and">
+            <expression operator="has" operand="audioVideoModes"/> 
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="imMode"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="is" operand="accepted"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="is" operand="incoming"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="localDelegate"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="localTM"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="has" operand="remoteDelegate"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="deflectedTo"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="transferedTo"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="is" operand="pickupByDiffPerson"/>
+        </condition>
+    </template>
+    
+    <template name="callFromAdminTransfered">
+        <!--CallFromAdmin
+            incoming call from <<admin>> (<<phone label>>) on behalf of <<boss>>  - Custom subject
+        -->
+        <condition relation="and">
+            <expression operator="has" operand="audioVideoModes"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="imMode"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="is" operand="accepted"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="is" operand="incoming"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="localDelegate"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="localTM"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="has" operand="remoteDelegate"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="deflectedTo"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="has" operand="transferedTo"/>
+        </condition>
+    </template>
+
+    <template name="rejectedCallFromAdmin">
+        <!--CallFromAdmin
+            Rejected call from <<admin>> (<<phone label>>) on behalf of <<boss>>  - Custom subject
+        -->
+        <condition relation="and">
+            <expression operator="has" operand="audioVideoModes"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="conferenceMode"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="imMode"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="is" operand="rejected"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="is" operand="incoming"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="localDelegate"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="localTM"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="has" operand="remoteDelegate"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="deflectedTo"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="transferedTo"/>
+        </condition> 
+    </template>
+    
+    <template name="deflectedCallFromAdmin">
+        <!--CallFromAdmin
+            Incoming call from <<admin>> (<<phone label>>) on behalf of <<boss>> 
+            deflected to - Custom subject
+        -->
+        <condition relation="and">
+            <expression operator="has" operand="audioVideoModes"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="imMode"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="is" operand="deflected"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="is" operand="incoming"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="localDelegate"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="localTM"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="has" operand="remoteDelegate"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="has" operand="deflectedTo"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="transferedTo"/>
+        </condition>
+    </template>
+
+    <template name="missedRegularCall">
+        <!--
+       missed call from %2
+        -->
+        <condition relation="and">
+            <expression operator="has" operand="audioVideoModes"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="imMode"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="conferenceMode"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="is" operand="missed"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="is" operand="incoming"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="remoteDelegate"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="localDelegate"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="localTM"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="localAcdAgent"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="referBy"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="is" operand="pickupByDiffPerson"/>
+        </condition>
+    </template>
+  
+    <template name="missedConferenceCall">
+        <!--
+        missed conference call from %2
+        -->        
+        <condition relation="and">
+            <expression operator="is" operand="incoming"/>
+        </condition>
+        <condition relation="and">
+            <condition relation="or">
+                <expression operator="is" operand="missed"/>
+            </condition>
+            <condition relation="or">
+                <expression operator="is" operand="rejected"/>
+            </condition>
+        </condition>
+        <condition relation="and">
+            <expression operator="has" operand="audioVideoModes"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="imMode"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="has" operand="conferenceMode"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="is" operand="pickupByDiffPerson"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="localDelegate"/>
+        </condition>
+    </template>
+
+    <template name="missedCallFromCustomerReferBy">
+        <!--
+        "missed call from %2 transfered by %8"
+        -->
+        <condition relation="and">
+            <expression operator="has" operand="audioVideoModes"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="imMode"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="is" operand="missed"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="is" operand="incoming"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="remoteDelegate"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="localDelegate"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="localAcdAgent"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="localTM"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="has" operand="referBy"/>
+        </condition> 
+    </template>
+
+    <template name="missedCallFromAdmin">
+        <!--
+       missed call from %2 on behalf of %3
+        -->
+        <condition relation="and">
+            <expression operator="has" operand="audioVideoModes"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="conferenceMode"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="imMode"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="is" operand="missed"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="is" operand="incoming"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="has" operand="remoteDelegate"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="localDelegate"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="localTM"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="referBy"/>
+        </condition> 
+    </template>
+    
+    <template name="missedCallToBoss">
+        <!--
+       missed call from %2 on behalf of %3
+        -->
+        <condition relation="and">
+            <expression operator="has" operand="audioVideoModes"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="conferenceMode"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="imMode"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="is" operand="missed"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="is" operand="incoming"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="remoteDelegate"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="has" operand="localDelegate"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="localTM"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="referBy"/>
+        </condition> 
+    </template>
+    
+    <template name="deflectedCallToBoss">
+        <!--
+       missed call from %2 on behalf of %3
+        -->
+        <condition relation="and">
+            <expression operator="has" operand="audioVideoModes"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="imMode"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="is" operand="deflected"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="is" operand="incoming"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="remoteDelegate"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="has" operand="localDelegate"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="localTM"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="referBy"/>
+        </condition>
+    </template>
+
+    <template name="deflectedCallToTL">
+        <!--
+       missed call from %2 on behalf of %3
+        -->
+        <condition relation="and">
+            <expression operator="has" operand="audioVideoModes"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="imMode"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="is" operand="deflected"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="is" operand="incoming"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="remoteDelegate"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="localDelegate"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="has" operand="localTM"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="referBy"/>
+        </condition>
+    </template>
+    
+    <template name="missedCallFromAdminReferBy">
+        <!--
+       missed call from %2 on behalf of %3
+        -->
+        <condition relation="and">
+            <expression operator="has" operand="audioVideoModes"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="conferenceMode"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="imMode"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="is" operand="missed"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="is" operand="incoming"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="has" operand="remoteDelegate"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="has" operand="referBy"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="localDelegate"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="localTM"/>
+        </condition> 
+    </template>
+
+    <template name="missedCallFromAdminToBoss">
+        <!--
+       missed call from %2 on behalf of %3
+        -->
+        <condition relation="and">
+            <expression operator="has" operand="audioVideoModes"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="conferenceMode"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="imMode"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="is" operand="missed"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="is" operand="incoming"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="has" operand="remoteDelegate"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="has" operand="localDelegate"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="localTM"/>
+        </condition> 
+    </template>
+ 
+    <template name="rejectedCallToBoss">
+        <!--
+       missed call from %2 on behalf of %3
+        -->
+        <condition relation="and">
+            <expression operator="has" operand="audioVideoModes"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="conferenceMode"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="imMode"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="is" operand="rejected"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="is" operand="incoming"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="remoteDelegate"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="has" operand="localDelegate"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="localTM"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="referBy"/>
+        </condition> 
+    </template>
+    
+    <template name="rejectedCallToTL">
+        <!--
+       missed call from %2 on behalf of %3
+        -->
+        <condition relation="and">
+            <expression operator="has" operand="audioVideoModes"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="conferenceMode"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="imMode"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="is" operand="rejected"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="is" operand="incoming"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="remoteDelegate"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="localDelegate"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="has" operand="localTM"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="referBy"/>
+        </condition> 
+    </template> 
+     
+    <template name="rejectedCallFromAdminToBoss">
+        <!--
+       missed call from %2 on behalf of %3
+        -->
+        <condition relation="and">
+            <expression operator="has" operand="audioVideoModes"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="conferenceMode"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="imMode"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="is" operand="rejected"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="is" operand="incoming"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="has" operand="remoteDelegate"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="has" operand="localDelegate"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="localTM"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="referBy"/>
+        </condition> 
+    </template>
+
+    <template name="deflectedCallFromAdminToBoss">
+        <!--
+       missed call from %2 on behalf of %3
+        -->
+        <condition relation="and">
+            <expression operator="has" operand="audioVideoModes"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="imMode"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="is" operand="deflected"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="is" operand="incoming"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="has" operand="remoteDelegate"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="has" operand="localDelegate"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="localTM"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="referBy"/>
+        </condition>
+    </template>
+    
+    <template name="rejectedCallFromAdminToTL">
+        <!--
+       missed call from %2 on behalf of %3
+        -->
+        <condition relation="and">
+            <expression operator="has" operand="audioVideoModes"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="conferenceMode"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="imMode"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="is" operand="rejected"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="is" operand="incoming"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="has" operand="remoteDelegate"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="localDelegate"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="has" operand="localTM"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="referBy"/>
+        </condition> 
+    </template>
+    
+    <template name="deflectedCallFromAdminToTL">
+        <!--
+       missed call from %2 on behalf of %3
+        -->
+        <condition relation="and">
+            <expression operator="has" operand="audioVideoModes"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="imMode"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="is" operand="deflected"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="is" operand="incoming"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="has" operand="remoteDelegate"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="localDelegate"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="has" operand="localTM"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="referBy"/>
+        </condition>
+    </template> 
+    
+    <template name="callForBossAnsweredByDiffPerson">
+        <!--
+        outgoing call on behalf of %1 to %2 answered by %4
+        -->
+        <condition relation="and">
+            <expression operator="has" operand="audioVideoModes"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="imMode"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="conferenceMode"/>
+        </condition> 
+        <condition relation="and">
+            <expression operator="is" operand="outgoing"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="has" operand="localDelegate"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="is" operand="pickupByDiffPerson"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="transferedTo"/>
+        </condition>
+    </template>
+    
+    <template name="callForBossAnsweredByDiffPersonThenTranfered">
+        <!--
+        outgoing call on behalf of %1 to %2 answered by %4
+        -->
+        <condition relation="and">
+            <expression operator="has" operand="audioVideoModes"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="imMode"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="has" operand="conferenceMode"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="is" operand="outgoing"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="has" operand="localDelegate"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="is" operand="pickupByDiffPerson"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="has" operand="transferedTo"/>
+        </condition>
+    </template>
+    <template name="incomingAppsharingOnly">
+        <!--
+        outgoing call on behalf of %1 to %2 answered by %4
+        -->
+        <condition relation="and">
+            <expression operator="is" operand="incoming"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="has" operand="p2pOrConferenceAppSharingModeOnly"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="is" operand="accepted"/>
+        </condition>
+    </template>    
+    <template name="outgoingAppsharingOnly">
+        <!--
+        outgoing call on behalf of %1 to %2 answered by %4
+        -->
+        <condition relation="and">
+            <expression operator="is" operand="outgoing"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="has" operand="p2pOrConferenceAppSharingModeOnly"/>
+        </condition> 
+    </template>
+    <template name="missedAppsharingOnly">
+        <!--
+        outgoing call on behalf of %1 to %2 answered by %4
+        -->
+        <condition relation="and">
+            <expression operator="is" operand="incoming"/>
+        </condition>
+        <condition relation="and">
+            <expression operator="has" operand="p2pOrConferenceAppSharingModeOnly"/>
+        </condition>
+        <condition relation="andNot">
+            <expression operator="is" operand="accepted"/>
+        </condition>
+    </template>
+</templates>

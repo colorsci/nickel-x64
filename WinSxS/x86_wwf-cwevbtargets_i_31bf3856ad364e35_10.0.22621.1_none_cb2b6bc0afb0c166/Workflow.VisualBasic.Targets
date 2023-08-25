@@ -1,0 +1,102 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <UsingTask TaskName="System.Workflow.ComponentModel.Compiler.CompileWorkflowTask" AssemblyName="System.Workflow.ComponentModel, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
+    <UsingTask TaskName="System.Workflow.ComponentModel.Compiler.CreateWorkflowManifestResourceNameForVB" AssemblyName="System.Workflow.ComponentModel, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
+    <UsingTask TaskName="System.Workflow.ComponentModel.Compiler.CompileWorkflowCleanupTask" AssemblyName="System.Workflow.ComponentModel, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
+    <PropertyGroup>
+        <WinWFTempFiles>
+        </WinWFTempFiles>
+        <KeepWinWFTempFiles>
+        </KeepWinWFTempFiles>
+    </PropertyGroup>
+    <PropertyGroup>
+        <CoreCompileDependsOn>$(CoreCompileDependsOn);WorkflowCompilation</CoreCompileDependsOn>
+        <CoreBuildDependsOn>$(CoreBuildDependsOn);WorkflowCompilationCleanup</CoreBuildDependsOn>
+    </PropertyGroup>
+
+    <Target 
+        Name="CreateManifestResourceNames"
+        Condition="'@(ResxWithNoCulture)@(ResxWithCulture)@(NonResxWithNoCulture)@(NonResxWithCulture)'!=''"
+        DependsOnTargets="$(CreateManifestResourceNamesDependsOn)"
+        >
+
+        <!-- Create the target resource names for non-culture resx files. -->
+        <CreateWorkflowManifestResourceNameForVB Condition="'@(ResxWithNoCulture)'!=''"
+              ResourceFiles="@(ResxWithNoCulture)"
+              RootNamespace="$(RootNamespace)">
+
+            <Output TaskParameter="ManifestResourceNames" ItemName="ManifestResourceWithNoCultureName"/>
+
+        </CreateWorkflowManifestResourceNameForVB>
+
+        <!-- Create the target resource names for culture resx files. -->
+        <CreateWorkflowManifestResourceNameForVB  Condition="'@(ResxWithCulture)'!=''"
+              ResourceFiles="@(ResxWithCulture)"
+              RootNamespace="$(RootNamespace)">
+
+            <Output TaskParameter="ManifestResourceNames" ItemName="ManifestResourceWithCultureName"/>
+
+        </CreateWorkflowManifestResourceNameForVB>
+
+        <!-- Create the target resource names for non-culture non-resx files. -->
+        <CreateWorkflowManifestResourceNameForVB  Condition="'@(NonResxWithNoCulture)'!=''"
+              ResourceFiles="@(NonResxWithNoCulture)"
+              RootNamespace="$(RootNamespace)">
+
+            <Output TaskParameter="ManifestResourceNames" ItemName="ManifestNonResxWithNoCulture"/>
+
+        </CreateWorkflowManifestResourceNameForVB>
+
+        <!-- Create the target resource names for culture non-resx files. -->
+        <CreateWorkflowManifestResourceNameForVB  Condition="'@(NonResxWithCulture)'!=''"
+              ResourceFiles="@(NonResxWithCulture)"
+              RootNamespace="$(RootNamespace)">
+
+            <Output TaskParameter="ManifestResourceNames" ItemName="ManifestNonResxWithCulture"/>
+
+        </CreateWorkflowManifestResourceNameForVB>
+
+    </Target>
+
+    <!--Note: The inputs and outputs of the "WorkflowCompilation" target match those of 
+              "Compile" target in CSharp.Targets/VisualBasic.Targets 
+              except that "WorkflowCompilation" have @(Content) also as the input 
+              because .xoml files are represented as content items in the 
+              project files.
+              The inputs/outputs are evaluated at build time to determine if 
+              the target's tasks need to be executed. -->
+    <Target Name="WorkflowCompilation" 
+            Inputs="$(MSBuildAllProjects);
+          @(Compile);
+          @(Content);
+          @(ManifestResourceWithNoCulture);
+          $(ApplicationIcon);
+          $(AssemblyOriginatorKeyFile);
+          @(ManifestNonResxWithNoCultureOnDisk);
+          @(ReferencePath);
+          @(CompiledLicenseFile)" 
+           Outputs="$(DocFile);
+          @(IntermediateAssembly); 
+          $(NonExistentFile)">
+        <CompileWorkflowTask 
+            Imports="@(Import)"
+            RootNamespace="$(RootNamespace)"
+            AssemblyName="$(AssemblyName)"
+            ProjectDirectory="$(MSBuildProjectDirectory)" 
+            ProjectExtension="$(MSBuildProjectExtension)" 
+            ResourceFiles="@(ManifestResourceWithNoCulture);@(ManifestNonResxWithNoCultureOnDisk);@(CompiledLicenseFile)"
+            ReferenceFiles="@(ReferencePath)" 
+            SourceCodeFiles="@(Compile)" 
+            WorkflowMarkupFiles="@(Content)"
+                    DelaySign="$(DelaySign)"
+                    KeyContainer="$(KeyContainerName)"
+                    KeyFile="$(KeyOriginatorFile)">
+            <Output TaskParameter="OutputFiles" ItemName="Compile" />
+            <Output TaskParameter="TemporaryFiles" ItemName="WinWFTempFiles" />
+            <Output TaskParameter="KeepTemporaryFiles" ItemName="KeepWinWFTempFiles" />
+        </CompileWorkflowTask>
+    </Target>
+    <Target Name="WorkflowCompilationCleanup">
+    <CompileWorkflowCleanupTask 
+        TemporaryFiles="@(WinWFTempFiles)" />
+    </Target>
+</Project>

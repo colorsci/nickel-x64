@@ -1,0 +1,202 @@
+﻿<Activity mc:Ignorable="sads sap" x:Class="RDManagement.Remove_RDSHCollection"
+ xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities"
+ xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+ xmlns:mpa="clr-namespace:Microsoft.PowerShell.Activities;assembly=Microsoft.PowerShell.Activities"
+ xmlns:mpua="clr-namespace:Microsoft.PowerShell.Utility.Activities;assembly=Microsoft.PowerShell.Utility.Activities"
+ xmlns:mrc="clr-namespace:Microsoft.RemoteDesktopServices.Common;assembly=Microsoft.RemoteDesktopServices.Management.Activities"
+ xmlns:mrma="clr-namespace:Microsoft.RemoteDesktopServices.Management.Activities;assembly=Microsoft.RemoteDesktopServices.Management.Activities"
+ xmlns:mrmc="clr-namespace:Microsoft.RemoteDesktopServices.Management.Cmdlets;assembly=Microsoft.RemoteDesktopServices.Management.Activities"
+ xmlns:mv="clr-namespace:Microsoft.VisualBasic;assembly=System"
+ xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities"
+ xmlns:s="clr-namespace:System;assembly=mscorlib"
+ xmlns:s1="clr-namespace:System;assembly=System"
+ xmlns:s2="clr-namespace:System;assembly=System.Xml"
+ xmlns:s3="clr-namespace:System;assembly=System.Core"
+ xmlns:s4="clr-namespace:System;assembly=System.ServiceModel"
+ xmlns:sa="clr-namespace:System.Activities;assembly=System.Activities"
+ xmlns:sad="clr-namespace:System.Activities.Debugger;assembly=System.Activities"
+ xmlns:sads="http://schemas.microsoft.com/netfx/2010/xaml/activities/debugger"
+ xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation"
+ xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System"
+ xmlns:scg1="clr-namespace:System.Collections.Generic;assembly=System.ServiceModel"
+ xmlns:scg2="clr-namespace:System.Collections.Generic;assembly=System.Core"
+ xmlns:scg3="clr-namespace:System.Collections.Generic;assembly=mscorlib"
+ xmlns:sd="clr-namespace:System.Data;assembly=System.Data"
+ xmlns:sl="clr-namespace:System.Linq;assembly=System.Core"
+ xmlns:sma="clr-namespace:System.Management.Automation;assembly=System.Management.Automation"
+ xmlns:st="clr-namespace:System.Text;assembly=mscorlib"
+ xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <x:Members>
+    <x:Property Name="RDManagementServer" Type="InArgument(x:String)">
+      <x:Property.Attributes>
+        <RequiredArgumentAttribute />
+      </x:Property.Attributes>
+    </x:Property>
+    <x:Property Name="CollectionAlias" Type="InArgument(x:String)">
+      <x:Property.Attributes>
+        <RequiredArgumentAttribute />
+      </x:Property.Attributes>
+    </x:Property>
+  </x:Members>
+  <sap:VirtualizedContainerService.HintSize>620,1145</sap:VirtualizedContainerService.HintSize>
+  <mva:VisualBasic.Settings>Assembly references and imported namespaces for internal implementation</mva:VisualBasic.Settings>
+  <sap:WorkflowViewStateService.ViewState>
+    <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+      <x:Boolean x:Key="ShouldExpandAll">False</x:Boolean>
+      <x:Boolean x:Key="ShouldCollapseAll">True</x:Boolean>
+    </scg3:Dictionary>
+  </sap:WorkflowViewStateService.ViewState>
+  <Sequence DisplayName="Remove RDSH Collection" sap:VirtualizedContainerService.HintSize="580,1065">
+    <Sequence.Variables>
+      <Variable x:TypeArguments="sma:PSDataCollection(sma:PSObject)" Name="Output" />
+      <Variable x:TypeArguments="sma:PSDataCollection(sma:ErrorRecord)" Name="Errors" />
+      <Variable x:TypeArguments="sma:PSDataCollection(sma:ErrorRecord)" Name="GetErrors" />
+      <Variable x:TypeArguments="sma:PSDataCollection(sma:PSObject)" Name="RDSHServer" />
+      <Variable x:TypeArguments="x:Int32" Default="1" Modifiers="ReadOnly" Name="CBProgressID" />
+      <Variable x:TypeArguments="x:Int32" Default="2" Modifiers="ReadOnly" Name="RDSHProgressID" />
+      <Variable x:TypeArguments="sma:ErrorRecord" Name="catchErrorRecord" />
+      <Variable x:TypeArguments="x:Int32" Default="0" Name="CurrentProgress" />
+    </Sequence.Variables>
+    <sap:WorkflowViewStateService.ViewState>
+      <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+      </scg3:Dictionary>
+    </sap:WorkflowViewStateService.ViewState>
+    <mpua:WriteProgress Completed="{x:Null}" CurrentOperation="{x:Null}" ParentId="{x:Null}" SecondsRemaining="{x:Null}" SourceId="{x:Null}" Activity="Remove-RDSHCollection" DisplayName="Progress : 0" sap:VirtualizedContainerService.HintSize="558,22" PercentComplete="0" ProgressId="[CBProgressID]" Status="In Progress..." />
+    <mpua:WriteVerbose DisplayName="Verbose: Input" sap:VirtualizedContainerService.HintSize="558,22" Message="[&quot;CollectionAlias: &quot; + CollectionAlias]" />
+    <mpua:WriteProgress Completed="{x:Null}" CurrentOperation="{x:Null}" ParentId="{x:Null}" SecondsRemaining="{x:Null}" SourceId="{x:Null}" Activity="Remove-RDSHCollection" DisplayName="Progress : 10" sap:VirtualizedContainerService.HintSize="558,22" PercentComplete="10" ProgressId="[CBProgressID]" Status="In Progress..." />
+    <mpa:InlineScript Command="import-module $env:windir\System32\ServerManagerInternal\rdmanagement;&#xD;&#xA;Get-RDSHServer -Name * -CollectionAlias $using:CollectionAlias -ManagementServer $using:RDManagementServer" sap:VirtualizedContainerService.HintSize="558,188" Result="[RDSHServer]" PSError="[GetErrors]"/>
+    <If Condition="[GetErrors.Count &lt;&gt; 0]" DisplayName="Write RDMS Error" sap:VirtualizedContainerService.HintSize="558,642">
+      <sap:WorkflowViewStateService.ViewState>
+        <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+        </scg3:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+      <If.Then>
+        <TerminateWorkflow Exception="[GetErrors(0).Exception]" sap:VirtualizedContainerService.HintSize="200,22" />
+      </If.Then>
+    </If>
+    <mpua:WriteProgress Completed="{x:Null}" CurrentOperation="{x:Null}" ParentId="{x:Null}" SecondsRemaining="{x:Null}" SourceId="{x:Null}" Activity="Remove-RDSHCollection" DisplayName="Progress : 0" sap:VirtualizedContainerService.HintSize="558,22" PercentComplete="0" ProgressId="[RDSHProgressID]" Status="In Progress..." />
+    <ForEach x:TypeArguments="sma:PSObject" DisplayName="Configure RDSH Servers" sap:VirtualizedContainerService.HintSize="558,51" Values="[RDSHServer]">
+      <sap:WorkflowViewStateService.ViewState>
+        <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+        </scg3:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+      <ActivityAction x:TypeArguments="sma:PSObject">
+        <ActivityAction.Argument>
+          <DelegateInArgument x:TypeArguments="sma:PSObject" Name="rdsh" />
+        </ActivityAction.Argument>
+        <Sequence DisplayName="Configure RDSH" sap:VirtualizedContainerService.HintSize="580,2180">
+          <Sequence.Variables>
+            <Variable x:TypeArguments="x:String" Name="server" />
+          </Sequence.Variables>
+          <sap:WorkflowViewStateService.ViewState>
+            <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+              <x:Boolean x:Key="IsPinned">False</x:Boolean>
+            </scg3:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+          <Assign sap:VirtualizedContainerService.HintSize="558,60">
+            <Assign.To>
+              <OutArgument x:TypeArguments="x:String">[server]</OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="x:String">[CType(rdsh.Properties("Name").Value, String)]</InArgument>
+            </Assign.Value>
+          </Assign>
+          <mpa:InlineScript Command="import-module $env:windir\System32\ServerManagerInternal\rdmanagement;&#xD;&#xA;Remove-RDSHServer -Name $using:server -ManagementServer $using:RDManagementServer" DisplayName="Remove RDSH from collection" sap:VirtualizedContainerService.HintSize="558,188" PSError="[Errors]"/>
+          <Sequence DisplayName="Update Progress" sap:VirtualizedContainerService.HintSize="558,246">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+              </scg3:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+            <Assign sap:VirtualizedContainerService.HintSize="242,60">
+              <Assign.To>
+                <OutArgument x:TypeArguments="x:Int32">[CurrentProgress]</OutArgument>
+              </Assign.To>
+              <Assign.Value>
+                <InArgument x:TypeArguments="x:Int32">[CurrentProgress + (30 \ RDSHServer.Count)]</InArgument>
+              </Assign.Value>
+            </Assign>
+            <mpua:WriteProgress Completed="{x:Null}" CurrentOperation="{x:Null}" ParentId="{x:Null}" SecondsRemaining="{x:Null}" SourceId="{x:Null}" Activity="Add-RDSessionHost" DisplayName="Progress : Current" sap:VirtualizedContainerService.HintSize="242,22" PercentComplete="[CurrentProgress]" ProgressId="[RDSHProgressID]" Status="In Progress..." />
+          </Sequence>
+          <If Condition="[Errors.Count &lt;&gt; 0]" DisplayName="Write RDMS Error" sap:VirtualizedContainerService.HintSize="558,642">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+              </scg3:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+            <If.Then>
+
+              <Sequence sap:VirtualizedContainerService.HintSize="264,246">
+                <Assign sap:VirtualizedContainerService.HintSize="242,60">
+                  <Assign.To>
+                    <OutArgument x:TypeArguments="sma:ErrorRecord">[catchErrorRecord]</OutArgument>
+                  </Assign.To>
+                  <Assign.Value>
+                    <InArgument x:TypeArguments="sma:ErrorRecord">[ErrorUtility.GetErrorRecord(string.Format(RDManagementResources.ResourceManager.GetString(&quot;FailedToDeleteSessionHostServer&quot;), server), server, ErrorId.ConfigureRDSessionHost, Errors(0).Exception)]</InArgument>
+                  </Assign.Value>
+                </Assign>
+                <mpua:WriteError ErrorRecord="[catchErrorRecord]" sap:VirtualizedContainerService.HintSize="242,22" />
+              </Sequence>
+
+            </If.Then>
+            <If.Else>
+              <Sequence DisplayName="Write Status Object" sap:VirtualizedContainerService.HintSize="240,494">
+                <Sequence.Variables>
+                  <Variable x:TypeArguments="sma:PSObject" Default="[New PSObject()]" Name="StatusObject" />
+                </Sequence.Variables>
+                <sap:WorkflowViewStateService.ViewState>
+                  <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+                    <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                    <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                  </scg3:Dictionary>
+                </sap:WorkflowViewStateService.ViewState>
+                <InvokeMethod sap:VirtualizedContainerService.HintSize="218,134" MethodName="Add">
+                  <InvokeMethod.TargetObject>
+                    <InArgument x:TypeArguments="sma:PSMemberInfoCollection(sma:PSPropertyInfo)">[StatusObject.Properties]</InArgument>
+                  </InvokeMethod.TargetObject>
+                  <InArgument x:TypeArguments="sma:PSNoteProperty">[New PSNoteProperty("ServerName", server)]</InArgument>
+                </InvokeMethod>
+                <InvokeMethod sap:VirtualizedContainerService.HintSize="218,134" MethodName="Add">
+                  <InvokeMethod.TargetObject>
+                    <InArgument x:TypeArguments="sma:PSMemberInfoCollection(sma:PSPropertyInfo)">[StatusObject.Properties]</InArgument>
+                  </InvokeMethod.TargetObject>
+                  <InArgument x:TypeArguments="sma:PSNoteProperty">[New PSNoteProperty("Success", True)]</InArgument>
+                </InvokeMethod>
+                <mpua:WriteOutput sap:VirtualizedContainerService.HintSize="218,22" InputObject="[{StatusObject}]" />
+              </Sequence>
+            </If.Else>
+          </If>
+          <Sequence DisplayName="Update Progress" sap:VirtualizedContainerService.HintSize="558,246">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+              </scg3:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+            <Assign sap:VirtualizedContainerService.HintSize="242,60">
+              <Assign.To>
+                <OutArgument x:TypeArguments="x:Int32">[CurrentProgress]</OutArgument>
+              </Assign.To>
+              <Assign.Value>
+                <InArgument x:TypeArguments="x:Int32">[CurrentProgress + (40 \ RDSHServer.Count)]</InArgument>
+              </Assign.Value>
+            </Assign>
+            <mpua:WriteProgress Completed="{x:Null}" CurrentOperation="{x:Null}" ParentId="{x:Null}" SecondsRemaining="{x:Null}" SourceId="{x:Null}" Activity="Add-RDSessionHost" DisplayName="Progress : Current" sap:VirtualizedContainerService.HintSize="242,22" PercentComplete="[CurrentProgress]" ProgressId="[RDSHProgressID]" Status="In Progress..." />
+          </Sequence>
+        </Sequence>
+      </ActivityAction>
+    </ForEach>
+    <mpua:WriteProgress CurrentOperation="{x:Null}" ParentId="{x:Null}" SecondsRemaining="{x:Null}" SourceId="{x:Null}" Activity="Remove-RDSHCollection" Completed="[True]" DisplayName="Progress : 100" sap:VirtualizedContainerService.HintSize="558,22" PercentComplete="100" ProgressId="[RDSHProgressID]" Status="In Progress..." />
+    <mpa:InlineScript Command="import-module $env:windir\System32\ServerManagerInternal\rdmanagement;&#xD;&#xA;Remove-RDSHPool -Alias $using:CollectionAlias -ManagementServer $using:RDManagementServer" DisplayName="Remove Collection on Broker" sap:VirtualizedContainerService.HintSize="558,188" />
+    <mpua:WriteProgress CurrentOperation="{x:Null}" ParentId="{x:Null}" SecondsRemaining="{x:Null}" SourceId="{x:Null}" Activity="Remove-RDSHCollection" Completed="[True]" DisplayName="Progress : 100" sap:VirtualizedContainerService.HintSize="558,22" PercentComplete="100" ProgressId="[CBProgressID]" Status="In Progress..." />
+    
+  </Sequence>
+</Activity>

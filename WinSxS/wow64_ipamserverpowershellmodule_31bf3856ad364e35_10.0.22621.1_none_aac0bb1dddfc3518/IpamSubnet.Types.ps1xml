@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Types>
+  <Type>
+    <Name>Microsoft.Management.Infrastructure.CimInstance#MSFT_IPAM_Subnet</Name>
+    <Members>
+      <ScriptProperty>
+        <Name>NetworkType</Name>
+        <GetScriptBlock>
+          [Microsoft.PowerShell.Cmdletization.GeneratedTypes.Ipam.VirtualizationType]($this.PSBase.CimInstanceProperties['NetworkType'].Value)
+        </GetScriptBlock>
+        <SetScriptBlock>
+          param($newValue)
+          $this.PSBase.CimInstanceProperties['NetworkType'].Value = [System.String] [Microsoft.PowerShell.Cmdletization.GeneratedTypes.Ipam.VirtualizationType] $newValue
+        </SetScriptBlock>
+      </ScriptProperty>
+
+      <ScriptProperty>
+        <Name>AddressType</Name>
+        <GetScriptBlock>
+          [Microsoft.PowerShell.Cmdletization.GeneratedTypes.Ipam.AddressFamily]($this.PSBase.CimInstanceProperties['AddressType'].Value)
+        </GetScriptBlock>
+        <SetScriptBlock>
+          param($newValue)
+          $this.PSBase.CimInstanceProperties['AddressType'].Value = [System.String] [Microsoft.PowerShell.Cmdletization.GeneratedTypes.Ipam.AddressFamily] $newValue
+        </SetScriptBlock>
+      </ScriptProperty>
+
+      <ScriptProperty>
+        <Name>Utilization</Name>
+        <GetScriptBlock>
+          [Microsoft.PowerShell.Cmdletization.GeneratedTypes.Ipam.Utilization]($this.PSBase.CimInstanceProperties['Utilization'].Value)
+        </GetScriptBlock>
+        <SetScriptBlock>
+          param($newValue)
+          $this.PSBase.CimInstanceProperties['Utilization'].Value = [System.String] [Microsoft.PowerShell.Cmdletization.GeneratedTypes.Ipam.Utilization] $newValue
+        </SetScriptBlock>
+      </ScriptProperty>
+
+      <ScriptProperty>
+        <Name>CustomFields</Name>
+        <GetScriptBlock>
+          param()
+
+          $output = @{};
+          $isPrevCharSeperator = $false;
+          $tempString = "";
+          $nameValueFormat = $this.PSBase.CimInstanceProperties['CustomConfiguration'].Value;
+
+          # Walk through the string, break the string at the Seperator character if it is not escaped.
+          # And add to the string collection.
+          for ( $i = 0; $i -lt $nameValueFormat.Length; $i++)
+          {
+          $currentChar = $nameValueFormat[$i];
+          switch ($currentChar)
+          {
+
+          '\' {
+
+          if ($isPrevCharSeperator)
+          {
+          $tempString += $currentChar;
+          # As this character was not considered as a seperator.
+          $isPrevCharSeperator = $false;
+          }
+          else
+          {
+          $isPrevCharSeperator = $true;
+          }
+
+          }
+
+          ';' {
+
+          # It is a escaped special character, we just treat it as a part of the name.
+          if ($isPrevCharSeperator)
+          {
+          $tempString += $currentChar;
+          }
+          else
+          {
+          # If this is not a escaped seperator, we take the word till this point
+          # as the end of a valid value.
+
+          $value = $tempString;
+          $output.Add($name, $value);
+          $tempString = "";
+
+          }
+          $isPrevCharSeperator = $false;
+          }
+
+          '=' {
+
+          # It is a escaped special character, we just treat it as a part of the name.
+          if ($isPrevCharSeperator)
+          {
+          $tempString += $currentChar;
+          }
+          else
+          {
+
+          # This is the boundary of name=value.
+          # Get the name and store it in the first item of the current tuple.
+
+          $name = $tempString
+          $tempString = "";
+          }
+
+          $isPrevCharSeperator = $false;
+          }
+
+          default {
+
+          # The previous character was Escape Character and when combined with the
+          # current character does not form a escape sequence, hence the previous
+          # escape character is traeted as part of the string.
+          if ($isPrevCharSeperator)
+          {
+          $tempString += '\';
+          }
+
+          # Any other character, just append it to the current word.
+          $tempString += $currentChar;
+          $isPrevCharSeperator = $false;
+          }
+          }
+          }
+          $output;
+        </GetScriptBlock>
+      </ScriptProperty>
+    </Members>
+  </Type>
+  <Type>
+    <Name>Microsoft.Management.Infrastructure.CimInstance#MSFT_IPAM_FreeSubnet</Name>
+    <Members>
+      <ScriptProperty>
+        <Name>NetworkId</Name>
+        <GetScriptBlock>
+          [OutputType([System.String])]
+          param()
+          [System.String]($this.PSBase.CimInstanceProperties['NetworkId'].Value)
+        </GetScriptBlock>
+        <SetScriptBlock>
+          param([System.String]$value)
+          $this.PSBase.CimInstanceProperties['NetworkId'].Value = [System.String]$value
+        </SetScriptBlock>
+      </ScriptProperty>
+    </Members>
+  </Type>  
+</Types>

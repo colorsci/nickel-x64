@@ -1,0 +1,1 @@
+﻿var USB4View=USB4View?USB4View:{};USB4View.HostRouter=(class{constructor(n){Object.assign(this,n)}get id(){return USB4View.generateHostRouterId(this)}})

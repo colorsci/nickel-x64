@@ -1,0 +1,431 @@
+<Activity mc:Ignorable="sads sap" x:Class="Microsoft.PowerShell.DynamicActivities._3cbbde66114b431cab95238c969d47ba" this:_3cbbde66114b431cab95238c969d47ba.RDManagementServer="localhost"
+ xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities"
+ xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+ xmlns:mpa="clr-namespace:Microsoft.PowerShell.Activities;assembly=Microsoft.PowerShell.Activities"
+ xmlns:mpma="clr-namespace:Microsoft.PowerShell.Management.Activities;assembly=Microsoft.PowerShell.Management.Activities"
+ xmlns:mpua="clr-namespace:Microsoft.PowerShell.Utility.Activities;assembly=Microsoft.PowerShell.Utility.Activities"
+ xmlns:mrc="clr-namespace:Microsoft.RemoteDesktopServices.Common;assembly=Microsoft.RemoteDesktopServices.Management.Activities"
+ xmlns:mrma="clr-namespace:Microsoft.RemoteDesktopServices.Management.Activities;assembly=Microsoft.RemoteDesktopServices.Management.Activities"
+ xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities"
+ xmlns:s="clr-namespace:System;assembly=mscorlib"
+ xmlns:s1="clr-namespace:System;assembly=System"
+ xmlns:s2="clr-namespace:System;assembly=System.Core"
+ xmlns:s3="clr-namespace:System;assembly=System.ServiceModel"
+ xmlns:s4="clr-namespace:System;assembly=System.ComponentModel.Composition"
+ xmlns:sa="clr-namespace:System.Activities;assembly=System.Activities"
+ xmlns:sads="http://schemas.microsoft.com/netfx/2010/xaml/activities/debugger"
+ xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation"
+ xmlns:sc="clr-namespace:System.Collections;assembly=mscorlib"
+ xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib"
+ xmlns:scg1="clr-namespace:System.Collections.Generic;assembly=System"
+ xmlns:scg2="clr-namespace:System.Collections.Generic;assembly=System.Core"
+ xmlns:scg3="clr-namespace:System.Collections.Generic;assembly=System.ServiceModel"
+ xmlns:si="clr-namespace:System.IO;assembly=WindowsBase"
+ xmlns:si1="clr-namespace:System.IO;assembly=mscorlib"
+ xmlns:si2="clr-namespace:System.IO;assembly=System"
+ xmlns:si3="clr-namespace:System.IO;assembly=System.Core"
+ xmlns:si4="clr-namespace:System.IO;assembly=System.ServiceModel"
+ xmlns:sma="clr-namespace:System.Management.Automation;assembly=System.Management.Automation"
+ xmlns:sn="clr-namespace:System.Net;assembly=System"
+ xmlns:ss="clr-namespace:System.Security;assembly=mscorlib"
+ xmlns:ss1="clr-namespace:System.Security;assembly=System.Core"
+ xmlns:this="clr-namespace:Microsoft.PowerShell.DynamicActivities"
+ xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <x:Members>
+    <x:Property Name="Role" Type="InArgument(x:String)">
+      <x:Property.Attributes>
+        <RequiredArgumentAttribute />
+      </x:Property.Attributes>
+    </x:Property>
+    <x:Property Name="Name" Type="InArgument(s:String[])" />
+    <x:Property Name="Path" Type="InArgument(x:String)" />
+    <x:Property Name="Password" Type="InArgument(ss:SecureString)" />
+    <x:Property Name="RDManagementServer" Type="InArgument(x:String)" />
+    <x:Property Name="Thumbprint" Type="InArgument(x:String)" />
+  </x:Members>
+  <sap:VirtualizedContainerService.HintSize>440,488</sap:VirtualizedContainerService.HintSize>
+  <mva:VisualBasic.Settings>Assembly references and imported namespaces for internal implementation</mva:VisualBasic.Settings>
+  <sap:WorkflowViewStateService.ViewState>
+    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+      <x:Boolean x:Key="ShouldExpandAll">False</x:Boolean>
+      <x:Boolean x:Key="ShouldCollapseAll">True</x:Boolean>
+    </scg:Dictionary>
+  </sap:WorkflowViewStateService.ViewState>
+  <Sequence DisplayName="Set-RDCertificate" sap:VirtualizedContainerService.HintSize="222,448">
+    <Sequence.Variables>
+      <Variable x:TypeArguments="x:String" Default="[Nothing]" Name="ExportPath" />
+      <Variable x:TypeArguments="sma:PSDataCollection(sma:PSObject)" Name="TargetServer" />
+      <Variable x:TypeArguments="x:String" Default="[Microsoft.RemoteDesktopServices.Common.CommonUtility.GetLocalhostFullyQualifiedDomainname()]" Name="machineDnsName" />
+      <Variable x:TypeArguments="s:Byte[]" Default="[Nothing]" Name="certificateData" />
+    </Sequence.Variables>
+    <sap:WorkflowViewStateService.ViewState>
+      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+      </scg:Dictionary>
+    </sap:WorkflowViewStateService.ViewState>
+    <Sequence DisplayName="Initialize" sap:VirtualizedContainerService.HintSize="200,51">
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+      <If Condition="[Path Is Nothing]" DisplayName="Set Path if not specified" sap:VirtualizedContainerService.HintSize="200,51">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+        <If.Then>
+          <Assign sap:VirtualizedContainerService.HintSize="242,60">
+            <Assign.To>
+              <OutArgument x:TypeArguments="x:String">[ExportPath]</OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="x:String">[System.IO.Path.GetTempFileName()]</InArgument>
+            </Assign.Value>
+          </Assign>
+        </If.Then>
+        <If.Else>
+          <Assign sap:VirtualizedContainerService.HintSize="242,60">
+            <Assign.To>
+              <OutArgument x:TypeArguments="x:String">[ExportPath]</OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="x:String">[Path]</InArgument>
+            </Assign.Value>
+          </Assign>
+        </If.Else>
+      </If>
+      <Sequence DisplayName="Fetch Target Servers" sap:VirtualizedContainerService.HintSize="200,51">
+        <Sequence.Variables>
+          <Variable x:TypeArguments="x:String" Name="filter" />
+        </Sequence.Variables>
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+        <Switch x:TypeArguments="x:String" Expression="[Role]" sap:VirtualizedContainerService.HintSize="476,732">
+          <Switch.Default>
+            <TerminateWorkflow sap:VirtualizedContainerService.HintSize="200,22" Reason="[RDManagementResources.InvalidRoleSpecified]" />
+          </Switch.Default>
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsPinned">False</x:Boolean>
+              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+          <Assign x:Key="RDGateway" sap:VirtualizedContainerService.HintSize="242,60">
+            <Assign.To>
+              <OutArgument x:TypeArguments="x:String">[filter]</OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="x:String">IsRdg= true</InArgument>
+            </Assign.Value>
+          </Assign>
+          <Assign x:Key="RDWebAccess" sap:VirtualizedContainerService.HintSize="242,60">
+            <Assign.To>
+              <OutArgument x:TypeArguments="x:String">[filter]</OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="x:String">IsRdwa = true</InArgument>
+            </Assign.Value>
+          </Assign>
+          <Assign x:Key="RDRedirector" sap:VirtualizedContainerService.HintSize="242,60">
+            <Assign.To>
+              <OutArgument x:TypeArguments="x:String">[filter]</OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="x:String">IsRdcb = true</InArgument>
+            </Assign.Value>
+          </Assign>
+          <Assign x:Key="RDPublishing" sap:VirtualizedContainerService.HintSize="242,60">
+            <Assign.To>
+              <OutArgument x:TypeArguments="x:String">[filter]</OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="x:String">IsRdcb = true</InArgument>
+            </Assign.Value>
+          </Assign>
+        </Switch>
+        <mpa:GetWmiObject Amended="False" Class="Win32_RDMSJoinedNode" DirectRead="False" DisplayName="Get Target Servers" EnableAllPrivileges="False" Filter="[filter]" sap:VirtualizedContainerService.HintSize="476,22" Impersonation="Impersonate" Namespace="root\cimv2\rdms" PSAuthenticationLevel="PacketPrivacy" PSComputerName="[{RDManagementServer}]" Property="[{&quot;FQDN&quot;}]" Result="[TargetServer]" />
+      </Sequence>
+      <If Condition="[RDManagementServer.Equals(machineDnsName, StringComparison.OrdinalIgnoreCase)]" DisplayName="Resolve local machine name" sap:VirtualizedContainerService.HintSize="200,51">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+        <If.Then>
+          <Assign sap:VirtualizedContainerService.HintSize="242,60">
+            <Assign.To>
+              <OutArgument x:TypeArguments="x:String">[RDManagementServer]</OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="x:String">localhost</InArgument>
+            </Assign.Value>
+          </Assign>
+        </If.Then>
+      </If>
+    </Sequence>
+    <Sequence DisplayName="Create Self Signed Certificate" sap:VirtualizedContainerService.HintSize="200,51">
+      <Sequence.Variables>
+        <Variable x:TypeArguments="x:Boolean" Default="False" Name="createSelfSignedCertificate" />
+      </Sequence.Variables>
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+      <If Condition="[not (Name Is nothing)]" DisplayName="Condition to check if certificate needs to be created" sap:VirtualizedContainerService.HintSize="200,51">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+        <If.Then>
+          <Assign sap:VirtualizedContainerService.HintSize="242,60">
+            <Assign.To>
+              <OutArgument x:TypeArguments="x:Boolean">[createSelfSignedCertificate]</OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="x:Boolean">[Name.Length &gt; 0]</InArgument>
+            </Assign.Value>
+          </Assign>
+        </If.Then>
+      </If>
+      <If Condition="[createSelfSignedCertificate]" DisplayName="Check if creation is required" sap:VirtualizedContainerService.HintSize="200,51">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+        <If.Then>
+          <mpa:InlineScript Command="$optionalParams = @{}&#xD;&#xA;if ($using:Password) {$optionalParams['Password'] = $using:Password}&#xD;&#xA; import-module $env:windir\System32\ServerManagerInternal\rdmanagement; New-RemoteDesktopCertificate -Name $using:Name -Path $using:ExportPath @optionalParams" DisplayName="New-RemoteDesktopCertificate" sap:VirtualizedContainerService.HintSize="508,139">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+          </mpa:InlineScript>
+        </If.Then>
+      </If>
+    </Sequence>
+    <If Condition="[(Thumbprint Is nothing)]" DisplayName="Check for the absence of Thumbprint" sap:VirtualizedContainerService.HintSize="1085,967">
+      <If.Then>
+        <Sequence DisplayName="Import Certificate to RDMS database" sap:VirtualizedContainerService.HintSize="200,51">
+          <Sequence.Variables>
+            <Variable x:TypeArguments="x:Boolean" Default="False" Name="importCertificate" />
+            <Variable x:TypeArguments="sma:PSDataCollection(sma:ErrorRecord)" Name="Errors" />
+          </Sequence.Variables>
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+              <x:Boolean x:Key="IsPinned">False</x:Boolean>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+          <Assign sap:VirtualizedContainerService.HintSize="1085,60">
+            <Assign.To>
+              <OutArgument x:TypeArguments="x:Boolean">[importCertificate]</OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="x:Boolean">[(not (Path Is nothing)) OR (not (Name Is nothing))]</InArgument>
+            </Assign.Value>
+          </Assign>
+          <If Condition="[importCertificate]" DisplayName="Check if import is required" sap:VirtualizedContainerService.HintSize="1085,967">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+            <If.Then>
+              <Sequence DisplayName="Import Certificate" sap:VirtualizedContainerService.HintSize="530,859">
+                <sap:WorkflowViewStateService.ViewState>
+                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                    <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                  </scg:Dictionary>
+                </sap:WorkflowViewStateService.ViewState>
+                <Assign sap:VirtualizedContainerService.HintSize="508,60">
+                  <Assign.To>
+                    <OutArgument x:TypeArguments="s:Byte[]">[certificateData]</OutArgument>
+                  </Assign.To>
+                  <Assign.Value>
+                    <InArgument x:TypeArguments="s:Byte[]">[System.IO.File.ReadAllBytes(ExportPath)]</InArgument>
+                  </Assign.Value>
+                </Assign>
+                <If Condition="[Path Is nothing]" DisplayName="Delete Temp Certificate" sap:VirtualizedContainerService.HintSize="508,208">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                      <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <If.Then>
+                    <mpma:RemoveItem DisplayName="Remove Certificate File" Force="[True]" sap:VirtualizedContainerService.HintSize="200,22" Path="[{ExportPath}]" />
+                  </If.Then>
+                </If>
+                <mpa:InlineScript Command="$optionalParams = @{}&#xD;&#xA;if ($using:Password) {$optionalParams['Password'] = $using:Password}&#xD;&#xA; import-module $env:windir\System32\ServerManagerInternal\rdmanagement; Import-RemoteDesktopCertificate -Role $using:Role -RawData $using:certificateData @optionalParams" DisplayName="Import-RemoteDesktopCertificate" sap:VirtualizedContainerService.HintSize="508,139" PSComputerName="[{RDManagementServer}]" PSError="[Errors]">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                      <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                </mpa:InlineScript>
+                <If Condition="[Errors.Count &gt; 0]" DisplayName="Terminate if error" sap:VirtualizedContainerService.HintSize="508,208">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                      <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <If.Then>
+                    <TerminateWorkflow Exception="[Errors(0).Exception]" sap:VirtualizedContainerService.HintSize="200,22" />
+                  </If.Then>
+                </If>
+              </Sequence>
+            </If.Then>
+            <If.Else>
+              <Sequence DisplayName="Get Certificate from RDMS database" sap:VirtualizedContainerService.HintSize="530,611">
+                <Sequence.Variables>
+                  <Variable x:TypeArguments="x:Boolean" Default="False" Name="exportCertificate" />
+                  <Variable x:TypeArguments="sma:PSDataCollection(sma:PSObject)" Name="getCertificateResult" />
+                </Sequence.Variables>
+                <sap:WorkflowViewStateService.ViewState>
+                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                    <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                  </scg:Dictionary>
+                </sap:WorkflowViewStateService.ViewState>
+                <mpa:InlineScript Command="import-module $env:windir\System32\ServerManagerInternal\rdmanagement; Get-RemoteDesktopCertificate -Role $using:Role" DisplayName="Get-RemoteDesktopCertificate" sap:VirtualizedContainerService.HintSize="508,139" PSComputerName="[{RDManagementServer}]" PSError="[Errors]" Result="[getCertificateResult]">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                      <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                </mpa:InlineScript>
+                <If Condition="[Errors.Count &gt; 0]" DisplayName="Terminate if error" sap:VirtualizedContainerService.HintSize="508,208">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                      <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <If.Then>
+                    <TerminateWorkflow Exception="[Errors(0).Exception]" sap:VirtualizedContainerService.HintSize="200,22" />
+                  </If.Then>
+                </If>
+                <Assign sap:VirtualizedContainerService.HintSize="508,60">
+                  <Assign.To>
+                    <OutArgument x:TypeArguments="s:Byte[]">[certificateData]</OutArgument>
+                  </Assign.To>
+                  <Assign.Value>
+                    <InArgument x:TypeArguments="s:Byte[]">[CType(getCertificateResult(0).Properties("RawData").Value, byte())]</InArgument>
+                  </Assign.Value>
+                </Assign>
+              </Sequence>
+            </If.Else>
+          </If>
+        </Sequence>
+      </If.Then>
+    </If>
+    <ParallelForEach x:TypeArguments="sma:PSObject" DisplayName="Configure Target Server(s)" sap:VirtualizedContainerService.HintSize="200,51" Values="[TargetServer]">
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+      <ActivityAction x:TypeArguments="sma:PSObject">
+        <ActivityAction.Argument>
+          <DelegateInArgument x:TypeArguments="sma:PSObject" Name="server" />
+        </ActivityAction.Argument>
+        <Sequence DisplayName="Configure Certificate" sap:VirtualizedContainerService.HintSize="530,425">
+          <Sequence.Variables>
+            <Variable x:TypeArguments="x:String" Name="target" />
+            <Variable x:TypeArguments="sma:PSDataCollection(sma:ErrorRecord)" Name="errorSetCertInstalled" />
+            <Variable x:TypeArguments="sma:PSDataCollection(sma:ErrorRecord)" Name="errorSetCertificate" />
+          </Sequence.Variables>
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+              <x:Boolean x:Key="IsPinned">True</x:Boolean>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+          <Assign sap:VirtualizedContainerService.HintSize="508,60">
+            <Assign.To>
+              <OutArgument x:TypeArguments="x:String">[target]</OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="x:String">[CType(server.Properties("Fqdn").Value, string)]</InArgument>
+            </Assign.Value>
+          </Assign>
+          <mpua:WriteVerbose DisplayName="Write-Verbose" sap:VirtualizedContainerService.HintSize="508,22" Message="[target]" />
+          <If Condition="[not (Thumbprint Is nothing)]" DisplayName="Apply cerificate via Thumbprint or as RawData" sap:VirtualizedContainerService.HintSize="1085,967">
+            <If.Then>
+              <Sequence>
+                <Sequence.Variables>
+                  <Variable x:TypeArguments="sma:PSDataCollection(sma:PSObject)" Name="TargetCertificate" />
+                </Sequence.Variables>
+                <mpa:InlineScript Command="import-module $env:windir\System32\ServerManagerInternal\rdmanagement; Set-RemoteDesktopCertificate -Role $using:Role -Thumbprint $using:Thumbprint" DisplayName="Set-RemoteDesktopCertificate" sap:VirtualizedContainerService.HintSize="508,139" PSComputerName="[{target}]" PSError="[errorSetCertificate]"/>
+                <If Condition="[errorSetCertificate.Count &gt; 0]" DisplayName="Check for certificate installation errors">
+                  <If.Then>
+                    <TerminateWorkflow Exception="[errorSetCertificate(0).Exception]"/>
+                  </If.Then>
+                </If>
+                <mpa:InlineScript Command="dir Cert:\LocalMachine\My\$($using:Thumbprint)" DisplayName="Get Certificate from Remote Machine" sap:VirtualizedContainerService.HintSize="508,139" PSComputerName="[{target}]" PSError="[errorSetCertificate]" Result="[TargetCertificate]"/>
+                <If Condition="[errorSetCertificate.Count &gt; 0]" DisplayName="Check for certificate enumerate error in my store">
+                  <If.Then>
+                    <TerminateWorkflow Exception="[errorSetCertificate(0).Exception]"/>
+                  </If.Then>
+                </If>
+                <mpa:InlineScript Command="import-module $env:windir\System32\ServerManagerInternal\rdmanagement; Import-RemoteDesktopCertificate -Role $using:Role -RawData $($using:TargetCertificate[0].RawData)" DisplayName="Import Remote Machine Certificate to RDMS DB" sap:VirtualizedContainerService.HintSize="508,139" PSComputerName="[{RDManagementServer}]" PSError="[errorSetCertificate]"/>
+                <If Condition="[errorSetCertificate.Count &gt; 0]" DisplayName="Check for remote certificate import errors">
+                  <If.Then>
+                    <TerminateWorkflow Exception="[errorSetCertificate(0).Exception]"/>
+                  </If.Then>
+                </If>
+              </Sequence>
+            </If.Then>
+            <If.Else>
+              <mpa:InlineScript Command="$optionalParams = @{}&#xD;&#xA;if ($using:Password) {$optionalParams['Password'] = $using:Password}&#xD;&#xA; import-module $env:windir\System32\ServerManagerInternal\rdmanagement; Set-RemoteDesktopCertificate -Role $using:Role -RawData $using:certificateData @optionalParams" DisplayName="Set-RemoteDesktopCertificate" sap:VirtualizedContainerService.HintSize="508,139" PSComputerName="[{target}]" PSError="[errorSetCertificate]">
+                <sap:WorkflowViewStateService.ViewState>
+                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                    <x:Boolean x:Key="IsPinned">True</x:Boolean>
+                  </scg:Dictionary>
+                </sap:WorkflowViewStateService.ViewState>
+              </mpa:InlineScript>
+            </If.Else>
+          </If>
+          <If Condition="[errorSetCertificate.Count &gt; 0]" sap:VirtualizedContainerService.HintSize="733,247">
+            <If.Then>
+              <mpua:WriteError DisplayName="Write-Error" ErrorRecord="[errorSetCertificate(0)]" sap:VirtualizedContainerService.HintSize="200,22" />
+            </If.Then>
+            <If.Else>
+              <mpa:InlineScript Command="$obj = gwmi -Namespace root\cimv2\rdms -Class win32_rdmsjoinednode -Filter &quot;FQDN='$using:target'&quot; &#xA;if($using:Role -eq &quot;RDWebAccess&quot;) &#xA;{ &#xA;$obj.IsWebAccessCertificateInstalled = $true&#xA;} &#xA;if($using:Role -eq &quot;RDGateway&quot;)&#xA;{ &#xA;$obj.IsGatewayCertificateInstalled = $true &#xA;} &#xA;if($using:Role -eq &quot;RDRedirector&quot;) &#xA;{ &#xA;$obj.IsRedirectorCertificateInstalled = $true&#xA;} &#xA;if($using:Role -eq &quot;RDPublishing&quot;)&#xA;{ &#xA;$obj.IsPublishingCertificateInstalled = $true &#xA;} &#xA;$obj.Put()&#xA;" DisplayName="Set-CertificateInstalled value" sap:VirtualizedContainerService.HintSize="508,139" PSComputerName="[{RDManagementServer}]" PSError="[errorSetCertInstalled]">
+                <sap:WorkflowViewStateService.ViewState>
+                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                    <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                  </scg:Dictionary>
+                </sap:WorkflowViewStateService.ViewState>
+              </mpa:InlineScript>
+            </If.Else>
+          </If>
+        </Sequence>
+      </ActivityAction>
+    </ParallelForEach>
+  </Sequence>
+</Activity>

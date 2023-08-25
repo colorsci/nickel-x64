@@ -1,0 +1,81 @@
+//------------------------------------------------
+// RSOP_PushPrinterConnectionsPolicySetting
+// Comment: Abtraction for PPC extension policy data
+//------------------------------------------------
+// During setup, run twice
+// mofcomp -N:\\.\root\RSOP\computer    "RsopSchema.mof"
+// mofcomp -N:\\.\root\RSOP\user        "RsopSchema.mof"
+//
+
+#pragma autorecover
+#pragma namespace("\\\\.\\root\\RSOP\\computer")
+
+
+[
+    Locale( 0x409 ),
+    Description("Policy object for PPc")
+]
+class RSOP_PushPrinterConnectionsPolicySetting: RSOP_PolicySetting
+{
+    [
+        key,
+        Description("Inherited from RSOP_PolicySetting"),
+        Read,
+        DisplayName("ID")
+    ]
+    string id;
+
+    [
+        key,
+        Description("Inherited from RSOP_PolicySetting"),
+        Read,
+        DisplayName("Precedence")
+    ]
+    uint32 precedence;
+
+    [
+        Description("Printer name,"),
+        Read,
+        DisplayName("Printer name")
+    ]
+    string printerName = "";
+
+    [
+        Description("Short server name"),
+        Read,
+        DisplayName("Server name")
+    ]
+    string serverName = "";
+
+    [
+        Description("Short server name"),
+        Read,
+        DisplayName("Network name")
+    ]
+    string uncName = "";
+
+    [
+        ValueMap {"1", "2"},
+        Values { "User connection", "Machine connection"},
+        Description("Whether the the connection is applied per machine, per user"
+            "1 = User, 2 = Machine."),
+        Read,
+        DisplayName("Connection Type")
+    ]
+    uint32      ConnectionType = 1;
+
+    [
+        Description("Indicates whether the print connection"
+            "has been deleted."),
+        Read,
+        DisplayName("Is deleted")
+    ]
+    boolean deleted = false;
+
+    [
+        Description("The final result of pushed printer connection. 0 indicate success"),
+        Read,
+        DisplayName("PushResult")
+    ]
+    uint32      PushResult;
+};

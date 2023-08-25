@@ -1,0 +1,180 @@
+<?xml version='1.0' encoding='utf-8' standalone='yes'?>
+<WindowsPerformanceRecorder
+    Author="Windows Mixed Reality"
+    Comments="Windows Mixed Reality Debug"
+    Company="Microsoft Corporation"
+    Copyright="Microsoft Corporation"
+    Team="Windows Mixed Reality"
+    Version="1.0"
+    >
+  <Profiles>
+    <SystemCollector
+        Id="SystemCollector"
+        Name="NT Kernel Logger"
+        >
+      <!-- 1MB * 100 buffers = 100 MB -->
+      <!--
+      The allocation path for 1MB sized allocation from non-paged pool always allocates a 4KB guard page at the end of the allocation. 
+      This in turns requires virtual address space allocation, which has a minimum block size of 1MB. Since the requested 1MB alloc now has a 4k addition the total virtual size is rounded up to 2MB.
+      Keep the buffer size at 1020KB to avoid waisting a full MB of System VA.
+      -->
+      <BufferSize Value="1020"/>
+      <Buffers Value="100"/>
+    </SystemCollector>
+
+    <EventCollector
+        Id="EventCollector_UserMode"
+        Name="WPR User Mode Event Collector"
+        >
+      <!-- 1MB * 95 buffers = 95 MB -->
+      <BufferSize Value="1020"/>
+      <Buffers Value="95"/>
+    </EventCollector>
+
+    <EventCollector
+      Id="EventCollector_UserMode_DXStacks"
+      Name="WPR Event Collector DXStacks"
+      >
+      <!-- 1MB * 5 buffers = 5 MB -->
+      <BufferSize Value="1020"/>
+      <Buffers Value="5"/>
+    </EventCollector>
+
+    <SystemProvider Id="SystemProviderVerbose">
+      <Keywords>
+        <!-- Disk -->
+        <Keyword Value="DiskIO"/>
+        <Keyword Value="HardFaults"/>
+
+        <!-- CPU -->
+        <Keyword Value="ProcessThread"/>
+        <Keyword Value="Loader"/>
+        <Keyword Value="Power"/>
+        <Keyword Value="CSwitch"/>
+        <Keyword Value="ReadyThread"/>
+        <Keyword Value="SampledProfile"/>
+        <Keyword Value="DPC"/>
+        <Keyword Value="Interrupt"/>
+        <Keyword Value="IdleStates"/>
+
+        <!-- Memory -->
+        <Keyword Value="Memory"/>
+        <Keyword Value="MemoryInfo"/>
+      </Keywords>
+      <Stacks>
+        <Stack Value="CSwitch"/>
+        <Stack Value="ReadyThread"/>
+        <Stack Value="SampledProfile"/>
+      </Stacks>
+    </SystemProvider>
+
+    <SystemProvider Id="SystemProviderLight">
+      <Keywords>
+        <!-- CPU -->
+        <Keyword Value="ProcessThread"/>
+        <Keyword Value="Loader"/>
+        <Keyword Value="Power"/>
+        <Keyword Value="CSwitch"/>
+        <Keyword Value="DPC"/>
+        <Keyword Value="Interrupt"/>
+        <Keyword Value="IdleStates"/>
+        <Keyword Value="SampledProfile"/>
+      </Keywords>
+    </SystemProvider>
+
+    <!-- Perception -->
+    <EventProvider Id="Microsoft.Windows.Analog.Spectrum" Name="05c32102-40e0-4b2b-b778-e5fd577c472b" />
+    <EventProvider Id="Microsoft.Windows.Analog.SpectrumContinuous" Name="356E1338-04AD-420E-8B8A-A2EB678541CF" />
+    <EventProvider Id="Microsoft.Windows.Analog.Spectrum.TrackingDiagnostics" Name="32bd5542-afcb-569e-4d02-ebe0e08bde8e" />
+    <EventProvider Id="Microsoft.Windows.PerceptionApi.Stub" Name="E6852BC9-A7B6-4127-AC15-8D5C50BE9BD7" />
+
+    <!-- Compositor -->
+    <EventProvider Id="Microsoft.Windows.Analog.Compositor" Name="e369227c-ee2f-42d0-9734-cec639966d99" />
+    <EventProvider Id="Microsoft.Windows.Analog.HydrogenCompositor" Name="2161BF9E-E2A6-4463-B9AB-12FAA958D69B" />
+
+    <!-- Shell -->
+    <EventProvider Id="Microsoft.Windows.Analog.HoloSI" Name="5D1E83A6-BBE3-4844-94C0-0347370B5208" />
+    <EventProvider Id="Microsoft.Windows.Analog.HoloShell" Name="3F159176-AF51-44F4-838F-B1268A925924" />
+
+    <!-- Driver Client -->
+    <EventProvider Id="Microsoft.Windows.Analog.HolographicDriverClient" Name="0504EB02-3A16-54E4-A2FF-3D85FA2F13E6" />
+    <EventProvider Id="Microsoft.Windows.Analog.HolographicDriverClientContinuous" Name="092da0c3-6935-5a0c-4034-d9bddce5708f" />
+
+    <!-- Input -->
+    <EventProvider Id="Microsoft.Windows.InputStateManager" Name="83BDA64C-A52C-4B37-8E61-086C22A4CD15" />
+    <EventProvider Id="Microsoft.Windows.Analog.SpatialInteractionContinuous" Name="6CE8E4F2-FECB-4013-9D4D-BE7F699D438D" />
+
+    <!-- Drivers -->
+    <EventProvider Id="SpatialGraphFilterProvider" Name="5f9080bf-b22c-47ea-8b76-1da0cf975419" />
+    <EventProvider Id="Microsoft.Windows.Analog.SpatialGraphDriver" Name="06ef64e5-ffa8-441c-bb2d-0c24f0c32d76" />
+    <EventProvider Id="TraceLoggingHoloLensSensorsProvider" Name="ce491dde-a0c2-4de6-acb1-b2712cf96fda" />
+    <EventProvider Id="Microsoft.Windows.Analog.PerceptionSimulation" Name="47F16003-0637-4D05-A9DA-1FC40BBD0944" />
+
+    <!-- Sharing and Persistence -->
+    <EventProvider Id="Microsoft.Windows.Analog.SharingAndPersistence" Name="9D60ED7F-7714-4815-8FE8-1D9E8095FC5B" />
+
+    <!-- Test Automation -->
+    <EventProvider Id="Microsoft.Windows.TestExecution.WexLogger" Name="40c4df8b-00a9-5159-62bc-9bbc5ee78a29" />
+
+    <Profile
+        Description="Windows Mixed Reality Debug"
+        DetailLevel="Verbose"
+        Id="WindowsMixedReality.Verbose.File"
+        LoggingMode="File"
+        Name="WindowsMixedReality"
+        >
+      <ProblemCategories>
+        <ProblemCategory Value="First Level Triage"/>
+      </ProblemCategories>
+      <Collectors>
+
+        <SystemCollectorId Value="SystemCollector">
+          <SystemProviderId Value="SystemProviderVerbose"/>
+        </SystemCollectorId>
+
+        <EventCollectorId Value="EventCollector_UserMode">
+          <EventProviders>
+
+            <EventProviderId Value="Microsoft.Windows.Analog.Spectrum" />
+            <EventProviderId Value="Microsoft.Windows.Analog.SpectrumContinuous" />
+            <EventProviderId Value="Microsoft.Windows.Analog.Spectrum.TrackingDiagnostics" />
+            <EventProviderId Value="Microsoft.Windows.PerceptionApi.Stub" />
+            <EventProviderId Value="Microsoft.Windows.Analog.Compositor" />
+            <EventProviderId Value="Microsoft.Windows.Analog.HydrogenCompositor" />
+            <EventProviderId Value="Microsoft.Windows.Analog.HoloSI" />
+            <EventProviderId Value="Microsoft.Windows.Analog.HoloShell" />
+            <EventProviderId Value="Microsoft.Windows.Analog.HolographicDriverClient" />
+            <EventProviderId Value="Microsoft.Windows.Analog.HolographicDriverClientContinuous" />
+            <EventProviderId Value="Microsoft.Windows.InputStateManager" />
+            <EventProviderId Value="Microsoft.Windows.Analog.SpatialInteractionContinuous" />
+            <EventProviderId Value="SpatialGraphFilterProvider" />
+            <EventProviderId Value="Microsoft.Windows.Analog.SpatialGraphDriver" />
+            <EventProviderId Value="TraceLoggingHoloLensSensorsProvider" />
+            <EventProviderId Value="Microsoft.Windows.Analog.PerceptionSimulation" />
+            <EventProviderId Value="Microsoft.Windows.Analog.SharingAndPersistence" />
+            <EventProviderId Value="Microsoft.Windows.TestExecution.WexLogger" />
+
+          </EventProviders>
+        </EventCollectorId>
+      </Collectors>
+    </Profile>
+  </Profiles>
+
+  <TraceMergeProperties>
+    <TraceMergeProperty
+        Id="TraceMerge_Default"
+        Name="TraceMerge_Default"
+        >
+      <CustomEvents>
+        <CustomEvent Value="ImageId"/>
+        <CustomEvent Value="BuildInfo"/>
+        <CustomEvent Value="VolumeMapping"/>
+        <CustomEvent Value="EventMetadata"/>
+        <CustomEvent Value="PerfTrackMetadata"/>
+        <CustomEvent Value="WinSAT"/>
+      </CustomEvents>
+    </TraceMergeProperty>
+  </TraceMergeProperties>
+
+
+</WindowsPerformanceRecorder>

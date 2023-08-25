@@ -1,0 +1,157 @@
+﻿<Activity mc:Ignorable="sap sap2010 sads" x:Class="{x:Null}"
+ xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities"
+ xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+ xmlns:mpa="clr-namespace:Microsoft.PowerShell.Activities;assembly=Microsoft.PowerShell.Activities"
+ xmlns:mpua="clr-namespace:Microsoft.PowerShell.Utility.Activities;assembly=Microsoft.PowerShell.Utility.Activities"
+ xmlns:mv="clr-namespace:Microsoft.VisualBasic;assembly=System"
+ xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities"
+ xmlns:s="clr-namespace:System;assembly=mscorlib"
+ xmlns:sad="clr-namespace:System.Activities.Debugger;assembly=System.Activities"
+ xmlns:sads="http://schemas.microsoft.com/netfx/2010/xaml/activities/debugger"
+ xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation"
+ xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation"
+ xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib"
+ xmlns:sma="clr-namespace:System.Management.Automation;assembly=System.Management.Automation"
+ xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <x:Members>
+    <x:Property Name="RDMSServer" Type="InArgument(x:String)" />
+    <x:Property Name="ExternalGatewayName" Type="InArgument(x:String)" />
+    <x:Property Name="Result" Type="OutArgument(sma:PSDataCollection(sma:PSObject))" />
+    <x:Property Name="GatewayServers" Type="InArgument(s:String[])" />
+  </x:Members>
+  <sap2010:WorkflowViewState.IdRef>ActivityBuilder_1</sap2010:WorkflowViewState.IdRef>
+  <mva:VisualBasic.Settings>Assembly references and imported namespaces for internal implementation</mva:VisualBasic.Settings>
+  <Sequence sap2010:WorkflowViewState.IdRef="Sequence_3">
+    <Assign sap2010:WorkflowViewState.IdRef="Assign_1">
+      <Assign.To>
+        <OutArgument x:TypeArguments="sma:PSDataCollection(sma:PSObject)">[Result]</OutArgument>
+      </Assign.To>
+      <Assign.Value>
+        <InArgument x:TypeArguments="sma:PSDataCollection(sma:PSObject)">[New PSDataCollection(Of PSObject)]</InArgument>
+      </Assign.Value>
+    </Assign>
+    <ParallelForEach x:TypeArguments="x:String" DisplayName="ParallelForEach&lt;String&gt;" sap2010:WorkflowViewState.IdRef="ParallelForEach`1_1" Values="[GatewayServers]">
+      <ActivityAction x:TypeArguments="x:String">
+        <ActivityAction.Argument>
+          <DelegateInArgument x:TypeArguments="x:String" Name="item" />
+        </ActivityAction.Argument>
+        <Sequence DisplayName="Add one RD Gateway Server" sap2010:WorkflowViewState.IdRef="Sequence_2">
+          <Sequence.Variables>
+            <Variable x:TypeArguments="sma:PSDataCollection(sma:ErrorRecord)" Name="Errors" />
+            <Variable x:TypeArguments="sma:PSObject" Name="Output" />
+          </Sequence.Variables>
+          <Assign sap2010:WorkflowViewState.IdRef="Assign_2">
+            <Assign.To>
+              <OutArgument x:TypeArguments="sma:PSObject">[Output]</OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="sma:PSObject">[New PSObject]</InArgument>
+            </Assign.Value>
+          </Assign>
+          <InvokeMethod sap2010:WorkflowViewState.IdRef="InvokeMethod_1" MethodName="Add">
+            <InvokeMethod.TargetObject>
+              <InArgument x:TypeArguments="sma:PSMemberInfoCollection(sma:PSPropertyInfo)">[Output.Properties]</InArgument>
+            </InvokeMethod.TargetObject>
+            <InArgument x:TypeArguments="sma:PSNoteProperty">[New PSNoteProperty("ServerName", item)]</InArgument>
+          </InvokeMethod>
+          <Assign sap2010:WorkflowViewState.IdRef="Assign_3">
+            <Assign.To>
+              <OutArgument x:TypeArguments="sma:PSDataCollection(sma:ErrorRecord)">[Errors]</OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="sma:PSDataCollection(sma:ErrorRecord)">[New PSDataCollection(Of ErrorRecord)]</InArgument>
+            </Assign.Value>
+          </Assign>
+          <mpa:InlineScript Command="import-module $env:windir\System32\ServerManagerInternal\rdmanagement;&#xA;Add-RDGateway -ManagementServer $using:RDMSServer -GatewayServer $using:item -ExternalGatewayName $using:ExternalGatewayName" DisplayName="Add RD Gateway" sap2010:WorkflowViewState.IdRef="InlineScript_1" PSError="[Errors]" />
+          <If Condition="[Errors.Count &gt; 0]" sap2010:WorkflowViewState.IdRef="If_1">
+            <If.Then>
+              <Sequence sap2010:WorkflowViewState.IdRef="Sequence_1">
+                <InvokeMethod sap2010:WorkflowViewState.IdRef="InvokeMethod_2" MethodName="Add">
+                  <InvokeMethod.TargetObject>
+                    <InArgument x:TypeArguments="sma:PSMemberInfoCollection(sma:PSPropertyInfo)">[Output.Properties]</InArgument>
+                  </InvokeMethod.TargetObject>
+                  <InArgument x:TypeArguments="sma:PSNoteProperty">[New PSNoteProperty("Success", False)]</InArgument>
+                </InvokeMethod>
+                <InvokeMethod sap2010:WorkflowViewState.IdRef="InvokeMethod_3" MethodName="Add">
+                  <InvokeMethod.TargetObject>
+                    <InArgument x:TypeArguments="sma:PSMemberInfoCollection(sma:PSPropertyInfo)">[Output.Properties]</InArgument>
+                  </InvokeMethod.TargetObject>
+                  <InArgument x:TypeArguments="sma:PSNoteProperty">[New PSNoteProperty("ErrorRecord", Errors(0))]</InArgument>
+                </InvokeMethod>
+                <ForEach x:TypeArguments="sma:ErrorRecord" DisplayName="ForEach&lt;ErrorRecord&gt;" sap2010:WorkflowViewState.IdRef="ForEach`1_1" Values="[Errors]">
+                  <ActivityAction x:TypeArguments="sma:ErrorRecord">
+                    <ActivityAction.Argument>
+                      <DelegateInArgument x:TypeArguments="sma:ErrorRecord" Name="errorRecord" />
+                    </ActivityAction.Argument>
+                    <mpua:WriteError DisplayName="Write-Error" ErrorRecord="[errorRecord]" sap2010:WorkflowViewState.IdRef="WriteError_1" />
+                  </ActivityAction>
+                </ForEach>
+              </Sequence>
+            </If.Then>
+            <If.Else>
+              <InvokeMethod sap2010:WorkflowViewState.IdRef="InvokeMethod_4" MethodName="Add">
+                <InvokeMethod.TargetObject>
+                  <InArgument x:TypeArguments="sma:PSMemberInfoCollection(sma:PSPropertyInfo)">[Output.Properties]</InArgument>
+                </InvokeMethod.TargetObject>
+                <InArgument x:TypeArguments="sma:PSNoteProperty">[New PSNoteProperty("Success", True)]</InArgument>
+              </InvokeMethod>
+            </If.Else>
+          </If>
+          <InvokeMethod sap2010:WorkflowViewState.IdRef="InvokeMethod_5" MethodName="Add">
+            <InvokeMethod.TargetObject>
+              <InArgument x:TypeArguments="sma:PSDataCollection(sma:PSObject)">[Result]</InArgument>
+            </InvokeMethod.TargetObject>
+            <InArgument x:TypeArguments="sma:PSObject">[Output]</InArgument>
+          </InvokeMethod>
+        </Sequence>
+      </ActivityAction>
+    </ParallelForEach>
+    <sads:DebugSymbol.Symbol>dzVEOlxyczFcdGVybXNydlxyZG1zXHdvcmtmbG93XEFkZC1SREdhdGV3YXlTZXJ2ZXIueGFtbCUYA24OAgEBGQUgDgIBMiEFbBcCAQIeSh5tAgE1G0sbUwIBMyGaASGsAQIBMCYJahQCAQMrCzIUAgEsMws4GgIBJzkLQBQCASNBC0HSAgIBIEILYxACAQlkC2kaAgEEMDowSAIBLy07LUMCAS01XDVvAgEqNz43ZgIBKD5TPnkCASY7VDtcAgEkQcUCQc8CAgEhQhlCMAIBCkQPWRoCARBcD2EeAgEMZlBmWAIBB2g4aEACAQVFEUogAgEcSxFQIAIBF1ERWBsCARFeYF5zAgEOYEJgZwIBDUdiR3UCAR5JRElqAgEdTWJNdQIBGk9ET3ICARhRmgFRpAECARVWFVaNAQIBElZMVlsCARM=</sads:DebugSymbol.Symbol>
+  </Sequence>
+  <sap2010:WorkflowViewState.ViewStateManager>
+    <sap2010:ViewStateManager>
+      <sap2010:ViewStateData Id="Assign_1" sap:VirtualizedContainerService.HintSize="604,60" />
+      <sap2010:ViewStateData Id="Assign_2" sap:VirtualizedContainerService.HintSize="552,60" />
+      <sap2010:ViewStateData Id="InvokeMethod_1" sap:VirtualizedContainerService.HintSize="552,128" />
+      <sap2010:ViewStateData Id="Assign_3" sap:VirtualizedContainerService.HintSize="552,60" />
+      <sap2010:ViewStateData Id="InlineScript_1" sap:VirtualizedContainerService.HintSize="552,139">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="InvokeMethod_2" sap:VirtualizedContainerService.HintSize="287,128" />
+      <sap2010:ViewStateData Id="InvokeMethod_3" sap:VirtualizedContainerService.HintSize="287,128" />
+      <sap2010:ViewStateData Id="WriteError_1" sap:VirtualizedContainerService.HintSize="200,22" />
+      <sap2010:ViewStateData Id="ForEach`1_1" sap:VirtualizedContainerService.HintSize="287,208" />
+      <sap2010:ViewStateData Id="Sequence_1" sap:VirtualizedContainerService.HintSize="309,668">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="InvokeMethod_4" sap:VirtualizedContainerService.HintSize="218,128" />
+      <sap2010:ViewStateData Id="If_1" sap:VirtualizedContainerService.HintSize="552,816" />
+      <sap2010:ViewStateData Id="InvokeMethod_5" sap:VirtualizedContainerService.HintSize="552,128" />
+      <sap2010:ViewStateData Id="Sequence_2" sap:VirtualizedContainerService.HintSize="574,1655">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="ParallelForEach`1_1" sap:VirtualizedContainerService.HintSize="604,1803" />
+      <sap2010:ViewStateData Id="Sequence_3" sap:VirtualizedContainerService.HintSize="626,2027">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="ActivityBuilder_1" sap:VirtualizedContainerService.HintSize="666,2107" />
+    </sap2010:ViewStateManager>
+  </sap2010:WorkflowViewState.ViewStateManager>
+</Activity>

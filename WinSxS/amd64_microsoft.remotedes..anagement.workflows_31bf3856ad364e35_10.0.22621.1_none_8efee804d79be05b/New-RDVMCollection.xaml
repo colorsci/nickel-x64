@@ -1,0 +1,413 @@
+﻿<Activity mc:Ignorable="sads sap" x:Class="RDManagement.New_RDVMCollection" this:New_RDVMCollection.SysprepMasterVM="False" this:New_RDVMCollection.ForceExport="False" this:New_RDVMCollection.UserDataVHDDiskSize="20" this:New_RDVMCollection.IsUserAdmin="False" this:New_RDVMCollection.RollbackEnabled="True"
+ xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities"
+ xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+ xmlns:mpa="clr-namespace:Microsoft.PowerShell.Activities;assembly=Microsoft.PowerShell.Activities"
+ xmlns:mpma="clr-namespace:Microsoft.PowerShell.Management.Activities;assembly=Microsoft.PowerShell.Management.Activities"
+ xmlns:mpsa="clr-namespace:Microsoft.PowerShell.Security.Activities;assembly=Microsoft.PowerShell.Security.Activities"
+ xmlns:mpua="clr-namespace:Microsoft.PowerShell.Utility.Activities;assembly=Microsoft.PowerShell.Utility.Activities"
+ xmlns:mrc="clr-namespace:Microsoft.RemoteDesktopServices.Common;assembly=Microsoft.RemoteDesktopServices.Management.Activities"
+ xmlns:mrmc="clr-namespace:Microsoft.RemoteDesktopServices.Management.Cmdlets;assembly=Microsoft.RemoteDesktopServices.Management.Activities"
+ xmlns:mv="clr-namespace:Microsoft.VisualBasic;assembly=System"
+ xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities"
+ xmlns:s="clr-namespace:System;assembly=mscorlib"
+ xmlns:s1="clr-namespace:System;assembly=System"
+ xmlns:s2="clr-namespace:System;assembly=System.Xml"
+ xmlns:s3="clr-namespace:System;assembly=System.Core"
+ xmlns:s4="clr-namespace:System;assembly=System.ServiceModel"
+ xmlns:s5="clr-namespace:System;assembly=System.ComponentModel.Composition"
+ xmlns:sa="clr-namespace:System.Activities;assembly=System.Activities"
+ xmlns:sad="clr-namespace:System.Activities.Debugger;assembly=System.Activities"
+ xmlns:sads="http://schemas.microsoft.com/netfx/2010/xaml/activities/debugger"
+ xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation"
+ xmlns:sc="clr-namespace:System.Collections;assembly=mscorlib"
+ xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System"
+ xmlns:scg1="clr-namespace:System.Collections.Generic;assembly=System.ServiceModel"
+ xmlns:scg2="clr-namespace:System.Collections.Generic;assembly=System.Core"
+ xmlns:scg3="clr-namespace:System.Collections.Generic;assembly=mscorlib"
+ xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=System"
+ xmlns:sco1="clr-namespace:System.Collections.ObjectModel;assembly=mscorlib"
+ xmlns:sd="clr-namespace:System.Data;assembly=System.Data"
+ xmlns:sl="clr-namespace:System.Linq;assembly=System.Core"
+ xmlns:sma="clr-namespace:System.Management.Automation;assembly=System.Management.Automation"
+ xmlns:st="clr-namespace:System.Text;assembly=mscorlib"
+ xmlns:this="clr-namespace:RDManagement"
+ xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <x:Members>
+    <x:Property Name="RDManagementServer" Type="InArgument(x:String)">
+      <x:Property.Attributes>
+        <RequiredArgumentAttribute />
+      </x:Property.Attributes>
+    </x:Property>
+    <x:Property Name="Name" Type="InArgument(x:String)">
+      <x:Property.Attributes>
+        <RequiredArgumentAttribute />
+      </x:Property.Attributes>
+    </x:Property>
+    <x:Property Name="CollectionAlias" Type="InArgument(x:String)">
+      <x:Property.Attributes>
+        <RequiredArgumentAttribute />
+      </x:Property.Attributes>
+    </x:Property>
+    <x:Property Name="Type" Type="InArgument(x:Int32)">
+      <x:Property.Attributes>
+        <RequiredArgumentAttribute />
+      </x:Property.Attributes>
+    </x:Property>
+    <x:Property Name="Managed" Type="InArgument(x:Boolean)">
+      <x:Property.Attributes>
+        <RequiredArgumentAttribute />
+      </x:Property.Attributes>
+    </x:Property>
+    <x:Property Name="Description" Type="InArgument(x:String)" />
+    <x:Property Name="HighlyAvailable" Type="InArgument(x:Boolean)">
+      <x:Property.Attributes>
+        <RequiredArgumentAttribute />
+      </x:Property.Attributes>
+    </x:Property>
+    <x:Property Name="MasterVMHostServer" Type="InArgument(x:String)">
+      <x:Property.Attributes>
+        <RequiredArgumentAttribute />
+      </x:Property.Attributes>
+    </x:Property>
+    <x:Property Name="MasterVMName" Type="InArgument(x:String)">
+      <x:Property.Attributes>
+        <RequiredArgumentAttribute />
+      </x:Property.Attributes>
+    </x:Property>
+    <x:Property Name="ExportLocation" Type="InArgument(x:String)">
+      <x:Property.Attributes>
+        <RequiredArgumentAttribute />
+      </x:Property.Attributes>
+    </x:Property>
+    <x:Property Name="SysprepMasterVM" Type="InArgument(x:Boolean)" />
+    <x:Property Name="MasterVMCredential" Type="InArgument(sma:PSCredential)" />
+    <x:Property Name="ForceExport" Type="InArgument(x:Boolean)" />
+    <x:Property Name="UserSecurityDescriptor" Type="InArgument(x:String)">
+      <x:Property.Attributes>
+        <RequiredArgumentAttribute />
+      </x:Property.Attributes>
+    </x:Property>
+    <x:Property Name="ProvisioningXML" Type="InArgument(x:String)">
+      <x:Property.Attributes>
+        <RequiredArgumentAttribute />
+      </x:Property.Attributes>
+    </x:Property>
+    <x:Property Name="UserDataVHDShare" Type="InArgument(x:String)" />
+    <x:Property Name="UserDataVHDDiskSize" Type="InArgument(s:UInt16)" />
+    <x:Property Name="IsUserAdmin" Type="InArgument(x:Boolean)"/>
+    <x:Property Name="RollbackEnabled" Type="InArgument(x:Boolean)"/>
+  </x:Members>
+  <sap:VirtualizedContainerService.HintSize>739,1511</sap:VirtualizedContainerService.HintSize>
+  <mva:VisualBasic.Settings>Assembly references and imported namespaces for internal implementation</mva:VisualBasic.Settings>
+  <sap:WorkflowViewStateService.ViewState>
+    <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+      <x:Boolean x:Key="ShouldCollapseAll">True</x:Boolean>
+      <x:Boolean x:Key="ShouldExpandAll">False</x:Boolean>
+    </scg3:Dictionary>
+  </sap:WorkflowViewStateService.ViewState>
+  <Sequence DisplayName="Create VM Collection" sap:VirtualizedContainerService.HintSize="699,1471">
+    <Sequence.Variables>
+      <Variable x:TypeArguments="sma:PSDataCollection(sma:PSObject)" Name="activityResult" />
+      <Variable x:TypeArguments="sma:PSObject" Name="ExportedVM" />
+      <Variable x:TypeArguments="sma:PSDataCollection(sma:ErrorRecord)" Name="activityError" />
+    </Sequence.Variables>
+    <sap:WorkflowViewStateService.ViewState>
+      <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+      </scg3:Dictionary>
+    </sap:WorkflowViewStateService.ViewState>
+    <Sequence DisplayName="Export Master VM" sap:VirtualizedContainerService.HintSize="677,357">
+      <Sequence.Variables>
+        <Variable x:TypeArguments="x:String" Name="securePassword">
+          <Variable.Default>
+            <Literal x:TypeArguments="x:String" Value="" />
+          </Variable.Default>
+        </Variable>
+        <Variable x:TypeArguments="x:Int32" Default="1" Name="activityID" />
+        <Variable x:TypeArguments="x:String" Name="userName">
+          <Variable.Default>
+            <Literal x:TypeArguments="x:String" Value="" />
+          </Variable.Default>
+        </Variable>
+        <Variable x:TypeArguments="x:Int32" Default="0" Name="progress" />
+        <Variable x:TypeArguments="x:String" Default="Export Master VM" Name="activityName" />
+        <Variable x:TypeArguments="x:String" Name="variable1" />
+      </Sequence.Variables>
+      <sap:WorkflowViewStateService.ViewState>
+        <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          <x:Boolean x:Key="IsPinned">True</x:Boolean>
+        </scg3:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+      <mpa:InlineScript Command="mkdir $using:ExportLocation -Force -ErrorAction SilentlyContinue | Out-Null&#xD;&#xA;import-module $env:windir\System32\ServerManagerInternal\rdmanagement&#xD;&#xA;$optParams = @{}&#xD;&#xA;if ($using:MasterVMCredential -ne $null) {$optParams['Credential'] = $using:MasterVMCredential}&#xD;&#xA;Export-MasterVirtualMachine -Override $using:ForceExport -SysPrepGeneralize $using:SysprepMasterVM -ExportLocation $using:ExportLocation -VMHostName $using:MasterVMHostServer -VMName $using:MasterVMName @optParams" DisplayName="Script : Export-MasterVM" sap:VirtualizedContainerService.HintSize="200,51" PSError="[activityError]" Result="[activityResult]">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          </scg3:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </mpa:InlineScript>
+      <If Condition="[activityError.Count &gt; 0]" DisplayName="Terminate if error" sap:VirtualizedContainerService.HintSize="200,51">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg3:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+        <If.Then>
+          <Sequence DisplayName="Cleanup" sap:VirtualizedContainerService.HintSize="580,374">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+              </scg3:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+            <mpa:InlineScript Command="Remove-Item -Force -Recurse -Path $using:ExportLocation" DisplayName="Script : Remove Export Location" sap:VirtualizedContainerService.HintSize="558,188">
+              <sap:WorkflowViewStateService.ViewState>
+                <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                  <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                </scg3:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+            </mpa:InlineScript>
+            <TerminateWorkflow Exception="[New RDManagementException(activityError.Item(0).Exception.Message, RDManagementServer, ErrorId.Unknown, activityError.Item(0).Exception)]" sap:VirtualizedContainerService.HintSize="558,22" Reason="[activityError.Item(0).Exception.Message]" />
+          </Sequence>
+        </If.Then>
+        <If.Else>
+          <Sequence sap:VirtualizedContainerService.HintSize="264,184">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+              </scg3:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+            <Assign sap:VirtualizedContainerService.HintSize="242,60">
+              <Assign.To>
+                <OutArgument x:TypeArguments="sma:PSObject">[ExportedVM]</OutArgument>
+              </Assign.To>
+              <Assign.Value>
+                <InArgument x:TypeArguments="sma:PSObject">[activityResult(0)]</InArgument>
+              </Assign.Value>
+            </Assign>
+          </Sequence>
+        </If.Else>
+      </If>
+      <Sequence DisplayName="Progress : Done" sap:VirtualizedContainerService.HintSize="200,51">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          </scg3:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+        <Assign sap:VirtualizedContainerService.HintSize="242,60">
+          <Assign.To>
+            <OutArgument x:TypeArguments="x:Int32">[progress]</OutArgument>
+          </Assign.To>
+          <Assign.Value>
+            <InArgument x:TypeArguments="x:Int32">100</InArgument>
+          </Assign.Value>
+        </Assign>
+        <mpua:WriteProgress Activity="[activityName]" Completed="[True]" DisplayName="Progress : Done" sap:VirtualizedContainerService.HintSize="242,22" PercentComplete="[progress]" ProgressId="[activityID]" Status="Done!" />
+      </Sequence>
+    </Sequence>
+    <Sequence DisplayName="Create Collection" sap:VirtualizedContainerService.HintSize="222,448">
+      <Sequence.Variables>
+        <Variable x:TypeArguments="x:Int32" Default="2" Name="activityID" />
+        <Variable x:TypeArguments="x:Int32" Default="0" Name="progress" />
+        <Variable x:TypeArguments="sc:Hashtable" Default="[New Hashtable()]" Name="wmiParameters" />
+        <Variable x:TypeArguments="x:String" Default="Create Collection" Name="activityName" />
+      </Sequence.Variables>
+      <sap:WorkflowViewStateService.ViewState>
+        <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+        </scg3:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+      <Sequence DisplayName="Progress : In Progress" sap:VirtualizedContainerService.HintSize="200,51">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          </scg3:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+        <Assign sap:VirtualizedContainerService.HintSize="242,60">
+          <Assign.To>
+            <OutArgument x:TypeArguments="x:Int32">[progress]</OutArgument>
+          </Assign.To>
+          <Assign.Value>
+            <InArgument x:TypeArguments="x:Int32">0</InArgument>
+          </Assign.Value>
+        </Assign>
+        <mpua:WriteProgress Activity="[activityName]" DisplayName="Progress : In Progress" sap:VirtualizedContainerService.HintSize="242,22" PercentComplete="[progress]" ProgressId="[activityID]" Status="In Progress..." />
+      </Sequence>
+      <mpa:InlineScript Command="import-module $env:windir\System32\ServerManagerInternal\rdmanagement&#xD;&#xA;$optParams = @{}&#xD;&#xA;if ($using:description -ne $null) {$optParams['Description'] = $using:Description}&#xD;&#xA;New-RDVMPool -Alias $using:CollectionAlias -ManagementServer $using:RDManagementServer -Name $using:Name -CollectionType $using:Type -Managed $using:Managed -HighlyAvailable $using:HighlyAvailable -UserSecurityDescriptor $using:UserSecurityDescriptor -MasterVMDetails $using:ExportedVM -ActivityId $using:activityID -IsUserAdmin $using:IsUserAdmin -RollbackEnabled $using:RollbackEnabled @optParams" DisplayName="Script : New-RDVMPool" sap:VirtualizedContainerService.HintSize="508,139" PSError="[activityError]" Result="[activityResult]">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          </scg3:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </mpa:InlineScript>
+      <If Condition="[activityError.Count &gt; 0]" DisplayName="Terminate if error" sap:VirtualizedContainerService.HintSize="200,51">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+          </scg3:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+        <If.Then>
+          <Sequence DisplayName="Cleanup" sap:VirtualizedContainerService.HintSize="580,374">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+              </scg3:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+            <mpa:InlineScript Command="Remove-Item -Force -Recurse -Path $using:ExportLocation" DisplayName="Script : Remove Export Location" sap:VirtualizedContainerService.HintSize="558,188" />
+            <TerminateWorkflow Exception="[New RDManagementException(activityError.Item(0).Exception.Message, RDManagementServer, ErrorId.Unknown, activityError.Item(0).Exception)]" sap:VirtualizedContainerService.HintSize="558,22" Reason="[activityError.Item(0).Exception.Message]" />
+          </Sequence>
+        </If.Then>
+      </If>
+      <Sequence DisplayName="Progress : Done" sap:VirtualizedContainerService.HintSize="200,51">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          </scg3:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+        <Assign sap:VirtualizedContainerService.HintSize="242,60">
+          <Assign.To>
+            <OutArgument x:TypeArguments="x:Int32">[progress]</OutArgument>
+          </Assign.To>
+          <Assign.Value>
+            <InArgument x:TypeArguments="x:Int32">100</InArgument>
+          </Assign.Value>
+        </Assign>
+        <mpua:WriteProgress Activity="[activityName]" Completed="[True]" DisplayName="Progress : Done" sap:VirtualizedContainerService.HintSize="242,22" PercentComplete="[progress]" ProgressId="[activityID]" Status="Done!" />
+      </Sequence>
+    </Sequence>
+    <Sequence DisplayName="Enable User data Vhd" sap:VirtualizedContainerService.HintSize="677,768">
+      <Sequence.Variables>
+        <Variable x:TypeArguments="x:Int32" Default="4" Name="activityID" />
+        <Variable x:TypeArguments="x:Int32" Default="0" Name="progress" />
+        <Variable x:TypeArguments="sc:Hashtable" Default="[New Hashtable()]" Name="wmiParameters" />
+        <Variable x:TypeArguments="x:String" Default="Enable User Data VHD" Name="activityName" />
+        <Variable x:TypeArguments="x:Int32" Default="0" Modifiers="ReadOnly" Name="UVHDRemapMode" />
+        <Variable x:TypeArguments="x:Int32" Default="1" Modifiers="ReadOnly" Name="UVHDDiskType" />
+        <Variable x:TypeArguments="s:UInt64" Default="[CType(CType(UserDataVHDDiskSize, UInt64) * 1073741824, UInt64)]" Name="UVHDDiskSize" />
+        <Variable x:TypeArguments="s:String[]" Default="[{}]" Name="UVHDIncludeLocation" />
+      </Sequence.Variables>
+      <sap:WorkflowViewStateService.ViewState>
+        <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          <x:Boolean x:Key="IsPinned">True</x:Boolean>
+        </scg3:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+      <Sequence DisplayName="Progress : In Progress" sap:VirtualizedContainerService.HintSize="655,51">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          </scg3:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+        <Assign sap:VirtualizedContainerService.HintSize="242,60">
+          <Assign.To>
+            <OutArgument x:TypeArguments="x:Int32">[progress]</OutArgument>
+          </Assign.To>
+          <Assign.Value>
+            <InArgument x:TypeArguments="x:Int32">0</InArgument>
+          </Assign.Value>
+        </Assign>
+        <mpua:WriteProgress Activity="[activityName]" DisplayName="Progress : In Progress" sap:VirtualizedContainerService.HintSize="242,22" PercentComplete="[progress]" ProgressId="[activityID]" Status="In Progress..." />
+      </Sequence>
+      <If Condition="[Not String.IsNullOrWhiteSpace(UserDataVHDShare)]" DisplayName="Configure UVHD if specified" sap:VirtualizedContainerService.HintSize="655,462">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsPinned">True</x:Boolean>
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg3:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+        <If.Then>
+          <Sequence sap:VirtualizedContainerService.HintSize="530,354">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                <x:Boolean x:Key="IsPinned">True</x:Boolean>
+              </scg3:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+            <mpa:InlineScript Command="import-module $env:windir\System32\ServerManagerInternal\rdmanagement\Enable-UserDataVHD.xaml;&#xA;Enable-UserDataVHD -CollectionAlias $using:CollectionAlias -UserVhdShare $using:UserDataVHDShare -RemapMode $using:UVHDRemapMode -DiskType $using:UVHDDiskType  -DiskSize $using:UVHDDiskSize -IncludeFolderLocation $using:UVHDIncludeLocation -IncludeFileLocation $using:UVHDIncludeLocation -RDMSServer $using:RDManagementServer -ProvisioningXml $using:ProvisioningXML" DisplayName="Script : Enable-UserDataVHD" sap:VirtualizedContainerService.HintSize="508,139" PSError="[activityError]" PSRequiredModules="[{&quot;PSWorkflow&quot;}]" Result="[activityResult]">
+              <sap:WorkflowViewStateService.ViewState>
+                <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                  <x:Boolean x:Key="IsPinned">True</x:Boolean>
+                </scg3:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+            </mpa:InlineScript>
+            <If Condition="[activityError.Count &gt; 0]" DisplayName="Report  any errors" sap:VirtualizedContainerService.HintSize="508,51">
+              <sap:WorkflowViewStateService.ViewState>
+                <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                </scg3:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+              <If.Then>
+                <ForEach x:TypeArguments="sma:ErrorRecord" DisplayName="ForEach&lt;ErrorRecord&gt;" sap:VirtualizedContainerService.HintSize="287,208" Values="[activityError]">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                    </scg3:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <ActivityAction x:TypeArguments="sma:ErrorRecord">
+                    <ActivityAction.Argument>
+                      <DelegateInArgument x:TypeArguments="sma:ErrorRecord" Name="errorRecord" />
+                    </ActivityAction.Argument>
+                    <mpua:WriteError DisplayName="Write-Error" ErrorRecord="[errorRecord]" sap:VirtualizedContainerService.HintSize="200,22" />
+                  </ActivityAction>
+                </ForEach>
+              </If.Then>
+            </If>
+          </Sequence>
+        </If.Then>
+      </If>
+      <Sequence DisplayName="Progress : Done" sap:VirtualizedContainerService.HintSize="655,51">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          </scg3:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+        <Assign sap:VirtualizedContainerService.HintSize="242,60">
+          <Assign.To>
+            <OutArgument x:TypeArguments="x:Int32">[progress]</OutArgument>
+          </Assign.To>
+          <Assign.Value>
+            <InArgument x:TypeArguments="x:Int32">100</InArgument>
+          </Assign.Value>
+        </Assign>
+        <mpua:WriteProgress Activity="[activityName]" Completed="[True]" DisplayName="Progress : Done" sap:VirtualizedContainerService.HintSize="242,22" PercentComplete="[progress]" ProgressId="[activityID]" Status="Done!" />
+      </Sequence>
+    </Sequence>
+    <Sequence DisplayName="Roll out VMs" sap:VirtualizedContainerService.HintSize="677,51">
+      <Sequence.Variables>
+        <Variable x:TypeArguments="x:Int32" Default="3" Name="activityID" />
+        <Variable x:TypeArguments="x:Int32" Default="0" Name="progress" />
+        <Variable x:TypeArguments="sc:Hashtable" Default="[New Hashtable()]" Name="wmiParameters" />
+        <Variable x:TypeArguments="x:String" Default="Roll out VMs" Name="activityName" />
+      </Sequence.Variables>
+      <sap:WorkflowViewStateService.ViewState>
+        <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+        </scg3:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+      <mpa:InlineScript Command="import-module $env:windir\System32\ServerManagerInternal\rdmanagement;&#xA;Start-RDVMRollout -Alias $using:CollectionAlias -ProvisioningXml $using:ProvisioningXML -ManagementServer $using:RDManagementServer -ActivityId $using:activityID" DisplayName="Script : Start-RDVMRollout" sap:VirtualizedContainerService.HintSize="923,98">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          </scg3:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </mpa:InlineScript>
+    </Sequence>
+  </Sequence>
+</Activity>

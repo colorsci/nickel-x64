@@ -1,0 +1,458 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<Package IgnorableNamespaces="build mp uap rescap" xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities" xmlns:build="http://schemas.microsoft.com/developer/appx/2015/build">
+  <Identity Name="Microsoft.Windows.PPISkype" Publisher="CN=Microsoft Windows, O=Microsoft Corporation, L=Redmond, S=Washington, C=US" Version="16.9.100.75" ProcessorArchitecture="neutral" ResourceId="neutral" />
+  <mp:PhoneIdentity PhoneProductId="ca6e747f-41ba-422c-9f7b-e78f080c9dd7" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
+  <Properties>
+    <DisplayName>ms-resource:Manifest_DisplayName</DisplayName>
+    <PublisherDisplayName>Microsoft Corporation</PublisherDisplayName>
+    <Logo>Assets\StoreLogo.png</Logo>
+  </Properties>
+  <Dependencies>
+    <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.15063.0" MaxVersionTested="10.0.15063.0" />
+  </Dependencies>
+  <Resources>
+    <Resource Language="EN-US" />
+    <Resource Language="EN-GB" />
+    <Resource uap:Scale="200" />
+  </Resources>
+  <Applications>
+    <Application Id="App" Executable="Microsoft.PPISkype.Windows.exe" EntryPoint="Microsoft.PPISkype.App">
+      <uap:VisualElements DisplayName="ms-resource:Manifest_DisplayName" Square150x150Logo="Assets\Logo.png" Square44x44Logo="Assets\SmallLogo.png" Description="ms-resource:Manifest_Description" BackgroundColor="#00aff0" AppListEntry="none">
+        <uap:SplashScreen Image="Assets\SplashScreen.png" />
+        <uap:LockScreen Notification="badge" BadgeLogo="Assets\SmallerLogo.png" />
+      </uap:VisualElements>
+      <Extensions>
+        <uap:Extension Category="windows.protocol">
+          <uap:Protocol Name="skype-mrx" />
+        </uap:Extension>
+        <Extension Category="windows.backgroundTasks" Executable="Microsoft.PPISkype.Windows.exe" EntryPoint="LyncImm.UcImmTimeBrokerTask">
+          <BackgroundTasks>
+            <Task Type="controlChannel" />
+            <Task Type="timer" />
+          </BackgroundTasks>
+        </Extension>
+        <Extension Category="windows.backgroundTasks" Executable="Microsoft.PPISkype.Windows.exe" EntryPoint="LyncImm.WhiteSpaceKeepAliveTask">
+          <BackgroundTasks>
+            <Task Type="controlChannel" />
+          </BackgroundTasks>
+        </Extension>
+        <Extension Category="windows.backgroundTasks" Executable="Microsoft.PPISkype.Windows.exe" EntryPoint="LyncImm.UccApiImmTimeBrokerTask">
+          <BackgroundTasks>
+            <Task Type="controlChannel" />
+            <Task Type="timer" />
+          </BackgroundTasks>
+        </Extension>
+        <Extension Category="windows.backgroundTasks" Executable="Microsoft.PPISkype.Windows.exe" EntryPoint="ToastNotificationBackgroundTask.ToastNotificationBackground">
+          <BackgroundTasks>
+            <Task Type="general" />
+          </BackgroundTasks>
+        </Extension>
+        <Extension Category="windows.backgroundTasks" Executable="Microsoft.PPISkype.Windows.exe" EntryPoint="LyncImm.SebBackgroundTask">
+          <BackgroundTasks>
+            <Task Type="controlChannel" />
+            <Task Type="systemEvent" />
+          </BackgroundTasks>
+        </Extension>
+        <Extension Category="windows.backgroundTasks" Executable="Microsoft.PPISkype.Windows.exe" EntryPoint="LyncImm.AudioTask">
+          <BackgroundTasks>
+            <Task Type="audio" />
+          </BackgroundTasks>
+        </Extension>
+      </Extensions>
+    </Application>
+    <Application Id="EmailApp" Executable="Microsoft.PPISkype.Windows.exe" EntryPoint="Microsoft.PPISkype.App">
+      <uap:VisualElements DisplayName="ms-resource:Manifest_EmailDisplayName" Square150x150Logo="Assets\Logo.png" Square44x44Logo="Assets\EmailSmallLogo.png" Description="ms-resource:Manifest_EmailDescription" BackgroundColor="#077db4" AppListEntry="none">
+        <uap:SplashScreen Image="Assets\SplashScreen.png" />
+        <uap:LockScreen Notification="badge" BadgeLogo="Assets\SmallerLogo.png" />
+      </uap:VisualElements>
+      <Extensions>
+        <uap:Extension Category="windows.shareTarget">
+          <uap:ShareTarget Description="ms-resource:ShareTarget_Description">
+            <uap:SupportedFileTypes>
+              <uap:SupportsAnyFileType />
+            </uap:SupportedFileTypes>
+            <uap:DataFormat>Text</uap:DataFormat>
+            <uap:DataFormat>URI</uap:DataFormat>
+            <uap:DataFormat>HTML</uap:DataFormat>
+            <uap:DataFormat>StorageItems</uap:DataFormat>
+            <uap:DataFormat>Bitmap</uap:DataFormat>
+          </uap:ShareTarget>
+        </uap:Extension>
+      </Extensions>
+    </Application>
+  </Applications>
+  <Capabilities>
+    <rescap:Capability Name="screenDuplication" />
+    <rescap:Capability Name="appointmentsSystem" />
+    <rescap:Capability Name="teamEditionExperience" />
+    <rescap:Capability Name="email" />
+    <rescap:Capability Name="emailSystem" />
+    <rescap:Capability Name="hidTelephony" />
+    <uap:Capability Name="appointments" />
+    <uap:Capability Name="contacts" />
+    <uap:Capability Name="enterpriseAuthentication" />
+    <uap:Capability Name="sharedUserCertificates" />
+    <Capability Name="internetClientServer" />
+    <Capability Name="privateNetworkClientServer" />
+    <DeviceCapability Name="location" />
+    <DeviceCapability Name="microphone" />
+    <DeviceCapability Name="webcam" />
+    <DeviceCapability Name="humaninterfacedevice">
+      <Device Id="any">
+        <Function Type="usage:000B *" />
+      </Device>
+    </DeviceCapability>
+  </Capabilities>
+  <Extensions>
+    <Extension Category="windows.activatableClass.inProcessServer">
+      <InProcessServer>
+        <Path>Microsoft.Rtc.WinRt.MMVR.MediaEngine.dll</Path>
+        <ActivatableClass ActivatableClassId="MediaVR.SchemeHandler.SchemeHandler" ThreadingModel="both" />
+      </InProcessServer>
+    </Extension>
+    <Extension Category="windows.activatableClass.inProcessServer">
+      <InProcessServer>
+        <Path>uccapiimm.dll</Path>
+        <ActivatableClass ActivatableClassId="LyncImm.WhiteSpaceKeepAliveTask" ThreadingModel="MTA" />
+      </InProcessServer>
+    </Extension>
+    <Extension Category="windows.activatableClass.inProcessServer">
+      <InProcessServer>
+        <Path>ucimm.dll</Path>
+        <ActivatableClass ActivatableClassId="LyncImm.SebBackgroundTask" ThreadingModel="MTA" />
+      </InProcessServer>
+    </Extension>
+    <Extension Category="windows.activatableClass.inProcessServer">
+      <InProcessServer>
+        <Path>uccapiimm.dll</Path>
+        <ActivatableClass ActivatableClassId="LyncImm.UccApiImmTimeBrokerTask" ThreadingModel="MTA" />
+      </InProcessServer>
+    </Extension>
+    <Extension Category="windows.activatableClass.inProcessServer">
+      <InProcessServer>
+        <Path>ucimm.dll</Path>
+        <ActivatableClass ActivatableClassId="LyncImm.UcImmTimeBrokerTask" ThreadingModel="MTA" />
+      </InProcessServer>
+    </Extension>
+    <Extension Category="windows.activatableClass.inProcessServer">
+      <InProcessServer>
+        <Path>Microsoft.Lync.PropertyViewModel.dll</Path>
+        <ActivatableClass ActivatableClassId="Microsoft.Lync.PropertyViewModel.LyncViewModel" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.Lync.PropertyViewModel.ClientViewModelTypeAdapter" ThreadingModel="both" />
+      </InProcessServer>
+    </Extension>
+    <Extension Category="windows.activatableClass.inProcessServer">
+      <InProcessServer>
+        <Path>ClientLib.dll</Path>
+        <ActivatableClass ActivatableClassId="ClientLib.Globalisation" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ClientLib.FileUtils" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ClientLib.StringUtils" ThreadingModel="both" />
+      </InProcessServer>
+    </Extension>
+    <Extension Category="windows.activatableClass.inProcessServer">
+      <InProcessServer>
+        <Path>ClientPPI.dll</Path>
+        <ActivatableClass ActivatableClassId="ClientPPI.Converters.StateStoryboardConverter" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ClientPPI.Converters.EnumEqualityToVisibility" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ClientPPI.Converters.ParticipantViewModelToNameConverter" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ClientPPI.Converters.CountToVisibility" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ClientPPI.Converters.StringLengthToVisibility" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ClientPPI.Converters.Int32ToBoolConverter" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ClientPPI.Converters.StringFormatHelper" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ClientPPI.Converters.ParticipantConnectivityConverter" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ClientPPI.Views.ShareTargetPage.ShareTargetPageArgs" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ClientPPI.AccessibleRecipientListBox" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ClientPPI.ClientFsmModel" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ClientPPI.ParticipantImage" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ClientPPI.SharingToolBar" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ClientPPI.CallButtonsControl" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ClientPPI.PINInputControl" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ClientPPI.ParticipantControl" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ClientPPI.EndCallControl" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ClientPPI.MainPage" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ClientPPI.ContentStatusControl" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ClientPPI.IMMessageListControl" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ClientPPI.GalleryControl" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ClientPPI.ParticipantVideo" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ClientPPI.RosterControl" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ClientPPI.AppointmentButtonControl" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ClientPPI.PreviewControl" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ClientPPI.StartCallDialler" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ClientPPI.DisclaimerControl" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ClientPPI.ClientPPI_XamlTypeInfo.XamlMetaDataProvider" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ClientPPI.InLobby" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ClientPPI.PowerPointContentControl" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ClientPPI.SignInControl" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ClientPPI.AccessibleListView" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ClientPPI.StartMeetingButtonsControl" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ClientPPI.StartAppointmentCalendar" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ClientPPI.MeetingAttachmentsControl" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ClientPPI.DialogControl" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ClientPPI.MeetingSummaryPage" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ClientPPI.AccessibleContentListView" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ClientPPI.WheresMyJoinButton" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ClientPPI.DebugConvoView" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ClientPPI.IMNotificationControl" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ClientPPI.AdHocConnecting" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ClientPPI.PPIAvatar" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ClientPPI.PresentedContentControl" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ClientPPI.ContentBinTemplateSelector" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ClientPPI.RDeepLinkHandler" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ClientPPI.SearchPane" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ClientPPI.AdHocConnectingParticipant" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ClientPPI.StartCallPane" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ClientPPI.PowerPointContentToolbarControl" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ClientPPI.CollabWindowPage" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ClientPPI.ViewModels.WheresMyJoinButtonViewModel" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ClientPPI.ViewModels.AppointmentItemViewModel" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ClientPPI.ViewModels.CallOptionsClickCommand" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ClientPPI.ViewModels.CollabWindowViewModel" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ClientPPI.ViewModels.AppointmentListViewModel" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ClientPPI.ViewModels.AmbientScreen" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ClientPPI.ViewModels.AppointmentItemCommand" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ClientPPI.ViewModels.JoinMeetingURLCommand" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ClientPPI.ViewModels.MainViewModel" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ClientPPI.ViewModels.SharingToolBarViewModel" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ClientPPI.ViewModels.BoundingRectangleType" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ClientPPI.ViewModels.ViewModelLocator" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ClientPPI.PINEntryControl" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ClientPPI.BusinessBar" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ClientPPI.EmailRecipientItemTemplateSelector" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ClientPPI.CallControl" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ClientPPI.SittingRowControl" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ClientPPI.StoryboardHelpers.ObjectAnimationUsingKeyFramesHelper" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ClientPPI.StoryboardHelpers.StoryboardHelper" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ClientPPI.ParticipantMuteIndicator" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ClientPPI.ShareTargetPage" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ClientPPI.CollabWindowHelper" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ClientPPI.IMInputControl" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ClientPPI.PINPadControl" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ClientPPI.AccessibleRecipientView" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ClientPPI.IMControl" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ClientPPI.DialogManager" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ClientPPI.EmailRecipientItemContainerStyleSelector" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ClientPPI.SittingParticipantControl" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ClientPPI.EmailPINControl" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ClientPPI.DistributionGroup" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ClientPPI.IMMessageTemplateSelector" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ClientPPI.MeetingContentControl" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ClientPPI.DebugContentControl" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ClientPPI.DialpadControl" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ClientPPI.ContactSearchBox" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ClientPPI.PINInputAutomationPeer" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ClientPPI.ConversationControl" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ClientPPI.IMMessageContent" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="ClientPPI.PhoneAvatar" ThreadingModel="both" />
+      </InProcessServer>
+    </Extension>
+    <Extension Category="windows.activatableClass.inProcessServer">
+      <InProcessServer>
+        <Path>Microsoft.PPISkype.ViewModels.dll</Path>
+        <ActivatableClass ActivatableClassId="Microsoft.PPISkype.ViewModels.EmailContactViewModel" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.PPISkype.ViewModels.EmailSearchTextVisibilityCommand" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.PPISkype.ViewModels.CollabContact" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.PPISkype.ViewModels.PINDigitCommand" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.PPISkype.ViewModels.EmailSearchContactViewModel" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.PPISkype.ViewModels.EmailAttachmentManagerViewModel" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.PPISkype.ViewModels.UriCallRelay" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.PPISkype.ViewModels.CleanupUtil" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.PPISkype.ViewModels.EmailRecipientsViewModel" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.PPISkype.ViewModels.SignInViewModelClient" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.PPISkype.ViewModels.EmailPresenceItemsViewModel" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.PPISkype.ViewModels.ShowPINEntryCommand" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.PPISkype.ViewModels.CollabPhoto" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.PPISkype.ViewModels.EmailErrorViewModel" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.PPISkype.ViewModels.EmailSearchContactCommand" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.PPISkype.ViewModels.EmailRecipientCommand" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.PPISkype.ViewModels.ContentPaneViewModel" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.PPISkype.ViewModels.RSignInViewModel" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.PPISkype.ViewModels.PropertyModelPropertyPropagator" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.PPISkype.ViewModels.MessagePolicyViewModel" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.PPISkype.ViewModels.REmailAttachmentViewModel" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.PPISkype.ViewModels.CollabPresenceItems" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.PPISkype.ViewModels.SignInRetryCommand" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.PPISkype.ViewModels.EmailPhotoViewModel" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.PPISkype.ViewModels.FeedbackButtonClickCommand" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.PPISkype.ViewModels.PINNonDigitCommand" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.PPISkype.ViewModels.SetPINRecipientEmailCommand" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.PPISkype.ViewModels.EmailOperationResult" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.PPISkype.ViewModels.EmailMeetingInviteesViewModel" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.PPISkype.ViewModels.FeedbackControlViewModel" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.PPISkype.ViewModels.EmailMailboxViewModel" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.PPISkype.ViewModels.FeedbackHelper" ThreadingModel="both" />
+      </InProcessServer>
+    </Extension>
+    <Extension Category="windows.activatableClass.inProcessServer">
+      <InProcessServer>
+        <Path>Microsoft.SkypeTeam.NativeUtils.dll</Path>
+        <ActivatableClass ActivatableClassId="Microsoft.SkypeTeam.NativeUtils.ShellHelper" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.SkypeTeam.NativeUtils.NarrationUtil" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.SkypeTeam.NativeUtils.IMMessageParagraphBuilder" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.SkypeTeam.NativeUtils.AutomationPeerWithCustomName" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.SkypeTeam.NativeUtils.UrlHelper" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.SkypeTeam.NativeUtils.RichTextHelper" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.SkypeTeam.NativeUtils.EventTimer" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.SkypeTeam.NativeUtils.RViewHelper" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.SkypeTeam.NativeUtils.StreamReference" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.SkypeTeam.NativeUtils.AppointmentsUtil" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.SkypeTeam.NativeUtils.HotkeyHandler" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.SkypeTeam.NativeUtils.IMMessageInlineElementBuilder" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.SkypeTeam.NativeUtils.PropertyModelRelayCommand" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.SkypeTeam.NativeUtils.IMMessageConverter" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.SkypeTeam.NativeUtils.WPPTracer" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.SkypeTeam.NativeUtils.RRegistryHelper" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.SkypeTeam.NativeUtils.StringStream" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.SkypeTeam.NativeUtils.PhoneNumberHelper" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.SkypeTeam.NativeUtils.Transitioner" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.SkypeTeam.NativeUtils.AppSettings" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.SkypeTeam.NativeUtils.Props" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.SkypeTeam.NativeUtils.ButtonCommand" ThreadingModel="both" />
+      </InProcessServer>
+    </Extension>
+    <Extension Category="windows.activatableClass.inProcessServer">
+      <InProcessServer>
+        <Path>Microsoft.SkypeTeam.Telemetry.dll</Path>
+        <ActivatableClass ActivatableClassId="Microsoft.SkypeTeam.Telemetry.TelemetryManagerWinRT" ThreadingModel="both" />
+      </InProcessServer>
+    </Extension>
+    <Extension Category="windows.activatableClass.inProcessServer">
+      <InProcessServer>
+        <Path>Microsoft.SkypeTeam.AppLayer.dll</Path>
+        <ActivatableClass ActivatableClassId="Microsoft.SkypeTeam.AppLayer.LyncApp" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.SkypeTeam.AppLayer.AppLayerVersion" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.SkypeTeam.AppLayer.Logging" ThreadingModel="both" />
+      </InProcessServer>
+    </Extension>
+    <Extension Category="windows.activatableClass.inProcessServer">
+      <InProcessServer>
+        <Path>Microsoft.LyncImm.ViewModel.dll</Path>
+        <ActivatableClass ActivatableClassId="Microsoft.LyncImm.ViewModel.ViewModelFactory" ThreadingModel="both" />
+      </InProcessServer>
+    </Extension>
+    <Extension Category="windows.activatableClass.inProcessServer">
+      <InProcessServer>
+        <Path>Microsoft.SkypeTeam.NativeConverters.dll</Path>
+        <ActivatableClass ActivatableClassId="Microsoft.SkypeTeam.NativeConverters.MultiplierConverter" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.SkypeTeam.NativeConverters.BoolInverterConverter" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.SkypeTeam.NativeConverters.KeyValuePair" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.SkypeTeam.NativeConverters.TranslateKeyValueConverter" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.SkypeTeam.NativeConverters.KeyValueConverter" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.SkypeTeam.NativeConverters.FlowDirectionToValueConverter" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.SkypeTeam.NativeConverters.LocConverter" ThreadingModel="both" />
+      </InProcessServer>
+    </Extension>
+    <Extension Category="windows.activatableClass.inProcessServer">
+      <InProcessServer>
+        <Path>Microsoft.SkypeTeam.NativeView.dll</Path>
+        <ActivatableClass ActivatableClassId="Microsoft.SkypeTeam.NativeView.Microsoft_SkypeTeam_NativeView_XamlTypeInfo.XamlMetaDataProvider" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.SkypeTeam.NativeView.FeedbackControl" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.SkypeTeam.NativeView.Button" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.SkypeTeam.NativeView.WrapPanel" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.SkypeTeam.NativeView.CustomisedContentControl" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.SkypeTeam.NativeView.ContactAvatar" ThreadingModel="both" />
+      </InProcessServer>
+    </Extension>
+    <Extension Category="windows.activatableClass.inProcessServer">
+      <InProcessServer>
+        <Path>Microsoft.Windows.PPISkype.dll</Path>
+        <ActivatableClass ActivatableClassId="Microsoft.SkypeTeam.Utils.Measurements" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.SkypeTeam.Utils.Margins" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.SkypeTeam.Utils.PropertyBinding" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.SkypeTeam.View.HorizontalContactControl" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.SkypeTeam.View.MeetingDetailsControl" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.SkypeTeam.View.DividerLineInsideStackPanel" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.SkypeTeam.View.Microsoft_SkypeTeam_View_XamlTypeInfo.XamlMetaDataProvider" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.SkypeTeam.View.RosterNavigationButton" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.SkypeTeam.View.SittingRowOverflowItem" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.SkypeTeam.View.RosterParticipantActionButton" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.SkypeTeam.View.ContentBinItemControl" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.SkypeTeam.View.SittingRowParticipantControl" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.SkypeTeam.View.SittingRowParticipantItem" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.SkypeTeam.Converters.IntToBoolConverter" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.SkypeTeam.Converters.BoolToVisibilityConverter" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.SkypeTeam.Converters.StreamToBitmapImageConverter" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.SkypeTeam.Converters.CountToVisibilityConverter" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.SkypeTeam.Converters.TranslateConverter" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.SkypeTeam.Converters.EnumToVisibilityConverter" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.SkypeTeam.Converters.StringLengthToVisibilityConverter" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.SkypeTeam.Converters.ManagedBoolInvertConverter" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.SkypeTeam.Converters.BoolToStringConverter" ThreadingModel="both" />
+      </InProcessServer>
+    </Extension>
+    <Extension Category="windows.activatableClass.inProcessServer">
+      <InProcessServer>
+        <Path>ToastNotificationBackgroundTask.dll</Path>
+        <ActivatableClass ActivatableClassId="ToastNotificationBackgroundTask.ToastNotificationBackground" ThreadingModel="both" />
+      </InProcessServer>
+    </Extension>
+    <Extension Category="windows.activatableClass.inProcessServer">
+      <InProcessServer>
+        <Path>Microsoft.Internal.PropertyModel.Proxy.dll</Path>
+        <ActivatableClass ActivatableClassId="Microsoft.Internal.PropertyModel.Proxy.CollectionModelProxy" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.Internal.PropertyModel.Proxy.ProxyFactory" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.Internal.PropertyModel.Proxy.PropertyViewModelProxy" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.Internal.PropertyModel.Proxy.CommandModelProxy" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.Internal.PropertyModel.Proxy.PropertyModelProxy" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.Internal.PropertyModel.Proxy.PropertyResultModelProxy" ThreadingModel="both" />
+      </InProcessServer>
+    </Extension>
+    <Extension Category="windows.activatableClass.inProcessServer">
+      <InProcessServer>
+        <Path>Microsoft.Internal.PropertyModel.dll</Path>
+        <ActivatableClass ActivatableClassId="Microsoft.Internal.PropertyModel.ModelAdapterFactory" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.Internal.PropertyModel.PropertyResultModel" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.Internal.PropertyModel.PropertyBinding" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.Internal.PropertyModel.MultiSourceCollectionViewModel" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.Internal.PropertyModel.MultiSourcePropertyViewModel" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.Internal.PropertyModel.ViewModelFactory" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.Internal.PropertyModel.PropertyModel" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.Internal.PropertyModel.CollectionModel" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.Internal.PropertyModel.CommandModel" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.Internal.PropertyModel.CommandViewModel" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.Internal.PropertyModel.ModelTypeInfo" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.Internal.PropertyModel.MultiSourceBinding" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.Internal.PropertyModel.Model" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.Internal.PropertyModel.PropertyViewModel" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.Internal.PropertyModel.CollectionViewModel" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.Internal.PropertyModel.PropertyModelInfo" ThreadingModel="both" />
+      </InProcessServer>
+    </Extension>
+    <Extension Category="windows.activatableClass.inProcessServer">
+      <InProcessServer>
+        <Path>Microsoft.Lync.PropertyModel.dll</Path>
+        <ActivatableClass ActivatableClassId="Microsoft.Lync.PropertyModel.ClientModelTypeAdapter" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.Lync.PropertyModel.LyncModel" ThreadingModel="both" />
+      </InProcessServer>
+    </Extension>
+    <Extension Category="windows.activatableClass.inProcessServer">
+      <InProcessServer>
+        <Path>Microsoft.Skype.JoinLinkDiscovery.dll</Path>
+        <ActivatableClass ActivatableClassId="Microsoft.Skype.JoinLinkDiscovery.DiscoveryAgent" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.Skype.JoinLinkDiscovery.JoinLinkDetails" ThreadingModel="both" />
+      </InProcessServer>
+    </Extension>
+    <Extension Category="windows.activatableClass.inProcessServer">
+      <InProcessServer>
+        <Path>microsoft.foundation.diagnostics.dll</Path>
+        <ActivatableClass ActivatableClassId="Microsoft.Foundation.Diagnostics.LoggingActivity" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.Foundation.Diagnostics.LoggingFields" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.Foundation.Diagnostics.LoggingChannelOptions" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.Foundation.Diagnostics.LoggingOptions" ThreadingModel="both" />
+        <ActivatableClass ActivatableClassId="Microsoft.Foundation.Diagnostics.LoggingChannel" ThreadingModel="both" />
+      </InProcessServer>
+    </Extension>
+  </Extensions>
+  <build:Metadata>
+    <build:Item Name="cl.exe" Version="19.16.27034.0 built by: vcwrkspc" />
+    <build:Item Name="VisualStudio" Version="15.0" />
+    <build:Item Name="OperatingSystem" Version="10.0.19041.1 (WinBuild.160101.0800)" />
+    <build:Item Name="Microsoft.Build.AppxPackage.dll" Version="15.0.28307.779" />
+    <build:Item Name="ProjectGUID" Value="{d9eb4ec9-e88e-409c-8ce9-6fcebfdae8f6}" />
+    <build:Item Name="ilc.exe" Version="1.4.24211.07 built by: PROJECTNSVC2" />
+    <build:Item Name="OptimizingToolset" Value="ilc.exe" />
+    <build:Item Name="UseDotNetNativeSharedAssemblyFrameworkPackage" Value="false" />
+    <build:Item Name="UniversalGenericsOptOut" Value="false" />
+    <build:Item Name="Microsoft.Windows.UI.Xaml.Build.Tasks.dll" Version="15.0.28307.779" />
+    <build:Item Name="MakePri.exe" Version="10.0.15063.674 (WinBuild.160101.0800)" />
+  </build:Metadata>
+</Package>

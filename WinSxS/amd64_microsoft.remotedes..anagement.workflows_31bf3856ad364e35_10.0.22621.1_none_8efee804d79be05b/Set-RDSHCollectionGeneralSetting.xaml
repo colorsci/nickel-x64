@@ -1,0 +1,336 @@
+<Activity mc:Ignorable="sads sap" x:Class="RDManagement.Set_RDSHCollectionGeneralSetting" this:Set_RDSHCollectionGeneralSetting.Name="[Nothing]" this:Set_RDSHCollectionGeneralSetting.Description="[Nothing]" this:Set_RDSHCollectionGeneralSetting.User="[Nothing]" this:Set_RDSHCollectionGeneralSetting.ShowInWebAccess="-1"
+ xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities"
+ xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+ xmlns:mpa="clr-namespace:Microsoft.PowerShell.Activities;assembly=Microsoft.PowerShell.Activities"
+ xmlns:mpua="clr-namespace:Microsoft.PowerShell.Utility.Activities;assembly=Microsoft.PowerShell.Utility.Activities"
+ xmlns:mv="clr-namespace:Microsoft.VisualBasic;assembly=System"
+ xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities"
+ xmlns:mvc="clr-namespace:Microsoft.VisualBasic.CompilerServices;assembly=Microsoft.VisualBasic"
+ xmlns:s="clr-namespace:System;assembly=mscorlib"
+ xmlns:s1="clr-namespace:System;assembly=System"
+ xmlns:s2="clr-namespace:System;assembly=System.Xml"
+ xmlns:s3="clr-namespace:System;assembly=System.Core"
+ xmlns:s4="clr-namespace:System;assembly=System.ServiceModel"
+ xmlns:s5="clr-namespace:System;assembly=System.Configuration.Install"
+ xmlns:s6="clr-namespace:System;assembly=Microsoft.VisualStudio.Platform.VSEditor"
+ xmlns:s7="clr-namespace:System;assembly=System.ComponentModel.Composition"
+ xmlns:sa="clr-namespace:System.Activities;assembly=System.Activities"
+ xmlns:sad="clr-namespace:System.Activities.Debugger;assembly=System.Activities"
+ xmlns:sads="http://schemas.microsoft.com/netfx/2010/xaml/activities/debugger"
+ xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation"
+ xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System"
+ xmlns:scg1="clr-namespace:System.Collections.Generic;assembly=System.ServiceModel"
+ xmlns:scg2="clr-namespace:System.Collections.Generic;assembly=System.Core"
+ xmlns:scg3="clr-namespace:System.Collections.Generic;assembly=mscorlib"
+ xmlns:sd="clr-namespace:System.Data;assembly=System.Data"
+ xmlns:sl="clr-namespace:System.Linq;assembly=System.Core"
+ xmlns:sma="clr-namespace:System.Management.Automation;assembly=System.Management.Automation"
+ xmlns:st="clr-namespace:System.Text;assembly=mscorlib"
+ xmlns:this="clr-namespace:RDManagement"
+ xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <x:Members>
+    <x:Property Name="RDManagementServer" Type="InArgument(x:String)">
+      <x:Property.Attributes>
+        <RequiredArgumentAttribute />
+      </x:Property.Attributes>
+    </x:Property>
+    <x:Property Name="CollectionAlias" Type="InArgument(x:String)">
+      <x:Property.Attributes>
+        <RequiredArgumentAttribute />
+      </x:Property.Attributes>
+    </x:Property>
+    <x:Property Name="Name" Type="InArgument(x:String)" />
+    <x:Property Name="Description" Type="InArgument(x:String)" />
+    <x:Property Name="User" Type="InArgument(s:String[])" />
+    <x:Property Name="ShowInWebAccess" Type="InArgument(x:Int32)" />
+  </x:Members>
+  <sap:VirtualizedContainerService.HintSize>989,2520</sap:VirtualizedContainerService.HintSize>
+  <mva:VisualBasic.Settings>Assembly references and imported namespaces for internal implementation</mva:VisualBasic.Settings>
+  <sap:WorkflowViewStateService.ViewState>
+    <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+      <x:Boolean x:Key="ShouldExpandAll">False</x:Boolean>
+      <x:Boolean x:Key="ShouldCollapseAll">True</x:Boolean>
+    </scg3:Dictionary>
+  </sap:WorkflowViewStateService.ViewState>
+  <Sequence DisplayName="Set RDSH Collection General Settings" sap:VirtualizedContainerService.HintSize="949,2480">
+    <Sequence.Variables>
+      <Variable x:TypeArguments="sma:PSDataCollection(sma:ErrorRecord)" Name="errors" />
+      <Variable x:TypeArguments="sma:PSDataCollection(sma:PSObject)" Name="Null" />
+      <Variable x:TypeArguments="x:String" Default="[String.Empty]" Name="PsCommandParamsString" />
+      <Variable x:TypeArguments="sma:PSDataCollection(sma:PSObject)" Name="RDSHServer" />
+      <Variable x:TypeArguments="s:String[]" Name="joinedservers" />
+    </Sequence.Variables>
+    <sap:WorkflowViewStateService.ViewState>
+      <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+      </scg3:Dictionary>
+    </sap:WorkflowViewStateService.ViewState>
+    <mpua:WriteVerbose DisplayName="Verbose: Input" sap:VirtualizedContainerService.HintSize="927,22" Message="[&quot;Management Server: &quot; + RDManagementServer + Environment.NewLine +&#xA;&quot;Collection Alias: &quot; + CollectionAlias]" />
+    <Sequence DisplayName="Construct Command Params String" sap:VirtualizedContainerService.HintSize="927,51">
+      <sap:WorkflowViewStateService.ViewState>
+        <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+        </scg3:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+      <If Condition="[Name &lt;&gt; Nothing]" DisplayName="Name" sap:VirtualizedContainerService.HintSize="200,51">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          </scg3:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+        <If.Then>
+          <Assign sap:VirtualizedContainerService.HintSize="242,60">
+            <Assign.To>
+              <OutArgument x:TypeArguments="x:String">[PsCommandParamsString]</OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="x:String">[PsCommandParamsString + " -Name """ + Name.Replace("`", "``").Replace("'", "`'").Replace("""", "`""") + """"]</InArgument>
+            </Assign.Value>
+          </Assign>
+        </If.Then>
+      </If>
+      <If Condition="[Description Is Nothing]" DisplayName="Description" sap:VirtualizedContainerService.HintSize="200,51">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          </scg3:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+        <If.Else>
+          <Assign sap:VirtualizedContainerService.HintSize="242,60">
+            <Assign.To>
+              <OutArgument x:TypeArguments="x:String">[PsCommandParamsString]</OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="x:String">[PsCommandParamsString + " -Description """ + Description.Replace("`", "``").Replace("'", "`'").Replace("""", "`""") + """"]</InArgument>
+            </Assign.Value>
+          </Assign>
+        </If.Else>
+      </If>
+      <If Condition="[ShowInWebAccess &lt;&gt; -1]" DisplayName="ShowInWebAccess" sap:VirtualizedContainerService.HintSize="200,51">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          </scg3:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+        <If.Then>
+          <If Condition="[ShowInWebAccess = 1]" sap:VirtualizedContainerService.HintSize="509,208">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+              </scg3:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+            <If.Then>
+              <Assign sap:VirtualizedContainerService.HintSize="242,60">
+                <Assign.To>
+                  <OutArgument x:TypeArguments="x:String">[PsCommandParamsString]</OutArgument>
+                </Assign.To>
+                <Assign.Value>
+                  <InArgument x:TypeArguments="x:String">[PsCommandParamsString + " -ShowInWebAccess $true"]</InArgument>
+                </Assign.Value>
+              </Assign>
+            </If.Then>
+            <If.Else>
+              <Assign sap:VirtualizedContainerService.HintSize="242,60">
+                <Assign.To>
+                  <OutArgument x:TypeArguments="x:String">[PsCommandParamsString]</OutArgument>
+                </Assign.To>
+                <Assign.Value>
+                  <InArgument x:TypeArguments="x:String">[PsCommandParamsString + " -ShowInWebAccess $false"]</InArgument>
+                </Assign.Value>
+              </Assign>
+            </If.Else>
+          </If>
+        </If.Then>
+      </If>
+      <If Condition="[Not (User Is Nothing)]" DisplayName="User" sap:VirtualizedContainerService.HintSize="200,51">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          </scg3:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+        <If.Then>
+          <If Condition="[User.Length &gt; 0]" DisplayName="Valid user list" sap:VirtualizedContainerService.HintSize="200,51">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+              </scg3:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+            <If.Then>
+              <Assign sap:VirtualizedContainerService.HintSize="242,60">
+                <Assign.To>
+                  <OutArgument x:TypeArguments="x:String">[PsCommandParamsString]</OutArgument>
+                </Assign.To>
+                <Assign.Value>
+                  <InArgument x:TypeArguments="x:String">[PsCommandParamsString + " -User '" + String.Join("', '", User) + "'"]</InArgument>
+                </Assign.Value>
+              </Assign>
+            </If.Then>
+          </If>
+        </If.Then>
+      </If>
+      <mpua:WriteVerbose DisplayName="Verbose: Command Params String" sap:VirtualizedContainerService.HintSize="200,22" Message="[&quot;Command Params: &quot; + PsCommandParamsString]" />
+    </Sequence>
+    <mpa:InlineScript Command="import-module $env:windir\System32\ServerManagerInternal\rdmanagement;&#xD;&#xA;iex &quot;Set-RDSHPoolGeneralSetting -Alias '$using:CollectionAlias' -ManagementServer '$using:RDManagementServer' $using:PsCommandParamsString&quot;" DisplayName="Update Collection on Broker" sap:VirtualizedContainerService.HintSize="927,163" PSError="[errors]">
+      <sap:WorkflowViewStateService.ViewState>
+        <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsPinned">True</x:Boolean>
+        </scg3:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+    </mpa:InlineScript>
+    <If Condition="[errors.Count &lt;&gt; 0]" DisplayName="Quit If Error" sap:VirtualizedContainerService.HintSize="927,51">
+      <sap:WorkflowViewStateService.ViewState>
+        <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+        </scg3:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+      <If.Then>
+        <TerminateWorkflow Exception="[errors(0).Exception]" sap:VirtualizedContainerService.HintSize="200,22" />
+      </If.Then>
+    </If>
+    <If Condition="[Not (User Is Nothing)]" DisplayName="Configure Users" sap:VirtualizedContainerService.HintSize="927,1785">
+      <sap:WorkflowViewStateService.ViewState>
+        <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          <x:Boolean x:Key="IsPinned">True</x:Boolean>
+        </scg3:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+      <If.Then>
+        <If Condition="[User.Length &gt; 0]" DisplayName="Valid user list" sap:VirtualizedContainerService.HintSize="802,1677">
+          <sap:WorkflowViewStateService.ViewState>
+            <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+              <x:Boolean x:Key="IsPinned">True</x:Boolean>
+            </scg3:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+          <If.Then>
+            <Sequence DisplayName="Configure Users" sap:VirtualizedContainerService.HintSize="677,1569">
+              <sap:WorkflowViewStateService.ViewState>
+                <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                  <x:Boolean x:Key="IsPinned">True</x:Boolean>
+                </scg3:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+              <mpa:InlineScript Command="import-module $env:windir\System32\ServerManagerInternal\rdmanagement;&#xD;&#xA;Get-RDSHServer -Name * -CollectionAlias $using:CollectionAlias -ManagementServer $using:RDManagementServer" DisplayName="Get Collection Members" sap:VirtualizedContainerService.HintSize="655,163" Result="[RDSHServer]">
+                <sap:WorkflowViewStateService.ViewState>
+                  <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+                    <x:Boolean x:Key="IsPinned">True</x:Boolean>
+                  </scg3:Dictionary>
+                </sap:WorkflowViewStateService.ViewState>
+              </mpa:InlineScript>
+              <If Condition="[RDSHServer.Count &gt; 0]" sap:VirtualizedContainerService.HintSize="655,1151">
+                <sap:WorkflowViewStateService.ViewState>
+                  <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+                    <x:Boolean x:Key="IsPinned">True</x:Boolean>
+                  </scg3:Dictionary>
+                </sap:WorkflowViewStateService.ViewState>
+                <If.Then>
+                  <Sequence sap:VirtualizedContainerService.HintSize="530,1043">
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                        <x:Boolean x:Key="IsPinned">True</x:Boolean>
+                      </scg3:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                    <Sequence DisplayName="Creating Server Array" sap:VirtualizedContainerService.HintSize="508,716">
+                      <Sequence.Variables>
+                        <Variable x:TypeArguments="x:Int32" Default="0" Name="count" />
+                        <Variable x:TypeArguments="x:String" Name="variable1" />
+                      </Sequence.Variables>
+                      <sap:WorkflowViewStateService.ViewState>
+                        <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+                          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                          <x:Boolean x:Key="IsPinned">True</x:Boolean>
+                        </scg3:Dictionary>
+                      </sap:WorkflowViewStateService.ViewState>
+                      <Assign sap:VirtualizedContainerService.HintSize="294,60">
+                        <Assign.To>
+                          <OutArgument x:TypeArguments="s:String[]">[joinedservers]</OutArgument>
+                        </Assign.To>
+                        <Assign.Value>
+                          <InArgument x:TypeArguments="s:String[]">[new String(RDSHServer.Count -1) {}]</InArgument>
+                        </Assign.Value>
+                      </Assign>
+                      <Assign sap:VirtualizedContainerService.HintSize="294,60">
+                        <Assign.To>
+                          <OutArgument x:TypeArguments="x:Int32">[count]</OutArgument>
+                        </Assign.To>
+                        <Assign.Value>
+                          <InArgument x:TypeArguments="x:Int32">0</InArgument>
+                        </Assign.Value>
+                      </Assign>
+                      <ForEach x:TypeArguments="sma:PSObject" DisplayName="Adding Servers to Server Array" sap:VirtualizedContainerService.HintSize="294,392" Values="[RDSHServer]">
+                        <sap:WorkflowViewStateService.ViewState>
+                          <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+                            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                            <x:Boolean x:Key="IsPinned">True</x:Boolean>
+                          </scg3:Dictionary>
+                        </sap:WorkflowViewStateService.ViewState>
+                        <ActivityAction x:TypeArguments="sma:PSObject">
+                          <ActivityAction.Argument>
+                            <DelegateInArgument x:TypeArguments="sma:PSObject" Name="rdsh" />
+                          </ActivityAction.Argument>
+                          <Sequence sap:VirtualizedContainerService.HintSize="264,284">
+                            <sap:WorkflowViewStateService.ViewState>
+                              <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+                                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                <x:Boolean x:Key="IsPinned">True</x:Boolean>
+                              </scg3:Dictionary>
+                            </sap:WorkflowViewStateService.ViewState>
+                            <Assign sap:VirtualizedContainerService.HintSize="242,60">
+                              <Assign.To>
+                                <OutArgument x:TypeArguments="x:String">[joinedservers(count)]</OutArgument>
+                              </Assign.To>
+                              <Assign.Value>
+                                <InArgument x:TypeArguments="x:String">[CType(rdsh.Properties("Name").Value, String)]</InArgument>
+                              </Assign.Value>
+                            </Assign>
+                            <Assign sap:VirtualizedContainerService.HintSize="242,60">
+                              <Assign.To>
+                                <OutArgument x:TypeArguments="x:Int32">[count]</OutArgument>
+                              </Assign.To>
+                              <Assign.Value>
+                                <InArgument x:TypeArguments="x:Int32">[count + 1]</InArgument>
+                              </Assign.Value>
+                            </Assign>
+                          </Sequence>
+                        </ActivityAction>
+                      </ForEach>
+                    </Sequence>
+                    <mpa:InlineScript Command="function Get-SecurityGroupMember { param ([Parameter(Mandatory=$TRUE)] [string] $GroupSID ) try { $sid = New-Object System.Security.Principal.SecurityIdentifier $GroupSID; $groupName = $sid.Translate([System.Security.Principal.NTAccount]).Value.split('\')[1]; $directoryEntry = [ADSI]('WinNT://{0}/{1},group' -f $Env:COMPUTERNAME, $groupName); foreach($member in $directoryEntry.Invoke('Members', $NULL)) { $objPath = (New-Object System.DirectoryServices.DirectoryEntry $member).Path; if ($objPath -match '^WinNT://(.*)$') { ($matches[1]) -replace '/', '\' } } } catch { throw $_ } }; function Add-SecurityGroupMember { param ( [Parameter(Mandatory=$TRUE)] [string] $GroupSID, [Parameter(Mandatory=$TRUE)] [string[]] $Member, [switch] $IsComputer ) try { $sid = New-Object System.Security.Principal.SecurityIdentifier $GroupSID; $groupName = $sid.Translate([System.Security.Principal.NTAccount]).Value.split('\')[1]; $directoryEntry = [ADSI]('WinNT://{0}/{1},group' -f $Env:COMPUTERNAME, $groupName) } catch { throw $_ };  foreach($entry in $Member) { if ($entry -match '\\') { $memberPath = 'WinNT://{0}/{1}' -f ($entry -split '\\') } else { $memberPath = 'WinNT://{0}' -f $entry }; if ($IsComputer) { $memberPath = $memberPath + '$' }; $directoryEntry.Invoke('Add', $memberPath); } }; function Remove-SecurityGroupMember { param ( [Parameter(Mandatory=$TRUE)] [string] $GroupSID, [Parameter(Mandatory=$TRUE)] [string[]] $Member, [switch] $IsComputer ) try { $sid = New-Object System.Security.Principal.SecurityIdentifier $GroupSID; $groupName = $sid.Translate([System.Security.Principal.NTAccount]).Value.split('\')[1]; $directoryEntry = [ADSI]('WinNT://{0}/{1},group' -f $Env:COMPUTERNAME, $groupName) } catch { throw $_ };  foreach($entry in $Member) { if ($entry -match '\\') { $memberPath = 'WinNT://{0}/{1}' -f ($entry -split '\\') } else { $memberPath = 'WinNT://{0}' -f $entry }; if ($IsComputer) { $memberPath = $memberPath + '$' }; $directoryEntry.Invoke('Remove', $memberPath); } }; function Set-SecurityGroupMember { param ( [Parameter(Mandatory=$TRUE)] [string] $GroupSID, [Parameter(Mandatory=$TRUE)] [string[]] $Member, [switch] $IsComputer ) Get-SecurityGroupMember $GroupSID | %{Remove-SecurityGroupMember $GroupSID $_}; Add-SecurityGroupMember $GroupSID $Member -IsComputer:$IsComputer }; Set-SecurityGroupMember -GroupSID 'S-1-5-32-555' -Member $using:User" DisplayName="Add User to 'Remote Desktop Users' " sap:VirtualizedContainerService.HintSize="508,163" PSComputerName="[joinedservers]" PSError="[errors]" Result="[Null]">
+                      <sap:WorkflowViewStateService.ViewState>
+                        <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+                          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                          <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                        </scg3:Dictionary>
+                      </sap:WorkflowViewStateService.ViewState>
+                    </mpa:InlineScript>
+                  </Sequence>
+                </If.Then>
+              </If>
+              <If Condition="[errors.Count &lt;&gt; 0]" DisplayName="Write RDMS Error" sap:VirtualizedContainerService.HintSize="655,51">
+                <sap:WorkflowViewStateService.ViewState>
+                  <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+                    <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                    <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                  </scg3:Dictionary>
+                </sap:WorkflowViewStateService.ViewState>
+                <If.Then>
+                  <mpua:WriteError DisplayName="Write-Error" Exception="[errors(0).Exception]" sap:VirtualizedContainerService.HintSize="200,22" />
+                </If.Then>
+              </If>
+            </Sequence>
+          </If.Then>
+        </If>
+      </If.Then>
+    </If>
+    <mpua:WriteVerbose DisplayName="Verbose: Done!" sap:VirtualizedContainerService.HintSize="927,22" Message="Done!" />
+  </Sequence>
+</Activity>

@@ -1,0 +1,204 @@
+<Activity mc:Ignorable="sads sap" x:Class="Microsoft.RemoteDesktopServices.Workflow.DisableUserDataVhd"
+ xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities"
+ xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+ xmlns:mpa="clr-namespace:Microsoft.PowerShell.Activities;assembly=Microsoft.PowerShell.Activities"
+ xmlns:mpma="clr-namespace:Microsoft.PowerShell.Management.Activities;assembly=Microsoft.PowerShell.Management.Activities"
+ xmlns:mpua="clr-namespace:Microsoft.PowerShell.Utility.Activities;assembly=Microsoft.PowerShell.Utility.Activities"
+ xmlns:mrma="clr-namespace:Microsoft.RemoteDesktopServices.Management.Activities;assembly=Microsoft.RemoteDesktopServices.Management.Activities"
+ xmlns:mv="clr-namespace:Microsoft.VisualBasic;assembly=System"
+ xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities"
+ xmlns:s="clr-namespace:System;assembly=mscorlib"
+ xmlns:s1="clr-namespace:System;assembly=System.Core"
+ xmlns:s2="clr-namespace:System;assembly=System"
+ xmlns:s3="clr-namespace:System;assembly=System.ServiceModel"
+ xmlns:sa="clr-namespace:System.Activities;assembly=System.Activities"
+ xmlns:sad="clr-namespace:System.Activities.Debugger;assembly=System.Activities"
+ xmlns:sads="http://schemas.microsoft.com/netfx/2010/xaml/activities/debugger"
+ xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation"
+ xmlns:sc="clr-namespace:System.Collections;assembly=mscorlib"
+ xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib"
+ xmlns:sm="clr-namespace:System.Management;assembly=System.Management"
+ xmlns:sma="clr-namespace:System.Management.Automation;assembly=System.Management.Automation"
+ xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <x:Members>
+    <x:Property Name="CollectionAlias" Type="InArgument(x:String)">
+      <x:Property.Attributes>
+        <RequiredArgumentAttribute />
+      </x:Property.Attributes>
+    </x:Property>
+    <x:Property Name="RDMSServer" Type="InArgument(x:String)">
+      <x:Property.Attributes>
+        <RequiredArgumentAttribute />
+      </x:Property.Attributes>
+    </x:Property>
+  </x:Members>
+  <sap:VirtualizedContainerService.HintSize>863,2753</sap:VirtualizedContainerService.HintSize>
+  <mva:VisualBasic.Settings>Assembly references and imported namespaces for internal implementation</mva:VisualBasic.Settings>
+  <Sequence DisplayName="DisableUserDataVhd" sap:VirtualizedContainerService.HintSize="823,2673">
+    <Sequence.Variables>
+      <Variable x:TypeArguments="sma:PSDataCollection(sma:PSObject)" Name="vmPool" />
+      <Variable x:TypeArguments="x:String" Name="vmFarmSetting" />
+      <Variable x:TypeArguments="x:String" Name="userVhdSetting" />
+      <Variable x:TypeArguments="mrma:UserDataVhdSetting" Name="userDataVhdSetting" />
+      <Variable x:TypeArguments="sc:Hashtable" Default="[New Hashtable()]" Name="vmFarmProperties" />
+      <Variable x:TypeArguments="sma:PSDataCollection(sma:PSObject)" Default="[New PSDataCollection(Of PSObject)]" Name="null" />
+    </Sequence.Variables>
+    <sap:WorkflowViewStateService.ViewState>
+      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+      </scg:Dictionary>
+    </sap:WorkflowViewStateService.ViewState>
+    <mpua:WriteVerbose DisplayName="Verbose: Input" sap:VirtualizedContainerService.HintSize="801,22" Message="[&quot;Alias: &quot; + CollectionAlias]" />
+    <Sequence DisplayName="Validate" sap:VirtualizedContainerService.HintSize="801,2425">
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+      <mpa:GetWmiObject Amended="False" Class="Win32_RDSHCollection" DirectRead="False" DisplayName="GWMI: Pool" EnableAllPrivileges="False" Filter="[&quot;Alias = '&quot; &amp; CollectionAlias &amp; &quot;'&quot;]" sap:VirtualizedContainerService.HintSize="779,22" Impersonation="Impersonate" Namespace="ROOT\cimv2\rdms" PSAuthenticationLevel="PacketPrivacy" PSComputerName="[{RDMSServer}]" Result="[vmPool]" />
+      <If Condition="[vmPool.Count &lt;&gt; 1]" DisplayName="CheckIfPoolExists" sap:VirtualizedContainerService.HintSize="779,51">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+        <If.Then>
+          <TerminateWorkflow sap:VirtualizedContainerService.HintSize="200,22" Reason="[String.Format(System.Globalization.CultureInfo.CurrentCulture, RDManagementResources.SpecifiedCollectionDoesNotExist, CollectionAlias)]" />
+        </If.Then>
+      </If>
+      <Sequence DisplayName="GetUvhdObject" sap:VirtualizedContainerService.HintSize="779,184">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+        <Assign sap:VirtualizedContainerService.HintSize="242,60">
+          <Assign.To>
+            <OutArgument x:TypeArguments="mrma:UserDataVhdSetting">[userDataVhdSetting]</OutArgument>
+          </Assign.To>
+          <Assign.Value>
+            <InArgument x:TypeArguments="mrma:UserDataVhdSetting">[RDSessionHostUserDataVhdUtility.GetUserDataVhdSetting(RDMSServer, CollectionAlias)]</InArgument>
+          </Assign.Value>
+        </Assign>
+      </Sequence>
+      <If Condition="[userDataVhdSetting.UserVhdEnabled]" DisplayName="CheckIfUvhdIsEnabled" sap:VirtualizedContainerService.HintSize="779,1924">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+        <If.Then>
+          <Sequence DisplayName="UpdateUvhdSetting" sap:VirtualizedContainerService.HintSize="654,1776">
+            <Sequence.Variables>
+              <Variable x:TypeArguments="x:Boolean" Default="False" Name="tempResult" />
+              <Variable x:TypeArguments="sma:PSDataCollection(sma:PSObject)" Name="rdshServerList" />
+              <Variable x:TypeArguments="x:String" Name="policyXML" />
+            </Sequence.Variables>
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+            <Assign sap:VirtualizedContainerService.HintSize="632,60">
+              <Assign.To>
+                <OutArgument x:TypeArguments="x:Boolean">[tempResult]</OutArgument>
+              </Assign.To>
+              <Assign.Value>
+                <InArgument x:TypeArguments="x:Boolean">[RDSessionHostUserDataVhdUtility.SetUserDataVhdSetting(RDMSServer, CollectionAlias, False, Nothing, Nothing, -1, -1)]</InArgument>
+              </Assign.Value>
+            </Assign>
+            <If Condition="[tempResult = False]" sap:VirtualizedContainerService.HintSize="632,208">
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+              <If.Then>
+                <TerminateWorkflow sap:VirtualizedContainerService.HintSize="200,22" Reason="[RDManagementResources.UnableToSetUVHDSettings]" />
+              </If.Then>
+            </If>
+            <mpua:WriteVerbose DisplayName="Verbose: Updated Collection Level settings" sap:VirtualizedContainerService.HintSize="632,22" Message="Updated settings for RDSH Collection" />
+            <Sequence DisplayName="Update Settings on RDSH servers" sap:VirtualizedContainerService.HintSize="632,1180">
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+              <mpa:GetWmiObject Amended="False" Class="Win32_RDSHServer" DirectRead="False" DisplayName="GWMI: RDSHServers" EnableAllPrivileges="False" Filter="[&quot;CollectionAlias = '&quot; &amp; CollectionAlias &amp; &quot;'&quot;]" sap:VirtualizedContainerService.HintSize="610,22" Impersonation="Impersonate" Namespace="ROOT\cimv2\rdms" PSAuthenticationLevel="PacketPrivacy" PSComputerName="[{RDMSServer}]" Result="[rdshServerList]" />
+              <ParallelForEach x:TypeArguments="sma:PSObject" DisplayName="ParallelForEach&lt;PSObject&gt;" sap:VirtualizedContainerService.HintSize="610,994" Values="[rdshServerList]">
+                <sap:WorkflowViewStateService.ViewState>
+                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                    <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                  </scg:Dictionary>
+                </sap:WorkflowViewStateService.ViewState>
+                <ActivityAction x:TypeArguments="sma:PSObject">
+                  <ActivityAction.Argument>
+                    <DelegateInArgument x:TypeArguments="sma:PSObject" Name="rdshServer" />
+                  </ActivityAction.Argument>
+                  <Sequence sap:VirtualizedContainerService.HintSize="580,846">
+                    <Sequence.Variables>
+                      <Variable x:TypeArguments="x:String" Name="ServerName" />
+                      <Variable x:TypeArguments="sma:PSDataCollection(sma:ErrorRecord)" Name="Errors" />
+                    </Sequence.Variables>
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                    <Assign sap:VirtualizedContainerService.HintSize="558,60">
+                      <Assign.To>
+                        <OutArgument x:TypeArguments="sma:PSDataCollection(sma:ErrorRecord)">[Errors]</OutArgument>
+                      </Assign.To>
+                      <Assign.Value>
+                        <InArgument x:TypeArguments="sma:PSDataCollection(sma:ErrorRecord)">[New PSDataCollection(Of ErrorRecord)]</InArgument>
+                      </Assign.Value>
+                    </Assign>
+                    <Assign sap:VirtualizedContainerService.HintSize="558,60">
+                      <Assign.To>
+                        <OutArgument x:TypeArguments="x:String">[ServerName]</OutArgument>
+                      </Assign.To>
+                      <Assign.Value>
+                        <InArgument x:TypeArguments="x:String">[CType(rdshServer.Properties("Name").Value, String)]</InArgument>
+                      </Assign.Value>
+                    </Assign>
+                    <mpa:InlineScript Command="import-module $env:windir\System32\ServerManagerInternal\rdmanagement;&#xD;&#xA;Reset-RDSHUserDataVHD -SessionHostServers $using:ServerName" sap:VirtualizedContainerService.HintSize="558,188" PSError="[Errors]" />
+                    <If Condition="[Errors.Count &gt; 0]" sap:VirtualizedContainerService.HintSize="558,294">
+                      <sap:WorkflowViewStateService.ViewState>
+                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                        </scg:Dictionary>
+                      </sap:WorkflowViewStateService.ViewState>
+                      <If.Then>
+                        <Sequence sap:VirtualizedContainerService.HintSize="222,146">
+                          <sap:WorkflowViewStateService.ViewState>
+                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                              <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                            </scg:Dictionary>
+                          </sap:WorkflowViewStateService.ViewState>
+                          <mpua:WriteError Category="{x:Null}" CategoryActivity="{x:Null}" CategoryReason="{x:Null}" CategoryTargetName="{x:Null}" CategoryTargetType="{x:Null}" ErrorId="{x:Null}" ErrorRecord="{x:Null}" Exception="{x:Null}" RecommendedAction="{x:Null}" TargetObject="{x:Null}" sap:VirtualizedContainerService.HintSize="200,22" Message="[Errors.Item(0).Exception.Message]" />
+                        </Sequence>
+                      </If.Then>
+                    </If>
+                  </Sequence>
+                </ActivityAction>
+              </ParallelForEach>
+            </Sequence>
+            <mpua:WriteVerbose DisplayName="Verbose: Updated RDSH Servers" sap:VirtualizedContainerService.HintSize="632,22" Message="Updated RDSH Servers" />
+          </Sequence>
+        </If.Then>
+      </If>
+    </Sequence>
+    <mpua:WriteVerbose DisplayName="Verbose: Done" sap:VirtualizedContainerService.HintSize="801,22" Message="Done!" />
+  </Sequence>
+</Activity>

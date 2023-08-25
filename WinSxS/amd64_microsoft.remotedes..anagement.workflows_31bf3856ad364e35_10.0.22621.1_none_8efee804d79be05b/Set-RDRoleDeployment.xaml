@@ -1,0 +1,1329 @@
+<Activity mc:Ignorable="sads sap" x:Class="RDManagement.Set_RDRoleDeployment" this:Set_RDRoleDeployment.ConfigurationType="[String.Empty]" this:Set_RDRoleDeployment.RDServers="[{}]" this:Set_RDRoleDeployment.UpdateDeploymentLicensingSettings="True"
+ xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities"
+ xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+ xmlns:mpa="clr-namespace:Microsoft.PowerShell.Activities;assembly=Microsoft.PowerShell.Activities"
+ xmlns:mpua="clr-namespace:Microsoft.PowerShell.Utility.Activities;assembly=Microsoft.PowerShell.Utility.Activities"
+ xmlns:mrc="clr-namespace:Microsoft.RemoteDesktopServices.Common;assembly=Microsoft.RemoteDesktopServices.Management.Activities"
+ xmlns:mrma="clr-namespace:Microsoft.RemoteDesktopServices.Management.Activities;assembly=Microsoft.RemoteDesktopServices.Management.Activities"
+ xmlns:mrmc="clr-namespace:Microsoft.RemoteDesktopServices.Management.Cmdlets;assembly=Microsoft.RemoteDesktopServices.Management.Activities"
+ xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities"
+ xmlns:s="clr-namespace:System;assembly=mscorlib"
+ xmlns:s1="clr-namespace:System;assembly=System.Core"
+ xmlns:s2="clr-namespace:System;assembly=System"
+ xmlns:s3="clr-namespace:System;assembly=System.ServiceModel"
+ xmlns:sa="clr-namespace:System.Activities;assembly=System.Activities"
+ xmlns:sad="clr-namespace:System.Activities.Debugger;assembly=System.Activities"
+ xmlns:sads="http://schemas.microsoft.com/netfx/2010/xaml/activities/debugger"
+ xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation"
+ xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib"
+ xmlns:sm="clr-namespace:System.Management;assembly=System.Management"
+ xmlns:sma="clr-namespace:System.Management.Automation;assembly=System.Management.Automation"
+ xmlns:this="clr-namespace:RDManagement"
+ xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <x:Members>
+    <x:Property Name="RDMSServer" Type="InArgument(x:String)">
+      <x:Property.Attributes>
+        <RequiredArgumentAttribute />
+      </x:Property.Attributes>
+    </x:Property>
+    <x:Property Name="Results" Type="OutArgument(sma:PSDataCollection(sma:PSObject))" />
+    <x:Property Name="ErrorLog" Type="OutArgument(sma:PSDataCollection(x:String))" />
+    <x:Property Name="ConfigurationType" Type="InArgument(x:String)">
+      <x:Property.Attributes>
+        <RequiredArgumentAttribute />
+      </x:Property.Attributes>
+    </x:Property>
+    <x:Property Name="RDServers" Type="InArgument(s:String[])">
+      <x:Property.Attributes>
+        <RequiredArgumentAttribute />
+      </x:Property.Attributes>
+    </x:Property>
+    <x:Property Name="UpdateDeploymentLicensingSettings" Type="InArgument(x:Boolean)" />
+    <x:Property Name="LicensingType" Type="InArgument(x:Int32)" />
+    <x:Property Name="EndPointServers" Type="InArgument(s:String[])" />
+    <x:Property Name="DeploymentGatewayServerName" Type="InArgument(x:String)" />
+    <x:Property Name="GatewayUsage" Type="InArgument(x:Int32)" />
+    <x:Property Name="GatewayAuthMode" Type="InArgument(x:Int32)" />
+    <x:Property Name="GatewayUseCachedCredentials" Type="InArgument(x:Boolean)" />
+  </x:Members>
+  <this:Set_RDRoleDeployment.RDMSServer>
+    <InArgument x:TypeArguments="x:String">
+      <Literal x:TypeArguments="x:String" Value="" />
+    </InArgument>
+  </this:Set_RDRoleDeployment.RDMSServer>
+  <sap:VirtualizedContainerService.HintSize>590,2213</sap:VirtualizedContainerService.HintSize>
+  <mva:VisualBasic.Settings>Assembly references and imported namespaces for internal implementation</mva:VisualBasic.Settings>
+  <sap:WorkflowViewStateService.ViewState>
+    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+      <x:Boolean x:Key="ShouldCollapseAll">False</x:Boolean>
+      <x:Boolean x:Key="ShouldExpandAll">True</x:Boolean>
+    </scg:Dictionary>
+  </sap:WorkflowViewStateService.ViewState>
+  <Sequence DisplayName="Set RD Role Deployment WF" sap:VirtualizedContainerService.HintSize="550,2133">
+    <sap:WorkflowViewStateService.ViewState>
+      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+      </scg:Dictionary>
+    </sap:WorkflowViewStateService.ViewState>
+    <Sequence DisplayName="Input Validation: RDMSServer Name" sap:VirtualizedContainerService.HintSize="528,51">
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+          <x:Boolean x:Key="IsPinned">True</x:Boolean>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+      <If Condition="[RDMSServer.Length = 0 Or (Not RDMSServer.Contains(&quot;.&quot;))]" sap:VirtualizedContainerService.HintSize="711,580">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+        <If.Then>
+          <TerminateWorkflow Exception="[New System.ArgumentException(&quot;Invalid Input&quot;)]" sap:VirtualizedContainerService.HintSize="200,22" Reason="[RDManagementResources.InvalidFqdnManagementServer]" />
+        </If.Then>
+        <If.Else>
+          <Sequence sap:VirtualizedContainerService.HintSize="486,432">
+            <Sequence.Variables>
+              <Variable x:TypeArguments="x:String" Name="RDMSServerDomain" />
+            </Sequence.Variables>
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+            <Assign sap:VirtualizedContainerService.HintSize="464,60">
+              <Assign.To>
+                <OutArgument x:TypeArguments="x:String">[RDMSServerDomain]</OutArgument>
+              </Assign.To>
+              <Assign.Value>
+                <InArgument x:TypeArguments="x:String">[Microsoft.RemoteDesktopServices.Common.CommonUtility.GetDomainNameFromLiveComputer(RDMSServer)]</InArgument>
+              </Assign.Value>
+            </Assign>
+            <If Condition="[RDMSServerDomain.Length = 0]" sap:VirtualizedContainerService.HintSize="464,208">
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+              <If.Then>
+                <TerminateWorkflow Exception="[New System.ArgumentException(&quot;Invalid Input&quot;)]" sap:VirtualizedContainerService.HintSize="200,22" Reason="[RDManagementResources.InvalidFqdnManagementServer]" />
+              </If.Then>
+            </If>
+          </Sequence>
+        </If.Else>
+      </If>
+    </Sequence>
+    <Switch x:TypeArguments="x:String" Expression="[ConfigurationType]" sap:VirtualizedContainerService.HintSize="528,1918">
+      <Switch.Default>
+        <TerminateWorkflow Exception="[New RDManagementException(RDManagementResources.ResourceManager.GetString(&quot;InvalidInput&quot;))]" sap:VirtualizedContainerService.HintSize="200,22" />
+      </Switch.Default>
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+      <Sequence x:Key="RDG" DisplayName="RD Gateway Configuration" sap:VirtualizedContainerService.HintSize="508,1374">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+        <mpua:WriteProgress Activity="Initializing and validating user inputs" DisplayName="WriteProgress Starting..." sap:VirtualizedContainerService.HintSize="486,22" PercentComplete="0" Status="Starting ..." />
+        <Sequence DisplayName="Add RD Gateway Servers" sap:VirtualizedContainerService.HintSize="486,266">
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+              <x:Boolean x:Key="IsPinned">False</x:Boolean>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+          <Sequence DisplayName="InputValidation" sap:VirtualizedContainerService.HintSize="200,51">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                <x:Boolean x:Key="IsPinned">True</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+            <If Condition="[RDServers.Length &gt; 0]" sap:VirtualizedContainerService.HintSize="464,323">
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+              <If.Then>
+                <Sequence sap:VirtualizedContainerService.HintSize="222,175">
+                  <Sequence.Variables>
+                    <Variable x:TypeArguments="x:String" Name="RDServerdomain">
+                      <Variable.Default>
+                        <Literal x:TypeArguments="x:String" Value="" />
+                      </Variable.Default>
+                    </Variable>
+                  </Sequence.Variables>
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                      <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <ParallelForEach x:TypeArguments="x:String" DisplayName="ParallelForEach&lt;String&gt;" sap:VirtualizedContainerService.HintSize="200,51" Values="[RDServers]">
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsPinned">True</x:Boolean>
+                        <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                    <ActivityAction x:TypeArguments="x:String">
+                      <ActivityAction.Argument>
+                        <DelegateInArgument x:TypeArguments="x:String" Name="Server" />
+                      </ActivityAction.Argument>
+                      <Sequence sap:VirtualizedContainerService.HintSize="486,332">
+                        <sap:WorkflowViewStateService.ViewState>
+                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                          </scg:Dictionary>
+                        </sap:WorkflowViewStateService.ViewState>
+                        <If Condition="[Server.Length = 0 Or (Not Server.Contains(&quot;.&quot;))]" sap:VirtualizedContainerService.HintSize="464,208">
+                          <sap:WorkflowViewStateService.ViewState>
+                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                              <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                            </scg:Dictionary>
+                          </sap:WorkflowViewStateService.ViewState>
+                          <If.Then>
+                            <TerminateWorkflow Exception="[New System.ArgumentException(&quot;Invalid Input&quot;)]" sap:VirtualizedContainerService.HintSize="200,22" Reason="[RDManagementResources.InvalidFqdnGateway]" />
+                          </If.Then>
+                          <If.Else>
+                            <Sequence sap:VirtualizedContainerService.HintSize="200,51">
+                              <sap:WorkflowViewStateService.ViewState>
+                                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                  <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                  <x:Boolean x:Key="IsPinned">True</x:Boolean>
+                                </scg:Dictionary>
+                              </sap:WorkflowViewStateService.ViewState>
+                              <Assign sap:VirtualizedContainerService.HintSize="464,60">
+                                <Assign.To>
+                                  <OutArgument x:TypeArguments="x:String">[RDServerdomain]</OutArgument>
+                                </Assign.To>
+                                <Assign.Value>
+                                  <InArgument x:TypeArguments="x:String">[Microsoft.RemoteDesktopServices.Common.CommonUtility.GetDomainNameFromLiveComputer(Server)]</InArgument>
+                                </Assign.Value>
+                              </Assign>
+                              <If Condition="[RDServerdomain.Length = 0]" sap:VirtualizedContainerService.HintSize="464,208">
+                                <sap:WorkflowViewStateService.ViewState>
+                                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                    <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                  </scg:Dictionary>
+                                </sap:WorkflowViewStateService.ViewState>
+                                <If.Then>
+                                  <TerminateWorkflow Exception="[New System.ArgumentException(&quot;Invalid Input&quot;)]" sap:VirtualizedContainerService.HintSize="200,22" Reason="[RDManagementResources.InvalidFqdnGateway]" />
+                                </If.Then>
+                              </If>
+                            </Sequence>
+                          </If.Else>
+                        </If>
+                      </Sequence>
+                    </ActivityAction>
+                  </ParallelForEach>
+                </Sequence>
+              </If.Then>
+            </If>
+          </Sequence>
+          <ForEach x:TypeArguments="x:String" DisplayName="ForEach&lt;String&gt;" sap:VirtualizedContainerService.HintSize="200,51" Values="[RDServers]">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                <x:Boolean x:Key="IsPinned">True</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+            <ActivityAction x:TypeArguments="x:String">
+              <ActivityAction.Argument>
+                <DelegateInArgument x:TypeArguments="x:String" Name="ServerName" />
+              </ActivityAction.Argument>
+              <Sequence DisplayName="RDMSJoinedNode.Join RDServers" sap:VirtualizedContainerService.HintSize="200,51">
+                <Sequence.Variables>
+                  <Variable x:TypeArguments="sma:PSDataCollection(sma:PSObject)" Name="RDWebAccessServerObjects" />
+                  <Variable x:TypeArguments="sma:PSDataCollection(sma:ErrorRecord)" Name="Errors" />
+                </Sequence.Variables>
+                <sap:WorkflowViewStateService.ViewState>
+                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                    <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                    <x:Boolean x:Key="IsPinned">True</x:Boolean>
+                  </scg:Dictionary>
+                </sap:WorkflowViewStateService.ViewState>
+                <Assign sap:VirtualizedContainerService.HintSize="464,60">
+                  <Assign.To>
+                    <OutArgument x:TypeArguments="sma:PSDataCollection(sma:ErrorRecord)">[Errors]</OutArgument>
+                  </Assign.To>
+                  <Assign.Value>
+                    <InArgument x:TypeArguments="sma:PSDataCollection(sma:ErrorRecord)">[New PSDataCollection(Of ErrorRecord)]</InArgument>
+                  </Assign.Value>
+                </Assign>
+                <mpa:InlineScript Command="import-module $env:windir\System32\ServerManagerInternal\rdmanagement;&#xD;&#xA;Add-RDGateway -ManagementServer $using:RDMSServer -GatewayServer $using:ServerName -ExternalGatewayName $using:DeploymentGatewayServerName" DisplayName="Add RD Gateway" sap:VirtualizedContainerService.HintSize="464,108" PSError="[Errors]" Result="[Results]">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                      <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                </mpa:InlineScript>
+                <mpa:InlineScript Command="Restart-Service -Force -Name &quot;TSGateway&quot;" DisplayName="Restart Gateway Service" sap:VirtualizedContainerService.HintSize="464,93" PSComputerName="[{ServerName}]" PSError="[Errors]" Result="[Results]">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                      <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                </mpa:InlineScript>
+                <If Condition="[Errors.Count &gt; 0]" sap:VirtualizedContainerService.HintSize="464,294">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <If.Then>
+                    <Sequence sap:VirtualizedContainerService.HintSize="222,146">
+                      <sap:WorkflowViewStateService.ViewState>
+                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                        </scg:Dictionary>
+                      </sap:WorkflowViewStateService.ViewState>
+                      <mpua:WriteError ErrorId="EXCEPTION_FOUND" sap:VirtualizedContainerService.HintSize="200,22" Message="[String.Format(System.Globalization.CultureInfo.CurrentCulture, RDManagementResources.FailedToJoinNode, RDMSServer, ServerName, Errors(0).ToString)]" />
+                    </Sequence>
+                  </If.Then>
+                </If>
+              </Sequence>
+            </ActivityAction>
+          </ForEach>
+        </Sequence>
+        <mpua:WriteProgress Activity="Joined Gateway Server Nodes to RDMS" DisplayName="WriteProgress Nodes Joined To RDMS..." sap:VirtualizedContainerService.HintSize="486,22" PercentComplete="50" Status="Starting ..." />
+        <Sequence DisplayName="Deployment Gateway Settings" sap:VirtualizedContainerService.HintSize="486,758">
+          <Sequence.Variables>
+            <Variable x:TypeArguments="sma:PSDataCollection(sma:ErrorRecord)" Name="GatewayErrors" />
+          </Sequence.Variables>
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+              <x:Boolean x:Key="IsPinned">False</x:Boolean>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+          <Assign sap:VirtualizedContainerService.HintSize="464,60">
+            <Assign.To>
+              <OutArgument x:TypeArguments="sma:PSDataCollection(sma:ErrorRecord)">[GatewayErrors]</OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="sma:PSDataCollection(sma:ErrorRecord)">[New PSDataCollection(Of ErrorRecord)]</InArgument>
+            </Assign.Value>
+          </Assign>
+          <mpa:InlineScript Command="import-module $env:windir\System32\ServerManagerInternal\rdmanagement;&#xD;&#xA;Set-GatewaySettings -ManagementServer $using:RDMSServer -GatewayName $using:DeploymentGatewayServerName -GatewayUsage $using:GatewayUsage -GatewayAuthMode $using:GatewayAuthMode -GatewayUseCachedCredentials $using:GatewayUseCachedCredentials" DisplayName="InlineScript to Update the Gateway Settings" sap:VirtualizedContainerService.HintSize="464,138" PSError="[GatewayErrors]" Result="[Results]">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                <x:Boolean x:Key="IsPinned">True</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+          </mpa:InlineScript>
+          <If Condition="[GatewayErrors.Count &gt; 0]" DisplayName="Check If Error" sap:VirtualizedContainerService.HintSize="464,356">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+            <If.Then>
+              <Sequence sap:VirtualizedContainerService.HintSize="222,208">
+                <sap:WorkflowViewStateService.ViewState>
+                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                  </scg:Dictionary>
+                </sap:WorkflowViewStateService.ViewState>
+                <mpua:WriteError ErrorRecord="[GatewayErrors(0)]" sap:VirtualizedContainerService.HintSize="200,22" />
+                <TerminateWorkflow Exception="[New RDManagementException(RDManagementResources.ResourceManager.GetString(&quot;RDRoleDeploymentFailedToSetRDGatewaySettings&quot;))]" sap:VirtualizedContainerService.HintSize="200,22" />
+              </Sequence>
+            </If.Then>
+          </If>
+        </Sequence>
+        <mpua:WriteProgress Activity="Joined Gateway Server Nodes to RDMS" DisplayName="WriteProgress Gateway Settings Configured..." sap:VirtualizedContainerService.HintSize="486,22" PercentComplete="100" Status="Starting ..." />
+      </Sequence>
+      <Sequence x:Key="RDLS" DisplayName="RD Licnesing Configuration" sap:VirtualizedContainerService.HintSize="200,51">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+            <x:Boolean x:Key="IsPinned">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+        <mpua:WriteProgress Activity="Initializing and validating user inputs" DisplayName="WriteProgress Starting..." sap:VirtualizedContainerService.HintSize="632,22" PercentComplete="0" Status="Starting ..." />
+        <Sequence DisplayName="Join Nodes" sap:VirtualizedContainerService.HintSize="632,1109">
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+              <x:Boolean x:Key="IsPinned">False</x:Boolean>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+          <Sequence DisplayName="InputValidation" sap:VirtualizedContainerService.HintSize="610,51">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                <x:Boolean x:Key="IsPinned">True</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+            <If Condition="[RDServers.Length &gt; 0]" sap:VirtualizedContainerService.HintSize="910,1124">
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+              <If.Then>
+                <Sequence sap:VirtualizedContainerService.HintSize="785,976">
+                  <Sequence.Variables>
+                    <Variable x:TypeArguments="x:String" Name="RDServerdomain">
+                      <Variable.Default>
+                        <Literal x:TypeArguments="x:String" Value="" />
+                      </Variable.Default>
+                    </Variable>
+                  </Sequence.Variables>
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                      <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <ParallelForEach x:TypeArguments="x:String" DisplayName="ParallelForEach&lt;String&gt;" sap:VirtualizedContainerService.HintSize="763,852" Values="[RDServers]">
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                    <ActivityAction x:TypeArguments="x:String">
+                      <ActivityAction.Argument>
+                        <DelegateInArgument x:TypeArguments="x:String" Name="Server" />
+                      </ActivityAction.Argument>
+                      <Sequence sap:VirtualizedContainerService.HintSize="733,704">
+                        <sap:WorkflowViewStateService.ViewState>
+                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                          </scg:Dictionary>
+                        </sap:WorkflowViewStateService.ViewState>
+                        <If Condition="[Server.Length = 0 Or (Not Server.Contains(&quot;.&quot;))]" sap:VirtualizedContainerService.HintSize="711,580">
+                          <sap:WorkflowViewStateService.ViewState>
+                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                              <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                            </scg:Dictionary>
+                          </sap:WorkflowViewStateService.ViewState>
+                          <If.Then>
+                            <TerminateWorkflow Exception="[New System.ArgumentException(&quot;Invalid Input&quot;)]" sap:VirtualizedContainerService.HintSize="200,22" Reason="[RDManagementResources.InvalidFqdnWebAccess]" />
+                          </If.Then>
+                          <If.Else>
+                            <Sequence sap:VirtualizedContainerService.HintSize="486,432">
+                              <sap:WorkflowViewStateService.ViewState>
+                                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                </scg:Dictionary>
+                              </sap:WorkflowViewStateService.ViewState>
+                              <Assign sap:VirtualizedContainerService.HintSize="464,60">
+                                <Assign.To>
+                                  <OutArgument x:TypeArguments="x:String">[RDServerdomain]</OutArgument>
+                                </Assign.To>
+                                <Assign.Value>
+                                  <InArgument x:TypeArguments="x:String">[Microsoft.RemoteDesktopServices.Common.CommonUtility.GetDomainNameFromLiveComputer(Server)]</InArgument>
+                                </Assign.Value>
+                              </Assign>
+                              <If Condition="[RDServerdomain.Length = 0]" sap:VirtualizedContainerService.HintSize="464,208">
+                                <sap:WorkflowViewStateService.ViewState>
+                                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                    <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                  </scg:Dictionary>
+                                </sap:WorkflowViewStateService.ViewState>
+                                <If.Then>
+                                  <TerminateWorkflow Exception="[New System.ArgumentException(&quot;Invalid Input&quot;)]" sap:VirtualizedContainerService.HintSize="200,22" Reason="[RDManagementResources.InvalidFqdnWebAccess]" />
+                                </If.Then>
+                              </If>
+                            </Sequence>
+                          </If.Else>
+                        </If>
+                      </Sequence>
+                    </ActivityAction>
+                  </ParallelForEach>
+                </Sequence>
+              </If.Then>
+            </If>
+          </Sequence>
+          <ForEach x:TypeArguments="x:String" DisplayName="ForEach&lt;String&gt;" sap:VirtualizedContainerService.HintSize="610,894" Values="[RDServers]">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+            <ActivityAction x:TypeArguments="x:String">
+              <ActivityAction.Argument>
+                <DelegateInArgument x:TypeArguments="x:String" Name="ServerName" />
+              </ActivityAction.Argument>
+              <Sequence DisplayName="RDMSJoinedNode.Join RDServers" sap:VirtualizedContainerService.HintSize="580,746">
+                <Sequence.Variables>
+                  <Variable x:TypeArguments="sma:PSDataCollection(sma:PSObject)" Name="RDWebAccessServerObjects" />
+                  <Variable x:TypeArguments="sma:PSDataCollection(sma:ErrorRecord)" Name="Errors" />
+                </Sequence.Variables>
+                <sap:WorkflowViewStateService.ViewState>
+                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                    <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                  </scg:Dictionary>
+                </sap:WorkflowViewStateService.ViewState>
+                <Assign sap:VirtualizedContainerService.HintSize="558,60">
+                  <Assign.To>
+                    <OutArgument x:TypeArguments="sma:PSDataCollection(sma:ErrorRecord)">[Errors]</OutArgument>
+                  </Assign.To>
+                  <Assign.Value>
+                    <InArgument x:TypeArguments="sma:PSDataCollection(sma:ErrorRecord)">[New PSDataCollection(Of ErrorRecord)]</InArgument>
+                  </Assign.Value>
+                </Assign>
+                <mpa:InlineScript Command="import-module $env:windir\System32\ServerManagerInternal\rdmanagement;&#xD;&#xA;Set-RDMSJoinedNode -ManagementServer $using:RDMSServer -MachineName $using:ServerName -Roles &quot;RDS-LICENSING&quot;" DisplayName="Join RD License Server to RDMSJoined Node" sap:VirtualizedContainerService.HintSize="508,138.666666666667" PSError="[Errors]" Result="[Results]">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                      <x:Boolean x:Key="IsPinned">True</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                </mpa:InlineScript>
+                <If Condition="[Errors.Count &gt; 0]" sap:VirtualizedContainerService.HintSize="558,294">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <If.Then>
+                    <Sequence sap:VirtualizedContainerService.HintSize="222,146">
+                      <sap:WorkflowViewStateService.ViewState>
+                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                        </scg:Dictionary>
+                      </sap:WorkflowViewStateService.ViewState>
+                      <mpua:WriteError ErrorId="EXCEPTION_FOUND" sap:VirtualizedContainerService.HintSize="200,22" Message="[String.Format(System.Globalization.CultureInfo.CurrentCulture, RDManagementResources.FailedToJoinNode, RDMSServer, ServerName, Errors(0).ToString)]" />
+                    </Sequence>
+                  </If.Then>
+                </If>
+              </Sequence>
+            </ActivityAction>
+          </ForEach>
+        </Sequence>
+        <mpua:WriteProgress Activity="Joined Gateway Server Nodes to RDMS" DisplayName="WriteProgress Nodes Joined To RDMS..." sap:VirtualizedContainerService.HintSize="632,22" PercentComplete="50" Status="Starting ..." />
+        <Sequence DisplayName="Add Licensing End Point Servers to RD Endpoint Server Group" sap:VirtualizedContainerService.HintSize="632,51">
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+              <x:Boolean x:Key="IsPinned">True</x:Boolean>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+        </Sequence>
+        <mpua:WriteProgress Activity="Added LicensingEndPoint servers to RD End Point servers group on each RDLS" DisplayName="WriteProgress Added Licensing End Point servers to group" sap:VirtualizedContainerService.HintSize="632,22" PercentComplete="75" Status="Starting ..." />
+        <If Condition="[UpdateDeploymentLicensingSettings]" DisplayName="Deployment Licensing Settings" sap:VirtualizedContainerService.HintSize="632,51">
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+              <x:Boolean x:Key="IsPinned">True</x:Boolean>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+          <If.Then>
+            <Sequence DisplayName="Licensing Settings" sap:VirtualizedContainerService.HintSize="871,2356">
+              <Sequence.Variables>
+                <Variable x:TypeArguments="sma:PSDataCollection(sma:ErrorRecord)" Name="LicenseErrors" />
+                <Variable x:TypeArguments="x:String" Name="variable1" />
+              </Sequence.Variables>
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+              <Assign sap:VirtualizedContainerService.HintSize="849,60">
+                <Assign.To>
+                  <OutArgument x:TypeArguments="sma:PSDataCollection(sma:ErrorRecord)">[LicenseErrors]</OutArgument>
+                </Assign.To>
+                <Assign.Value>
+                  <InArgument x:TypeArguments="sma:PSDataCollection(sma:ErrorRecord)">[New PSDataCollection(Of ErrorRecord)]</InArgument>
+                </Assign.Value>
+              </Assign>
+              <Sequence DisplayName="Set Licensing Mode" sap:VirtualizedContainerService.HintSize="849,1532">
+                <Sequence.Variables>
+                  <Variable x:TypeArguments="x:Int32" Name="ExistingMode" />
+                </Sequence.Variables>
+                <sap:WorkflowViewStateService.ViewState>
+                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                    <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                  </scg:Dictionary>
+                </sap:WorkflowViewStateService.ViewState>
+                <Assign sap:VirtualizedContainerService.HintSize="827,60">
+                  <Assign.To>
+                    <OutArgument x:TypeArguments="x:Int32">[ExistingMode]</OutArgument>
+                  </Assign.To>
+                  <Assign.Value>
+                    <InArgument x:TypeArguments="x:Int32">0</InArgument>
+                  </Assign.Value>
+                </Assign>
+                <mpa:InlineScript Command="import-module $env:windir\System32\ServerManagerInternal\rdmanagement\Get-LicensingMode.Xaml;&#xD;&#xA;Get-LicensingMode -PSComputerName $using:RDMSServer" DisplayName="InlineScript to get current licensing mode" sap:VirtualizedContainerService.HintSize="827,188" PSError="[LicenseErrors]" PSRequiredModules="[{&quot;PSWorkflow&quot;}]" Result="[Results]">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                      <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                </mpa:InlineScript>
+                <If Condition="[LicenseErrors.Count &gt; 0]" DisplayName="If not error save the existing mode" sap:VirtualizedContainerService.HintSize="827,208">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                      <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <If.Then>
+                    <TerminateWorkflow Exception="[New RDManagementException(RDManagementResources.ResourceManager.GetString(&quot;RDRoleDeploymentFailedToGetLicensingMode&quot;))]" sap:VirtualizedContainerService.HintSize="200,22" />
+                  </If.Then>
+                  <If.Else>
+                    <Assign sap:VirtualizedContainerService.HintSize="242,60">
+                      <Assign.To>
+                        <OutArgument x:TypeArguments="x:Int32">[ExistingMode]</OutArgument>
+                      </Assign.To>
+                      <Assign.Value>
+                        <InArgument x:TypeArguments="x:Int32">[CType(Results(0).BaseObject, Integer)]</InArgument>
+                      </Assign.Value>
+                    </Assign>
+                  </If.Else>
+                </If>
+                <If Condition="[Not ExistingMode.Equals(2) And Not ExistingMode.Equals(4)]" DisplayName="If Licensing Mode is &quot;Not Yet Configured&quot;, then set the specified 'LicensingType'" sap:VirtualizedContainerService.HintSize="733,752">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                      <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <If.Then>
+                    <Sequence sap:VirtualizedContainerService.HintSize="602,684">
+                      <sap:WorkflowViewStateService.ViewState>
+                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                        </scg:Dictionary>
+                      </sap:WorkflowViewStateService.ViewState>
+                      <Sequence sap:VirtualizedContainerService.HintSize="580,560">
+                        <sap:WorkflowViewStateService.ViewState>
+                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                          </scg:Dictionary>
+                        </sap:WorkflowViewStateService.ViewState>
+                        <mpa:InlineScript Command="import-module $env:windir\System32\ServerManagerInternal\rdmanagement\Set-LicenseMode.Xaml;&#xD;&#xA;Set-LicenseMode -RDMSServer $using:RDMSServer -LicensingType $using:LicensingType" sap:VirtualizedContainerService.HintSize="464,108" PSError="[LicenseErrors]" PSRequiredModules="[{&quot;PSWorkflow&quot;}]" Result="[Results]">
+                          <sap:WorkflowViewStateService.ViewState>
+                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                              <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                              <x:Boolean x:Key="IsPinned">True</x:Boolean>
+                            </scg:Dictionary>
+                          </sap:WorkflowViewStateService.ViewState>
+                        </mpa:InlineScript>
+                        <If Condition="[LicenseErrors.Count &gt; 0]" DisplayName="On error Terminate" sap:VirtualizedContainerService.HintSize="558,208">
+                          <sap:WorkflowViewStateService.ViewState>
+                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                              <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                            </scg:Dictionary>
+                          </sap:WorkflowViewStateService.ViewState>
+                          <If.Then>
+                            <TerminateWorkflow Exception="[New RDManagementException(RDManagementResources.ResourceManager.GetString(&quot;RDRoleDeploymentFailedToSetLicensingMode&quot;))]" sap:VirtualizedContainerService.HintSize="200,22" />
+                          </If.Then>
+                        </If>
+                      </Sequence>
+                    </Sequence>
+                  </If.Then>
+                  <If.Else>
+                    <mpua:WriteVerbose sap:VirtualizedContainerService.HintSize="200,22" Message="A licensing Mode is already Configured, so skipping the step Set-LicensingMode" />
+                  </If.Else>
+                </If>
+              </Sequence>
+              <Sequence DisplayName="Set Specified LSes" sap:VirtualizedContainerService.HintSize="849,560">
+                <sap:WorkflowViewStateService.ViewState>
+                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                    <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                  </scg:Dictionary>
+                </sap:WorkflowViewStateService.ViewState>
+                <mpa:InlineScript Command="import-module $env:windir\System32\ServerManagerInternal\rdmanagement\Set-SpecifiedLicenseServers.Xaml;&#xD;&#xA;Set-SpecifiedLicenseServers -RDMSServer $using:RDMSServer -SpecifiedLSList $using:RDServers" sap:VirtualizedContainerService.HintSize="558,188" PSError="[LicenseErrors]" PSRequiredModules="[{&quot;PSWorkflow&quot;}]" Result="[Results]">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                      <x:Boolean x:Key="IsPinned">True</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                </mpa:InlineScript>
+                <If Condition="[LicenseErrors.Count &gt; 0]" DisplayName="On error Terminate" sap:VirtualizedContainerService.HintSize="558,208">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                      <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <If.Then>
+                    <TerminateWorkflow Exception="[New RDManagementException(RDManagementResources.ResourceManager.GetString(&quot;RDRoleDeploymentFailedToSetSpecifiedLicenseServers&quot;))]" sap:VirtualizedContainerService.HintSize="200,22" />
+                  </If.Then>
+                </If>
+              </Sequence>
+            </Sequence>
+          </If.Then>
+        </If>
+        <mpua:WriteProgress Activity="Joined Gateway Server Nodes to RDMS" DisplayName="WriteProgress License Settings Configured..." sap:VirtualizedContainerService.HintSize="632,22" PercentComplete="100" Status="Starting ..." />
+      </Sequence>
+      <Sequence x:Key="RDWA" DisplayName="RD WebAccess Configuration" sap:VirtualizedContainerService.HintSize="200,51">
+        <Sequence.Variables>
+          <Variable x:TypeArguments="x:String" Default="S-1-5-32-577" Name="RDMSServersGroupSID" />
+          <Variable x:TypeArguments="x:String" Default="S-1-5-32-576" Name="SessionBrokerComputersGroupSID" />
+          <Variable x:TypeArguments="x:String" Default="S-1-5-32-575" Name="WebAccessComputersGroupSID" />
+          <Variable x:TypeArguments="x:String" Name="ShortRDMSServerName">
+            <Variable.Default>
+              <Literal x:TypeArguments="x:String" Value="" />
+            </Variable.Default>
+          </Variable>
+          <Variable x:TypeArguments="sma:PSDataCollection(sma:ErrorRecord)" Name="Errors" />
+          <Variable x:TypeArguments="x:String" Name="AdministratorsGroup">
+            <Variable.Default>
+              <Literal x:TypeArguments="x:String" Value="" />
+            </Variable.Default>
+          </Variable>
+          <Variable x:TypeArguments="x:String" Name="RDMSServerDomain">
+            <Variable.Default>
+              <Literal x:TypeArguments="x:String" Value="" />
+            </Variable.Default>
+          </Variable>
+          <Variable x:TypeArguments="x:String" Name="RDMSServersGroup">
+            <Variable.Default>
+              <Literal x:TypeArguments="x:String" Value="" />
+            </Variable.Default>
+          </Variable>
+          <Variable x:TypeArguments="x:String" Name="SessionBrokerComputersGroup">
+            <Variable.Default>
+              <Literal x:TypeArguments="x:String" Value="" />
+            </Variable.Default>
+          </Variable>
+          <Variable x:TypeArguments="x:String" Name="WebAccessComputersGroup">
+            <Variable.Default>
+              <Literal x:TypeArguments="x:String" Value="" />
+            </Variable.Default>
+          </Variable>
+          <Variable x:TypeArguments="x:String" Default="S-1-5-20" Name="NetworkServiceSID" />
+          <Variable x:TypeArguments="x:String" Name="NetworkServiceName">
+            <Variable.Default>
+              <Literal x:TypeArguments="x:String" Value="" />
+            </Variable.Default>
+          </Variable>
+          <Variable x:TypeArguments="x:String" Default="S-1-5-32-544" Name="AdministratorsGroupSID" />
+        </Sequence.Variables>
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+            <x:Boolean x:Key="IsPinned">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+        <mpua:WriteProgress Activity="Initializing and validating user inputs" sap:VirtualizedContainerService.HintSize="200,22" PercentComplete="0" Status="Starting ..." />
+        <Sequence DisplayName="InputValidation" sap:VirtualizedContainerService.HintSize="200,51">
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+              <x:Boolean x:Key="IsPinned">True</x:Boolean>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+          <If Condition="[RDServers.Length &gt; 0]" sap:VirtualizedContainerService.HintSize="200,51">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsPinned">True</x:Boolean>
+                <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+            <If.Then>
+              <Sequence sap:VirtualizedContainerService.HintSize="309,447">
+                <Sequence.Variables>
+                  <Variable x:TypeArguments="x:String" Name="RDServerdomain">
+                    <Variable.Default>
+                      <Literal x:TypeArguments="x:String" Value="" />
+                    </Variable.Default>
+                  </Variable>
+                </Sequence.Variables>
+                <sap:WorkflowViewStateService.ViewState>
+                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                    <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                  </scg:Dictionary>
+                </sap:WorkflowViewStateService.ViewState>
+                <ParallelForEach x:TypeArguments="x:String" DisplayName="ParallelForEach&lt;String&gt;" sap:VirtualizedContainerService.HintSize="287,323" Values="[RDServers]">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <ActivityAction x:TypeArguments="x:String">
+                    <ActivityAction.Argument>
+                      <DelegateInArgument x:TypeArguments="x:String" Name="Server" />
+                    </ActivityAction.Argument>
+                    <Sequence sap:VirtualizedContainerService.HintSize="222,175">
+                      <sap:WorkflowViewStateService.ViewState>
+                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                        </scg:Dictionary>
+                      </sap:WorkflowViewStateService.ViewState>
+                      <If Condition="[Server.Length = 0 Or (Not Server.Contains(&quot;.&quot;))]" sap:VirtualizedContainerService.HintSize="200,51">
+                        <sap:WorkflowViewStateService.ViewState>
+                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                            <x:Boolean x:Key="IsPinned">True</x:Boolean>
+                          </scg:Dictionary>
+                        </sap:WorkflowViewStateService.ViewState>
+                        <If.Then>
+                          <TerminateWorkflow Exception="[New System.ArgumentException(&quot;Invalid Input&quot;)]" sap:VirtualizedContainerService.HintSize="200,22" Reason="[RDManagementResources.InvalidFqdnWebAccess]" />
+                        </If.Then>
+                        <If.Else>
+                          <Sequence sap:VirtualizedContainerService.HintSize="200,51">
+                            <sap:WorkflowViewStateService.ViewState>
+                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                <x:Boolean x:Key="IsPinned">True</x:Boolean>
+                              </scg:Dictionary>
+                            </sap:WorkflowViewStateService.ViewState>
+                            <Assign sap:VirtualizedContainerService.HintSize="464,60">
+                              <Assign.To>
+                                <OutArgument x:TypeArguments="x:String">[RDServerdomain]</OutArgument>
+                              </Assign.To>
+                              <Assign.Value>
+                                <InArgument x:TypeArguments="x:String">[Microsoft.RemoteDesktopServices.Common.CommonUtility.GetDomainNameFromLiveComputer(Server)]</InArgument>
+                              </Assign.Value>
+                            </Assign>
+                            <If Condition="[RDServerdomain.Length = 0]" sap:VirtualizedContainerService.HintSize="464,208">
+                              <sap:WorkflowViewStateService.ViewState>
+                                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                </scg:Dictionary>
+                              </sap:WorkflowViewStateService.ViewState>
+                              <If.Then>
+                                <TerminateWorkflow Exception="[New System.ArgumentException(&quot;Invalid Input&quot;)]" sap:VirtualizedContainerService.HintSize="200,22" Reason="[RDManagementResources.InvalidFqdnWebAccess]" />
+                              </If.Then>
+                            </If>
+                          </Sequence>
+                        </If.Else>
+                      </If>
+                    </Sequence>
+                  </ActivityAction>
+                </ParallelForEach>
+              </Sequence>
+            </If.Then>
+          </If>
+        </Sequence>
+        <Sequence DisplayName="Initialization" sap:VirtualizedContainerService.HintSize="200,51">
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+              <x:Boolean x:Key="IsPinned">True</x:Boolean>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+          <Assign sap:VirtualizedContainerService.HintSize="242,60">
+            <Assign.To>
+              <OutArgument x:TypeArguments="sma:PSDataCollection(x:String)">[ErrorLog]</OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="sma:PSDataCollection(x:String)">[New PSDataCollection(Of String)]</InArgument>
+            </Assign.Value>
+          </Assign>
+          <Assign sap:VirtualizedContainerService.HintSize="242,60">
+            <Assign.To>
+              <OutArgument x:TypeArguments="sma:PSDataCollection(sma:PSObject)">[Results]</OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="sma:PSDataCollection(sma:PSObject)">[New PSDataCollection(Of PSObject)]</InArgument>
+            </Assign.Value>
+          </Assign>
+          <Assign sap:VirtualizedContainerService.HintSize="242,60">
+            <Assign.To>
+              <OutArgument x:TypeArguments="x:String">[ShortRDMSServerName]</OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="x:String">[Microsoft.RemoteDesktopServices.Common.CommonUtility.GetNetbiosNameFromLiveComputer(RDMSServer)]</InArgument>
+            </Assign.Value>
+          </Assign>
+          <Assign sap:VirtualizedContainerService.HintSize="242,60">
+            <Assign.To>
+              <OutArgument x:TypeArguments="x:String">[RDMSServerDomain]</OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="x:String">[Microsoft.RemoteDesktopServices.Common.CommonUtility.GetDomainNameFromLiveComputer(RDMSServer)]</InArgument>
+            </Assign.Value>
+          </Assign>
+        </Sequence>
+        <mpua:WriteProgress Activity="Configuring RD virtual host servers (if any)" sap:VirtualizedContainerService.HintSize="200,22" PercentComplete="10" Status="Initializing and validating user inputs is complete" />
+        <Sequence DisplayName="Configure WebAccess Servers" sap:VirtualizedContainerService.HintSize="200,51">
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+              <x:Boolean x:Key="IsPinned">True</x:Boolean>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+          <If Condition="[RDServers Is Nothing]" sap:VirtualizedContainerService.HintSize="464,356">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+            <If.Else>
+              <ParallelForEach x:TypeArguments="x:String" DisplayName="ParallelForEach&lt;String&gt;" sap:VirtualizedContainerService.HintSize="287,208" Values="[RDServers]">
+                <sap:WorkflowViewStateService.ViewState>
+                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                    <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                  </scg:Dictionary>
+                </sap:WorkflowViewStateService.ViewState>
+                <ActivityAction x:TypeArguments="x:String">
+                  <ActivityAction.Argument>
+                    <DelegateInArgument x:TypeArguments="x:String" Name="ServerName" />
+                  </ActivityAction.Argument>
+                  <Sequence DisplayName="WebAccess Configuration Sequence" sap:VirtualizedContainerService.HintSize="200,51">
+                    <Sequence.Variables>
+                      <Variable x:TypeArguments="x:String" Name="ExceptionString">
+                        <Variable.Default>
+                          <Literal x:TypeArguments="x:String" Value="" />
+                        </Variable.Default>
+                      </Variable>
+                      <Variable x:TypeArguments="x:Boolean" Default="True" Name="Success" />
+                    </Sequence.Variables>
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                        <x:Boolean x:Key="IsPinned">True</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                    <Sequence DisplayName="Adding RDMS server To RD ManagementServergroup" sap:VirtualizedContainerService.HintSize="880,1738">
+                      <Sequence.Variables>
+                        <Variable x:TypeArguments="sma:PSDataCollection(sma:PSObject)" Name="tempGroupObject" />
+                        <Variable x:TypeArguments="x:String" Name="variable2" />
+                      </Sequence.Variables>
+                      <sap:WorkflowViewStateService.ViewState>
+                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                        </scg:Dictionary>
+                      </sap:WorkflowViewStateService.ViewState>
+                      <Assign sap:VirtualizedContainerService.HintSize="858,60">
+                        <Assign.To>
+                          <OutArgument x:TypeArguments="sma:PSDataCollection(sma:PSObject)">[tempGroupObject]</OutArgument>
+                        </Assign.To>
+                        <Assign.Value>
+                          <InArgument x:TypeArguments="sma:PSDataCollection(sma:PSObject)">[New PSDataCollection(Of PSObject)]</InArgument>
+                        </Assign.Value>
+                      </Assign>
+                      <mpa:GetWmiObject Amended="False" Class="win32_account" DirectRead="False" DisplayName="Get RDS Management Servers Group name from SID" EnableAllPrivileges="False" Filter="SID='S-1-5-32-577'  and LocalAccount=True" sap:VirtualizedContainerService.HintSize="858,22" Impersonation="Impersonate" Namespace="root\cimv2" PSAuthenticationLevel="PacketPrivacy" PSComputerName="[{ServerName}]" Result="[tempGroupObject]" />
+                      <If Condition="[tempGroupObject.Count &gt; 0]" sap:VirtualizedContainerService.HintSize="858,332">
+                        <sap:WorkflowViewStateService.ViewState>
+                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                          </scg:Dictionary>
+                        </sap:WorkflowViewStateService.ViewState>
+                        <If.Then>
+                          <Sequence sap:VirtualizedContainerService.HintSize="264,184">
+                            <sap:WorkflowViewStateService.ViewState>
+                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                              </scg:Dictionary>
+                            </sap:WorkflowViewStateService.ViewState>
+                            <Assign sap:VirtualizedContainerService.HintSize="242,60">
+                              <Assign.To>
+                                <OutArgument x:TypeArguments="x:String">[RDMSServersGroup]</OutArgument>
+                              </Assign.To>
+                              <Assign.Value>
+                                <InArgument x:TypeArguments="x:String">[tempGroupObject(0).Properties("Name").Value.ToString()]</InArgument>
+                              </Assign.Value>
+                            </Assign>
+                          </Sequence>
+                        </If.Then>
+                        <If.Else>
+                          <mpua:WriteError ErrorId="EXCEPTION_FOUND" sap:VirtualizedContainerService.HintSize="200,22" Message="[String.Format(System.Globalization.CultureInfo.CurrentCulture, RDManagementResources.FailedToGetGroupNameFromSid, ServerName, RDMSServersGroup, Errors(0).ToString)]" />
+                        </If.Else>
+                      </If>
+                      <If Condition="[RDMSServersGroup.Length &gt; 0]" sap:VirtualizedContainerService.HintSize="858,1080">
+                        <sap:WorkflowViewStateService.ViewState>
+                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                          </scg:Dictionary>
+                        </sap:WorkflowViewStateService.ViewState>
+                        <If.Then>
+                          <Sequence sap:VirtualizedContainerService.HintSize="633,932">
+                            <sap:WorkflowViewStateService.ViewState>
+                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                              </scg:Dictionary>
+                            </sap:WorkflowViewStateService.ViewState>
+                            <Assign sap:VirtualizedContainerService.HintSize="611,60">
+                              <Assign.To>
+                                <OutArgument x:TypeArguments="sma:PSDataCollection(sma:ErrorRecord)">[Errors]</OutArgument>
+                              </Assign.To>
+                              <Assign.Value>
+                                <InArgument x:TypeArguments="sma:PSDataCollection(sma:ErrorRecord)">[New PSDataCollection(Of ErrorRecord)]</InArgument>
+                              </Assign.Value>
+                            </Assign>
+                            <mpa:InlineScript Command="net Localgroup $using:RDMSServersGroup /ADD &quot;$using:RDMSServerDomain\$using:ShortRDMSServerName$&quot;" DisplayName="Add RDMS in RDS Management Servers group in RDWA Servers" sap:VirtualizedContainerService.HintSize="611,188" PSComputerName="[{ServerName}]" PSError="[Errors]" Result="[Results]" />
+                            <If Condition="[Errors.Count &gt; 0]" sap:VirtualizedContainerService.HintSize="611,480">
+                              <sap:WorkflowViewStateService.ViewState>
+                                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                </scg:Dictionary>
+                              </sap:WorkflowViewStateService.ViewState>
+                              <If.Then>
+                                <Sequence sap:VirtualizedContainerService.HintSize="486,332">
+                                  <sap:WorkflowViewStateService.ViewState>
+                                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                      <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                    </scg:Dictionary>
+                                  </sap:WorkflowViewStateService.ViewState>
+                                  <If Condition="[Not Errors(0).ToString.Contains(&quot;1378&quot;)]" sap:VirtualizedContainerService.HintSize="464,208">
+                                    <sap:WorkflowViewStateService.ViewState>
+                                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                      </scg:Dictionary>
+                                    </sap:WorkflowViewStateService.ViewState>
+                                    <If.Then>
+                                      <mpua:WriteError ErrorId="EXCEPTION_FOUND" sap:VirtualizedContainerService.HintSize="200,22" Message="[String.Format(System.Globalization.CultureInfo.CurrentCulture, RDManagementResources.FailedToAddToSecurityGroup, ServerName, RDMSServer, RDMSServersGroup, Errors(0).ToString)]" />
+                                    </If.Then>
+                                  </If>
+                                </Sequence>
+                              </If.Then>
+                            </If>
+                          </Sequence>
+                        </If.Then>
+                        <If.Else>
+                          <mpua:WriteError ErrorId="EXCEPTION_FOUND" sap:VirtualizedContainerService.HintSize="200,22" Message="[String.Format(System.Globalization.CultureInfo.CurrentCulture, RDManagementResources.FailedToAddToSecurityGroup, ServerName, RDMSServer, RDMSServersGroup, Errors(0).ToString)]" />
+                        </If.Else>
+                      </If>
+                    </Sequence>
+                    <mrma:PointWebAccessToCB ExceptionString="[ExceptionString]" sap:VirtualizedContainerService.HintSize="880,22" RDServerName="[RDMSServer]" RDWebAccessServerName="[ServerName]" Success="[Success]" />
+                    <If Condition="[Success &lt;&gt; True]" sap:VirtualizedContainerService.HintSize="880,294">
+                      <sap:WorkflowViewStateService.ViewState>
+                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                        </scg:Dictionary>
+                      </sap:WorkflowViewStateService.ViewState>
+                      <If.Then>
+                        <Sequence sap:VirtualizedContainerService.HintSize="222,146">
+                          <sap:WorkflowViewStateService.ViewState>
+                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                              <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                            </scg:Dictionary>
+                          </sap:WorkflowViewStateService.ViewState>
+                          <mpua:WriteError ErrorId="EXCEPTION_FOUND" sap:VirtualizedContainerService.HintSize="200,22" Message="[String.Format(System.Globalization.CultureInfo.CurrentCulture, RDManagementResources.FailedToUpdateSource, ServerName, RDMSServer, ExceptionString)]" />
+                        </Sequence>
+                      </If.Then>
+                    </If>
+                  </Sequence>
+                </ActivityAction>
+              </ParallelForEach>
+            </If.Else>
+          </If>
+        </Sequence>
+        <mpua:WriteProgress Activity="Configuring RD management servers" sap:VirtualizedContainerService.HintSize="200,22" PercentComplete="30" Status="Configuring RD web access servers(if any) is complete" />
+        <Sequence DisplayName="Configure RDMS Server" sap:VirtualizedContainerService.HintSize="200,51">
+          <Sequence.Variables>
+            <Variable x:TypeArguments="x:String" Name="temp" />
+          </Sequence.Variables>
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+              <x:Boolean x:Key="IsPinned">True</x:Boolean>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+          <Sequence DisplayName="Retrieving RDMS computers Group name" sap:VirtualizedContainerService.HintSize="654,51">
+            <Sequence.Variables>
+              <Variable x:TypeArguments="sma:PSDataCollection(sma:PSObject)" Name="tempGroupObject" />
+            </Sequence.Variables>
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                <x:Boolean x:Key="IsPinned">True</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+            <Assign sap:VirtualizedContainerService.HintSize="464,60">
+              <Assign.To>
+                <OutArgument x:TypeArguments="sma:PSDataCollection(sma:PSObject)">[tempGroupObject]</OutArgument>
+              </Assign.To>
+              <Assign.Value>
+                <InArgument x:TypeArguments="sma:PSDataCollection(sma:PSObject)">[New PSDataCollection(Of PSObject)]</InArgument>
+              </Assign.Value>
+            </Assign>
+            <mpa:GetWmiObject Amended="False" Class="win32_account" DirectRead="False" DisplayName="Get RDS Management Servers Group name from SID" EnableAllPrivileges="False" Filter="[&quot;SID='&quot; + RDMSServersGroupSID + &quot;'  and LocalAccount=True&quot;]" sap:VirtualizedContainerService.HintSize="464,22" Impersonation="Impersonate" Namespace="root\cimv2" PSAuthenticationLevel="PacketPrivacy" PSComputerName="[{RDMSServer}]" Result="[tempGroupObject]" />
+            <If Condition="[tempGroupObject.Count &gt; 0]" sap:VirtualizedContainerService.HintSize="464,332">
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+              <If.Then>
+                <Sequence sap:VirtualizedContainerService.HintSize="264,184">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                      <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <Assign sap:VirtualizedContainerService.HintSize="242,60">
+                    <Assign.To>
+                      <OutArgument x:TypeArguments="x:String">[RDMSServersGroup]</OutArgument>
+                    </Assign.To>
+                    <Assign.Value>
+                      <InArgument x:TypeArguments="x:String">[tempGroupObject(0).Properties("Name").Value.ToString()]</InArgument>
+                    </Assign.Value>
+                  </Assign>
+                </Sequence>
+              </If.Then>
+            </If>
+          </Sequence>
+          <Sequence DisplayName="Retrieving RDWA Compuetr's group name" sap:VirtualizedContainerService.HintSize="654,51">
+            <Sequence.Variables>
+              <Variable x:TypeArguments="sma:PSDataCollection(sma:PSObject)" Name="tempGroupObject" />
+            </Sequence.Variables>
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                <x:Boolean x:Key="IsPinned">True</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+            <Assign sap:VirtualizedContainerService.HintSize="242,60">
+              <Assign.To>
+                <OutArgument x:TypeArguments="sma:PSDataCollection(sma:PSObject)">[tempGroupObject]</OutArgument>
+              </Assign.To>
+              <Assign.Value>
+                <InArgument x:TypeArguments="sma:PSDataCollection(sma:PSObject)">[New PSDataCollection(Of PSObject)]</InArgument>
+              </Assign.Value>
+            </Assign>
+            <mpa:GetWmiObject Amended="False" Class="win32_account" DirectRead="False" DisplayName="Get RDS Remote Access Servers Group name from SID" EnableAllPrivileges="False" Filter="[&quot;SID='&quot; + WebAccessComputersGroupSID + &quot;'  and LocalAccount=True&quot;]" sap:VirtualizedContainerService.HintSize="242,22" Impersonation="Impersonate" Namespace="root\cimv2" PSAuthenticationLevel="PacketPrivacy" PSComputerName="[{RDMSServer}]" Result="[tempGroupObject]" />
+            <If Condition="[tempGroupObject.Count &gt; 0]" sap:VirtualizedContainerService.HintSize="242,51">
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsPinned">True</x:Boolean>
+                  <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+              <If.Then>
+                <Sequence sap:VirtualizedContainerService.HintSize="264,184">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                      <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <Assign sap:VirtualizedContainerService.HintSize="242,60">
+                    <Assign.To>
+                      <OutArgument x:TypeArguments="x:String">[WebAccessComputersGroup]</OutArgument>
+                    </Assign.To>
+                    <Assign.Value>
+                      <InArgument x:TypeArguments="x:String">[tempGroupObject(0).Properties("Name").Value.ToString()]</InArgument>
+                    </Assign.Value>
+                  </Assign>
+                </Sequence>
+              </If.Then>
+            </If>
+          </Sequence>
+          <mpua:WriteProgress Activity="Configuring RD management servers" sap:VirtualizedContainerService.HintSize="654,22" PercentComplete="40" Status="Configuring RD management server settings is in progress" />
+          <Sequence DisplayName="RD WebAccess specific configuration" sap:VirtualizedContainerService.HintSize="654,1814">
+            <Sequence.Variables>
+              <Variable x:TypeArguments="x:String" Name="ServerDomainName">
+                <Variable.Default>
+                  <Literal x:TypeArguments="x:String" Value="" />
+                </Variable.Default>
+              </Variable>
+            </Sequence.Variables>
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+            <ForEach x:TypeArguments="x:String" DisplayName="ForEach&lt;String&gt;" sap:VirtualizedContainerService.HintSize="632,1690" Values="[RDServers]">
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+              <ActivityAction x:TypeArguments="x:String">
+                <ActivityAction.Argument>
+                  <DelegateInArgument x:TypeArguments="x:String" Name="ServerName" />
+                </ActivityAction.Argument>
+                <Sequence DisplayName="RD WebAccess specific setting" sap:VirtualizedContainerService.HintSize="602,1542">
+                  <Sequence.Variables>
+                    <Variable x:TypeArguments="x:String" Name="ServerShortName" />
+                    <Variable x:TypeArguments="x:String" Name="RDVHServer" />
+                  </Sequence.Variables>
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                      <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <Assign sap:VirtualizedContainerService.HintSize="580,60">
+                    <Assign.To>
+                      <OutArgument x:TypeArguments="x:String">[ServerShortName]</OutArgument>
+                    </Assign.To>
+                    <Assign.Value>
+                      <InArgument x:TypeArguments="x:String">[Microsoft.RemoteDesktopServices.Common.CommonUtility.GetNetbiosNameFromLiveComputer(ServerName)]</InArgument>
+                    </Assign.Value>
+                  </Assign>
+                  <Assign sap:VirtualizedContainerService.HintSize="580,60">
+                    <Assign.To>
+                      <OutArgument x:TypeArguments="x:String">[ServerDomainName]</OutArgument>
+                    </Assign.To>
+                    <Assign.Value>
+                      <InArgument x:TypeArguments="x:String">[Microsoft.RemoteDesktopServices.Common.CommonUtility.GetDomainNameFromLiveComputer(ServerName)]</InArgument>
+                    </Assign.Value>
+                  </Assign>
+                  <Assign sap:VirtualizedContainerService.HintSize="580,60">
+                    <Assign.To>
+                      <OutArgument x:TypeArguments="sma:PSDataCollection(sma:ErrorRecord)">[Errors]</OutArgument>
+                    </Assign.To>
+                    <Assign.Value>
+                      <InArgument x:TypeArguments="sma:PSDataCollection(sma:ErrorRecord)">[New PSDataCollection(Of ErrorRecord)]</InArgument>
+                    </Assign.Value>
+                  </Assign>
+                  <Sequence DisplayName="Adding RDWA server To RDS Remote Access Servers group" sap:VirtualizedContainerService.HintSize="580,332">
+                    <Sequence.Variables>
+                      <Variable x:TypeArguments="sma:PSDataCollection(sma:PSObject)" Name="tempGroupObject" />
+                      <Variable x:TypeArguments="x:String" Name="variable2" />
+                    </Sequence.Variables>
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                    <If Condition="[WebAccessComputersGroup.Length &gt; 0]" sap:VirtualizedContainerService.HintSize="464,208">
+                      <sap:WorkflowViewStateService.ViewState>
+                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                          <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                        </scg:Dictionary>
+                      </sap:WorkflowViewStateService.ViewState>
+                      <If.Then>
+                        <Sequence sap:VirtualizedContainerService.HintSize="200,51">
+                          <sap:WorkflowViewStateService.ViewState>
+                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                              <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                              <x:Boolean x:Key="IsPinned">True</x:Boolean>
+                            </scg:Dictionary>
+                          </sap:WorkflowViewStateService.ViewState>
+                          <Assign sap:VirtualizedContainerService.HintSize="611,60">
+                            <Assign.To>
+                              <OutArgument x:TypeArguments="sma:PSDataCollection(sma:ErrorRecord)">[Errors]</OutArgument>
+                            </Assign.To>
+                            <Assign.Value>
+                              <InArgument x:TypeArguments="sma:PSDataCollection(sma:ErrorRecord)">[New PSDataCollection(Of ErrorRecord)]</InArgument>
+                            </Assign.Value>
+                          </Assign>
+                          <mpa:InlineScript Command="net Localgroup $using:WebAccessComputersGroup /ADD &quot;$using:ServerDomainName\$using:ServerShortName$&quot;" DisplayName="Add RDWA server To  RDS Remote Access Servers Group in RDMS Server" sap:VirtualizedContainerService.HintSize="611,188" PSComputerName="[{RDMSServer}]" PSError="[Errors]" Result="[Results]" />
+                          <If Condition="[Errors.Count &gt; 0]" sap:VirtualizedContainerService.HintSize="611,480">
+                            <sap:WorkflowViewStateService.ViewState>
+                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                              </scg:Dictionary>
+                            </sap:WorkflowViewStateService.ViewState>
+                            <If.Then>
+                              <Sequence sap:VirtualizedContainerService.HintSize="486,332">
+                                <sap:WorkflowViewStateService.ViewState>
+                                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                    <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                  </scg:Dictionary>
+                                </sap:WorkflowViewStateService.ViewState>
+                                <If Condition="[Not Errors(0).ToString.Contains(&quot;1378&quot;)]" sap:VirtualizedContainerService.HintSize="464,208">
+                                  <sap:WorkflowViewStateService.ViewState>
+                                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                      <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                    </scg:Dictionary>
+                                  </sap:WorkflowViewStateService.ViewState>
+                                  <If.Then>
+                                    <mpua:WriteError ErrorId="EXCEPTION_FOUND" sap:VirtualizedContainerService.HintSize="200,22" Message="[String.Format(System.Globalization.CultureInfo.CurrentCulture, RDManagementResources.FailedToAddToSecurityGroup, ServerName, RDMSServer, WebAccessComputersGroup, Errors(0).ToString)]" />
+                                  </If.Then>
+                                </If>
+                              </Sequence>
+                            </If.Then>
+                          </If>
+                        </Sequence>
+                      </If.Then>
+                      <If.Else>
+                        <mpua:WriteError ErrorId="EXCEPTION_FOUND" sap:VirtualizedContainerService.HintSize="200,22" Message="[String.Format(System.Globalization.CultureInfo.CurrentCulture, RDManagementResources.FailedToAddToSecurityGroup, ServerName, RDMSServer, WebAccessComputersGroup, Errors(0).ToString)]" />
+                      </If.Else>
+                    </If>
+                  </Sequence>
+                  <Sequence DisplayName="Join RD WebAccess to RDMSJoinedNode" sap:VirtualizedContainerService.HintSize="580,746">
+                    <Sequence.Variables>
+                      <Variable x:TypeArguments="sma:PSDataCollection(sma:PSObject)" Name="RDWebAccessServerObjects" />
+                    </Sequence.Variables>
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                    <Assign sap:VirtualizedContainerService.HintSize="558,60">
+                      <Assign.To>
+                        <OutArgument x:TypeArguments="sma:PSDataCollection(sma:ErrorRecord)">[Errors]</OutArgument>
+                      </Assign.To>
+                      <Assign.Value>
+                        <InArgument x:TypeArguments="sma:PSDataCollection(sma:ErrorRecord)">[New PSDataCollection(Of ErrorRecord)]</InArgument>
+                      </Assign.Value>
+                    </Assign>
+                    <mpa:InlineScript Command="import-module $env:windir\System32\ServerManagerInternal\rdmanagement;&#xD;&#xA;Set-RDMSJoinedNode -ManagementServer $using:RDMSServer -MachineName $using:ServerName -Roles &quot;RDS-WEB-ACCESS&quot;" DisplayName="Join RD Web Access to RDMSJoined Node" sap:VirtualizedContainerService.HintSize="508,138.666666666667" PSError="[Errors]" />
+                    <If Condition="[Errors.Count &gt; 0]" sap:VirtualizedContainerService.HintSize="558,294">
+                      <sap:WorkflowViewStateService.ViewState>
+                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                        </scg:Dictionary>
+                      </sap:WorkflowViewStateService.ViewState>
+                      <If.Then>
+                        <Sequence sap:VirtualizedContainerService.HintSize="222,146">
+                          <sap:WorkflowViewStateService.ViewState>
+                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                              <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                            </scg:Dictionary>
+                          </sap:WorkflowViewStateService.ViewState>
+                          <mpua:WriteError ErrorId="EXCEPTION_FOUND" sap:VirtualizedContainerService.HintSize="200,22" Message="[String.Format(System.Globalization.CultureInfo.CurrentCulture, RDManagementResources.FailedToJoinNode, RDMSServer, ServerName, Errors(0).ToString)]" />
+                        </Sequence>
+                      </If.Then>
+                    </If>
+                  </Sequence>
+                </Sequence>
+              </ActivityAction>
+            </ForEach>
+          </Sequence>
+        </Sequence>
+        <mpua:WriteProgress Activity="Configuring RD virtualiation host servers(if any)" sap:VirtualizedContainerService.HintSize="200,22" PercentComplete="90" Status="Configuring RD management servers is complete" />
+      </Sequence>
+    </Switch>
+  </Sequence>
+</Activity>

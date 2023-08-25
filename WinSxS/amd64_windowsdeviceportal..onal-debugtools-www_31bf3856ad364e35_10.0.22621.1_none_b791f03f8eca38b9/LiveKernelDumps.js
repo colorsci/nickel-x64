@@ -1,0 +1,4 @@
+﻿function KernelModeDumpManager(){function i(){var i=n.find("option:selected"),r;i.length>0?(t.show(),r={filename:i.val()},t.attr("href","api/debug/dump/kernel/dump?"+$.param(r))):t.hide()}var r=new WebbRest,n=$("#bugcheckDumpsList"),t=$("#bugcheckFileDownloadLink"),u=$("#bugcheckLink");t.hide();n.change(function(){i()});u.click(function(n){n.preventDefault();window.confirm("Warning: This will cause the system to crash. It is recommended that you save any work and close any open applications before continuing")&&$.ajax({url:"/api/debug/dump/kernel/bugcheck",cache:!1,type:"POST"})});r.getBugcheckDumpsList().done(function(t){for(var r in t.DumpFiles)n.append($("<option>",{value:t.DumpFiles[r].FileName,text:t.DumpFiles[r].FileName}));t.DumpFiles.length>0?(n.val(t.DumpFiles[0].FileName),i(),n.attr("disabled",!1)):n.attr("disabled",!0)})}var WebbRest;$(function(){KernelModeDumpManager()});
+/*!
+//@ sourceURL=tools/LiveKernelDumps/LiveKernelDumps.js
+*/

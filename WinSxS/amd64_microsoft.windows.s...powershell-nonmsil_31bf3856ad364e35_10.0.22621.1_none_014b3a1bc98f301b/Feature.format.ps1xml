@@ -1,0 +1,225 @@
+<Configuration>
+<ViewDefinitions>
+<View>
+    <Name>Feature</Name>
+    <ViewSelectedBy>
+	<TypeName>Microsoft.Windows.ServerManager.Commands.Feature</TypeName>
+    </ViewSelectedBy>
+    <TableControl>
+	<TableHeaders>
+	    <TableColumnHeader>
+		<Label>Display Name</Label>
+		<Width>55</Width>
+		<Alignment>left</Alignment>
+	    </TableColumnHeader>
+	    <TableColumnHeader>
+		<Label>Name</Label>
+		<Width>23</Width>
+		<Alignment>left</Alignment>
+	    </TableColumnHeader>
+        <TableColumnHeader>
+            <Label>Install State</Label>
+            <Width>16</Width>
+            <Alignment>right</Alignment>
+        </TableColumnHeader>
+	</TableHeaders>
+	<TableRowEntries>
+	    <TableRowEntry>
+		<TableColumnItems>
+		    <TableColumnItem>
+                <ScriptBlock>
+                $indent=""
+				for ($i=$_.Depth; $i -gt 1; $i--)
+				{ 
+				    $indent += "    "
+				}
+
+                if ($_.Installed -eq $TRUE)
+                {
+                    $indent += "[X] "
+                }
+                else
+                {
+                    $indent += "[ ] "
+                }
+
+                $indent + $_.DisplayName
+		        </ScriptBlock>
+		    </TableColumnItem>
+		    <TableColumnItem>
+			    <PropertyName>Name</PropertyName>
+		    </TableColumnItem>
+            <TableColumnItem>
+                <PropertyName>InstallState</PropertyName>
+            </TableColumnItem>
+        </TableColumnItems>
+	    </TableRowEntry>
+	</TableRowEntries>
+    </TableControl>
+</View>
+<View>
+    <Name>FeatureOperationResult</Name>
+    <ViewSelectedBy>
+	<TypeName>Microsoft.Windows.ServerManager.Commands.FeatureOperationResult</TypeName>
+    </ViewSelectedBy>
+    <TableControl>
+	<TableHeaders>
+	    <TableColumnHeader>
+		<Label>Success</Label>
+		<Width>7</Width>
+		<Alignment>left</Alignment>
+	    </TableColumnHeader>
+
+	    <TableColumnHeader>
+		<Label>Restart Needed</Label>
+		<Width>14</Width>
+		<Alignment>left</Alignment>
+	    </TableColumnHeader>
+
+	    <TableColumnHeader>
+		<Label>Exit Code</Label>
+		<Width>14</Width>
+		<Alignment>left</Alignment>
+	    </TableColumnHeader>
+
+	    <TableColumnHeader>
+		<Label>Feature Result</Label>
+		<Width>45</Width>
+		<Alignment>left</Alignment>
+	    </TableColumnHeader>
+	</TableHeaders>
+	<TableRowEntries>
+	    <TableRowEntry>
+		<TableColumnItems>
+		    <TableColumnItem>
+			    <PropertyName>Success</PropertyName>
+		    </TableColumnItem>
+		    <TableColumnItem>
+			    <PropertyName>RestartNeeded</PropertyName>
+		    </TableColumnItem>
+		    <TableColumnItem>
+			    <PropertyName>ExitCode</PropertyName>
+		    </TableColumnItem>
+		    <TableColumnItem>
+			    <PropertyName>FeatureResult</PropertyName>
+		    </TableColumnItem>
+		</TableColumnItems>
+	    </TableRowEntry>
+	</TableRowEntries>
+    </TableControl>
+</View>
+<View>
+    <Name>FeatureResult</Name>
+    <ViewSelectedBy>
+	<TypeName>Microsoft.Windows.ServerManager.Commands.FeatureResult</TypeName>
+    </ViewSelectedBy>
+    <TableControl>
+	<TableHeaders>
+    <TableColumnHeader>
+    <Label>Display Name</Label>
+    <Width>38</Width>
+    <Alignment>left</Alignment>
+    </TableColumnHeader>
+    
+	  <TableColumnHeader>
+		<Label>Name</Label>
+		<Width>14</Width>
+		<Alignment>left</Alignment>
+	  </TableColumnHeader>
+
+	    <TableColumnHeader>
+		<Label>Success</Label>
+		<Width>7</Width>
+		<Alignment>left</Alignment>
+	    </TableColumnHeader>
+
+	    <TableColumnHeader>
+		<Label># Msg</Label>
+		<Width>5</Width>
+		<Alignment>left</Alignment>
+	    </TableColumnHeader>
+
+	    <TableColumnHeader>
+		<Label>Restart Needed</Label>
+		<Width>14</Width>
+		<Alignment>left</Alignment>
+	    </TableColumnHeader>
+
+	    <TableColumnHeader>
+		<Label>Skip Reason</Label>
+		<Width>11</Width>
+		<Alignment>left</Alignment>
+	    </TableColumnHeader>
+	</TableHeaders>
+	<TableRowEntries>
+	    <TableRowEntry>
+		<TableColumnItems>
+        <TableColumnItem>
+			    <PropertyName>DisplayName</PropertyName>
+		    </TableColumnItem>
+        <TableColumnItem>
+          <PropertyName>Name</PropertyName>
+        </TableColumnItem>
+		    <TableColumnItem>
+			    <PropertyName>Success</PropertyName>
+		    </TableColumnItem>
+		    <TableColumnItem>
+                <ScriptBlock>
+                $_.Message.Count
+		        </ScriptBlock>
+		    </TableColumnItem>
+		    <TableColumnItem>
+			    <PropertyName>RestartNeeded</PropertyName>
+		    </TableColumnItem>
+		    <TableColumnItem>
+			    <PropertyName>SkipReason</PropertyName>
+		    </TableColumnItem>
+		</TableColumnItems>
+	    </TableRowEntry>
+	</TableRowEntries>
+    </TableControl>
+</View>
+<View>
+    <Name>FeatureMessage</Name>
+    <ViewSelectedBy>
+	<TypeName>Microsoft.Windows.ServerManager.Commands.FeatureMessage</TypeName>
+    </ViewSelectedBy>
+    <TableControl>
+	<TableHeaders>
+	    <TableColumnHeader>
+		<Label>Msg Type</Label>
+		<Width>8</Width>
+		<Alignment>left</Alignment>
+	    </TableColumnHeader>
+
+	    <TableColumnHeader>
+		<Label>Error Code</Label>
+		<Width>10</Width>
+		<Alignment>left</Alignment>
+	    </TableColumnHeader>
+
+	    <TableColumnHeader>
+		<Label>Text</Label>
+		<Width>60</Width>
+		<Alignment>left</Alignment>
+	    </TableColumnHeader>
+	</TableHeaders>
+	<TableRowEntries>
+	    <TableRowEntry>
+		<TableColumnItems>
+		    <TableColumnItem>
+			    <PropertyName>MessageType</PropertyName>
+		    </TableColumnItem>
+		    <TableColumnItem>
+			    <PropertyName>ErrorCode</PropertyName>
+		    </TableColumnItem>
+		    <TableColumnItem>
+			    <PropertyName>Text</PropertyName>
+		    </TableColumnItem>
+		</TableColumnItems>
+	    </TableRowEntry>
+	</TableRowEntries>
+    </TableControl>
+</View>
+</ViewDefinitions>
+</Configuration>

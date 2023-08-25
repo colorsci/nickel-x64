@@ -1,0 +1,112 @@
+<Activity mc:Ignorable="sap" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mpa="clr-namespace:Microsoft.PowerShell.Activities;assembly=Microsoft.PowerShell.Activities" xmlns:mv="clr-namespace:Microsoft.VisualBasic;assembly=System" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:sad="clr-namespace:System.Activities.Debugger;assembly=System.Activities" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:scg3="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:sma="clr-namespace:System.Management.Automation;assembly=System.Management.Automation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <x:Members>
+    <x:Property Name="RDMSServer" Type="InArgument(x:String)" />
+    <x:Property Name="Result" Type="OutArgument(sma:PSDataCollection(sma:PSObject))" />
+    <x:Property Name="LicenseServers" Type="InArgument(s:String[])" />
+  </x:Members>
+  <sap:VirtualizedContainerService.HintSize>622,1737</sap:VirtualizedContainerService.HintSize>
+  <mva:VisualBasic.Settings>Assembly references and imported namespaces for internal implementation</mva:VisualBasic.Settings>
+  <Sequence sap:VirtualizedContainerService.HintSize="582,1697">
+    <Sequence.Variables>
+      <Variable x:TypeArguments="x:String" Name="variable1" />
+    </Sequence.Variables>
+    <sap:WorkflowViewStateService.ViewState>
+      <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+      </scg3:Dictionary>
+    </sap:WorkflowViewStateService.ViewState>
+    <Assign sap:VirtualizedContainerService.HintSize="560,58">
+      <Assign.To>
+        <OutArgument x:TypeArguments="sma:PSDataCollection(sma:PSObject)">[Result]</OutArgument>
+      </Assign.To>
+      <Assign.Value>
+        <InArgument x:TypeArguments="sma:PSDataCollection(sma:PSObject)">[New PSDataCollection(Of PSObject)]</InArgument>
+      </Assign.Value>
+    </Assign>
+    <ParallelForEach x:TypeArguments="x:String" DisplayName="ParallelForEach&lt;String&gt;" sap:VirtualizedContainerService.HintSize="560,1475" Values="[LicenseServers]">
+      <ActivityAction x:TypeArguments="x:String">
+        <ActivityAction.Argument>
+          <DelegateInArgument x:TypeArguments="x:String" Name="item" />
+        </ActivityAction.Argument>
+        <Sequence DisplayName="Add one RD License Server" sap:VirtualizedContainerService.HintSize="530,1369">
+          <Sequence.Variables>
+            <Variable x:TypeArguments="sma:PSDataCollection(sma:ErrorRecord)" Name="Errors" />
+            <Variable x:TypeArguments="sma:PSObject" Name="Output" />
+          </Sequence.Variables>
+          <sap:WorkflowViewStateService.ViewState>
+            <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            </scg3:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+          <Assign sap:VirtualizedContainerService.HintSize="508,58">
+            <Assign.To>
+              <OutArgument x:TypeArguments="sma:PSObject">[Output]</OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="sma:PSObject">[New PSObject]</InArgument>
+            </Assign.Value>
+          </Assign>
+          <InvokeMethod sap:VirtualizedContainerService.HintSize="508,130" MethodName="Add">
+            <InvokeMethod.TargetObject>
+              <InArgument x:TypeArguments="sma:PSMemberInfoCollection(sma:PSPropertyInfo)">[Output.Properties]</InArgument>
+            </InvokeMethod.TargetObject>
+            <InArgument x:TypeArguments="sma:PSNoteProperty">[New PSNoteProperty("ServerName", item)]</InArgument>
+          </InvokeMethod>
+          <Assign sap:VirtualizedContainerService.HintSize="508,58">
+            <Assign.To>
+              <OutArgument x:TypeArguments="sma:PSDataCollection(sma:ErrorRecord)">[Errors]</OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="sma:PSDataCollection(sma:ErrorRecord)">[New PSDataCollection(Of ErrorRecord)]</InArgument>
+            </Assign.Value>
+          </Assign>
+          <mpa:InlineScript Command="import-module $env:windir\System32\ServerManagerInternal\rdmanagement;&#xD;&#xA;Add-RDLicense -ManagementServer $using:RDMSServer -LicenseServer $using:item" DisplayName="Add RD License" sap:VirtualizedContainerService.HintSize="508,139" PSError="[Errors]">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+              </scg3:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+          </mpa:InlineScript>
+          <If Condition="[Errors.Count &gt; 0]" sap:VirtualizedContainerService.HintSize="508,530">
+            <If.Then>
+              <Sequence sap:VirtualizedContainerService.HintSize="240,424">
+                <sap:WorkflowViewStateService.ViewState>
+                  <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                  </scg3:Dictionary>
+                </sap:WorkflowViewStateService.ViewState>
+                <InvokeMethod sap:VirtualizedContainerService.HintSize="218,130" MethodName="Add">
+                  <InvokeMethod.TargetObject>
+                    <InArgument x:TypeArguments="sma:PSMemberInfoCollection(sma:PSPropertyInfo)">[Output.Properties]</InArgument>
+                  </InvokeMethod.TargetObject>
+                  <InArgument x:TypeArguments="sma:PSNoteProperty">[New PSNoteProperty("Success", False)]</InArgument>
+                </InvokeMethod>
+                <InvokeMethod sap:VirtualizedContainerService.HintSize="218,130" MethodName="Add">
+                  <InvokeMethod.TargetObject>
+                    <InArgument x:TypeArguments="sma:PSMemberInfoCollection(sma:PSPropertyInfo)">[Output.Properties]</InArgument>
+                  </InvokeMethod.TargetObject>
+                  <InArgument x:TypeArguments="sma:PSNoteProperty">[New PSNoteProperty("ErrorRecord", Errors(0))]</InArgument>
+                </InvokeMethod>
+              </Sequence>
+            </If.Then>
+            <If.Else>
+              <InvokeMethod sap:VirtualizedContainerService.HintSize="218,424" MethodName="Add">
+                <InvokeMethod.TargetObject>
+                  <InArgument x:TypeArguments="sma:PSMemberInfoCollection(sma:PSPropertyInfo)">[Output.Properties]</InArgument>
+                </InvokeMethod.TargetObject>
+                <InArgument x:TypeArguments="sma:PSNoteProperty">[New PSNoteProperty("Success", True)]</InArgument>
+              </InvokeMethod>
+            </If.Else>
+          </If>
+          <InvokeMethod sap:VirtualizedContainerService.HintSize="508,130" MethodName="Add">
+            <InvokeMethod.TargetObject>
+              <InArgument x:TypeArguments="sma:PSDataCollection(sma:PSObject)">[Result]</InArgument>
+            </InvokeMethod.TargetObject>
+            <InArgument x:TypeArguments="sma:PSObject">[Output]</InArgument>
+          </InvokeMethod>
+        </Sequence>
+      </ActivityAction>
+    </ParallelForEach>
+  </Sequence>
+</Activity>

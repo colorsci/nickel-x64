@@ -1,0 +1,589 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<schema targetNamespace="http://schemas.microsoft.com/wsus/2005/04/CorporatePublishing/SoftwareDistributionPackage.xsd"
+    xmlns="http://www.w3.org/2001/XMLSchema"
+    xmlns:bt="http://schemas.microsoft.com/wsus/2005/04/CorporatePublishing/BaseTypes.xsd"
+    xmlns:sdp="http://schemas.microsoft.com/wsus/2005/04/CorporatePublishing/SoftwareDistributionPackage.xsd"
+    xmlns:bar="http://schemas.microsoft.com/wsus/2005/04/CorporatePublishing/BaseApplicabilityRules.xsd"
+    xmlns:msiar="http://schemas.microsoft.com/wsus/2005/04/CorporatePublishing/MsiApplicabilityRules.xsd"
+    xmlns:lar="http://schemas.microsoft.com/wsus/2005/04/CorporatePublishing/LogicalApplicabilityRules.xsd"
+    xmlns:cmd="http://schemas.microsoft.com/wsus/2005/04/CorporatePublishing/Installers/CommandLineInstallation.xsd"
+    xmlns:msi="http://schemas.microsoft.com/wsus/2005/04/CorporatePublishing/Installers/MsiInstallation.xsd"
+    xmlns:msp="http://schemas.microsoft.com/wsus/2005/04/CorporatePublishing/Installers/MspInstallation.xsd"
+    xmlns:drv="http://schemas.microsoft.com/wsus/2005/04/CorporatePublishing/WindowsDriver.xsd"
+    elementFormDefault="qualified" attributeFormDefault="unqualified">
+    <import namespace="http://schemas.microsoft.com/wsus/2005/04/CorporatePublishing/BaseTypes.xsd"
+        schemaLocation="BaseTypes.xsd" />
+    <import namespace="http://schemas.microsoft.com/wsus/2005/04/CorporatePublishing/BaseApplicabilityRules.xsd"
+        schemaLocation="BaseApplicabilityRules.xsd" />
+    <import namespace="http://schemas.microsoft.com/wsus/2005/04/CorporatePublishing/MsiApplicabilityRules.xsd"
+        schemaLocation="MsiApplicabilityRules.xsd" />
+    <import namespace="http://schemas.microsoft.com/wsus/2005/04/CorporatePublishing/LogicalApplicabilityRules.xsd"
+        schemaLocation="LogicalApplicabilityRules.xsd" />
+    <import namespace="http://schemas.microsoft.com/wsus/2005/04/CorporatePublishing/Installers/CommandLineInstallation.xsd"
+        schemaLocation="CommandLineInstallation.xsd" />
+    <import namespace="http://schemas.microsoft.com/wsus/2005/04/CorporatePublishing/Installers/MsiInstallation.xsd"
+        schemaLocation="MsiInstallation.xsd" />
+    <import namespace="http://schemas.microsoft.com/wsus/2005/04/CorporatePublishing/Installers/MspInstallation.xsd"
+        schemaLocation="MspInstallation.xsd" />
+    <import namespace="http://schemas.microsoft.com/wsus/2005/04/CorporatePublishing/Installers/WindowsDriver.xsd"
+        schemaLocation="WindowsDriver.xsd" />
+
+    <!--
+        This schema specifies the form of the XML meta-data for an Software Distribution Package.
+    -->
+    <element name="SoftwareDistributionPackage" type="sdp:SoftwareDistributionPackage" />
+    
+    <!--
+        Types related to the descriptive text of a package
+    -->
+    <simpleType name="SchemaVersion">
+		<annotation>
+			<documentation>A two-part version string, such as "1.0". This is used for informational purposes only and not for schema validation. The value should always be set to "1.0" for now.</documentation>
+		</annotation>
+		<restriction base="string">
+			<pattern value="\d{1,5}\.\d{1,5}" />
+		</restriction>
+	</simpleType>
+    <simpleType name="LocalizedPropertiesLanguage">
+        <annotation>
+            <documentation>A language that a LocalizedProperties element applies to. A LocalizedProperties element must apply to at least one language. The DefaultPropertiesLanguage attribute of the Properties element can specify which one of the languages should be used by default when no LocalizedProperties element exists for a given language.</documentation>
+        </annotation>
+        <restriction base="language" />
+    </simpleType>
+    <simpleType name="Title">
+        <annotation>
+            <documentation>The name or title of the package.</documentation>
+        </annotation>
+        <restriction base="string">
+            <maxLength value="200" />
+            <minLength value="1" />
+        </restriction>
+    </simpleType>
+    <simpleType name="Description">
+        <annotation>
+            <documentation>The descriptive text of the package. This will be rendered as text, not HTML.</documentation>
+        </annotation>
+        <restriction base="string">
+            <maxLength value="1500" />
+            <minLength value="1" />
+        </restriction>
+    </simpleType>
+    <complexType name="LocalizedProperties">
+        <annotation>
+            <documentation>The language-specific descriptive properties for the update.</documentation>
+        </annotation>
+        <sequence>
+            <element name="Language" type="sdp:LocalizedPropertiesLanguage" />
+            <element name="Title" type="sdp:Title" />
+            <element name="Description" type="sdp:Description" />
+        </sequence>
+    </complexType>
+
+    <!--
+        UpdateType enumeration
+    -->
+    <simpleType name="UpdateType">
+        <annotation>
+            <documentation>Defines the possible Update Types used in identifying the package type.</documentation>
+        </annotation>
+        <restriction base="token">
+            <enumeration value="Software">
+                <annotation>
+                    <documentation>Specifies that the package is a Software update. Software updates are the normal case for Local Publishing.</documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="Driver">
+                <annotation>
+                    <documentation>Specifies that the package is a Driver update. Driver updates are targetted to specific hardware and are differentiated from Software because they use a different Install handler.</documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="Detectoid">
+                <annotation>
+                    <documentation>Specifies that the package is a Detectoid. Detectoids are special updates that provide shared applicability rules across updates and pruning updates that shouldn't flow to the client if the detectoid prerequisite is not met.</documentation>
+                </annotation>
+            </enumeration>
+        </restriction>
+    </simpleType>
+    
+    <!--
+        Types related to the installation properties of a package
+    -->
+    <simpleType name="InstallationImpact">
+        <annotation>
+            <documentation>The assessment of how installation/uninstallation of the update will impact the system.</documentation>
+        </annotation>
+        <restriction base="token">
+            <enumeration value="Normal">
+                <annotation>
+                    <documentation>Specifies that installing/uninstalling the update will result in the level of impact to the system that is typical to most updates. This means, in essence, that the update does not qualify for any of the special impact ratings defined below.</documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="Minor">
+                <annotation>
+                    <documentation>Specifies that the update qualifies as a "zero service interruption" (ZSI) update. Installing/uninstalling a ZSI update results in negligible impact on the system. This is the desired behavior for all updates. The update must meet stringent requirements to qualify for this rating, including but not limited to: it must not perform or require a reboot, it must not display any UI, and it must install/uninstall successfully even if it affects an application or service that is currently in use. Updates that qualify for this rating may be eligible for special handling within MSUS, such as accelerated distribution. Please see other specifications for details.</documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="RequiresExclusiveHandling">
+                <annotation>
+                    <documentation>Specifies that installing/uninstalling the update results in such a high impact to the system that it must be installed "exclusively". This means the MSUS Client will install/uninstall this update by itself without batching it together with others. Update authors should avoid authoring exclusive updates if at all possible. Exclusive updates typically reboot during or after installation (although it is permitted to author an exclusive update that does not reboot). Exclusive updates may face restrictions in how they may be distributed. Please see other specifications for details.</documentation>
+                </annotation>
+            </enumeration>
+        </restriction>
+    </simpleType>
+    <simpleType name="InstallationRebootBehavior">
+        <annotation>
+            <documentation>The reboot behavior exhibited by the update during installation/uninstallation. Updates that cause or require reboots may face restrictions in how they may be distributed.</documentation>
+        </annotation>
+        <restriction base="token">
+            <enumeration value="NeverReboots">
+                <annotation>
+                    <documentation>Specifies that the update never needs a reboot during or after installation/uninstallation. This is the desired behavior for all updates.</documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="AlwaysRequiresReboot">
+                <annotation>
+                    <documentation>Specifies that the MSUS Client should always reboot the machine after successfully completing installation/uninstallation of the update. The Client may perform the reboot after installing or uninstalling other updates as part of a batch. This behavior can be overridden by setting Impact to RequiresExclusiveHandling.</documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="CanRequestReboot">
+                <annotation>
+                    <documentation>Specifies that the underlying installer can request that the MSUS Client reboot the machine after successfully completing the installation/uninstallation of the update. If there is any possibility whatsoever that a reboot could be requested, this option must be chosen. Each update handler defines its own mechanism for receiving the reboot request from the underlying installer. The Client may perform the requested reboot after installing or uninstalling other updates as part of a batch. This behavior can be overridden by setting Impact to RequiresExclusiveHandling.</documentation>
+                </annotation>
+            </enumeration>
+        </restriction>
+    </simpleType>
+    <complexType name="InstallProperties">
+        <annotation>
+            <documentation>Specifies properties of the packages (un)install.</documentation>
+        </annotation>
+        <attribute name="CanRequestUserInput" type="boolean" use="optional" default="false">
+            <annotation>
+                <documentation>Specifies whether or not the package can request input from the user during installation/uninstallation. This attribute must be set to true if there is any possibility whatsoever that input will be requested. Updates that can exhibit this behavior may face some restrictions in how they may be distributed.</documentation>
+            </annotation>
+        </attribute>
+        <attribute name="RequiresNetworkConnectivity" type="boolean" use="optional" default="false">
+            <annotation>
+                <documentation>Specifies whether or not the package requires network connectivity for the installation/uninstallation to complete successfully. If true, the agent will not attempt the installation/uninstallation if the machine is not connected to a network. Note that this attribute does not test reachability of the Internet or any particular network server; that can be tested with applicability rules.</documentation>
+            </annotation>
+        </attribute>
+        <attribute name="Impact" type="sdp:InstallationImpact" use="optional" default="Normal" />
+        <attribute name="RebootBehavior" type="sdp:InstallationRebootBehavior" use="optional" default="CanRequestReboot" />
+    </complexType>
+    <element name="InstallHandlerSpecificData" abstract="true">
+        <annotation>
+            <documentation>Data that is specific to the install handler (e.g., MSI, MSP, command-line, etc). This element is abstract. Each install handler derives a new complexType containing its own install-handler-specific elements and attributes.</documentation>
+        </annotation>
+    </element>
+    <complexType name="InstallableItem">
+        <annotation>
+            <documentation>Each package contains one or more installable items. Typically applications have a single installable item and updtes have several (e.g., one per locale).</documentation>
+        </annotation>
+        <sequence>
+            <element name="ApplicabilityRules" type="sdp:ApplicabilityRules" minOccurs ="0">
+                <annotation>
+                    <documentation>Additional applicability rules for this installable item, if any. If present, the rules are added (and-ed) to the ones specified at the package level. So an item is not considered installable unless both it's IsInstallable and the package IsInstallable rules return true. If omitted, default to using the package-level rules.</documentation>
+                </annotation>
+            </element>
+            <element name="InstallProperties" type="sdp:InstallProperties" minOccurs="0">
+                <annotation>
+                    <documentation>Specifies that the package can be installed and the various behaviors for installation.</documentation>
+                </annotation>
+            </element>
+            <element name="UninstallProperties" type="sdp:InstallProperties" minOccurs="0">
+                <annotation>
+                    <documentation>If present, specifies that the update can be uninstalled and the various behaviors for uninstallation. If not present, the update does not support uninstall.</documentation>
+                </annotation>
+            </element>
+            <element ref="sdp:InstallHandlerSpecificData" minOccurs="0" />
+            <element name="OriginFile" type="sdp:File" minOccurs="0">
+                <annotation>
+                    <documentation>If present, specifies the origin package file (e.g, on the Microsoft Download Center).</documentation>
+                </annotation>
+            </element>
+            <element name="Language" type="language" minOccurs="0" maxOccurs="unbounded">
+                <annotation>
+                    <documentation>The language that the binary has been localized to. If unspecified, the item is language-independent. This refers to the languages of the binaries, as opposed to the languages that the meta-data supports.</documentation>
+                </annotation>
+            </element>
+       </sequence>
+       <attribute name="ID" type="bt:Guid" use="required"/>
+    </complexType>
+    <!--
+        Types related to publication state
+    -->
+    <simpleType name="PublicationState">
+        <annotation>
+            <documentation>The publication state of the update.</documentation>
+        </annotation>
+        <restriction base="token">
+            <enumeration value="Published">
+                <annotation>
+                    <documentation>Specifies that the update is available to clients.</documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="Expired">
+                <annotation>
+                    <documentation>Specifies that the update has been expired and should not be offered to clients. Expired updates can not be revised.</documentation>
+                </annotation>
+            </enumeration>
+        </restriction>
+    </simpleType>
+    <!--
+        Types related to applicability
+    -->
+    <element name="ApplicabilityRuleElement" abstract="true">
+        <annotation>
+            <documentation>The abstract base type for an applicability rule element.</documentation>
+        </annotation>
+    </element>
+    <element name="ApplicabilityMetadataElement" abstract="true">
+        <annotation>
+            <documentation>The abstract base type for applicability metadata. This is used so that new applicability metadata can be defined in new XML schemas without revising the core schema. Applicability metadata is essentially information that is needed by multiple applicability rules but is large enough that it would significantly bloat the XML to duplicate it in each rule that needed it.</documentation>
+        </annotation>
+    </element>
+    <complexType name="ApplicabilityRules">
+        <annotation>
+            <documentation>The applicability rules for the package. Each of the child elements checks for a different condition. The child elements are optional, as is the single element each one can contain. If a child element or the contained element is missing, the condition is assumed to be false. Please see other specifications for information about how applicability rules should be authored.</documentation>
+        </annotation>
+        <sequence>
+            <element name="IsInstalled" minOccurs="0">
+                <annotation>
+                    <documentation>An applicability expression that evaluates to true if the package is actually installed. This expression is supposed to check for the exact package, not for something that supersedes it.</documentation>
+                </annotation>
+                <complexType>
+                    <sequence>
+                        <element ref="sdp:ApplicabilityRuleElement" minOccurs="0" />
+                    </sequence>
+                </complexType>
+            </element>
+            <element name="IsSuperseded" minOccurs="0">
+                <annotation>
+                    <documentation>An applicability expression that evaluates to true if something else already installed on the machine supersedes the package. This allows package authors to declare ahead of time how to detect that their package is eventually superseded, rather than having (or in addition to having) the superseding packages "point back" to the superseded package via an entry in the SupersededPackages element. This is important because the superseding software may be installed on the machine before the publisher even authors the metadata for it. In that case, the IsInstalled rule will fail for the old package, and since metadata is not yet available for the new package, the only way to detect the supersedence is with the IsSuperseded rule. If there is no IsSuperseded rule, then the old package will appear to be not installed and not installable when the new software is on the machine. The state of the machine won't be harmed, but the administrator will think it may not be patched to the appropriate level, even though it is.</documentation>
+                </annotation>
+                <complexType>
+                    <sequence>
+                        <element ref="sdp:ApplicabilityRuleElement" minOccurs="0" />
+                    </sequence>
+                </complexType>
+            </element>
+            <element name="IsInstallable" minOccurs="0">
+                <annotation>
+                    <documentation>An applicability expression that evaluates to true if the package is even relevalant to this machine (e.g., SQL server on XP home). This rule allows the author to specify what prerequisite conditions are necessary for this package to be applicable. Note that a package should only be offered for install if IsInstalled is false, IsSuperseded is false, and IsInstallable is true.</documentation>
+                </annotation>
+                <complexType>
+                    <sequence>
+                        <element ref="sdp:ApplicabilityRuleElement" minOccurs="0" />
+                    </sequence>
+                </complexType>
+            </element>
+            <element name="Metadata" minOccurs="0">
+                <annotation>
+                    <documentation>Applicability metadata is essentially information that is needed by multiple applicability rules but is large enough that it would significantly bloat the XML to duplicate it in each rule that needed it. Rather than duplicating the data in each rule, it is specified once here and the rules are smart enough to retrieve it from here.</documentation>
+                </annotation>
+                <complexType>
+                    <sequence>
+                        <element ref="sdp:ApplicabilityMetadataElement" minOccurs="0" maxOccurs="unbounded" />
+                    </sequence>
+                </complexType>
+            </element>
+        </sequence>
+    </complexType>
+    <!--
+        Other non-localized properties of the package
+    -->
+    <complexType name="Properties">
+        <annotation>
+            <documentation>Miscelaneous properties of the package.</documentation>
+        </annotation>
+        <sequence>
+            <element name="MoreInfoUrl" type="bt:HttpUrl" minOccurs="0" maxOccurs="unbounded">
+                <annotation>
+                    <documentation>A URL providing more information than may have been available at publishing time, such as a KB article. This URL is only used if no MoreInfoUrl is specified in LocalizedProperties.</documentation>
+                </annotation>
+            </element>
+            <element name="SupportUrl" type="bt:HttpUrl" minOccurs="0">
+                <annotation>
+                    <documentation>A URL which provides product support information for the update.</documentation>
+                </annotation>
+            </element>
+            <element name="ProductName" type="sdp:Title" minOccurs="0" maxOccurs="unbounded">
+                <annotation>
+                    <documentation>Specifies the marketing approved product name without the SKU distiction (e.g., Windows XP SP 1). For updates, refers to the name of the product(s) being patched.</documentation>
+                </annotation>
+            </element>
+        </sequence>
+        <attribute name="PackageID" type="bt:Guid" use="required" >
+            <annotation>
+                <documentation>An identity of this package. All variants of this package are published to SUS XML with this as the "legacy name". </documentation>
+            </annotation>
+        </attribute>
+        <attribute name="CreationDate" type="dateTime" use="required">
+            <annotation>
+                <documentation>The UTC date and time that this revision of the update's metadata was authored.</documentation>
+            </annotation>
+        </attribute>
+        <attribute name="CanSourceBeRequired" type="boolean" use="optional" default="false">
+            <annotation>
+                <documentation>Specifies if source code, such as a companion CD, may be required for installation of the update. If true, or if the value is true for any bundled children (recursively), source code may be required for installation. Otherwise the update can be installed without a companion source code.</documentation>
+            </annotation>
+        </attribute>
+        <attribute name="VendorName" type="sdp:Title" use="optional">
+            <annotation>
+                <documentation>Specifies the name of the vendor who created the software package.</documentation>
+            </annotation>
+        </attribute>
+        <attribute name="PublicationState" type="sdp:PublicationState" use="optional">
+            <annotation>
+                <documentation>Specifies the Publication State of this software package. This is optional and defaults to Published.</documentation>
+            </annotation>
+        </attribute>
+        <attribute name="RestrictToClientServicingApi" type="boolean" use="optional" default="false">
+            <annotation>
+                <documentation>Specifies whether this package is made available only through the Client Servicing API. This is optional and defaults to false. If true, agents talking to the WSUS web services will not receive this package.</documentation>
+            </annotation>
+        </attribute>
+        <attribute name="UpdateType" type="sdp:UpdateType" use="optional" default="Software">
+            <annotation>
+                <documentation>Specifies the type of the software package. This is optional and defaults to Software.</documentation>
+            </annotation>
+        </attribute>
+    </complexType>
+    <!--
+        File information
+    -->
+    <complexType name="File">
+        <annotation>
+            <documentation>A files that must be downloaded by the agent prior to installing the package.</documentation>
+        </annotation>
+        <sequence>
+            <element name="AdditionalDigest" minOccurs="0" maxOccurs="unbounded" type="bt:AdditionalDigest"></element>
+        </sequence>
+        <attribute name="Digest" type="bt:FileDigest" use="required">
+            <annotation>
+                <documentation>A SHA1 hash of the file, that both uniquely identifies it and allows the agent to verify its integrity.</documentation>
+            </annotation>
+        </attribute>
+        <attribute name="FileName" type="bt:FileName" use="required">
+            <annotation>
+                <documentation>The file name that the file should have prior to attempting installation. (This is needed because the file is stored on the server using a different file name.)</documentation>
+            </annotation>
+        </attribute>
+        <attribute name="Size" type="bt:FileSize" use="required">
+            <annotation>
+                <documentation>The size of the file, in bytes.</documentation>
+            </annotation>
+        </attribute>
+        <attribute name="Modified" type="bt:FileDate" use="required">
+            <annotation>
+                <documentation>The date and time the file was last modified. (Literally, the modified date from NTFS.)</documentation>
+            </annotation>
+        </attribute>
+        <attribute name="OriginUri" type="anyURI" use="optional">
+            <annotation>
+                <documentation>The URI at which this package was originally hosted, if any (e.g., MSFT download center, FTP site, etc).</documentation>
+            </annotation>
+        </attribute>
+    </complexType>
+    
+    <!--
+        Type-specific date
+    -->
+    <element name="PackageTypeSpecificData" abstract="true">
+        <annotation>
+            <documentation>Data that is specific to the type of package (update, application, and in the future script, policy, etc). This element is abstract. Each type derives a new complexType containing its own type-specific elements and attributes.</documentation>
+        </annotation>
+    </element>
+    <element name="ApplicationSpecificData" substitutionGroup="sdp:PackageTypeSpecificData">
+        <annotation>
+            <documentation>Meta-data that is specific to applications. Currently none.</documentation>
+        </annotation>
+    </element>
+    <element name="UpdateSpecificData" substitutionGroup="sdp:PackageTypeSpecificData">
+        <annotation>
+            <documentation>Meta-data that is specific to updates.</documentation>
+        </annotation>
+        <complexType>
+            <sequence>
+                <element name="SecurityBulletinID" type="sdp:SecurityBulletinID" minOccurs="0" maxOccurs="1" />
+                <element name="CveID" type="sdp:CveID" minOccurs="0" maxOccurs="unbounded" />
+                <element name="KBArticleID" type="sdp:KBArticleID" minOccurs="0" maxOccurs="1" />
+            </sequence>
+            <attribute name="MsrcSeverity" type="sdp:MsrcSeverity" use="optional" />
+            <attribute name="UpdateClassification" type="sdp:UpdateClassification" use="required" />
+        </complexType>
+    </element>
+    <simpleType name="UpdateClassification">
+        <annotation>
+            <documentation>The classification of the update as specified by the SE cabinet.</documentation>
+        </annotation>
+        <restriction base="token">
+            <enumeration value="Updates">
+                <annotation>
+                    <documentation>A broadly released fix for a specific problem addressing a noncritical, non-security-related bug.</documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="Critical Updates">
+                <annotation>
+                    <documentation>A broadly released fix for a specific problem addressing a critical, non-security related bug.</documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="Security Updates">
+                <annotation>
+                    <documentation>A broadly released fix for a product-specific, security-related vulnerability. Security vulnerabilities are rated based on their severity, which is indicated in the Microsoft security bulletin as critical, important, moderate, or low.</documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="Feature Packs">
+                <annotation>
+                    <documentation>New product functionality that is first distributed outside the context of a product release, and usually included in the next full product release.</documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="Update Rollups">
+                <annotation>
+                    <documentation>A tested, cumulative set of hotfixes, security updates, critical updates, and updates packaged together for easy deployment. A rollup generally targets a specific area, such as security, or a component of a product, such as Internet Information Services (IIS).</documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="Service Packs">
+                <annotation>
+                    <documentation>A tested, cumulative set of all hotfixes, security updates, critical updates, and updates, as well as additional fixes for problems found internally since the release of the product. Service packs may also contain a limited number of customer-requested design changes or features.</documentation>
+                </annotation>
+            </enumeration>         
+            <enumeration value="Tools">
+                <annotation>
+                    <documentation>A utility or feature that aids in accomplishing a task or set of tasks.</documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="Hotfixes">
+                <annotation>
+                    <documentation>Hotfixes address a specific customer situation and may not be distributed outside that customer organization.</documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="Drivers">
+                <annotation>
+                    <documentation>A driver package.</documentation>
+                </annotation>
+            </enumeration>
+        </restriction>
+    </simpleType>
+    <simpleType name="MsrcSeverity">
+        <annotation>
+            <documentation>The maximum severity rating of the Microsoft Security Response Center (MSRC) bulletin associated with the update. Because MSRC changes their rating scheme from time to time, we cannot restrict the possible values via this schema. Both a non-localized and localized representation of the rating are needed. This simpleType will be used for both. The non-localized values for the 2001 rating scheme are: "Low", "Moderate", and "Critical". For the 2002 scheme: "Low", "Moderate", "Important", and "Critical".</documentation>
+        </annotation>
+        <restriction base="token">
+            <enumeration value="Critical" />
+            <enumeration value="Important" />
+            <enumeration value="Moderate" />
+            <enumeration value="Low" />
+        </restriction>
+    </simpleType>
+    <simpleType name="SecurityBulletinID">
+        <annotation>
+            <documentation>Specifies the security bulletin ID of a vulnerability fixed by an update.</documentation>
+        </annotation>
+        <restriction base="string">
+            <maxLength value="15" />
+            <minLength value="1" />
+        </restriction>
+    </simpleType>
+    <simpleType name="CveID">
+        <annotation>
+            <documentation>Specifies the CVE ID of a vulnerability fixed by an update.</documentation>
+        </annotation>
+        <restriction base="string">
+            <maxLength value="40" />
+            <minLength value="1" />
+        </restriction>
+    </simpleType>
+    <simpleType name="KBArticleID">
+        <annotation>
+            <documentation>Specifies the Microsoft Knowledge Base article ID associated with an update.</documentation>
+        </annotation>
+        <restriction base="string">
+            <maxLength value="15" />
+            <minLength value="1" />
+        </restriction>
+    </simpleType>
+    
+    <!--
+	    An update services package
+	-->
+    <complexType name="SoftwareDistributionPackage">
+        <annotation>
+            <documentation>A package that can be imported into the update services server for distribution.</documentation>
+        </annotation>
+        <sequence>
+            <element name="Properties" type="sdp:Properties" />
+            <element name="LocalizedProperties" type="sdp:LocalizedProperties" maxOccurs="unbounded">
+                <annotation>
+                    <documentation>Localized descriptive properties for this package. Whichever is listed first is the default, in case an exact match can't be found.</documentation>
+                </annotation>
+            </element>
+            <element ref="sdp:PackageTypeSpecificData" />
+            <element name="IsInstallable" minOccurs="0">
+                <annotation>
+                    <documentation>An applicability expression that evaluates to true if the package is even relevalant to this machine (e.g., SQL server on XP home). This rule allows the author to specify what prerequisite conditions are necessary for this package to be applicable. If not specified, assummed to be true.</documentation>
+                </annotation>
+                <complexType>
+                    <sequence>
+                        <element ref="sdp:ApplicabilityRuleElement" minOccurs="0" />
+                    </sequence>
+                </complexType>
+            </element>
+            <element name="IsInstalled" minOccurs="0">
+                <annotation>
+                    <documentation>An applicability expression that evaluates to true if the package is actually installed. This expression is supposed to check for the exact package, not for something that supersedes it.</documentation>
+                </annotation>
+                <complexType>
+                    <sequence>
+                        <element ref="sdp:ApplicabilityRuleElement" minOccurs="0" />
+                    </sequence>
+                </complexType>
+            </element>
+            <element name="SupersededPackages" minOccurs="0">
+                <annotation>
+                    <documentation>A list of packages that are superseded by this one. All recursively superseded packages should be explicitly listed.</documentation>
+                </annotation>
+                <complexType>
+                    <sequence>
+                        <element name="PackageID" type="bt:Guid" minOccurs="0" maxOccurs="unbounded"/>
+                    </sequence>
+                </complexType>
+            </element>
+            <element name="Prerequisites" minOccurs="0" maxOccurs="unbounded">
+                <annotation>
+                    <documentation>A list of prerequisite conditions that are evaluated during MSUS Client/Server communication to determine whether the update is relevant enough to the Client to evaluate the applicability rules. If all prerequisites are true, the Server sends the update to the Client for further evaluation. The Client then evaluates the applicability rules to determine the state of the update on the machine.</documentation>
+                </annotation>
+                <complexType>
+                    <sequence>
+                        <element name="AtLeastOne" minOccurs="1" maxOccurs="unbounded">
+                            <annotation>
+                                <documentation>A prerequisite condition that contains other prerequisites and evaluates to true when at least one of them is true. If they are all false, the AtLeastOne is false.</documentation>
+                            </annotation>
+                            <complexType>
+                                <sequence>
+                                    <element name="PackageID" type="bt:Guid" minOccurs="1" maxOccurs="unbounded"/>
+                                </sequence>
+                            </complexType>
+                        </element>
+                    </sequence>
+                </complexType>
+            </element>
+            <element name="BundledPackages" minOccurs="0">
+                <annotation>
+                    <documentation>A list of packages bundled by this one.</documentation>
+                </annotation>
+                <complexType>
+                    <sequence>
+                        <element name="PackageID" type="bt:Guid" minOccurs="1" maxOccurs="unbounded"/>
+                    </sequence>
+                </complexType>
+            </element>
+            <element name="InstallableItem" type="sdp:InstallableItem" minOccurs="0" maxOccurs="unbounded">
+                <annotation>
+                    <documentation>Each package can contain one or more installable items. All installable items that are applicable are installed with the package. At least one must be applicable for the package to be considered applicable. Updates typically contain one installable item per localized build of the patch.</documentation>
+                </annotation>
+            </element>
+        </sequence>
+        <!-- version -->
+        <attribute name="SchemaVersion" type="sdp:SchemaVersion" use="required" />
+    </complexType>
+</schema>

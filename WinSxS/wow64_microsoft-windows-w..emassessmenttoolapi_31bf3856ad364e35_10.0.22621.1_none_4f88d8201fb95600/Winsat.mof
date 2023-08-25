@@ -1,0 +1,63 @@
+// Nathan Teeuwen (nathant)
+// Copyright (c) 2005 Microsoft Corporation
+
+// Place the WinSAT provider in the root\CIMV2 namespace
+#pragma namespace("\\\\.\\ROOT\\CIMV2")
+
+// Create an instance of __Win32Provider
+instance of __Win32Provider as $Winsat
+{
+  Name = "Win32_WinSAT";        
+  ClsId = "{A3C97737-76D9-4f5f-B917-4DE47FE023C8}";       
+};
+
+// Register as an instance provider by
+// creating an instance
+instance of __InstanceProviderRegistration
+{
+	Provider = $Winsat;	
+		
+	SupportsGet = "TRUE"; 
+	SupportsEnumeration = "TRUE"; 
+};
+
+// Define the Win32_WinSAT class
+[dynamic, provider("Win32_WinSAT")]
+class Win32_WinSAT
+{
+  // This key defaults to the key for the singleton instance of this provider
+  // that we support.
+  // Do not change this key without changing the C++ code
+  [key]  string  TimeTaken="MostRecentAssessment";
+  
+  [read,   
+  PropertyContext("WinSPRLevel")]
+  real32 WinSPRLevel;
+
+  [read,    
+   PropertyContext("AssessmentState"),
+  ValueMap {"0","1","2","3","4"},
+	Values {"StateUnknown", "Valid", "IncoherentWithHardware", "NoAssessmentAvailable", "Invalid"}]
+  uint32 WinSATAssessmentState;
+  
+  [read,   
+  PropertyContext("MemoryScore")]
+  real32 MemoryScore;
+  
+  [read,  
+  PropertyContext("CPUScore")]  
+  real32 CPUScore;
+  
+  [read,  
+  PropertyContext("DiskScore")]  
+  real32 DiskScore;
+  
+  [read,  
+  PropertyContext("D3DScore")]  
+  real32 D3DScore;
+  
+  [read,  
+  PropertyContext("GraphicsScore")]  
+  real32 GraphicsScore;
+     
+};

@@ -1,0 +1,429 @@
+// AmStatusInstall.mof : mof source for Antimalware Status provider
+//
+// Copyright (c) Microsoft Corporation. All rights reserved.
+//
+// This file will be processed by MOFCOMP utility to
+// register the provider with the WMI repository
+//
+
+#pragma autorecover
+
+#pragma namespace ("\\\\.\\root\\Microsoft\\SecurityClient")
+
+////////////////////////////////////////////////////////
+// Declare class : AntimalwareHealthStatus
+////////////////////////////////////////////////////////
+[
+    provider("AntimalwareHealthStatusProv"): ToInstance ToSubClass, 
+    singleton: DisableOverride ToInstance ToSubClass, 
+    dynamic: DisableOverride ToInstance, 
+    Description("This is a singleton that represents the Microsoft Antimalware service status"): ToInstance ToSubClass
+]
+class AntimalwareHealthStatus: ProtectionTechnologyStatus
+{
+    string SchemaVersion = "1.0.0.1"; // derived from SerializableToXml
+
+    string Name = "Antimalware"; // derived from ProtectionTechnologyStatus
+    
+    [
+        Description("Overall product status (MPSTATUS_FLAG enumeration bitmask)"): ToInstance ToSubClass,
+        read: ToInstance ToSubClass,
+        ValueMap {"0x000000", "0x000001", "0x000002", "0x000004", "0x000008", "0x000010", "0x000020", "0x000040", "0x000080", "0x000100", "0x000200", "0x000400", "0x000800", "0x001000", "0x002000", "0x004000", "0x008000", "0x010000", "0x020000", "0x040000", "0x080000", "0x100000", "0x200000"},
+        Values {"NONE", "SERVICE_UNAVAILABLE", "MPENGINE_UNAVAILABLE", "THREAT_FULLSCAN_REQUIRED", "THREAT_REBOOT_REQUIRED", "THREAT_MANUAL_STEPS_REQUIRED", "DUE_AV_SIGNATURE", "DUE_AS_SIGNATURE", "DUE_QUICK_SCAN", "DUE_FULL_SCAN", "INPROGRESS_SYSTEM_SCAN", "INPROGRESS_ROUTINE_CLEANING", "DUE_SAMPLES", "EVALUATION_MODE", "NONGENUINE", "PRODUCT_EXPIRED", "THREAT_CALLISTO_REQUIRED", "SERVICE_ON_SYSTEM_SHUTDOWN", "SERVICE_CRITICAL_FAILURE", "SERVICE_NON_CRITICAL_FAILURE", "HEALTH_INITIALIZED", "DUE_PLATFORM_UPDATE", "INPROGRESS_PLATFORM_UPDATE"}
+    ] 
+    uint32 ProductStatus = 0;
+    
+    [Description("Rtp is enabled"): ToInstance ToSubClass, read: ToInstance ToSubClass] 
+        boolean RtpEnabled = false;
+        
+    [
+        Description("Real-time scan direction enumeration"): ToInstance ToSubClass,
+        read: ToInstance ToSubClass,
+        ValueMap {"0", "1", "2"}, 
+        Values {"Both", "Incoming", "Outcoming"}
+    ] 
+    uint8 RealTimeScanDirection = 0;
+    
+    [Description("On-access protection is enabled"): ToInstance ToSubClass, read: ToInstance ToSubClass] 
+        boolean OnAccessProtectionEnabled = false;
+    [Description("IOAV protection is enabled"): ToInstance ToSubClass, read: ToInstance ToSubClass] 
+        boolean IoavProtectionEnabled = false;
+    [Description("Behavior monitor is enabled"): ToInstance ToSubClass, read: ToInstance ToSubClass] 
+        boolean BehaviorMonitorEnabled = false;
+    [Description("Antivirus component is enabled"): ToInstance ToSubClass, read: ToInstance ToSubClass] 
+        boolean AntivirusEnabled = false;
+    [Description("Antispyware component is enabled"): ToInstance ToSubClass, read: ToInstance ToSubClass] 
+        boolean AntispywareEnabled = false;
+    [Description("Engine version (major, minor, build, revision)"): ToInstance ToSubClass, read: ToInstance ToSubClass] 
+        string EngineVersion = "";
+        
+    [
+        Description("Last quick scan start date and time (using round-trip UTC format)"): ToInstance ToSubClass, 
+        read: ToInstance ToSubClass
+    ] 
+    string LastQuickScanDateTimeStart = "";
+    
+    [
+        Description("Last full scan start date and time (using round-trip UTC format)"): ToInstance ToSubClass, 
+        read: ToInstance ToSubClass
+    ] 
+    string LastFullScanDateTimeStart = "";
+    [
+        Description("Last quick scan end date and time (using round-trip UTC format)"): ToInstance ToSubClass,
+        read: ToInstance ToSubClass
+    ] 
+    string LastQuickScanDateTimeEnd = "";
+    [
+        Description("Last full scan date end and time (using round-trip UTC format)"): ToInstance ToSubClass,
+        read: ToInstance ToSubClass
+    ] 
+    string LastFullScanDateTimeEnd = "";
+        
+    [
+        Description("Last full scan age in days"): ToInstance ToSubClass,
+        read: ToInstance ToSubClass
+    ] 
+    uint32 LastFullScanAge = 0;
+    [
+        Description("Last quick scan age in days"): ToInstance ToSubClass,
+        read: ToInstance ToSubClass
+    ] 
+    uint32 LastQuickScanAge = 0;
+
+    [
+        Description("Last quick scan source"): ToInstance ToSubClass,
+        read: ToInstance ToSubClass,
+        ValueMap {"0", "1", "2", "3", "4"}, 
+        Values {"Unknown", "User", "System", "Realtime", "IOAV"}
+    ] 
+    uint8 LastQuickScanSource = 0;
+    [
+        Description("Last full scan source"): ToInstance ToSubClass,
+        read: ToInstance ToSubClass,
+        ValueMap {"0", "1", "2", "3", "4"}, 
+        Values {"Unknown", "User", "System", "Realtime", "IOAV"}
+    ] 
+    uint8 LastFullScanSource = 0;
+    
+    [Description("Antivirus signature update date and time (using round-trip UTC format)"): ToInstance ToSubClass, read: ToInstance ToSubClass] 
+        string AntivirusSignatureUpdateDateTime = "";
+    [Description("Antispyware signature update date and time (using round-trip UTC format)"): ToInstance ToSubClass, read: ToInstance ToSubClass] 
+        string AntispywareSignatureUpdateDateTime = "";
+    [
+        Description("Antivirus signature age in days"): ToInstance ToSubClass,
+        read: ToInstance ToSubClass
+    ] 
+    uint32 AntivirusSignatureAge = 0;
+    [
+        Description("Antispyware signaturen age in days"): ToInstance ToSubClass,
+        read: ToInstance ToSubClass
+    ] 
+    uint32 AntispywareSignatureAge = 0;
+
+    [Description("Antivirus signature version (major, minor, build, revision)"): ToInstance ToSubClass, read: ToInstance ToSubClass] 
+        string AntivirusSignatureVersion = "";
+    [Description("Antispyware signature version (major, minor, build, revision)"): ToInstance ToSubClass, read: ToInstance ToSubClass] 
+        string AntispywareSignatureVersion = "";
+
+    [Description("Network Inspection System is enabled"): ToInstance ToSubClass, read: ToInstance ToSubClass] 
+        boolean NisEnabled = false;
+    [Description("Network Inspection System engine version (major, minor, build, revision)"): ToInstance ToSubClass, read: ToInstance ToSubClass] 
+        string NisEngineVersion = "";
+    [Description("Network Inspection System signature version (major, minor, build, revision)"): ToInstance ToSubClass, read: ToInstance ToSubClass] 
+        string NisSignatureVersion = "";
+};
+
+////////////////////////////////////////////////////////
+// instance of the provider class 
+////////////////////////////////////////////////////////
+instance of Win32_ProviderEx as $AntimalwareHealthStatusProv
+{
+    Name    = "AntimalwareHealthStatusProv" ;            //Name is the key property for __Provider objects.
+                                        //vendor|provider|version is the suggested format
+                                        //to prevent name collisions.
+
+    ClsId   = "{8a696d12-576b-422e-9712-01b9dd84b446}" ;     //provider GUID
+
+    DefaultMachineName = NULL;         //NULL for local machine
+
+    ClientLoadableCLSID = NULL;         //reserved
+
+    ImpersonationLevel = 1;             // impersonate client
+
+    InitializationReentrancy = 0;        //Set of flags that provide information about serialization:
+                                        //0 = all initialization of this provider must be serialized
+                                        //1 = all initializations of this provider in the same namespace must be serialized
+                                        //2 = no initialization serialization is necessary
+
+    InitializeAsAdminFirst = FALSE;        //Request to be fully initialized as "Admin" before 
+                                        //initializations begin for users
+
+    PerLocaleInitialization = FALSE;    //Indicates whether the provider is initialized for each 
+                                        //locale if a user connects to the same namespace more 
+                                        //than once using different locales.
+
+    PerUserInitialization = TRUE;        //Indicates whether the provider is initialized once for each actual 
+                                        //Windows NT/Windows 2000 NTLM user making requests of the provider. 
+                                        //If set to FALSE, the provider is initialized once for all users
+
+    Pure = TRUE;                        //A pure provider exists only to service requests from 
+                                        //applications and WMI. Most providers are pure providers.
+                                        //Non-pure providers transition to the role of client after they have 
+                                        //finished servicing requests. 
+
+
+    UnloadTimeout = NULL;                //Currently ignored
+                                        //Use __CacheControl class in the root namespace to control provider unloading.
+                                        //A string in the DMTF date/time format that specifies how long WMI 
+                                        //allows the provider to remain idle before it is unloaded.
+} ;    
+
+////////////////////////////////////////////////////////
+// registration of the instance of the provider class 
+////////////////////////////////////////////////////////
+instance of __InstanceProviderRegistration
+{
+    Provider = $AntimalwareHealthStatusProv;
+
+    SupportsPut = "FALSE"; 
+    SupportsGet = "TRUE"; 
+    SupportsDelete = "FALSE"; 
+    SupportsEnumeration = "TRUE"; 
+};
+
+//**************************************************************************
+//* Class: AntimalwareDetectionStatus
+//* Derived from: 
+//**************************************************************************
+[
+    Description("This is a class that represents a single detection"): ToInstance ToSubClass
+]
+class AntimalwareDetectionStatus
+{
+    [
+        Description("Unique identifier of the incident (GUID)"): ToInstance ToSubClass, 
+        read: ToInstance ToSubClass
+    ] 
+    string DetectionID = "";
+
+    [
+        Description("Date and time of the malware incident (using round-trip UTC format)"): ToInstance ToSubClass, 
+        read: ToInstance ToSubClass
+    ] 
+    string DetectionTime = "";
+        
+    [
+        Description("Unique identifier of the threat"): ToInstance ToSubClass, 
+        read: ToInstance ToSubClass
+    ] 
+    sint64 ThreatID = 0; 
+        
+    [
+        Description("The name of the threat"): ToInstance ToSubClass, 
+        read: ToInstance ToSubClass
+    ] 
+    string ThreatName = "";
+        
+    [
+        Description("Threat severity enumeration"): ToInstance ToSubClass, 
+        read: ToInstance ToSubClass,
+        ValueMap {"0", "1", "2", "4", "5"}, 
+        Values {"Unknown", "Low", "Moderate", "High", "Severe"}
+    ]
+    uint8 SeverityID = 0;
+        
+    [
+        Description("Threat category enumeration"): ToInstance ToSubClass, 
+        read: ToInstance ToSubClass,
+        ValueMap { "0", "1", "2", "3", "4", "5", "6", "7,"  "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "32", "33", "34", "36", "37", "38", "39", "40", "42", "43", "44", "45", "46", "47", "48" },
+        Values { "INVALID", "ADWARE", "SPYWARE", "PASSWORDSTEALER", "TROJANDOWNLOADER", "WORM", "BACKDOOR", "REMOTEACCESSTROJAN", "TROJAN", "EMAILFLOODER", "KEYLOGGER", "DIALER", "MONITORINGSOFTWARE", "BROWSERMODIFIER", "COOKIE", "BROWSERPLUGIN", "AOLEXPLOIT", "NUKER", "SECURITYDISABLER", "JOKEPROGRAM", "HOSTILEACTIVEXCONTROL", "SOFTWAREBUNDLER", "STEALTHNOTIFIER", "SETTINGSMODIFIER", "TOOLBAR", "REMOTECONTROLSOFTWARE", "TROJANFTP", "POTENTIALUNWANTEDSOFTWARE", "ICQEXPLOIT", "TROJANTELNET", "FILESHARINGPROGRAM", "MALWARE_CREATION_TOOL", "REMOTE_CONTROL_SOFTWARE", "TOOL", "TROJAN_DENIALOFSERVICE", "TROJAN_DROPPER", "TROJAN_MASSMAILER", "TROJAN_MONITORINGSOFTWARE", "TROJAN_PROXYSERVER", "VIRUS", "KNOWN", "UNKNOWN", "SPP", "BEHAVIOR", "VULNERABILTIY", "POLICY" }
+    ]
+    uint8 CategoryID = 0;
+    
+    [
+        Description("How was the threat detected"): ToInstance ToSubClass, 
+        read: ToInstance ToSubClass,
+        ValueMap {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"}, 
+        Values {"Unknown", "User", "System", "Realtime", "IOAV", "NIS", "BHO", "ELAM", "LocalAttestation", "RemoteAttestation"}
+    ]
+    uint8 DetectionSource = 0;
+
+    [
+        Description("The action the Antimalware took on the detected threat (the threat status)"): ToInstance ToSubClass, 
+        read: ToInstance ToSubClass,
+        ValueMap {"0", "1", "2", "3", "4", "5", "6", "102", "103", "104", "105", "106", "107"}, 
+        Values {"Unknown", "Detected", "Cleaned", "Quarantined", "Removed", "Allowed", "Blocked", "CleanFailed", "QuarantineFailed", "RemoveFailed", "AllowFailed", "Abandoned", "BlockFailed"}
+    ]
+    uint8 MitigationAction = 0;
+
+    [
+        Description("The error code if the action failed (the threat status code). Zero if succeeded. HRESULT"): ToInstance ToSubClass, 
+        read: ToInstance ToSubClass
+    ] 
+    sint32 ErrorCode = 0;
+     
+    [
+        Description("The pending action resulting from the action taken on the threat (status flag)"): ToInstance ToSubClass, 
+        read: ToInstance ToSubClass,
+        ValueMap { "0", "4", "8", "12", "16", "20", "24", "28", "32768", "32772", "32776", "32780", "32784", "32788", "32792", "32796" }, 
+        Values { "None", "FullScanRequired", "RebootRequired", "FullScanAndRebootRequired", "ManualStepsRequired", "FullScanAndManualStepsRequired", "RebootAndManualStepsRequired", "FullScanAndRebootAndManualStepsRequired", "OfflineScanRequired", "FullScanAndOfflineScanRequired", "RebootAndOfflineScanRequired", "FullScanAndRebootAndOfflineScanRequired", "ManualStepsAndOfflineScanRequired", "FullScanAndManualStepsAndOfflineScanRequired", "RebootAndManualStepsAndOfflineScanRequired", "FullScanAndRebootAndManualStepsAndOfflineScanRequired" }
+    ]
+    uint32 PendingActions = 0;
+
+    [
+        Description("The domain of the user logged in when the detection occurred"): ToInstance ToSubClass, 
+        read: ToInstance ToSubClass
+    ] 
+    string Domain = "";
+
+    [
+        Description("The name of the user logged in when the detection occurred"): ToInstance ToSubClass, 
+        read: ToInstance ToSubClass
+    ] 
+    string User = "";
+
+    [
+        Description("List of resources affected by the threat (using a <schema>:<path> format)"): ToInstance ToSubClass, 
+        read: ToInstance ToSubClass
+    ]
+    string Resources[] = {};
+    
+    [
+        Description("Process name associated with the detection"): ToInstance ToSubClass, 
+        read: ToInstance ToSubClass
+    ]
+    string Process = "";
+    
+    [
+        Description("Threat execution status"): ToInstance ToSubClass, 
+        read: ToInstance ToSubClass,
+        ValueMap {"0", "1", "2", "3", "4"},
+        Values {"Unknown", "Blocked", "Allowed", "Executing", "NotExecuting"}
+    ]
+    uint8 ExecutionStatus = 0;
+
+};
+
+//**************************************************************************
+//* Class: AntimalwareInfectionStatus
+//* Derived from: SerializableToXml
+
+//**************************************************************************
+[
+    Description("This is a singleton that represents the Microsoft Antimalware service infection status"): ToInstance ToSubClass,
+    Singleton: DisableOverride ToInstance ToSubClass,
+    dynamic: DisableOverride ToInstance, 
+    provider("AntimalwareInfectionStatusProv"): ToInstance ToSubClass
+]
+class AntimalwareInfectionStatus: SerializableToXml
+{
+    string SchemaVersion = "1.0.0.0"; // derived from SerializableToXml
+
+    [
+        Description("Computer status enumeration"): ToInstance ToSubClass, 
+        read: ToInstance ToSubClass,
+        ValueMap {"0", "1", "2", "3", "4"}, 
+        Values {"Unknown", "None", "Cleaned", "Pending", "Failed"}
+    ]
+    uint8 ComputerStatus = 0;
+    
+    [
+        Description("Pending full scan due to threat action"): ToInstance ToSubClass, 
+        read: ToInstance ToSubClass
+    ]
+    boolean PendingFullScan = false; 
+
+    [
+        Description("Pending reboot due to threat action"): ToInstance ToSubClass, 
+        read: ToInstance ToSubClass
+    ]
+    boolean PendingReboot = false; 
+
+    [
+        Description("Pending manual steps due to threat action"): ToInstance ToSubClass, 
+        read: ToInstance ToSubClass
+    ]
+    boolean PendingManualSteps = false; 
+    
+    [
+        Description("Off-line scan required"): ToInstance ToSubClass, 
+        read: ToInstance ToSubClass
+    ]
+    boolean PendingOfflineScan = false; 
+        
+    [
+        Description("Critical remediation failure detections"): ToInstance ToSubClass, 
+        read: ToInstance ToSubClass
+    ]
+    AntimalwareDetectionStatus CriticallyFailedDetections[];
+
+    [
+        Description("Pending 24 hour move to cleared and non critical remediation failure detections"): ToInstance ToSubClass, 
+        read: ToInstance ToSubClass
+    ]
+    AntimalwareDetectionStatus RecentlyCleanedDetections[];
+
+    [
+        Description("Pending action detections"): ToInstance ToSubClass, 
+        read: ToInstance ToSubClass
+    ]
+    AntimalwareDetectionStatus PendingActionDetections[];
+};
+
+////////////////////////////////////////////////////////
+// instance of the provider class 
+////////////////////////////////////////////////////////
+instance of Win32_ProviderEx as $AntimalwareInfectionStatusProv
+{
+    Name    = "AntimalwareInfectionStatusProv" ;            //Name is the key property for __Provider objects.
+                                        //vendor|provider|version is the suggested format
+                                        //to prevent name collisions.
+
+    ClsId   = "{361290c0-cb1b-49ae-9f3e-ba1cbe5dab35}" ;     //provider GUID
+
+    DefaultMachineName = NULL;         //NULL for local machine
+
+    ClientLoadableCLSID = NULL;         //reserved
+
+    ImpersonationLevel = 1;             // impersonate client
+
+    InitializationReentrancy = 0;        //Set of flags that provide information about serialization:
+                                        //0 = all initialization of this provider must be serialized
+                                        //1 = all initializations of this provider in the same namespace must be serialized
+                                        //2 = no initialization serialization is necessary
+
+    InitializeAsAdminFirst = FALSE;        //Request to be fully initialized as "Admin" before 
+                                        //initializations begin for users
+
+    PerLocaleInitialization = FALSE;    //Indicates whether the provider is initialized for each 
+                                        //locale if a user connects to the same namespace more 
+                                        //than once using different locales.
+
+    PerUserInitialization = TRUE;        //Indicates whether the provider is initialized once for each actual 
+                                        //Windows NT/Windows 2000 NTLM user making requests of the provider. 
+                                        //If set to FALSE, the provider is initialized once for all users
+
+    Pure = TRUE;                        //A pure provider exists only to service requests from 
+                                        //applications and WMI. Most providers are pure providers.
+                                        //Non-pure providers transition to the role of client after they have 
+                                        //finished servicing requests. 
+
+
+    UnloadTimeout = NULL;                //Currently ignored
+                                        //Use __CacheControl class in the root namespace to control provider unloading.
+                                        //A string in the DMTF date/time format that specifies how long WMI 
+                                        //allows the provider to remain idle before it is unloaded.
+} ;    
+
+////////////////////////////////////////////////////////
+// registration of the instance of the provider class 
+////////////////////////////////////////////////////////
+instance of __InstanceProviderRegistration
+{
+    Provider = $AntimalwareInfectionStatusProv;
+
+    SupportsPut = "FALSE"; 
+    SupportsGet = "TRUE"; 
+    SupportsDelete = "FALSE"; 
+    SupportsEnumeration = "TRUE"; 
+};

@@ -1,0 +1,135 @@
+<Activity mc:Ignorable="sads sap" x:Class="RDManagement.Set_RDSHServerSetting" this:Set_RDSHServerSetting.DrainMode="-1" this:Set_RDSHServerSetting.SessionLimit="-1" this:Set_RDSHServerSetting.RelativeWeight="-1"
+ xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities"
+ xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+ xmlns:mpa="clr-namespace:Microsoft.PowerShell.Activities;assembly=Microsoft.PowerShell.Activities"
+ xmlns:mpua="clr-namespace:Microsoft.PowerShell.Utility.Activities;assembly=Microsoft.PowerShell.Utility.Activities"
+ xmlns:mrc="clr-namespace:Microsoft.RemoteDesktopServices.Common;assembly=Microsoft.RemoteDesktopServices.Management.Activities"
+ xmlns:mrma="clr-namespace:Microsoft.RemoteDesktopServices.Management.Activities;assembly=Microsoft.RemoteDesktopServices.Management.Activities"
+ xmlns:mrmc="clr-namespace:Microsoft.RemoteDesktopServices.Management.Cmdlets;assembly=Microsoft.RemoteDesktopServices.Management.Activities"
+ xmlns:mv="clr-namespace:Microsoft.VisualBasic;assembly=System"
+ xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities"
+ xmlns:s="clr-namespace:System;assembly=mscorlib"
+ xmlns:s1="clr-namespace:System;assembly=System"
+ xmlns:s2="clr-namespace:System;assembly=System.Xml"
+ xmlns:s3="clr-namespace:System;assembly=System.Core"
+ xmlns:s4="clr-namespace:System;assembly=System.ServiceModel"
+ xmlns:s5="clr-namespace:System;assembly=System.ComponentModel.Composition"
+ xmlns:sa="clr-namespace:System.Activities;assembly=System.Activities"
+ xmlns:sad="clr-namespace:System.Activities.Debugger;assembly=System.Activities"
+ xmlns:sads="http://schemas.microsoft.com/netfx/2010/xaml/activities/debugger"
+ xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation"
+ xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System"
+ xmlns:scg1="clr-namespace:System.Collections.Generic;assembly=System.ServiceModel"
+ xmlns:scg2="clr-namespace:System.Collections.Generic;assembly=System.Core"
+ xmlns:scg3="clr-namespace:System.Collections.Generic;assembly=mscorlib"
+ xmlns:sd="clr-namespace:System.Data;assembly=System.Data"
+ xmlns:sl="clr-namespace:System.Linq;assembly=System.Core"
+ xmlns:sma="clr-namespace:System.Management.Automation;assembly=System.Management.Automation"
+ xmlns:st="clr-namespace:System.Text;assembly=mscorlib"
+ xmlns:this="clr-namespace:RDManagement"
+ xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <x:Members>
+    <x:Property Name="RDManagementServer" Type="InArgument(x:String)" />
+    <x:Property Name="Name" Type="InArgument(s:String[])" />
+    <x:Property Name="DrainMode" Type="InArgument(x:Int32)" />
+    <x:Property Name="SessionLimit" Type="InArgument(x:Int32)" />
+    <x:Property Name="RelativeWeight" Type="InArgument(x:Int32)" />
+    <x:Property Name="argument1" Type="InArgument(x:String)" />
+  </x:Members>
+  <sap:VirtualizedContainerService.HintSize>911,1368</sap:VirtualizedContainerService.HintSize>
+  <mva:VisualBasic.Settings>Assembly references and imported namespaces for internal implementation</mva:VisualBasic.Settings>
+  <Sequence DisplayName="Set RDSH Properties" sap:VirtualizedContainerService.HintSize="871,1328">
+    <Sequence.Variables>
+      <Variable x:TypeArguments="x:Int32" Default="1" Name="ProgressID" />
+      <Variable x:TypeArguments="x:String" Name="PsCommandParamsString" />
+    </Sequence.Variables>
+    <mpua:WriteProgress Activity="Get-RDSessionHost" DisplayName="Progress : 0" sap:VirtualizedContainerService.HintSize="849,22" PercentComplete="0" ProgressId="[ProgressID]" Status="In Progress..." />
+    <mpua:WriteVerbose DisplayName="Verbose: Input" sap:VirtualizedContainerService.HintSize="849,22" Message="[&quot;Management Server: &quot; + RDManagementServer + Environment.NewLine +&#xA;&quot;Name: &quot; + String.Join(&quot;, &quot;, Name) + Environment.NewLine]" />
+    <Sequence DisplayName="Construct Command Params String" sap:VirtualizedContainerService.HintSize="849,51">
+      <If Condition="[DrainMode &lt;&gt; -1]" DisplayName="DrainMode" sap:VirtualizedContainerService.HintSize="464,208">
+        <If.Then>
+          <Assign sap:VirtualizedContainerService.HintSize="242,60">
+            <Assign.To>
+              <OutArgument x:TypeArguments="x:String">[PsCommandParamsString]</OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="x:String">[" -DrainMode " + DrainMode.ToString()]</InArgument>
+            </Assign.Value>
+          </Assign>
+        </If.Then>
+      </If>
+      <If Condition="[SessionLimit &gt;= 0]" sap:VirtualizedContainerService.HintSize="464,208">
+        <If.Then>
+          <Assign sap:VirtualizedContainerService.HintSize="242,60">
+            <Assign.To>
+              <OutArgument x:TypeArguments="x:String">[PsCommandParamsString]</OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="x:String">[PsCommandParamsString + " -SessionLimit " + SessionLimit.ToString()]</InArgument>
+            </Assign.Value>
+          </Assign>
+        </If.Then>
+      </If>
+      <If Condition="[RelativeWeight &gt; 0]" sap:VirtualizedContainerService.HintSize="464,208">
+        <If.Then>
+          <Assign sap:VirtualizedContainerService.HintSize="242,60">
+            <Assign.To>
+              <OutArgument x:TypeArguments="x:String">[PsCommandParamsString]</OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="x:String">[PsCommandParamsString + " -RelativeWeight " + RelativeWeight.ToString()]</InArgument>
+            </Assign.Value>
+          </Assign>
+        </If.Then>
+      </If>
+      <mpua:WriteVerbose DisplayName="Verbose: Command Params String" sap:VirtualizedContainerService.HintSize="464,22" Message="[&quot;Command Params: &quot; + PsCommandParamsString]" />
+    </Sequence>
+    <ForEach x:TypeArguments="x:String" DisplayName="ForEach&lt;server&gt;" sap:VirtualizedContainerService.HintSize="849,927" Values="[Name]">
+      <ActivityAction x:TypeArguments="x:String">
+        <ActivityAction.Argument>
+          <DelegateInArgument x:TypeArguments="x:String" Name="rdshServer" />
+        </ActivityAction.Argument>
+        <Sequence DisplayName="Set property of a server" sap:VirtualizedContainerService.HintSize="819,819">
+          <Sequence.Variables>
+            <Variable x:TypeArguments="x:Int32" Default="0" Name="currentProgress" />
+            <Variable x:TypeArguments="sma:PSDataCollection(sma:ErrorRecord)" Name="Errors" />
+          </Sequence.Variables>
+          <mpa:InlineScript Command="import-module $env:windir\System32\ServerManagerInternal\rdmanagement;&#xD;&#xA;iex &quot;Set-RDSHServerProperty -ManagementServer '$using:RDManagementServer' -Name '$using:rdshServer' $using:PsCommandParamsString&quot;" sap:VirtualizedContainerService.HintSize="797,139" PSError="[Errors]">
+          </mpa:InlineScript>
+          <If Condition="[Errors.Count &gt; 0]" DisplayName="Write error" sap:VirtualizedContainerService.HintSize="797,354">
+            <If.Then>
+              <Sequence sap:VirtualizedContainerService.HintSize="264,246">
+                <Sequence.Variables>
+                  <Variable x:TypeArguments="sma:ErrorRecord" Name="errorRecord" />
+                </Sequence.Variables>
+                <Assign sap:VirtualizedContainerService.HintSize="242,60">
+                  <Assign.To>
+                    <OutArgument x:TypeArguments="sma:ErrorRecord">[errorRecord]</OutArgument>
+                  </Assign.To>
+                  <Assign.Value>
+                    <InArgument x:TypeArguments="sma:ErrorRecord">[ErrorUtility.GetErrorRecord(RDManagementResources.ResourceManager.GetString("FailedToConfigureRDSHServer"), rdshServer, ErrorId.SetRDSessionHostProperties, Errors(0).Exception)]</InArgument>
+                  </Assign.Value>
+                </Assign>
+                <mpua:WriteError DisplayName="Write-Error" ErrorRecord="[errorRecord]" sap:VirtualizedContainerService.HintSize="242,22" />
+              </Sequence>
+            </If.Then>
+            <If.Else>
+              <mpa:InlineScript Command="import-module $env:windir\System32\ServerManagerInternal\rdmanagement;&#xD;&#xA;iex &quot;Set-RDSHServerPropertyOnRDMS -ManagementServer '$using:RDManagementServer' -Name '$using:rdshServer' $using:PsCommandParamsString&quot;" sap:VirtualizedContainerService.HintSize="508,139" PSComputerName="[{}]">
+              </mpa:InlineScript>
+            </If.Else>
+          </If>
+          <Assign sap:VirtualizedContainerService.HintSize="797,60">
+            <Assign.To>
+              <OutArgument x:TypeArguments="x:Int32">[currentProgress]</OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="x:Int32">[currentProgress + 100 \ Name.Length]</InArgument>
+            </Assign.Value>
+          </Assign>
+          <mpua:WriteProgress Activity="Get-RDSessionHost" DisplayName="Progress : N" sap:VirtualizedContainerService.HintSize="797,22" PercentComplete="[currentProgress]" ProgressId="[ProgressID]" Status="In Progress..." />
+        </Sequence>
+      </ActivityAction>
+    </ForEach>
+    <mpua:WriteProgress Activity="Get-RDSessionHost" DisplayName="Progress : 100" sap:VirtualizedContainerService.HintSize="849,22" PercentComplete="100" ProgressId="[ProgressID]" Status="In Progress..." />
+  </Sequence>
+</Activity>

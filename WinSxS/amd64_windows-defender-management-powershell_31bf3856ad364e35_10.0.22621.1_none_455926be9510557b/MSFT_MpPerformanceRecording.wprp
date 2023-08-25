@@ -1,0 +1,97 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone='yes'?>
+
+<WindowsPerformanceRecorder Version="1.0" Author="Microsoft Defender for Endpoint" Team="Microsoft Defender for Endpoint" Comments="Microsoft Defender for Endpoint Scan performance tracing" Company="Microsoft Corporation" Copyright="Microsoft Corporation">
+    <Profiles>
+        <!-- System Providers -->
+
+        <SystemProvider Id="SystemProvider_Scans_Light">
+            <Keywords>
+                <Keyword Value="CpuConfig" />
+                <Keyword Value="ProcessThread" />
+                <Keyword Value="ProcessCounter" />
+            </Keywords>
+        </SystemProvider>
+
+        <SystemProvider Id="SystemProvider_Scans_Verbose" Base="SystemProvider_Scans_Light">
+            <Keywords Operation="Add">
+                <Keyword Value="Loader" />
+                <Keyword Value="SampledProfile"/>
+            </Keywords>
+            <Stacks>
+                <Stack Value="SampledProfile"/>
+            </Stacks>
+        </SystemProvider>
+
+        <!-- Microsoft Defender for Endpoint providers -->
+        <EventProvider Id="EventProvider_AM_Engine" Name="0a002690-3839-4e3a-b3b6-96d8df868d99" /> <!-- Microsoft-Antimalware-Engine: keep guid as name is not registered on all machines -->
+
+        <!-- Profiles -->
+        <Profile Id="Scans.Light.File" Base="BaseProfile.Light" LoggingMode="File" Name="Scans" DetailLevel="Light" Description="Microsoft Defender for Endpoint Scan activity">
+            <Collectors Operation="Add">
+                <SystemCollectorId Value="SystemCollector_WPRSystemCollectorInFile">
+                    <SystemProviderId Value="SystemProvider_Scans_Light" />
+                </SystemCollectorId>
+                <EventCollectorId Value="EventCollector_WPREventCollectorInFile">
+                    <EventProviders Operation="Add">
+                        <EventProviderId Value="EventProvider_AM_Engine" />
+                    </EventProviders>
+                </EventCollectorId>
+            </Collectors>
+        </Profile>
+
+        <Profile Id="Scans.Light.Memory" Base="BaseProfile.Light" LoggingMode="Memory" Name="Scans" DetailLevel="Light" Description="Microsoft Defender for Endpoint Scan activity">
+            <Collectors Operation="Add">
+                <SystemCollectorId Value="SystemCollector_WPRSystemCollectorInMemory">
+                    <SystemProviderId Value="SystemProvider_Scans_Light" />
+                </SystemCollectorId>
+                <EventCollectorId Value="EventCollector_WPREventCollectorInMemoryMedium">
+                    <EventProviders Operation="Add">
+                        <EventProviderId Value="EventProvider_AM_Engine" />
+                    </EventProviders>
+                </EventCollectorId>
+            </Collectors>
+        </Profile>
+
+        <Profile Id="Scans.Verbose.File" Base="BaseProfile.Light" LoggingMode="File" Name="Scans" DetailLevel="Verbose" Description="Microsoft Defender for Endpoint Scan activity">
+            <Collectors Operation="Add">
+                <SystemCollectorId Value="SystemCollector_WPRSystemCollectorInFile">
+                    <SystemProviderId Value="SystemProvider_Scans_Verbose" />
+                </SystemCollectorId>
+                <EventCollectorId Value="EventCollector_WPREventCollectorInFile">
+                    <EventProviders Operation="Add">
+                        <EventProviderId Value="EventProvider_AM_Engine" />
+                    </EventProviders>
+                </EventCollectorId>
+            </Collectors>
+        </Profile>
+
+        <Profile Id="Scans.Verbose.Memory" Base="BaseProfile.Light" LoggingMode="Memory" Name="Scans" DetailLevel="Verbose" Description="Microsoft Defender for Endpoint Scan activity">
+            <Collectors Operation="Add">
+                <SystemCollectorId Value="SystemCollector_WPRSystemCollectorInMemory">
+                    <SystemProviderId Value="SystemProvider_Scans_Verbose" />
+                </SystemCollectorId>
+                <EventCollectorId Value="EventCollector_WPREventCollectorInMemoryMedium">
+                    <EventProviders Operation="Add">
+                        <EventProviderId Value="EventProvider_AM_Engine" />
+                    </EventProviders>
+                </EventCollectorId>
+            </Collectors>
+        </Profile>
+    </Profiles>
+
+    <TraceMergeProperties>
+        <TraceMergeProperty  Id="Default" Name="Default" Base="">
+            <DeletePreMergedTraceFiles Value="true"/>
+            <FileCompression Value="true"/>
+            <CustomEvents>
+                <CustomEvent Value="ImageId"/>
+                <CustomEvent Value="BuildInfo"/>
+                <CustomEvent Value="VolumeMapping"/>
+                <CustomEvent Value="EventMetadata"/>
+                <CustomEvent Value="WinSAT"/>
+                <CustomEvent Value="NetworkInterface"/>
+            </CustomEvents>
+        </TraceMergeProperty>
+    </TraceMergeProperties>
+
+</WindowsPerformanceRecorder>

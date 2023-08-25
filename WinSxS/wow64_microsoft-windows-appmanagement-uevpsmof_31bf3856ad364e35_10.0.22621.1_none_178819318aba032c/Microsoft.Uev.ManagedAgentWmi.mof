@@ -1,0 +1,84 @@
+#pragma autorecover
+
+#pragma namespace("\\\\.\\root")
+
+instance of __Namespace
+{
+  Name = "Microsoft";
+};
+
+#pragma namespace("\\\\.\\root\\Microsoft")
+
+instance of __Namespace
+{
+  Name = "Uev";
+};
+
+#pragma namespace("\\\\.\\root\\Microsoft\\Uev")
+
+class WMI_extension : __Win32Provider
+{
+	string Name = NULL;
+	string CLSID = "{2A7B042D-578A-4366-9A3D-154C0498458E}";
+	uint32 Version = 1;
+	string HostingModel = "Decoupled:COM";
+	string SecurityDescriptor = NULL;
+	string AssemblyPath;
+	string AssemblyName;
+	string CLRVersion;
+};
+
+instance of WMI_extension
+{
+	AssemblyName = "Microsoft.Uev.ManagedAgentWmi, Version=10.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35";
+	CLRVersion = "v4.0.30319";
+	CLSID = "{2A7B042D-578A-4366-9A3D-154C0498458E}";
+	HostingModel = "NetworkServiceHost:CLR";
+	Name = "Microsoft.Uev.ManagedAgentWmi, Version=10.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35";
+};
+
+instance of __InstanceProviderRegistration
+{
+	provider = "__win32provider.Name=\"Microsoft.Uev.ManagedAgentWmi, Version=10.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35\"";
+	SupportsDelete = TRUE;
+	SupportsEnumeration = TRUE;
+	SupportsGet = TRUE;
+	SupportsPut = TRUE;
+};
+
+instance of __MethodProviderRegistration
+{
+	provider = "__win32provider.Name=\"Microsoft.Uev.ManagedAgentWmi, Version=10.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35\"";
+};
+[dynamic(TRUE) : ToInstance , provider("Microsoft.Uev.ManagedAgentWmi, Version=10.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35")]
+class EffectiveWindows8App
+{
+	[read(TRUE) , key(TRUE)] string PackageFamilyName;
+	[read(TRUE)] string DisplayName;
+	[read(TRUE)] boolean Enabled;
+	[read(TRUE)] string EnabledSource;
+};
+[dynamic(TRUE) : ToInstance , provider("Microsoft.Uev.ManagedAgentWmi, Version=10.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35")]
+class MachineConfiguredWindows8App
+{
+	[read(TRUE) , key(TRUE)] string PackageFamilyName;
+	[read(TRUE)] string DisplayName;
+	[read(TRUE)] boolean Enabled;
+	[read(TRUE)] boolean Installed;
+	[static(TRUE) , implemented(TRUE)] void EnableApp([ID(0) , in(TRUE)] string packageFamilyName);
+	[static(TRUE) , implemented(TRUE)] void DisableApp([ID(0) , in(TRUE)] string packageFamilyName);
+	[static(TRUE) , implemented(TRUE)] void RemoveApp([ID(0) , in(TRUE)] string packageFamilyName);
+};
+[dynamic(TRUE) : ToInstance , provider("Microsoft.Uev.ManagedAgentWmi, Version=10.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35")]
+class UserConfiguredWindows8App
+{
+	[read(TRUE) , key(TRUE)] string PackageFamilyName;
+	[read(TRUE)] string DisplayName;
+	[read(TRUE)] boolean Enabled;
+	[read(TRUE)] boolean Installed;
+	[static(TRUE) , implemented(TRUE)] void EnableApp([ID(0) , in(TRUE)] string packageFamilyName);
+	[static(TRUE) , implemented(TRUE)] void DisableApp([ID(0) , in(TRUE)] string packageFamilyName);
+	[static(TRUE) , implemented(TRUE)] void RemoveApp([ID(0) , in(TRUE)] string packageFamilyName);
+	[static(TRUE) , implemented(TRUE)] boolean CheckApp([ID(0) , in(TRUE)] string packageFamilyName);
+};
+

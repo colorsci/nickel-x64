@@ -1,0 +1,290 @@
+<Activity mc:Ignorable="sads sap" x:Class="RDManagement.Remove_PublishedApplication" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mpa="clr-namespace:Microsoft.PowerShell.Activities;assembly=Microsoft.PowerShell.Activities" xmlns:mpma="clr-namespace:Microsoft.PowerShell.Management.Activities;assembly=Microsoft.PowerShell.Management.Activities" xmlns:mpua="clr-namespace:Microsoft.PowerShell.Utility.Activities;assembly=Microsoft.PowerShell.Utility.Activities" xmlns:mrma="clr-namespace:Microsoft.RemoteDesktopServices.Management.Activities;assembly=Microsoft.RemoteDesktopServices.Management.Activities" xmlns:mrc="clr-namespace:Microsoft.RemoteDesktopServices.Common;assembly=Microsoft.RemoteDesktopServices.Management.Activities" xmlns:mrmc="clr-namespace:Microsoft.RemoteDesktopServices.Management.Cmdlets;assembly=Microsoft.RemoteDesktopServices.Management.Activities" xmlns:mv="clr-namespace:Microsoft.VisualBasic;assembly=System" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities" xmlns:r="clr-namespace:RDManagement" xmlns:sad="clr-namespace:System.Activities.Debugger;assembly=System.Activities" xmlns:sads="http://schemas.microsoft.com/netfx/2010/xaml/activities/debugger" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:sc="clr-namespace:System.Collections;assembly=mscorlib" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:sd="clr-namespace:System.Data;assembly=System.Data" xmlns:sm="clr-namespace:System.Management;assembly=System.Management" xmlns:sma="clr-namespace:System.Management.Automation;assembly=System.Management.Automation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <x:Members>
+    <x:Property Name="AppAlias" Type="InArgument(x:String)">
+      <x:Property.Attributes>
+        <RequiredArgumentAttribute />
+      </x:Property.Attributes>
+    </x:Property>
+    <x:Property Name="PoolName" Type="InArgument(x:String)">
+      <x:Property.Attributes>
+        <RequiredArgumentAttribute />
+      </x:Property.Attributes>
+    </x:Property>
+    <x:Property Name="RDMSServer" Type="InArgument(x:String)">
+      <x:Property.Attributes>
+        <RequiredArgumentAttribute />
+      </x:Property.Attributes>
+    </x:Property>
+  </x:Members>
+  <sap:VirtualizedContainerService.HintSize>820,6332</sap:VirtualizedContainerService.HintSize>
+  <mva:VisualBasic.Settings>Assembly references and imported namespaces for internal implementation</mva:VisualBasic.Settings>
+  <Sequence sap:VirtualizedContainerService.HintSize="780,6292">
+    <Sequence.Variables>
+      <Variable x:TypeArguments="sma:PSDataCollection(sma:PSObject)" Name="VmFarmSetting" />
+      <Variable x:TypeArguments="x:String" Default="/Farm/Metadata[starts-with(@Name,'AllowList:{0}:')]" Name="xPathValue" />
+      <Variable x:TypeArguments="x:String" Name="VmFarmSettingOutput" />
+      <Variable x:TypeArguments="sc:Hashtable" Default="[New Hashtable()]" Name="farmSettingHTable" />
+      <Variable x:TypeArguments="x:String" Name="ConnectionBroker" />
+      <Variable x:TypeArguments="x:Int32" Name="index" />
+      <Variable x:TypeArguments="sma:PSDataCollection(sma:PSObject)" Name="RDMSJoinedNodes" />
+      <Variable x:TypeArguments="sma:PSDataCollection(sma:ErrorRecord)" Default="[New PSDataCollection(Of ErrorRecord)()]" Name="PSError" />
+      <Variable x:TypeArguments="sma:PSDataCollection(sma:ErrorRecord)" Default="[New PSDataCollection(Of ErrorRecord)()]" Name="GetPublishedAppsErrors" />
+      <Variable x:TypeArguments="sma:PSDataCollection(sma:ErrorRecord)" Default="[New PSDataCollection(Of ErrorRecord)()]" Name="PublishDesktopErrors" />
+      <Variable x:TypeArguments="sma:PSDataCollection(sma:PSObject)" Name="RDMSRemoteApps" />
+      <Variable x:TypeArguments="x:Boolean" Name="isSessionHostCollection" />
+      <Variable x:TypeArguments="sma:PSDataCollection(sma:PSObject)" Name="SessionHostCollections" />
+      <Variable x:TypeArguments="sma:PSDataCollection(sma:PSObject)" Name="Machines" />
+    </Sequence.Variables>
+    <Assign sap:VirtualizedContainerService.HintSize="758,60">
+      <Assign.To>
+        <OutArgument x:TypeArguments="x:String">[ConnectionBroker]</OutArgument>
+      </Assign.To>
+      <Assign.Value>
+        <InArgument x:TypeArguments="x:String">[RDMSServer]</InArgument>
+      </Assign.Value>
+    </Assign>
+    <mpa:InlineScript Command="import-module $env:windir\System32\ServerManagerInternal\rdmanagement;&#xD;&#xA;Get-RDSHPool -Alias $using:PoolName -ManagementServer $using:ConnectionBroker" sap:VirtualizedContainerService.HintSize="758,22" PSError="[PSError]" Result="[SessionHostCollections]" />
+    <If Condition="[Not PSError.Count.Equals(0)]" sap:VirtualizedContainerService.HintSize="758,208">
+      <If.Then>
+        <TerminateWorkflow Exception="[PSError.Item(0).Exception]" sap:VirtualizedContainerService.HintSize="269,100" Reason="[PSError.Item(0).Exception.Message]" />
+      </If.Then>
+    </If>
+    <If Condition="[SessionHostCollections.Count.Equals(0)]" sap:VirtualizedContainerService.HintSize="758,208">
+      <If.Then>
+        <Assign sap:VirtualizedContainerService.HintSize="242,100">
+          <Assign.To>
+            <OutArgument x:TypeArguments="x:Boolean">[isSessionHostCollection]</OutArgument>
+          </Assign.To>
+          <Assign.Value>
+            <InArgument x:TypeArguments="x:Boolean">False</InArgument>
+          </Assign.Value>
+        </Assign>
+      </If.Then>
+      <If.Else>
+        <Assign sap:VirtualizedContainerService.HintSize="242,100">
+          <Assign.To>
+            <OutArgument x:TypeArguments="x:Boolean">[isSessionHostCollection]</OutArgument>
+          </Assign.To>
+          <Assign.Value>
+            <InArgument x:TypeArguments="x:Boolean">True</InArgument>
+          </Assign.Value>
+        </Assign>
+      </If.Else>
+    </If>
+    <If Condition="[isSessionHostCollection]" sap:VirtualizedContainerService.HintSize="758,998">
+      <If.Then>
+        <Sequence sap:VirtualizedContainerService.HintSize="486,890">
+          <Sequence.Variables>
+            <Variable x:TypeArguments="sma:ErrorRecord" Name="catchErrorRecord" />
+          </Sequence.Variables>
+          <mpa:InlineScript Command="import-module $env:windir\System32\ServerManagerInternal\rdmanagement;&#xD;&#xA;Get-RDSHServer -Name &quot;*&quot; -CollectionAlias $using:PoolName -ManagementServer $using:ConnectionBroker" sap:VirtualizedContainerService.HintSize="464,22" PSError="[PSError]" Result="[Machines]" />
+          <If Condition="[Not PSError.Count.Equals(0)]" sap:VirtualizedContainerService.HintSize="464,208">
+            <If.Then>
+              <TerminateWorkflow Exception="[PSError.Item(0).Exception]" sap:VirtualizedContainerService.HintSize="269,100" Reason="[PSError.Item(0).Exception.Message]" />
+            </If.Then>
+          </If>
+          <mpua:WriteOutput sap:VirtualizedContainerService.HintSize="218,22" InputObject="[New PSObject() {Machines.Count}]" />
+          <Sequence sap:VirtualizedContainerService.HintSize="536,510">
+            <Sequence.Variables>
+              <Variable x:TypeArguments="s:String[]" Default="[New String(Machines.Count - 1) {}]" Name="ServerNames" />
+              <Variable x:TypeArguments="x:Int32" Default="0" Name="i" />
+            </Sequence.Variables>
+            <mpua:WriteOutput sap:VirtualizedContainerService.HintSize="218,22" InputObject="[New PSObject() {ServerNames.GetLength(0)}]" />
+            <ForEach x:TypeArguments="sma:PSObject" DisplayName="Set server name array" sap:VirtualizedContainerService.HintSize="294,386" Values="[Machines]">
+              <ActivityAction x:TypeArguments="sma:PSObject">
+                <ActivityAction.Argument>
+                  <DelegateInArgument x:TypeArguments="sma:PSObject" Name="item" />
+                </ActivityAction.Argument>
+                <Sequence sap:VirtualizedContainerService.HintSize="264,280">
+                  <Assign sap:VirtualizedContainerService.HintSize="242,58">
+                    <Assign.To>
+                      <OutArgument x:TypeArguments="x:String">[ServerNames(i)]</OutArgument>
+                    </Assign.To>
+                    <Assign.Value>
+                      <InArgument x:TypeArguments="x:String">[item.Properties("Name").Value.ToString()]</InArgument>
+                    </Assign.Value>
+                  </Assign>
+                  <mpua:WriteOutput sap:VirtualizedContainerService.HintSize="218,22" InputObject="[New PSObject() {ServerNames(i)}]" />
+                  <Assign sap:VirtualizedContainerService.HintSize="242,58">
+                    <Assign.To>
+                      <OutArgument x:TypeArguments="x:Int32">[i]</OutArgument>
+                    </Assign.To>
+                    <Assign.Value>
+                      <InArgument x:TypeArguments="x:Int32">[i + 1]</InArgument>
+                    </Assign.Value>
+                  </Assign>
+                </Sequence>
+              </ActivityAction>
+            </ForEach>
+              <mpua:WriteOutput sap:VirtualizedContainerService.HintSize="218,22" InputObject="[New PSObject() {ServerNames.GetLength(0)}]" />
+              <Sequence sap:VirtualizedContainerService.HintSize="526,931">
+              <Sequence.Variables>
+                <Variable x:TypeArguments="sma:PSDataCollection(sma:ErrorRecord)" Default="[New PSDataCollection(Of ErrorRecord)()]" Name="PSError2" />
+              </Sequence.Variables>
+                <TryCatch sap:VirtualizedContainerService.HintSize="504,807">
+                  <TryCatch.Try>
+                    <Sequence sap:VirtualizedContainerService.HintSize="486,580">
+                      <mpma:RemoveWmiObject PSError="[PSError2]" Authentication="[AuthenticationLevel.PacketPrivacy]" DisplayName="Remove Session Host Pub App Instance" sap:VirtualizedContainerService.HintSize="257,100" Namespace="root\cimv2\terminalservices" PSActionRunningTimeoutSec="[30]" PSComputerName="[ServerNames]" Path="[&quot;Win32_TSPublishedApplication.Alias='&quot; &amp; AppAlias &amp; &quot;'&quot;]" />
+                      <If Condition="[PSError2.Count &gt; 0]" sap:VirtualizedContainerService.HintSize="464,354">
+                        <If.Then>
+                          <Sequence sap:VirtualizedContainerService.HintSize="536,330">
+                            <ForEach x:TypeArguments="sma:ErrorRecord" DisplayName="Consolidate errors from all the servers" sap:VirtualizedContainerService.HintSize="287,206" Values="[PSError2]">
+                              <ActivityAction x:TypeArguments="sma:ErrorRecord">
+                                <ActivityAction.Argument>
+                                  <DelegateInArgument x:TypeArguments="sma:ErrorRecord" Name="item" />
+                                </ActivityAction.Argument>
+                                <Sequence sap:VirtualizedContainerService.HintSize="264,246">
+                                  <Sequence.Variables>
+                                    <Variable x:TypeArguments="sma:ErrorRecord" Name="errorRecord" />
+                                  </Sequence.Variables>
+                                  <Assign sap:VirtualizedContainerService.HintSize="242,60">
+                                    <Assign.To>
+                                      <OutArgument x:TypeArguments="sma:ErrorRecord">[errorRecord]</OutArgument>
+                                    </Assign.To>
+                                    <Assign.Value>
+                                      <InArgument x:TypeArguments="sma:ErrorRecord">[ErrorUtility.GetErrorRecord(RDManagementResources.ResourceManager.GetString("FailedToSetSessionHostObjects"), string.Empty, ErrorId.ConfigureRDSessionHost, item.Exception)]</InArgument>
+                                    </Assign.Value>
+                                  </Assign>
+                                  <mpua:WriteError DisplayName="Write consolidated errors" ErrorRecord="[errorRecord]" sap:VirtualizedContainerService.HintSize="242,22" />
+                                </Sequence>
+                              </ActivityAction>
+                            </ForEach>
+                          </Sequence>
+                        </If.Then>
+                      </If>
+                    </Sequence>
+                  </TryCatch.Try>
+                  <TryCatch.Catches>
+                    <Catch x:TypeArguments="s:Exception" sap:VirtualizedContainerService.HintSize="490,21">
+                      <ActivityAction x:TypeArguments="s:Exception">
+                        <ActivityAction.Argument>
+                          <DelegateInArgument x:TypeArguments="s:Exception" Name="exception" />
+                        </ActivityAction.Argument>
+                        <Sequence sap:VirtualizedContainerService.HintSize="264,246">
+                          <Assign sap:VirtualizedContainerService.HintSize="242,60">
+                            <Assign.To>
+                              <OutArgument x:TypeArguments="sma:ErrorRecord">[catchErrorRecord]</OutArgument>
+                            </Assign.To>
+                            <Assign.Value>
+                              <InArgument x:TypeArguments="sma:ErrorRecord">[ErrorUtility.GetErrorRecord(RDManagementResources.ResourceManager.GetString("FailedToSetSessionHostObjects"), string.Empty, ErrorId.ConfigureRDSessionHost, exception)]</InArgument>
+                            </Assign.Value>
+                          </Assign>
+                          <mpua:WriteError ErrorRecord="[catchErrorRecord]" sap:VirtualizedContainerService.HintSize="242,22" />
+                        </Sequence>
+                      </ActivityAction>
+                    </Catch>
+                  </TryCatch.Catches>
+                </TryCatch>
+              </Sequence>
+            </Sequence>
+        </Sequence>
+      </If.Then>
+    </If>
+    <mpma:RemoveWmiObject Authentication="[AuthenticationLevel.PacketPrivacy]" DisplayName="Remove App from RDMS Database" sap:VirtualizedContainerService.HintSize="758,22" Impersonation="[ImpersonationLevel.Impersonate]" Namespace="root\cimv2\rdms" PSComputerName="[{RDMSServer}]" PSError="[PSError]" Path="[&quot;Win32_RDMSPublishedApplication.AppAlias='&quot; &amp; AppAlias &amp; &quot;',PoolName='&quot; &amp; PoolName &amp; &quot;'&quot;]" />
+    <If Condition="[Not PSError.Count.Equals(0)]" sap:VirtualizedContainerService.HintSize="758,208">
+      <If.Then>
+        <TerminateWorkflow Exception="[New Exception(RDManagementResources.RDMSRemoveRDMSRemoteAppErrorMsg, PSError.Item(0).Exception)]" sap:VirtualizedContainerService.HintSize="200,22" Reason="[RDManagementResources.RDMSRemoveRDMSRemoteAppErrorMsg]" />
+      </If.Then>
+    </If>
+    <If Condition="[Not isSessionHostCollection]" sap:VirtualizedContainerService.HintSize="758,1170">
+      <If.Then>
+        <Sequence sap:VirtualizedContainerService.HintSize="633,1062">
+          <Assign sap:VirtualizedContainerService.HintSize="611,60">
+            <Assign.To>
+              <OutArgument x:TypeArguments="sma:PSDataCollection(sma:PSObject)">[RDMSRemoteApps]</OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="sma:PSDataCollection(sma:PSObject)">[New PSDataCollection(Of PSObject)]</InArgument>
+            </Assign.Value>
+          </Assign>
+          <mpa:GetWmiObject Amended="False" Class="Win32_RDMSPublishedApplication" DirectRead="False" DisplayName="Get-WmiObject" EnableAllPrivileges="False" Filter="[&quot;PoolName='&quot; &amp; PoolName &amp; &quot;'&quot;]" sap:VirtualizedContainerService.HintSize="611,22" Impersonation="Impersonate" Namespace="root\cimv2\rdms" PSAuthenticationLevel="PacketPrivacy" PSComputerName="[{RDMSServer}]" PSError="[PSError]" Result="[RDMSRemoteApps]" />
+          <If Condition="[RDMSRemoteApps.Count &lt;= 0]" sap:VirtualizedContainerService.HintSize="611,776">
+            <If.Then>
+              <Sequence sap:VirtualizedContainerService.HintSize="486,668">
+                <Assign sap:VirtualizedContainerService.HintSize="464,60">
+                  <Assign.To>
+                    <OutArgument x:TypeArguments="sc:Hashtable">[farmSettingHTable]</OutArgument>
+                  </Assign.To>
+                  <Assign.Value>
+                    <InArgument x:TypeArguments="sc:Hashtable">[New Hashtable()]</InArgument>
+                  </Assign.Value>
+                </Assign>
+                <InvokeMethod sap:VirtualizedContainerService.HintSize="464,134" MethodName="Add">
+                  <InvokeMethod.TargetObject>
+                    <InArgument x:TypeArguments="sc:Hashtable">[farmSettingHTable]</InArgument>
+                  </InvokeMethod.TargetObject>
+                  <InArgument x:TypeArguments="x:String">ShowInPortal</InArgument>
+                  <InArgument x:TypeArguments="x:Int32">1</InArgument>
+                </InvokeMethod>
+                <mpma:SetWmiInstance AsJob="{x:Null}" Authority="{x:Null}" Class="{x:Null}" ComputerName="{x:Null}" Credential="{x:Null}" EnableAllPrivileges="{x:Null}" InputObject="{x:Null}" Locale="{x:Null}" ThrottleLimit="{x:Null}" Arguments="[farmSettingHTable]" Authentication="[Management.AuthenticationLevel.PacketPrivacy]" DisplayName="Publish-RemoteDesktop" sap:VirtualizedContainerService.HintSize="464,22" Impersonation="[ImpersonationLevel.Impersonate]" Namespace="root\cimv2\rdms" PSComputerName="[{RDMSServer}]" PSError="[PSError]" Path="[&quot;Win32_RDMSVirtualDesktopCollection.Alias='&quot; &amp; PoolName &amp; &quot;'&quot;]" PutType="[PutType.UpdateOnly]" />
+                <If Condition="[Not PSError.Count.Equals(0)]" sap:VirtualizedContainerService.HintSize="464,208">
+                  <If.Then>
+                    <TerminateWorkflow Exception="[New Exception(RDManagementResources.RDMSPublishRemoteDesktopError, PSError.Item(0).Exception)]" sap:VirtualizedContainerService.HintSize="200,22" Reason="[RDManagementResources.RDMSPublishRemoteDesktopError]" />
+                  </If.Then>
+                </If>
+              </Sequence>
+            </If.Then>
+          </If>
+        </Sequence>
+      </If.Then>
+    </If>
+    <If Condition="[isSessionHostCollection]" sap:VirtualizedContainerService.HintSize="758,1170">
+      <If.Then>
+        <Sequence sap:VirtualizedContainerService.HintSize="264,246">
+          <Assign sap:VirtualizedContainerService.HintSize="611,60">
+            <Assign.To>
+              <OutArgument x:TypeArguments="sma:PSDataCollection(sma:PSObject)">[RDMSRemoteApps]</OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="sma:PSDataCollection(sma:PSObject)">[New PSDataCollection(Of PSObject)]</InArgument>
+            </Assign.Value>
+          </Assign>
+          <mpa:GetWmiObject Amended="False" Class="Win32_RDMSPublishedApplication" DirectRead="False" DisplayName="Get-PublishedApplications" EnableAllPrivileges="False" Filter="[&quot;PoolName='&quot; &amp; PoolName &amp; &quot;'&quot;]" sap:VirtualizedContainerService.HintSize="200,200" Impersonation="Impersonate" Namespace="root\cimv2\rdms" PSAuthenticationLevel="PacketPrivacy" PSComputerName="[{RDMSServer}]" PSError="[GetPublishedAppsErrors]" Result="[RDMSRemoteApps]" />
+          <If Condition="[GetPublishedAppsErrors.Count = 0 And RDMSRemoteApps.Count &lt;= 0]" sap:VirtualizedContainerService.HintSize="656,51">
+            <If.Then>
+              <Sequence sap:VirtualizedContainerService.HintSize="264,246">
+                <mpa:InlineScript Command="import-module $env:windir\System32\ServerManagerInternal\rdmanagement;&#xD;&#xA;Set-RDSHPoolGeneralSetting -Alias $using:PoolName -ManagementServer $using:ConnectionBroker -ShowInWebAccess 1" DisplayName="Unpublish remote desktop" sap:VirtualizedContainerService.HintSize="656,51" PSError="[PublishDesktopErrors]" />
+                <If Condition="[PublishDesktopErrors.Count &lt;&gt; 0]" DisplayName="Quit If Error" sap:VirtualizedContainerService.HintSize="656,51">
+                  <If.Then>
+                    <Sequence sap:VirtualizedContainerService.HintSize="264,246">
+                      <Sequence.Variables>
+                        <Variable x:TypeArguments="sma:ErrorRecord" Name="errorRecord" />
+                      </Sequence.Variables>
+                      <Assign sap:VirtualizedContainerService.HintSize="242,60">
+                        <Assign.To>
+                          <OutArgument x:TypeArguments="sma:ErrorRecord">[errorRecord]</OutArgument>
+                        </Assign.To>
+                        <Assign.Value>
+                          <InArgument x:TypeArguments="sma:ErrorRecord">[ErrorUtility.GetErrorRecord(RDManagementResources.ResourceManager.GetString("RDMSPublishRemoteDesktopError"), string.Empty, ErrorId.Unknown, PublishDesktopErrors(0).Exception)]</InArgument>
+                        </Assign.Value>
+                      </Assign>
+                      <mpua:WriteError DisplayName="Write-Error" ErrorRecord="[errorRecord]" sap:VirtualizedContainerService.HintSize="242,22" />
+                    </Sequence>
+                  </If.Then>
+                </If>
+              </Sequence>
+            </If.Then>
+          </If>
+          <If Condition="[GetPublishedAppsErrors.Count &lt;&gt; 0]" DisplayName="Quit If Error" sap:VirtualizedContainerService.HintSize="656,51">
+            <If.Then>
+              <Sequence sap:VirtualizedContainerService.HintSize="264,246">
+                <Sequence.Variables>
+                  <Variable x:TypeArguments="sma:ErrorRecord" Name="errorRecord" />
+                </Sequence.Variables>
+                <Assign sap:VirtualizedContainerService.HintSize="242,60">
+                  <Assign.To>
+                    <OutArgument x:TypeArguments="sma:ErrorRecord">[errorRecord]</OutArgument>
+                  </Assign.To>
+                  <Assign.Value>
+                    <InArgument x:TypeArguments="sma:ErrorRecord">[ErrorUtility.GetErrorRecord(RDManagementResources.ResourceManager.GetString("RDMSPublishRemoteDesktopError"), string.Empty, ErrorId.Unknown, GetPublishedAppsErrors(0).Exception)]</InArgument>
+                  </Assign.Value>
+                </Assign>
+                  <mpua:WriteError DisplayName="Write-Error" ErrorRecord="[errorRecord]" sap:VirtualizedContainerService.HintSize="242,22" />
+              </Sequence>
+            </If.Then>
+          </If>
+        </Sequence>
+      </If.Then>
+    </If>
+  </Sequence>
+</Activity>

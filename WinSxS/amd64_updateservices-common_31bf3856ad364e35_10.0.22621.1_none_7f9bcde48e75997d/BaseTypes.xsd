@@ -1,0 +1,349 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<schema targetNamespace="http://schemas.microsoft.com/wsus/2005/04/CorporatePublishing/BaseTypes.xsd"
+    xmlns="http://www.w3.org/2001/XMLSchema"
+	xmlns:bt="http://schemas.microsoft.com/wsus/2005/04/CorporatePublishing/BaseTypes.xsd"
+    elementFormDefault="qualified" attributeFormDefault="unqualified">
+	
+	<!--
+  
+  Generic simple types
+    
+  -->
+
+	<simpleType name="positiveInt">
+		<annotation>
+			<documentation>A non-negative integer derived from a signed integer so as to be VB-type compatible.</documentation>
+		</annotation>
+		<restriction base="int">
+			<minInclusive value="0" />
+		</restriction>
+	</simpleType>
+	<simpleType name="positiveLong">
+		<annotation>
+			<documentation>A non-negative long integer derived from a signed long so as to be VB-type compatible.</documentation>
+		</annotation>
+		<restriction base="long">
+			<minInclusive value="0" />
+		</restriction>
+	</simpleType>
+	<simpleType name="Guid">
+		<annotation>
+			<documentation>A GUID in standard string form, such as "23058894-E97E-407e-A8DC-3D475B27FB3D".</documentation>
+		</annotation>
+		<restriction base="string">
+			<pattern value="[0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{12}" />
+		</restriction>
+	</simpleType>
+	<simpleType name="Version">
+		<annotation>
+			<documentation>A standard four-part version string, such as "1.2.3.4".</documentation>
+		</annotation>
+		<restriction base="string">
+			<pattern value="\d{1,5}\.\d{1,5}\.\d{1,5}\.\d{1,5}" />
+		</restriction>
+	</simpleType>
+	<simpleType name="ScalarComparison">
+		<annotation>
+			<documentation>An enumeration defining basic scalar comparisons.</documentation>
+		</annotation>
+		<restriction base="token">
+			<enumeration value="LessThan" />
+			<enumeration value="LessThanOrEqualTo" />
+			<enumeration value="EqualTo" />
+			<enumeration value="GreaterThanOrEqualTo" />
+			<enumeration value="GreaterThan" />
+		</restriction>
+	</simpleType>
+	<simpleType name="StringComparison">
+		<annotation>
+			<documentation>An enumeration defining basic string comparisons.</documentation>
+		</annotation>
+		<restriction base="token">
+			<enumeration value="EqualTo" />
+			<enumeration value="BeginsWith" />
+			<enumeration value="Contains" />
+			<enumeration value="EndsWith" />
+		</restriction>
+	</simpleType>
+	<simpleType name="LoopLogic">
+		<annotation>
+			<documentation>An enumeration defining the logic used when combining results from iterations through a loop.</documentation>
+		</annotation>
+		<restriction base="token">
+			<enumeration value="Any" />
+			<enumeration value="All" />
+			<enumeration value="None" />
+		</restriction>
+	</simpleType>
+
+	<!--
+  
+  Simple types related to files
+    
+  -->
+	<simpleType name="FileDate">
+		<annotation>
+			<documentation>A date from the file system, such as the creation or modification date of a file.</documentation>
+		</annotation>
+		<restriction base="dateTime" />
+	</simpleType>
+	<simpleType name="FileDigest">
+		<annotation>
+			<documentation>A digest (hash) of a file used both to identify the file within MSUS and to validate its integrity.</documentation>
+		</annotation>
+		<restriction base="base64Binary">
+			<maxLength value="20" />
+		</restriction>
+	</simpleType>
+	<simpleType name="FileName">
+		<annotation>
+			<documentation>A file name without a path.</documentation>
+		</annotation>
+		<restriction base="string">
+			<maxLength value="256" />
+			<minLength value="1" />
+		</restriction>
+	</simpleType>
+	<simpleType name="FilePath">
+		<annotation>
+			<documentation>A file path. The path may be absolute or relative, may include zero or more directories, and must end with a valid file or directory name (it may not end with a backslash, colon, etc.).</documentation>
+		</annotation>
+		<restriction base="string">
+			<maxLength value="260" />
+			<minLength value="1" />
+		</restriction>
+	</simpleType>
+	<simpleType name="FileSize">
+		<annotation>
+			<documentation>A file size in bytes.</documentation>
+		</annotation>
+		<restriction base="bt:positiveLong" />
+	</simpleType>
+	<simpleType name="Csidl">
+		<annotation>
+			<documentation>A numeric CSIDL value, as would be passed as the nFolder parameter to Win32 SHGetFolderPath.</documentation>
+		</annotation>
+		<restriction base="int" />
+	</simpleType>
+  <simpleType name="AdditionalDigestAlgorithm">
+    <annotation>
+      <documentation>Contains the string representation of the hashing algorithm.</documentation>
+    </annotation>
+    <restriction base="token">
+      <enumeration value="SHA256" />
+    </restriction>
+  </simpleType>
+  <complexType name="AdditionalDigest">
+    <annotation>
+      <documentation>Contains the hash value for the relevant hashing algorithm.</documentation>
+    </annotation>
+    <simpleContent>
+      <extension base="base64Binary">
+        <attribute name="Algorithm" type="bt:AdditionalDigestAlgorithm" use="required"/>
+      </extension>
+    </simpleContent>
+  </complexType>
+	<!--
+  
+  Simple types and attribute groups related to the Windows Registry
+    
+  -->
+	<simpleType name="RegistryKey">
+		<annotation>
+			<documentation>An enumeration defining the standard predefined registry keys, such as "HKEY_LOCAL_MACHINE".</documentation>
+		</annotation>
+		<restriction base="token">
+			<enumeration value="HKEY_LOCAL_MACHINE" />
+			<enumeration value="HKEY_LOOP_TARGET" />
+		</restriction>
+	</simpleType>
+	<simpleType name="RegistrySubkey">
+		<annotation>
+			<documentation>A registry subkey, such as "Software\Microsoft\Windows".</documentation>
+		</annotation>
+		<restriction base="string">
+			<maxLength value="255" />
+			<minLength value="1" />
+		</restriction>
+	</simpleType>
+	<simpleType name="RegistryValue">
+		<annotation>
+			<documentation>A registry value name, such as "CurrentBuildNumber".</documentation>
+		</annotation>
+		<restriction base="string">
+			<maxLength value="16383" />
+			<minLength value="0" />
+		</restriction>
+	</simpleType>
+	<simpleType name="RegistryValueType">
+		<annotation>
+			<documentation>An enumeration defining the valid registry value types, such as "REG_SZ" and "REG_DWORD".</documentation>
+		</annotation>
+		<restriction base="token">
+			<enumeration value="REG_BINARY" />
+			<enumeration value="REG_DWORD" />
+			<enumeration value="REG_EXPAND_SZ" />
+			<enumeration value="REG_MULTI_SZ" />
+			<enumeration value="REG_QWORD" />
+			<enumeration value="REG_SZ" />
+			<enumeration value="REG_FULL_RESOURCE_DESCRIPTOR" />
+		</restriction>
+	</simpleType>
+	<simpleType name="RegistryValueBinary">
+		<annotation>
+			<documentation>A REG_BINARY registry value.</documentation>
+		</annotation>
+		<restriction base="hexBinary">
+			<maxLength value="16383" />
+		</restriction>
+	</simpleType>
+	<simpleType name="RegistryValueDword">
+		<annotation>
+			<documentation>A REG_DWORD registry value.</documentation>
+		</annotation>
+		<restriction base="unsignedInt" />
+	</simpleType>
+	<simpleType name="RegistryValueExpandSz">
+		<annotation>
+			<documentation>A REG_EXPAND_SZ registry value.</documentation>
+		</annotation>
+		<restriction base="string">
+			<maxLength value="16383" />
+			<minLength value="1" />
+		</restriction>
+	</simpleType>
+	<simpleType name="RegistryValueMultiSz">
+		<annotation>
+			<documentation>A REG_MULTI_SZ registry value.</documentation>
+		</annotation>
+		<restriction base="string">
+			<maxLength value="16383" />
+			<minLength value="1" />
+		</restriction>
+	</simpleType>
+	<simpleType name="RegistryValueQword">
+		<annotation>
+			<documentation>A REG_QWORD registry value.</documentation>
+		</annotation>
+		<restriction base="unsignedLong" />
+	</simpleType>
+	<simpleType name="RegistryValueSz">
+		<annotation>
+			<documentation>A REG_SZ registry value.</documentation>
+		</annotation>
+		<restriction base="string">
+			<maxLength value="16383" />
+			<minLength value="1" />
+		</restriction>
+	</simpleType>
+	<attributeGroup name="RegistryKeyAttributes">
+		<annotation>
+			<documentation>A group of attributes that identify a registry subkey.</documentation>
+		</annotation>
+		<attribute name="Key" type="bt:RegistryKey" use="required" />
+		<attribute name="Subkey" type="bt:RegistrySubkey" use="required" />
+		<attribute name="RegType32" type="boolean" use="optional" default="false"/>
+	</attributeGroup>
+	<attributeGroup name="RegistryValueAttributes">
+		<annotation>
+			<documentation>A group of attributes that identify a registry value.</documentation>
+		</annotation>
+		<attributeGroup ref="bt:RegistryKeyAttributes" />
+		<attribute name="Value" type="bt:RegistryValue" use="required" />
+	</attributeGroup>
+	<!--
+  
+  Simple types related to the Windows Management Infrastructure (WMI)
+    
+  -->
+	<simpleType name="WmiNamespace">
+		<annotation>
+			<documentation>A WMI namespace.</documentation>
+		</annotation>
+		<restriction base="string">
+			<minLength value="1" />
+		</restriction>
+	</simpleType>
+	<simpleType name="WmiWqlQuery">
+		<annotation>
+			<documentation>A WMI WQL query.</documentation>
+		</annotation>
+		<restriction base="string">
+			<minLength value="1" />
+		</restriction>
+	</simpleType>
+	<!--
+  
+  Simple types related to processors
+    
+  -->
+	<simpleType name="ProcessorArchitecture">
+		<annotation>
+			<documentation>A processor architecture, as defined in Win32 SYSTEM_INFO.wProcessorArchictecture.</documentation>
+		</annotation>
+		<restriction base="unsignedShort" />
+	</simpleType>
+	<simpleType name="ProcessorLevel">
+		<annotation>
+			<documentation>A processor level, as defined in Win32 SYSTEM_INFO.wProcessorLevel.</documentation>
+		</annotation>
+		<restriction base="unsignedShort" />
+	</simpleType>
+	<simpleType name="ProcessorRevision">
+		<annotation>
+			<documentation>A processor revision, as defined in Win32 SYSTEM_INFO.wProcessorRevision.</documentation>
+		</annotation>
+		<restriction base="unsignedShort" />
+	</simpleType>
+	<!--
+  
+  Simple types related to MSI (Microsoft Installer)
+    
+  -->
+	<simpleType name="MsiFeatureName">
+		<annotation>
+			<documentation>An MSI feature name.</documentation>
+		</annotation>
+		<restriction base="string">
+			<maxLength value="255" />
+			<minLength value="1" />
+		</restriction>
+	</simpleType>
+	<simpleType name="MsiComponentCode">
+		<annotation>
+			<documentation>An MSI component code.</documentation>
+		</annotation>
+		<restriction base="string">
+			<maxLength value="255" />
+			<minLength value="1" />
+		</restriction>
+	</simpleType>
+	<!--
+  
+  Simple types related to INFs
+    
+  -->
+	<simpleType name="InfSection">
+		<annotation>
+			<documentation>The name of a section of an INF file.</documentation>
+		</annotation>
+		<restriction base="string">
+			<maxLength value="511" />
+		</restriction>
+	</simpleType>
+	<!--
+  
+  Simple types related to URIs
+    
+  -->
+	<simpleType name="HttpUrl">
+		<annotation>
+			<documentation>An http or https URL.</documentation>
+		</annotation>
+		<restriction base="anyURI">
+			<pattern value="http://.+" />
+			<pattern value="https://.+" />
+			<maxLength value="2083" />
+		</restriction>
+	</simpleType>
+</schema>

@@ -1,0 +1,68 @@
+<configSchema>  
+  <sectionSchema name="system.webServer/system.management.wsmanagement.config">    
+    <element name="OperationsConfiguration">      
+      <attribute name="MaxEnvelopeSizeKB" type="uint" defaultValue="500"  validationType="integerRange" validationParameter="32,4294967295" />
+      <attribute name="MaxOperationTimeoutSeconds" type="uint" defaultValue="60"  validationType="integerRange" validationParameter="1,4294967295" />
+      <attribute name="MaxEnumerateIdleTimeoutSeconds" type="uint" defaultValue="60" validationType="integerRange" validationParameter="1,4294967295"/>
+      <attribute name="MaxSubscribeIdleTimeoutSeconds" type="uint" defaultValue="60" validationType="integerRange" validationParameter="1,4294967295"/>
+      <attribute name="MaxShellIdleTimeoutMinutes" type="uint" defaultValue="15" validationType="integerRange" validationParameter="0,4294967295"/>
+      <attribute name="MaxPacketRetrievalTimeSeconds" type="uint" defaultValue="120" validationType="integerRange" validationParameter="0,4294967295"/>
+      <attribute name="QuotaRefreshIntervalSeconds" type="uint" defaultValue="60" validationType="integerRange" validationParameter="0,4294967295"/>
+      <attribute name="QuotaSystemWindowSeconds" type="uint" defaultValue="2" validationType="integerRange" validationParameter="0,4294967295"/>
+      <attribute name="QuotaSystemWindowOperations" type="uint" defaultValue="1000" validationType="integerRange" validationParameter="0,4294967295"/>
+    </element>
+    <element name="PluginModules">
+      <collection addElement="AuthorizationPlugin">
+        <attribute name="Name" type="string" isUniqueKey="true" required="true" validationType="nonEmptyString"/>
+        <attribute name="Filename" type="string" required="true" validationType="nonEmptyString"/>
+        <attribute name="SDKVersion" type="uint" required="true" />
+        <attribute name="SupportsQuota" type="bool" defaultValue="false" />
+        <attribute name="IgnoreTransportToken" type="bool" defaultValue="false" />
+      </collection>
+      <element name="OperationsPlugins">
+        <collection addElement="Plugin">
+          <attribute name="Name" type="string" isUniqueKey="true" required="true" validationType="nonEmptyString"/>
+          <attribute name="Filename" type="string"  required="true" validationType="nonEmptyString"/>
+          <attribute name="SDKVersion" type="uint" required="true" />
+          <attribute name="XmlRenderingType" type="enum"  defaultValue="text">
+            <enum name="text" value="1" />
+            <enum name="XmlReader" value="2" />
+          </attribute>
+          <attribute name="Enabled" type="bool" defaultValue="true" />
+          <element name="InitializationParameters">
+            <collection addElement="Param">
+              <attribute name="Name" type="string" isUniqueKey="true" required="true" validationType="nonEmptyString"/>
+              <attribute name="Value" type="string" required="true" validationType="nonEmptyString"/>
+            </collection>
+          </element>
+          <element name="Resources">
+            <collection addElement="Resource">
+              <attribute name="ResourceUri" type="string" isUniqueKey="true" required="true" validationType="nonEmptyString"/>
+              <attribute name="SupportsOptions" type="bool" defaultValue="false" />
+              <attribute name="ExactMatch" type="bool" defaultValue="false" />
+              <collection addElement="Security">
+                <attribute name="Uri" type="string" />
+                <attribute name="ExactMatch" type="bool" defaultValue="false" />
+                <attribute name="Sddl" type="string" required="true" />
+              </collection>
+              <collection addElement="Capability">
+                <attribute name="Type" type="enum" isUniqueKey="true" required="true">
+                  <enum name="Get" value="1"/>
+                  <enum name="Put" value="2"/>
+                  <enum name="Create" value="3"/>
+                  <enum name="Delete" value="4"/>
+                  <enum name="Invoke" value="5"/>
+                  <enum name="Enumerate" value="6"/>
+                  <enum name="Subscribe" value="7"/>
+                  <enum name="Shell" value="8"/>
+                </attribute>
+                <attribute name="SupportsFragment" type="bool" default="false"/>
+                <attribute name="SupportsFiltering" type="bool" default="false"/>
+              </collection>
+            </collection>
+          </element>
+        </collection>
+      </element>
+    </element>
+  </sectionSchema>
+</configSchema>

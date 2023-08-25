@@ -1,0 +1,400 @@
+﻿<Activity mc:Ignorable="sads sap sap2010" x:Class="RDManagement.AddTo_RDSHCollection" this:AddTo_RDSHCollection.PersonalSessionCollection="False"
+ xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities"
+ xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+ xmlns:mpa="clr-namespace:Microsoft.PowerShell.Activities;assembly=Microsoft.PowerShell.Activities"
+ xmlns:mpua="clr-namespace:Microsoft.PowerShell.Utility.Activities;assembly=Microsoft.PowerShell.Utility.Activities"
+ xmlns:mrc="clr-namespace:Microsoft.RemoteDesktopServices.Common;assembly=Microsoft.RemoteDesktopServices.Management.Activities"
+ xmlns:mrma="clr-namespace:Microsoft.RemoteDesktopServices.Management.Activities;assembly=Microsoft.RemoteDesktopServices.Management.Activities"
+ xmlns:mrmc="clr-namespace:Microsoft.RemoteDesktopServices.Management.Cmdlets;assembly=Microsoft.RemoteDesktopServices.Management.Activities"
+ xmlns:mv="clr-namespace:Microsoft.VisualBasic;assembly=System"
+ xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities"
+ xmlns:s="clr-namespace:System;assembly=mscorlib"
+ xmlns:s1="clr-namespace:System;assembly=System"
+ xmlns:s2="clr-namespace:System;assembly=System.Xml"
+ xmlns:s3="clr-namespace:System;assembly=System.Core"
+ xmlns:s4="clr-namespace:System;assembly=System.ServiceModel"
+ xmlns:s5="clr-namespace:System;assembly=System.ComponentModel.Composition"
+ xmlns:sa="clr-namespace:System.Activities;assembly=System.Activities"
+ xmlns:sad="clr-namespace:System.Activities.Debugger;assembly=System.Activities"
+ xmlns:sads="http://schemas.microsoft.com/netfx/2010/xaml/activities/debugger"
+ xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation"
+ xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation"
+ xmlns:sc="clr-namespace:System.Collections;assembly=mscorlib"
+ xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System"
+ xmlns:scg1="clr-namespace:System.Collections.Generic;assembly=System.ServiceModel"
+ xmlns:scg2="clr-namespace:System.Collections.Generic;assembly=System.Core"
+ xmlns:scg3="clr-namespace:System.Collections.Generic;assembly=mscorlib"
+ xmlns:sd="clr-namespace:System.Data;assembly=System.Data"
+ xmlns:sl="clr-namespace:System.Linq;assembly=System.Core"
+ xmlns:sma="clr-namespace:System.Management.Automation;assembly=System.Management.Automation"
+ xmlns:st="clr-namespace:System.Text;assembly=mscorlib"
+ xmlns:this="clr-namespace:RDManagement"
+ xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <x:Members>
+    <x:Property Name="RDManagementServer" Type="InArgument(x:String)">
+      <x:Property.Attributes>
+        <RequiredArgumentAttribute />
+      </x:Property.Attributes>
+    </x:Property>
+    <x:Property Name="CollectionAlias" Type="InArgument(x:String)">
+      <x:Property.Attributes>
+        <RequiredArgumentAttribute />
+      </x:Property.Attributes>
+    </x:Property>
+    <x:Property Name="RDSHServer" Type="InArgument(s:String[])">
+      <x:Property.Attributes>
+        <RequiredArgumentAttribute />
+      </x:Property.Attributes>
+    </x:Property>
+    <x:Property Name="PersonalSessionCollection" Type="InArgument(x:Boolean)" />
+  </x:Members>
+  <sap2010:WorkflowViewState.IdRef>RDManagement.AddTo_RDSHCollection_1</sap2010:WorkflowViewState.IdRef>
+  <mva:VisualBasic.Settings>Assembly references and imported namespaces for internal implementation</mva:VisualBasic.Settings>
+  <Sequence DisplayName="Add RDSH server to a collection" sap2010:WorkflowViewState.IdRef="Sequence_14">
+    <Sequence.Variables>
+      <Variable x:TypeArguments="sma:PSDataCollection(sma:ErrorRecord)" Name="Errors" />
+      <Variable x:TypeArguments="sma:PSDataCollection(sma:PSObject)" Name="Null" />
+      <Variable x:TypeArguments="s:String[]" Name="RemoteDesktopUsers" />
+      <Variable x:TypeArguments="x:Int32" Default="1" Modifiers="ReadOnly" Name="ProgressID" />
+      <Variable x:TypeArguments="x:Int32" Default="20" Name="CurrentProgress" />
+      <Variable x:TypeArguments="sma:ErrorRecord" Name="catchErrorRecord" />
+    </Sequence.Variables>
+    <mpua:WriteProgress Activity="Add-RDSessionHost" DisplayName="Progress : 0" sap2010:WorkflowViewState.IdRef="WriteProgress_1" PercentComplete="0" ProgressId="[ProgressID]" Status="In Progress..." />
+    <mpua:WriteVerbose DisplayName="Verbose: Input" sap2010:WorkflowViewState.IdRef="WriteVerbose_1" Message="[&quot;Management Server: &quot; + RDManagementServer + Environment.NewLine +&#xA;&quot;Collection Alias: &quot; + CollectionAlias + Environment.NewLine +&#xA;&quot;RDSH Server: &quot; + String.Join(&quot;, &quot;, RDSHServer)]" />
+    <Sequence DisplayName="Initialize" sap2010:WorkflowViewState.IdRef="Sequence_1">
+      <Sequence.Variables>
+        <Variable x:TypeArguments="sma:PSDataCollection(sma:PSObject)" Name="InlineScriptResult" />
+      </Sequence.Variables>
+      <mpa:InlineScript Command="import-module $env:windir\System32\ServerManagerInternal\rdmanagement;&#xA;Get-RDSHPool -Alias * -ManagementServer $using:RDManagementServer | ?{$_.Alias -eq $using:CollectionAlias}" sap2010:WorkflowViewState.IdRef="InlineScript_1" PSError="[Errors]" Result="[InlineScriptResult]" />
+      <If Condition="[Errors.Count &lt;&gt; 0]" DisplayName="Quit If Error" sap2010:WorkflowViewState.IdRef="If_1">
+        <If.Then>
+          <TerminateWorkflow Exception="[Errors(0).Exception]" sap2010:WorkflowViewState.IdRef="TerminateWorkflow_1" />
+        </If.Then>
+      </If>
+      <Assign sap2010:WorkflowViewState.IdRef="Assign_1">
+        <Assign.To>
+          <OutArgument x:TypeArguments="s:String[]">[RemoteDesktopUsers]</OutArgument>
+        </Assign.To>
+        <Assign.Value>
+          <InArgument x:TypeArguments="s:String[]">[CType(InlineScriptResult(0).Properties("Users").Value, String())]</InArgument>
+        </Assign.Value>
+      </Assign>
+    </Sequence>
+    <mpua:WriteVerbose DisplayName="Verbose: CB &amp; RDU" sap2010:WorkflowViewState.IdRef="WriteVerbose_2" Message="[&quot;Remote Desktop Users: &quot; + String.Join(&quot;, &quot;, RemoteDesktopUsers)]" />
+    <mpua:WriteProgress Activity="Add-RDSessionHost" DisplayName="Progress : 20" sap2010:WorkflowViewState.IdRef="WriteProgress_2" PercentComplete="20" ProgressId="[ProgressID]" Status="In Progress..." />
+    <ForEach x:TypeArguments="x:String" DisplayName="Configure all RDSH servers" sap2010:WorkflowViewState.IdRef="ForEach`1_1" Values="[RDSHServer]">
+      <ActivityAction x:TypeArguments="x:String">
+        <ActivityAction.Argument>
+          <DelegateInArgument x:TypeArguments="x:String" Name="server" />
+        </ActivityAction.Argument>
+        <Sequence DisplayName="Configure RD Session Host" sap2010:WorkflowViewState.IdRef="Sequence_13">
+          <Sequence.Variables>
+            <Variable x:TypeArguments="sma:PSDataCollection(sma:ErrorRecord)" Default="[New PSDataCollection(Of ErrorRecord)()]" Name="LoopErrors1" />
+            <Variable x:TypeArguments="sma:PSDataCollection(sma:ErrorRecord)" Default="[New PSDataCollection(Of ErrorRecord)()]" Name="LoopErrors2" />
+          </Sequence.Variables>
+          <TryCatch sap2010:WorkflowViewState.IdRef="TryCatch_1">
+            <TryCatch.Try>
+              <Sequence sap2010:WorkflowViewState.IdRef="Sequence_11">
+                <Sequence.Variables>
+                  <Variable x:TypeArguments="x:String" Name="serverDomain" />
+                  <Variable x:TypeArguments="x:String" Name="serverNetbios" />
+                </Sequence.Variables>
+                <Assign sap2010:WorkflowViewState.IdRef="Assign_2">
+                  <Assign.To>
+                    <OutArgument x:TypeArguments="x:String">[serverDomain]</OutArgument>
+                  </Assign.To>
+                  <Assign.Value>
+                    <InArgument x:TypeArguments="x:String">[Microsoft.RemoteDesktopServices.Common.CommonUtility.GetDomainNameFromLiveComputer(server)]</InArgument>
+                  </Assign.Value>
+                </Assign>
+                <Assign sap2010:WorkflowViewState.IdRef="Assign_3">
+                  <Assign.To>
+                    <OutArgument x:TypeArguments="x:String">[serverNetbios]</OutArgument>
+                  </Assign.To>
+                  <Assign.Value>
+                    <InArgument x:TypeArguments="x:String">[Microsoft.RemoteDesktopServices.Common.CommonUtility.GetNetbiosNameFromLiveComputer(server)]</InArgument>
+                  </Assign.Value>
+                </Assign>
+                <mpa:InlineScript Command="function Add-SecurityGroupMember { &#xA;param ( &#xA;    [Parameter(Mandatory=$TRUE)]&#xA;    [string]&#xA;    $GroupSID, &#xA;    &#xA;    [Parameter(Mandatory=$TRUE)]&#xA;    [string[]]&#xA;    $Member,&#xA;    &#xA;    [switch]&#xA;    $IsComputer &#xA;) &#xA;    try {&#xA;        $sid = New-Object System.Security.Principal.SecurityIdentifier $GroupSID&#xA;        $groupName = $sid.Translate([System.Security.Principal.NTAccount]).Value.split('\')[1]&#xA;        $directoryEntry = [ADSI]('WinNT://{0}/{1},group' -f $Env:COMPUTERNAME, $groupName)&#xA;    }&#xA;    catch { throw $_ }&#xA;    &#xA;    foreach($entry in $Member) {&#xA;        $memberPath = 'WinNT:/'&#xA;        $parts = $entry -split '\\'&#xA;        foreach ($part in $parts) { &#xA;            $memberPath = $memberPath + '/' + $part;&#xA;        }&#xA;        &#xA;        if ($IsComputer) {&#xA;            $memberPath = $memberPath + '$'&#xA;        }&#xA;        &#xA;        $directoryEntry.Invoke('Add', $memberPath)&#xA;    }&#xA;}&#xA;&#xA;$memberComputer = $using:serverDomain + &quot;\&quot; + $using:serverNetbios;&#xA;Add-SecurityGroupMember -GroupSID 'S-1-5-32-576' -Member $memberComputer -IsComputer -ErrorAction Silentlycontinue" DisplayName="Add RDSH Servers to 'End point servers' " sap2010:WorkflowViewState.IdRef="InlineScript_2" PSComputerName="[{RDManagementServer}]" PSError="[LoopErrors1]" Result="[Null]" />
+                <Sequence DisplayName="Update Progress" sap2010:WorkflowViewState.IdRef="Sequence_2">
+                  <Assign sap2010:WorkflowViewState.IdRef="Assign_4">
+                    <Assign.To>
+                      <OutArgument x:TypeArguments="x:Int32">[CurrentProgress]</OutArgument>
+                    </Assign.To>
+                    <Assign.Value>
+                      <InArgument x:TypeArguments="x:Int32">[CurrentProgress + (20 \ RDSHServer.Length)]</InArgument>
+                    </Assign.Value>
+                  </Assign>
+                  <mpua:WriteProgress Activity="Add-RDSessionHost" DisplayName="Progress : Current" sap2010:WorkflowViewState.IdRef="WriteProgress_3" PercentComplete="[CurrentProgress]" ProgressId="[ProgressID]" Status="In Progress..." />
+                </Sequence>
+                <If Condition="[LoopErrors1.Count &lt;&gt; 0]" DisplayName="Write RDMS Error" sap2010:WorkflowViewState.IdRef="If_4">
+                  <If.Then>
+                    <Sequence DisplayName="Error!" sap2010:WorkflowViewState.IdRef="Sequence_5">
+                      <Sequence sap2010:WorkflowViewState.IdRef="Sequence_3">
+                        <Assign sap2010:WorkflowViewState.IdRef="Assign_5">
+                          <Assign.To>
+                            <OutArgument x:TypeArguments="sma:ErrorRecord">[catchErrorRecord]</OutArgument>
+                          </Assign.To>
+                          <Assign.Value>
+                            <InArgument x:TypeArguments="sma:ErrorRecord">[ErrorUtility.GetErrorRecord(RDManagementResources.ResourceManager.GetString("FailedToSetSessionHostObjects"), server, ErrorId.ConfigureRDSessionHost, LoopErrors1(0).Exception)]</InArgument>
+                          </Assign.Value>
+                        </Assign>
+                        <mpua:WriteError DisplayName="Write-Error" ErrorRecord="[catchErrorRecord]" sap2010:WorkflowViewState.IdRef="WriteError_1" />
+                      </Sequence>
+                      <Sequence DisplayName="Update Progress" sap2010:WorkflowViewState.IdRef="Sequence_4">
+                        <Assign sap2010:WorkflowViewState.IdRef="Assign_6">
+                          <Assign.To>
+                            <OutArgument x:TypeArguments="x:Int32">[CurrentProgress]</OutArgument>
+                          </Assign.To>
+                          <Assign.Value>
+                            <InArgument x:TypeArguments="x:Int32">[CurrentProgress + (60 \ RDSHServer.Length)]</InArgument>
+                          </Assign.Value>
+                        </Assign>
+                        <mpua:WriteProgress Activity="Add-RDSessionHost" DisplayName="Progress : Current" sap2010:WorkflowViewState.IdRef="WriteProgress_4" PercentComplete="[CurrentProgress]" ProgressId="[ProgressID]" Status="In Progress..." />
+                      </Sequence>
+                    </Sequence>
+                  </If.Then>
+                  <If.Else>
+                    <Sequence DisplayName="Configure" sap2010:WorkflowViewState.IdRef="Sequence_10">
+                      <mpa:InlineScript Command="import-module $env:windir\System32\ServerManagerInternal\rdmanagement;&#xA;Add-RDSHServer -Name $using:server -CollectionAlias $using:CollectionAlias -ConnectionBroker $using:RDManagementServer -ManagementServer $using:RDManagementServer" sap2010:WorkflowViewState.IdRef="InlineScript_3" />
+                      <Sequence DisplayName="Update Progress" sap2010:WorkflowViewState.IdRef="Sequence_6">
+                        <Assign sap2010:WorkflowViewState.IdRef="Assign_7">
+                          <Assign.To>
+                            <OutArgument x:TypeArguments="x:Int32">[CurrentProgress]</OutArgument>
+                          </Assign.To>
+                          <Assign.Value>
+                            <InArgument x:TypeArguments="x:Int32">[CurrentProgress + (30 \ RDSHServer.Length)]</InArgument>
+                          </Assign.Value>
+                        </Assign>
+                        <mpua:WriteProgress Activity="Add-RDSessionHost" DisplayName="Progress : Current" sap2010:WorkflowViewState.IdRef="WriteProgress_5" PercentComplete="[CurrentProgress]" ProgressId="[ProgressID]" Status="In Progress..." />
+                      </Sequence>
+                      <If Condition="[PersonalSessionCollection = False]" sap2010:WorkflowViewState.IdRef="If_2">
+                        <If.Then>
+                          <mpa:InlineScript Command="function Get-SecurityGroupMember { param ([Parameter(Mandatory=$TRUE)] [string] $GroupSID ) try { $sid = New-Object System.Security.Principal.SecurityIdentifier $GroupSID; $groupName = $sid.Translate([System.Security.Principal.NTAccount]).Value.split('\')[1]; $directoryEntry = [ADSI]('WinNT://{0}/{1},group' -f $Env:COMPUTERNAME, $groupName); foreach($member in $directoryEntry.Invoke('Members', $NULL)) { $objPath = (New-Object System.DirectoryServices.DirectoryEntry $member).Path; if ($objPath -match '^WinNT://(.*)$') { ($matches[1]) -replace '/', '\' } } } catch { throw $_ } }; function Add-SecurityGroupMember { param ( [Parameter(Mandatory=$TRUE)] [string] $GroupSID, [Parameter(Mandatory=$TRUE)] [string[]] $Member, [switch] $IsComputer ) try { $sid = New-Object System.Security.Principal.SecurityIdentifier $GroupSID; $groupName = $sid.Translate([System.Security.Principal.NTAccount]).Value.split('\')[1]; $directoryEntry = [ADSI]('WinNT://{0}/{1},group' -f $Env:COMPUTERNAME, $groupName) } catch { throw $_ };  foreach($entry in $Member) {  $memberPath = 'WinNT:/'; $parts = $entry -split '\\'; foreach ($part in $parts) { $memberPath = $memberPath + '/' + $part; }; if ($IsComputer) { $memberPath = $memberPath + '$' }; $directoryEntry.Invoke('Add', $memberPath); } }; function Remove-SecurityGroupMember { param ( [Parameter(Mandatory=$TRUE)] [string] $GroupSID, [Parameter(Mandatory=$TRUE)] [string[]] $Member, [switch] $IsComputer ) try { $sid = New-Object System.Security.Principal.SecurityIdentifier $GroupSID; $groupName = $sid.Translate([System.Security.Principal.NTAccount]).Value.split('\')[1]; $directoryEntry = [ADSI]('WinNT://{0}/{1},group' -f $Env:COMPUTERNAME, $groupName) } catch { throw $_ };  foreach($entry in $Member) { $memberPath = 'WinNT:/'; $parts = $entry -split '\\'; foreach ($part in $parts) { $memberPath = $memberPath + '/' + $part; }; if ($IsComputer) { $memberPath = $memberPath + '$' }; $directoryEntry.Invoke('Remove', $memberPath); } }; function Set-SecurityGroupMember { param ( [Parameter(Mandatory=$TRUE)] [string] $GroupSID, [Parameter(Mandatory=$TRUE)] [string[]] $Member, [switch] $IsComputer ) Get-SecurityGroupMember $GroupSID | %{Remove-SecurityGroupMember $GroupSID $_}; Add-SecurityGroupMember $GroupSID $Member -IsComputer:$IsComputer }; Set-SecurityGroupMember -GroupSID 'S-1-5-32-555' -Member $using:RemoteDesktopUsers" DisplayName="Add User to 'Remote Desktop Users' " sap2010:WorkflowViewState.IdRef="InlineScript_4" PSComputerName="[{server}]" PSError="[LoopErrors2]" Result="[Null]" />
+                        </If.Then>
+                      </If>
+                      <If Condition="[LoopErrors2.Count &lt;&gt; 0]" DisplayName="Write RDMS Error" sap2010:WorkflowViewState.IdRef="If_3">
+                        <If.Then>
+                          <Sequence sap2010:WorkflowViewState.IdRef="Sequence_7">
+                            <Assign sap2010:WorkflowViewState.IdRef="Assign_8">
+                              <Assign.To>
+                                <OutArgument x:TypeArguments="sma:ErrorRecord">[catchErrorRecord]</OutArgument>
+                              </Assign.To>
+                              <Assign.Value>
+                                <InArgument x:TypeArguments="sma:ErrorRecord">[ErrorUtility.GetErrorRecord(RDManagementResources.ResourceManager.GetString("FailedToSetSessionHostObjects"), server,-1, LoopErrors2(0).Exception)]</InArgument>
+                              </Assign.Value>
+                            </Assign>
+                            <mpua:WriteError DisplayName="Write-Error" ErrorRecord="[catchErrorRecord]" sap2010:WorkflowViewState.IdRef="WriteError_2" />
+                          </Sequence>
+                        </If.Then>
+                        <If.Else>
+                          <Sequence DisplayName="Write Status Object" sap2010:WorkflowViewState.IdRef="Sequence_8">
+                            <Sequence.Variables>
+                              <Variable x:TypeArguments="sma:PSObject" Default="[New PSObject()]" Name="StatusObject" />
+                            </Sequence.Variables>
+                            <InvokeMethod sap2010:WorkflowViewState.IdRef="InvokeMethod_1" MethodName="Add">
+                              <InvokeMethod.TargetObject>
+                                <InArgument x:TypeArguments="sma:PSMemberInfoCollection(sma:PSPropertyInfo)">[StatusObject.Properties]</InArgument>
+                              </InvokeMethod.TargetObject>
+                              <InArgument x:TypeArguments="sma:PSNoteProperty">[New PSNoteProperty("ServerName", server)]</InArgument>
+                            </InvokeMethod>
+                            <InvokeMethod sap2010:WorkflowViewState.IdRef="InvokeMethod_2" MethodName="Add">
+                              <InvokeMethod.TargetObject>
+                                <InArgument x:TypeArguments="sma:PSMemberInfoCollection(sma:PSPropertyInfo)">[StatusObject.Properties]</InArgument>
+                              </InvokeMethod.TargetObject>
+                              <InArgument x:TypeArguments="sma:PSNoteProperty">[New PSNoteProperty("Success", True)]</InArgument>
+                            </InvokeMethod>
+                            <mpua:WriteOutput DisplayName="Write-Output" sap2010:WorkflowViewState.IdRef="WriteOutput_1" InputObject="[{StatusObject}]" />
+                          </Sequence>
+                        </If.Else>
+                      </If>
+                      <Sequence DisplayName="Update Progress" sap2010:WorkflowViewState.IdRef="Sequence_9">
+                        <Assign sap2010:WorkflowViewState.IdRef="Assign_9">
+                          <Assign.To>
+                            <OutArgument x:TypeArguments="x:Int32">[CurrentProgress]</OutArgument>
+                          </Assign.To>
+                          <Assign.Value>
+                            <InArgument x:TypeArguments="x:Int32">[CurrentProgress + (30 \ RDSHServer.Length)]</InArgument>
+                          </Assign.Value>
+                        </Assign>
+                        <mpua:WriteProgress Activity="Add-RDSessionHost" DisplayName="Progress : Current" sap2010:WorkflowViewState.IdRef="WriteProgress_6" PercentComplete="[CurrentProgress]" ProgressId="[ProgressID]" Status="In Progress..." />
+                      </Sequence>
+                    </Sequence>
+                  </If.Else>
+                </If>
+              </Sequence>
+            </TryCatch.Try>
+            <TryCatch.Catches>
+              <Catch x:TypeArguments="s:Exception" sap2010:WorkflowViewState.IdRef="Catch`1_1">
+                <ActivityAction x:TypeArguments="s:Exception">
+                  <ActivityAction.Argument>
+                    <DelegateInArgument x:TypeArguments="s:Exception" Name="exception" />
+                  </ActivityAction.Argument>
+                  <Sequence sap2010:WorkflowViewState.IdRef="Sequence_12">
+                    <Assign sap2010:WorkflowViewState.IdRef="Assign_10">
+                      <Assign.To>
+                        <OutArgument x:TypeArguments="sma:ErrorRecord">[catchErrorRecord]</OutArgument>
+                      </Assign.To>
+                      <Assign.Value>
+                        <InArgument x:TypeArguments="sma:ErrorRecord">[ErrorUtility.GetErrorRecord(RDManagementResources.ResourceManager.GetString("FailedToSetSessionHostObjects"), server, ErrorId.ConfigureRDSessionHost, exception)]</InArgument>
+                      </Assign.Value>
+                    </Assign>
+                    <mpua:WriteError DisplayName="Write-Error" ErrorRecord="[catchErrorRecord]" sap2010:WorkflowViewState.IdRef="WriteError_3" />
+                  </Sequence>
+                </ActivityAction>
+              </Catch>
+            </TryCatch.Catches>
+          </TryCatch>
+        </Sequence>
+      </ActivityAction>
+    </ForEach>
+    <mpua:WriteProgress Activity="Add-RDSessionHost" Completed="[True]" DisplayName="Progress : 100" sap2010:WorkflowViewState.IdRef="WriteProgress_7" PercentComplete="100" ProgressId="[ProgressID]" Status="In Progress..." />
+    <sads:DebugSymbol.Symbol>dz5EOlxmYmxfdXIxX3JkX2Rldlx0ZXJtc3J2XHJkbXNcd29ya2Zsb3dcQWRkLVJEU2Vzc2lvbkhvc3QueGFtbIEBAYsBAZEBAQI1A/0BDgIBATozOjYCAQM7Mzs3AgECPgU+ywEDAbIBPwU/1gIDAa0BQAVSEAMBnAFTBVPQAQMBmQFUBVTNAQMBkwFVBfoBDwIBC/sBBfsB4gECAQQ+ogE+sAEDAbYBPiI+NQMBtQE+uAE+yAEDAbQBPpMBPpYBAwGzAT9uP9MCAwGuAUQHRL0CAwGoAUUHSQwDAaIBSgdREAMBnQFTdVPNAQMBmgFUpAFUsgEDAZcBVCJUNQMBlgFUugFUygEDAZUBVJQBVJgBAwGUAVWHAVWVAQMBkQFaCfgBFAIBDPsBuQH7AccBAgEJ+wEi+wE1AgEI+wHPAfsB3wECAQf7AagB+wGtAQIBBvsBQPsBSAIBBUSSAkScAgMBqwFEpAJEugIDAakBRRVFMAMBowFHC0d4AwGlAU80T3YDAaABTDVMSQMBngFcV1yBAQIBDl1XXYEBAgENXwv3ARYCAQ9HKEc/AwGmAWEP4QEaAgEY6QET8wEeAgEQZhFtGgMBjQFuEXUaAwGJAXYRdqoLAwGCAXcRgQEcAgF0ggER4AEWAgEZ6gEV8QEeAgEU8gEV8gGSAQIBEWs8a5gBAwGQAWg9aEsDAY4BczxzmQEDAYwBcD1wTAMBigF2iAt2lwsDAYcBducKdv8KAwGFAXafC3anCwMBgwF4E38cAgF8gAETgAHvAQIBdYIBH4IBPwIBGoQBFZsBIAIBXZ4BFd4BIAIBHO8BR+8B6QECARfsAUjsAVoCARXyAUzyAWACARJ9PX1pAgF/ej56TwIBfYABxgGAAdQBAgF6gAEwgAFDAgF5gAHcAYAB7AECAXiAAacBgAG6AQIBdoUBF48BIgIBbJABF5oBIgIBXp8BF58B1AICAVygAReqASICAU6rARevARwCAUSwARfSARwCASvTARfdASICAR2GARmNASICAXCOARmOAZYBAgFtkQEZmAEiAgFmmQEZmQH1AQIBX6EBGagBIgIBVqkBGakB9QECAU+rASWrAUoCAUWtARutAawUAgFHsAElsAFFAgEssgEbvAEmAgE8vwEb0AEmAgEu1AEZ2wEiAgEl3AEZ3AH1AQIBHosBS4sB/AECAXOIAUyIAV4CAXGOAVCOAWQCAW6WAUOWAW8CAWmTAUSTAVUCAWeZAcwBmQHaAQIBZJkBNpkBSQIBY5kB4gGZAfIBAgFimQGtAZkBwAECAWCmAUOmAW8CAVmjAUSjAVUCAVepAcwBqQHaAQIBVKkBNqkBSQIBU6kB4gGpAfIBAgFSqQGtAakBwAECAVCtAYoUrQGZFAIBTK0B9ROtAYEUAgFKrQGhFK0BqRQCAUizAR26ASYCAUC7AR27AZoBAgE9wQFQwQFiAgEvwwEdyAEsAgE3yQEdzgEsAgEzzwEdzwGbAQIBMNkBQ9kBbwIBKNYBRNYBVQIBJtwBzAHcAdoBAgEj3AE23AFJAgEi3AHiAdwB8gECASHcAa0B3AHAAQIBH7gBT7gB4wECAUO1AVC1AWICAUG7AVS7AWgCAT7FAW7FAYcBAgE6xwFQxwF6AgE4ywFuywGHAQIBNc0BUM0BdQIBNM8BhgHPAZgBAgEx</sads:DebugSymbol.Symbol>
+  </Sequence>
+  <sap2010:WorkflowViewState.ViewStateManager>
+    <sap2010:ViewStateManager>
+      <sap2010:ViewStateData Id="WriteProgress_1" sap:VirtualizedContainerService.HintSize="1058,22" />
+      <sap2010:ViewStateData Id="WriteVerbose_1" sap:VirtualizedContainerService.HintSize="1058,22" />
+      <sap2010:ViewStateData Id="InlineScript_1" sap:VirtualizedContainerService.HintSize="508,139" />
+      <sap2010:ViewStateData Id="TerminateWorkflow_1" sap:VirtualizedContainerService.HintSize="200,22" />
+      <sap2010:ViewStateData Id="If_1" sap:VirtualizedContainerService.HintSize="508,208" />
+      <sap2010:ViewStateData Id="Assign_1" sap:VirtualizedContainerService.HintSize="508,60" />
+      <sap2010:ViewStateData Id="Sequence_1" sap:VirtualizedContainerService.HintSize="1058,611">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg3:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="WriteVerbose_2" sap:VirtualizedContainerService.HintSize="1058,22" />
+      <sap2010:ViewStateData Id="WriteProgress_2" sap:VirtualizedContainerService.HintSize="1058,22" />
+      <sap2010:ViewStateData Id="Assign_2" sap:VirtualizedContainerService.HintSize="966,60" />
+      <sap2010:ViewStateData Id="Assign_3" sap:VirtualizedContainerService.HintSize="966,60" />
+      <sap2010:ViewStateData Id="InlineScript_2" sap:VirtualizedContainerService.HintSize="966,139" />
+      <sap2010:ViewStateData Id="Assign_4" sap:VirtualizedContainerService.HintSize="242,60" />
+      <sap2010:ViewStateData Id="WriteProgress_3" sap:VirtualizedContainerService.HintSize="242,22" />
+      <sap2010:ViewStateData Id="Sequence_2" sap:VirtualizedContainerService.HintSize="966,246">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg3:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="Assign_5" sap:VirtualizedContainerService.HintSize="242,60" />
+      <sap2010:ViewStateData Id="WriteError_1" sap:VirtualizedContainerService.HintSize="242,22" />
+      <sap2010:ViewStateData Id="Sequence_3" sap:VirtualizedContainerService.HintSize="264,246">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg3:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="Assign_6" sap:VirtualizedContainerService.HintSize="242,60" />
+      <sap2010:ViewStateData Id="WriteProgress_4" sap:VirtualizedContainerService.HintSize="242,22" />
+      <sap2010:ViewStateData Id="Sequence_4" sap:VirtualizedContainerService.HintSize="264,246">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg3:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="Sequence_5" sap:VirtualizedContainerService.HintSize="286,656">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg3:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="InlineScript_3" sap:VirtualizedContainerService.HintSize="633,139" />
+      <sap2010:ViewStateData Id="Assign_7" sap:VirtualizedContainerService.HintSize="242,60" />
+      <sap2010:ViewStateData Id="WriteProgress_5" sap:VirtualizedContainerService.HintSize="242,22" />
+      <sap2010:ViewStateData Id="Sequence_6" sap:VirtualizedContainerService.HintSize="633,246">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg3:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="InlineScript_4" sap:VirtualizedContainerService.HintSize="508,139" />
+      <sap2010:ViewStateData Id="If_2" sap:VirtualizedContainerService.HintSize="633,287" />
+      <sap2010:ViewStateData Id="Assign_8" sap:VirtualizedContainerService.HintSize="242,60" />
+      <sap2010:ViewStateData Id="WriteError_2" sap:VirtualizedContainerService.HintSize="242,22" />
+      <sap2010:ViewStateData Id="Sequence_7" sap:VirtualizedContainerService.HintSize="264,246">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg3:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="InvokeMethod_1" sap:VirtualizedContainerService.HintSize="218,128" />
+      <sap2010:ViewStateData Id="InvokeMethod_2" sap:VirtualizedContainerService.HintSize="218,128" />
+      <sap2010:ViewStateData Id="WriteOutput_1" sap:VirtualizedContainerService.HintSize="218,22" />
+      <sap2010:ViewStateData Id="Sequence_8" sap:VirtualizedContainerService.HintSize="240,482">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg3:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="If_3" sap:VirtualizedContainerService.HintSize="633,630" />
+      <sap2010:ViewStateData Id="Assign_9" sap:VirtualizedContainerService.HintSize="242,60" />
+      <sap2010:ViewStateData Id="WriteProgress_6" sap:VirtualizedContainerService.HintSize="242,22" />
+      <sap2010:ViewStateData Id="Sequence_9" sap:VirtualizedContainerService.HintSize="633,246">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg3:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="Sequence_10" sap:VirtualizedContainerService.HintSize="655,1832">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg3:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="If_4" sap:VirtualizedContainerService.HintSize="966,1980" />
+      <sap2010:ViewStateData Id="Sequence_11" sap:VirtualizedContainerService.HintSize="988,2769">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg3:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="Assign_10" sap:VirtualizedContainerService.HintSize="242,60" />
+      <sap2010:ViewStateData Id="WriteError_3" sap:VirtualizedContainerService.HintSize="242,22" />
+      <sap2010:ViewStateData Id="Sequence_12" sap:VirtualizedContainerService.HintSize="264,243">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg3:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="Catch`1_1" sap:VirtualizedContainerService.HintSize="992,21">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+          </scg3:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="TryCatch_1" sap:VirtualizedContainerService.HintSize="1006,2996" />
+      <sap2010:ViewStateData Id="Sequence_13" sap:VirtualizedContainerService.HintSize="1028,3120">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg3:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="ForEach`1_1" sap:VirtualizedContainerService.HintSize="1058,3268" />
+      <sap2010:ViewStateData Id="WriteProgress_7" sap:VirtualizedContainerService.HintSize="1058,22" />
+      <sap2010:ViewStateData Id="Sequence_14" sap:VirtualizedContainerService.HintSize="1080,4353">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg3:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="RDManagement.AddTo_RDSHCollection_1" sap:VirtualizedContainerService.HintSize="1120,4433" />
+    </sap2010:ViewStateManager>
+  </sap2010:WorkflowViewState.ViewStateManager>
+</Activity>

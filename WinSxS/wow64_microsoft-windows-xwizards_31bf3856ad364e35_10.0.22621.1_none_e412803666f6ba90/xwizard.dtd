@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!ENTITY % onerrortypes "(ignore | abort)" >
+
+<!ENTITY % registryactiontypes "(image | append | remove)" >
+
+<!ENTITY % datatypes "(char | short | int | int64 | long | longlong |
+                       uchar | ushort | uint | uint64 | ulong | ulonglong |
+                       byte | word | dword | qword |
+                       bool | float | double |
+                       str | wstr  | bstr |
+                       ptr | variant | hexbinary)" >
+
+<!ENTITY % allocationmethods "(CoTaskMemAlloc | LocalAlloc)" >
+
+<!ENTITY % wizardtypes "(default |
+                         propertysheet97 | wizard97 |
+                         aero |
+                         dui | moderndui)" >
+
+<!ENTITY % propertyaccesstypes "(private | readonly | readwrite)" >
+
+<!ENTITY % propertymodetypes "(none | marshalid)" >
+
+<!ENTITY % propertyactiontypes "(normal | retrieve | autonext)" >
+
+
+
+
+<!ELEMENT xwizard (registry | run)* >
+<!ATTLIST xwizard 
+        version                 CDATA                           "1.0"
+>
+
+<!ELEMENT registry (host | task | page)* >
+<!ATTLIST registry
+        action                  %registryactiontypes;           "append"
+        behavior                CDATA                           #IMPLIED
+        unregisterfromCOM       (yes | no)                      "no"
+        onerror                 %onerrortypes;                  "ignore"
+>
+
+<!ELEMENT host (task*) >
+<!ATTLIST host 
+        name                    CDATA                           #IMPLIED
+        id                      CDATA                           #REQUIRED
+        filename                CDATA                           #IMPLIED
+        behavior                CDATA                           #IMPLIED
+>
+
+<!ELEMENT task (page*) >
+<!ATTLIST task 
+        name                    CDATA                           #IMPLIED
+        id                      CDATA                           #REQUIRED
+        filename                CDATA                           #IMPLIED
+        behavior                CDATA                           #IMPLIED
+        flags                   CDATA                           #IMPLIED
+        commandline             CDATA                           #IMPLIED
+>
+
+<!ELEMENT page (page*) >
+<!ATTLIST page
+        name                    CDATA                           #IMPLIED
+        id                      CDATA                           #REQUIRED
+        filename                CDATA                           #IMPLIED
+        behavior                CDATA                           #IMPLIED
+        flags                   CDATA                           #IMPLIED
+        commandline             CDATA                           #IMPLIED
+>
+
+<!ELEMENT run (properties | wizard)* >
+<!ATTLIST run
+        onerror                 %onerrortypes;                  "ignore"
+>
+
+<!ELEMENT properties (property*) >
+<!ELEMENT property (#PCDATA)>
+<!ATTLIST property
+        name                    CDATA                           #REQUIRED
+        id                      CDATA                           #REQUIRED
+        type                    %datatypes;                     "wstr"
+        allocation              %allocationmethods;             "CoTaskMemAlloc"
+        access                  %propertyaccesstypes;           "private"
+        mode                    %propertymodetypes;             "none"
+        action                  %propertyactiontypes;           "normal"
+>
+
+<!ELEMENT wizard EMPTY >
+<!ATTLIST wizard
+        name                    CDATA                           #IMPLIED
+        id                      CDATA                           #REQUIRED
+        type                    %wizardtypes;                   "default"
+        flags                   CDATA                           #IMPLIED
+        commandline             CDATA                           #IMPLIED
+        contextflags            CDATA                           #IMPLIED
+>

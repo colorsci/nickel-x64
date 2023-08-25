@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<schema targetNamespace="http://schemas.microsoft.com/wsus/2005/04/CorporatePublishing/Installers/MsiInstallation.xsd"
+    xmlns:bt="http://schemas.microsoft.com/wsus/2005/04/CorporatePublishing/BaseTypes.xsd"
+    xmlns:msi="http://schemas.microsoft.com/wsus/2005/04/CorporatePublishing/Installers/MsiInstallation.xsd"
+    xmlns:sdp="http://schemas.microsoft.com/wsus/2005/04/CorporatePublishing/SoftwareDistributionPackage.xsd"
+    xmlns:mspblob="http://www.microsoft.com/msi/patch_applicability.xsd"
+    xmlns="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+    <!--
+        Data specific to MSI installation 
+    -->
+    
+    <simpleType name="MsiInstallerCommandLine">
+        <annotation>
+            <documentation>An optional command line to be passed to MSI when installing, specified as space-separated name=value pairs.</documentation>
+        </annotation>
+        <restriction base="string">
+            <maxLength value="32768" />
+            <minLength value="1" />
+        </restriction>
+    </simpleType>
+    <element name="MsiInstallerData" substitutionGroup="sdp:InstallHandlerSpecificData">
+        <complexType>
+            <annotation>
+                <documentation>Data specific to MSI packages.</documentation>
+            </annotation>
+            <attribute name="CommandLine" type="msi:MsiInstallerCommandLine" use="optional">
+                <annotation>
+                    <documentation>Optional "command line" that is passed to the MSI APIs when installing the product. This will typically contain extra properties as name-value pairs separated by spaces.</documentation>
+                </annotation>
+            </attribute>
+            <attribute name="UninstallCommandLine" type="msi:MsiInstallerCommandLine" use="optional">
+                <annotation>
+                    <documentation>Optional uninstall "command line" that is passed to the MSI APIs when uninstalling the product.  This will typically contain extra properties as name-value pairs separated by spaces.</documentation>
+                </annotation>
+            </attribute>
+            <attribute name="MsiFile" type="bt:FilePath" use="required">
+                <annotation>
+                    <documentation>The name of the MSI file to install, specified as a filename such as FILENAME.MSI, and may include an optional relative path.  The Client will download (and decompress) the files required for installation (if any) into a temporary directory, and then execute the program via Win32 CreateProcess.  This attribute specifies the file within the temporary directory to execute.  If the decompression results in subdirectories within the temporary directory, the file to execute may be within on of those subdirectories and the relative path should include that subdirectory.  Note that this means that only files within the temporary directory may be executed so the executable must be included in the files download from the server.</documentation>
+                </annotation>
+            </attribute>
+            <attribute name="ProductCode" type="mspblob:GUID" use="required">
+                <annotation>
+                    <documentation>ProductCode of the MSI to be applied.</documentation>
+                </annotation>
+            </attribute>
+        </complexType>
+    </element>
+</schema>

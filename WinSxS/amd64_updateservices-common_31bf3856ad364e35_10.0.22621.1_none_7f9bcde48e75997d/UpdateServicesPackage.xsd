@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<schema targetNamespace="http://schemas.microsoft.com/wsus/2005/04/CorporatePublishing/UpdateServicesPackage.xsd"
+    xmlns="http://www.w3.org/2001/XMLSchema" xmlns:bt="http://schemas.microsoft.com/wsus/2005/04/CorporatePublishing/BaseTypes.xsd"
+    xmlns:usp="http://schemas.microsoft.com/wsus/2005/04/CorporatePublishing/UpdateServicesPackage.xsd"
+    xmlns:sdp="http://schemas.microsoft.com/wsus/2005/04/CorporatePublishing/SoftwareDistributionPackage.xsd"
+    xmlns:mspblob="http://www.microsoft.com/msi/patch_applicability.xsd"
+    elementFormDefault="qualified" attributeFormDefault="unqualified">
+    <import namespace="http://schemas.microsoft.com/wsus/2005/04/CorporatePublishing/SoftwareDistributionPackage.xsd"
+        schemaLocation="SoftwareDistributionPackage.xsd" />
+    <import namespace="http://schemas.microsoft.com/wsus/2005/04/CorporatePublishing/BaseTypes.xsd"
+        schemaLocation="BaseTypes.xsd" />
+    <!--
+        This schema specifies the form of the XML meta-data for an Update Services package.
+    -->
+    <element name="UpdateServicesPackage" type="usp:UpdateServicesPackage" />
+    <!--
+        Types related to the descriptive text of a package
+    -->
+
+    <complexType name="UpdateIdentityForBundle">
+        <annotation>
+            <documentation>An update that is bundled by this update. The applicability of the bundled updates affects the applicability of the bundling update, and the MSUS Client installs /uninstalls the bundled updates when it installs / uninstalls the bundling update. Please see other specifications for the details of these processes.</documentation>
+        </annotation>
+        <attribute name="UpdateID" type="bt:Guid" use="required" />
+        <attribute name="RevisionNumber" type="bt:positiveInt" use="required" />
+    </complexType>
+
+    <complexType name="UpdateServicesPackage">
+        <sequence>
+            <element name="SoftwareDistributionPackage" type="sdp:SoftwareDistributionPackage" />
+            <element name="UpdateServicesProperties" type="usp:UpdateServicesProperties" />
+        </sequence>
+    </complexType>
+    <complexType name="UpdateServicesProperties">
+        <annotation>
+            <documentation>Miscelaneous properties of how the package is deployed to WSUS in a specific corporate environment.</documentation>
+        </annotation>
+        <sequence>
+            <element name="ProductCategoryUpdateID" type="bt:Guid" minOccurs="0" maxOccurs="unbounded">
+                <annotation>
+                    <documentation>Specifies the Category(s) that this Update should belong to.</documentation>
+                </annotation>
+            </element>
+            <element name="InstallableItemInfo" minOccurs="0" maxOccurs="unbounded">
+                <annotation>
+                    <documentation>Information about an installable item that is specific to this WSUS server.</documentation>
+                </annotation>
+                <complexType>
+                    <sequence>
+                        <element name="File" type="sdp:File" maxOccurs="unbounded">
+                            <annotation>
+                                <documentation>Each InstallableItem is packaged into a cab and signed by the server (making the cab server-specific). This element specifies information about the signed cab.</documentation>
+                            </annotation>
+                        </element>
+                        <element name="WindowsInstallerRepairPathInfo" minOccurs="0" maxOccurs="unbounded">
+                            <annotation>
+                                <documentation>Repair path properties of Exe-wrapped-Msi</documentation>
+                            </annotation>
+                            <complexType>
+                                <sequence />
+                                <attribute name="TargetId" type="mspblob:GUID">
+                                    <annotation>
+                                        <documentation>The targetId of this package referenced in SoftwareDistributionPackage.WindowsInstallerRepairPath</documentation>
+                                    </annotation>
+                                </attribute>
+                                <attribute name="Path" type="string">
+                                    <annotation>
+                                        <documentation>The repair path.</documentation>
+                                    </annotation>
+                                </attribute>
+                            </complexType>
+                        </element>
+                    </sequence>
+                    <attribute name="ID" type="bt:Guid" use="required">
+                        <annotation>
+                            <documentation>The ID of the SoftwareDistributionPackage.InstallableItem to which this info applies.</documentation>
+                        </annotation>
+                    </attribute>
+                    <attribute name="InstallPointDirectory" type="string" use="optional">
+                        <annotation>
+                            <documentation>Specifies the subdirectory of the "app server" UNC path that contains the install point for the package.</documentation>
+                        </annotation>
+                    </attribute>
+                </complexType>
+            </element>
+            <element name="BundledUpdates" minOccurs="0">
+                <annotation>
+                    <documentation>A list of updates that are bundled by this update.</documentation>
+                </annotation>
+                <complexType>
+                    <sequence>
+                        <element name="UpdateIdentity" type="usp:UpdateIdentityForBundle" maxOccurs="unbounded" />
+                    </sequence>
+                </complexType>
+            </element>
+            <element name="BundleLanguage" type="language" minOccurs="0" maxOccurs="unbounded">
+                <annotation>
+                    <documentation>The language that the bundle has been localized to. If unspecified, the item is language-independent. This refers to the languages of the binaries, as opposed to the languages that the meta-data supports.</documentation>
+                </annotation>
+            </element>
+        </sequence>
+        <attribute name="RevisionNumber" type="bt:positiveInt">
+            <annotation>
+                <documentation>The revision number of a specific revision of the packages's metadata.</documentation>
+            </annotation>
+        </attribute>
+        <attribute name="MaxDownloadSize" type="bt:FileSize" use="optional">
+            <annotation>
+                <documentation>The maximum number of bytes that could be downloaded by the MSUS Client in order to perform installation/uninstallation of this update. This attribute will usually be omitted, and the number of bytes may be calculated by adding up the sizes specified by the relevent File elements. But certain kinds of updates (Windows Patches) can perform an optimized download. For these updates, it is not possible to determine the actual download size without performing an analysis of the Client machine. The update author should include a MaxDownloadSize and MinDownloadSize, and the Client will present these to the user as an initial approximation of what would happen if he elected to download and install/uninstall the update. This attribute is omitted on bundles, and the value is calculated by adding the values on all applicable bundled children.</documentation>
+            </annotation>
+        </attribute>
+        <attribute name="MinDownloadSize" type="bt:FileSize" use="optional">
+            <annotation>
+                <documentation>The minimum number of bytes that could be downloaded by the MSUS Client in order to perform installation/uninstallation of this update. Please see the documentation of MaxDownloadSize for more information.</documentation>
+            </annotation>
+        </attribute>
+        <attribute name="PublisherID" type="bt:Guid">
+            <annotation>
+                <documentation>Speficies the identity of publisher which publishs this package.</documentation>
+            </annotation>
+        </attribute>
+        <attribute name="CompatibleProtocolVersion" type="sdp:SchemaVersion" use="optional">
+            <annotation>
+                <documentation>Specifies the Compatible Protocol Version required to handle this package. This is used to prevent an update from being sent to a client or server that cannot handle it properly.</documentation>
+            </annotation>
+        </attribute>
+        <attribute name="MetadataOnly" type="boolean" use="optional">
+            <annotation>
+                <documentation>Specifies whether the package is published as MetdataOnly</documentation>
+            </annotation>
+        </attribute>
+    </complexType>
+</schema>

@@ -1,0 +1,1169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Report xmlns="http://schemas.microsoft.com/sqlserver/reporting/2005/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
+  <DataSources>
+    <DataSource Name="DummyDataSource">
+      <ConnectionProperties>
+        <ConnectString />
+        <DataProvider>SQL</DataProvider>
+      </ConnectionProperties>
+      <rd:DataSourceID>cd59c056-3d7c-4009-b97b-e74a4bc53591</rd:DataSourceID>
+    </DataSource>
+  </DataSources>
+  <BottomMargin>1in</BottomMargin>
+  <RightMargin>1in</RightMargin>
+  <ReportParameters>
+    <ReportParameter Name="Classifications">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>Classifications</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="Products">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>Products</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="Groups">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>Groups</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="Status">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>Status</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="IsPermittedApproveUpdate">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>Report_Parameter_4</Prompt>
+    </ReportParameter>
+  </ReportParameters>
+  <rd:DrawGrid>true</rd:DrawGrid>
+  <InteractiveWidth>8.5in</InteractiveWidth>
+  <rd:GridSpacing>0.05in</rd:GridSpacing>
+  <rd:SnapToGrid>true</rd:SnapToGrid>
+  <Body>
+    <ReportItems>
+      <Textbox Name="HeaderTextBox">
+        <ZIndex>3</ZIndex>
+        <Width>4.8in</Width>
+        <Style>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingBottom>2pt</PaddingBottom>
+          <FontFamily>=First(Fields!FontFamily.Value, "Microsoft_UpdateServices_UI_SnapIn_Reporting_UpdateComputerLocalizationBusinessObject")</FontFamily>
+          <FontWeight>700</FontWeight>
+          <Color>Gray</Color>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+        </Style>
+        <Height>0.25in</Height>
+        <Value>=First(Fields!TitleComputerStatus.Value, "Microsoft_UpdateServices_UI_SnapIn_Reporting_UpdateComputerLocalizationBusinessObject")</Value>
+      </Textbox>
+      <Image Name="image4">
+        <Sizing>AutoSize</Sizing>
+        <Left>4.85in</Left>
+        <MIMEType>image/png</MIMEType>
+        <Top>0.01in</Top>
+        <ZIndex>2</ZIndex>
+        <Width>1.58333in</Width>
+        <Source>Embedded</Source>
+        <Style />
+        <Height>0.40625in</Height>
+        <Value>wsuslogo</Value>
+      </Image>
+      <List Name="list1">
+        <Sorting>
+          <SortBy>
+            <SortExpression>=Fields!FullDomainName.Value</SortExpression>
+            <Direction>Ascending</Direction>
+          </SortBy>
+        </Sorting>
+        <ReportItems>
+          <Rectangle Name="rectangle13">
+            <ReportItems>
+              <Image Name="chart">
+                <Sizing>AutoSize</Sizing>
+                <Left>0.35in</Left>
+                <MIMEType>image/png</MIMEType>
+                <Top>0.4in</Top>
+                <ZIndex>11</ZIndex>
+                <Width>0.8in</Width>
+                <Source>Database</Source>
+                <Style />
+                <Height>0.8in</Height>
+                <Value>=Fields!ChartImage.Value</Value>
+              </Image>
+              <Rectangle Name="ChartColorUnknown">
+                <Left>1.21in</Left>
+                <Top>1.09in</Top>
+                <ZIndex>10</ZIndex>
+                <Width>2.911mm</Width>
+                <Style>
+                  <BorderStyle>
+                    <Default>Solid</Default>
+                  </BorderStyle>
+                  <BorderColor>
+                    <Default>#8b889d</Default>
+                  </BorderColor>
+                  <BackgroundColor>#949494</BackgroundColor>
+                </Style>
+                <Height>2.911mm</Height>
+              </Rectangle>
+              <Textbox Name="UnknownCount">
+                <Left>1.36in</Left>
+                <Top>1.085in</Top>
+                <rd:DefaultName>UnknownCount</rd:DefaultName>
+                <ZIndex>9</ZIndex>
+                <Width>4.142in</Width>
+                <Style>
+                  <TextAlign>Left</TextAlign>
+                  <FontFamily>=First(Fields!FontFamily.Value, "Microsoft_UpdateServices_UI_SnapIn_Reporting_UpdateComputerLocalizationBusinessObject")</FontFamily>
+                  <FontSize>=First(Fields!FontNormalSize.Value, "Microsoft_UpdateServices_UI_SnapIn_Reporting_UpdateComputerLocalizationBusinessObject")</FontSize>
+                  <VerticalAlign>Middle</VerticalAlign>
+                  <Color>=Fields!WindowTextColor.Value</Color>
+                </Style>
+                <CanGrow>true</CanGrow>
+                <Height>0.15in</Height>
+                <Value>=Fields!LabelUnknown.Value</Value>
+              </Textbox>
+              <Textbox Name="NeededCount">
+                <Left>1.36in</Left>
+                <Top>0.625in</Top>
+                <rd:DefaultName>NeededCount</rd:DefaultName>
+                <ZIndex>8</ZIndex>
+                <Width>4.142in</Width>
+                <Style>
+                  <TextAlign>Left</TextAlign>
+                  <FontFamily>=First(Fields!FontFamily.Value, "Microsoft_UpdateServices_UI_SnapIn_Reporting_UpdateComputerLocalizationBusinessObject")</FontFamily>
+                  <FontSize>=First(Fields!FontNormalSize.Value, "Microsoft_UpdateServices_UI_SnapIn_Reporting_UpdateComputerLocalizationBusinessObject")</FontSize>
+                  <VerticalAlign>Middle</VerticalAlign>
+                  <Color>=Fields!WindowTextColor.Value</Color>
+                </Style>
+                <CanGrow>true</CanGrow>
+                <Height>0.15in</Height>
+                <Value>=Fields!LabelNeeded.Value</Value>
+              </Textbox>
+              <Rectangle Name="ChartColorNeeded">
+                <Left>1.21in</Left>
+                <Top>0.639in</Top>
+                <ZIndex>7</ZIndex>
+                <Width>2.911mm</Width>
+                <Style>
+                  <BorderStyle>
+                    <Default>Solid</Default>
+                  </BorderStyle>
+                  <BorderColor>
+                    <Default>#8b889d</Default>
+                  </BorderColor>
+                  <BackgroundColor>#ffcb06</BackgroundColor>
+                </Style>
+                <Height>2.911mm</Height>
+              </Rectangle>
+              <Rectangle Name="ChartColorInstalled">
+                <Left>1.21in</Left>
+                <Top>0.864in</Top>
+                <ZIndex>6</ZIndex>
+                <Width>2.911mm</Width>
+                <Style>
+                  <BorderStyle>
+                    <Default>Solid</Default>
+                  </BorderStyle>
+                  <BorderColor>
+                    <Default>#8b889d</Default>
+                  </BorderColor>
+                  <BackgroundColor>#23bd3e</BackgroundColor>
+                </Style>
+                <Height>2.911mm</Height>
+              </Rectangle>
+              <Rectangle Name="ChartColorFailed">
+                <Left>1.21in</Left>
+                <Top>0.414in</Top>
+                <ZIndex>5</ZIndex>
+                <Width>2.911mm</Width>
+                <Style>
+                  <BorderStyle>
+                    <Default>Solid</Default>
+                  </BorderStyle>
+                  <BorderColor>
+                    <Default>#8b889d</Default>
+                  </BorderColor>
+                  <BackgroundColor>#f80423</BackgroundColor>
+                </Style>
+                <Height>2.911mm</Height>
+              </Rectangle>
+              <Textbox Name="FailedCount">
+                <Left>1.36in</Left>
+                <Top>0.41in</Top>
+                <rd:DefaultName>FailedCount</rd:DefaultName>
+                <ZIndex>4</ZIndex>
+                <Width>4.142in</Width>
+                <Style>
+                  <TextAlign>Left</TextAlign>
+                  <FontFamily>=First(Fields!FontFamily.Value, "Microsoft_UpdateServices_UI_SnapIn_Reporting_UpdateComputerLocalizationBusinessObject")</FontFamily>
+                  <FontSize>=First(Fields!FontNormalSize.Value, "Microsoft_UpdateServices_UI_SnapIn_Reporting_UpdateComputerLocalizationBusinessObject")</FontSize>
+                  <VerticalAlign>Middle</VerticalAlign>
+                  <Color>=Fields!WindowTextColor.Value</Color>
+                </Style>
+                <CanGrow>true</CanGrow>
+                <Height>0.15in</Height>
+                <Value>=Fields!LabelFailed.Value</Value>
+              </Textbox>
+              <Textbox Name="UpToDateCount">
+                <Left>1.36in</Left>
+                <Top>0.85in</Top>
+                <ZIndex>3</ZIndex>
+                <Width>4.142in</Width>
+                <Style>
+                  <TextAlign>Left</TextAlign>
+                  <FontFamily>=First(Fields!FontFamily.Value, "Microsoft_UpdateServices_UI_SnapIn_Reporting_UpdateComputerLocalizationBusinessObject")</FontFamily>
+                  <FontSize>=First(Fields!FontNormalSize.Value, "Microsoft_UpdateServices_UI_SnapIn_Reporting_UpdateComputerLocalizationBusinessObject")</FontSize>
+                  <VerticalAlign>Middle</VerticalAlign>
+                  <Color>=Fields!WindowTextColor.Value</Color>
+                </Style>
+                <CanGrow>true</CanGrow>
+                <Height>0.15in</Height>
+                <Value>=Fields!LabelInstalled.Value</Value>
+              </Textbox>
+              <Table Name="table2">
+                <Left>0.35in</Left>
+                <ZIndex>2</ZIndex>
+                <Style>
+                  <FontFamily>=First(Fields!FontFamily.Value, "Microsoft_UpdateServices_UI_SnapIn_Reporting_UpdateComputerLocalizationBusinessObject")</FontFamily>
+                  <FontSize>=First(Fields!FontNormalSize.Value, "Microsoft_UpdateServices_UI_SnapIn_Reporting_UpdateComputerLocalizationBusinessObject")</FontSize>
+                </Style>
+                <Header>
+                  <TableRows>
+                    <TableRow>
+                      <TableCells>
+                        <TableCell>
+                          <ColSpan>2</ColSpan>
+                          <ReportItems>
+                            <Textbox Name="textbox17">
+                              <Style>
+                                <BorderStyle>
+                                  <Bottom>Solid</Bottom>
+                                </BorderStyle>
+                                <PaddingLeft>2pt</PaddingLeft>
+                                <BorderWidth>
+                                  <Bottom>1pt</Bottom>
+                                </BorderWidth>
+                                <PaddingBottom>2pt</PaddingBottom>
+                                <FontFamily>=First(Fields!FontFamily.Value, "Microsoft_UpdateServices_UI_SnapIn_Reporting_UpdateComputerLocalizationBusinessObject")</FontFamily>
+                                <FontWeight>700</FontWeight>
+                                <FontSize>=First(Fields!FontHeaderSize.Value, "Microsoft_UpdateServices_UI_SnapIn_Reporting_UpdateComputerLocalizationBusinessObject")</FontSize>
+                                <VerticalAlign>Middle</VerticalAlign>
+                                <BorderColor>
+                                  <Bottom>LightGrey</Bottom>
+                                </BorderColor>
+                                <Color>Gray</Color>
+                                <PaddingRight>2pt</PaddingRight>
+                                <PaddingTop>2pt</PaddingTop>
+                              </Style>
+                              <CanGrow>true</CanGrow>
+                              <Value>=First(Fields!HeaderStatusArea.Value)</Value>
+                            </Textbox>
+                          </ReportItems>
+                        </TableCell>
+                      </TableCells>
+                      <Height>0.3in</Height>
+                    </TableRow>
+                  </TableRows>
+                </Header>
+                <TableColumns>
+                  <TableColumn>
+                    <Width>1.71294in</Width>
+                  </TableColumn>
+                  <TableColumn>
+                    <Width>4.43706in</Width>
+                  </TableColumn>
+                </TableColumns>
+                <Height>0.3in</Height>
+              </Table>
+              <Image Name="image2">
+                <Sizing>AutoSize</Sizing>
+                <Left>0.01in</Left>
+                <MIMEType>image/png</MIMEType>
+                <Top>0.01in</Top>
+                <ZIndex>1</ZIndex>
+                <Width>0.33333in</Width>
+                <Source>Embedded</Source>
+                <Style />
+                <Height>0.33333in</Height>
+                <Value>update32x32</Value>
+              </Image>
+              <Rectangle Name="rectangle6">
+                <PageBreakAtStart>true</PageBreakAtStart>
+                <ReportItems>
+                  <Table Name="table1">
+                    <Left>0.35in</Left>
+                    <ZIndex>2</ZIndex>
+                    <Style>
+                      <FontFamily>=First(Fields!FontFamily.Value, "Microsoft_UpdateServices_UI_SnapIn_Reporting_UpdateComputerLocalizationBusinessObject")</FontFamily>
+                      <FontSize>=First(Fields!FontNormalSize.Value, "Microsoft_UpdateServices_UI_SnapIn_Reporting_UpdateComputerLocalizationBusinessObject")</FontSize>
+                    </Style>
+                    <Header>
+                      <TableRows>
+                        <TableRow>
+                          <TableCells>
+                            <TableCell>
+                              <ColSpan>2</ColSpan>
+                              <ReportItems>
+                                <Textbox Name="textbox1">
+                                  <Style>
+                                    <BorderStyle>
+                                      <Bottom>Solid</Bottom>
+                                    </BorderStyle>
+                                    <PaddingLeft>2pt</PaddingLeft>
+                                    <BorderWidth>
+                                      <Bottom>1pt</Bottom>
+                                    </BorderWidth>
+                                    <PaddingBottom>2pt</PaddingBottom>
+                                    <FontFamily>=First(Fields!FontFamily.Value, "Microsoft_UpdateServices_UI_SnapIn_Reporting_UpdateComputerLocalizationBusinessObject")</FontFamily>
+                                    <FontWeight>700</FontWeight>
+                                    <FontSize>=First(Fields!FontHeaderSize.Value, "Microsoft_UpdateServices_UI_SnapIn_Reporting_UpdateComputerLocalizationBusinessObject")</FontSize>
+                                    <VerticalAlign>Middle</VerticalAlign>
+                                    <BorderColor>
+                                      <Bottom>LightGrey</Bottom>
+                                    </BorderColor>
+                                    <Color>Gray</Color>
+                                    <PaddingRight>2pt</PaddingRight>
+                                    <PaddingTop>2pt</PaddingTop>
+                                  </Style>
+                                  <CanGrow>true</CanGrow>
+                                  <Value>=First(Fields!TitleUpdateStatus.Value, "Microsoft_UpdateServices_UI_SnapIn_Reporting_UpdateComputerLocalizationBusinessObject")</Value>
+                                </Textbox>
+                              </ReportItems>
+                            </TableCell>
+                          </TableCells>
+                          <Height>0.3in</Height>
+                        </TableRow>
+                      </TableRows>
+                    </Header>
+                    <TableColumns>
+                      <TableColumn>
+                        <Width>1.72761in</Width>
+                      </TableColumn>
+                      <TableColumn>
+                        <Width>4.42239in</Width>
+                      </TableColumn>
+                    </TableColumns>
+                    <Height>0.3in</Height>
+                  </Table>
+                  <Image Name="image3">
+                    <Sizing>AutoSize</Sizing>
+                    <Left>0.01in</Left>
+                    <MIMEType>image/png</MIMEType>
+                    <Top>0.01in</Top>
+                    <ZIndex>1</ZIndex>
+                    <Width>0.33333in</Width>
+                    <Source>Embedded</Source>
+                    <Style />
+                    <Height>0.33333in</Height>
+                    <Value>computerreport_details</Value>
+                  </Image>
+                  <Subreport Name="UpdatesStatusForComputer">
+                    <Left>0.35in</Left>
+                    <Parameters>
+                      <Parameter Name="ComputerId">
+                        <Value>=Fields!ComputerTargetId.Value</Value>
+                      </Parameter>
+                      <Parameter Name="IsPermittedApproveUpdate">
+                        <Value>=Parameters!IsPermittedApproveUpdate.Value</Value>
+                      </Parameter>
+                    </Parameters>
+                    <Top>0.4in</Top>
+                    <ReportName>UpdatesStatusForComputer</ReportName>
+                  </Subreport>
+                </ReportItems>
+                <Top>1.35in</Top>
+                <PageBreakAtEnd>true</PageBreakAtEnd>
+              </Rectangle>
+            </ReportItems>
+            <Top>1.45in</Top>
+            <ZIndex>2</ZIndex>
+            <Style>
+              <BorderColor>
+                <Default>Gainsboro</Default>
+              </BorderColor>
+            </Style>
+          </Rectangle>
+          <Table Name="ComputerSummaryTable">
+            <Left>0.35in</Left>
+            <DataSetName>Microsoft_UpdateServices_UI_SnapIn_Reporting_ComputerBusinessObject</DataSetName>
+            <ZIndex>1</ZIndex>
+            <Style>
+              <FontFamily>=First(Fields!FontFamily.Value, "Microsoft_UpdateServices_UI_SnapIn_Reporting_UpdateComputerLocalizationBusinessObject")</FontFamily>
+              <FontSize>=First(Fields!FontNormalSize.Value, "Microsoft_UpdateServices_UI_SnapIn_Reporting_UpdateComputerLocalizationBusinessObject")</FontSize>
+            </Style>
+            <Header>
+              <TableRows>
+                <TableRow>
+                  <TableCells>
+                    <TableCell>
+                      <ColSpan>2</ColSpan>
+                      <ReportItems>
+                        <Textbox Name="textbox2">
+                          <ZIndex>10</ZIndex>
+                          <Style>
+                            <BorderStyle>
+                              <Bottom>Solid</Bottom>
+                            </BorderStyle>
+                            <TextAlign>Left</TextAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <BorderWidth>
+                              <Bottom>1pt</Bottom>
+                            </BorderWidth>
+                            <PaddingBottom>2pt</PaddingBottom>
+                            <FontFamily>=First(Fields!FontFamily.Value, "Microsoft_UpdateServices_UI_SnapIn_Reporting_UpdateComputerLocalizationBusinessObject")</FontFamily>
+                            <FontWeight>700</FontWeight>
+                            <FontSize>=First(Fields!FontHeaderSize.Value, "Microsoft_UpdateServices_UI_SnapIn_Reporting_UpdateComputerLocalizationBusinessObject")</FontSize>
+                            <VerticalAlign>Middle</VerticalAlign>
+                            <BorderColor>
+                              <Bottom>LightGrey</Bottom>
+                            </BorderColor>
+                            <Color>Gray</Color>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                          </Style>
+                          <Label>=Fields!FullDomainName.Value</Label>
+                          <CanGrow>true</CanGrow>
+                          <Value>=Fields!FullDomainName.Value</Value>
+                        </Textbox>
+                      </ReportItems>
+                    </TableCell>
+                  </TableCells>
+                  <Height>0.3in</Height>
+                </TableRow>
+                <TableRow>
+                  <TableCells>
+                    <TableCell>
+                      <ReportItems>
+                        <Textbox Name="textbox3">
+                          <ZIndex>9</ZIndex>
+                          <Style>
+                            <BorderStyle>
+                              <Top>Solid</Top>
+                            </BorderStyle>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <BorderWidth>
+                              <Top>1pt</Top>
+                            </BorderWidth>
+                            <PaddingBottom>2pt</PaddingBottom>
+                            <FontFamily>=First(Fields!FontFamily.Value, "Microsoft_UpdateServices_UI_SnapIn_Reporting_UpdateComputerLocalizationBusinessObject")</FontFamily>
+                            <FontSize>=First(Fields!FontNormalSize.Value, "Microsoft_UpdateServices_UI_SnapIn_Reporting_UpdateComputerLocalizationBusinessObject")</FontSize>
+                            <VerticalAlign>Bottom</VerticalAlign>
+                            <BorderColor>
+                              <Top>LightGrey</Top>
+                            </BorderColor>
+                            <Color>=Fields!WindowTextColor.Value</Color>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                          </Style>
+                          <CanGrow>true</CanGrow>
+                          <Value>=First(Fields!LabelComputerOperatingSystem.Value, "Microsoft_UpdateServices_UI_SnapIn_Reporting_UpdateComputerLocalizationBusinessObject")</Value>
+                        </Textbox>
+                      </ReportItems>
+                    </TableCell>
+                    <TableCell>
+                      <ReportItems>
+                        <Textbox Name="textbox4">
+                          <ZIndex>8</ZIndex>
+                          <Style>
+                            <BorderStyle>
+                              <Top>Solid</Top>
+                            </BorderStyle>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <BorderWidth>
+                              <Top>1pt</Top>
+                            </BorderWidth>
+                            <PaddingBottom>2pt</PaddingBottom>
+                            <FontFamily>=First(Fields!FontFamily.Value, "Microsoft_UpdateServices_UI_SnapIn_Reporting_UpdateComputerLocalizationBusinessObject")</FontFamily>
+                            <FontSize>=First(Fields!FontNormalSize.Value, "Microsoft_UpdateServices_UI_SnapIn_Reporting_UpdateComputerLocalizationBusinessObject")</FontSize>
+                            <VerticalAlign>Bottom</VerticalAlign>
+                            <BorderColor>
+                              <Top>LightGrey</Top>
+                            </BorderColor>
+                            <Color>=Fields!WindowTextColor.Value</Color>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                          </Style>
+                          <CanGrow>true</CanGrow>
+                          <Value>=Fields!OperatingSystemName.Value</Value>
+                        </Textbox>
+                      </ReportItems>
+                    </TableCell>
+                  </TableCells>
+                  <Height>0.2in</Height>
+                </TableRow>
+                <TableRow>
+                  <TableCells>
+                    <TableCell>
+                      <ReportItems>
+                        <Textbox Name="textbox5">
+                          <ZIndex>7</ZIndex>
+                          <Style>
+                            <BorderStyle>
+                              <Bottom>Solid</Bottom>
+                              <Top>Solid</Top>
+                            </BorderStyle>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <BorderWidth>
+                              <Bottom>1pt</Bottom>
+                              <Top>1pt</Top>
+                            </BorderWidth>
+                            <PaddingBottom>2pt</PaddingBottom>
+                            <FontFamily>=First(Fields!FontFamily.Value, "Microsoft_UpdateServices_UI_SnapIn_Reporting_UpdateComputerLocalizationBusinessObject")</FontFamily>
+                            <FontSize>=First(Fields!FontNormalSize.Value, "Microsoft_UpdateServices_UI_SnapIn_Reporting_UpdateComputerLocalizationBusinessObject")</FontSize>
+                            <VerticalAlign>Bottom</VerticalAlign>
+                            <BorderColor>
+                              <Bottom>Gainsboro</Bottom>
+                              <Top>Gainsboro</Top>
+                            </BorderColor>
+                            <Color>=Fields!WindowTextColor.Value</Color>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                          </Style>
+                          <CanGrow>true</CanGrow>
+                          <Value>=First(Fields!LabelComputerServicePack.Value, "Microsoft_UpdateServices_UI_SnapIn_Reporting_UpdateComputerLocalizationBusinessObject")</Value>
+                        </Textbox>
+                      </ReportItems>
+                    </TableCell>
+                    <TableCell>
+                      <ReportItems>
+                        <Textbox Name="textbox6">
+                          <ZIndex>6</ZIndex>
+                          <Style>
+                            <BorderStyle>
+                              <Bottom>Solid</Bottom>
+                              <Top>Solid</Top>
+                            </BorderStyle>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <BorderWidth>
+                              <Bottom>1pt</Bottom>
+                              <Top>1pt</Top>
+                            </BorderWidth>
+                            <PaddingBottom>2pt</PaddingBottom>
+                            <FontFamily>=First(Fields!FontFamily.Value, "Microsoft_UpdateServices_UI_SnapIn_Reporting_UpdateComputerLocalizationBusinessObject")</FontFamily>
+                            <FontSize>=First(Fields!FontNormalSize.Value, "Microsoft_UpdateServices_UI_SnapIn_Reporting_UpdateComputerLocalizationBusinessObject")</FontSize>
+                            <VerticalAlign>Bottom</VerticalAlign>
+                            <BorderColor>
+                              <Bottom>Gainsboro</Bottom>
+                              <Top>Gainsboro</Top>
+                            </BorderColor>
+                            <Color>=Fields!WindowTextColor.Value</Color>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                          </Style>
+                          <CanGrow>true</CanGrow>
+                          <Value>=Fields!OperatingSystemServicePack.Value</Value>
+                        </Textbox>
+                      </ReportItems>
+                    </TableCell>
+                  </TableCells>
+                  <Height>0.2in</Height>
+                </TableRow>
+                <TableRow>
+                  <TableCells>
+                    <TableCell>
+                      <ReportItems>
+                        <Textbox Name="textbox9">
+                          <ZIndex>5</ZIndex>
+                          <Style>
+                            <BorderStyle>
+                              <Bottom>Solid</Bottom>
+                              <Top>Solid</Top>
+                            </BorderStyle>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <BorderWidth>
+                              <Bottom>1pt</Bottom>
+                              <Top>1pt</Top>
+                            </BorderWidth>
+                            <PaddingBottom>2pt</PaddingBottom>
+                            <FontFamily>=First(Fields!FontFamily.Value, "Microsoft_UpdateServices_UI_SnapIn_Reporting_UpdateComputerLocalizationBusinessObject")</FontFamily>
+                            <FontSize>=First(Fields!FontNormalSize.Value, "Microsoft_UpdateServices_UI_SnapIn_Reporting_UpdateComputerLocalizationBusinessObject")</FontSize>
+                            <VerticalAlign>Bottom</VerticalAlign>
+                            <BorderColor>
+                              <Bottom>Gainsboro</Bottom>
+                              <Top>Gainsboro</Top>
+                            </BorderColor>
+                            <Color>=Fields!WindowTextColor.Value</Color>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                          </Style>
+                          <CanGrow>true</CanGrow>
+                          <Value>=First(Fields!LabelComputerLanguage.Value, "Microsoft_UpdateServices_UI_SnapIn_Reporting_UpdateComputerLocalizationBusinessObject")</Value>
+                        </Textbox>
+                      </ReportItems>
+                    </TableCell>
+                    <TableCell>
+                      <ReportItems>
+                        <Textbox Name="textbox10">
+                          <ZIndex>4</ZIndex>
+                          <Style>
+                            <BorderStyle>
+                              <Bottom>Solid</Bottom>
+                              <Top>Solid</Top>
+                            </BorderStyle>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <BorderWidth>
+                              <Bottom>1pt</Bottom>
+                              <Top>1pt</Top>
+                            </BorderWidth>
+                            <PaddingBottom>2pt</PaddingBottom>
+                            <FontFamily>=First(Fields!FontFamily.Value, "Microsoft_UpdateServices_UI_SnapIn_Reporting_UpdateComputerLocalizationBusinessObject")</FontFamily>
+                            <FontSize>=First(Fields!FontNormalSize.Value, "Microsoft_UpdateServices_UI_SnapIn_Reporting_UpdateComputerLocalizationBusinessObject")</FontSize>
+                            <VerticalAlign>Bottom</VerticalAlign>
+                            <BorderColor>
+                              <Bottom>Gainsboro</Bottom>
+                              <Top>Gainsboro</Top>
+                            </BorderColor>
+                            <Color>=Fields!WindowTextColor.Value</Color>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                          </Style>
+                          <CanGrow>true</CanGrow>
+                          <Value>=Fields!OperatingSystemLanguage.Value</Value>
+                        </Textbox>
+                      </ReportItems>
+                    </TableCell>
+                  </TableCells>
+                  <Height>0.2in</Height>
+                </TableRow>
+                <TableRow>
+                  <TableCells>
+                    <TableCell>
+                      <ReportItems>
+                        <Textbox Name="textbox11">
+                          <ZIndex>3</ZIndex>
+                          <Style>
+                            <BorderStyle>
+                              <Bottom>Solid</Bottom>
+                              <Top>Solid</Top>
+                            </BorderStyle>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <BorderWidth>
+                              <Bottom>1pt</Bottom>
+                              <Top>1pt</Top>
+                            </BorderWidth>
+                            <PaddingBottom>2pt</PaddingBottom>
+                            <FontFamily>=First(Fields!FontFamily.Value, "Microsoft_UpdateServices_UI_SnapIn_Reporting_UpdateComputerLocalizationBusinessObject")</FontFamily>
+                            <FontSize>=First(Fields!FontNormalSize.Value, "Microsoft_UpdateServices_UI_SnapIn_Reporting_UpdateComputerLocalizationBusinessObject")</FontSize>
+                            <VerticalAlign>Bottom</VerticalAlign>
+                            <BorderColor>
+                              <Bottom>Gainsboro</Bottom>
+                              <Top>Gainsboro</Top>
+                            </BorderColor>
+                            <Color>=Fields!WindowTextColor.Value</Color>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                          </Style>
+                          <CanGrow>true</CanGrow>
+                          <Value>=First(Fields!LabelComputerIPAddress.Value, "Microsoft_UpdateServices_UI_SnapIn_Reporting_UpdateComputerLocalizationBusinessObject")</Value>
+                        </Textbox>
+                      </ReportItems>
+                    </TableCell>
+                    <TableCell>
+                      <ReportItems>
+                        <Textbox Name="textbox12">
+                          <ZIndex>2</ZIndex>
+                          <Style>
+                            <BorderStyle>
+                              <Bottom>Solid</Bottom>
+                              <Top>Solid</Top>
+                            </BorderStyle>
+                            <TextAlign>Left</TextAlign>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <BorderWidth>
+                              <Bottom>1pt</Bottom>
+                              <Top>1pt</Top>
+                            </BorderWidth>
+                            <PaddingBottom>2pt</PaddingBottom>
+                            <FontFamily>=First(Fields!FontFamily.Value, "Microsoft_UpdateServices_UI_SnapIn_Reporting_UpdateComputerLocalizationBusinessObject")</FontFamily>
+                            <FontSize>=First(Fields!FontNormalSize.Value, "Microsoft_UpdateServices_UI_SnapIn_Reporting_UpdateComputerLocalizationBusinessObject")</FontSize>
+                            <VerticalAlign>Bottom</VerticalAlign>
+                            <BorderColor>
+                              <Bottom>Gainsboro</Bottom>
+                              <Top>Gainsboro</Top>
+                            </BorderColor>
+                            <Color>=Fields!WindowTextColor.Value</Color>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                          </Style>
+                          <CanGrow>true</CanGrow>
+                          <Value>=Fields!IPAddress.Value</Value>
+                        </Textbox>
+                      </ReportItems>
+                    </TableCell>
+                  </TableCells>
+                  <Height>0.2in</Height>
+                </TableRow>
+                <TableRow>
+                  <TableCells>
+                    <TableCell>
+                      <ReportItems>
+                        <Textbox Name="textbox15">
+                          <ZIndex>1</ZIndex>
+                          <Style>
+                            <BorderStyle>
+                              <Bottom>Solid</Bottom>
+                              <Top>Solid</Top>
+                            </BorderStyle>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <BorderWidth>
+                              <Bottom>1pt</Bottom>
+                              <Top>1pt</Top>
+                            </BorderWidth>
+                            <PaddingBottom>2pt</PaddingBottom>
+                            <FontFamily>=First(Fields!FontFamily.Value, "Microsoft_UpdateServices_UI_SnapIn_Reporting_UpdateComputerLocalizationBusinessObject")</FontFamily>
+                            <FontSize>=First(Fields!FontNormalSize.Value, "Microsoft_UpdateServices_UI_SnapIn_Reporting_UpdateComputerLocalizationBusinessObject")</FontSize>
+                            <VerticalAlign>Bottom</VerticalAlign>
+                            <BorderColor>
+                              <Bottom>Gainsboro</Bottom>
+                              <Top>Gainsboro</Top>
+                            </BorderColor>
+                            <Color>=Fields!WindowTextColor.Value</Color>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                          </Style>
+                          <CanGrow>true</CanGrow>
+                          <Value>=First(Fields!LabelComputerLastStatusReported.Value, "Microsoft_UpdateServices_UI_SnapIn_Reporting_UpdateComputerLocalizationBusinessObject")</Value>
+                        </Textbox>
+                      </ReportItems>
+                    </TableCell>
+                    <TableCell>
+                      <ReportItems>
+                        <Textbox Name="textbox16">
+                          <Style>
+                            <BorderStyle>
+                              <Bottom>Solid</Bottom>
+                              <Top>Solid</Top>
+                            </BorderStyle>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <BorderWidth>
+                              <Bottom>1pt</Bottom>
+                              <Top>1pt</Top>
+                            </BorderWidth>
+                            <PaddingBottom>2pt</PaddingBottom>
+                            <FontFamily>=First(Fields!FontFamily.Value, "Microsoft_UpdateServices_UI_SnapIn_Reporting_UpdateComputerLocalizationBusinessObject")</FontFamily>
+                            <FontSize>=First(Fields!FontNormalSize.Value, "Microsoft_UpdateServices_UI_SnapIn_Reporting_UpdateComputerLocalizationBusinessObject")</FontSize>
+                            <VerticalAlign>Bottom</VerticalAlign>
+                            <BorderColor>
+                              <Bottom>Gainsboro</Bottom>
+                              <Top>Gainsboro</Top>
+                            </BorderColor>
+                            <Color>=Fields!WindowTextColor.Value</Color>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                          </Style>
+                          <CanGrow>true</CanGrow>
+                          <Value>=Fields!LastStatusReported.Value</Value>
+                        </Textbox>
+                      </ReportItems>
+                    </TableCell>
+                  </TableCells>
+                  <Height>0.2in</Height>
+                </TableRow>
+              </TableRows>
+            </Header>
+            <TableColumns>
+              <TableColumn>
+                <Width>1.64374in</Width>
+              </TableColumn>
+              <TableColumn>
+                <Width>4.50626in</Width>
+              </TableColumn>
+            </TableColumns>
+            <Height>1.3in</Height>
+          </Table>
+          <Image Name="image1">
+            <Sizing>AutoSize</Sizing>
+            <Left>0.01in</Left>
+            <MIMEType>image/png</MIMEType>
+            <Top>0.01in</Top>
+            <Width>0.33333in</Width>
+            <Source>Embedded</Source>
+            <Style />
+            <Height>0.33333in</Height>
+            <Value>computer_reports</Value>
+          </Image>
+        </ReportItems>
+        <DataSetName>Microsoft_UpdateServices_UI_SnapIn_Reporting_ComputerBusinessObject</DataSetName>
+        <Top>0.45in</Top>
+        <NoRows>=First(Fields!LabelNoItemsFound.Value, "Microsoft_UpdateServices_UI_SnapIn_Reporting_UpdateComputerLocalizationBusinessObject")</NoRows>
+        <ZIndex>1</ZIndex>
+        <Style>
+          <FontFamily>=First(Fields!FontFamily.Value, "Microsoft_UpdateServices_UI_SnapIn_Reporting_UpdateComputerLocalizationBusinessObject")</FontFamily>
+          <FontWeight>700</FontWeight>
+          <FontSize>=First(Fields!FontHeaderSize.Value, "Microsoft_UpdateServices_UI_SnapIn_Reporting_UpdateComputerLocalizationBusinessObject")</FontSize>
+          <Color>Gray</Color>
+        </Style>
+        <Grouping Name="list1_Details_Group">
+          <GroupExpressions>
+            <GroupExpression>=Fields!FullDomainName.Value</GroupExpression>
+          </GroupExpressions>
+        </Grouping>
+        <Height>3.3in</Height>
+      </List>
+      <Subreport Name="subreportReportParameters">
+        <Top>3.9in</Top>
+        <ReportName>ReportParameters</ReportName>
+      </Subreport>
+    </ReportItems>
+    <Height>3.95in</Height>
+  </Body>
+  <rd:ReportID>fb2e38d6-4dbb-4ffc-a523-de939a5227c4</rd:ReportID>
+  <LeftMargin>1in</LeftMargin>
+  <EmbeddedImages>
+    <EmbeddedImage Name="computer_reports">
+      <ImageData>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</ImageData>
+      <MIMEType>image/png</MIMEType>
+    </EmbeddedImage>
+    <EmbeddedImage Name="computerreport_details">
+      <ImageData>iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAIAAAD8GO2jAAAAB3RJTUUH1wIWFyAavdK1OQAAAAlwSFlzAAAewgAAHsIBbtB1PgAAAARnQU1BAACxjwv8YQUAAAcWSURBVHjapVbrbxxXFb933jO7O/uw42wSJ7G3gUZtTJu0ioIDDZHbRCpIhVZEFRWoH1CTgvjIBySoUL6g/gctElI/8wGBBGlVXq1U4VLihFKnre0kxnbsfYx3dmd33vcxnLs2dtwIEsLVaLR3dub8zu+c3znn4izL0D0sSim8KcuyJEkbT+A7jO/+ofLf/2aMvfPuu9PT06P79g0NDRUKhUqlUiwW4YdpWbKEM8QzJBmafp8AsKIwPP/SBXA2DJOeH6w7ztz8Yqfjep6ryJJt26VSCe52sVSulPP5fNG2wS340C4U7gkAQtJoOB9dS8vl/Oi+wucODT/6yISqKooqc84poVGceF6/3V6/vvDPrtcJ/T78m8vn8gX7UG38LgAQ9ygKwMQPf3K50be5sgvJFlJLJsofP6Z8/0Xp4J5MVVEhl6/ViocflMA05ElRFELI/PzCp5/O3T0H4CZGOIqYUEPGRHI5izJ2c0m+sawYGu/5LEkpIammSaYhGwa2TNyoB0cfMsG/uwAkSUIpqAVTzhHlSGLiyuARXbmVa3mFFyZk10cSFopKUgavxwmDuLXaGaFY01TpP0Um4wyuOOqnBBGa6ZqURUSYBhJcACCefDibdnugAhTAFSGWyYquF0tWddSGTwyVaZq+yaDRbL3+9mtv1X/rRV7ZqpiKxTgzcQ4xjrm62z9gHfPshs7oHoQLae/zJD6EJHVxOamvm+A+iEYGSxhJshAFJogywjOu65qyYf3nr7+21mgePv7Q9NJ7uqINg9xzQyWrZJs2zrCf+M99S3bDjtO77Aad6+8dXb9aRDxo1qPFJWVkSCcMiwKUMJaxoqAwRoYE/JmuGwLgV7/+zUvnL/z08o+eOHzyxXMv
+dLxu2+v0g/6qs/qJ+7EXdGeXZ4tGqWINTeydePrBZ14dufiHmQRhGRS5cMPXVJ4kYF8GECzJmiq31rmlI0i7YQwAnv36M8AgaxjtE7e6caOol82RXDGr1moHdUlXILCKnpIUKP/4jVcufu1naAbkFSNZQim+vuhXd6kxwTJEBxoJ4prO1urskXGaJsnQUGUHg9VoZZCRxTvTnpPzU8WnoUNIWB7IgCAWQZtYWem3xo2UyRj8H3QqRVWbTlQ+moVhbJrmDgb8UAzb9j8Clze3KzmVuMbtPdYTx9LbCiRGUoYy7jhes2XSTBHhlxRJlBl13SBvoTCIcrncDgZbn1869+de1AvTMEpDL+p+95ffoXaOCLEgBnUBi0fijjk0ibW6BYoS1iVgoCBFc9u+puAeJVBAOxiQH/S2MEzVNhQbWWi0KLaUQ78WDKAHiH0YIYUjRU9i3HJ6kqxCW5NkcVGuRF6oqjkI2ibAFoOEJBtR8YNYloyN+iR8EHOOSCZ8T1IBs79qrTSgwZIkDG5ipJmqZqiwIEBxqkg00bQ8bDVN28EAXejDtt669dVffCWv2QWjtNfev7dwQDgO3WbAIE3E/c1LX+z1kvkF/y/T/b9eDR0XeQ0S+CAtqHCpUgIm+/L5nMjIFoNvXzo3EohwmONyrx+2vNW1/tJCZ1Ye9CuaMorSAQPB8srMlbGxA48/Vjk5uVdkhPMgZNcXyfsf+DMf+Bkn8ARmw44c1BoPew8swTZfKOQKObqLxlEci2aXYkmLophsACQC4MbNpbn5m9CwFEWGCbN7967aAwePTow8/mgBn5coYx3XLZfLmwNnmwEpxjhOEwIlyShLoX4yrCkmDGQlU/4dIgFw/PhjURT5fuA4626nc2tt7crVjwxDL5Vgnor51uv1p6ZObwJsMWiNzgvtQbNKQSwEZgFlFGqHQPYh9pnQT5qKO3hXrVYhAmmaApLnea1Wy3EcUEO367luF2BARZ9lYFF50Ks5RCY
+IAxAdYxm8BngIxsFARYQKAMuyoEohh/1+HzzQdfC9NDw8DBi+7ydJeubMk+PjY59lMDf1/iCfNEkIeCxEJsnQ/8E6dG82YEAHhQYWYS4KuhhvILXbbQCA3ALGkSNHRkdH8eBUs83gS7/7gtW2oFplRYajCCUwWFKwlPEMrFNhmG2VYRiGYBSUDkgwnAzTjOO4A2cN1z116tTk5OTW8WmbwVTjuena27ESyQQqDC6YUJABcd4C8zAx+W0AEJlGs0nJ5hIlK0ljY2Nnz56FDN/eJbcZPPXGyYD7YISlFM4kEB8hcCZmPVhHOw+A4Ca6t7XNYLJ5xj293I/6dXe13XNSoqmarkJ7gSxnGRmI5z6WAKjuHvnyiYlXr82welK0KydqNVBzQiKYz+t9x+k7rte+P+to62R3+sw3wqoBLXquPv/m39+KSQwnjnzOKpeLE9X9lcOlVrd5fwD4ztM1WPfj4Pcf//Fvi5evrc52w25MEjgq2sW8bPNnzW++/Pz3/i+AO9fS+vKfPnnn6vKHJbl48flX/icG/wInYSZanQsDGgAAAABJRU5ErkJggg==</ImageData>
+      <MIMEType>image/png</MIMEType>
+    </EmbeddedImage>
+    <EmbeddedImage Name="update32x32">
+      <ImageData>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</ImageData>
+      <MIMEType>image/png</MIMEType>
+    </EmbeddedImage>
+    <EmbeddedImage Name="wsuslogo">
+      <ImageData>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</ImageData>
+      <MIMEType>image/png</MIMEType>
+    </EmbeddedImage>
+
+  </EmbeddedImages>
+  <DataSets>
+    <DataSet Name="Microsoft_UpdateServices_UI_SnapIn_Reporting_ComputerBusinessObject">
+      <rd:DataSetInfo>
+        <rd:DataSetName>Microsoft.UpdateServices.UI.SnapIn.Reporting</rd:DataSetName>
+        <rd:ObjectDataSourceType>Microsoft.UpdateServices.UI.SnapIn.Reporting.ComputerBusinessObject, Microsoft.UpdateServices.UI.SnapIn, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35</rd:ObjectDataSourceType>
+        <rd:TableName>ComputerBusinessObject</rd:TableName>
+      </rd:DataSetInfo>
+      <Query>
+        <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
+        <CommandText />
+        <DataSourceName>DummyDataSource</DataSourceName>
+      </Query>
+      <Fields>
+        <Field Name="WindowTextColor">
+          <rd:TypeName>System.String</rd:TypeName>
+          <DataField>WindowTextColor</DataField>
+        </Field>
+        <Field Name="BiosReleaseDate">
+          <rd:TypeName>System.String</rd:TypeName>
+          <DataField>BiosReleaseDate</DataField>
+        </Field>
+        <Field Name="BiosVersion">
+          <rd:TypeName>System.String</rd:TypeName>
+          <DataField>BiosVersion</DataField>
+        </Field>
+        <Field Name="ComputerTargetId">
+          <rd:TypeName>System.String</rd:TypeName>
+          <DataField>ComputerTargetId</DataField>
+        </Field>
+        <Field Name="FailedCount">
+          <rd:TypeName>System.Int32</rd:TypeName>
+          <DataField>FailedCount</DataField>
+        </Field>
+        <Field Name="FullDomainName">
+          <rd:TypeName>System.String</rd:TypeName>
+          <DataField>FullDomainName</DataField>
+        </Field>
+        <Field Name="UpToDateCount">
+          <rd:TypeName>System.Int32</rd:TypeName>
+          <DataField>UpToDateCount</DataField>
+        </Field>
+        <Field Name="IPAddress">
+          <rd:TypeName>System.String</rd:TypeName>
+          <DataField>IPAddress</DataField>
+        </Field>
+        <Field Name="LabelFailed">
+          <rd:TypeName>System.String</rd:TypeName>
+          <DataField>LabelFailed</DataField>
+        </Field>
+        <Field Name="LabelInstalled">
+          <rd:TypeName>System.String</rd:TypeName>
+          <DataField>LabelInstalled</DataField>
+        </Field>
+        <Field Name="LabelNeeded">
+          <rd:TypeName>System.String</rd:TypeName>
+          <DataField>LabelNeeded</DataField>
+        </Field>
+        <Field Name="LabelUnknown">
+          <rd:TypeName>System.String</rd:TypeName>
+          <DataField>LabelUnknown</DataField>
+        </Field>
+        <Field Name="LastStatusReported">
+          <rd:TypeName>System.String</rd:TypeName>
+          <DataField>LastStatusReported</DataField>
+        </Field>
+        <Field Name="Make">
+          <rd:TypeName>System.String</rd:TypeName>
+          <DataField>Make</DataField>
+        </Field>
+        <Field Name="Model">
+          <rd:TypeName>System.String</rd:TypeName>
+          <DataField>Model</DataField>
+        </Field>
+        <Field Name="NeededCount">
+          <rd:TypeName>System.Int32</rd:TypeName>
+          <DataField>NeededCount</DataField>
+        </Field>
+        <Field Name="OperatingSystemLanguage">
+          <rd:TypeName>System.String</rd:TypeName>
+          <DataField>OperatingSystemLanguage</DataField>
+        </Field>
+        <Field Name="OperatingSystemName">
+          <rd:TypeName>System.String</rd:TypeName>
+          <DataField>OperatingSystemName</DataField>
+        </Field>
+        <Field Name="OperatingSystemServicePack">
+          <rd:TypeName>System.String</rd:TypeName>
+          <DataField>OperatingSystemServicePack</DataField>
+        </Field>
+        <Field Name="Processor">
+          <rd:TypeName>System.String</rd:TypeName>
+          <DataField>Processor</DataField>
+        </Field>
+        <Field Name="RequestedTargetGroups">
+          <rd:TypeName>System.String</rd:TypeName>
+          <DataField>RequestedTargetGroups</DataField>
+        </Field>
+        <Field Name="TargetGroups">
+          <rd:TypeName>System.String</rd:TypeName>
+          <DataField>TargetGroups</DataField>
+        </Field>
+        <Field Name="UnknownCount">
+          <rd:TypeName>System.Int32</rd:TypeName>
+          <DataField>UnknownCount</DataField>
+        </Field>
+        <Field Name="HeaderStatusArea">
+          <rd:TypeName>System.String</rd:TypeName>
+          <DataField>HeaderStatusArea</DataField>
+        </Field>
+        <Field Name="ChartImage">
+          <rd:TypeName>System.Byte[]</rd:TypeName>
+          <DataField>ChartImage</DataField>
+        </Field>
+      </Fields>
+    </DataSet>
+    <DataSet Name="Microsoft_UpdateServices_UI_SnapIn_Reporting_UpdateComputerLocalizationBusinessObject">
+      <rd:DataSetInfo>
+        <rd:DataSetName>Microsoft.UpdateServices.UI.SnapIn.Reporting</rd:DataSetName>
+        <rd:ObjectDataSourceType>Microsoft.UpdateServices.UI.SnapIn.Reporting.UpdateComputerLocalizationBusinessObject, Microsoft.UpdateServices.UI.SnapIn, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35</rd:ObjectDataSourceType>
+        <rd:TableName>UpdateComputerLocalizationBusinessObject</rd:TableName>
+      </rd:DataSetInfo>
+      <Query>
+        <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
+        <CommandText />
+        <DataSourceName>DummyDataSource</DataSourceName>
+      </Query>
+      <Fields>
+        <Field Name="FontFamily">
+          <rd:TypeName>System.String</rd:TypeName>
+          <DataField>FontFamily</DataField>
+        </Field>
+        <Field Name="FontHeaderSize">
+          <rd:TypeName>System.String</rd:TypeName>
+          <DataField>FontHeaderSize</DataField>
+        </Field>
+        <Field Name="FontNormalSize">
+          <rd:TypeName>System.String</rd:TypeName>
+          <DataField>FontNormalSize</DataField>
+        </Field>
+        <Field Name="ColumnHeaderComputerName">
+          <rd:TypeName>System.String</rd:TypeName>
+          <DataField>ColumnHeaderComputerName</DataField>
+        </Field>
+        <Field Name="ColumnHeaderUpdateClassification">
+          <rd:TypeName>System.String</rd:TypeName>
+          <DataField>ColumnHeaderUpdateClassification</DataField>
+        </Field>
+        <Field Name="ColumnHeaderUpdateCountFailed">
+          <rd:TypeName>System.String</rd:TypeName>
+          <DataField>ColumnHeaderUpdateCountFailed</DataField>
+        </Field>
+        <Field Name="ColumnHeaderUpdateCountInstalled">
+          <rd:TypeName>System.String</rd:TypeName>
+          <DataField>ColumnHeaderUpdateCountInstalled</DataField>
+        </Field>
+        <Field Name="ColumnHeaderUpdateCountNeeded">
+          <rd:TypeName>System.String</rd:TypeName>
+          <DataField>ColumnHeaderUpdateCountNeeded</DataField>
+        </Field>
+        <Field Name="ColumnHeaderUpdateCountUnknown">
+          <rd:TypeName>System.String</rd:TypeName>
+          <DataField>ColumnHeaderUpdateCountUnknown</DataField>
+        </Field>
+        <Field Name="ColumnHeaderUpdateStatus">
+          <rd:TypeName>System.String</rd:TypeName>
+          <DataField>ColumnHeaderUpdateStatus</DataField>
+        </Field>
+        <Field Name="ColumnHeaderUpdateTitle">
+          <rd:TypeName>System.String</rd:TypeName>
+          <DataField>ColumnHeaderUpdateTitle</DataField>
+        </Field>
+        <Field Name="LabelComputerBIOSVersion">
+          <rd:TypeName>System.String</rd:TypeName>
+          <DataField>LabelComputerBIOSVersion</DataField>
+        </Field>
+        <Field Name="LabelComputerGroupMembership">
+          <rd:TypeName>System.String</rd:TypeName>
+          <DataField>LabelComputerGroupMembership</DataField>
+        </Field>
+        <Field Name="LabelComputerIPAddress">
+          <rd:TypeName>System.String</rd:TypeName>
+          <DataField>LabelComputerIPAddress</DataField>
+        </Field>
+        <Field Name="LabelComputerLanguage">
+          <rd:TypeName>System.String</rd:TypeName>
+          <DataField>LabelComputerLanguage</DataField>
+        </Field>
+        <Field Name="LabelComputerLastStatusReported">
+          <rd:TypeName>System.String</rd:TypeName>
+          <DataField>LabelComputerLastStatusReported</DataField>
+        </Field>
+        <Field Name="LabelComputerMake">
+          <rd:TypeName>System.String</rd:TypeName>
+          <DataField>LabelComputerMake</DataField>
+        </Field>
+        <Field Name="LabelComputerModel">
+          <rd:TypeName>System.String</rd:TypeName>
+          <DataField>LabelComputerModel</DataField>
+        </Field>
+        <Field Name="LabelComputerOperatingSystem">
+          <rd:TypeName>System.String</rd:TypeName>
+          <DataField>LabelComputerOperatingSystem</DataField>
+        </Field>
+        <Field Name="LabelComputerProcessor">
+          <rd:TypeName>System.String</rd:TypeName>
+          <DataField>LabelComputerProcessor</DataField>
+        </Field>
+        <Field Name="LabelComputerServicePack">
+          <rd:TypeName>System.String</rd:TypeName>
+          <DataField>LabelComputerServicePack</DataField>
+        </Field>
+        <Field Name="LabelUpdateApproval">
+          <rd:TypeName>System.String</rd:TypeName>
+          <DataField>LabelUpdateApproval</DataField>
+        </Field>
+        <Field Name="LabelUpdateApprovalDate">
+          <rd:TypeName>System.String</rd:TypeName>
+          <DataField>LabelUpdateApprovalDate</DataField>
+        </Field>
+        <Field Name="LabelUpdateClassification">
+          <rd:TypeName>System.String</rd:TypeName>
+          <DataField>LabelUpdateClassification</DataField>
+        </Field>
+        <Field Name="LabelUpdateDeadline">
+          <rd:TypeName>System.String</rd:TypeName>
+          <DataField>LabelUpdateDeadline</DataField>
+        </Field>
+        <Field Name="LabelUpdateDescription">
+          <rd:TypeName>System.String</rd:TypeName>
+          <DataField>LabelUpdateDescription</DataField>
+        </Field>
+        <Field Name="LabelUpdateKBArticleNumber">
+          <rd:TypeName>System.String</rd:TypeName>
+          <DataField>LabelUpdateKBArticleNumber</DataField>
+        </Field>
+        <Field Name="LabelUpdateLanguages">
+          <rd:TypeName>System.String</rd:TypeName>
+          <DataField>LabelUpdateLanguages</DataField>
+        </Field>
+        <Field Name="LabelUpdateMayRequestUserInput">
+          <rd:TypeName>System.String</rd:TypeName>
+          <DataField>LabelUpdateMayRequestUserInput</DataField>
+        </Field>
+        <Field Name="LabelUpdateMoreInformationUrl">
+          <rd:TypeName>System.String</rd:TypeName>
+          <DataField>LabelUpdateMoreInformationUrl</DataField>
+        </Field>
+        <Field Name="LabelUpdateMSRCNumber">
+          <rd:TypeName>System.String</rd:TypeName>
+          <DataField>LabelUpdateMSRCNumber</DataField>
+        </Field>
+        <Field Name="LabelUpdateMSRCSeverityRating">
+          <rd:TypeName>System.String</rd:TypeName>
+          <DataField>LabelUpdateMSRCSeverityRating</DataField>
+        </Field>
+        <Field Name="LabelUpdateMustBeInstalledExclusively">
+          <rd:TypeName>System.String</rd:TypeName>
+          <DataField>LabelUpdateMustBeInstalledExclusively</DataField>
+        </Field>
+        <Field Name="LabelUpdateReleaseDate">
+          <rd:TypeName>System.String</rd:TypeName>
+          <DataField>LabelUpdateReleaseDate</DataField>
+        </Field>
+        <Field Name="LabelUpdateRemovable">
+          <rd:TypeName>System.String</rd:TypeName>
+          <DataField>LabelUpdateRemovable</DataField>
+        </Field>
+        <Field Name="LabelUpdateRestartBehavior">
+          <rd:TypeName>System.String</rd:TypeName>
+          <DataField>LabelUpdateRestartBehavior</DataField>
+        </Field>
+        <Field Name="LabelUpdateUpdateId">
+          <rd:TypeName>System.String</rd:TypeName>
+          <DataField>LabelUpdateUpdateId</DataField>
+        </Field>
+        <Field Name="TitleComputerStatus">
+          <rd:TypeName>System.String</rd:TypeName>
+          <DataField>TitleComputerStatus</DataField>
+        </Field>
+        <Field Name="TitleComputerSummary">
+          <rd:TypeName>System.String</rd:TypeName>
+          <DataField>TitleComputerSummary</DataField>
+        </Field>
+        <Field Name="TitleComputerTabular">
+          <rd:TypeName>System.String</rd:TypeName>
+          <DataField>TitleComputerTabular</DataField>
+        </Field>
+        <Field Name="TitleSynchronization">
+          <rd:TypeName>System.String</rd:TypeName>
+          <DataField>TitleSynchronization</DataField>
+        </Field>
+        <Field Name="TitleUpdateStatus">
+          <rd:TypeName>System.String</rd:TypeName>
+          <DataField>TitleUpdateStatus</DataField>
+        </Field>
+        <Field Name="TitleUpdateSummary">
+          <rd:TypeName>System.String</rd:TypeName>
+          <DataField>TitleUpdateSummary</DataField>
+        </Field>
+        <Field Name="TitleUpdateTabular">
+          <rd:TypeName>System.String</rd:TypeName>
+          <DataField>TitleUpdateTabular</DataField>
+        </Field>
+        <Field Name="LabelNoItemsFound">
+          <rd:TypeName>System.String</rd:TypeName>
+          <DataField>LabelNoItemsFound</DataField>
+        </Field>
+      </Fields>
+    </DataSet>
+  </DataSets>
+  <Author>Microsoft Corporation</Author>
+  <Code />
+  <Width>6.5in</Width>
+  <InteractiveHeight>11in</InteractiveHeight>
+  <Description>Copyright (c) Microsoft Corporation.  All rights reserved.</Description>
+  <TopMargin>1in</TopMargin>
+</Report>

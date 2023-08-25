@@ -1,0 +1,61 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <script src="js/konva.js"></script>
+    <script src="js/d3.js"></script>
+    <script src="tools/Usb4ViewPlugin/DeviceRouter.js"></script>
+    <script src="tools/Usb4ViewPlugin/HostRouter.js"></script>
+    <script src="tools/Usb4ViewPlugin/KonvaAdapterGroup.js"></script>
+    <script src="tools/Usb4ViewPlugin/KonvaConstants.js"></script>
+    <script src="tools/Usb4ViewPlugin/KonvaDeviceRouter.js"></script>
+    <script src="tools/Usb4ViewPlugin/KonvaDFP.js"></script>
+    <script src="tools/Usb4ViewPlugin/KonvaDPGroup.js"></script>
+    <script src="tools/Usb4ViewPlugin/KonvaHostRouter.js"></script>
+    <script src="tools/Usb4ViewPlugin/KonvaProtocolAdapter.js"></script>
+    <script src="tools/Usb4ViewPlugin/KonvaTopology.js"></script>
+    <script src="tools/Usb4ViewPlugin/KonvaTreeRoot.js"></script>
+    <script src="tools/Usb4ViewPlugin/KonvaTunnelBox.js"></script>
+    <script src="tools/Usb4ViewPlugin/KonvaUFP.js"></script>
+    <script src="tools/Usb4ViewPlugin/SidebarDeviceRouter.js"></script>
+    <script src="tools/Usb4ViewPlugin/SidebarHostRouter.js"></script>
+    <script src="tools/Usb4ViewPlugin/SidebarTunnel.js"></script>
+    <script src="tools/Usb4ViewPlugin/TopologyTree.js"></script>
+    <script src="tools/Usb4ViewPlugin/Tunnel.js"></script>
+    <script src="tools/Usb4ViewPlugin/Utils.js"></script>
+    <link rel="Stylesheet" href="tools/Usb4ViewPlugin/Usb4ViewPlugin.css" />
+</head>
+
+<body class="usb4-body">
+        <div class="main-container" aria-label="USB4 Domains" role="region">
+            <div class="sidebar-container" aria-label="USB4 Topology Information" role="region">
+                <div id="info-group">
+                    <div class="sidebar-nodevicesfound">No USB4 Domains Found</div>
+                </div>
+            </div>
+
+            <!--Inner (konva) canvas will be bigger than the screen.  The outer div constrains this canvas.-->
+            <div id="constrainedViewDivId" class="usb4-container" aria-label="USB4 Topology Visualization" role="region">
+                <div id="konvaDivId" class="konva-container"></div>
+            </div>
+        </div>
+    <script>
+        $(function () {
+            console.log("running Usb4View");
+            var topologyTree = new USB4View.TopologyTree("constrainedViewDivId", "konvaDivId");
+
+            var websocketProtocol = (document.location.protocol === 'https:' ? 'wss://' : 'ws://');
+            var host = websocketProtocol + window.location.host + '/ext/devices/usb4viewplugin';
+            var socket = new WebSocket(host);
+
+            socket.onmessage = function (messageEvent) {
+                var parsedJson = JSON.parse(messageEvent.data)
+
+                topologyTree.addEvents(parsedJson.events);
+            };
+        })
+    </script>
+</body>
+
+</html>

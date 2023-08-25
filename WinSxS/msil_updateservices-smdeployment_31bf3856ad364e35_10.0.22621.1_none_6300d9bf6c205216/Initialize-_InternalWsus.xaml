@@ -1,0 +1,29 @@
+﻿<Activity mc:Ignorable="sads sap" x:Class="Initialize_InternalWsus.Initialize_InternalWsus" sap:VirtualizedContainerService.HintSize="526,585" mva:VisualBasic.Settings="Assembly references and imported namespaces for internal implementation"
+ xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities"
+ xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+ xmlns:mpa="clr-namespace:Microsoft.PowerShell.Activities;assembly=Microsoft.PowerShell.Activities"
+ xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities"
+ xmlns:s="clr-namespace:System;assembly=mscorlib"
+ xmlns:sad="clr-namespace:System.Activities.Debugger;assembly=System.Activities"
+ xmlns:sads="http://schemas.microsoft.com/netfx/2010/xaml/activities/debugger"
+ xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation"
+ xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib"
+ xmlns:sma="clr-namespace:System.Management.Automation;assembly=System.Management.Automation"
+ xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <Sequence >
+    <Sequence.Variables>
+      <Variable x:TypeArguments="sma:PSDataCollection(sma:ErrorRecord)" Name="errors" />
+    </Sequence.Variables>
+    <sap:WorkflowViewStateService.ViewState>
+      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+      </scg:Dictionary>
+    </sap:WorkflowViewStateService.ViewState>
+    <mpa:InlineScript Command="$startInfo = New-Object System.Diagnostics.ProcessStartInfo(&quot;$env:ProgramFiles\Update Services\Tools\WsusUtil.exe&quot;,&quot;postinstall /sm&quot;)&#xD;&#xA;$startInfo.UseShellExecute = $false&#xD;&#xA;$startInfo.RedirectStandardOutput = $true&#xD;&#xA;$startInfo.CreateNoWindow = $true&#xD;&#xA;&#xA;$process = New-Object System.Diagnostics.Process&#xA;$process.StartInfo = $startInfo&#xA;&#xD;&#xA;[void]$process.Start()&#xD;&#xA;&#xD;&#xA;$stdOut = $process.StandardOutput.ReadToEnd()&#xD;&#xA;&#xD;&#xA;if (![System.String]::IsNullOrEmpty($stdOut)) { Write-Output $stdOut }&#xD;&#xA;&#xA;$process.WaitForExit()&#xD;&#xA;&#xD;&#xA;if ($process.ExitCode -ne 0) { Write-Error $process.ExitCode }&#xD;&#xA;" sap:VirtualizedContainerService.HintSize="464,178" PSError="[errors]" />
+    <If Condition="[errors.Count &lt;&gt; 0]" sap:VirtualizedContainerService.HintSize="464,203">
+      <If.Then>
+        <TerminateWorkflow Exception="[errors(0).Exception]" sap:VirtualizedContainerService.HintSize="200,22" />
+      </If.Then>
+    </If>
+  </Sequence>
+</Activity>

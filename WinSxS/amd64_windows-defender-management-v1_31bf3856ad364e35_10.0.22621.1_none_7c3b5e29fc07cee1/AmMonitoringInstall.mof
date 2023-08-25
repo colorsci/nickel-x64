@@ -1,0 +1,214 @@
+// AmMonitoringInstall.mof : mof source for Malware class
+//
+// Copyright (c) Microsoft Corporation. All rights reserved.
+//
+// This file will be processed by MOFCOMP utility to
+// register the provider with the WMI repository.
+//
+
+#pragma autorecover
+
+#pragma namespace ("\\\\.\\root\\Microsoft\\SecurityClient")
+
+////////////////////////////////////////////////////////
+// Declare WMI class : Malware
+////////////////////////////////////////////////////////
+
+[
+    Description("Describes malware detected by Forefront Antimalware"): ToInstance ToSubClass, 
+    dynamic: DisableOverride ToInstance,
+    provider("AntimalwareMonitoringProvider"): ToInstance ToSubClass
+]
+class Malware: SerializableToXml
+{
+    string SchemaVersion = "1.0.0.0"; // derived from SerializableToXml
+    
+    [
+        Description("Detection time in the Round-Trip Format"): ToInstance ToSubClass, 
+        read: ToInstance ToSubClass
+    ]
+    string DetectionTime;
+    
+    [
+        Description("Action Time in the Round-Trip Format"): ToInstance ToSubClass, 
+        read: ToInstance ToSubClass
+    ]
+    string ActionTime;
+    
+    [
+        Description("Version of the security client"): ToInstance ToSubClass, 
+        read: ToInstance ToSubClass
+    ]
+    string ProductVersion;
+    
+    [
+        Description("Unique Detection ID (GUID)"): ToInstance ToSubClass, 
+        read: ToInstance ToSubClass,
+        key
+    ]
+    string DetectionID;
+    
+    [
+        Description("How was the malware detected (Enumeration)? RTP/Scheduled Scan/..."): ToInstance ToSubClass, 
+        read: ToInstance ToSubClass,
+        ValueMap {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"}, 
+        Values {"Unknown", "User", "System", "Realtime", "IOAV", "NIS", "BHO", "ELAM", "LocalAttestation", "RemoteAttestation"}
+    ]
+    uint8 DetectionSource;
+    
+    [
+        Description("Pending actions (bit flags indicating reboot/full scan/manual steps required)"): ToInstance ToSubClass, 
+        read: ToInstance ToSubClass,
+        ValueMap { "0", "4", "8", "12", "16", "20", "24", "28", "32768", "32772", "32776", "32780", "32784", "32788", "32792", "32796" }, 
+        Values { "None", "FullScanRequired", "RebootRequired", "FullScanAndRebootRequired", "ManualStepsRequired", "FullScanAndManualStepsRequired", "RebootAndManualStepsRequired", "FullScanAndRebootAndManualStepsRequired", "OfflineScanRequired", "FullScanAndOfflineScanRequired", "RebootAndOfflineScanRequired", "FullScanAndRebootAndOfflineScanRequired", "ManualStepsAndOfflineScanRequired", "FullScanAndManualStepsAndOfflineScanRequired", "RebootAndManualStepsAndOfflineScanRequired", "FullScanAndRebootAndManualStepsAndOfflineScanRequired" }
+    ]
+    uint32 PendingActions;
+    
+    [
+        Description("Infected process"): ToInstance ToSubClass, 
+        read: ToInstance ToSubClass
+    ]
+    string Process;
+    
+    [
+        Description("Domain hosting the user"): ToInstance ToSubClass, 
+        read: ToInstance ToSubClass
+    ]
+    string Domain = "Domain";
+    
+    [
+        Description("User account hosting the infected process"): ToInstance ToSubClass, 
+        read: ToInstance ToSubClass
+    ]
+    string User;
+    
+    [
+        Description("Name of the threat"): ToInstance ToSubClass, 
+        read: ToInstance ToSubClass
+    ]
+    string ThreatName;
+        
+    [
+        Description("Threat ID - Enumeration"): ToInstance ToSubClass, 
+        read: ToInstance ToSubClass
+    ]
+    sint64 ThreatID;
+
+    [
+        Description("Severity ID - Enumeration"): ToInstance ToSubClass, 
+        read: ToInstance ToSubClass,
+        ValueMap {"0", "1", "2", "4", "5"}, 
+        Values {"Unknown", "Low", "Moderate", "High", "Severe"}
+    ]
+    uint8 SeverityID;
+
+    [
+        Description("Category ID - Enumeration"): ToInstance ToSubClass, 
+        read: ToInstance ToSubClass,
+        ValueMap { "0", "1", "2", "3", "4", "5", "6", "7,"  "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "32", "33", "34", "36", "37", "38", "39", "40", "42", "43", "44", "45", "46", "47", "48" },
+        Values { "INVALID", "ADWARE", "SPYWARE", "PASSWORDSTEALER", "TROJANDOWNLOADER", "WORM", "BACKDOOR", "REMOTEACCESSTROJAN", "TROJAN", "EMAILFLOODER", "KEYLOGGER", "DIALER", "MONITORINGSOFTWARE", "BROWSERMODIFIER", "COOKIE", "BROWSERPLUGIN", "AOLEXPLOIT", "NUKER", "SECURITYDISABLER", "JOKEPROGRAM", "HOSTILEACTIVEXCONTROL", "SOFTWAREBUNDLER", "STEALTHNOTIFIER", "SETTINGSMODIFIER", "TOOLBAR", "REMOTECONTROLSOFTWARE", "TROJANFTP", "POTENTIALUNWANTEDSOFTWARE", "ICQEXPLOIT", "TROJANTELNET", "FILESHARINGPROGRAM", "MALWARE_CREATION_TOOL", "REMOTE_CONTROL_SOFTWARE", "TOOL", "TROJAN_DENIALOFSERVICE", "TROJAN_DROPPER", "TROJAN_MASSMAILER", "TROJAN_MONITORINGSOFTWARE", "TROJAN_PROXYSERVER", "VIRUS", "KNOWN", "UNKNOWN", "SPP", "BEHAVIOR", "VULNERABILTIY", "POLICY" }
+    ]
+    uint8 CategoryID;
+    
+    [
+        Description("Path to infected resource"): ToInstance ToSubClass, 
+        read: ToInstance ToSubClass
+    ]
+    string Path;
+
+    [
+        Description("Cleaning Action - Enumeration"): ToInstance ToSubClass, 
+        read: ToInstance ToSubClass,
+        ValueMap { "0", "1", "2", "3", "6", "8", "9", "10" },
+        Values { "UNKNOWN", "CLEAN", "QUARANTINE", "REMOVE", "ALLOW", "USERDEFINED", "NOACTION", "BLOCK" }
+    ]
+    uint8 CleaningAction;
+    
+    [
+        Description("What happened to the malware? (Enumeration)? Blocked/Allowed/Executing/..."): ToInstance ToSubClass, 
+        read: ToInstance ToSubClass,
+        ValueMap {"0", "1", "2", "3", "4"},
+        Values {"Unknown", "Blocked", "Allowed", "Executing", "NotExecuting"}
+    ]
+    uint8 ExecutionStatus;
+    
+    [
+        Description("Was the cleaning action successful?"): ToInstance ToSubClass,
+        read: ToInstance ToSubClass
+    ]
+    boolean ActionSuccess;
+    
+    [
+        Description("Error code if cleaning action failed"): ToInstance ToSubClass, 
+        read: ToInstance ToSubClass
+    ]
+    sint32 ErrorCode;
+};
+
+
+////////////////////////////////////////////////////////
+// instance of the provider class 
+////////////////////////////////////////////////////////
+
+instance of Win32_ProviderEx as $AntimalwareMonitoringProvider
+{
+    Name    = "AntimalwareMonitoringProvider";   //Name is the key property for __Provider objects.
+                                        //vendor|provider|version is the suggested format
+                                        //to prevent name collisions.
+
+    ClsId   = "{DACA056E-216A-4FD1-84A6-C306A017ECEC}" ;     //provider GUID
+                
+
+    DefaultMachineName = NULL;         //NULL for local machine
+
+    ClientLoadableCLSID = NULL;         //reserved
+
+    ImpersonationLevel = 1;             //reserved
+
+    InitializationReentrancy = 0;       //Set of flags that provide information about serialization:
+                                        //0 = all initialization of this provider must be serialized
+                                        //1 = all initializations of this provider in the same namespace must be serialized
+                                        //2 = no initialization serialization is necessary
+
+    InitializeAsAdminFirst = FALSE;     //Request to be fully initialized as "Admin" before 
+                                        //initializations begin for users
+
+    PerLocaleInitialization = FALSE;    //Indicates whether the provider is initialized for each 
+                                        //locale if a user connects to the same namespace more 
+                                        //than once using different locales.
+
+    PerUserInitialization = TRUE;       //Indicates whether the provider is initialized once for each actual 
+                                        //Windows NT/Windows 2000 NTLM user making requests of the provider. 
+                                        //If set to FALSE, the provider is initialized once for all users
+
+    Pure = TRUE;                        //A pure provider exists only to service requests from 
+                                        //applications and WMI. Most providers are pure providers.
+                                        //Non-pure providers transition to the role of client after they have 
+                                        //finished servicing requests. 
+
+
+    UnloadTimeout = NULL;               //Currently ignored
+                                        //Use __CacheControl class in the root namespace to control provider unloading.
+                                        //A string in the DMTF date/time format that specifies how long WMI 
+                                        //allows the provider to remain idle before it is unloaded.
+                                        
+
+} ;    
+
+
+////////////////////////////////////////////////////////
+// registration of the instance of the provider class 
+////////////////////////////////////////////////////////
+
+instance of __InstanceProviderRegistration
+{
+    Provider = $AntimalwareMonitoringProvider;
+
+    SupportsPut = "FALSE"; 
+    SupportsGet = "FALSE"; 
+    SupportsDelete = "FALSE"; 
+    SupportsEnumeration = "TRUE"; 
+
+
+};
+

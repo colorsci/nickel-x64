@@ -1,0 +1,57 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <!-- This .targets file can be used by updating Microsoft.Common.targets to 
+         include the line below (as the last import element just before the end project tag)
+      <Import Project="$(MSBuildBinPath)\Microsoft.Data.Entity.targets" Condition="Exists('$(MSBuildBinPath)\Microsoft.Data.Entity.targets')"/>
+      -->
+
+  <!-- The below ensures that "EntityDeploy" is available in the VS Build Action dropdown -->
+  <ItemGroup>
+    <AvailableItemName Include="EntityDeploy" />
+  </ItemGroup>
+  
+  <UsingTask TaskName="EntityDeploy"
+             AssemblyFile="$(MSBuildBinPath)\Microsoft.Data.Entity.Build.Tasks.dll">
+  </UsingTask>
+
+  <UsingTask TaskName="EntityClean"
+             AssemblyFile="$(MSBuildBinPath)\Microsoft.Data.Entity.Build.Tasks.dll">
+  </UsingTask>
+
+  <PropertyGroup>
+    <!-- EntityDeployDependsOn deliberately left empty so others can override this -->
+    <EntityDeployDependsOn></EntityDeployDependsOn>
+    <BuildDependsOn>
+      EntityDeploy;
+      $(BuildDependsOn)
+    </BuildDependsOn>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <CleanDependsOn>
+      $(CleanDependsOn);
+      EntityClean;
+    </CleanDependsOn>
+  </PropertyGroup>
+  
+  <Target Name="EntityDeploy"
+          DependsOnTargets="$(EntityDeployDependsOn)" >
+
+    <EntityDeploy
+          Sources="@(EntityDeploy)"
+          OutputPath="$(OutputPath)">
+      <Output TaskParameter="EntityDataModelEmbeddedResources"
+              ItemName="EmbeddedResource" />
+    </EntityDeploy>
+
+  </Target>
+
+  <Target Name="EntityClean">
+    <EntityClean
+        Sources="@(EntityDeploy)"
+        OutputPath="$(OutputPath)"
+      />
+  </Target>
+
+</Project>
+

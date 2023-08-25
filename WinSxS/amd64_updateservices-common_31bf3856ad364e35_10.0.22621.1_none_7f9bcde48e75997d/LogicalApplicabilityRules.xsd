@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema targetNamespace="http://schemas.microsoft.com/wsus/2005/04/CorporatePublishing/LogicalApplicabilityRules.xsd"
+  xmlns:lar="http://schemas.microsoft.com/wsus/2005/04/CorporatePublishing/LogicalApplicabilityRules.xsd"
+  xmlns:sdp="http://schemas.microsoft.com/wsus/2005/04/CorporatePublishing/SoftwareDistributionPackage.xsd"
+  xmlns="http://www.w3.org/2001/XMLSchema"
+  elementFormDefault="qualified" attributeFormDefault="unqualified">
+
+    <!-- 
+  Logical operators    
+  -->
+        
+  <element name="True" substitutionGroup="sdp:ApplicabilityRuleElement">
+    <annotation>
+      <documentation>Evaluates to true, by definition.</documentation>
+    </annotation>
+    <complexType/>
+  </element>
+  <element name="False" substitutionGroup="sdp:ApplicabilityRuleElement">
+    <annotation>
+      <documentation>Evaluates to false, by defintiion.</documentation>
+    </annotation>
+    <complexType/>
+  </element>
+  <element name="And" substitutionGroup="sdp:ApplicabilityRuleElement">
+    <annotation>
+      <documentation>Evaluates to the logical AND of the rules it contains.</documentation>
+    </annotation>
+    <complexType>
+      <sequence>
+        <element ref="sdp:ApplicabilityRuleElement" maxOccurs="unbounded"/>
+      </sequence>
+    </complexType>
+  </element>
+  <element name="Or" substitutionGroup="sdp:ApplicabilityRuleElement">
+    <annotation>
+      <documentation>Evaluates to the logical OR of the rules it contains.</documentation>
+    </annotation>
+    <complexType>
+      <sequence>
+        <element ref="sdp:ApplicabilityRuleElement" maxOccurs="unbounded"/>
+      </sequence>
+    </complexType>
+  </element>
+  <element name="Not" substitutionGroup="sdp:ApplicabilityRuleElement">
+    <annotation>
+      <documentation>Evaluates to the logical NOT of the rule it contains.</documentation>
+    </annotation>
+    <complexType>
+      <sequence>
+        <element ref="sdp:ApplicabilityRuleElement"/>
+      </sequence>
+    </complexType>
+  </element>
+</schema>

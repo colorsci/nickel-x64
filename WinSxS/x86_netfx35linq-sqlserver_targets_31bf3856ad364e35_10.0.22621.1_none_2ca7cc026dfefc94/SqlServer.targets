@@ -1,0 +1,62 @@
+<!--
+***********************************************************************************************
+SQLServer.targets
+
+WARNING:  DO NOT MODIFY this file unless you are knowledgeable about MSBuild and have
+          created a backup copy.  Incorrect changes to this file will make it
+          impossible to load or build your projects from the command-line or the IDE.
+
+Copyright (C) Microsoft Corporation. All rights reserved.
+***********************************************************************************************
+-->
+
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ResolveAssemblyReferencesDependsOn>$(ResolveAssemblyReferencesDependsOn);ResolveSQLCLRReferences</ResolveAssemblyReferencesDependsOn>
+        <LoadTimeSensitiveTargets>
+            $(LoadTimeSensitiveTargets);
+            ResolveSQLCLRReferences;
+        </LoadTimeSensitiveTargets>
+    </PropertyGroup>
+
+    <!--  Target ResolveSQLCLRReferences
+        Resolves SQL CLR assembly references to full paths.
+            [IN]
+            @(Reference) - The list of references to resolve.
+            [OUT]
+            @(ReferencePath) - The list of paths that those references resolved to.
+        The SearchPaths property is set to find assemblies in the hintpath only
+    -->
+    <Target
+        Name="ResolveSQLCLRReferences"
+        Condition="'@(Reference)'!=''"
+        DependsOnTargets="$(ResolveSQLCLRReferencesDependsOn)"
+        >
+
+        <CreateItem
+              Include="@(Reference)"
+              AdditionalMetadata="SubType="
+              Condition="'%(Reference.SubType)'=='SQLCLR'"
+              >
+
+            <Output TaskParameter="Include" ItemName="SqlReference"/>
+        </CreateItem>
+
+
+        <ResolveAssemblyReference
+              Assemblies="@(SqlReference)"
+              SearchPaths="{HintPathFromItem}"
+              >
+
+            <Output TaskParameter="ResolvedFiles" ItemName="ReferencePath"/>
+        </ResolveAssemblyReference>
+    </Target>
+
+    <!--
+    Flavor is the project flavor. For example, Client, Smart Devices, SQL Server, etc.
+    -->
+    <PropertyGroup>
+        <ProjectFlavor>SQL Server</ProjectFlavor>
+    </PropertyGroup>
+
+</Project>

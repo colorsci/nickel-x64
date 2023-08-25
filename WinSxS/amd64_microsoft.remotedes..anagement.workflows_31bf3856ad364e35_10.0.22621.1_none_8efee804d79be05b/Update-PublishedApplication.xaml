@@ -1,0 +1,220 @@
+<Activity mc:Ignorable="sads sap" x:Class="RDManagement.Update_PublishedApplication" this:Update_PublishedApplication.IconContents="[{}]" this:Update_PublishedApplication.Folder="[Nothing]"
+ xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities"
+ xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+ xmlns:mpa="clr-namespace:Microsoft.PowerShell.Activities;assembly=Microsoft.PowerShell.Activities"
+ xmlns:mpma="clr-namespace:Microsoft.PowerShell.Management.Activities;assembly=Microsoft.PowerShell.Management.Activities"
+ xmlns:mpua="clr-namespace:Microsoft.PowerShell.Utility.Activities;assembly=Microsoft.PowerShell.Utility.Activities"
+ xmlns:mrc="clr-namespace:Microsoft.RemoteDesktopServices.Common;assembly=Microsoft.RemoteDesktopServices.Management.Activities"
+ xmlns:mrma="clr-namespace:Microsoft.RemoteDesktopServices.Management.Activities;assembly=Microsoft.RemoteDesktopServices.Management.Activities"
+ xmlns:mrmc="clr-namespace:Microsoft.RemoteDesktopServices.Management.Cmdlets;assembly=Microsoft.RemoteDesktopServices.Management.Activities"
+ xmlns:mv="clr-namespace:Microsoft.VisualBasic;assembly=System"
+ xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities"
+ xmlns:s="clr-namespace:System;assembly=mscorlib"
+ xmlns:sa="clr-namespace:System.Activities;assembly=System.Activities"
+ xmlns:sad="clr-namespace:System.Activities.Debugger;assembly=System.Activities"
+ xmlns:sads="http://schemas.microsoft.com/netfx/2010/xaml/activities/debugger"
+ xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation"
+ xmlns:sc="clr-namespace:System.Collections;assembly=mscorlib"
+ xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib"
+ xmlns:sm="clr-namespace:System.Management;assembly=System.Management"
+ xmlns:sma="clr-namespace:System.Management.Automation;assembly=System.Management.Automation"
+ xmlns:this="clr-namespace:RDManagement"
+ xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <x:Members>
+    <x:Property Name="AppAlias" Type="InArgument(x:String)">
+      <x:Property.Attributes>
+        <RequiredArgumentAttribute />
+      </x:Property.Attributes>
+    </x:Property>
+    <x:Property Name="SecurityDescriptor" Type="InArgument(x:String)">
+      <x:Property.Attributes>
+        <RequiredArgumentAttribute />
+      </x:Property.Attributes>
+    </x:Property>
+    <x:Property Name="ShowInPortal" Type="InArgument(x:Int32)">
+      <x:Property.Attributes>
+        <RequiredArgumentAttribute />
+      </x:Property.Attributes>
+    </x:Property>
+    <x:Property Name="CommandLineSetting" Type="InArgument(x:Int32)">
+      <x:Property.Attributes>
+        <RequiredArgumentAttribute />
+      </x:Property.Attributes>
+    </x:Property>
+    <x:Property Name="RequiredCommandLine" Type="InArgument(x:String)">
+      <x:Property.Attributes>
+        <RequiredArgumentAttribute />
+      </x:Property.Attributes>
+    </x:Property>
+    <x:Property Name="IconContents" Type="InArgument(s:Byte[])">
+      <x:Property.Attributes>
+        <RequiredArgumentAttribute />
+      </x:Property.Attributes>
+    </x:Property>
+    <x:Property Name="IconPath" Type="InArgument(x:String)">
+      <x:Property.Attributes>
+        <RequiredArgumentAttribute />
+      </x:Property.Attributes>
+    </x:Property>
+    <x:Property Name="IconIndex" Type="InArgument(x:Int32)">
+      <x:Property.Attributes>
+        <RequiredArgumentAttribute />
+      </x:Property.Attributes>
+    </x:Property>
+    <x:Property Name="PoolName" Type="InArgument(x:String)">
+      <x:Property.Attributes>
+        <RequiredArgumentAttribute />
+      </x:Property.Attributes>
+    </x:Property>
+    <x:Property Name="AppPath" Type="InArgument(x:String)">
+      <x:Property.Attributes>
+        <RequiredArgumentAttribute />
+      </x:Property.Attributes>
+    </x:Property>
+    <x:Property Name="VirtualPath" Type="InArgument(x:String)">
+      <x:Property.Attributes>
+        <RequiredArgumentAttribute />
+      </x:Property.Attributes>
+    </x:Property>
+    <x:Property Name="DisplayName" Type="InArgument(x:String)" />
+    <x:Property Name="Folder" Type="InArgument(x:String)" />
+    <x:Property Name="RDMSServer" Type="InArgument(x:String)">
+      <x:Property.Attributes>
+        <RequiredArgumentAttribute />
+      </x:Property.Attributes>
+    </x:Property>
+  </x:Members>
+  <sap:VirtualizedContainerService.HintSize>725,6467</sap:VirtualizedContainerService.HintSize>
+  <mva:VisualBasic.Settings>Assembly references and imported namespaces for internal implementation</mva:VisualBasic.Settings>
+  <Sequence sap:VirtualizedContainerService.HintSize="685,6427">
+    <Sequence.Variables>
+      <Variable x:TypeArguments="sma:PSDataCollection(sma:ErrorRecord)" Default="[New PSDataCollection(Of ErrorRecord)()]" Name="PSError" />
+      <Variable x:TypeArguments="sma:PSDataCollection(sma:PSObject)" Name="VMFarmSetting" />
+      <Variable x:TypeArguments="sc:Hashtable" Name="farmSettingHTable" />
+      <Variable x:TypeArguments="x:String" Name="VMXMLoutput" />
+      <Variable x:TypeArguments="sma:PSDataCollection(sma:PSObject)" Name="RDMSjoinedNodes" />
+      <Variable x:TypeArguments="x:String" Name="ConnectionBroker" />
+      <Variable x:TypeArguments="x:Int32" Name="index" />
+      <Variable x:TypeArguments="sma:PSDataCollection(sma:PSObject)" Name="CPUBRemoteApp" />
+      <Variable x:TypeArguments="x:Boolean" Name="isSessionHostCollection" />
+      <Variable x:TypeArguments="sma:PSDataCollection(sma:PSObject)" Name="SessionHostCollections" />
+    </Sequence.Variables>
+    <sap:WorkflowViewStateService.ViewState>
+      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+      </scg:Dictionary>
+    </sap:WorkflowViewStateService.ViewState>
+    <Assign sap:VirtualizedContainerService.HintSize="663,60">
+      <Assign.To>
+        <OutArgument x:TypeArguments="x:String">[ConnectionBroker]</OutArgument>
+      </Assign.To>
+      <Assign.Value>
+        <InArgument x:TypeArguments="x:String">[RDMSServer]</InArgument>
+      </Assign.Value>
+    </Assign>
+    <mpa:InlineScript Command="import-module $env:windir\System32\ServerManagerInternal\rdmanagement;&#xD;&#xA;Get-RDSHPool -Alias $using:PoolName -ManagementServer $using:ConnectionBroker" sap:VirtualizedContainerService.HintSize="663,139" PSError="[PSError]" Result="[SessionHostCollections]" />
+    <If Condition="[Not PSError.Count.Equals(0)]" sap:VirtualizedContainerService.HintSize="663,208">
+      <If.Then>
+        <TerminateWorkflow Exception="[PSError.Item(0).Exception]" sap:VirtualizedContainerService.HintSize="200,22" Reason="[PSError.Item(0).Exception.Message]" />
+      </If.Then>
+    </If>
+    <If Condition="[SessionHostCollections.Count.Equals(0)]" sap:VirtualizedContainerService.HintSize="663,208">
+      <If.Then>
+        <Assign sap:VirtualizedContainerService.HintSize="242,60">
+          <Assign.To>
+            <OutArgument x:TypeArguments="x:Boolean">[isSessionHostCollection]</OutArgument>
+          </Assign.To>
+          <Assign.Value>
+            <InArgument x:TypeArguments="x:Boolean">False</InArgument>
+          </Assign.Value>
+        </Assign>
+      </If.Then>
+      <If.Else>
+        <Assign sap:VirtualizedContainerService.HintSize="242,60">
+          <Assign.To>
+            <OutArgument x:TypeArguments="x:Boolean">[isSessionHostCollection]</OutArgument>
+          </Assign.To>
+          <Assign.Value>
+            <InArgument x:TypeArguments="x:Boolean">True</InArgument>
+          </Assign.Value>
+        </Assign>
+      </If.Else>
+    </If>
+    <If Condition="[isSessionHostCollection]" sap:VirtualizedContainerService.HintSize="663,2856">
+      <If.Then>
+        <Sequence sap:VirtualizedContainerService.HintSize="538,2748">
+          <Sequence.Variables>
+            <Variable x:TypeArguments="sma:PSDataCollection(sma:PSObject)" Name="PoolMachines" />
+          </Sequence.Variables>
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+          <mpa:InlineScript Command="import-module $env:windir\System32\ServerManagerInternal\rdmanagement;&#xD;&#xA;Get-RDSHServer -Name &quot;*&quot; -CollectionAlias $using:PoolName -ManagementServer $using:ConnectionBroker" sap:VirtualizedContainerService.HintSize="464,22" PSError="[PSError]" Result="[PoolMachines]" />
+          <If Condition="[Not PSError.Count.Equals(0)]" sap:VirtualizedContainerService.HintSize="464,208">
+            <If.Then>
+              <TerminateWorkflow Exception="[PSError.Item(0).Exception]" sap:VirtualizedContainerService.HintSize="269,100" Reason="[PSError.Item(0).Exception.Message]" />
+            </If.Then>
+          </If>
+          <ParallelForEach x:TypeArguments="sma:PSObject" sap:VirtualizedContainerService.HintSize="516,648" Values="[PoolMachines]">
+            <ActivityAction x:TypeArguments="sma:PSObject">
+              <ActivityAction.Argument>
+                <DelegateInArgument x:TypeArguments="sma:PSObject" Name="poolmachine" />
+              </ActivityAction.Argument>
+              <Sequence sap:VirtualizedContainerService.HintSize="486,540">
+                <Sequence.Variables>
+                  <Variable x:TypeArguments="sma:PSDataCollection(sma:ErrorRecord)" Default="[New PSDataCollection(Of ErrorRecord)()]" Name="PSError2" />
+                  <Variable x:TypeArguments="x:String" Name="RDSHServer" />
+                </Sequence.Variables>
+                <sap:WorkflowViewStateService.ViewState>
+                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                  </scg:Dictionary>
+                </sap:WorkflowViewStateService.ViewState>
+                <Assign sap:VirtualizedContainerService.HintSize="508,60">
+                  <Assign.To>
+                    <OutArgument x:TypeArguments="x:String">[RDSHServer]</OutArgument>
+                  </Assign.To>
+                  <Assign.Value>
+                    <InArgument x:TypeArguments="x:String">[poolmachine.Properties("Name").Value.ToString()]</InArgument>
+                  </Assign.Value>
+                </Assign>
+                <mpa:InlineScript CommandName="{x:Null}" Parameters="{x:Null}" Command="import-module $env:windir\System32\ServerManagerInternal\rdmanagement;&#xD;&#xA;Set-TSPublishedApplication -ApplicationAlias $using:AppAlias -RequiredCommandLine $using:RequiredCommandLine -ApplicationPath $using:AppPath -Server $using:RDSHServer -DisplayName $using:DisplayName -SecurityDescriptor $using:SecurityDescriptor -CommandLineSetting $using:CommandLineSetting -VirtualPath $using:VirtualPath -IconContents $using:IconContents" sap:VirtualizedContainerService.HintSize="508,139" PSError="[PSError2]" />
+                <If Condition="[PSError2.Count &gt; 0]" sap:VirtualizedContainerService.HintSize="464,354">
+                  <If.Then>
+                    <Sequence sap:VirtualizedContainerService.HintSize="264,246">
+                      <Sequence.Variables>
+                        <Variable x:TypeArguments="sma:ErrorRecord" Name="errorRecord" />
+                      </Sequence.Variables>
+                      <sap:WorkflowViewStateService.ViewState>
+                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                        </scg:Dictionary>
+                      </sap:WorkflowViewStateService.ViewState>
+                      <Assign sap:VirtualizedContainerService.HintSize="242,60">
+                        <Assign.To>
+                          <OutArgument x:TypeArguments="sma:ErrorRecord">[errorRecord]</OutArgument>
+                        </Assign.To>
+                        <Assign.Value>
+                          <InArgument x:TypeArguments="sma:ErrorRecord">[ErrorUtility.GetErrorRecord(RDManagementResources.ResourceManager.GetString("FailedToSetSessionHostObjects"), poolmachine.Properties("Name").Value.ToString(), ErrorId.ConfigureRDSessionHost, PSError2(0).Exception)]</InArgument>
+                        </Assign.Value>
+                      </Assign>
+                      <mpua:WriteError DisplayName="Write-Error" ErrorRecord="[errorRecord]" sap:VirtualizedContainerService.HintSize="242,22" />
+                    </Sequence>
+                  </If.Then>
+                </If>
+              </Sequence>
+            </ActivityAction>
+          </ParallelForEach>
+        </Sequence>
+      </If.Then>
+    </If>
+    <mpa:InlineScript CommandName="{x:Null}" Parameters="{x:Null}" Command="import-module $env:windir\System32\ServerManagerInternal\rdmanagement;&#xD;&#xA;Set-RDMSPublishedApplication -ApplicationAlias $using:AppAlias -PoolName $using:PoolName -ApplicationPath $using:AppPath -ManagementServer $using:ConnectionBroker -DisplayName $using:DisplayName -SecurityDescriptor $using:SecurityDescriptor -VirtualPath $using:VirtualPath -CommandLineSetting $using:CommandLineSetting -RequiredCommandLine $using:RequiredCommandLine -ShowInPortal $using:ShowInPortal -Folder $using:Folder -IconPath $using:IconPath -IconIndex $using:IconIndex -IconContents $using:IconContents" sap:VirtualizedContainerService.HintSize="707,139" PSError="[PSError]" />
+    <If Condition="[Not PSError.Count.Equals(0)]" sap:VirtualizedContainerService.HintSize="663,208">
+      <If.Then>
+        <TerminateWorkflow Exception="[PSError.Item(0).Exception]" sap:VirtualizedContainerService.HintSize="200,22" Reason="[PSError.Item(0).Exception.Message]" />
+      </If.Then>
+    </If>
+  </Sequence>
+</Activity>

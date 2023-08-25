@@ -1,0 +1,594 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "USB4View Visualizer",
+    "description": "Expected JSON objects to be recieved by USB4View Visualizer for Add/Remove/Update events",
+    "type": "object",
+    "required": ["events"],
+    "additionalProperties": false,
+    "properties": {
+        "events": {
+            "description": "Although these events can be sent separately to individual endpoints, a list of events accomodates both live events and static events",
+            "type": "array",
+            "items": {
+                "oneOf": [
+                    {
+                        "$ref": "#/definitions/EvtRundownStart"
+                    },
+                    {
+                        "$ref": "#/definitions/EvtRundownComplete"
+                    },
+                    {
+                        "$ref": "#/definitions/EvtAddHostRouter"
+                    },
+                    {
+                        "$ref": "#/definitions/EvtRemoveHostRouter"
+                    },
+                    {
+                        "$ref": "#/definitions/EvtAddDeviceRouter"
+                    },
+                    {
+                        "$ref": "#/definitions/EvtRemoveDeviceRouter"
+                    },
+                    {
+                        "$ref": "#/definitions/EvtAddTunnel"
+                    },
+                    {
+                        "$ref": "#/definitions/EvtRemoveTunnel"
+                    }
+                ]
+            }
+        }
+    },
+    "definitions": {
+        "EvtRundownStart": {
+            "description": "An Event to mark the start of the initial set of events representing the initial state of the USB4 Topology, and set constraints on later sent events",
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+                "eventKind",
+                "timestamp"
+            ],
+            "properties": {
+                "eventKind": {
+                    "description": "Type of event broadcasted to the endpoint",
+                    "type": "string",
+                    "const": "EvtRundownStart"
+                },
+                "timestamp": {
+                    "description": "Time of which the event is broadcasted",
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "maxUSB3DownAdaptersPerDeviceRouter": {
+                    "description": "This will be validated by the Visualizer on start, any discrepancy will fail to load the Visualizer",
+                    "type": "integer",
+                    "minimum": 0
+                },
+                "maxPCIeDownAdaptersPerDeviceRouter": {
+                    "description": "This will be validated by the Visualizer on start, any discrepancy will fail to load the Visualizer",
+                    "type": "integer",
+                    "minimum": 0
+                },
+                "maxDPInOutAdaptersPerDeviceRouter": {
+                    "description": "This will be validated by the Visualizer on start, any discrepancy will fail to load the Visualizer",
+                    "type": "integer",
+                    "minimum": 0
+                }
+            }
+        },
+        "EvtRundownComplete": {
+            "description": "An Event to mark the end of the initial set of events representing the initial state of the USB4 Topology",
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+                "eventKind",
+                "timestamp"
+            ],
+            "properties": {
+                "eventKind": {
+                    "description": "Type of event broadcasted to the endpoint",
+                    "type": "string",
+                    "const": "EvtRundownComplete"
+                },
+                "timestamp": {
+                    "description": "Time of which the event is broadcasted",
+                    "type": "string",
+                    "format": "date-time"
+                }
+            }
+        },
+        "EvtAddHostRouter": {
+            "description": "An Event for adding HostRouters: the Router in a USB4 host. A HostRouter has one or more Downstream Facing Ports (abstracted by a Root Device Router)",
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+                "eventKind",
+                "timestamp",
+                "domainId",
+                "pnpDeviceDescription",
+                "vendorId",
+                "productId",
+                "revisionId",
+                "subVendorId",
+                "subSystemId"
+            ],
+            "properties": {
+                "eventKind": {
+                    "description": "Type of event broadcasted to the endpoint",
+                    "type": "string",
+                    "const": "EvtAddHostRouter"
+                },
+                "timestamp": {
+                    "description": "Time of which the event is broadcasted",
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "domainId": {
+                    "$ref": "#/definitions/DomainId"
+                },
+                "pnpDeviceDescription": {
+                    "description": "System-supplied device identification string that uniquely identifies a device in the system for PNP",
+                    "type": "string"
+                },
+                "vendorId": {
+                    "type": "integer"
+                },
+                "productId": {
+                    "type": "integer"
+                },
+                "revisionId": {
+                    "type": "integer"
+                },
+                "subVendorId": {
+                    "type": "integer"
+                },
+                "subSystemId": {
+                    "type": "integer"
+                }
+            }
+        },
+        "EvtRemoveHostRouter": {
+            "description": "An Event for removing HostRouters: the Router in a USB4 host. A HostRouter has one or more Downstream Facing Ports (abstracted by a Root Device Router)",
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+                "eventKind",
+                "timestamp",
+                "domainId"
+            ],
+            "properties": {
+                "eventKind": {
+                    "description": "Type of event broadcasted to the endpoint",
+                    "type": "string",
+                    "const": "EvtRemoveHostRouter"
+                },
+                "timestamp": {
+                    "description": "Time of which the event is broadcasted",
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "domainId": {
+                    "$ref": "#/definitions/DomainId"
+                }
+            }
+        },
+        "EvtAddDeviceRouter": {
+            "description": "An Event for adding DeviceRouters: The Router in a USB4 hub or USB4 peripheral device",
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+                "eventKind",
+                "timestamp",
+                "domainId",
+                "topologyId",
+                "pnpDeviceDescription",
+                "vendorName",
+                "modelName",
+                "productId",
+                "ufp",
+                "dfps",
+                "adapters"
+            ],
+            "properties": {
+                "eventKind": {
+                    "description": "Type of event broadcasted to the endpoint",
+                    "type": "string",
+                    "const": "EvtAddDeviceRouter"
+                },
+                "timestamp": {
+                    "description": "Time of which the event is broadcasted",
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "domainId": {
+                    "$ref": "#/definitions/DomainId"
+                },
+                "topologyId": {
+                    "$ref": "#/definitions/TopologyId"
+                },
+                "pnpDeviceDescription": {
+                    "description": "System-supplied device identification string that uniquely identifies a device in the system for PNP",
+                    "type": "string"
+                },
+                "vendorName": {
+                    "type": "string"
+                },
+                "vendorId": {
+                    "type": "integer"
+                },
+                "modelName": {
+                    "type": "string"
+                },
+                "productId": {
+                    "type": "integer"
+                },
+                "ufp": {
+                    "description": "Upstream Facing Port, will be null if device router does not have one (i.e Root Device Router)",
+                    "oneOf": [
+                        {
+                            "$ref": "#/definitions/Port"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
+                },
+                "dfps": {
+                    "description": "List of Downstream Facing Ports",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Port"
+                    }
+                },
+                "adapters": {
+                    "description": "List of Adapters existing on the DeviceRouter",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Adapter"
+                    },
+                    "minItems": 1
+                }
+            },
+            "if": {
+                "properties": {
+                    "dfp": {
+                        "minLength": 1
+                    }
+                }
+            },
+            "then": {
+                "properties": {
+                    "adapters": {
+                        "minLength": 1
+                    }
+                }
+            }
+        },
+        "EvtRemoveDeviceRouter": {
+            "description": "An Event for removing DeviceRouters: The Router in a USB4 hub or USB4 peripheral device",
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+                "eventKind",
+                "timestamp",
+                "domainId",
+                "topologyId"
+            ],
+            "properties": {
+                "eventKind": {
+                    "description": "Type of event broadcasted to the endpoint",
+                    "type": "string",
+                    "const": "EvtRemoveDeviceRouter"
+                },
+                "timestamp": {
+                    "description": "Time of which the event is broadcasted",
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "domainId":{
+                    "$ref": "#/definitions/DomainId"
+                },
+                "topologyId": {
+                    "$ref": "#/definitions/TopologyId"
+                }
+            }
+        },
+        "EvtAddTunnel": {
+            "description": "An Event for adding Tunnel: A logical connection between any two Adapters of two distinct DeviceRouters, consists of multiple paths",
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+                "eventKind",
+                "timestamp",
+                "tunnelHandle",
+                "domainId",
+                "paths"
+            ],
+            "properties": {
+                "eventKind": {
+                    "description": "Type of event broadcasted to the endpoint",
+                    "type": "string",
+                    "const": "EvtAddTunnel"
+                },
+                "timestamp": {
+                    "description": "Time of which the event is broadcasted",
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "tunnelHandle": {
+                    "$ref": "#/definitions/TunnelHandle"
+                },
+                "domainId": {
+                    "$ref": "#/definitions/DomainId"
+                },
+                "paths": {
+                    "description": "Paths in the Added Tunnel, (usually 2 for PCIe/USB3, and 3 for DP), must always exist one",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Path"
+                    },
+                    "minItems": 1
+                }
+            }
+        },
+        "EvtRemoveTunnel": {
+            "description": "An Event for removing Tunnel: A logical connection between any two Adapters of two different Device Router, consists of multiple paths",
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+                "eventKind",
+                "timestamp",
+                "tunnelHandle",
+                "domainId"
+            ],
+            "properties": {
+                "eventKind": {
+                    "description": "Type of event broadcasted to the endpoint",
+                    "type": "string",
+                    "const": "EvtRemoveTunnel"
+                },
+                "timestamp": {
+                    "description": "Time of which the event is broadcasted",
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "tunnelHandle": {
+                    "$ref": "#/definitions/TunnelHandle"
+                },
+                "domainId": {
+                    "$ref": "#/definitions/DomainId"
+                }
+            }
+        },
+        "Adapter": {
+            "$comment": "Desc taken from USB4 spec, maybe better if say that ",
+            "description": "An addressable Router interface (through Adapter Numbers 1...64) that includes additional functionality based on type",
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+                "adapterNumber",
+                "kind"
+            ],
+            "properties": {
+                "adapterNumber": {
+                    "$ref": "#/definitions/AdapterNumber"
+                },
+                "kind": {
+                    "$ref": "#/definitions/AdapterType"
+                },
+                "isDownstream": {
+                    "type": "boolean"
+                }
+            },
+            "if" : {
+                "not": {
+                    "properties": {
+                        "kind": {
+                            "const": "Lane"
+                        }
+                    }
+                }
+                
+            },
+            "then": {
+                "required": [
+                    "isDownstream"
+                ]
+            }
+        },
+        "Path": {
+            "description": "The one-way path that carries data either from a Source Adapter to a Destination Adapter",
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+                "name",
+                "isIncoming",
+                "segments"
+            ],
+            "properties": {
+                "name": {
+                    "description": "Descriptive name of Path",
+                    "type": "string"
+                },
+                "isIncoming": {
+                    "description": "Boolean flag for direction of the Path (host-centric)",
+                    "type": "boolean"
+                },
+                "segments": {
+                    "description": "Segments within connected DeviceRouters that make up the path (up to 2 for PCIe/USB3, 6 for DP)",
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/PathSegment"
+                    }
+                }
+            }
+        },
+        "PathSegment": {
+            "description": "A logical connection within a Device Router that connects between adapter",
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+                "topologyId",
+                "startAdapter",
+                "endAdapter",
+                "weight",
+                "priority",
+                "inHopId",
+                "outHopId",
+                "pathCredits"
+            ],
+            "properties": {
+                "topologyId": {
+                    "$ref": "#/definitions/TopologyId"
+                },
+                "startAdapter": {
+                    "$ref": "#/definitions/Adapter"
+                },
+                "endAdapter": {
+                    "$ref": "#/definitions/Adapter"
+                },
+                "weight": {
+                    "type": "integer"
+                },
+                "priority": {
+                    "type": "integer"
+                },
+                "inHopId": {
+                    "description": "A number assigned to a packet to identify its Path in the context of a connection between two adjacent routers, configured by the SW Connection Manager.",
+                    "type": "integer"
+                },
+                "outHopId": {
+                    "description": "A number assigned to a packet to identify its Path in the context of a connection between two adjacent routers, configured by the SW Connection Manager.",
+                    "type": "integer"
+                },
+                "pathCredits": {
+                    "type": "integer"
+                }
+            }
+        },
+        "Port": {
+            "description": "USB4 Port",
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+                "portNumber",
+                "connectedDeviceRouter",
+                "lane0Adapter",
+                "lane1Adapter",
+                "isLaneAdaptersBonded",
+                "currentLinkSpeed",
+                "negotiatedLinkWidth",
+                "targetLinkSpeed",
+                "targetLinkWidth"
+            ],
+            "properties": {
+                "portNumber": {
+                    "$ref": "#/definitions/AdapterNumber"
+                },
+                "connectedDeviceRouter": {
+                    "oneOf": [
+                        {
+                            "$ref": "#/definitions/ConnectedDeviceRouter"
+                        },
+                        {
+                            "type": "null"
+                        }
+                    ]
+                },
+                "lane0Adapter": {
+                    "$ref": "#/definitions/AdapterNumber"
+                },
+                "lane1Adapter": {
+                    "$ref": "#/definitions/AdapterNumber"
+                },
+                "isLaneAdaptersBonded": {
+                    "type": "boolean"
+                },
+                "currentLinkSpeed": {
+                    "$ref": "#/definitions/LinkSpeedKind"
+                },
+                "negotiatedLinkWidth": {
+                    "type": "integer"
+                },
+                "targetLinkSpeed": {
+                    "$ref": "#/definitions/LinkSpeedKind"
+                },
+                "targetLinkWidth": {
+                    "$ref": "#/definitions/LinkWidthKind"
+                }
+            }
+        },
+        "ConnectedDeviceRouter": {
+            "description": "Connected device router to a port",
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+                "topologyId",
+                "domainId",
+                "connectedPort"
+            ],
+            "properties": {
+                "topologyId": {
+                    "$ref": "#/definitions/TopologyId"
+                },
+                "domainId": {
+                    "$ref": "#/definitions/DomainId"
+                },
+                "connectedPort": {
+                    "$ref": "#/definitions/AdapterNumber"
+                }
+            }
+        },
+        "TopologyId": {
+            "description": "The unique 7 digit identifier for a router in the spanning USB4 tree",
+            "type": "array",
+            "items": {
+                "type": "integer"
+            },
+            "minItems": 7,
+            "maxItems": 7
+        },
+        "DomainId": {
+            "description": "The unique identifier for a domain containing the host/device router or tunnel",
+            "type": "integer"
+        },
+        "TunnelHandle": {
+            "description": "A unique TunnelHandle id number",
+            "type": "integer"
+        },
+        "AdapterNumber": {
+            "type": "integer",
+            "description": "The designated number for any Adapter/Port on a DeviceRouter (use Lane0 for port number)",
+            "minimum": 1,
+            "maximum": 64
+        },
+        "AdapterType": {
+            "description": "Type of Adapter on a DeviceRouter",
+            "type": "string",
+            "enum": [
+                "PCIe",
+                "USB3",
+                "DP",
+                "Lane"
+            ]
+        },
+        "LinkSpeedKind": {
+            "description": "Type of LinkSpeed on a Port",
+            "type": "string",
+            "enum": [
+                "-",
+                "Gen 2",
+                "Gen 3"
+            ]
+        },
+        "LinkWidthKind": {
+            "description": "Type of LinkSpeed on a Port",
+            "type": "string",
+            "enum": [
+                "-",
+                "Two Single Lanes",
+                "Dual Lane"
+            ]
+        }
+    }
+}

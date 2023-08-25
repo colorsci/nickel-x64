@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema targetNamespace="http://schemas.microsoft.com/wsus/2005/04/CorporatePublishing/MsiApplicabilityRules.xsd" 
+        xmlns="http://www.w3.org/2001/XMLSchema" 
+        xmlns:bt="http://schemas.microsoft.com/wsus/2005/04/CorporatePublishing/BaseTypes.xsd"
+        xmlns:sdp="http://schemas.microsoft.com/wsus/2005/04/CorporatePublishing/SoftwareDistributionPackage.xsd"
+        xmlns:msiar="http://schemas.microsoft.com/wsus/2005/04/CorporatePublishing/MsiApplicabilityRules.xsd" 
+        xmlns:mspblob="http://www.microsoft.com/msi/patch_applicability.xsd" 
+        elementFormDefault="qualified" attributeFormDefault="unqualified">
+        
+   <!--
+  
+  MSI (Windows Installer) checks
+    
+  -->
+  <element name="MsiProductInstalled" substitutionGroup="sdp:ApplicabilityRuleElement">
+    <annotation>
+      <documentation>Checks that the specified product is installed. Only the ProductCode is required, but the other attributes will be checked if they are supplied.</documentation>
+    </annotation>
+    <complexType>
+      <attribute name="ProductCode" type="mspblob:GUID" use="required">
+        <annotation>
+          <documentation>MSI product code for the product to be checked.</documentation>
+        </annotation>
+      </attribute>
+      <attribute name="VersionMax" type="mspblob:Version" use="optional">
+        <annotation>
+          <documentation>If present, this specified the maximum version of the product. If not present, there is no maximum version filter.</documentation>
+        </annotation>
+      </attribute>
+      <attribute name="ExcludeVersionMax" type="boolean" use="optional" default="false">
+        <annotation>
+          <documentation>This is only valid if VersionMax is specified. If set to true, the value in VersionMax is not considered a valid version for this check. If set to false, VersionMax is valid.</documentation>
+        </annotation>
+      </attribute>
+      <attribute name="VersionMin" type="mspblob:Version" use="optional">
+        <annotation>
+          <documentation>If present, this specified the minimum version of the product. If not present, there is no minimum version filter.</documentation>
+        </annotation>
+      </attribute>
+      <attribute name="ExcludeVersionMin" type="boolean" use="optional" default="false">
+        <annotation>
+          <documentation>This is only valid if VersionMin is specified. If set to true, the value in VersionMin is not considered a valid version for this check. If set to false, VersionMin is valid.</documentation>
+        </annotation>
+      </attribute>
+      <attribute name="Language" type="int" use="optional">
+        <annotation>
+          <documentation>If present, specifies the language to be filtered on. If not present, all languages are considered valid.</documentation>
+        </annotation>
+      </attribute>
+    </complexType>
+  </element>
+  
+  <element name="MsiFeatureInstalledForProduct" substitutionGroup="sdp:ApplicabilityRuleElement">
+    <annotation>
+      <documentation>Checks that the specified feature(s) are installed for one (optionally all) of the specified products.</documentation>
+    </annotation>
+    <complexType>
+      <sequence>
+        <element name="Feature" type="bt:MsiFeatureName" minOccurs="1" maxOccurs="unbounded" />
+        <element name="Product" type="mspblob:GUID" minOccurs="1" maxOccurs="unbounded" />
+      </sequence>
+      <attribute name="AllFeaturesRequired" type="boolean" use="optional" default="false" />
+      <attribute name="AllProductsRequired" type="boolean" use="optional" default="false" />
+    </complexType>
+  </element>
+  
+  <element name="MsiComponentInstalledForProduct" substitutionGroup="sdp:ApplicabilityRuleElement">
+    <annotation>
+      <documentation>Checks that the specified component(s) are installed for one (optionally all) of the specified products.</documentation>
+    </annotation>
+    <complexType>
+      <sequence>
+        <element name="Component" type="bt:MsiComponentCode" minOccurs="1" maxOccurs="unbounded" />
+        <element name="Product" type="mspblob:GUID" minOccurs="1" maxOccurs="unbounded" />
+      </sequence>
+      <attribute name="AllComponentsRequired" type="boolean" use="optional" default="false" />
+      <attribute name="AllProductsRequired" type="boolean" use="optional" default="false" />
+    </complexType>
+  </element>
+  
+  <element name="MsiPatchInstalledForProduct" substitutionGroup="sdp:ApplicabilityRuleElement">
+    <annotation>
+      <documentation>Checks that the specified patch is installed for the specified product.</documentation>
+    </annotation>
+    <complexType>
+      <attribute name="PatchCode" type="mspblob:GUID" use="required">
+        <annotation>
+          <documentation>MSI patch code for the patch whose install status is to be checked.</documentation>
+        </annotation>
+      </attribute>
+      <attribute name="ProductCode" type="mspblob:GUID" use="required">
+        <annotation>
+          <documentation>MSI product code for the product to be checked.</documentation>
+        </annotation>
+      </attribute>
+      <attribute name="VersionMax" type="mspblob:Version" use="optional">
+        <annotation>
+          <documentation>If present, this specified the maximum version of the product. If not present, there is no maximum version filter.</documentation>
+        </annotation>
+      </attribute>
+      <attribute name="ExcludeVersionMax" type="boolean" use="optional" default="false">
+        <annotation>
+          <documentation>This is only valid if VersionMax is specified. If set to true, the value in VersionMax is not considered a valid version for this check. If set to false, VersionMax is valid.</documentation>
+        </annotation>
+      </attribute>
+      <attribute name="VersionMin" type="mspblob:Version" use="optional">
+        <annotation>
+          <documentation>If present, this specified the minimum version of the product. If not present, there is no minimum version filter.</documentation>
+        </annotation>
+      </attribute>
+      <attribute name="ExcludeVersionMin" type="boolean" use="optional" default="false">
+        <annotation>
+          <documentation>This is only valid if VersionMin is specified. If set to true, the value in VersionMin is not considered a valid version for this check. If set to false, VersionMin is valid.</documentation>
+        </annotation>
+      </attribute>
+      <attribute name="Language" type="int" use="optional">
+        <annotation>
+          <documentation>If present, specifies the language to be filtered on. If not present, all languages are considered valid.</documentation>
+        </annotation>
+      </attribute>
+    </complexType>
+  </element>
+  <!--
+  
+  MSP (Windows Installer Patch) checks - these rely on the MSP metadata
+    
+  -->
+  <element name="MsiPatchInstalled" substitutionGroup="sdp:ApplicabilityRuleElement">
+    <annotation>
+      <documentation>Checks that the specified patch is installed. This rule uses the MSP metadata to perform the check.</documentation>
+    </annotation>
+  </element>
+  
+  <element name="MsiPatchSuperseded" substitutionGroup="sdp:ApplicabilityRuleElement">
+    <annotation>
+      <documentation>Checks that the specified patch is superseded. This rule uses the MSP metadata to perform the check.</documentation>
+    </annotation>
+  </element>
+  
+  <element name="MsiPatchInstallable" substitutionGroup="sdp:ApplicabilityRuleElement">
+    <annotation>
+      <documentation>Checks that the specified patch is installable. This rule uses the MSP metadata to perform the check.</documentation>
+    </annotation>
+  </element>
+  
+ <!--
+  
+  MSI (Windows Installer) checks - these rely on the MSI metadata
+    
+  -->
+  <element name="MsiApplicationInstalled" substitutionGroup="sdp:ApplicabilityRuleElement">
+    <annotation>
+      <documentation>Checks that the specified application is installed. This rule uses the MSI metadata to perform the check.</documentation>
+    </annotation>
+  </element>
+  
+  <element name="MsiApplicationSuperseded" substitutionGroup="sdp:ApplicabilityRuleElement">
+    <annotation>
+      <documentation>Checks that the specified application is superseded. This rule uses the MSI metadata to perform the check.</documentation>
+    </annotation>
+  </element>
+  
+  <element name="MsiApplicationInstallable" substitutionGroup="sdp:ApplicabilityRuleElement">
+    <annotation>
+      <documentation>Checks that the specified application is installable. This rule uses the MSI metadata to perform the check.</documentation>
+    </annotation>
+  </element>
+  
+  <!--
+  
+  MSP (Windows Installer Patch) metadata
+    
+  -->
+  <complexType name="MsiPatchMetadataStuff">
+    <annotation>
+      <documentation>The metadata for an MSP (Windows Installer Patch). This metadata is used by the MsiPatchInstalled, MsiPatchSuperseded, and MsiPatchInstallable applicability rules.</documentation>
+    </annotation>
+    <sequence>
+      <element ref="mspblob:MsiPatch" />
+      <element name="FallbackPatchCode" type="mspblob:GUID" minOccurs="0" maxOccurs="1" />
+    </sequence>
+  </complexType>
+
+  <element name="MsiPatchMetadata" substitutionGroup="sdp:ApplicabilityMetadataElement" type="msiar:MsiPatchMetadataStuff"/>
+
+   <!--
+  
+  MSI (Windows Installer) metadata
+    
+  -->
+  <complexType name="MsiApplicationMetadataStuff">
+	<annotation>
+		<documentation>The metadata for an MSI (Windows Installer Application). This metadata is used by the MsiApplicationInstalled, MsiApplicationSuperseded, and MsiApplicationInstallable applicability rules.</documentation>
+	</annotation>
+	<sequence>
+	    <element name="ProductCode" type="mspblob:GUID" />
+	</sequence>
+  </complexType>
+
+  <element name="MsiApplicationMetadata" substitutionGroup="sdp:ApplicabilityMetadataElement" type="msiar:MsiApplicationMetadataStuff"/>
+</schema>
+

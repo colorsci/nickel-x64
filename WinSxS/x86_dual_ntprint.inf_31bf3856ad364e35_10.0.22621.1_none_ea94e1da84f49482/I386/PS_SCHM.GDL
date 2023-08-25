@@ -1,0 +1,282 @@
+*% ==================
+*%  === XML/XSD types :  use prefix XSD ====
+*% ==================
+
+*Template:  XSD_STRING
+{
+    *Type:  DATATYPE
+    *DataType:   XML_TYPE
+    *XMLDataType: "string"
+}
+*Template:  XSD_INT
+{
+    *Type:  DATATYPE
+    *DataType:   XML_TYPE
+    *XMLDataType: "int"
+}
+
+*Template:  XSD_FLOAT
+{
+    *Type:  DATATYPE
+    *DataType:   XML_TYPE
+    *XMLDataType: "float"
+}
+
+
+*% ==================
+*%  === Enumerator types :  use prefix EDT ====
+*% ==================
+
+*Template:  EDT_BOOLEAN
+{
+    *Type:  DATATYPE
+    *DataType:   ENUMERATOR
+    *XMLDataType: "XML_BOOLEAN"
+    *EnumeratorList: (TRUE, FALSE)
+}
+
+
+*Template:  EDT_RESPONSETYPE
+{
+    *Type:  DATATYPE
+    *DataType:   ENUMERATOR
+    *XMLDataType: "XML_RESPONSETYPE"
+    *EnumeratorList: (BIDI_NULL ,BIDI_INT ,BIDI_FLOAT ,BIDI_BOOL ,
+        BIDI_STRING, BIDI_TEXT , BIDI_ENUM  , BIDI_BLOB )
+}
+
+*Template:  EDT_FEATURETYPE
+{
+    *Type:  DATATYPE
+    *DataType:   ENUMERATOR
+    *XMLDataType: "XML_FEATURETYPE"
+    *EnumeratorList: (PARAMETER_PROPERTY, DOC_PROPERTY, JOB_PROPERTY,
+        PRINTER_PROPERTY, SYNTHESIZED_PROPERTY)
+}
+
+
+*% ==================
+*%  === Filter types :  use prefix GPD ====
+*%  === these represent GPD defined types ====
+*% ==================
+
+*Template:  GPD_INTEGER
+{
+    *Type:  DATATYPE
+    *DataType:   FILTER_TYPE
+    *ElementType:  XSD_INT
+    *FilterTypeName: "HEX_OR_INT"
+}
+
+*Template:  GPD_NORMAL_STRING  *%  ANSI string, no Unicode conversion
+{
+    *Type:  DATATYPE
+    *DataType:   FILTER_TYPE
+    *ElementType:  XSD_STRING
+    *FilterTypeName: "NORMAL_STRING"
+}
+
+*Template:  GPD_SYMBOL
+{
+    *Type:  DATATYPE
+    *DataType:   FILTER_TYPE
+    *ElementType:  XSD_STRING
+    *FilterTypeName: "SYMBOLNAME"
+}
+
+
+*% ==================
+*%  ====  define  DT_BIDIVALUE  ====
+*% ==================
+
+
+*Template:  DT_TAGGED_INT
+{
+    *Inherits:  GPD_INTEGER
+    *ArrayLabel: "INT"          *%  Ensures Multi Personality template knows this holds an Int.
+}
+
+*Template:  DT_TAGGED_BOOL
+{
+    *Inherits:  EDT_BOOLEAN
+    *ArrayLabel: "BOOL"          *%  Ensures Multi Personality template knows this holds an Int.
+}
+
+*Template:  DT_TAGGED_NORMAL_STRING
+{
+    *Inherits:  GPD_NORMAL_STRING
+    *ArrayLabel: "STRING"          *%  Ensures Multi Personality template knows this holds an Int.
+}
+
+*Template:  DT_TAGGED_FLOAT
+{
+    *Inherits:  XSD_FLOAT
+    *ArrayLabel: "FLOAT"          *%  Ensures Multi Personality template knows this holds an Int.
+}
+
+*Template:  DT_RESPONSEDATA  *%  ResponseData
+{
+    *Inherits:  GPD_SYMBOL
+    *ArrayLabel: "ENUM_OPTION"
+}
+
+
+*Template:  DT_BIDIVALUE
+{
+    *Type:  DATATYPE
+    *DataType:   MULTIPLE_PERSONALITY
+    *ElementType:  (DT_TAGGED_INT, DT_TAGGED_BOOL, DT_TAGGED_NORMAL_STRING,
+        DT_TAGGED_FLOAT)
+    *ElementTags: (BIDI_INT , BIDI_BOOL , BIDI_STRING,
+        BIDI_FLOAT)
+}
+
+
+
+*% ==================
+*%  ====  BidiQuery Attributes  ====
+*% ==================
+
+*Template:  V_QUERYSTRING
+{
+    *Type:  ATTRIBUTE
+    *ValueType:  GPD_NORMAL_STRING
+    *Virtual: TRUE
+}
+*Template:  QUERYSTRING
+{
+    *Name:  "*QueryString"
+    *Inherits: V_QUERYSTRING
+}
+
+
+*% ==================
+*%  ====  BidiResponse Attributes  ====
+*% ==================
+
+*Template:  V_RESPONSETYPE
+{
+    *Type:  ATTRIBUTE
+    *ValueType:  EDT_RESPONSETYPE
+    *Virtual: TRUE
+}
+*Template:  RESPONSETYPE
+{
+    *Name:  "*ResponseType"
+    *Inherits: V_RESPONSETYPE
+}
+
+*Template:  V_RESPONSEDATA
+{
+    *Type:  ATTRIBUTE
+    *ValueType:  DT_RESPONSEDATA
+    *Additive: MOST_RECENT
+    *Virtual: TRUE
+}
+
+*Template:  RESPONSEDATA
+{
+    *Name:  "*ResponseData"
+    *Inherits: V_RESPONSEDATA
+}
+
+*% ==================
+*%  ==== BIDI  Constructs  ====
+*% ==================
+
+*Template:  BIDIQUERY
+{
+    *Name:  "*BidiQuery"
+    *Instances:  <ANY>
+    *Type: CONSTRUCT
+    *Members:  (QUERYSTRING)
+    *Production: SATISFY_ALL
+    {
+        *Member:  QUERYSTRING {*Occurs:  1 }
+    }
+}
+
+
+*Template:  BIDIRESPONSE
+{
+    *Name:  "*BidiResponse"
+    *Type: CONSTRUCT
+    *Members:  (RESPONSETYPE, RESPONSEDATA)
+    *Instances:  <ANY>
+    *Production: SATISFY_ALL
+    {
+        *Member:  RESPONSETYPE {*Occurs:  1 }
+        *Member:  RESPONSEDATA {*Occurs:  [0-1] }
+    }
+}
+
+
+*Template:  BIDIVALUE
+{
+    *Name:  "*BidiValue"
+    *Type:  ATTRIBUTE
+    *ValueType:  DT_BIDIVALUE
+    *%Additive: LEAST_TO_MOST_RECENT           *% disable after debugging
+    *Additive: MOST_RECENT
+}
+
+*% ==================
+*%  ==== Feature/Option  Constructs  ====
+*% ==================
+
+*Template:  FEATURETYPE
+{
+    *Name:  "*FeatureType"
+    *Type:  ATTRIBUTE
+    *ValueType:  EDT_FEATURETYPE
+}
+
+*Template: OPTION
+{
+    *Name:  "*Option"
+    *Type: CONSTRUCT
+    *Instances:  <ANY>
+    *Members: (
+        BIDIVALUE, BIDIQUERY, BIDIRESPONSE
+     )
+
+
+    *Production: SATISFY_ALL
+    {
+        *Member:  BIDIVALUE {*Occurs:  [0-1] }
+    }
+}
+
+
+
+*Template:  FEATURE       *%  define properties common to all Features
+{
+    *Name:  "*Feature"
+    *Type: CONSTRUCT
+    *Instances:  <ANY>
+    *Members:  (
+        BIDIQUERY, BIDIRESPONSE, OPTION, FEATURETYPE
+        )
+}
+
+
+
+
+
+*% ==================
+*%  ====  ROOT Construct  ====
+*% ==================
+
+
+
+*Template:  ROOT
+{
+    *Type: CONSTRUCT
+    *Name:  "root"
+    *Instances:  <ANY>
+    *Members:  (
+        FEATURE,
+        BIDIQUERY, BIDIRESPONSE )
+
+}
+

@@ -1,0 +1,84 @@
+// ClientWMIUninstall.mof : 
+//
+// Copyright (c) Microsoft Corporation. All rights reserved.
+//
+// This file will be processed by MOFCOMP utility to
+// install Microsoft Security Client classes to the WMI repository
+//
+
+#pragma autorecover
+
+#pragma namespace("\\\\.\\root\\Microsoft")
+
+instance of __Namespace
+{
+    Name = "SecurityClient" ;
+};
+
+#pragma namespace ("\\\\.\\root\\Microsoft\\SecurityClient")
+
+class Win32_ProviderEx : __Win32Provider
+{
+    [
+        Description("Hosting Model, provides compatibility with Windows XP and Windows Server .NET. Do not override."),
+        Override("HostingModel")
+    ]
+    string HostingModel = "LocalServiceHost";
+    
+    [
+        Description("..."),
+        Override("SecurityDescriptor")
+    ] 
+    string SecurityDescriptor; 
+    
+    UInt32 version = 1;
+};
+
+
+[
+    abstract: ToInstance, 
+    Description("This is a base abstract class that might be serialized to XML"): ToInstance ToSubClass
+]
+class SerializableToXml
+{
+    [
+        Description("Schema version (major, minor, build, revision)"): ToInstance ToSubClass,
+        read: ToInstance ToSubClass
+    ] 
+    string SchemaVersion = "";
+
+    [
+        Description("This is an all-in-one state data that uses an XML format with a standard CIM DTD schema"): ToInstance ToSubClass, 
+        read: ToInstance ToSubClass
+    ] 
+    string PackedXml = "";
+};
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Base abstract class ProtectionTechnologyStatus
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+[
+    abstract: ToInstance, 
+    Description("This is an abstract class that shows the status of a Microsoft protection technology."): ToInstance ToSubClass
+]
+class ProtectionTechnologyStatus: SerializableToXml
+{
+    [
+        Description("Protection technology version (major, minor, build, revision)"): ToInstance ToSubClass,
+        read: ToInstance ToSubClass
+    ] 
+    string Version = "";
+
+    [
+        Description("Protection technology name"): ToInstance ToSubClass,
+        read: ToInstance ToSubClass
+    ] 
+    string Name = "";
+
+    [
+        Description("Is protection technology enabled"): ToInstance ToSubClass, 
+        read: ToInstance ToSubClass
+    ]
+    boolean Enabled = false;
+};

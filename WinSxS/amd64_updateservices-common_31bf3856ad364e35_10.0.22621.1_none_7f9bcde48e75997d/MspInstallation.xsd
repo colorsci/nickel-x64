@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<schema targetNamespace="http://schemas.microsoft.com/wsus/2005/04/CorporatePublishing/Installers/MspInstallation.xsd"
+    xmlns="http://www.w3.org/2001/XMLSchema" xmlns:sdp="http://schemas.microsoft.com/wsus/2005/04/CorporatePublishing/SoftwareDistributionPackage.xsd"
+    xmlns:bt="http://schemas.microsoft.com/wsus/2005/04/CorporatePublishing/BaseTypes.xsd"
+    xmlns:msp="http://schemas.microsoft.com/wsus/2005/04/CorporatePublishing/Installers/MspInstallation.xsd"
+    xmlns:mspblob="http://www.microsoft.com/msi/patch_applicability.xsd" elementFormDefault="qualified"
+    attributeFormDefault="unqualified">
+    <import namespace="http://www.microsoft.com/msi/patch_applicability.xsd" schemaLocation="patch_applicability.xsd" />
+    <!--
+        Data specific to MSP installation 
+    -->
+    <simpleType name="MspInstallerCommandLine">
+        <annotation>
+            <documentation>An optional command line to be passed to MSI when installing, specified as space-separated name=value pairs.</documentation>
+        </annotation>
+        <restriction base="string">
+            <maxLength value="32768" />
+            <minLength value="1" />
+        </restriction>
+    </simpleType>
+    <element name="MspInstallerData" substitutionGroup="sdp:InstallHandlerSpecificData">
+        <complexType>
+            <annotation>
+                <documentation>Handler-specific data for updates that are Windows Installer Patches.</documentation>
+            </annotation>
+            <sequence>
+                <element name="MspFileName" type="bt:FileName" minOccurs="0" maxOccurs="1">
+                    <annotation>
+                        <documentation>File name of this MSP package</documentation>
+                    </annotation>
+                </element>
+            </sequence>
+            <attribute name="PatchCode" type="mspblob:GUID" use="optional">
+                <annotation>
+                    <documentation>Patch code for the MSP to be applied.</documentation>
+                </annotation>
+            </attribute>
+            <attribute name="FullFilePatchCode" type="mspblob:GUID" use="optional">
+                <annotation>
+                    <documentation>Patch code for the companion full-file MSP when the update contains both full-file and binary-delta payloads. To accomidate both payloads in the same update we assume that the binary delta-patch's applicability is more restrictive. In that case, the applicability meta-data element is that of the delta-patch and this attribute allows the full file patch GUID to also be specified.</documentation>
+                </annotation>
+            </attribute>
+            <attribute name="CommandLine" type="msp:MspInstallerCommandLine" use="optional">
+                <annotation>
+                    <documentation>Optional "command line" that is passed to the MSI APIs when installing the product.  This will typically contain extra properties as name-value pairs separated by spaces.</documentation>
+                </annotation>
+            </attribute>
+            <attribute name="UninstallCommandLine" type="msp:MspInstallerCommandLine" use="optional">
+                <annotation>
+                    <documentation>Optional uninstall "command line" that is passed to the MSI APIs when uninstalling the product.  This will typically contain extra properties as name-value pairs separated by spaces.</documentation>
+                </annotation>
+            </attribute>
+        </complexType>
+    </element>
+</schema>

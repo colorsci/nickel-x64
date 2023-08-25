@@ -1,0 +1,67 @@
+<Activity mc:Ignorable="sads sap" x:Class="Microsoft.RemoteDesktopServices.Workflow.SetGatewaySetting" this:SetGatewaySetting.GatewayUsage="-1" this:SetGatewaySetting.GatewayName="[Nothing]" this:SetGatewaySetting.GatewayAuthMode="-1" this:SetGatewaySetting.CollectionAlias="[Nothing]" this:SetGatewaySetting.GatewayUseCachedCredentials="-1"
+ xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities"
+ xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+ xmlns:mpa="clr-namespace:Microsoft.PowerShell.Activities;assembly=Microsoft.PowerShell.Activities"
+ xmlns:mpma="clr-namespace:Microsoft.PowerShell.Management.Activities;assembly=Microsoft.PowerShell.Management.Activities"
+ xmlns:mpua="clr-namespace:Microsoft.PowerShell.Utility.Activities;assembly=Microsoft.PowerShell.Utility.Activities"
+ xmlns:mrma="clr-namespace:Microsoft.RemoteDesktopServices.Management.Activities;assembly=Microsoft.RemoteDesktopServices.Management.Activities"
+ xmlns:mv="clr-namespace:Microsoft.VisualBasic;assembly=System"
+ xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities"
+ xmlns:s="clr-namespace:System;assembly=System.Core"
+ xmlns:s1="clr-namespace:System;assembly=System"
+ xmlns:s2="clr-namespace:System;assembly=System.ServiceModel"
+ xmlns:s3="clr-namespace:System;assembly=mscorlib"
+ xmlns:sa="clr-namespace:System.Activities;assembly=System.Activities"
+ xmlns:sad="clr-namespace:System.Activities.Debugger;assembly=System.Activities"
+ xmlns:sads="http://schemas.microsoft.com/netfx/2010/xaml/activities/debugger"
+ xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation"
+ xmlns:sc="clr-namespace:System.Collections;assembly=mscorlib"
+ xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib"
+ xmlns:sm="clr-namespace:System.Management;assembly=System.Management"
+ xmlns:sma="clr-namespace:System.Management.Automation;assembly=System.Management.Automation"
+ xmlns:this="clr-namespace:Microsoft.RemoteDesktopServices.Workflow"
+ xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <x:Members>
+    <x:Property Name="GatewayUsage" Type="InArgument(x:Int32)" />
+    <x:Property Name="GatewayName" Type="InArgument(x:String)" />
+    <x:Property Name="GatewayAuthMode" Type="InArgument(x:Int32)" />
+    <x:Property Name="CollectionAlias" Type="InArgument(x:String)" />
+    <x:Property Name="UseDeploymentGatewaySettings" Type="InArgument(x:Int32)" />
+    <x:Property Name="RDMSServer" Type="InArgument(x:String)">
+      <x:Property.Attributes>
+        <RequiredArgumentAttribute />
+      </x:Property.Attributes>
+    </x:Property>
+    <x:Property Name="GatewayUseCachedCredentials" Type="InArgument(x:Int32)" />
+  </x:Members>
+  <sap:VirtualizedContainerService.HintSize>526,620</sap:VirtualizedContainerService.HintSize>
+  <mva:VisualBasic.Settings>Assembly references and imported namespaces for internal implementation</mva:VisualBasic.Settings>
+  <Sequence DisplayName="Set RDP Gateway Setting" sap:VirtualizedContainerService.HintSize="486,540">
+    <Sequence.Variables>
+      <Variable x:TypeArguments="sma:PSDataCollection(sma:ErrorRecord)" Name="Errors" />
+    </Sequence.Variables>
+    <sap:WorkflowViewStateService.ViewState>
+      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+      </scg:Dictionary>
+    </sap:WorkflowViewStateService.ViewState>
+    <mpa:InlineScript Command="import-module $env:windir\System32\ServerManagerInternal\rdmanagement;&#xD;&#xA;Set-GatewaySettings -ManagementServer $using:RDMSServer -GatewayName $using:GatewayName -GatewayUsage $using:GatewayUsage -GatewayAuthMode $using:GatewayAuthMode -GatewayUseCachedCredentials $using:GatewayUseCachedCredentials -CollectionAlias $using:CollectionAlias -UseDeploymentGatewaySettings $using:UseDeploymentGatewaySettings" DisplayName="InlineScript to Update the Gateway Settings" sap:VirtualizedContainerService.HintSize="464,168" PSError="[Errors]">
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+    </mpa:InlineScript>
+    <If Condition="[Errors.Count &gt; 0]" sap:VirtualizedContainerService.HintSize="464,208">
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+      <If.Then>
+        <TerminateWorkflow Exception="[Errors.Item(0).Exception]" sap:VirtualizedContainerService.HintSize="200,22" Reason="[Errors.Item(0).Exception.Message]" />
+      </If.Then>
+    </If>
+  </Sequence>
+</Activity>

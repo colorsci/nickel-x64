@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<schema targetNamespace="http://schemas.microsoft.com/wsus/2005/04/CorporatePublishing/Installers/WindowsDriver.xsd" 
+        xmlns="http://www.w3.org/2001/XMLSchema" 
+        xmlns:bt="http://schemas.microsoft.com/wsus/2005/04/CorporatePublishing/BaseTypes.xsd"
+        xmlns:sdp="http://schemas.microsoft.com/wsus/2005/04/CorporatePublishing/SoftwareDistributionPackage.xsd"
+        xmlns:tns="http://schemas.microsoft.com/wsus/2005/04/CorporatePublishing/Installers/WindowsDriver.xsd" 
+        elementFormDefault="qualified" attributeFormDefault="unqualified">
+    <!--
+  
+  Primitive types that are specific to Windows Drivers
+    
+  -->
+
+    <simpleType name="HardwareID">
+        <annotation>
+            <documentation>A hardware ID.</documentation>
+        </annotation>
+        <restriction base="string" >
+            <maxLength value="200" />
+        </restriction>
+    </simpleType>
+    <simpleType name="DriverCompany">
+        <annotation>
+            <documentation>A driver manufacturer string.</documentation>
+        </annotation>
+        <restriction base="string">
+            <maxLength value="256" />
+        </restriction>
+    </simpleType>
+    <simpleType name="DriverProvider">
+        <annotation>
+            <documentation>A driver provider string.</documentation>
+        </annotation>
+        <restriction base="string">
+            <maxLength value="256" />
+        </restriction>
+    </simpleType>
+    <simpleType name="DriverManufacturer">
+        <annotation>
+            <documentation>A driver manufacturer string.</documentation>
+        </annotation>
+        <restriction base="string">
+            <maxLength value="256" />
+        </restriction>
+    </simpleType>
+    <!--
+        Driver Class enumeration
+    -->
+    <simpleType name="DriverClass">
+        <annotation>
+            <documentation>A SUS driver classification (e.g., Printers). This is mapped from the driver's INF class by WHOS (WHQL) before publishing to MU. The only guaranteed mapping is from INF "Printer" class to SUS "Printers" classification.</documentation>
+        </annotation>
+        <restriction base="token">
+            <enumeration value="Video">
+                <annotation>
+                    <documentation>Specifies that the Driver Class is Video.</documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="Sound">
+                <annotation>
+                    <documentation>Specifies that the Driver Class is Sound.</documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="Printers">
+                <annotation>
+                    <documentation>Specifies that the Driver Class is Printers.</documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="Modems">
+                <annotation>
+                    <documentation>Specifies that the Driver Class is Modems.</documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="Cameras">
+                <annotation>
+                    <documentation>Specifies that the Driver Class is Cameras.</documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="Scanners">
+                <annotation>
+                    <documentation>Specifies that the Driver Class is Scanners.</documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="Monitors">
+                <annotation>
+                    <documentation>Specifies that the Driver Class is Monitors.</documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="Networking">
+                <annotation>
+                    <documentation>Specifies that the Driver Class is Networking.</documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="Input Devices">
+                <annotation>
+                    <documentation>Specifies that the Driver Class is Input Devices.</documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="Storage">
+                <annotation>
+                    <documentation>Specifies that the Driver Class is Storage.</documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="Personal Computers">
+                <annotation>
+                    <documentation>Specifies that the Driver Class is Personal Computers.</documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="Servers and Cluster Solutions">
+                <annotation>
+                    <documentation>Specifies that the Driver Class is Servers and Cluster Solutions.</documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="Other Hardware">
+                <annotation>
+                    <documentation>Specifies that the Driver Class is Other Hardware.</documentation>
+                </annotation>
+            </enumeration>
+        </restriction>
+    </simpleType>
+    <simpleType name="DriverModel">
+        <annotation>
+            <documentation>A driver model string.</documentation>
+        </annotation>
+        <restriction base="string">
+            <maxLength value="256" />
+        </restriction>
+    </simpleType>
+    <simpleType name="DriverVerVersion">
+        <annotation>
+            <documentation>The drivers version string written as four integers separated by dots (e.g., "1.2.3.4"). The DriverVerVersion is derived from information in the driver INF.</documentation>
+        </annotation>
+        <restriction base="bt:Version"/>
+    </simpleType>
+    <!--
+  
+  The main data-type for windows drivers
+    
+  -->
+    <complexType name="WindowsDriverMetaData">
+        <annotation>
+            <documentation>Meta-data needed by both the driver installation handler and the driver applicability rules evaluator.</documentation>
+        </annotation>
+        <sequence>
+            <element name="CompatibleProvider" type="tns:DriverProvider" minOccurs="0" maxOccurs="unbounded">
+                <annotation>
+                    <documentation>Compatible driver providers. This information is only needed for printer drivers, because printer drivers are only offered as updates to existing drivers if the existing driver provider is the same as the new driver'sprovider, or if it is one of the new driver's compatible providers.</documentation>
+                </annotation>
+            </element>
+        </sequence>
+        <attribute name="HardwareID" type="tns:HardwareID" use="required">
+            <annotation>
+                <documentation>The hardware ID (HWID) or compatible ID that this driver must match to be applicable. The HardwareID is derived from the submitted INF file as part of the publication process.</documentation>
+            </annotation>
+        </attribute>
+        <attribute name="DriverVerDate" type="date" use="required">
+            <annotation>
+                <documentation>The driver version date. The driver version date is derived from the submitted INF file as part of the publication process.</documentation>
+            </annotation>
+        </attribute>
+        <attribute name="DriverVerVersion" type="tns:DriverVerVersion" use="required">
+        </attribute>
+        <attribute name="WhqlDriverID" type="unsignedInt" use="required">
+            <annotation>
+                <documentation>The WHQL driver submission number. The driver ID is assigned to the driver by WHQL as part of the publication process.</documentation>
+            </annotation>
+        </attribute>
+        <attribute name="Class" type="tns:DriverClass" use="required">
+            <annotation>
+                <documentation>The class of driver (e.g., printer). The driver class is derived from the submitted INF file as part of the publication process.</documentation>
+            </annotation>
+        </attribute>
+        <attribute name="Company" type="tns:DriverCompany" use="required">
+            <annotation>
+                <documentation>The company that signed the driver. The company is derived from the cab signature as part of the publication process.</documentation>
+            </annotation>
+        </attribute>
+        <attribute name="Provider" type="tns:DriverProvider" use="required">
+            <annotation>
+                <documentation>The company providing the driver. The provider is derived from the submitted INF file as part of the publication process.</documentation>
+            </annotation>
+        </attribute>
+        <attribute name="Manufacturer" type="tns:DriverManufacturer" use="required">
+            <annotation>
+                <documentation>The company that manufactured the driver. The manufacturer is derived from the submitted INF file as part of the publication process.</documentation>
+            </annotation>
+        </attribute>
+        <attribute name="Model" type="tns:DriverModel" use="required">
+            <annotation>
+                <documentation>The model of the device for which this driver is intended. The device model is derived from the submitted INF file as part of the publication process.</documentation>
+            </annotation>
+        </attribute>
+    </complexType>
+    <!--
+  
+  The <WindowsDriverMetaData> element, used by the driver applicability evaluation engine.
+    
+ -->
+    <element name="WindowsDriverMetaData" substitutionGroup="sdp:ApplicabilityMetadataElement" type="tns:WindowsDriverMetaData">
+        <annotation>
+            <documentation>The metadata for a windows driver. This metadata is used by all the driver applicability rules as well as the driver installation handler.</documentation>
+        </annotation>
+    </element>
+    <element name="WindowsDriverInstalled" substitutionGroup="sdp:ApplicabilityRuleElement">
+        <annotation>
+            <documentation>Checks that the specified update is installed. This rule uses the applicability metadata to perform the check. It returns true if this driver is an equal match as the currently installed driver.</documentation>
+        </annotation>
+        <complexType />
+    </element>
+    <element name="WindowsDriverSuperseded" substitutionGroup="sdp:ApplicabilityRuleElement">
+        <annotation>
+            <documentation>Checks that the specified update is superseded. This rule uses the applicability metadata to perform the check. It returns true if this driver is a worse match as the currently installed driver.</documentation>
+        </annotation>
+        <complexType />
+    </element>
+    <element name="WindowsDriverInstallable" substitutionGroup="sdp:ApplicabilityRuleElement">
+        <annotation>
+            <documentation>Checks that the specified update is installable. This rule uses the applicability metadata to perform the check. It returns true if this driver is a better match as the currently installed driver.</documentation>
+        </annotation>
+        <complexType />
+    </element>
+</schema>

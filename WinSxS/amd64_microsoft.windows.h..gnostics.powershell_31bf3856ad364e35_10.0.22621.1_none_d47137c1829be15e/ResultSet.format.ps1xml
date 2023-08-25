@@ -1,0 +1,38 @@
+<Configuration>
+  <SelectionSets>
+    <SelectionSet>
+      <Name>ResultSetTypes</Name>
+      <Types>
+        <TypeName>Microsoft.Windows.HostGuardianService.Diagnostics.Payload.RemoteResultSet</TypeName>
+        <TypeName>Microsoft.Windows.HostGuardianService.Diagnostics.Payload.RemoteCollectionResultSet</TypeName>  
+        <TypeName>Microsoft.Windows.HostGuardianService.Diagnostics.Payload.TargetResultSet</TypeName>
+        <TypeName>Microsoft.Windows.HostGuardianService.Diagnostics.Payload.CollectionTargetResultSet</TypeName>
+        <TypeName>Microsoft.Windows.HostGuardianService.Diagnostics.Payload.DiagnosticSetResultSet</TypeName>
+        <TypeName>Microsoft.Windows.HostGuardianService.Diagnostics.Record</TypeName>
+      </Types>
+    </SelectionSet>
+  </SelectionSets>
+
+  <ViewDefinitions>
+    <View>
+      <Name>ResultSetView</Name>
+      <ViewSelectedBy>
+        <SelectionSetName>ResultSetTypes</SelectionSetName>
+      </ViewSelectedBy>
+      <CustomControl>
+        <CustomEntries>
+          <CustomEntry>
+            <CustomItem>
+              <ExpressionBinding>
+                <ScriptBlock>
+                  $formatter = New-Object Microsoft.Windows.HostGuardianService.Diagnostics.Payload.ResultFormatter $Host
+                  $formatter.Print($_)
+                </ScriptBlock>
+              </ExpressionBinding>
+            </CustomItem>
+          </CustomEntry>
+        </CustomEntries>
+      </CustomControl>
+    </View>
+  </ViewDefinitions>
+</Configuration>

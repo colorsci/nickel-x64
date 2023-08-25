@@ -1,0 +1,35 @@
+;Privacy Notification - Group Policy Setting
+
+#if version >= 3
+
+CLASS MACHINE
+    CATEGORY !!TITLE
+
+    #if version >= 4
+        EXPLAIN !!HELP
+    #endif
+
+    ;Privacy Notification - Group Policy Setting, no parameter with DWORD value
+ 
+    KEYNAME "Software\Policies\Microsoft\Windows MultiPoint Server\"
+
+        POLICY !!POLICY
+        #if version >= 4
+        SUPPORTED !!SUPPORTED_ProductOnly
+        #endif
+
+        EXPLAIN !!POLICY_HELP
+            VALUENAME "SuppressPrivacyNotification"
+            VALUEON  NUMERIC 1
+            VALUEOFF NUMERIC 0
+        END POLICY
+    END CATEGORY
+
+#endif
+
+[strings]
+TITLE="@: Suppress privacy notification for standard users"
+HELP="@: Details."
+POLICY="@: Configure privacy notification"
+POLICY_HELP="@: Sets a value for only the enabled and disabled states.\n\nIf you enable this policy setting, the Example1NoParam value will be set to 1.\n\n If you disable this policy setting, the Example1NoParam will be set to 0.\n\nIf you do not configure this policy setting, the value will be deleted, if currently set to a value."
+SUPPORTED_ProductOnly="@: Supported in Windows MultiPoint Server 2012"

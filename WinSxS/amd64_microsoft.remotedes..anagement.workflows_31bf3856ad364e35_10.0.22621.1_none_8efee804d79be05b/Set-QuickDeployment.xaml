@@ -1,0 +1,836 @@
+<Activity mc:Ignorable="sads sap" x:Class="Set_QuickDeployment.Workflow1" this:Workflow1.DeploymentType="1" this:Workflow1.VirtualNetworkName="RDS Virtual" this:Workflow1.MasterVmName="QuickMasterVM" this:Workflow1.HighlyAvailable="False" this:Workflow1.ApplicationNames="[{}]" this:Workflow1.PublishRemoteApp="True"
+ xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities"
+ xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+ xmlns:mpa="clr-namespace:Microsoft.PowerShell.Activities;assembly=Microsoft.PowerShell.Activities"
+ xmlns:mpma="clr-namespace:Microsoft.PowerShell.Management.Activities;assembly=Microsoft.PowerShell.Management.Activities"
+ xmlns:mpua="clr-namespace:Microsoft.PowerShell.Utility.Activities;assembly=Microsoft.PowerShell.Utility.Activities"
+ xmlns:mrc="clr-namespace:Microsoft.RemoteDesktopServices.Common;assembly=Microsoft.RemoteDesktopServices.Management.Activities"
+ xmlns:mrma="clr-namespace:Microsoft.RemoteDesktopServices.Management.Activities;assembly=Microsoft.RemoteDesktopServices.Management.Activities"
+ xmlns:mrmc="clr-namespace:Microsoft.RemoteDesktopServices.Management.Cmdlets;assembly=Microsoft.RemoteDesktopServices.Management.Activities"
+ xmlns:mv="clr-namespace:Microsoft.VisualBasic;assembly=System"
+ xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities"
+ xmlns:s="clr-namespace:System;assembly=mscorlib"
+ xmlns:s1="clr-namespace:System;assembly=System"
+ xmlns:s2="clr-namespace:System;assembly=System.Xml"
+ xmlns:s3="clr-namespace:System;assembly=System.Core"
+ xmlns:s4="clr-namespace:System;assembly=System.ServiceModel"
+ xmlns:s5="clr-namespace:System;assembly=System.ComponentModel.Composition"
+ xmlns:sa="clr-namespace:System.Activities;assembly=System.Activities"
+ xmlns:sad="clr-namespace:System.Activities.Debugger;assembly=System.Activities"
+ xmlns:sads="http://schemas.microsoft.com/netfx/2010/xaml/activities/debugger"
+ xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation"
+ xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System"
+ xmlns:scg1="clr-namespace:System.Collections.Generic;assembly=System.ServiceModel"
+ xmlns:scg2="clr-namespace:System.Collections.Generic;assembly=System.Core"
+ xmlns:scg3="clr-namespace:System.Collections.Generic;assembly=mscorlib"
+ xmlns:sd="clr-namespace:System.Data;assembly=System.Data"
+ xmlns:sl="clr-namespace:System.Linq;assembly=System.Core"
+ xmlns:sma="clr-namespace:System.Management.Automation;assembly=System.Management.Automation"
+ xmlns:st="clr-namespace:System.Text;assembly=mscorlib"
+ xmlns:this="clr-namespace:Set_QuickDeployment"
+ xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <x:Members>
+    <x:Property Name="HostName" Type="InArgument(x:String)">
+      <x:Property.Attributes>
+        <RequiredArgumentAttribute />
+      </x:Property.Attributes>
+    </x:Property>
+    <x:Property Name="DeploymentType" Type="InArgument(x:Int32)">
+      <x:Property.Attributes>
+        <RequiredArgumentAttribute />
+      </x:Property.Attributes>
+    </x:Property>
+    <x:Property Name="VirtualNetworkName" Type="InArgument(x:String)" />
+    <x:Property Name="NetworkAdapterName" Type="InArgument(x:String)" />
+    <x:Property Name="MasterVmName" Type="InArgument(x:String)" />
+    <x:Property Name="VhdPath" Type="InArgument(x:String)" />
+    <x:Property Name="CollectionDescription" Type="InArgument(x:String)" />
+    <x:Property Name="HighlyAvailable" Type="InArgument(x:Boolean)" />
+    <x:Property Name="MasterVMCredential" Type="InArgument(sma:PSCredential)" />
+    <x:Property Name="UserSecurityDescriptor" Type="InArgument(x:String)" />
+    <x:Property Name="ProvisioningXML" Type="InArgument(x:String)" />
+    <x:Property Name="CollectionName" Type="InArgument(x:String)">
+      <x:Property.Attributes>
+        <RequiredArgumentAttribute />
+      </x:Property.Attributes>
+    </x:Property>
+    <x:Property Name="ExportLocation" Type="InArgument(x:String)" />
+    <x:Property Name="ApplicationNames" Type="InArgument(s:String[])" />
+    <x:Property Name="PublishRemoteApp" Type="InArgument(x:Boolean)" />
+  </x:Members>
+  <this:Workflow1.NetworkAdapterName>
+    <InArgument x:TypeArguments="x:String">
+      <Literal x:TypeArguments="x:String" Value="" />
+    </InArgument>
+  </this:Workflow1.NetworkAdapterName>
+  <this:Workflow1.VhdPath>
+    <InArgument x:TypeArguments="x:String">
+      <Literal x:TypeArguments="x:String" Value="" />
+    </InArgument>
+  </this:Workflow1.VhdPath>
+  <this:Workflow1.CollectionDescription>
+    <InArgument x:TypeArguments="x:String">
+      <Literal x:TypeArguments="x:String" Value="" />
+    </InArgument>
+  </this:Workflow1.CollectionDescription>
+  <this:Workflow1.UserSecurityDescriptor>
+    <InArgument x:TypeArguments="x:String">
+      <Literal x:TypeArguments="x:String" Value="" />
+    </InArgument>
+  </this:Workflow1.UserSecurityDescriptor>
+  <this:Workflow1.ProvisioningXML>
+    <InArgument x:TypeArguments="x:String">
+      <Literal x:TypeArguments="x:String" Value="" />
+    </InArgument>
+  </this:Workflow1.ProvisioningXML>
+  <this:Workflow1.CollectionName>
+    <InArgument x:TypeArguments="x:String">
+      <Literal x:TypeArguments="x:String" Value="" />
+    </InArgument>
+  </this:Workflow1.CollectionName>
+  <this:Workflow1.ExportLocation>
+    <InArgument x:TypeArguments="x:String">
+      <Literal x:TypeArguments="x:String" Value="" />
+    </InArgument>
+  </this:Workflow1.ExportLocation>
+  <sap:VirtualizedContainerService.HintSize>2193,3192</sap:VirtualizedContainerService.HintSize>
+  <mva:VisualBasic.Settings>Assembly references and imported namespaces for internal implementation</mva:VisualBasic.Settings>
+  <sap:WorkflowViewStateService.ViewState>
+    <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+      <x:Boolean x:Key="ShouldCollapseAll">True</x:Boolean>
+      <x:Boolean x:Key="ShouldExpandAll">False</x:Boolean>
+    </scg3:Dictionary>
+  </sap:WorkflowViewStateService.ViewState>
+  <Sequence DisplayName="Begin" sap:VirtualizedContainerService.HintSize="2153,3152">
+    <Sequence.Variables>
+      <Variable x:TypeArguments="sma:PSDataCollection(sma:ErrorRecord)" Name="Errors" />
+      <Variable x:TypeArguments="sma:PSDataCollection(sma:PSObject)" Name="tempResults" />
+      <Variable x:TypeArguments="x:Boolean" Default="False" Name="RestartNeeded" />
+      <Variable x:TypeArguments="x:Int32" Default="1000" Name="ProgressID" />
+    </Sequence.Variables>
+    <sap:WorkflowViewStateService.ViewState>
+      <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+      </scg3:Dictionary>
+    </sap:WorkflowViewStateService.ViewState>
+    <Assign sap:VirtualizedContainerService.HintSize="2131,60">
+      <Assign.To>
+        <OutArgument x:TypeArguments="sma:PSDataCollection(sma:PSObject)">[tempResults]</OutArgument>
+      </Assign.To>
+      <Assign.Value>
+        <InArgument x:TypeArguments="sma:PSDataCollection(sma:PSObject)">[New PSDataCollection(Of PSObject)]</InArgument>
+      </Assign.Value>
+    </Assign>
+    <Assign sap:VirtualizedContainerService.HintSize="2131,60">
+      <Assign.To>
+        <OutArgument x:TypeArguments="sma:PSDataCollection(sma:ErrorRecord)">[Errors]</OutArgument>
+      </Assign.To>
+      <Assign.Value>
+        <InArgument x:TypeArguments="sma:PSDataCollection(sma:ErrorRecord)">[New PSDataCollection(Of ErrorRecord)]</InArgument>
+      </Assign.Value>
+    </Assign>
+    <mpua:WriteProgress Activity="Begin" CurrentOperation="Installation" DisplayName="Write-Progress" sap:VirtualizedContainerService.HintSize="2131,22" PercentComplete="0" ProgressId="1001" />
+    <If Condition="[DeploymentType &lt;&gt; 7]" sap:VirtualizedContainerService.HintSize="1085,519">
+      <sap:WorkflowViewStateService.ViewState>
+        <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsPinned">True</x:Boolean>
+          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+        </scg3:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+      <If.Then>
+        <Sequence sap:VirtualizedContainerService.HintSize="530,411">
+          <mpa:InlineScript PSRemotingBehavior="{x:Null}" Command="import-Module servermanager; &#xD;&#xA;Add-WindowsFeature rds-connection-broker" DisplayName="Install RDMS -InlineScript" sap:VirtualizedContainerService.HintSize="2131,51" PSComputerName="[{HostName}]" PSActionRunningTimeoutSec="[1800]" PSError="[Errors]" Result="[tempResults]">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+              </scg3:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+          </mpa:InlineScript>
+          <If Condition="[Errors.Count &gt; 0]" sap:VirtualizedContainerService.HintSize="2131,51">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+              </scg3:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+            <If.Then>
+              <Sequence sap:VirtualizedContainerService.HintSize="222,146">
+                <sap:WorkflowViewStateService.ViewState>
+                  <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                    <x:Boolean x:Key="IsPinned">True</x:Boolean>
+                  </scg3:Dictionary>
+                </sap:WorkflowViewStateService.ViewState>
+                <TerminateWorkflow Exception="[New RDManagementException(RDManagementResources.ResourceManager.GetString(&quot;FailedToInstallRoleServices&quot;), HostName, ErrorId.InstallRoleServices, Errors(0).Exception)]" sap:VirtualizedContainerService.HintSize="200,22" />
+              </Sequence>
+            </If.Then>
+            <If.Else>
+              <If Condition="[tempResults.Count &gt; 0 And CType(tempResults.Item(0).Properties(&quot;Success&quot;).Value, Boolean) &lt;&gt; True]" sap:VirtualizedContainerService.HintSize="464,208">
+                <If.Then>
+                  <TerminateWorkflow Exception="[New RDManagementException(RDManagementResources.ResourceManager.GetString(&quot;FailedToInstallRoleServices&quot;), HostName, ErrorId.InstallRoleServices)]" sap:VirtualizedContainerService.HintSize="200,22" />
+                </If.Then>
+              </If>
+            </If.Else>
+          </If>
+        </Sequence>
+      </If.Then>
+    </If>
+    <Assign sap:VirtualizedContainerService.HintSize="2131,60">
+      <Assign.To>
+        <OutArgument x:TypeArguments="sma:PSDataCollection(sma:ErrorRecord)">[Errors]</OutArgument>
+      </Assign.To>
+      <Assign.Value>
+        <InArgument x:TypeArguments="sma:PSDataCollection(sma:ErrorRecord)">[New PSDataCollection(Of ErrorRecord)]</InArgument>
+      </Assign.Value>
+    </Assign>
+    <Assign sap:VirtualizedContainerService.HintSize="2131,60">
+      <Assign.To>
+        <OutArgument x:TypeArguments="sma:PSDataCollection(sma:PSObject)">[tempResults]</OutArgument>
+      </Assign.To>
+      <Assign.Value>
+        <InArgument x:TypeArguments="sma:PSDataCollection(sma:PSObject)">[New PSDataCollection(Of PSObject)]</InArgument>
+      </Assign.Value>
+    </Assign>
+    <Sequence DisplayName="Install Role Services" sap:VirtualizedContainerService.HintSize="2131,51">
+      <sap:WorkflowViewStateService.ViewState>
+        <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+        </scg3:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+      <mpua:WriteVerbose DisplayName="Write-Verbose" sap:VirtualizedContainerService.HintSize="353,22" Message="Installing RoleServices....." />
+      <Switch x:TypeArguments="x:Int32" Expression="[DeploymentType]" sap:VirtualizedContainerService.HintSize="476,266">
+        <Switch.Default>
+          <mpa:InlineScript PSRemotingBehavior="{x:Null}" Command="import-Module servermanager;&#xD;&#xA;Add-WindowsFeature rds-web-access, rds-virtualization, rds-rd-server -IncludeManagementTools" sap:VirtualizedContainerService.HintSize="200,51" PSComputerName="[{HostName}]" PSActionRunningTimeoutSec="[3000]" PSError="[Errors]" Result="[tempResults]">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+              </scg3:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+          </mpa:InlineScript>
+        </Switch.Default>
+        <sap:WorkflowViewStateService.ViewState>
+          <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            <x:Boolean x:Key="IsPinned">True</x:Boolean>
+          </scg3:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+        <mpa:InlineScript PSRemotingBehavior="{x:Null}" x:Key="1" Command="import-Module servermanager;&#xD;&#xA;Add-WindowsFeature rds-web-access, rds-virtualization -IncludeManagementTools" sap:VirtualizedContainerService.HintSize="200,51" PSComputerName="[{HostName}]" PSActionRunningTimeoutSec="[3000]" PSError="[Errors]" Result="[tempResults]">
+          <sap:WorkflowViewStateService.ViewState>
+            <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsPinned">False</x:Boolean>
+              <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+            </scg3:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+        </mpa:InlineScript>
+        <mpa:InlineScript PSRemotingBehavior="{x:Null}" x:Key="2" Command="import-Module servermanager;&#xD;&#xA;Add-WindowsFeature rds-web-access, rds-rd-server -IncludeManagementTools" sap:VirtualizedContainerService.HintSize="200,51" PSComputerName="[{HostName}]" PSActionRunningTimeoutSec="[3000]" PSError="[Errors]" Result="[tempResults]">
+          <sap:WorkflowViewStateService.ViewState>
+            <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+              <x:Boolean x:Key="IsPinned">False</x:Boolean>
+            </scg3:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+        </mpa:InlineScript>
+        <mpa:InlineScript PSRemotingBehavior="{x:Null}" x:Key="7" Command="import-Module servermanager;&#xD;&#xA;Add-WindowsFeature MultiPointServerRole" sap:VirtualizedContainerService.HintSize="200,51" PSComputerName="[{HostName}]" PSActionRunningTimeoutSec="[3000]" PSError="[Errors]" Result="[tempResults]">
+          <sap:WorkflowViewStateService.ViewState>
+            <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+              <x:Boolean x:Key="IsPinned">False</x:Boolean>
+            </scg3:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+        </mpa:InlineScript>
+      </Switch>
+      <If Condition="[Errors.Count &gt; 0]" sap:VirtualizedContainerService.HintSize="353,51">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          </scg3:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+        <If.Then>
+          <Sequence sap:VirtualizedContainerService.HintSize="222,146">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+              </scg3:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+            <TerminateWorkflow Exception="[New RDManagementException(RDManagementResources.ResourceManager.GetString(&quot;FailedToInstallRoleServices&quot;), HostName, ErrorId.InstallRoleServices, Errors(0).Exception)]" sap:VirtualizedContainerService.HintSize="200,22" />
+          </Sequence>
+        </If.Then>
+        <If.Else>
+          <ForEach x:TypeArguments="sma:PSObject" DisplayName="ForEach&lt;PSObject&gt;" sap:VirtualizedContainerService.HintSize="494,316" Values="[tempResults]">
+            <ActivityAction x:TypeArguments="sma:PSObject">
+              <ActivityAction.Argument>
+                <DelegateInArgument x:TypeArguments="sma:PSObject" Name="item" />
+              </ActivityAction.Argument>
+              <If Condition="[CType(item.Properties(&quot;Success&quot;).Value, Boolean) &lt;&gt; True]" sap:VirtualizedContainerService.HintSize="464,208">
+                <If.Then>
+                  <TerminateWorkflow Exception="[New RDManagementException(RDManagementResources.ResourceManager.GetString(&quot;FailedToInstallRoleServices&quot;), HostName, ErrorId.InstallRoleServices)]" sap:VirtualizedContainerService.HintSize="200,22" />
+                </If.Then>
+              </If>
+            </ActivityAction>
+          </ForEach>
+        </If.Else>
+      </If>
+      <If Condition="[tempResults.Count &gt; 0]" sap:VirtualizedContainerService.HintSize="353,51">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          </scg3:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+        <If.Then>
+          <Assign sap:VirtualizedContainerService.HintSize="242,60">
+            <Assign.To>
+              <OutArgument x:TypeArguments="x:Boolean">[RestartNeeded]</OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="x:Boolean">["Yes" = CStr(tempResults(0).Properties("RestartNeeded").Value)]</InArgument>
+            </Assign.Value>
+          </Assign>
+        </If.Then>
+      </If>
+    </Sequence>
+    <mpua:WriteProgress Activity="Installation Completed Succeffully" CurrentOperation="RestartComputer" DisplayName="Write-Progress" sap:VirtualizedContainerService.HintSize="2131,22" PercentComplete="0" ProgressId="1002" />
+    <Sequence DisplayName="Restart-Computers" sap:VirtualizedContainerService.HintSize="2131,51">
+      <Sequence.Variables>
+        <Variable x:TypeArguments="x:String" Name="AffectedRole">
+          <Variable.Default>
+            <Literal x:TypeArguments="x:String" Value="" />
+          </Variable.Default>
+        </Variable>
+        <Variable x:TypeArguments="sma:PSDataCollection(sma:PSObject)" Name="RestartError" />
+        <Variable x:TypeArguments="x:Int32" Name="Result" />
+      </Sequence.Variables>
+      <sap:WorkflowViewStateService.ViewState>
+        <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+        </scg3:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+      <If Condition="[RestartNeeded]" sap:VirtualizedContainerService.HintSize="924,1414">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            <x:Boolean x:Key="IsPinned">True</x:Boolean>
+          </scg3:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+        <If.Then>
+          <Sequence sap:VirtualizedContainerService.HintSize="799,1306">
+            <Sequence.Variables>
+              <Variable x:TypeArguments="x:String" Name="variable1" />
+              <Variable x:TypeArguments="sma:PSDataCollection(sma:PSObject)" Name="ServerNameResult" />
+              <Variable x:TypeArguments="x:String" Name="LocalServer" />
+            </Sequence.Variables>
+            <sap:WorkflowViewStateService.ViewState>
+              <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                <x:Boolean x:Key="IsPinned">True</x:Boolean>
+              </scg3:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+            <If Condition="[(DeploymentType = 2) Or (DeploymentType = 7)]" sap:VirtualizedContainerService.HintSize="777,208">
+              <sap:WorkflowViewStateService.ViewState>
+                <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                  <x:Boolean x:Key="IsPinned">True</x:Boolean>
+                </scg3:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+              <If.Then>
+                <Assign sap:VirtualizedContainerService.HintSize="242,60">
+                  <Assign.To>
+                    <OutArgument x:TypeArguments="x:String">[AffectedRole]</OutArgument>
+                  </Assign.To>
+                  <Assign.Value>
+                    <InArgument x:TypeArguments="x:String">RDS-RD-SERVER</InArgument>
+                  </Assign.Value>
+                </Assign>
+              </If.Then>
+              <If.Else>
+                <Assign sap:VirtualizedContainerService.HintSize="242,60">
+                  <Assign.To>
+                    <OutArgument x:TypeArguments="x:String">[AffectedRole]</OutArgument>
+                  </Assign.To>
+                  <Assign.Value>
+                    <InArgument x:TypeArguments="x:String">RDS-VIRTUALIZATION</InArgument>
+                  </Assign.Value>
+                </Assign>
+              </If.Else>
+            </If>
+            <mpua:WriteVerbose DisplayName="Write-Verbose" sap:VirtualizedContainerService.HintSize="777,22" Message="[&quot;Restarting Servers..... Affected Role: &quot; +AffectedRole]" />
+            <mpa:InlineScript PSRemotingBehavior="{x:Null}" Command="import-module $env:windir\System32\ServerManagerInternal\rdmanagement; Get-LocalMachineFqdn" sap:VirtualizedContainerService.HintSize="777,51" Result="[ServerNameResult]">
+              <sap:WorkflowViewStateService.ViewState>
+                <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                </scg3:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+            </mpa:InlineScript>
+            <Assign sap:VirtualizedContainerService.HintSize="777,60">
+              <Assign.To>
+                <OutArgument x:TypeArguments="x:String">[LocalServer]</OutArgument>
+              </Assign.To>
+              <Assign.Value>
+                <InArgument x:TypeArguments="x:String">[ServerNameResult(0).ToString()]</InArgument>
+              </Assign.Value>
+            </Assign>
+            <If Condition="[(LocalServer &lt;&gt; Nothing) And (HostName.Equals(LocalServer, StringComparison.OrdinalIgnoreCase))]" sap:VirtualizedContainerService.HintSize="777,619">
+              <sap:WorkflowViewStateService.ViewState>
+                <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsPinned">True</x:Boolean>
+                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                </scg3:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+              <If.Then>
+                <Sequence sap:VirtualizedContainerService.HintSize="222,208">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                      <x:Boolean x:Key="IsPinned">True</x:Boolean>
+                    </scg3:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <mpma:RestartComputer DisplayName="Restart local computer" Force="[true]" PSComputerName="[{}]" />
+                  <mpua:WriteProgress Activity="Immediately after reboot" DisplayName="Write-Progress" sap:VirtualizedContainerService.HintSize="200,22" PercentComplete="-1" Status="Debug" />
+                </Sequence>
+              </If.Then>
+              <If.Else>
+                <Sequence sap:VirtualizedContainerService.HintSize="530,511">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                      <x:Boolean x:Key="IsPinned">True</x:Boolean>
+                    </scg3:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <mpa:InlineScript PSRemotingBehavior="{x:Null}" Command="import-module $env:windir\System32\ServerManagerInternal\rdmanagement;&#xD;&#xA;restart-computersandblock -computername $using:HostName -AffectedRole $using:AffectedRole" DisplayName="Restart-Computers InlineScript" sap:VirtualizedContainerService.HintSize="508,139" PSComputerName="[{}]" Result="[RestartError]">
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsPinned">True</x:Boolean>
+                      </scg3:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                  </mpa:InlineScript>
+                  <If Condition="[RestartError.Count &gt; 0 And Boolean.Parse(RestartError.Item(0).Properties(&quot;Success&quot;).Value.ToString())]" sap:VirtualizedContainerService.HintSize="508,208">
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                        <x:Boolean x:Key="IsPinned">True</x:Boolean>
+                      </scg3:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                    <If.Else>
+                      <TerminateWorkflow Exception="[New RDManagementException(RDManagementResources.ResourceManager.GetString(&quot;FailedToRestartComputer&quot;), HostName, ErrorId.RestartComputers)]" sap:VirtualizedContainerService.HintSize="200,22" />
+                    </If.Else>
+                  </If>
+                </Sequence>
+              </If.Else>
+            </If>
+            <Delay Duration="[New TimeSpan(0, 0, 30)]" sap:VirtualizedContainerService.HintSize="777,22" />
+          </Sequence>
+        </If.Then>
+      </If>
+    </Sequence>
+    <mpua:WriteProgress Activity="Server Restarted Successfully" CurrentOperation="Post Install Configurations" DisplayName="Write-Progress" sap:VirtualizedContainerService.HintSize="2131,22" PercentComplete="0" ProgressId="1004" />
+    <Sequence DisplayName="Post Install Configurations" sap:VirtualizedContainerService.HintSize="2131,51">
+      <Sequence.Variables>
+        <Variable x:TypeArguments="x:Int32" Default="0" Name="RetryCount" />
+        <Variable x:TypeArguments="x:Int32" Default="5" Name="MaxTries" />
+        <Variable x:TypeArguments="x:Boolean" Default="False" Name="Retry" />
+      </Sequence.Variables>
+      <sap:WorkflowViewStateService.ViewState>
+        <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+        </scg3:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+      <Assign sap:VirtualizedContainerService.HintSize="1173,60">
+        <Assign.To>
+          <OutArgument x:TypeArguments="x:Int32">[RetryCount]</OutArgument>
+        </Assign.To>
+        <Assign.Value>
+          <InArgument x:TypeArguments="x:Int32">0</InArgument>
+        </Assign.Value>
+      </Assign>
+      <DoWhile sap:VirtualizedContainerService.HintSize="1173,1338">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsPinned">True</x:Boolean>
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg3:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+        <DoWhile.Condition>[RetryCount &lt; MaxTries And Retry = True]</DoWhile.Condition>
+        <TryCatch sap:VirtualizedContainerService.HintSize="1147,1216">
+          <sap:WorkflowViewStateService.ViewState>
+            <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsPinned">True</x:Boolean>
+              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            </scg3:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+          <TryCatch.Try>
+            <Sequence sap:VirtualizedContainerService.HintSize="1129,1029">
+              <sap:WorkflowViewStateService.ViewState>
+                <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                  <x:Boolean x:Key="IsPinned">True</x:Boolean>
+                </scg3:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+              <Assign sap:VirtualizedContainerService.HintSize="1107,60">
+                <Assign.To>
+                  <OutArgument x:TypeArguments="x:Boolean">[Retry]</OutArgument>
+                </Assign.To>
+                <Assign.Value>
+                  <InArgument x:TypeArguments="x:Boolean">False</InArgument>
+                </Assign.Value>
+              </Assign>
+              <Sequence DisplayName="Post Install Configuration" sap:VirtualizedContainerService.HintSize="1107,805">
+                <sap:WorkflowViewStateService.ViewState>
+                  <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                    <x:Boolean x:Key="IsPinned">True</x:Boolean>
+                  </scg3:Dictionary>
+                </sap:WorkflowViewStateService.ViewState>
+                <Assign sap:VirtualizedContainerService.HintSize="1085,60">
+                  <Assign.To>
+                    <OutArgument x:TypeArguments="sma:PSDataCollection(sma:ErrorRecord)">[Errors]</OutArgument>
+                  </Assign.To>
+                  <Assign.Value>
+                    <InArgument x:TypeArguments="sma:PSDataCollection(sma:ErrorRecord)">[New PSDataCollection(Of ErrorRecord)]</InArgument>
+                  </Assign.Value>
+                </Assign>
+                <mpua:WriteVerbose DisplayName="Write-Verbose" sap:VirtualizedContainerService.HintSize="1085,22" Message="Starting Post Install Configurations" />
+                <If Condition="[DeploymentType = 2]" sap:VirtualizedContainerService.HintSize="1085,519">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsPinned">True</x:Boolean>
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                    </scg3:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <If.Then>
+                    <Sequence sap:VirtualizedContainerService.HintSize="530,349">
+                              <sap:WorkflowViewStateService.ViewState>
+                                  <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+                          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                          <x:Boolean x:Key="IsPinned">True</x:Boolean>
+                                  </scg3:Dictionary>
+                              </sap:WorkflowViewStateService.ViewState>
+                      <mpua:WriteVerbose DisplayName="Write-Verbose" sap:VirtualizedContainerService.HintSize="508,22" Message="Create RDSH deployment" />
+                      <mpa:InlineScript PSRemotingBehavior="{x:Null}" Command="import-module $env:windir\System32\ServerManagerInternal\rdmanagement\Add-RDManagementServer.Xaml; &#xD;&#xA;Add-RDManagementServer -RDMSServer $using:HostName -DeploymentType 1;&#xD;&#xA;&#xD;&#xA;import-module $env:windir\System32\ServerManagerInternal\rdmanagement\Add-RDWebAccessServer.Xaml; &#xD;&#xA;Add-RDWebAccessServer -RDMSServer $using:HostName -RDWebAccessServers $using:HostName;&#xD;&#xA;&#xD;&#xA;import-module $env:windir\System32\ServerManagerInternal\rdmanagement\Add-RDSessionHostServer.Xaml; &#xD;&#xA;Add-RDSessionHostServer -RDMSServer $using:HostName -RDSHServers $using:HostName" sap:VirtualizedContainerService.HintSize="508,163" PSError="[Errors]" PSRequiredModules="[{&quot;PSWorkflow&quot;}]">
+                      <sap:WorkflowViewStateService.ViewState>
+                          <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+                            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                          </scg3:Dictionary>
+                      </sap:WorkflowViewStateService.ViewState>
+                      </mpa:InlineScript>
+                    </Sequence>
+                  </If.Then>
+                  <If.Else>
+                    <If Condition="[DeploymentType = 1]" sap:VirtualizedContainerService.HintSize="1085,519">
+                      <sap:WorkflowViewStateService.ViewState>
+                        <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+                          <x:Boolean x:Key="IsPinned">True</x:Boolean>
+                          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                        </scg3:Dictionary>
+                      </sap:WorkflowViewStateService.ViewState>
+                      <If.Then>
+                        <Sequence sap:VirtualizedContainerService.HintSize="530,411">
+                              <sap:WorkflowViewStateService.ViewState>
+                                  <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+                              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                              <x:Boolean x:Key="IsPinned">True</x:Boolean>
+                                  </scg3:Dictionary>
+                              </sap:WorkflowViewStateService.ViewState>
+                          <mpua:WriteVerbose DisplayName="Write-Verbose" sap:VirtualizedContainerService.HintSize="508,22" Message="Create RDVH deployment" />
+                          <mpa:InlineScript PSRemotingBehavior="{x:Null}" Command="import-module $env:windir\System32\ServerManagerInternal\rdmanagement\Add-RDManagementServer.Xaml; &#xD;&#xA;Add-RDManagementServer -RDMSServer $using:HostName -DeploymentType 0 -VirtualNetworkName $using:VirtualNetworkName;&#xD;&#xA;&#xD;&#xA;import-module $env:windir\System32\ServerManagerInternal\rdmanagement\Add-RDWebAccessServer.Xaml; &#xD;&#xA;Add-RDWebAccessServer -RDMSServer $using:HostName -RDWebAccessServers $using:HostName;&#xD;&#xA;&#xD;&#xA;import-module $env:windir\System32\ServerManagerInternal\rdmanagement\Add-RDVirtualizationHostServer.Xaml; &#xD;&#xA;Add-RDVirtualizationHostServer -RDMSServer $using:HostName -RDVHServers $using:HostName -VirtualNetworkName $using:VirtualNetworkName  -NetworkAdapterName $using:NetworkAdapterName;" sap:VirtualizedContainerService.HintSize="508,163" PSError="[Errors]" PSRequiredModules="[{&quot;PSWorkflow&quot;}]">
+                              <sap:WorkflowViewStateService.ViewState>
+                                  <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+                                <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                  </scg3:Dictionary>
+                              </sap:WorkflowViewStateService.ViewState>
+                          </mpa:InlineScript>
+                          <Delay Duration="[New TimeSpan(0, 0, 20)]" sap:VirtualizedContainerService.HintSize="508,22" />
+                        </Sequence>
+                      </If.Then>
+                    </If>
+                  </If.Else>
+                </If>
+              </Sequence>
+            </Sequence>
+          </TryCatch.Try>
+          <TryCatch.Catches>
+            <Catch x:TypeArguments="sma:RemoteException" sap:VirtualizedContainerService.HintSize="1133,21">
+              <sap:WorkflowViewStateService.ViewState>
+                <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                </scg3:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+              <ActivityAction x:TypeArguments="sma:RemoteException">
+                <ActivityAction.Argument>
+                  <DelegateInArgument x:TypeArguments="sma:RemoteException" Name="ex" />
+                </ActivityAction.Argument>
+                <Sequence sap:VirtualizedContainerService.HintSize="200,51">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                      <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                    </scg3:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <If Condition="[ErrorUtility.IsInvalidSelectorError(ex)]" sap:VirtualizedContainerService.HintSize="531,456">
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                      </scg3:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                    <If.Then>
+                      <Sequence sap:VirtualizedContainerService.HintSize="264,308">
+                        <sap:WorkflowViewStateService.ViewState>
+                          <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+                            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                          </scg3:Dictionary>
+                        </sap:WorkflowViewStateService.ViewState>
+                        <Assign sap:VirtualizedContainerService.HintSize="242,60">
+                          <Assign.To>
+                            <OutArgument x:TypeArguments="x:Boolean">[Retry]</OutArgument>
+                          </Assign.To>
+                          <Assign.Value>
+                            <InArgument x:TypeArguments="x:Boolean">True</InArgument>
+                          </Assign.Value>
+                        </Assign>
+                        <mpua:WriteVerbose DisplayName="Write-Verbose" sap:VirtualizedContainerService.HintSize="242,22" Message="[&quot;Execution Failed.... Trying again afetr 30 seconds. Retry count = &quot; + RetryCount.ToString()]" />
+                        <Delay Duration="[New TimeSpan(0, 0, 30)]" sap:VirtualizedContainerService.HintSize="242,22" />
+                      </Sequence>
+                    </If.Then>
+                    <If.Else>
+                      <Assign sap:VirtualizedContainerService.HintSize="242,60">
+                        <Assign.To>
+                          <OutArgument x:TypeArguments="x:Boolean">[Retry]</OutArgument>
+                        </Assign.To>
+                        <Assign.Value>
+                          <InArgument x:TypeArguments="x:Boolean">False</InArgument>
+                        </Assign.Value>
+                      </Assign>
+                    </If.Else>
+                  </If>
+                </Sequence>
+              </ActivityAction>
+            </Catch>
+          </TryCatch.Catches>
+          <TryCatch.Finally>
+            <Assign sap:VirtualizedContainerService.HintSize="242,60">
+              <Assign.To>
+                <OutArgument x:TypeArguments="x:Int32">[RetryCount]</OutArgument>
+              </Assign.To>
+              <Assign.Value>
+                <InArgument x:TypeArguments="x:Int32">[RetryCount + 1]</InArgument>
+              </Assign.Value>
+            </Assign>
+          </TryCatch.Finally>
+        </TryCatch>
+      </DoWhile>
+      <If Condition="[Errors.Count &gt; 0]" sap:VirtualizedContainerService.HintSize="1173,208">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            <x:Boolean x:Key="IsPinned">True</x:Boolean>
+          </scg3:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+        <If.Then>
+          <TerminateWorkflow Exception="[New RDManagementException(RDManagementResources.ResourceManager.GetString(&quot;FailedToPerformPostInstallConfiguration&quot;), HostName, ErrorId.PostInstallConfiguration, Errors(0).Exception)]" sap:VirtualizedContainerService.HintSize="200,22" />
+        </If.Then>
+      </If>
+    </Sequence>
+    <mpua:WriteProgress Activity="Successfully Performed Post Install Configurations" CurrentOperation="Creating Master VM" DisplayName="Write-Progress" sap:VirtualizedContainerService.HintSize="2131,22" PercentComplete="0" ProgressId="1005" />
+    <Sequence DisplayName="CreateMasterVM" sap:VirtualizedContainerService.HintSize="2131,51">
+      <sap:WorkflowViewStateService.ViewState>
+        <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+        </scg3:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+      <If Condition="[(DeploymentType &lt;&gt; 2) And (DeploymentType &lt;&gt; 7)]" sap:VirtualizedContainerService.HintSize="200,51">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+          </scg3:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+        <If.Then>
+          <Sequence sap:VirtualizedContainerService.HintSize="269,100">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+              </scg3:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+            <Assign sap:VirtualizedContainerService.HintSize="242,58">
+              <Assign.To>
+                <OutArgument x:TypeArguments="sma:PSDataCollection(sma:ErrorRecord)">[Errors]</OutArgument>
+              </Assign.To>
+              <Assign.Value>
+                <InArgument x:TypeArguments="sma:PSDataCollection(sma:ErrorRecord)">[New PSDataCollection(Of ErrorRecord)]</InArgument>
+              </Assign.Value>
+            </Assign>
+            <mpua:WriteVerbose DisplayName="Write-Verbose" sap:VirtualizedContainerService.HintSize="242,22" Message="Creating Master VM" />
+            <mpa:InlineScript PSRemotingBehavior="{x:Null}" Command="import-module $env:windir\System32\ServerManagerInternal\rdmanagement;&#xD;&#xA;New-RDParentVirtualDesktop -Name $using:MasterVMName -VhdPath $using:VhdPath -VirtualNetworkName $using:VirtualNetworkName -HostName $using:HostName" sap:VirtualizedContainerService.HintSize="242,51" PSError="[Errors]">
+              <sap:WorkflowViewStateService.ViewState>
+                <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                  <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                </scg3:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+            </mpa:InlineScript>
+            <If Condition="[Errors.Count &gt; 0]" sap:VirtualizedContainerService.HintSize="242,51">
+              <sap:WorkflowViewStateService.ViewState>
+                <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                </scg3:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+              <If.Then>
+                                <TerminateWorkflow Exception="[New RDManagementException(RDManagementResources.ResourceManager.GetString(&quot;FailedToCreateMasterVM&quot;) + &quot; &quot; + Errors(0).Exception.Message, HostName, ErrorId.CreateMasterVM, Errors(0).Exception)]" sap:VirtualizedContainerService.HintSize="200,22" />
+              </If.Then>
+            </If>
+          </Sequence>
+        </If.Then>
+      </If>
+    </Sequence>
+    <mpua:WriteProgress Activity="Master VM Creation Successfull" CurrentOperation="Creating Collection" DisplayName="Write-Progress" sap:VirtualizedContainerService.HintSize="2131,22" PercentComplete="0" ProgressId="1006" />
+    <Sequence DisplayName="Create Collection" sap:VirtualizedContainerService.HintSize="2131,51">
+      <sap:WorkflowViewStateService.ViewState>
+        <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+        </scg3:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+      <Assign sap:VirtualizedContainerService.HintSize="242,58">
+        <Assign.To>
+          <OutArgument x:TypeArguments="sma:PSDataCollection(sma:ErrorRecord)">[Errors]</OutArgument>
+        </Assign.To>
+        <Assign.Value>
+          <InArgument x:TypeArguments="sma:PSDataCollection(sma:ErrorRecord)">[New PSDataCollection(Of ErrorRecord)]</InArgument>
+        </Assign.Value>
+      </Assign>
+      <Switch x:TypeArguments="x:Int32" Expression="[DeploymentType]" sap:VirtualizedContainerService.HintSize="242,51">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          </scg3:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+        <Sequence x:Key="1" DisplayName="CreateVM Collection" sap:VirtualizedContainerService.HintSize="530,416">
+          <sap:WorkflowViewStateService.ViewState>
+            <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+              <x:Boolean x:Key="IsPinned">True</x:Boolean>
+            </scg3:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+          <mpua:WriteVerbose DisplayName="Write-Verbose" sap:VirtualizedContainerService.HintSize="508,22" Message="Creating VM Collection" />
+          <mpa:InlineScript PSRemotingBehavior="{x:Null}" Command="import-module $env:windir\System32\ServerManagerInternal\rdmanagement\New-RDVMCollection.Xaml;&#xD;&#xA;New-RDVMCollection -RDManagementServer $using:HostName -Name $using:CollectionName -CollectionAlias $using:CollectionName -Type 1 -Managed $true -Description $using:CollectionDescription -HighlyAvailable $using:HighlyAvailable -MasterVMHostServer $using:HostName -MasterVMName $using:MasterVmName -ExportLocation $using:ExportLocation -MasterVMCredential $using:MasterVMCredential -ForceExport $true -UserSecurityDescriptor $using:UserSecurityDescriptor -ProvisioningXML $using:ProvisioningXML" sap:VirtualizedContainerService.HintSize="508,139" PSError="[Errors]" PSRequiredModules="[{&quot;PSWorkflow&quot;}]">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsPinned">True</x:Boolean>
+              </scg3:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+          </mpa:InlineScript>
+          <If Condition="[Errors.Count &gt; 0]" sap:VirtualizedContainerService.HintSize="508,51">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+              </scg3:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+            <If.Then>
+              <TerminateWorkflow Exception="[New RDManagementException(RDManagementResources.ResourceManager.GetString(&quot;FailedToCreateVMCollection&quot;), HostName, ErrorId.CreateVMCollection, Errors(0).Exception)]" sap:VirtualizedContainerService.HintSize="200,22" />
+            </If.Then>
+          </If>
+        </Sequence>
+        <Sequence x:Key="2" DisplayName="Create RDSH Collection" sap:VirtualizedContainerService.HintSize="456,100">
+          <sap:WorkflowViewStateService.ViewState>
+            <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+              <x:Boolean x:Key="IsPinned">False</x:Boolean>
+            </scg3:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+          <mpua:WriteVerbose DisplayName="Write-Verbose" sap:VirtualizedContainerService.HintSize="200,22" Message="Creating RDSH Collection" />
+          <mpa:InlineScript PSRemotingBehavior="{x:Null}" Command="import-module $env:windir\System32\ServerManagerInternal\rdmanagement\New-RDSHCollection.Xaml;&#xD;&#xA;New-RDSHCollection -RDManagementServer $using:HostName -Name $using:CollectionName -CollectionAlias $using:CollectionName -RDSHServer $using:HostName -User $using:UserSecurityDescriptor" sap:VirtualizedContainerService.HintSize="200,51" PSError="[Errors]" PSRequiredModules="[{&quot;PSWorkflow&quot;}]">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+              </scg3:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+          </mpa:InlineScript>
+          <If Condition="[Errors.Count &gt; 0]" sap:VirtualizedContainerService.HintSize="200,51">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+              </scg3:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+            <If.Then>
+              <TerminateWorkflow Exception="[New RDManagementException(RDManagementResources.ResourceManager.GetString(&quot;FailedToCreateSessionCollection&quot;), HostName, ErrorId.CreateSessionCollection, Errors(0).Exception)]" sap:VirtualizedContainerService.HintSize="200,22" />
+            </If.Then>
+          </If>
+        </Sequence>
+      </Switch>
+    </Sequence>
+    <mpua:WriteProgress Activity="Collection Created Successfully" CurrentOperation="Publishing RemoteApp" DisplayName="Write-Progress" sap:VirtualizedContainerService.HintSize="2131,22" PercentComplete="0" ProgressId="1007" />
+    <Sequence DisplayName="Publish Remote Apps" sap:VirtualizedContainerService.HintSize="2131,1557">
+      <sap:WorkflowViewStateService.ViewState>
+        <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          <x:Boolean x:Key="IsPinned">True</x:Boolean>
+        </scg3:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+      <mpua:WriteVerbose DisplayName="Write-Verbose" sap:VirtualizedContainerService.HintSize="2109,22" Message="Publishing Remote Apps" />
+      <If Condition="[True = PublishRemoteApp]" sap:VirtualizedContainerService.HintSize="2109,1371">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsPinned">True</x:Boolean>
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg3:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+        <If.Then>
+          <Sequence sap:VirtualizedContainerService.HintSize="1984,1263">
+            <sap:WorkflowViewStateService.ViewState>
+              <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                <x:Boolean x:Key="IsPinned">True</x:Boolean>
+              </scg3:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+            <Assign sap:VirtualizedContainerService.HintSize="1962,60">
+              <Assign.To>
+                <OutArgument x:TypeArguments="sma:PSDataCollection(sma:ErrorRecord)">[Errors]</OutArgument>
+              </Assign.To>
+              <Assign.Value>
+                <InArgument x:TypeArguments="sma:PSDataCollection(sma:ErrorRecord)">[New PSDataCollection(Of ErrorRecord)]</InArgument>
+              </Assign.Value>
+            </Assign>
+            <mpa:InlineScript Command="import-module $env:windir\System32\ServerManagerInternal\rdmanagement\Get-StartMenuApplications.xaml ;&#xA;import-module $env:windir\System32\ServerManagerInternal\rdmanagement\Publish-RemoteApplication.xaml ;&#xA;$publishingApps=@();&#xA;&#xA;&#xA;    $appObjFullList = Get-StartMenuApplications -ServerName $using:HostName;&#xA;    foreach ($appObj in $appObjFullList)&#xA;    {&#xA;        foreach ($applicationName in $using:ApplicationNames)&#xA;        {&#xA;            if ($appObj.Path.EndsWith(&quot;\&quot; + $applicationName, [System.StringComparison]&quot;InvariantCultureIgnoreCase&quot;))&#xA;            {&#xD;&#xA;                if ($using:DeploymentType -eq 1) &#xA;                {&#xA;                     $appObj.path = $appObj.path -replace &quot;[A-Z]:\\&quot;, &quot;C:\&quot;;&#xD;&#xA;                }&#xA;                $publishingApps += $appObj;&#xA;            }&#xA;        }&#xA;    }&#xA;&#xA;for ($index = 0; $index -lt $publishingApps.length; $index++)&#xA;{&#xA;    $appObj = $publishingApps[$index];&#xA;    Publish-RemoteApplication -AppAlias $appObj.Name  -CommandLineSetting 0 -PoolName $using:CollectionName -RDMSServer $using:HostName -VirtualMachine $using:HostName  -IconPath $appObj.IconPath -IconContents $appObj.IconContents -IconIndex $appObj.IconIndex -ShowInPortal 1 -DisplayName  $appObj.Name -AppPath $appObj.Path -SecurityDescriptor $null -VirtualPath $appObj.VPath;&#xA;    Write-Progress -Activity &quot; &quot; -PercentComplete ((($index + 1) * 100)/$publishingApps.length);&#xA;}   RDManagement\Set-RDSHCollectionClientSetting -RDManagementServer $using:HostName -CollectionAlias $using:CollectionName -UseRDEasyPrintDriver 1 -SetClientPrinterAsDefault 1 -RedirectClientPrinter 1 -DeviceRedirectionOptions 187 -MaxMonitors 16 " sap:VirtualizedContainerService.HintSize="508,139" PSError="[Errors]" PSRequiredModules="[{&quot;PSWorkflow&quot;}]">
+              <sap:WorkflowViewStateService.ViewState>
+                <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                  <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                </scg3:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+            </mpa:InlineScript>
+            <If Condition="[Errors.Count &gt; 0]" sap:VirtualizedContainerService.HintSize="1962,462">
+              <sap:WorkflowViewStateService.ViewState>
+                <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsPinned">True</x:Boolean>
+                </scg3:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+              <If.Then>
+              <TerminateWorkflow Exception="[New RDManagementException(RDManagementResources.ResourceManager.GetString(&quot;FailedToPublishRemoteApps&quot;), HostName, ErrorId.PublishRemoteApps, New Exception())]" sap:VirtualizedContainerService.HintSize="200,22" />
+              </If.Then>
+            </If>
+          </Sequence>
+        </If.Then>
+      </If>
+    </Sequence>
+    <mpua:WriteProgress Activity="Published Remote Applications Successfully" CurrentOperation="Done" DisplayName="Write-Progress" sap:VirtualizedContainerService.HintSize="2131,22" PercentComplete="100" ProgressId="1008" />
+  </Sequence>
+</Activity>

@@ -1,0 +1,421 @@
+﻿<Activity mc:Ignorable="sads sap" x:Class="RDManagement.Set_FileTypeAssociation" this:Set_FileTypeAssociation.IconContents="[Nothing]" this:Set_FileTypeAssociation.IconPath="[Nothing]" this:Set_FileTypeAssociation.IconIndex="[Nothing]"
+ xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities"
+ xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+ xmlns:mpa="clr-namespace:Microsoft.PowerShell.Activities;assembly=Microsoft.PowerShell.Activities"
+ xmlns:mpma="clr-namespace:Microsoft.PowerShell.Management.Activities;assembly=Microsoft.PowerShell.Management.Activities"
+ xmlns:mpua="clr-namespace:Microsoft.PowerShell.Utility.Activities;assembly=Microsoft.PowerShell.Utility.Activities"
+ xmlns:mrc="clr-namespace:Microsoft.RemoteDesktopServices.Common;assembly=Microsoft.RemoteDesktopServices.Management.Activities"
+ xmlns:mrma="clr-namespace:Microsoft.RemoteDesktopServices.Management.Activities;assembly=Microsoft.RemoteDesktopServices.Management.Activities"
+ xmlns:mrmc="clr-namespace:Microsoft.RemoteDesktopServices.Management.Cmdlets;assembly=Microsoft.RemoteDesktopServices.Management.Activities"
+ xmlns:mv="clr-namespace:Microsoft.VisualBasic;assembly=System"
+ xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities"
+ xmlns:s="clr-namespace:System;assembly=mscorlib"
+ xmlns:s1="clr-namespace:System;assembly=System"
+ xmlns:s2="clr-namespace:System;assembly=System.Xml"
+ xmlns:s3="clr-namespace:System;assembly=System.Core"
+ xmlns:s4="clr-namespace:System;assembly=System.ComponentModel.Composition"
+ xmlns:s5="clr-namespace:System;assembly=System.ServiceModel"
+ xmlns:sa="clr-namespace:System.Activities;assembly=System.Activities"
+ xmlns:sad="clr-namespace:System.Activities.Debugger;assembly=System.Activities"
+ xmlns:sads="http://schemas.microsoft.com/netfx/2010/xaml/activities/debugger"
+ xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation"
+ xmlns:sc="clr-namespace:System.Collections;assembly=mscorlib"
+ xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib"
+ xmlns:sm="clr-namespace:System.Management;assembly=System.Management"
+ xmlns:sma="clr-namespace:System.Management.Automation;assembly=System.Management.Automation"
+ xmlns:this="clr-namespace:RDManagement"
+ xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <x:Members>
+    <x:Property Name="AppAlias" Type="InArgument(x:String)">
+      <x:Property.Attributes>
+        <RequiredArgumentAttribute />
+      </x:Property.Attributes>
+    </x:Property>
+    <x:Property Name="ExtName" Type="InArgument(x:String)">
+      <x:Property.Attributes>
+        <RequiredArgumentAttribute />
+      </x:Property.Attributes>
+    </x:Property>
+    <x:Property Name="ProgIdHint" Type="InArgument(x:String)" />
+    <x:Property Name="IconContents" Type="InArgument(s:Byte[])" />
+    <x:Property Name="IsPrimaryHandler" Type="InArgument(x:Int32)">
+      <x:Property.Attributes>
+        <RequiredArgumentAttribute />
+      </x:Property.Attributes>
+    </x:Property>
+    <x:Property Name="IsPublished" Type="InArgument(x:Int32)">
+      <x:Property.Attributes>
+        <RequiredArgumentAttribute />
+      </x:Property.Attributes>
+    </x:Property>
+    <x:Property Name="IconPath" Type="InArgument(x:String)" />
+    <x:Property Name="IconIndex" Type="InArgument(x:Int32)" />
+    <x:Property Name="RDMSServer" Type="InArgument(x:String)">
+      <x:Property.Attributes>
+        <RequiredArgumentAttribute />
+      </x:Property.Attributes>
+    </x:Property>
+    <x:Property Name="PoolName" Type="InArgument(x:String)">
+      <x:Property.Attributes>
+        <RequiredArgumentAttribute />
+      </x:Property.Attributes>
+    </x:Property>
+  </x:Members>
+  <this:Set_FileTypeAssociation.ProgIdHint>
+    <InArgument x:TypeArguments="x:String">
+      <Literal x:TypeArguments="x:String" Value="" />
+    </InArgument>
+  </this:Set_FileTypeAssociation.ProgIdHint>
+  <sap:VirtualizedContainerService.HintSize>673,4482</sap:VirtualizedContainerService.HintSize>
+  <mva:VisualBasic.Settings>Assembly references and imported namespaces for internal implementation</mva:VisualBasic.Settings>
+  <Sequence sap:VirtualizedContainerService.HintSize="633,4442">
+    <Sequence.Variables>
+      <Variable x:TypeArguments="sma:PSDataCollection(sma:PSObject)" Name="FTAResult" />
+      <Variable x:TypeArguments="sma:PSDataCollection(sma:ErrorRecord)" Default="[New PSDataCollection(Of ErrorRecord)()]" Name="PSError" />
+      <Variable x:TypeArguments="sc:Hashtable" Default="[New Hashtable()]" Name="FTAHashTable" />
+      <Variable x:TypeArguments="sma:PSDataCollection(sma:PSObject)" Name="VMFarmSettingXml" />
+      <Variable x:TypeArguments="x:String" Name="VMFarmSettingXmlOutput" />
+      <Variable x:TypeArguments="sma:PSDataCollection(sma:PSObject)" Name="RDMSJoinedNodes" />
+      <Variable x:TypeArguments="x:String" Name="ConnectionBroker" />
+      <Variable x:TypeArguments="x:Int32" Name="index" />
+      <Variable x:TypeArguments="x:Boolean" Name="isSessionHostCollection" />
+      <Variable x:TypeArguments="sma:PSDataCollection(sma:PSObject)" Name="SessionHostCollections" />
+      <Variable x:TypeArguments="sma:PSDataCollection(sma:PSObject)" Name="PoolMachines" />
+    </Sequence.Variables>
+    <Assign sap:VirtualizedContainerService.HintSize="611,60">
+      <Assign.To>
+        <OutArgument x:TypeArguments="x:String">[ConnectionBroker]</OutArgument>
+      </Assign.To>
+      <Assign.Value>
+        <InArgument x:TypeArguments="x:String">[RDMSServer]</InArgument>
+      </Assign.Value>
+    </Assign>
+    <InvokeMethod DisplayName="AppAlias" sap:VirtualizedContainerService.HintSize="611,134" MethodName="Add">
+      <InvokeMethod.TargetObject>
+        <InArgument x:TypeArguments="sc:Hashtable">[FTAHashTable]</InArgument>
+      </InvokeMethod.TargetObject>
+      <InArgument x:TypeArguments="x:String">AppAlias</InArgument>
+      <InArgument x:TypeArguments="x:String">[AppAlias]</InArgument>
+    </InvokeMethod>
+    <InvokeMethod DisplayName="ExtName" sap:VirtualizedContainerService.HintSize="611,134" MethodName="Add">
+      <InvokeMethod.TargetObject>
+        <InArgument x:TypeArguments="sc:Hashtable">[FTAHashTable]</InArgument>
+      </InvokeMethod.TargetObject>
+      <InArgument x:TypeArguments="x:String">ExtName</InArgument>
+      <InArgument x:TypeArguments="x:String">[ExtName]</InArgument>
+    </InvokeMethod>
+    <InvokeMethod DisplayName="PublishingFarm" sap:VirtualizedContainerService.HintSize="611,134" MethodName="Add">
+      <InvokeMethod.TargetObject>
+        <InArgument x:TypeArguments="sc:Hashtable">[FTAHashTable]</InArgument>
+      </InvokeMethod.TargetObject>
+      <InArgument x:TypeArguments="x:String">PoolName</InArgument>
+      <InArgument x:TypeArguments="x:String">[PoolName]</InArgument>
+    </InvokeMethod>
+    <InvokeMethod DisplayName="IsPublished" sap:VirtualizedContainerService.HintSize="611,134" MethodName="Add">
+      <InvokeMethod.TargetObject>
+        <InArgument x:TypeArguments="sc:Hashtable">[FTAHashTable]</InArgument>
+      </InvokeMethod.TargetObject>
+      <InArgument x:TypeArguments="x:String">IsPublished</InArgument>
+      <InArgument x:TypeArguments="x:Int32">[IsPublished]</InArgument>
+    </InvokeMethod>
+    <InvokeMethod DisplayName="IsPrimaryHandler" sap:VirtualizedContainerService.HintSize="611,134" MethodName="Add">
+      <InvokeMethod.TargetObject>
+        <InArgument x:TypeArguments="sc:Hashtable">[FTAHashTable]</InArgument>
+      </InvokeMethod.TargetObject>
+      <InArgument x:TypeArguments="x:String">IsPrimaryHandler</InArgument>
+      <InArgument x:TypeArguments="x:Int32">[IsPrimaryHandler]</InArgument>
+    </InvokeMethod>
+    <InvokeMethod DisplayName="ProgIdHint" sap:VirtualizedContainerService.HintSize="611,134" MethodName="Add">
+      <InvokeMethod.TargetObject>
+        <InArgument x:TypeArguments="sc:Hashtable">[FTAHashTable]</InArgument>
+      </InvokeMethod.TargetObject>
+      <InArgument x:TypeArguments="x:String">ProgIdHint</InArgument>
+      <InArgument x:TypeArguments="x:String">[ProgIdHint]</InArgument>
+    </InvokeMethod>
+    <If Condition="[Not IsNothing(IconIndex)]" sap:VirtualizedContainerService.HintSize="611,51">
+      <If.Then>
+        <Sequence sap:VirtualizedContainerService.HintSize="240,606">
+          <InvokeMethod DisplayName="IconPath" sap:VirtualizedContainerService.HintSize="218,134" MethodName="Add">
+            <InvokeMethod.TargetObject>
+              <InArgument x:TypeArguments="sc:Hashtable">[FTAHashTable]</InArgument>
+            </InvokeMethod.TargetObject>
+            <InArgument x:TypeArguments="x:String">IconPath</InArgument>
+            <InArgument x:TypeArguments="x:String">[IconPath]</InArgument>
+          </InvokeMethod>
+          <InvokeMethod DisplayName="IconIndex" sap:VirtualizedContainerService.HintSize="218,134" MethodName="Add">
+            <InvokeMethod.TargetObject>
+              <InArgument x:TypeArguments="sc:Hashtable">[FTAHashTable]</InArgument>
+            </InvokeMethod.TargetObject>
+            <InArgument x:TypeArguments="x:String">IconIndex</InArgument>
+            <InArgument x:TypeArguments="x:Int32">[IconIndex]</InArgument>
+          </InvokeMethod>
+          <InvokeMethod DisplayName="IconContents" sap:VirtualizedContainerService.HintSize="218,134" MethodName="Add">
+            <InvokeMethod.TargetObject>
+              <InArgument x:TypeArguments="sc:Hashtable">[FTAHashTable]</InArgument>
+            </InvokeMethod.TargetObject>
+            <InArgument x:TypeArguments="x:String">IconContents</InArgument>
+            <InArgument x:TypeArguments="s:Byte[]">[IconContents]</InArgument>
+          </InvokeMethod>
+        </Sequence>
+      </If.Then>
+    </If>
+    <mpa:InlineScript Command="Set-WmiInstance -Namespace &quot;root\cimv2\rdms&quot; -Class &quot;Win32_RDMSFileTypeAssociation&quot; -Arguments $using:FTAHashTable" DisplayName="Commit FTA" sap:VirtualizedContainerService.HintSize="611,51" PSComputerName="[{RDMSServer}]" PSError="[PSError]">
+    </mpa:InlineScript>
+    <If Condition="[Not PSError.Count.Equals(0)]" sap:VirtualizedContainerService.HintSize="611,51">
+      <If.Then>
+        <TerminateWorkflow Exception="[PSError.Item(0).Exception]" sap:VirtualizedContainerService.HintSize="200,22" Reason="[PSError.Item(0).Exception.Message]" />
+      </If.Then>
+    </If>
+    <mpa:InlineScript Command="import-module $env:windir\System32\ServerManagerInternal\rdmanagement;&#xD;&#xA;Get-RDSHPool -Alias $using:PoolName -ManagementServer $using:ConnectionBroker" sap:VirtualizedContainerService.HintSize="611,51" PSError="[PSError]" Result="[SessionHostCollections]" />
+    <If Condition="[Not PSError.Count.Equals(0)]" sap:VirtualizedContainerService.HintSize="611,51">
+      <If.Then>
+        <TerminateWorkflow Exception="[PSError.Item(0).Exception]" sap:VirtualizedContainerService.HintSize="200,22" Reason="[PSError.Item(0).Exception.Message]" />
+      </If.Then>
+    </If>
+    <If Condition="[SessionHostCollections.Count.Equals(0)]" sap:VirtualizedContainerService.HintSize="611,51">
+      <If.Then>
+        <Assign sap:VirtualizedContainerService.HintSize="242,60">
+          <Assign.To>
+            <OutArgument x:TypeArguments="x:Boolean">[isSessionHostCollection]</OutArgument>
+          </Assign.To>
+          <Assign.Value>
+            <InArgument x:TypeArguments="x:Boolean">False</InArgument>
+          </Assign.Value>
+        </Assign>
+      </If.Then>
+      <If.Else>
+        <Assign sap:VirtualizedContainerService.HintSize="242,60">
+          <Assign.To>
+            <OutArgument x:TypeArguments="x:Boolean">[isSessionHostCollection]</OutArgument>
+          </Assign.To>
+          <Assign.Value>
+            <InArgument x:TypeArguments="x:Boolean">True</InArgument>
+          </Assign.Value>
+        </Assign>
+      </If.Else>
+    </If>
+    <If Condition="[IsPublished.Equals(1)]" sap:VirtualizedContainerService.HintSize="611,2537">
+      <If.Then>
+        <Sequence sap:VirtualizedContainerService.HintSize="486,2429">
+          <Assign sap:VirtualizedContainerService.HintSize="464,60">
+            <Assign.To>
+              <OutArgument x:TypeArguments="sc:Hashtable">[FTAHashTable]</OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="sc:Hashtable">[New Hashtable()]</InArgument>
+            </Assign.Value>
+          </Assign>
+          <InvokeMethod DisplayName="AppAlias" sap:VirtualizedContainerService.HintSize="464,134" MethodName="Add">
+            <InvokeMethod.TargetObject>
+              <InArgument x:TypeArguments="sc:Hashtable">[FTAHashTable]</InArgument>
+            </InvokeMethod.TargetObject>
+            <InArgument x:TypeArguments="x:String">AppAlias</InArgument>
+            <InArgument x:TypeArguments="x:String">[AppAlias]</InArgument>
+          </InvokeMethod>
+          <InvokeMethod DisplayName="ExtName" sap:VirtualizedContainerService.HintSize="464,134" MethodName="Add">
+            <InvokeMethod.TargetObject>
+              <InArgument x:TypeArguments="sc:Hashtable">[FTAHashTable]</InArgument>
+            </InvokeMethod.TargetObject>
+            <InArgument x:TypeArguments="x:String">ExtName</InArgument>
+            <InArgument x:TypeArguments="x:String">[ExtName]</InArgument>
+          </InvokeMethod>
+          <InvokeMethod DisplayName="PublishingFarm" sap:VirtualizedContainerService.HintSize="464,134" MethodName="Add">
+            <InvokeMethod.TargetObject>
+              <InArgument x:TypeArguments="sc:Hashtable">[FTAHashTable]</InArgument>
+            </InvokeMethod.TargetObject>
+            <InArgument x:TypeArguments="x:String">FarmAlias</InArgument>
+            <InArgument x:TypeArguments="x:String">[PoolName]</InArgument>
+          </InvokeMethod>
+          <If Condition="[Not IsNothing(IconPath)]" sap:VirtualizedContainerService.HintSize="464,51">
+            <If.Then>
+              <InvokeMethod DisplayName="IconContents" sap:VirtualizedContainerService.HintSize="218,134" MethodName="Add">
+                <InvokeMethod.TargetObject>
+                  <InArgument x:TypeArguments="sc:Hashtable">[FTAHashTable]</InArgument>
+                </InvokeMethod.TargetObject>
+                <InArgument x:TypeArguments="x:String">IconContents</InArgument>
+                <InArgument x:TypeArguments="s:Byte[]">[IconContents]</InArgument>
+              </InvokeMethod>
+            </If.Then>
+          </If>
+          <InvokeMethod DisplayName="ProgIdHint" sap:VirtualizedContainerService.HintSize="464,134" MethodName="Add">
+            <InvokeMethod.TargetObject>
+              <InArgument x:TypeArguments="sc:Hashtable">[FTAHashTable]</InArgument>
+            </InvokeMethod.TargetObject>
+            <InArgument x:TypeArguments="x:String">ProgIdHint</InArgument>
+            <InArgument x:TypeArguments="x:Object">[ProgIdHint]</InArgument>
+          </InvokeMethod>
+          <InvokeMethod sap:VirtualizedContainerService.HintSize="464,134" MethodName="Add">
+            <InvokeMethod.TargetObject>
+              <InArgument x:TypeArguments="sc:Hashtable">[FTAHashTable]</InArgument>
+            </InvokeMethod.TargetObject>
+            <InArgument x:TypeArguments="x:String">PrimaryHandler</InArgument>
+            <InArgument x:TypeArguments="x:Int32">[IsPrimaryHandler]</InArgument>
+          </InvokeMethod>
+          <If Condition="[isSessionHostCollection]" sap:VirtualizedContainerService.HintSize="464,1244">
+            <If.Then>
+              <Sequence sap:VirtualizedContainerService.HintSize="309,1136">
+                <mpa:InlineScript Command="import-module $env:windir\System32\ServerManagerInternal\rdmanagement;&#xD;&#xA;Get-RDSHServer -Name &quot;*&quot; -CollectionAlias $using:PoolName -ManagementServer $using:ConnectionBroker" sap:VirtualizedContainerService.HintSize="287,51" PSError="[PSError]" Result="[PoolMachines]">
+                </mpa:InlineScript>
+                <If Condition="[Not PSError.Count.Equals(0)]" sap:VirtualizedContainerService.HintSize="287,51">
+                  <If.Then>
+                    <TerminateWorkflow Exception="[PSError.Item(0).Exception]" sap:VirtualizedContainerService.HintSize="200,22" Reason="[PSError.Item(0).Exception.Message]" />
+                  </If.Then>
+                </If>
+                <Assign sap:VirtualizedContainerService.HintSize="287,60">
+                  <Assign.To>
+                    <OutArgument x:TypeArguments="sc:Hashtable">[FTAHashTable]</OutArgument>
+                  </Assign.To>
+                  <Assign.Value>
+                    <InArgument x:TypeArguments="sc:Hashtable">[New Hashtable()]</InArgument>
+                  </Assign.Value>
+                </Assign>
+                <InvokeMethod DisplayName="AppAlias" sap:VirtualizedContainerService.HintSize="287,134" MethodName="Add">
+                  <InvokeMethod.TargetObject>
+                    <InArgument x:TypeArguments="sc:Hashtable">[FTAHashTable]</InArgument>
+                  </InvokeMethod.TargetObject>
+                  <InArgument x:TypeArguments="x:String">AppAlias</InArgument>
+                  <InArgument x:TypeArguments="x:String">[AppAlias]</InArgument>
+                </InvokeMethod>
+                <InvokeMethod DisplayName="ExtName" sap:VirtualizedContainerService.HintSize="287,134" MethodName="Add">
+                  <InvokeMethod.TargetObject>
+                    <InArgument x:TypeArguments="sc:Hashtable">[FTAHashTable]</InArgument>
+                  </InvokeMethod.TargetObject>
+                  <InArgument x:TypeArguments="x:String">ExtName</InArgument>
+                  <InArgument x:TypeArguments="x:String">[ExtName]</InArgument>
+                </InvokeMethod>
+                <InvokeMethod DisplayName="ProgIdHint" sap:VirtualizedContainerService.HintSize="287,134" MethodName="Add">
+                  <InvokeMethod.TargetObject>
+                    <InArgument x:TypeArguments="sc:Hashtable">[FTAHashTable]</InArgument>
+                  </InvokeMethod.TargetObject>
+                  <InArgument x:TypeArguments="x:String">ProgIdHint</InArgument>
+                  <InArgument x:TypeArguments="x:Object">[ProgIdHint]</InArgument>
+                </InvokeMethod>
+                <ParallelForEach x:TypeArguments="sma:PSObject" sap:VirtualizedContainerService.HintSize="287,208" Values="[PoolMachines]">
+                  <ActivityAction x:TypeArguments="sma:PSObject">
+                    <ActivityAction.Argument>
+                      <DelegateInArgument x:TypeArguments="sma:PSObject" Name="poolmachine" />
+                    </ActivityAction.Argument>
+                    <Sequence sap:VirtualizedContainerService.HintSize="200,51">
+                      <Sequence.Variables>
+                        <Variable x:TypeArguments="sma:PSDataCollection(sma:ErrorRecord)" Default="[New PSDataCollection(Of ErrorRecord)()]" Name="PSError2" />
+                      </Sequence.Variables>
+                      <mpa:InlineScript Command="Set-WmiInstance -Namespace &quot;root\cimv2\terminalservices&quot; -Class &quot;Win32_RDAllowListFileAssociation&quot; -Arguments $using:FTAHashTable" DisplayName="Commit RDAllowList" sap:VirtualizedContainerService.HintSize="200,51" PSComputerName="[{poolmachine.Properties(&quot;Name&quot;).Value.ToString()}]" PSError="[PSError2]">
+                      </mpa:InlineScript>
+                      <If Condition="[PSError2.Count &gt; 0]" sap:VirtualizedContainerService.HintSize="200,51">
+                        <If.Then>
+                          <Sequence sap:VirtualizedContainerService.HintSize="264,246">
+                            <Sequence.Variables>
+                              <Variable x:TypeArguments="sma:ErrorRecord" Name="errorRecord" />
+                            </Sequence.Variables>
+                            <Assign sap:VirtualizedContainerService.HintSize="242,60">
+                              <Assign.To>
+                                <OutArgument x:TypeArguments="sma:ErrorRecord">[errorRecord]</OutArgument>
+                              </Assign.To>
+                              <Assign.Value>
+                                <InArgument x:TypeArguments="sma:ErrorRecord">[ErrorUtility.GetErrorRecord(RDManagementResources.ResourceManager.GetString("FailedToSetSessionHostObjects"), poolmachine.Properties("Name").Value.ToString(), ErrorId.ConfigureRDSessionHost, PSError2(0).Exception)]</InArgument>
+                              </Assign.Value>
+                            </Assign>
+                            <mpua:WriteError DisplayName="Write-Error" ErrorRecord="[errorRecord]" sap:VirtualizedContainerService.HintSize="242,22" />
+                          </Sequence>
+                        </If.Then>
+                      </If>
+                    </Sequence>
+                  </ActivityAction>
+                </ParallelForEach>
+              </Sequence>
+            </If.Then>
+          </If>
+        </Sequence>
+      </If.Then>
+    </If>
+    <If Condition="[IsPublished.Equals(0)]" sap:VirtualizedContainerService.HintSize="611,51">
+      <If.Then>
+        <Sequence sap:VirtualizedContainerService.HintSize="200,51">
+          <If Condition="[isSessionHostCollection]" sap:VirtualizedContainerService.HintSize="200,51">
+            <If.Then>
+              <Sequence sap:VirtualizedContainerService.HintSize="578,1630">
+                <mpa:InlineScript Command="import-module $env:windir\System32\ServerManagerInternal\rdmanagement;&#xD;&#xA;Get-RDSHServer -Name &quot;*&quot; -CollectionAlias $using:PoolName -ManagementServer $using:ConnectionBroker" sap:VirtualizedContainerService.HintSize="556,139" PSError="[PSError]" Result="[PoolMachines]" />
+                <If Condition="[Not PSError.Count.Equals(0)]" sap:VirtualizedContainerService.HintSize="464,208">
+                  <If.Then>
+                    <TerminateWorkflow Exception="[PSError.Item(0).Exception]" sap:VirtualizedContainerService.HintSize="269,100" Reason="[PSError.Item(0).Exception.Message]" />
+                  </If.Then>
+                </If>
+                <ParallelForEach x:TypeArguments="sma:PSObject" sap:VirtualizedContainerService.HintSize="556,1079" Values="[PoolMachines]">
+                  <ActivityAction x:TypeArguments="sma:PSObject">
+                    <ActivityAction.Argument>
+                      <DelegateInArgument x:TypeArguments="sma:PSObject" Name="item" />
+                    </ActivityAction.Argument>
+                    <Sequence sap:VirtualizedContainerService.HintSize="526,931">
+                      <Sequence.Variables>
+                        <Variable x:TypeArguments="sma:PSDataCollection(sma:ErrorRecord)" Default="[New PSDataCollection(Of ErrorRecord)()]" Name="PSError2" />
+                        <Variable x:TypeArguments="sma:ErrorRecord" Name="errorRecord" />
+                      </Sequence.Variables>
+                      <TryCatch sap:VirtualizedContainerService.HintSize="504,807">
+                        <TryCatch.Try>
+                          <Sequence sap:VirtualizedContainerService.HintSize="486,580">
+                            <Sequence.Variables>
+                              <Variable x:TypeArguments="sma:PSDataCollection(sma:PSObject)" Name="SessionHostObjects" />
+                            </Sequence.Variables>
+                            <Assign sap:VirtualizedContainerService.HintSize="464,60">
+                              <Assign.To>
+                                <OutArgument x:TypeArguments="sma:PSDataCollection(sma:PSObject)">[SessionHostObjects]</OutArgument>
+                              </Assign.To>
+                              <Assign.Value>
+                                <InArgument x:TypeArguments="sma:PSDataCollection(sma:PSObject)">[New PSDataCollection(Of PSObject)()]</InArgument>
+                              </Assign.Value>
+                            </Assign>
+                            <mpa:GetWmiObject Amended="False" Class="Win32_RDAllowListFileAssociation" DirectRead="False" DisplayName="Get-WmiObject" EnableAllPrivileges="False" Filter="[&quot;ExtName='&quot; &amp; ExtName &amp; &quot;'&quot;]" sap:VirtualizedContainerService.HintSize="464,22" Impersonation="Impersonate" Namespace="root\cimv2\terminalservices" PSAuthenticationLevel="PacketPrivacy" PSComputerName="[{item.Properties(&quot;Name&quot;).Value.ToString()}]" Result="[SessionHostObjects]" />
+                            <If Condition="[SessionHostObjects.Count &gt; 0]" sap:VirtualizedContainerService.HintSize="464,208">
+                              <If.Then>
+                                <mpma:RemoveWmiObject Authentication="[AuthenticationLevel.PacketPrivacy]" DisplayName="Remove-WmiObject" sap:VirtualizedContainerService.HintSize="200,22" Impersonation="[ImpersonationLevel.Impersonate]" Namespace="root\cimv2\terminalservices" PSComputerName="[{item.Properties(&quot;Name&quot;).Value.ToString()}]" PSError="[PSError2]" Path="[&quot;Win32_RDAllowListFileAssociation.ExtName='&quot; &amp; ExtName &amp; &quot;'&quot;]" />
+                              </If.Then>
+                            </If>
+                            <If Condition="[PSError2.Count &gt; 0]" sap:VirtualizedContainerService.HintSize="464,354">
+                              <If.Then>
+                                <Sequence sap:VirtualizedContainerService.HintSize="264,246">
+                                  <Assign sap:VirtualizedContainerService.HintSize="242,60">
+                                    <Assign.To>
+                                      <OutArgument x:TypeArguments="sma:ErrorRecord">[errorRecord]</OutArgument>
+                                    </Assign.To>
+                                    <Assign.Value>
+                                      <InArgument x:TypeArguments="sma:ErrorRecord">[ErrorUtility.GetErrorRecord(RDManagementResources.ResourceManager.GetString("FailedToSetSessionHostObjects"), item.Properties("Name").Value.ToString(), ErrorId.ConfigureRDSessionHost, PSError2(0).Exception)]</InArgument>
+                                    </Assign.Value>
+                                  </Assign>
+                                  <mpua:WriteError DisplayName="Write-Error" ErrorRecord="[errorRecord]" sap:VirtualizedContainerService.HintSize="242,22" />
+                                </Sequence>
+                              </If.Then>
+                            </If>
+                          </Sequence>
+                        </TryCatch.Try>
+                        <TryCatch.Catches>
+                          <Catch x:TypeArguments="s:Exception" sap:VirtualizedContainerService.HintSize="490,21">
+                            <ActivityAction x:TypeArguments="s:Exception">
+                              <ActivityAction.Argument>
+                                <DelegateInArgument x:TypeArguments="s:Exception" Name="exception" />
+                              </ActivityAction.Argument>
+                              <Sequence sap:VirtualizedContainerService.HintSize="264,246">
+                                <Assign sap:VirtualizedContainerService.HintSize="242,60">
+                                  <Assign.To>
+                                    <OutArgument x:TypeArguments="sma:ErrorRecord">[errorRecord]</OutArgument>
+                                  </Assign.To>
+                                  <Assign.Value>
+                                    <InArgument x:TypeArguments="sma:ErrorRecord">[ErrorUtility.GetErrorRecord(RDManagementResources.ResourceManager.GetString("FailedToSetSessionHostObjects"), item.Properties("Name").Value.ToString(), ErrorId.ConfigureRDSessionHost, exception)]</InArgument>
+                                  </Assign.Value>
+                                </Assign>
+                                <mpua:WriteError DisplayName="Write-Error" ErrorRecord="[errorRecord]" sap:VirtualizedContainerService.HintSize="242,22" />
+                              </Sequence>
+                            </ActivityAction>
+                          </Catch>
+                        </TryCatch.Catches>
+                      </TryCatch>
+                    </Sequence>
+                  </ActivityAction>
+                </ParallelForEach>
+              </Sequence>
+            </If.Then>
+          </If>
+        </Sequence>
+      </If.Then>
+    </If>
+  </Sequence>
+</Activity>

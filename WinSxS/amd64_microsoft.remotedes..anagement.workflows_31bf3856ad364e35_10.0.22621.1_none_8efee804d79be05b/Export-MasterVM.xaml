@@ -1,0 +1,88 @@
+<Activity mc:Ignorable="sads sap" x:Class="PostInstallConfiguration.Export_MasterVirtualMachine" this:Export_MasterVirtualMachine.SysPrepGeneralize="False" this:Export_MasterVirtualMachine.Override="False" this:Export_MasterVirtualMachine.Credential="[Nothing]" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mpa="clr-namespace:Microsoft.PowerShell.Activities;assembly=Microsoft.PowerShell.Activities" xmlns:mpca="clr-namespace:Microsoft.PowerShell.Core.Activities;assembly=Microsoft.PowerShell.Core.Activities" xmlns:mpsa="clr-namespace:Microsoft.PowerShell.Security.Activities;assembly=Microsoft.PowerShell.Security.Activities" xmlns:mv="clr-namespace:Microsoft.VisualBasic;assembly=System" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities" xmlns:sa="clr-namespace:System.Activities;assembly=System.Activities" xmlns:sad="clr-namespace:System.Activities.Debugger;assembly=System.Activities" xmlns:sads="http://schemas.microsoft.com/netfx/2010/xaml/activities/debugger" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:scg3="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:sma="clr-namespace:System.Management.Automation;assembly=System.Management.Automation" xmlns:ss="clr-namespace:System.Security;assembly=mscorlib" xmlns:this="clr-namespace:PostInstallConfiguration" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <x:Members>
+    <x:Property Name="ExportLocation" Type="InArgument(x:String)">
+      <x:Property.Attributes>
+        <RequiredArgumentAttribute />
+      </x:Property.Attributes>
+    </x:Property>
+    <x:Property Name="VMHostName" Type="InArgument(x:String)">
+      <x:Property.Attributes>
+        <RequiredArgumentAttribute />
+      </x:Property.Attributes>
+    </x:Property>
+    <x:Property Name="VMName" Type="InArgument(x:String)">
+      <x:Property.Attributes>
+        <RequiredArgumentAttribute />
+      </x:Property.Attributes>
+    </x:Property>
+    <x:Property Name="SysPrepGeneralize" Type="InArgument(x:Boolean)" />
+    <x:Property Name="Override" Type="InArgument(x:Boolean)" />
+    <x:Property Name="VirtualMachineDetails" Type="OutArgument(sma:PSDataCollection(sma:PSObject))" />
+    <x:Property Name="Warnings" Type="OutArgument(sma:PSDataCollection(sma:WarningRecord))" />
+    <x:Property Name="Credential" Type="InArgument(sma:PSCredential)" />
+  </x:Members>
+  <sap:VirtualizedContainerService.HintSize>526,741</sap:VirtualizedContainerService.HintSize>
+  <mva:VisualBasic.Settings>Assembly references and imported namespaces for internal implementation</mva:VisualBasic.Settings>
+  <sap:WorkflowViewStateService.ViewState>
+    <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+      <x:Boolean x:Key="ShouldCollapseAll">True</x:Boolean>
+    </scg3:Dictionary>
+  </sap:WorkflowViewStateService.ViewState>
+  <Sequence DisplayName="Export Master VM" sap:VirtualizedContainerService.HintSize="486,830">
+    <Sequence.Variables>
+      <Variable x:TypeArguments="sma:PSDataCollection(sma:ErrorRecord)" Default="[New PSDataCollection(Of ErrorRecord)]" Name="Errors" />
+      <Variable x:TypeArguments="sma:PSDataCollection(sma:PSObject)" Default="[New PSDataCollection(Of PSObject)]" Name="OutputCollection" />
+      <Variable x:TypeArguments="sma:PSDataCollection(sma:WarningRecord)" Default="[New PSDataCollection(Of WarningRecord)]" Name="WarningRecords" />
+    </Sequence.Variables>
+    <sap:WorkflowViewStateService.ViewState>
+      <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+      </scg3:Dictionary>
+    </sap:WorkflowViewStateService.ViewState>
+    <Assign sap:VirtualizedContainerService.HintSize="464,59">
+      <Assign.To>
+        <OutArgument x:TypeArguments="sma:PSDataCollection(sma:ErrorRecord)">[Errors]</OutArgument>
+      </Assign.To>
+      <Assign.Value>
+        <InArgument x:TypeArguments="sma:PSDataCollection(sma:ErrorRecord)">[New PSDataCollection(Of ErrorRecord)]</InArgument>
+      </Assign.Value>
+    </Assign>
+    <mpa:InlineScript Command="import-module $env:windir\System32\ServerManagerInternal\rdmanagement;&#xD;&#xA;Export-MasterVirtualMachine -Override $using:Override -SysPrepGeneralize $using:SysPrepGeneralize -ExportLocation $using:ExportLocation -VMHostName $using:VMHostName -VMName $using:VMName -Credential $using:Credential" sap:VirtualizedContainerService.HintSize="464,22" PSError="[Errors]" PSWarning="[WarningRecords]" Result="[OutputCollection]" />
+    <Assign sap:VirtualizedContainerService.HintSize="464,59">
+      <Assign.To>
+        <OutArgument x:TypeArguments="sma:PSDataCollection(sma:WarningRecord)">[Warnings]</OutArgument>
+      </Assign.To>
+      <Assign.Value>
+        <InArgument x:TypeArguments="sma:PSDataCollection(sma:WarningRecord)">[WarningRecords]</InArgument>
+      </Assign.Value>
+    </Assign>
+    <If Condition="[Errors.Count &gt; 0]" sap:VirtualizedContainerService.HintSize="464,203">
+      <sap:WorkflowViewStateService.ViewState>
+        <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsPinned">True</x:Boolean>
+        </scg3:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+      <If.Then>
+        <TerminateWorkflow Exception="[Errors.Item(0).Exception]" sap:VirtualizedContainerService.HintSize="219,100" Reason="[Errors.Item(0).Exception.Message]" />
+      </If.Then>
+      <If.Else>
+        <Sequence sap:VirtualizedContainerService.HintSize="220,100">
+          <sap:WorkflowViewStateService.ViewState>
+            <scg3:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+              <x:Boolean x:Key="IsPinned">False</x:Boolean>
+            </scg3:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+          <Assign sap:VirtualizedContainerService.HintSize="242,59">
+            <Assign.To>
+              <OutArgument x:TypeArguments="sma:PSDataCollection(sma:PSObject)">[VirtualMachineDetails]</OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="sma:PSDataCollection(sma:PSObject)">[OutputCollection]</InArgument>
+            </Assign.Value>
+          </Assign>
+        </Sequence>
+      </If.Else>
+    </If>
+  </Sequence>
+</Activity>

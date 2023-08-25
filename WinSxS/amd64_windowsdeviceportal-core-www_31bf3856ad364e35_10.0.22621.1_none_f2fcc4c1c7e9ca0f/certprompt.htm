@@ -1,0 +1,32 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Windows Device Portal</title>
+    <link rel="Stylesheet" href="css/common.css" />
+    <link rel="shortcut icon" href="favicon.ico" />
+    <script src="js/jquery.js"></script>
+    <script type="text/javascript">
+        function setSslState(sslState) {
+            var params = { sslState: sslState, remember: document.getElementById("rememberSslState").checked };
+            var sslStateUri = "/api/authorize/setSslState?" + $.param(params);
+            document.location.href = sslStateUri;
+        }
+    </script>
+</head>
+<body id="root">
+    <div class="wdp-error">
+        <h1>Confirm security settings</h1>
+        <br />
+        You've enabled a password for Windows Device Portal but have not set up a secure (HTTPS) connection.  Be aware that an Http-only connection to Windows Device Portal sends your username and password over the network unencrypted.
+        <br />
+        <br />
+        <a href="https://aka.ms/WDPSecureConnection">Configure a secure connection</a>
+        <br />
+        <br />
+        <button class="commonButton" id="continueButton" onclick="setSslState('http');">Continue with an unsecured connection</button>
+        <br />
+        <input type="checkbox" id="rememberSslState" /><label for="rememberSslState">Don't show again</label>
+    </div>
+</body>
+</html>

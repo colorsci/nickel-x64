@@ -1,0 +1,108 @@
+<xs:schema   
+	id="available-network" 
+	targetNamespace="http://www.microsoft.com/AvailableNetwork/Info" 
+	xmlns:mstns="http://www.microsoft.com/AvailableNetwork/Info" 
+	xmlns="http://www.microsoft.com/AvailableNetwork/Info" 
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+	attributeFormDefault="unqualified"
+	elementFormDefault="qualified" >
+
+
+  <!-- Type for the Resource DLL Name -->
+  <xs:simpleType name="ResourceDllType">
+    <xs:restriction base="xs:normalizedString">
+      <xs:minLength value="1"/>
+      <xs:maxLength value="1000"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <!-- Type for straight text -->
+  <xs:simpleType name="PropertyTextType">
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1"/>
+      <xs:maxLength value="1000"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <!-- Type for name and value elements -->
+  <xs:complexType name="ResourceEntryType">
+    <xs:choice>
+      <xs:sequence>
+        <xs:element name="resource-dll" type="ResourceDllType" />
+        <xs:element name="resource-id" type="xs:nonNegativeInteger" />
+      </xs:sequence>
+      <xs:sequence>
+        <xs:element name="text" type="PropertyTextType" />
+      </xs:sequence>
+    </xs:choice>
+  </xs:complexType>
+
+  <!-- Type for logo element -->
+  <xs:complexType name="Base64ResourceType">
+    <xs:choice>
+      <xs:sequence>
+        <xs:element name="resource-dll" type="ResourceDllType" />
+        <xs:element name="resource-id" type="xs:nonNegativeInteger" />
+      </xs:sequence>
+      <xs:sequence>
+        <xs:element name="base64" type="xs:string" />
+      </xs:sequence>
+    </xs:choice>
+  </xs:complexType>
+
+
+  <!-- The root element -->
+	<xs:element name="available-network" >
+		<xs:complexType>
+      <xs:all>
+
+        <xs:element name="DetailedStatus" maxOccurs="1" minOccurs="0" type="Base64ResourceType" />
+
+        <!-- The properties element -->
+        <xs:element name="properties" minOccurs="1" maxOccurs="1" >
+          <xs:complexType>
+            <xs:sequence>
+
+              <!-- The property elements -->
+              <xs:element name="property" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="name" type="ResourceEntryType" />
+                    <xs:element name="value" type="ResourceEntryType" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+
+            </xs:sequence>
+          </xs:complexType>
+          
+        </xs:element>
+
+        
+		<!-- Actions element -->
+		<xs:element name="actions" minOccurs="1" maxOccurs="1" >
+		  <xs:complexType>
+		    <xs:sequence>
+
+		      <xs:element name="action" minOccurs="0" maxOccurs="unbounded" >
+		        <xs:complexType>
+		          <xs:sequence minOccurs="1" maxOccurs="1" >
+		            <xs:element name="id" type="PropertyTextType" />
+		            <xs:element name="verb" type="PropertyTextType" />
+		            <xs:element name="path" type="PropertyTextType" />
+		          </xs:sequence>
+		        </xs:complexType>
+		      </xs:element>
+		      
+		    </xs:sequence>
+		    
+		  </xs:complexType>
+		</xs:element>
+
+
+      </xs:all>
+
+    </xs:complexType>
+	</xs:element>
+
+</xs:schema>

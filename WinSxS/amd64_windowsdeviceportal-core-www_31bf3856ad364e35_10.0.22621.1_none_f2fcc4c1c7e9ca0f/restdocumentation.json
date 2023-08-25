@@ -1,0 +1,1190 @@
+{
+  "Namespaces": [
+    {
+      "Namespace": "App deloyment",
+      "Capability": "AppxDeployment",
+      "URIBase": "/api/appx/packagemanager/",
+      "URIS": [
+        {
+          "Name": "app install",
+          "URILeaf": "package",
+          "Description": "Installs an App",
+          "Verb": "POST",
+          "Restriction": "NoAppXInstall",
+          "Parameters": [
+            {
+              "Param": "package",
+              "Value": "File name of the package to be installed.",
+              "Required": true
+            }
+          ],
+          "Payload": "multi-part conforming http body",
+          "Restriction": "nonRestrictable",
+          "Namespace": "App deloyment",
+          "Capability": "AppxDeployment",
+          "URIBase": "/api/appx/packagemanager/"
+        },
+        {
+          "Name" : "register app from network share",
+          "URILeaf" : "networkapp",
+          "Description" : "Installs an app by registering loose files from a network share location",
+          "Verb" : "POST",
+          "Payload" : "JSON Body" :
+          {
+            "mainpackage" :
+            {
+              "networkshare" : "\\some\share\path",
+              "username" : "optional_username",
+              "password" : "optional_password"
+            },
+            "optionalpackages" :
+            [
+                {
+                    "networkshare" : "\\some\share\path2",
+                    "username" : "optional_username2",
+                    "password" : "optional_password2"
+                }
+            ]
+          },
+          "Restriction" : "NoAppXInstall"
+        },
+        {
+          "Name": "app installation status",
+          "URILeaf": "state",
+          "Description": "Gets the status of in progress app installation",
+          "Verb": "GET",
+          "Restriction": "nonRestrictable",
+          "Namespace": "App deloyment",
+          "Capability": "AppxDeployment",
+          "URIBase": "/api/appx/packagemanager/"
+        },
+        {
+          "Name": "app uninstall",
+          "URILeaf": "package",
+          "Description": "Uninstalls an app",
+          "Verb": "DELETE",
+          "Restriction": "nonRestrictable",
+          "Namespace": "App deloyment",
+          "Capability": "AppxDeployment",
+          "URIBase": "/api/appx/packagemanager/"
+        },
+        {
+          "Name": "get apps list",
+          "URILeaf": "packages",
+          "Description": "Retrieves the list of installed apps on the system, with details",
+          "Verb": "GET",
+          "ReturnData": "List of installed packages with details",
+          "Restriction": "nonRestrictable",
+          "Parameters": [
+            {
+              "Param": "streamable",
+              "Value": "Set to 'true' to retrieve only streamable-app packages (with content groups)",
+              "Required": false
+            }
+          ],
+          "Namespace": "App deloyment",
+          "Capability": "AppxDeployment",
+          "URIBase": "/api/appx/packagemanager/"
+        },
+        {
+          "Name": "get app content groups",
+          "URILeaf": "contentgroups",
+          "Description": "Gets the content groups of an installed streamable app that is in dev mode",
+          "Verb": "GET",
+          "ReturnData": "List of content groups in the streamable package",
+          "Restriction": "nonRestrictable",
+          "Namespace": "App deloyment",
+          "Capability": "AppxDeployment",
+          "URIBase": "/api/appx/packagemanager/"
+        },
+        {
+          "Name": "set app content groups",
+          "URILeaf": "contentgroups",
+          "Description": "Sets the content groups' state and percent-staged for a streamable app that is in dev mode",
+          "Verb": "POST",
+          "ReturnData": "List of content groups in the streamable package",
+          "Restriction": "nonRestrictable",
+          "Namespace": "App deloyment",
+          "Capability": "AppxDeployment",
+          "URIBase": "/api/appx/packagemanager/"
+        }
+      ]
+    },
+    {
+      "Namespace": "Device manager",
+      "Capability": "DeviceManager",
+      "URIBase": "/api/devicemanager/",
+      "URIS": [
+        {
+          "Name": "get device tree",
+          "URILeaf": "devices",
+          "Description": "Gets the list of devices installed on the machine",
+          "Verb": "GET",
+          "ReturnData": "JSON with hierarchical device tree",
+          "Restriction": "nonRestrictable",
+          "Namespace": "Device manager",
+          "Capability": "DeviceManager",
+          "URIBase": "/api/devicemanager/"
+        }
+      ]
+    },
+    {
+      "Namespace": "Dump collection",
+      "Capability": "DumpCollection",
+      "URIBase": "/api/debug/dump/",
+      "URIS": [
+        {
+          "Name": "delete sideloaded app crash dump",
+          "URILeaf": "usermode/crashdump",
+          "Description": "Deletes a crash dump for a sideloaded app",
+          "Verb": "DELETE",
+          "Parameters": [
+            {
+              "Param": "packageFullname",
+              "Value": "package name",
+              "Required": true
+            },
+            {
+              "Param": "fileName",
+              "Value": "dump file name",
+              "Required": true
+            }
+          ],
+          "Restriction": "nonRestrictable",
+          "Namespace": "Dump collection",
+          "Capability": "DumpCollection",
+          "URIBase": "/api/debug/dump/"
+        },
+        {
+          "Name": "disable sideloaded app crash dumps",
+          "URILeaf": "usermode/crashcontrol",
+          "Description": "Disables crash dump collection for a sideloaded app",
+          "Verb": "DELETE",
+          "Parameters": [
+            {
+              "Param": "packageFullname",
+              "Value": "package name",
+              "Required": true
+            }
+          ],
+          "Restriction": "nonRestrictable",
+          "Namespace": "Dump collection",
+          "Capability": "DumpCollection",
+          "URIBase": "/api/debug/dump/"
+        },
+        {
+          "Name": "download sideloaded app crash dump",
+          "URILeaf": "usermode/crashdump",
+          "Description": "Retrieves a crash dump for a sideloaded app",
+          "Verb": "GET",
+          "Parameters": [
+            {
+              "Param": "packageFullname",
+              "Value": "package name",
+              "Required": true
+            },
+            {
+              "Param": "fileName",
+              "Value": "dump file name",
+              "Required": true
+            }
+          ],
+          "ReturnData": "Dump file. Inspect with WinDbg or Visual Studio",
+          "Restriction": "nonRestrictable",
+          "Namespace": "Dump collection",
+          "Capability": "DumpCollection",
+          "URIBase": "/api/debug/dump/"
+        },
+        {
+          "Name": "enable sideloaded app crash dumps",
+          "URILeaf": "usermode/crashcontrol",
+          "Description": "Enables and sets dump control settings for a sideloaded app",
+          "Verb": "POST",
+          "Parameters": [
+            {
+              "Param": "packageFullname",
+              "Value": "package name",
+              "Required": true
+            }
+          ],
+          "Restriction": "nonRestrictable",
+          "Namespace": "Dump collection",
+          "Capability": "DumpCollection",
+          "URIBase": "/api/debug/dump/"
+        },
+        {
+          "Name": "get bugcheck crash control settings",
+          "URILeaf": "kernel/crashcontrol",
+          "Description": "Returns bugcheck data collection settings",
+          "Verb": "GET",
+          "ReturnData": "Crash control settings. See https://technet.microsoft.com/en-us/library/cc951703.aspx for details",
+          "Restriction": "NoBugcheckDumps",
+          "Namespace": "Dump collection",
+          "Capability": "DumpCollection",
+          "URIBase": "/api/debug/dump/"
+        },
+        {
+          "Name": "get bugcheck dump",
+          "URILeaf": "kernel/dump",
+          "Description": "Downloads a bugcheck dump file",
+          "Verb": "GET",
+          "Parameters": [
+            {
+              "Param": "filename",
+              "Value": "file name received from dumps enumeration API",
+              "Required": true
+            }
+          ],
+          "ReturnData": "Dump file. Can be inspected in WinDbg",
+          "Restriction": "NoBugcheckDumps",
+          "Namespace": "Dump collection",
+          "Capability": "DumpCollection",
+          "URIBase": "/api/debug/dump/"
+        },
+        {
+          "Name": "get bugcheck dumps list",
+          "URILeaf": "kernel/dumplist",
+          "Description": "Retrieves the list of bugcheck minidumps",
+          "Verb": "GET",
+          "ReturnData": "List of dump file names and sizes",
+          "Restriction": "NoBugcheckDumps",
+          "Namespace": "Dump collection",
+          "Capability": "DumpCollection",
+          "URIBase": "/api/debug/dump/"
+        },
+        {
+          "Name": "live kernel dump",
+          "URILeaf": "livekernel",
+          "Description": "Collects a live kernel dump",
+          "Verb": "GET",
+          "ReturnData": "Full kernel mode dump. Can be inspected in WinDbg",
+          "Restriction": "NoKernelDumps",
+          "Namespace": "Dump collection",
+          "Capability": "DumpCollection",
+          "URIBase": "/api/debug/dump/"
+        },
+        {
+          "Name": "live process dump",
+          "URILeaf": "usermode/live",
+          "Description": "Collects a live user process dump",
+          "Verb": "GET",
+          "Parameters": [
+            {
+              "Param": "pid",
+              "Value": "process id",
+              "Required": true
+            },
+            {
+              "Param": "containerId",
+              "Value": "container id",
+              "Required": false
+            }
+          ],
+          "ReturnData": "Process dump. Can be inspected in WinDbg or Visual Studio",
+          "Restriction": "NoUserModeDumps",
+          "Namespace": "Dump collection",
+          "Capability": "DumpCollection",
+          "URIBase": "/api/debug/dump/"
+        },
+        {
+          "Name": "set bugcheck crash control settings",
+          "URILeaf": "kernel/crashcontrol",
+          "Description": "Sets bugcheck data collection settings",
+          "Verb": "POST",
+          "Parameters": [
+            {
+              "Param": "autoreboot",
+              "Value": "true of false; auto-reboot after bugcheck",
+              "Required": false
+            },
+            {
+              "Param": "dumptype",
+              "Value": "dump type. see msdn for supported values",
+              "Required": false
+            },
+            {
+              "Param": "maxdumpcount",
+              "Value": "max number of dumps to save",
+              "Required": false
+            },
+            {
+              "Param": "overwrite",
+              "Value": "overwrite old dumps when dump count limit reached",
+              "Required": false
+            }
+          ],
+          "Restriction": "NoBugcheckDumps",
+          "Comment": "See https://technet.microsoft.com/en-us/library/cc951703.aspx for details",
+          "Namespace": "Dump collection",
+          "Capability": "DumpCollection",
+          "URIBase": "/api/debug/dump/"
+        },
+        {
+          "Name": "sideloaded app crash dump settings",
+          "URILeaf": "usermode/crashcontrol",
+          "Description": "Gets settings for sideloaded apps crash dump collection",
+          "Verb": "GET",
+          "Parameters": [
+            {
+              "Param": "packageFullname",
+              "Value": "package name",
+              "Required": true
+            }
+          ],
+          "Restriction": "nonRestrictable",
+          "Namespace": "Dump collection",
+          "Capability": "DumpCollection",
+          "URIBase": "/api/debug/dump/"
+        },
+        {
+          "Name": "sideloaded apps crash dump list",
+          "URILeaf": "usermode/dumps",
+          "Description": "Returns list of all crash dumps for sideloaded apps",
+          "Verb": "GET",
+          "ReturnData": "List of crash dumps per side loaded app",
+          "Restriction": "nonRestrictable",
+          "Namespace": "Dump collection",
+          "Capability": "DumpCollection",
+          "URIBase": "/api/debug/dump/"
+        }
+      ]
+    },
+    {
+      "Namespace": "ETW",
+      "Capability": "ETW",
+      "URIBase": "/api/etw/",
+      "URIS": [
+        {
+          "Name": "realtime ETW over websocket",
+          "URILeaf": "session/realtime",
+          "Description": "Creates a realtime ETW session; managed over a websocket.",
+          "Verb": "GET/WebSocket",
+          "ReturnData": "ETW events from the enabled providers",
+          "Restriction": "nonRestrictable",
+          "Namespace": "ETW",
+          "Capability": "ETW",
+          "URIBase": "/api/etw/"
+        },
+        {
+          "Name": "registered ETW providers",
+          "URILeaf": "providers",
+          "Description": "Enumerates registered providers",
+          "Verb": "GET",
+          "ReturnData": "List of providers, friendly name and GUID",
+          "Restriction": "nonRestrictable",
+          "Namespace": "ETW",
+          "Capability": "ETW",
+          "URIBase": "/api/etw/"
+        }
+      ]
+    },
+    {
+      "Namespace": "File explorer",
+      "Capability": "FileExplorer",
+      "URIBase": "/api/filesystem/",
+      "URIS": [
+        {
+            "Name": "Get known folders",
+            "URILeaf": "apps/knownfolders",
+            "Description": "Retrieves the list of existing known user folders",
+            "Verb": "GET",
+            "ReturnData": "List of known folders that exist under the user's profile",
+            "Restriction": "nonRestrictable",
+            "Namespace": "File explorer",
+            "Capability": "FileExplorer",
+            "URIBase": "/api/filesystem/"
+        },
+        {
+          "Name": "Get files",
+          "URILeaf": "apps/files",
+          "Description": "Retrieves the list of files a known user folder",
+          "Verb": "GET",
+          "ReturnData": "List of files inside a known user folder/user's app data folder",
+          "Restriction": "nonRestrictable",
+          "Namespace": "File explorer",
+          "Capability": "FileExplorer",
+          "URIBase": "/api/filesystem/"
+        },
+        {
+          "Name": "Delete file inside user's known folders",
+          "URILeaf": "apps/file",
+          "Description": "Deletes the specified file",
+          "Verb": "DELETE",
+          "Restriction": "nonRestrictable",
+          "Namespace": "File explorer",
+          "Capability": "FileExplorer",
+          "URIBase": "/api/filesystem/"
+        },
+        {
+          "Name": "Upload file inside user's known folders",
+          "URILeaf": "apps/file",
+          "Description": "Uploads the specified file. Does not create paths that do not yet exist.",
+          "Verb": "POST",
+          "Restriction": "nonRestrictable",
+          "Namespace": "File explorer",
+          "Capability": "FileExplorer",
+          "URIBase": "/api/filesystem/"
+        },
+        {
+          "Name": "Download file inside user's known folders",
+          "URILeaf": "apps/file",
+          "Description": "Downloads the specified file",
+          "Verb": "GET",
+          "ReturnData": "File requested",
+          "Restriction": "nonRestrictable",
+          "Namespace": "File explorer",
+          "Capability": "FileExplorer",
+          "URIBase": "/api/filesystem/"
+        },
+        {
+          "Name": "Renames a file/folder inside user's known folders",
+          "URILeaf": "apps/rename",
+          "Description": "Renames the specified file",
+          "Verb": "POST",
+          "Restriction": "nonRestrictable",
+          "Namespace": "File explorer",
+          "Capability": "FileExplorer",
+          "URIBase": "/api/filesystem/"
+        }
+      ]
+    },
+    {
+      "Namespace": "Networking",
+      "Capability": "NetworkingInformation",
+      "URIBase": "/api/networking/",
+      "URIS": [
+        {
+          "Name": "ipconfig",
+          "URILeaf": "ipconfig",
+          "Description": "Gets the current ip configuration",
+          "Verb": "GET",
+          "ReturnCode": [
+            {
+              "Success": "200 OK"
+            },
+            {
+              "Error": "500 Internal server error"
+            }
+          ],
+          "Restriction": "nonRestrictable",
+          "Namespace": "Networking",
+          "Capability": "NetworkingInformation",
+          "URIBase": "/api/networking/"
+        }
+      ]
+    },
+    {
+      "Namespace": "OS Information",
+      "Capability": "OSInformation",
+      "URIBase": "/api/os/",
+      "URIS": [
+        {
+          "Name": "get machine name",
+          "URILeaf": "machinename",
+          "Description": "Gets the machine name",
+          "Verb": "GET",
+          "Restriction": "nonRestrictable",
+          "Namespace": "OS Information",
+          "Capability": "OSInformation",
+          "URIBase": "/api/os/"
+        },
+        {
+          "Name": "os information",
+          "URILeaf": "info",
+          "Description": "Gets operating system information",
+          "Verb": "GET",
+          "Restriction": "nonRestrictable",
+          "Namespace": "OS Information",
+          "Capability": "OSInformation",
+          "URIBase": "/api/os/"
+        },
+        {
+          "Name": "set machine name",
+          "URILeaf": "machinename",
+          "Description": "Sets the machine name",
+          "Verb": "POST",
+          "Parameters": [
+            {
+              "Param": "name",
+              "Value": "New machine name to set to",
+              "Required": true
+            }
+          ],
+          "Restriction": "nonRestrictable",
+          "Namespace": "OS Information",
+          "Capability": "OSInformation",
+          "URIBase": "/api/os/"
+        }
+      ]
+    },
+    {
+      "Namespace": "Performance data",
+      "Capability": "PerformanceData",
+      "URIBase": "/api/resourcemanager/",
+      "URIS": [
+        {
+          "Name": "processes resource utilization",
+          "URILeaf": "processes",
+          "Description": "Returns the list of running processes with details",
+          "Verb": "GET",
+          "ReturnData": "JSON with list of processes and details for each process",
+          "Restriction": "nonRestrictable",
+          "Namespace": "Performance data",
+          "Capability": "PerformanceData",
+          "URIBase": "/api/resourcemanager/"
+        },
+        {
+          "Name": "system resource utilization",
+          "URILeaf": "systemperf",
+          "Description": "Returns system perf statistics (I/O read/write, memory stats etc.",
+          "Verb": "GET",
+          "ReturnData": "JSON with system information: CPU, GPU, Memory, Network, IO",
+          "Restriction": "nonRestrictable",
+          "Namespace": "Performance data",
+          "Capability": "PerformanceData",
+          "URIBase": "/api/resourcemanager/"
+        }
+      ]
+    },
+    {
+      "Namespace": "Power",
+      "Capability": "Power",
+      "URIBase": "/api/power/",
+      "URIS": [
+        {
+          "Name": "battery state",
+          "URILeaf": "battery",
+          "Description": "Gets the current battery state",
+          "Verb": "GET",
+          "Restriction": "nonRestrictable",
+          "Namespace": "Power",
+          "Capability": "Power",
+          "URIBase": "/api/power/"
+        },
+        {
+          "Name": "get active power scheme",
+          "URILeaf": "activecfg",
+          "Description": "Gets the active power scheme",
+          "Verb": "GET",
+          "Restriction": "NoPowerSchemeAccess",
+          "Namespace": "Power",
+          "Capability": "Power",
+          "URIBase": "/api/power/"
+        },
+        {
+          "Name": "get power scheme value",
+          "URILeaf": "cfg/<path_into_power_scheme>",
+          "Description": "Gets sub-value from a power scheme as indicated by the URI",
+          "Verb": "POST",
+          "Restriction": "NoPowerSchemeAccess",
+          "Namespace": "Power",
+          "Capability": "Power",
+          "URIBase": "/api/power/"
+        },
+        {
+          "Name": "get power state",
+          "URILeaf": "state",
+          "Description": "Checks if the system is in a low power state",
+          "Verb": "GET",
+          "Restriction": "nonRestrictable",
+          "Namespace": "Power",
+          "Capability": "Power",
+          "URIBase": "/api/power/"
+        },
+        {
+          "Name": "set active power scheme",
+          "URILeaf": "activecfg",
+          "Description": "Sets the active power scheme",
+          "Verb": "POST",
+          "Parameters": [
+            {
+              "Param": "scheme",
+              "Value": "GUID of the scheme to set to",
+              "Required": true
+            }
+          ],
+          "Restriction": "NoPowerSchemeAccess",
+          "Namespace": "Power",
+          "Capability": "Power",
+          "URIBase": "/api/power/"
+        },
+        {
+          "Name": "set power scheme value",
+          "URILeaf": "cfg/<path_into_power_scheme>",
+          "Description": "Gets sub-value from a power scheme as indicated by the URI",
+          "Verb": "POST",
+          "Parameters": [
+            {
+              "Param": "valueAC",
+              "Value": "The value for A/C power",
+              "Required": true
+            },
+            {
+              "Param": "ValueDC",
+              "Value": "The value for battery power",
+              "Required": true
+            }
+          ],
+          "Restriction": "NoPowerSchemeAccess",
+          "Namespace": "Power",
+          "Capability": "Power",
+          "URIBase": "/api/power/"
+        },
+        {
+          "Name": "sleepstudy report enumeration",
+          "URILeaf": "sleepstudy/reports",
+          "Description": "Enumerates the available sleepstudy reports",
+          "Verb": "GET",
+          "Restriction": "NoSleepStudyAccess",
+          "Namespace": "Power",
+          "Capability": "Power",
+          "URIBase": "/api/power/"
+        },
+        {
+          "Name": "sleepstudy report enumeration",
+          "URILeaf": "sleepstudy/reports",
+          "Description": "Downloads a sleepstudy report",
+          "Verb": "GET",
+          "Parameters": [
+            {
+              "Param": "FileName",
+              "Value": "sleepstudy report file name",
+              "Required": true
+            }
+          ],
+          "Restriction": "NoSleepStudyAccess",
+          "Namespace": "Power",
+          "Capability": "Power",
+          "URIBase": "/api/power/"
+        },
+        {
+          "Name": "sleepstudy transform",
+          "URILeaf": "sleepstudy/reports",
+          "Description": "Downloads the xslt required to convert sleepstudy report XML to human readable reports",
+          "Verb": "GET",
+          "Restriction": "NoSleepStudyAccess",
+          "Namespace": "Power",
+          "Capability": "Power",
+          "URIBase": "/api/power/"
+        }
+      ]
+    },
+    {
+      "Namespace": "Remote Control",
+      "Capability": "RemoteControl",
+      "URIBase": "/api/control/",
+      "URIS": [
+        {
+          "Name": "Restart",
+          "URILeaf": "restart",
+          "Description": "Restarts the target computer",
+          "Verb": "POST",
+          "Restriction": "nonRestrictable",
+          "Namespace": "Remote Control",
+          "Capability": "RemoteControl",
+          "URIBase": "/api/control/"
+        },
+        {
+          "Name": "shutdown",
+          "URILeaf": "shutdown",
+          "Description": "Shuts down the target computer",
+          "Verb": "POST",
+          "Restriction": "nonRestrictable",
+          "Namespace": "Remote Control",
+          "Capability": "RemoteControl",
+          "URIBase": "/api/control/"
+        }
+      ]
+    },
+    {
+      "Namespace": "Task Manager",
+      "Capability": "TaskManager",
+      "URIBase": "/api/taskmanager/",
+      "URIS": [
+        {
+          "Name": "start app",
+          "URILeaf": "app",
+          "Description": "Starts a modern app",
+          "Verb": "POST",
+          "Parameters": [
+            {
+              "Param": "appid",
+              "Value": "PRAID of app to start, hex64 encoded",
+              "Required": true
+            },
+            {
+              "Param": "package",
+              "Value": "Full name of the app package, hex64 encoded",
+              "Required": true
+            }
+          ],
+          "Restriction": "nonRestrictable",
+          "Namespace": "Task Manager",
+          "Capability": "TaskManager",
+          "URIBase": "/api/taskmanager/"
+        },
+        {
+          "Name": "stop app",
+          "URILeaf": "app",
+          "Description": "Stops a modern app",
+          "Verb": "DELETE",
+          "Parameters": [
+            {
+              "Param": "package",
+              "Value": "Full name of the app package, hex64 encoded",
+              "Required": true
+            },
+            {
+              "Param": "forcestop",
+              "Value": "Force all processes to stop (=yes)",
+              "Required": false
+            }
+          ],
+          "Restriction": "nonRestrictable",
+          "Namespace": "Task Manager",
+          "Capability": "TaskManager",
+          "URIBase": "/api/taskmanager/"
+        },
+        {
+          "Name": "stop process",
+          "URILeaf": "process",
+          "Description": "Stops a process",
+          "Verb": "DELETE",
+          "Parameters": [
+            {
+              "Param": "pid",
+              "Value": "ID of the process to be stopped",
+              "Required": true
+            }
+          ],
+          "Restriction": "NoProcessTermination",
+          "Namespace": "Task Manager",
+          "Capability": "TaskManager",
+          "URIBase": "/api/taskmanager/"
+        }
+      ]
+    },
+    {
+      "Namespace": "Bluetooth",
+      "Capability": "Bluetooth",
+      "URIBase": "/api/bt/",
+      "URIS": [
+        {
+          "Name": "Get available Bluetooth devices",
+          "URILeaf": "getavailable",
+          "Description": "List the available Bluetooth devices",
+          "Verb": "GET",
+          "ReturnData": "The list of available Bluetooth devices",
+          "Restriction": "nonRestrictable",
+          "Namespace": "Bluetooth",
+          "Capability": "Bluetooth",
+          "URIBase": "/api/bt/"
+        },
+        {
+          "Name": "Get paired Bluetooth devices",
+          "URILeaf": "getpaired",
+          "Description": "List the currently paired Bluetooth devices",
+          "Verb": "GET",
+          "ReturnData": "The list of paired Bluetooth devices",
+          "Restriction": "nonRestrictable",
+          "Namespace": "Bluetooth",
+          "Capability": "Bluetooth",
+          "URIBase": "/api/bt/"
+        },
+        {
+          "Name": "Pair bluetooth device",
+          "URILeaf": "pair",
+          "Description": "Pair with a Bluetooth device",
+          "Verb": "GET",
+          "Parameters": [
+            {
+              "Param": "deviceId",
+              "Value": "Bluetooth device id",
+              "Required": true
+            }
+          ],
+          "Restriction": "nonRestrictable",
+          "Namespace": "Bluetooth",
+          "Capability": "Bluetooth",
+          "URIBase": "/api/bt/"
+        },
+        {
+          "Name": "Unpair from a Bluetooth device",
+          "URILeaf": "unpair",
+          "Description": "Unpairs a Bluetooth device",
+          "Verb": "POST",
+          "Parameters": [
+            {
+              "Param": "deviceId",
+              "Value": "Bluetooth device id",
+              "Required": true
+            }
+          ],
+          "ReturnCode": [
+            {
+              "Success": "200 OK"
+            },
+            {
+              "Error": "500 Internal server error"
+            }
+          ],
+          "Restriction": "nonRestrictable",
+          "Namespace": "Bluetooth",
+          "Capability": "Bluetooth",
+          "URIBase": "/api/bt/"
+        },
+        {
+          "Name": "Enable bluetooth discoverable mode",
+          "URILeaf": "discoverable",
+          "Description": "Enables Bluetooth discoverable mode",
+          "Verb": "GET",
+          "Restriction": "nonRestrictable",
+          "Namespace": "Bluetooth",
+          "Capability": "Bluetooth",
+          "URIBase": "/api/bt/"
+        },
+        {
+          "Name": "Set Bluetooth Radio",
+          "URILeaf": "setradio",
+          "Description": "Sets a specific Bluetooth radio to On or Off",
+          "Verb": "POST",
+          "Parameters": [
+          {
+            "Param": "ID",
+            "Value": "Bluetooth adapter device id (base64 encoded)",
+            "Required": true
+          },
+          {
+            "Param": "State",
+            "Value": "'On' or 'Off'",
+            "Required": true
+          }
+          ],
+          "ReturnCode": [
+            {
+              "Success": "200 OK"
+            },
+            {
+              "Error": "400 Bad request"
+            }
+          ],
+          "Restriction": "nonRestrictable"
+        },
+        {
+          "Name": "Get Bluetooth Radios",
+          "URILeaf": "getradios",
+          "Description": "Get a list of Bluetooth adapters",
+          "ReturnData": "The list of available Bluetooth Adapters",
+          "Verb": "GET",
+          "ReturnCode": [
+            {
+              "Success": "200 OK"
+            },
+            {
+              "Error": "500 Bad request"
+            }
+          ],
+          "Restriction": "nonRestrictable"
+        },
+        {
+          "Name": "Connect Bluetooth Audio Device",
+          "URILeaf": "connectdevice",
+          "Description": "Connects a Bluetooth Audio device",
+          "Verb": "POST",
+          "Parameters": [
+          {
+            "Param": "deviceId",
+            "Value": "Bluetooth device id (base64 encoded)",
+            "Required": true
+          },
+          ],
+          "ReturnCode": [
+            {
+              "Success": "200 OK"
+            },
+            {
+              "Error": "400 Bad request"
+            }
+          ],
+          "Restriction": "nonRestrictable"
+        },
+        {
+          "Name": "Disconnect Bluetooth Audio Device",
+          "URILeaf": "disconnectdevice",
+          "Description": "Disconnects a Bluetooth Audio device",
+          "Verb": "POST",
+          "Parameters": [
+          {
+            "Param": "deviceId",
+            "Value": "Bluetooth device id (base64 encoded)",
+            "Required": true
+          },
+          ],
+          "ReturnCode": [
+            {
+              "Success": "200 OK"
+            },
+            {
+              "Error": "400 Bad request"
+            }
+          ],
+          "Restriction": "nonRestrictable"
+        }
+      ]
+    },
+    {
+      "Namespace": "WiFi Management",
+      "Capability": "Wifi",
+      "URIBase": "/api/wifi/",
+      "URIS": [
+        {
+          "Name": "enumerate wifi interfaces",
+          "URILeaf": "interfaces",
+          "Description": "Enumerates wireless network interfaces",
+          "Verb": "GET",
+          "ReturnData": "List of wireless interfaces with details (GUID, description etc.)",
+          "Restriction": "nonRestrictable",
+          "Namespace": "WiFi Management",
+          "Capability": "Wifi",
+          "URIBase": "/api/wifi/"
+        },
+        {
+          "Name": "enumerate wifi networks",
+          "URILeaf": "networks",
+          "Description": "Enumerates wireless networks on the specified network interface",
+          "Verb": "GET",
+          "Parameters": [
+            {
+              "Param": "interface",
+              "Value": "network interface guid",
+              "Required": true
+            }
+          ],
+          "ReturnData": "List of wireless networks found on the network interface with details",
+          "Restriction": "nonRestrictable",
+          "Namespace": "WiFi Management",
+          "Capability": "Wifi",
+          "URIBase": "/api/wifi/"
+        },
+        {
+          "Name": "wifi connect and disconnect",
+          "URILeaf": "network",
+          "Description": "Connects or disconnects to a network on the specified interface",
+          "Verb": "POST",
+          "Parameters": [
+            {
+              "Param": "interface",
+              "Value": "network interface guid",
+              "Required": true
+            },
+            {
+              "Param": "op",
+              "Value": "connect or disconnect",
+              "Required": true
+            },
+            {
+              "Param": "ssid",
+              "Value": "ssid to connect to",
+              "Required": "if op=connect"
+            },
+            {
+              "Param": "key",
+              "Value": "shared key",
+              "Required": "if op=connect"
+            }
+          ],
+          "Restriction": "nonRestrictable",
+          "Namespace": "WiFi Management",
+          "Capability": "Wifi",
+          "URIBase": "/api/wifi/"
+        },
+        {
+          "Name": "wifi profile delete",
+          "URILeaf": "network",
+          "Description": "Deletes a profile associated with a network on a specified interface",
+          "Verb": "DELETE",
+          "Parameters": [
+            {
+              "Param": "interface",
+              "Value": "network interface guid",
+              "Required": true
+            },
+            {
+              "Param": "profile",
+              "Value": "profile name",
+              "Required": true
+            }
+          ],
+          "Restriction": "nonRestrictable",
+          "Namespace": "WiFi Management",
+          "Capability": "Wifi",
+          "URIBase": "/api/wifi/"
+        }
+      ]
+    },
+    {
+      "Namespace": "Windows Error Reporting",
+      "Capability": "WindowsErrorReporting",
+      "URIBase": "/api/wer/",
+      "URIS": [
+        {
+          "Name": "download WER report file",
+          "URILeaf": "reports/file",
+          "Description": "Downloads a WER report file",
+          "Verb": "GET",
+          "Parameters": [
+            {
+              "Param": "user",
+              "Value": "the user name for the report",
+              "Required": true
+            },
+            {
+              "Param": "type",
+              "Value": "report type; queued or archived",
+              "Required": true
+            },
+            {
+              "Param": "name",
+              "Value": "name of the report",
+              "Required": true
+            },
+            {
+              "Param": "file",
+              "Value": "the name of the file to download from the report",
+              "Required": true
+            }
+          ],
+          "Restriction": "nonRestrictable",
+          "Namespace": "Windows Error Reporting",
+          "Capability": "WindowsErrorReporting",
+          "URIBase": "/api/wer/"
+        },
+        {
+          "Name": "enumerate files in a WER report",
+          "URILeaf": "reports/files",
+          "Description": "Gets the report files list",
+          "Verb": "GET",
+          "Parameters": [
+            {
+              "Param": "user",
+              "Value": "the user name for the report",
+              "Required": true
+            },
+            {
+              "Param": "type",
+              "Value": "report type; queued or archived",
+              "Required": true
+            },
+            {
+              "Param": "name",
+              "Value": "name of the report",
+              "Required": true
+            }
+          ],
+          "Restriction": "nonRestrictable",
+          "Namespace": "Windows Error Reporting",
+          "Capability": "WindowsErrorReporting",
+          "URIBase": "/api/wer/"
+        },
+        {
+          "Name": "list WER reports",
+          "URILeaf": "reports",
+          "Description": "Gets the WER reports",
+          "Verb": "GET",
+          "Restriction": "nonRestrictable",
+          "Namespace": "Windows Error Reporting",
+          "Capability": "WindowsErrorReporting",
+          "URIBase": "/api/wer/"
+        }
+      ]
+    },
+    {
+      "Namespace": "WPR",
+      "Capability": "ETW",
+      "URIBase": "/api/wpr/",
+      "URIS": [
+        {
+          "Name": "WPR boot trace start",
+          "URILeaf": "boottrace",
+          "Description": "Starts a boot WPR (performance) tracing session.",
+          "Verb": "GET",
+          "Parameters": [
+            {
+              "Param": "profile",
+              "Value": "Profile name. Available profiles are stored in perfprofiles/profiles.json",
+              "Required": "if op=start"
+            }
+          ],
+          "ReturnData": "On start, returns the WPR session status.",
+          "Restriction": "NoWPRBootTracing",
+          "Namespace": "WPR",
+          "Capability": "ETW",
+          "URIBase": "/api/wpr/"
+        },
+        {
+          "Name": "WPR boot trace stop",
+          "URILeaf": "boottrace",
+          "Description": "Stops a WPR (performance) tracing session",
+          "Verb": "GET",
+          "ReturnData": "Returns the trace ETL file",
+          "Restriction": "NoWPRBootTracing",
+          "Namespace": "WPR",
+          "Capability": "ETW",
+          "URIBase": "/api/wpr/"
+        },
+        {
+          "Name": "WPR trace start",
+          "URILeaf": "trace",
+          "Description": "Starts a WPR (performance) tracing sessions",
+          "Verb": "POST",
+          "Parameters": [
+            {
+              "Param": "profile",
+              "Value": "Profile name. Available profiles are stored in perfprofiles/profiles.json",
+              "Required": "if op=start"
+            }
+          ],
+          "ReturnData": "On start, returns the WPR session status.",
+          "Restriction": "nonRestrictable",
+          "Namespace": "WPR",
+          "Capability": "ETW",
+          "URIBase": "/api/wpr/"
+        },
+        {
+          "Name": "WPR trace stop",
+          "URILeaf": "trace",
+          "Description": "Stops a WPR (performance) tracing session",
+          "Verb": "GET",
+          "ReturnData": "Returns the trace ETL file",
+          "Restriction": "nonRestrictable",
+          "Namespace": "WPR",
+          "Capability": "ETW",
+          "URIBase": "/api/wpr/"
+        },
+        {
+          "Name": "WPR tracing status",
+          "URILeaf": "status",
+          "Description": "Retrieves the status of the WPR session",
+          "Verb": "GET",
+          "ReturnData": "WPR session status.",
+          "Restriction": "nonRestrictable",
+          "Namespace": "WPR",
+          "Capability": "ETW",
+          "URIBase": "/api/wpr/"
+        },
+        {
+          "Name": "custom profile tracing",
+          "URILeaf": "customtrace",
+          "Description": "Uploads a WPR profile and starts tracing using the uploaded profile.",
+          "Verb": "POST",
+          "Payload": "multi-part conforming http body",
+          "ReturnData": "Returns the WPR session status.",
+          "Restriction": "nonRestrictable",
+          "Namespace": "WPR",
+          "Capability": "ETW",
+          "URIBase": "/api/wpr/"
+        }
+      ]
+    }
+  ]
+}

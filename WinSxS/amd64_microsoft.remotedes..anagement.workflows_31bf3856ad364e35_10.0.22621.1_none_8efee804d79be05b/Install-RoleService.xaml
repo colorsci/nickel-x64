@@ -1,0 +1,261 @@
+<Activity mc:Ignorable="sads sap" x:Class="Microsoft.Windows.RDMS.DeploymentActivityLibrary.InstallRole" this:InstallRole.Remove="False" this:InstallRole.RestartIfNeeded="False"
+ xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities"
+ xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+ xmlns:mpa="clr-namespace:Microsoft.PowerShell.Activities;assembly=Microsoft.PowerShell.Activities"
+ xmlns:mpda="clr-namespace:Microsoft.PowerShell.Diagnostics.Activities;assembly=Microsoft.PowerShell.Diagnostics.Activities"
+ xmlns:mpua="clr-namespace:Microsoft.PowerShell.Utility.Activities;assembly=Microsoft.PowerShell.Utility.Activities"
+ xmlns:mrc="clr-namespace:Microsoft.RemoteDesktopServices.Common;assembly=Microsoft.RemoteDesktopServices.Management.Activities"
+ xmlns:mrma="clr-namespace:Microsoft.RemoteDesktopServices.Management.Activities;assembly=Microsoft.RemoteDesktopServices.Management.Activities"
+ xmlns:mrmc="clr-namespace:Microsoft.RemoteDesktopServices.Management.Cmdlets;assembly=Microsoft.RemoteDesktopServices.Management.Activities"
+ xmlns:mv="clr-namespace:Microsoft.VisualBasic;assembly=System"
+ xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities"
+ xmlns:s="clr-namespace:System;assembly=System.Core"
+ xmlns:s1="clr-namespace:System;assembly=System"
+ xmlns:s2="clr-namespace:System;assembly=System.ServiceModel"
+ xmlns:s3="clr-namespace:System;assembly=mscorlib"
+ xmlns:s4="clr-namespace:System;assembly=Microsoft.VisualStudio.Platform.VSEditor"
+ xmlns:s5="clr-namespace:System;assembly=System.ComponentModel.Composition"
+ xmlns:s6="clr-namespace:System;assembly=System.Net"
+ xmlns:sa="clr-namespace:System.Activities;assembly=System.Activities"
+ xmlns:sad="clr-namespace:System.Activities.Debugger;assembly=System.Activities"
+ xmlns:sads="http://schemas.microsoft.com/netfx/2010/xaml/activities/debugger"
+ xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation"
+ xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib"
+ xmlns:sma="clr-namespace:System.Management.Automation;assembly=System.Management.Automation"
+ xmlns:sma1="clr-namespace:System.Management.Automation;assembly=Microsoft.PowerShell.Commands.Utility"
+ xmlns:sn="clr-namespace:System.Net;assembly=System"
+ xmlns:sn1="clr-namespace:System.Net;assembly=System.Net"
+ xmlns:this="clr-namespace:Microsoft.Windows.RDMS.DeploymentActivityLibrary"
+ xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <x:Members>
+    <x:Property Name="RoleFeatureName" Type="InArgument(x:String)">
+      <x:Property.Attributes>
+        <RequiredArgumentAttribute />
+      </x:Property.Attributes>
+    </x:Property>
+    <x:Property Name="Remove" Type="InArgument(x:Boolean)" />
+    <x:Property Name="RestartIfNeeded" Type="InArgument(x:Boolean)" />
+    <x:Property Name="Result" Type="OutArgument(sma:PSObject)" />
+  </x:Members>
+  <sap:VirtualizedContainerService.HintSize>813,3107</sap:VirtualizedContainerService.HintSize>
+  <mva:VisualBasic.Settings>Assembly references and imported namespaces for internal implementation</mva:VisualBasic.Settings>
+  <Sequence sap:VirtualizedContainerService.HintSize="773,3067">
+    <Sequence.Variables>
+      <Variable x:TypeArguments="x:String" Default="Add-WindowsFeature" Name="command" />
+      <Variable x:TypeArguments="sma:PSDataCollection(sma:ErrorRecord)" Name="Errors" />
+      <Variable x:TypeArguments="sma:PSDataCollection(sma:PSObject)" Name="tempResults" />
+      <Variable x:TypeArguments="x:String" Name="ServerName" />
+    </Sequence.Variables>
+    <sap:WorkflowViewStateService.ViewState>
+      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+      </scg:Dictionary>
+    </sap:WorkflowViewStateService.ViewState>
+    <Assign sap:VirtualizedContainerService.HintSize="751,60">
+      <Assign.To>
+        <OutArgument x:TypeArguments="sma:PSObject">[Result]</OutArgument>
+      </Assign.To>
+      <Assign.Value>
+        <InArgument x:TypeArguments="sma:PSObject">[New PSObject()]</InArgument>
+      </Assign.Value>
+    </Assign>
+    <Assign sap:VirtualizedContainerService.HintSize="751,60">
+      <Assign.To>
+        <OutArgument x:TypeArguments="sma:PSDataCollection(sma:PSObject)">[tempResults]</OutArgument>
+      </Assign.To>
+      <Assign.Value>
+        <InArgument x:TypeArguments="sma:PSDataCollection(sma:PSObject)">[New PSDataCollection(Of PSObject)]</InArgument>
+      </Assign.Value>
+    </Assign>
+    <Assign sap:VirtualizedContainerService.HintSize="751,60">
+      <Assign.To>
+        <OutArgument x:TypeArguments="sma:PSDataCollection(sma:ErrorRecord)">[Errors]</OutArgument>
+      </Assign.To>
+      <Assign.Value>
+        <InArgument x:TypeArguments="sma:PSDataCollection(sma:ErrorRecord)">[New PSDataCollection(Of ErrorRecord)]</InArgument>
+      </Assign.Value>
+    </Assign>
+    <Sequence DisplayName="Set server name property in the Result object" sap:VirtualizedContainerService.HintSize="751,51">
+      <Sequence.Variables>
+        <Variable x:TypeArguments="sma:PSDataCollection(sma:PSObject)" Name="tempServerNameResults" />
+        <Variable x:TypeArguments="sma:PSDataCollection(sma:PSObject)" Name="ServerNameResult" />
+      </Sequence.Variables>
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+      <mpa:InlineScript Command="import-module $env:windir\System32\ServerManagerInternal\rdmanagement;&#xA;Get-LocalMachineFqdn" sap:VirtualizedContainerService.HintSize="508,163" Result="[ServerNameResult]" />
+      <Assign sap:VirtualizedContainerService.HintSize="508,60">
+        <Assign.To>
+          <OutArgument x:TypeArguments="x:String">[ServerName]</OutArgument>
+        </Assign.To>
+        <Assign.Value>
+          <InArgument x:TypeArguments="x:String">[ServerNameResult(0).ToString()]</InArgument>
+        </Assign.Value>
+      </Assign>
+      <InvokeMethod sap:VirtualizedContainerService.HintSize="508,134" MethodName="Add">
+        <InvokeMethod.TargetObject>
+          <InArgument x:TypeArguments="sma:PSMemberInfoCollection(sma:PSPropertyInfo)">[Result.Properties]</InArgument>
+        </InvokeMethod.TargetObject>
+        <InArgument x:TypeArguments="sma:PSNoteProperty">[New PSNoteProperty("ServerName", ServerName)]</InArgument>
+      </InvokeMethod>
+    </Sequence>
+    <If Condition="[Remove]" sap:VirtualizedContainerService.HintSize="751,208">
+      <If.Then>
+        <Assign sap:VirtualizedContainerService.HintSize="242,60">
+          <Assign.To>
+            <OutArgument x:TypeArguments="x:String">[command]</OutArgument>
+          </Assign.To>
+          <Assign.Value>
+            <InArgument x:TypeArguments="x:String">Remove-WindowsFeature</InArgument>
+          </Assign.Value>
+        </Assign>
+      </If.Then>
+    </If>
+    <mpda:NewWinEvent DisplayName="New-WinEvent" sap:VirtualizedContainerService.HintSize="751,22" PSComputerName="[{}]" Payload="[{new PSObject(RoleFeatureName),new PSObject(ServerName)}]" ProviderName="Microsoft-Windows-Rdms-UI" WinEventId="4115" />
+    <mpa:InlineScript Command="import-module $env:windir\System32\ServerManagerInternal\rdmanagement;&#xA;iex &quot;$using:command $using:RoleFeatureName -IncludeManagementTools &quot;" DisplayName="WindowsFeature InlineScript" sap:VirtualizedContainerService.HintSize="751,139" PSError="[Errors]" PSActionRunningTimeoutSec="[1800]" Result="[tempResults]">
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+    </mpa:InlineScript>
+    <If Condition="[tempResults.Count &gt; 0]" sap:VirtualizedContainerService.HintSize="751,896">
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+      <If.Then>
+        <Sequence sap:VirtualizedContainerService.HintSize="240,668">
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+              <x:Boolean x:Key="IsPinned">False</x:Boolean>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+          <InvokeMethod sap:VirtualizedContainerService.HintSize="218,134" MethodName="Add">
+            <InvokeMethod.TargetObject>
+              <InArgument x:TypeArguments="sma:PSMemberInfoCollection(sma:PSPropertyInfo)">[Result.Properties]</InArgument>
+            </InvokeMethod.TargetObject>
+            <InArgument x:TypeArguments="sma:PSNoteProperty">[New PSNoteProperty("Success", CType(tempResults.Item(0).Properties("Success").Value, Boolean))]</InArgument>
+          </InvokeMethod>
+          <InvokeMethod sap:VirtualizedContainerService.HintSize="218,134" MethodName="Add">
+            <InvokeMethod.TargetObject>
+              <InArgument x:TypeArguments="sma:PSMemberInfoCollection(sma:PSPropertyInfo)">[Result.Properties]</InArgument>
+            </InvokeMethod.TargetObject>
+            <InArgument x:TypeArguments="sma:PSNoteProperty">[New PSNoteProperty("RestartNeeded", tempResults.Item(0).Properties("RestartNeeded").Value.ToString())]</InArgument>
+          </InvokeMethod>
+          <InvokeMethod DisplayName="InvokeMethod" sap:VirtualizedContainerService.HintSize="218,134" MethodName="Add">
+            <InvokeMethod.TargetObject>
+              <InArgument x:TypeArguments="sma:PSMemberInfoCollection(sma:PSPropertyInfo)">[Result.Properties]</InArgument>
+            </InvokeMethod.TargetObject>
+            <InArgument x:TypeArguments="sma:PSNoteProperty">[New PSNoteProperty("FeatureResult", tempResults.Item(0).Properties("FeatureResult").Value.ToString())]</InArgument>
+          </InvokeMethod>
+          <mpda:NewWinEvent DisplayName="New-WinEvent" sap:VirtualizedContainerService.HintSize="218,22" PSComputerName="[{}]" Payload="[{new PSObject(RoleFeatureName),new PSObject(ServerName)}]" ProviderName="Microsoft-Windows-Rdms-UI" WinEventId="4117" />
+        </Sequence>
+      </If.Then>
+      <If.Else>
+        <Sequence sap:VirtualizedContainerService.HintSize="486,788">
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+              <x:Boolean x:Key="IsPinned">False</x:Boolean>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+          <If Condition="[Errors.Count &gt; 0]" sap:VirtualizedContainerService.HintSize="464,664">
+            <If.Then>
+              <Sequence sap:VirtualizedContainerService.HintSize="240,556">
+                <sap:WorkflowViewStateService.ViewState>
+                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                    <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                  </scg:Dictionary>
+                </sap:WorkflowViewStateService.ViewState>
+                <InvokeMethod sap:VirtualizedContainerService.HintSize="218,134" MethodName="Add">
+                  <InvokeMethod.TargetObject>
+                    <InArgument x:TypeArguments="sma:PSMemberInfoCollection(sma:PSPropertyInfo)">[Result.Properties]</InArgument>
+                  </InvokeMethod.TargetObject>
+                  <InArgument x:TypeArguments="sma:PSNoteProperty">[New PSNoteProperty("Success", False)]</InArgument>
+                </InvokeMethod>
+                <InvokeMethod sap:VirtualizedContainerService.HintSize="218,134" MethodName="Add">
+                  <InvokeMethod.TargetObject>
+                    <InArgument x:TypeArguments="sma:PSMemberInfoCollection(sma:PSPropertyInfo)">[Result.Properties]</InArgument>
+                  </InvokeMethod.TargetObject>
+                  <InArgument x:TypeArguments="sma:PSNoteProperty">[New PSNoteProperty("ErrorRecord", Errors(0))]</InArgument>
+                </InvokeMethod>
+                <mpua:WriteError DisplayName="Write-Error" ErrorRecord="[Microsoft.RemoteDesktopServices.Management.Cmdlets.ErrorUtility.GetErrorRecord(String.Format(Microsoft.RemoteDesktopServices.Management.Activities.RDManagementResources.ResourceManager.GetString(&quot;FailedToInstallRoleServicesOnServer&quot;), ServerName), ServerName, Microsoft.RemoteDesktopServices.Common.ErrorId.InstallRoleServices, New Exception())]" sap:VirtualizedContainerService.HintSize="218,22" />
+                <mpda:NewWinEvent DisplayName="New-WinEvent" sap:VirtualizedContainerService.HintSize="218,22" PSComputerName="[{}]" Payload="[{new PSObject(ServerName),new PSObject(RoleFeatureName),new PSObject(Errors(0).Exception.Message)}]" ProviderName="Microsoft-Windows-Rdms-UI" WinEventId="4116" />
+              </Sequence>
+            </If.Then>
+          </If>
+        </Sequence>
+      </If.Else>
+    </If>
+    <If Condition="[Boolean.Parse(Result.Properties(&quot;Success&quot;).Value.ToString()) And (Result.Properties(&quot;RestartNeeded&quot;).Value.ToString().Equals(&quot;Yes&quot;, StringComparison.InvariantCultureIgnoreCase)) And RestartIfNeeded]" sap:VirtualizedContainerService.HintSize="751,1149">
+      <If.Then>
+        <Sequence sap:VirtualizedContainerService.HintSize="530,1041">
+          <Sequence.Variables>
+            <Variable x:TypeArguments="sma:PSDataCollection(sma:PSObject)" Name="RestartError" />
+          </Sequence.Variables>
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+          <mpua:WriteProgress Activity="[RDManagementResources.ResourceManager.GetString(&quot;Restart&quot;)]" DisplayName="Write-Progress" sap:VirtualizedContainerService.HintSize="508,22" PercentComplete="0" ProgressId="1" Status="[ServerName + &quot; : &quot; + RDManagementResources.ResourceManager.GetString(&quot;RestartPending&quot;)]" />
+          <Assign sap:VirtualizedContainerService.HintSize="508,60">
+            <Assign.To>
+              <OutArgument x:TypeArguments="sma:PSDataCollection(sma:PSObject)">[RestartError]</OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="sma:PSDataCollection(sma:PSObject)">[New PSDataCollection(Of PSObject)]</InArgument>
+            </Assign.Value>
+          </Assign>
+          <mpda:NewWinEvent DisplayName="New-WinEvent" sap:VirtualizedContainerService.HintSize="508,22" PSComputerName="[{}]" Payload="[{new PSObject(ServerName)}]" ProviderName="Microsoft-Windows-Rdms-UI" WinEventId="4121" />
+          <mpa:InlineScript Command="import-module $env:windir\System32\ServerManagerInternal\rdmanagement;&#xA;restart-computersandblock -computername $using:ServerName -AffectedRole $using:RoleFeatureName -Remove $using:Remove" DisplayName="Restart-Computers InlineScript" sap:VirtualizedContainerService.HintSize="508,163" PSComputerName="[{}]" Result="[RestartError]" />
+          <If Condition="[RestartError.Count &gt; 0 And Boolean.Parse(RestartError.Item(0).Properties(&quot;Success&quot;).Value.ToString())]" sap:VirtualizedContainerService.HintSize="508,490">
+            <If.Then>
+              <Sequence sap:VirtualizedContainerService.HintSize="240,320">
+                <sap:WorkflowViewStateService.ViewState>
+                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                  </scg:Dictionary>
+                </sap:WorkflowViewStateService.ViewState>
+                <InvokeMethod sap:VirtualizedContainerService.HintSize="218,134" MethodName="Add">
+                  <InvokeMethod.TargetObject>
+                    <InArgument x:TypeArguments="sma:PSMemberInfoCollection(sma:PSPropertyInfo)">[Result.Properties]</InArgument>
+                  </InvokeMethod.TargetObject>
+                  <InArgument x:TypeArguments="sma:PSNoteProperty">[New PSNoteProperty("RestartSuccess", True)]</InArgument>
+                </InvokeMethod>
+                <mpda:NewWinEvent DisplayName="New-WinEvent" sap:VirtualizedContainerService.HintSize="218,22" PSComputerName="[{}]" Payload="[{new PSObject(ServerName)}]" ProviderName="Microsoft-Windows-Rdms-UI" WinEventId="4122" />
+              </Sequence>
+            </If.Then>
+            <If.Else>
+              <Sequence sap:VirtualizedContainerService.HintSize="240,382">
+                <sap:WorkflowViewStateService.ViewState>
+                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                  </scg:Dictionary>
+                </sap:WorkflowViewStateService.ViewState>
+                <InvokeMethod sap:VirtualizedContainerService.HintSize="218,134" MethodName="Add">
+                  <InvokeMethod.TargetObject>
+                    <InArgument x:TypeArguments="sma:PSMemberInfoCollection(sma:PSPropertyInfo)">[Result.Properties]</InArgument>
+                  </InvokeMethod.TargetObject>
+                  <InArgument x:TypeArguments="sma:PSNoteProperty">[New PSNoteProperty("RestartSuccess", False)]</InArgument>
+                </InvokeMethod>
+                <mpua:WriteError DisplayName="Write-Error" ErrorRecord="[Microsoft.RemoteDesktopServices.Management.Cmdlets.ErrorUtility.GetErrorRecord(String.Format(Microsoft.RemoteDesktopServices.Management.Activities.RDManagementResources.ResourceManager.GetString(&quot;FailedToInstallRoleServicesOnServer&quot;), ServerName), ServerName, Microsoft.RemoteDesktopServices.Common.ErrorId.InstallRoleServices, New Exception())]" sap:VirtualizedContainerService.HintSize="218,22" />
+                <mpda:NewWinEvent DisplayName="New-WinEvent" sap:VirtualizedContainerService.HintSize="218,22" PSComputerName="[{}]" Payload="[{new PSObject(ServerName)}]" ProviderName="Microsoft-Windows-Rdms-UI" WinEventId="4123" />
+              </Sequence>
+            </If.Else>
+          </If>
+        </Sequence>
+      </If.Then>
+    </If>
+    <mpua:WriteProgress Activity="[RDManagementResources.ResourceManager.GetString(&quot;Complete&quot;)]" DisplayName="Write-Progress" sap:VirtualizedContainerService.HintSize="751,22" PercentComplete="100" ProgressId="2" Status="[ServerName + &quot; : &quot; + RDManagementResources.ResourceManager.GetString(&quot;RoleInstallComplete&quot;)]" />
+  </Sequence>
+</Activity>
