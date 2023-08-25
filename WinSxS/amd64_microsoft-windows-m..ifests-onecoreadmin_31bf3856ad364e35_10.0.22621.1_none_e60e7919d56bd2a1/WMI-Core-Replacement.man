@@ -1,0 +1,58 @@
+﻿<?xml version='1.0' encoding='utf-8' standalone='yes'?>
+<assembly
+    xmlns="urn:schemas-microsoft-com:asm.v3"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    manifestVersion="1.0"
+    >
+  <assemblyIdentity
+      language="neutral"
+      name="Microsoft-Windows-WMI-Core"
+      processorArchitecture="*"
+      publicKeyToken="$(Build.WindowsPublicKeyToken)"
+      version="0.0.0.0"
+      versionScope="nonSxS"
+      />
+  <migration 
+      replacementSettingsVersionRange="0"
+      settingsVersion="1"
+      >
+    <migXml xmlns="">
+      <plugin
+          classId="{401F8281-A9B6-49F9-9F71-8AEA167EEEFD}"
+          file="%windir%\system32\migration\WMIMigrationPlugin.dll"
+          offlineApply="yes"
+          />
+      <rules context="system">
+        <include>
+          <objectSet>
+            <pattern type="File">%windir%\system32\wbem\* [*]</pattern>
+            <pattern type="File">%windir%\sysWow64\wbem\* [*]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\WBEM\CIMOM [Autorecover MOFs]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\WBEM\CIMOM\SecuredHostProviders [*]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\WBEM\CIMOM\CompatibleHostProviders [*]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\WBEM\CIMOM [DefaultSecuredHost]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\WBEM\CIMOM [AutoRestoreEnabled]</pattern>
+            <pattern type="Registry">HKLM\Software\Wow6432Node\Microsoft\WBEM\CIMOM\SecuredHostProviders [*]</pattern>
+            <pattern type="Registry">HKLM\Software\Wow6432Node\Microsoft\WBEM\CIMOM\CompatibleHostProviders [*]</pattern>
+            <pattern type="Registry">HKLM\Software\Wow6432Node\Microsoft\WBEM\CIMOM [DefaultSecuredHost]</pattern>
+          </objectSet>
+        </include>
+        <exclude>
+          <objectSet>
+            <pattern type="File">%windir%\system32\wbem\AutoRecover\* [*]</pattern>
+            <pattern type="File">%windir%\system32\wbem\logs [*]</pattern>
+            <pattern type="File">%windir%\system32\wbem\Repository [*]</pattern>
+            <pattern type="File">%windir%\system32\wbem\xml [*]</pattern>
+            <pattern type="File">%windir%\sysWow64\wbem\AutoRecover\* [*]</pattern>
+            <pattern type="File">%windir%\sysWow64\wbem\logs [*]</pattern>
+            <pattern type="File">%windir%\sysWow64\wbem\Repository [*]</pattern>
+            <pattern type="File">%windir%\sysWow64\wbem\xml [*]</pattern>
+          </objectSet>
+        </exclude>
+      </rules>
+    </migXml>
+  </migration>
+</assembly>
+
+

@@ -1,0 +1,69 @@
+﻿<?xml version='1.0' encoding='utf-8' standalone='yes'?>
+<assembly
+    xmlns="urn:schemas-microsoft-com:asm.v3"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    manifestVersion="1.0"
+    >
+  <assemblyIdentity
+      language="*"
+      name="Microsoft-Windows-DirectoryServices-ADAM-DL"
+      processorArchitecture="*"
+      version="0.0.0.1"
+      />
+  <migration>
+    <registerSDF name="DirectoryServices-ADAM"/>
+    <migXml xmlns="">
+      <detects>
+        <detect>
+          <condition>MigXmlHelper.IsOSEarlierThan("NT", "6.0.*.*")</condition>
+        </detect>
+        <detect>
+          <condition>MigXmlHelper.DoesObjectExist("Registry", "HKLM\SYSTEM\CurrentControlSet\Services\ADAM")</condition>
+        </detect>
+      </detects>
+    </migXml>
+    <machineSpecific>
+      <migXml xmlns="">
+        <detects>
+          <detect>
+            <condition>MigXmlHelper.IsOSEarlierThan("NT", "6.0.*.*")</condition>
+          </detect>
+          <detect>
+            <condition>MigXmlHelper.DoesObjectExist("Registry", "HKLM\SYSTEM\CurrentControlSet\Services\ADAM")</condition>
+          </detect>
+        </detects>
+        <plugin
+            classId="{43CCF250-2A74-48c6-9620-FC312EC475D6}"
+            file="Microsoft-Windows-DirectoryServices-ADAM-DL\adammigrate.dll"
+            />
+      </migXml>
+    </machineSpecific>
+  </migration>
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string
+            buildFilter=""
+            id="description0"
+            value="This manifest contains downlevel upgrade support for ADAM."
+            />
+        <string
+            buildFilter=""
+            id="displayName0"
+            value="ADAM Down-Level manifest"
+            />
+        <string
+            buildFilter=""
+            id="displayName1"
+            value="WRP_FILE_DEFAULT_SDDL"
+            />
+        <string
+            buildFilter=""
+            id="description2"
+            value="Default SDDL for Windows Resource Protected file"
+            />
+      </stringTable>
+    </resources>
+  </localization>
+</assembly>

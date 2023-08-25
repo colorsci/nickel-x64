@@ -1,0 +1,44 @@
+﻿<?xml version='1.0' encoding='utf-8' standalone='yes'?>
+<assembly>
+  <assemblyIdentity
+      name="Microsoft-Windows-IIS-SharedLibraries"
+      processorArchitecture="*"
+      version="0.0.0.0"
+      versionScope="nonSxS"
+      language="neutral"
+      />
+ 
+  <migration replacementSettingsVersionRange="0-1"
+             settingsVersion="2">
+    <machineSpecific>
+      <migXml xmlns="">
+        <!-- Allows us to use the plug-in to restore any captured config  -->
+        <!-- settings from the down-level machine or previous build       -->
+        <plugin
+            classId="{A33259A7-E9DB-4195-A31F-57E3C4D74C49}"
+            file="Microsoft-Windows-IIS-RM\iismig.dll"
+            offlineApply="Yes"
+            />
+        <rules context="System">
+          <!-- These rules migrate the extension DLLs for IIS -->
+          <include>
+            <objectSet>
+              <pattern type="File">%windir%\System32\inetsrv\*[*]</pattern>
+              <pattern type="File">%windir%\SysWOW64\inetsrv\*[*]</pattern>
+              <pattern type="File">%windir%\[iis7.log]</pattern>
+            </objectSet>
+          </include>
+          <exclude>
+            <objectSet>
+              <pattern type="File">%windir%\System32\inetsrv[InetMgr.exe.config]</pattern>
+              <pattern type="File">%windir%\System32\inetsrv\config\schema\ [NetFx45_IIS_schema_update.xml]</pattern>
+              <pattern type="File">%windir%\System32\inetsrv\config\schema\ [NetFx40_IIS_schema_update.xml]</pattern>
+              <pattern type="File">%windir%\System32\inetsrv\config\schema\ [dipr_schema.xml]</pattern>
+              <pattern type="File">%windir%\System32\inetsrv\config\schema\ [appwarmup.inf]</pattern>
+            </objectSet>
+          </exclude>
+        </rules>
+      </migXml>
+    </machineSpecific>
+  </migration>
+</assembly>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?Copyright (c) Microsoft Corporation. All rights reserved.?>
+<Report version="1">
+  <Sections>
+    <Section name="tracerptDisk" key="8000">
+      <CounterTable name="physicalDiskCounters" topic="TopicDisk" object="PhysicalDisk">
+        <Exclude column="machine"/>
+        <Include instance="/_Total/"/>
+        <Exclude counter="/% Idle Time/"/>
+        <Exclude counter="/Avg. Disk sec*/"/>
+      </CounterTable>
+      <CounterTable name="physicalDiskIdle" topic="TopicDisk" object="PhysicalDisk" note="NoteWhyDiskIdle">
+        <Exclude column="counter"/>
+        <Exclude column="machine"/>
+        <Exclude counter="/% D*/"/>
+        <Exclude counter="/A*/"/>
+        <Exclude counter="/C*/"/>
+        <Exclude counter="/D*/"/>
+        <Exclude counter="/S*/"/>
+      </CounterTable>
+      <CounterTable name="physicalDiskAveDiskSec" topic="TopicDisk" object="PhysicalDisk" note="NoteWhyDiskAvg">
+        <Exclude column="machine"/>
+        <Exclude counter="/%*/"/>
+        <Exclude counter="/Avg. Disk B*/"/>
+        <Exclude counter="/Avg. Disk Q*/"/>
+        <Exclude counter="/Avg. Disk R*/"/>
+        <Exclude counter="/Avg. Disk W*/"/>
+        <Exclude counter="/C*/"/>
+        <Exclude counter="/D*/"/>
+        <Exclude counter="/S*/"/>
+      </CounterTable>
+    </Section>
+  </Sections>
+  <StringTable>
+    <String ID="TopicDisk" loc.comment="Topic Name for Disk Tables in Report">Physical Disk</String>
+    <String ID="physicalDiskCounters" loc.comment="Table name for counters related to physical disks in Report">Physical Disk Counters</String>
+    <String ID="physicalDiskIdle" loc.comment="Table name for counters related to physical disks in Report">Physical Disk Percent Idle Time</String>
+    <String ID="physicalDiskAveDiskSec" loc.comment="Table name for counters related to physical disks in Report">Physical Disk Average Second Counters</String>
+    <String ID="NoteWhyDiskIdle" loc.comment="Explain value of this table in the report">Idle time is a good indicator of disk activity.  Disk subsystems sustain various I/O rates and the Idle counter normalized this data to show when the disk likely to be busy.  The counter value gets smaller as the disk gets busier.</String>
+    <String ID="NoteWhyDiskAvg" loc.comment="Explain value of this table in the report">Average seconds per operation is a good indicator of disk activity and health.  An I/O is expected to take under .015 ms on a health disk sub-system.  Values greater than this, especially if the Idle time is high or the disk I/O rate is low, suggest the disk is having trouble reading or writing.  Use any of the suggested Disk diagnostic tests if the later situation exists.</String>
+    <String ID="TableNTFSPerformance" loc.comment="Table name for file system performance seen in report">Performance Settings</String>
+    <String ID="TableWorkstationServices" loc.comment="Name of table lists the workstation service seen in report">Workstation Service</String>
+    <String ID="TopicNTFSPerformance" loc.comment="Topic name for file system performance seen in report">NTFS Performance</String>
+  </StringTable>
+</Report>

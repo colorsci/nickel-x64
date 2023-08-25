@@ -1,0 +1,84 @@
+# ==================================================================
+# @@UI-Description: ADAMSync metadata schema extension. Required for ADAMSync operation.
+#
+#  This file should be imported with the following command:
+#    ldifde -i -f MS-AdamSyncMetadata.LDF -s server:port -b username domain password -j . -c "cn=Configuration,dc=X" #configurationNamingContext
+#  LDIFDE.EXE from AD/AM V1.0 or above must be used.
+#  This LDIF file should be imported into AD or AD/AM. It may not work for other directories.
+# 
+# ==================================================================
+
+dn: CN=ms-DS-Source-Object-Guid,CN=Schema,CN=Configuration,DC=X
+changetype: add
+objectClass: attributeSchema
+ldapDisplayName: sourceObjectGuid
+attributeID: 1.2.840.113556.1.4.1885
+attributeSyntax: 2.5.5.10
+searchFlags: 1
+oMSyntax: 4
+
+dn: CN=ms-DS-Last-Aged-Change,CN=Schema,CN=Configuration,DC=X
+changetype: add
+objectClass: attributeSchema
+ldapDisplayName: lastAgedChange
+attributeID: 1.2.840.113556.1.4.1888
+attributeSyntax: 2.5.5.11
+searchFlags: 1
+oMSyntax: 24
+
+dn: CN=ms-DS-Configuration-File-Guid,CN=Schema,CN=Configuration,DC=X
+changetype: add
+objectClass: attributeSchema
+ldapDisplayName: configurationFileGuid
+attributeID: 1.2.840.113556.1.4.1886
+attributeSyntax: 2.5.5.10
+searchFlags: 1
+oMSyntax: 4
+
+dn: CN=ms-DS-Non-Indexed-Metadata,CN=Schema,CN=Configuration,DC=X
+changetype: add
+objectClass: attributeSchema
+ldapDisplayName: nonIndexedMetadata
+attributeID: 1.2.840.113556.1.4.1887
+attributeSyntax: 2.5.5.12
+oMSyntax: 64
+
+dn: CN=ms-DS-Configuration-File,CN=Schema,CN=Configuration,DC=X
+changetype: add
+objectClass: attributeSchema
+ldapDisplayName: configurationFile
+attributeID: 1.2.840.113556.1.4.1889
+attributeSyntax: 2.5.5.12
+searchFlags: 1
+oMSyntax: 64
+
+dn:
+changetype: modify
+add: schemaUpdateNow
+schemaUpdateNow: 1
+-
+
+dn: CN=ms-DS-Sync-Engine-Aux-Object,CN=Schema,CN=Configuration,DC=X
+changetype: add
+objectClass: classSchema
+ldapDisplayName: syncEngineAuxObject
+systemMayContain: sourceObjectGuid
+systemMayContain: configurationFileGuid
+systemMayContain: lastAgedChange
+systemMayContain: nonIndexedMetadata
+objectClassCategory: 3
+governsID: 1.2.840.113556.1.4.1890
+
+dn: CN=ms-DS-Sync-Engine-Aux-Configuration,CN=Schema,CN=Configuration,DC=X
+changetype: add
+objectClass: classSchema
+ldapDisplayName: syncEngineAuxConfiguration
+systemMayContain: configurationFile
+objectClassCategory: 3
+governsID: 1.2.840.113556.1.4.1891
+
+dn:
+changetype: modify
+add: schemaUpdateNow
+schemaUpdateNow: 1
+-

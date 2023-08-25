@@ -1,0 +1,62 @@
+﻿<?xml version='1.0' encoding='utf-8' standalone='yes'?>
+<assembly
+    xmlns="urn:schemas-microsoft-com:asm.v3"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    authors="jwesth"
+    buildFilter=""
+    company="Microsoft Corporation"
+    copyright="Microsoft Corporation"
+    creationTimeStamp="2004-10-21T22:15:26.4141421-07:00"
+    description="$(resourceString.description1)"
+    displayName="$(resourceString.displayName0)"
+    lastUpdateTimeStamp="2005-03-31T02:22:45.6392567Z"
+    manifestVersion="1.0"
+    owners="jwesth"
+    supportInformation=""
+    testers="rasundar"
+    >
+  <assemblyIdentity
+      language="*"
+      name="Microsoft-Windows-DNS-Server-Service-DL"
+      processorArchitecture="*"
+      version="0.0.0.0"
+      />
+  <migration xmlns="">
+    <registerSDF name="DNS-Server-Full-Role"/>
+    <migXml>
+      <detects>
+        <detect>
+          <condition>MigXmlHelper.IsOSEarlierThan("NT", "6.0.0.0")</condition>
+        </detect>
+        <detect>
+          <condition>MigXmlHelper.DoesObjectExist("Registry", "HKLM\SYSTEM\CurrentControlSet\Services\DNS [ImagePath]")</condition>
+        </detect>
+        <detect>
+          <condition>MigXmlHelper.DoesObjectExist("File", "%windir%\system32 [dns.exe]")</condition>
+        </detect>
+      </detects>
+    </migXml>
+    <machineSpecific>
+      <migXml>
+        <detects>
+          <detect>
+            <condition>MigXmlHelper.DoesObjectExist("Registry", "HKLM\SYSTEM\CurrentControlSet\Services\DNS [ImagePath]")</condition>
+          </detect>
+          <detect>
+            <condition>MigXmlHelper.DoesObjectExist("File", "%windir%\system32 [dns.exe]")</condition>
+          </detect>
+        </detects>
+        <rules context="System">
+          <include>
+            <objectSet>
+              <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\DNS Server\* [*]</pattern>
+              <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\DNS\Parameters\* [*]</pattern>
+              <pattern type="File">%windir%\system32\dns\ [*]</pattern>
+            </objectSet>
+          </include>
+        </rules>
+      </migXml>
+    </machineSpecific>
+  </migration>
+</assembly>

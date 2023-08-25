@@ -1,0 +1,56 @@
+﻿<?xml version='1.0' encoding='utf-8' standalone='yes'?>
+<assembly
+    xmlns="urn:schemas-microsoft-com:asm.v3"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    authors="prasenni"
+    buildFilter=""
+    company="Microsoft"
+    copyright=""
+    creationTimeStamp="2003-07-28T11:51:38.2054652-07:00"
+    description="$(resourceString.description)"
+    displayName="$(resourceString.displayName)"
+    lastUpdateTimeStamp="2005-04-12T00:06:49.9963520-07:00"
+    manifestVersion="1.0"
+    owners="rajakhan"
+    supportInformation=""
+    testers="Kmathur"
+    >
+  <assemblyIdentity
+      language="neutral"
+      name="Microsoft-Windows-WMI-Core-DL"
+      processorArchitecture="*"
+      publicKeyToken="$(Build.WindowsPublicKeyToken)"
+      version="0.0.0.0"
+      />
+  <migration>
+    <migXml xmlns="">
+      <plugin
+          classId="{401F8281-A9B6-49F9-9F71-8AEA167EEEFD}"
+          file="Microsoft-Windows-WMI-Core\WMIMigrationPlugin.dll"
+          />
+      <detects>
+        <detect>
+          <condition>MigXmlHelper.IsOSEarlierThan("NT", "6.0")</condition>
+        </detect>
+        <detect>
+          <condition>MigXmlHelper.IsOSLaterThan("NT", "5.1")</condition>
+        </detect>
+      </detects>
+      <rules context="system">
+        <include>
+          <objectSet>
+            <pattern type="Registry">HKLM\Software\Microsoft\WBEM\CIMOM [Autorecover MOFs]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\WBEM\CIMOM\SecuredHostProviders [*]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\WBEM\CIMOM\CompatibleHostProviders [*]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\WBEM\CIMOM [DefaultSecuredHost]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\WBEM\CIMOM [AutoRestoreEnabled]</pattern>
+            <pattern type="Registry">HKLM\Software\Wow6432Node\Microsoft\WBEM\CIMOM\SecuredHostProviders [*]</pattern>
+            <pattern type="Registry">HKLM\Software\Wow6432Node\Microsoft\WBEM\CIMOM\CompatibleHostProviders [*]</pattern>
+            <pattern type="Registry">HKLM\Software\Wow6432Node\Microsoft\WBEM\CIMOM [DefaultSecuredHost]</pattern>
+          </objectSet>
+        </include>
+      </rules>
+    </migXml>
+  </migration>
+</assembly>

@@ -1,0 +1,399 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<migration urlid="http://www.microsoft.com/systemreset/1.0/systemsettings">
+  <!-- Rejuv-->
+
+  <component type="System" context="System">
+    <displayName _locID="Rejuv.LogonScreenSettings">System Reset Logon Screen Settings</displayName>
+    <role role="Settings">
+      <rules>
+        <include>
+          <objectSet>
+            <!-- Logon UI Settings -->
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [DefaultUserName]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [DefaultDomainName]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [DefaultPassword]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [AutoAdminLogon]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [AutoLogonCount]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [ForceAutoLogon]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [IgnoreShiftOverride]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [DontDisplayLastUserName]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [DontDisplayLockedUserId]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [ShutdownWithoutLogon]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon\SpecialAccounts\* [*]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [DisableCAD]</pattern>
+            <!-- Vista settings -->
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows\CurrentVersion\Authentication\LogonUI [LastLoggedOnProvider]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows\CurrentVersion\Authentication\LogonUI [LastLoggedOnUser]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows\CurrentVersion\Authentication\LogonUI [LastLoggedOnSAMUser]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows\CurrentVersion\Authentication\LogonUI\BootAnimation [DisableStartupSound]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows\CurrentVersion\Authentication\Credential Providers</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows\CurrentVersion\Authentication\Credential Provider Filters</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows\CurrentVersion\Authentication\PLAP Providers</pattern>
+            <!-- Win7 settings -->
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows\CurrentVersion\Authentication\LogonUI [ButtonSet]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows\CurrentVersion\Authentication\LogonUI [ShowTabletKeyboard]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows\CurrentVersion\Authentication\LogonUI\Background [OEMBackground]</pattern>
+            <!-- Win8 settings -->
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows\CurrentVersion\Authentication\LogonUI [LastLoggedOnUserSID]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows\CurrentVersion\Authentication\LogonUI\AccessPage\UserConfigurableSettings [Enabled]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows\CurrentVersion\Authentication\LogonUI\PatternLogonEnrollment [*]</pattern>
+            <!-- End Logon UI Settings -->
+          </objectSet>
+        </include>
+      </rules>
+    </role>
+  </component>
+  
+  <component type="System">
+    <displayName _locID="Rejuv.InternationalizationSettings">System Reset Internationalization Settings</displayName>
+    <role role="Settings">
+      <rules context="System">
+        <include>
+          <objectSet>
+            <pattern type="Registry">HKU\.Default\Keyboard Layout\* [*]</pattern>
+            <pattern type="Registry">HKU\.Default\Control Panel\International [Locale]</pattern>
+            <pattern type="Registry">HKU\.Default\Control Panel\International [LocaleName]</pattern>
+            <pattern type="Registry">HKU\.Default\Control Panel\International\Geo [Nation]</pattern>
+            <pattern type="Registry">HKU\.Default\Software\Microsoft\CTF\* [*]</pattern>
+            <!--  migrated in the reset engine in WinRE
+            <pattern type="Registry">HKLM\SYSTEM\ControlSet001\Control\Nls\* [*]\* [*]</pattern>
+            -->
+          </objectSet>
+        </include>
+      </rules>
+      <rules context="User">
+        <include>
+          <objectSet>
+            <pattern type="Registry">HKCU\Keyboard Layout\* [*]</pattern>
+            <pattern type="Registry">HKCU\Control Panel\International [Locale]</pattern>
+            <pattern type="Registry">HKCU\Control Panel\International [LocaleName]</pattern>
+            <pattern type="Registry">HKCU\Control Panel\International\Geo [Nation]</pattern>
+            <pattern type="Registry">HKCU\Control Panel\International\Calendars\* [*]</pattern>
+            <pattern type="Registry">HKCU\Control Panel\International\User Profile\* [*]</pattern>
+            <pattern type="Registry">HKCU\Software\Microsoft\CTF\* [*]</pattern>
+          </objectSet>
+        </include>
+      </rules>
+    </role>
+  </component>
+  
+  <component type="System">
+    <!-- %sdxroot%\shell\themes\ThemeUI\themeui.man -->
+    <displayName _locID="Rejuv.Personalization">System Reset Personalization Settings</displayName>
+    <role role="Settings">
+      <rules context="System">
+        <include>
+          <objectSet>
+            <pattern type="File">%PROFILESFOLDER%\Public\AccountPictures\* [*]</pattern>
+            <pattern type="File">%PROGRAMDATA%\Microsoft\User Account Pictures\* [*]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows\CurrentVersion\AccountPicture\Users\* [*]</pattern>
+          </objectSet>
+        </include>
+      </rules>
+    </role>
+  </component>
+
+  <component type="System">
+    <displayName _locID="Rejuv.ConnectedAccounts">System Reset Connected Account Settings</displayName>
+    <role role="Settings">
+      <rules context="User">
+        <include>
+          <objectSet>
+            <pattern type="File">%CSIDL_LOCAL_APPDATA%\Microsoft\Vault\* [*]</pattern>
+            <pattern type="File">%CSIDL_LOCAL_APPDATA%\Microsoft\Credentials\* [*]</pattern>
+            <pattern type="Registry">HKCU\Software\Microsoft\IdentityCRL\Immersive\* [*]</pattern>
+            <pattern type="Registry">HKCU\Software\Microsoft\Windows\CurrentVersion\SettingSync [SyncPolicy]</pattern>
+            <pattern type="Registry">HKCU\Software\Microsoft\Windows\CurrentVersion\SettingSync\Groups\* [*]</pattern>
+          </objectSet>
+        </include>
+      </rules>
+      <rules context="System">
+        <include>
+          <objectSet>
+            <pattern type="Registry">HKU\.DEFAULT\Software\Microsoft\IdentityCRL\* [*]</pattern>
+          </objectSet>
+        </include>
+      </rules>
+    </role>
+  </component>
+  
+  <!-- Most of the data for this component is migrated offline -->
+  <component type="System" context="System">
+    <displayName _locID="Rejuv.NetworkProfiles">Network Settings</displayName>
+    <role role="Settings">
+      <rules>
+        <include>
+          <objectSet>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\NetworkList [FirstNetwork]</pattern>
+          </objectSet>
+        </include>
+        <!-- If there is a conflict for any file, this will give priority to source and will ignore the destination -->
+        <merge script="MigXmlHelper.SourcePriority()">
+          <objectSet>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\NetworkList [FirstNetwork]</pattern>
+          </objectSet>
+        </merge>
+      </rules>
+    </role>
+  </component>
+
+  <component context="User" type="System">
+    <displayName _locID="Rejuv.WLANUpgUser">WLAN User Settings</displayName>
+    <role role="Settings">
+      <rules context="User">
+        <include>
+          <objectSet>
+            <pattern type="Registry">HKCU\Software\Microsoft\Wlansvc\UserData\Profiles\* [*]</pattern>
+          </objectSet>
+        </include>
+      </rules>
+    </role>
+  </component>
+
+  <component type="System" context="System">
+    <displayName _locID="Rejuv.WLANUpg">WLAN Settings</displayName>
+    <role role="Settings">
+      <rules context="System">
+        <destinationCleanup>
+          <objectSet>
+            <pattern type="Registry">HKLM\Software\Microsoft\Wlansvc\MigrationData\* [*]</pattern>
+            <pattern type="File">%CSIDL_COMMON_APPDATA%\Microsoft\Wlansvc\MigrationData\* [*]</pattern>
+          </objectSet>
+        </destinationCleanup>
+        <exclude>
+          <objectSet>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\Wlansvc [Start]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Wlansvc\MigrationData\* [*]</pattern>
+          </objectSet>
+        </exclude>
+        <merge script="MigXmlHelper.SourcePriority()">
+          <!-- If there is a conflict for any file, this will give priority to source and will ignore the destination-->
+          <objectSet>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WLANSVC\Parameters\WlanAPIPermissions [*]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WLANSVC\Parameters\HostedNetworkSettings [*]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WLANSVC\Parameters\OneXAuthenticator [*]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WLANSVC\Parameters\WFDProvPlugin [*]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Wlansvc [ShowDeniedNetworks]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Wlansvc [GlobalParameters]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Wlansvc\DisableBackgroundScanOptimization [*]</pattern>
+          </objectSet>
+        </merge>
+
+        <include>
+          <objectSet>
+            <pattern type="Registry">HKLM\Software\Microsoft\Wlansvc\* [*]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Policies\Microsoft\Windows\Wireless\GPTWirelessPolicy\* [*]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Wlansvc\GroupPolicy\* [*]</pattern>
+            <pattern type="File">%CSIDL_COMMON_APPDATA%\Microsoft\Wlansvc\Profiles\* [*]</pattern>
+            <pattern type="File">%WINDIR%\wlansvc\policies\* [*]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WLANSVC\Parameters\WlanAPIPermissions [*]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WLANSVC\Parameters\HostedNetworkSettings [*]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WLANSVC\Parameters\OneXAuthenticator [*]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WLANSVC\Parameters\WFDProvPlugin [*]</pattern>
+          </objectSet>
+        </include>
+
+        <locationModify script="MigXmlHelper.RelativeMove(&apos;HKLM\Software\Microsoft\Wlansvc&apos;,&apos;HKLM\Software\Microsoft\WLANSVC\MigrationData\Migration\WLANSVC\&apos;)">
+          <objectSet>
+            <pattern type="Registry">HKLM\Software\Microsoft\Wlansvc\* [*]</pattern>
+          </objectSet>
+        </locationModify>
+        <locationModify script="MigXmlHelper.RelativeMove(&apos;HKLM\Software\Microsoft\Wlansvc [ShowDeniedNetworks]&apos;,&apos;HKLM\Software\Microsoft\WLANSVC [ShowDeniedNetworks]&apos;)">
+          <objectSet>
+            <pattern type="Registry">HKLM\Software\Microsoft\Wlansvc [ShowDeniedNetworks]</pattern>
+          </objectSet>
+        </locationModify>
+        <locationModify script="MigXmlHelper.RelativeMove(&apos;HKLM\Software\Microsoft\Wlansvc\DisableBackgroundScanOptimization&apos;,&apos;HKLM\Software\Microsoft\WLANSVC\DisableBackgroundScanOptimization&apos;)">
+          <objectSet>
+            <pattern type="Registry">HKLM\Software\Microsoft\Wlansvc\DisableBackgroundScanOptimization [*]</pattern>
+          </objectSet>
+        </locationModify>
+        <locationModify script="MigXmlHelper.RelativeMove(&apos;HKLM\SOFTWARE\Policies\Microsoft\Windows\Wireless\GPTWirelessPolicy&apos;,&apos;HKLM\Software\Microsoft\WLANSVC\MigrationData\Migration\GPTWirelessPolicy&apos;)">
+          <objectSet>
+            <pattern type="Registry">HKLM\SOFTWARE\Policies\Microsoft\Windows\Wireless\GPTWirelessPolicy\* [*]</pattern>
+          </objectSet>
+        </locationModify>
+        <locationModify script="MigXmlHelper.RelativeMove(&apos;HKLM\SOFTWARE\Microsoft\Wlansvc\GroupPolicy\Profiles&apos;,&apos;HKLM\Software\Microsoft\WLANSVC\MigrationData\Migration\GroupPolicy\Profiles&apos;)">
+          <objectSet>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Wlansvc\GroupPolicy\Profiles\* [*]</pattern>
+          </objectSet>
+        </locationModify>
+        <locationModify script="MigXmlHelper.RelativeMove(&apos;%CSIDL_COMMON_APPDATA%\Microsoft\Wlansvc\Profiles&apos;,&apos;%CSIDL_COMMON_APPDATA%\Microsoft\Wlansvc\MigrationData\Profiles&apos;)">
+          <objectSet>
+            <pattern type="File">%CSIDL_COMMON_APPDATA%\Microsoft\Wlansvc\Profiles\* [*]</pattern>
+          </objectSet>
+        </locationModify>
+        <locationModify script="MigXmlHelper.RelativeMove(&apos;%WINDIR%\wlansvc\policies&apos;,&apos;%CSIDL_COMMON_APPDATA%\Microsoft\Wlansvc\MigrationData\Policies&apos;)">
+          <objectSet>
+            <pattern type="File">%WINDIR%\wlansvc\policies\* [*]</pattern>
+          </objectSet>
+        </locationModify>
+        <merge script="MigXmlHelper.SourcePriority()">
+          <!-- If there is a conflict for any file, this will give priority to source and will ignore the destination-->
+          <objectSet>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WLANSVC\Parameters\WlanAPIPermissions [*]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WLANSVC\Parameters\HostedNetworkSettings [*]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WLANSVC\Parameters\OneXAuthenticator [*]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WLANSVC\Parameters\WFDProvPlugin [*]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Wlansvc [ShowDeniedNetworks]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Wlansvc\DisableBackgroundScanOptimization [*]</pattern>
+          </objectSet>
+        </merge>
+        <processing when="apply-success">
+          <script>MigXmlHelper.SyncSCM("wlansvc")</script>
+        </processing>
+      </rules>
+      <!-- Conditional: Migration can occur over Wireless - thus, we won't kill wlansvc unless it's an in-place upgrade -->
+      <rules context="System">
+        <processing when="pre-apply">
+          <addObjects>
+            <object>
+              <location type="Registry">HKLM\SOFTWARE\Microsoft\WLANSVC\MigrationData [WLANSVCMigrationDone] </location>
+              <attributes>dword</attributes>
+              <bytes>00000000</bytes>
+            </object>
+          </addObjects>
+          <script>MigXmlHelper.StopService("wlansvc")</script>
+        </processing>
+      </rules>
+      <!-- Conditional: Applied only if wlansvc service is set to autostart and this is an in-place upgrade -->
+      <rules context="System">
+        <detects>
+          <detect>
+            <condition>MigXmlHelper.IsUpgrade()</condition>
+          </detect>
+          <detect>
+            <condition>MigXmlHelper.DoesStringContentEqual("Registry","HKLM\SYSTEM\CurrentControlSet\Services\Wlansvc [Start]","0x00000002")</condition>
+          </detect>
+        </detects>
+        <processing when="post-apply">
+          <script>MigXmlHelper.StartService("wlansvc")</script>
+        </processing>
+      </rules>
+    </role>
+  </component>
+  
+  <component type="System">
+    <displayName _locID="Rejuv.Telemetry">Telemetry Settings</displayName>
+    <role role="Settings">
+      <rules context="System">
+        <include>
+          <objectSet>
+            <!-- RAC -->
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Reliability Analysis\RAC [RacSampleNumber]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Reliability Analysis\RAC [RacSqmId]</pattern>
+            <!-- SQM -->
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\SQMClient [MachineID]</pattern>
+            <!-- CEIP -->
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\SQMClient\Windows [CEIPEnable]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\SQMClient\Windows\Users [*]</pattern>
+            <!-- WER -->
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Windows\Windows Error Reporting [MachineID]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Windows\Windows Error Reporting\Consent [*]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Windows\Windows Error Reporting\ExcludedApplications [*]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Windows\Windows Error Reporting\Hangs [*]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Windows\Windows Error Reporting\HeapControlledList\* [*]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Windows\Windows Error Reporting\RuntimeExceptionHelperModules [*]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Windows\Windows Error Reporting\WMR [*]</pattern>
+          </objectSet>
+        </include>
+      </rules>
+      <rules context="User">
+        <include>
+          <objectSet>
+            <pattern type="Registry">HKCU\SOFTWARE\Microsoft\Windows\Windows Error Reporting\Consent [*]</pattern>
+            <pattern type="Registry">HKCU\SOFTWARE\Microsoft\Windows\Windows Error Reporting\ExcludedApplications [*]</pattern>
+            <pattern type="Registry">HKCU\SOFTWARE\Microsoft\Windows\Windows Error Reporting\Hangs [*]</pattern>
+            <pattern type="Registry">HKCU\SOFTWARE\Microsoft\Windows\Windows Error Reporting\HeapControlledList\* [*]</pattern>
+            <pattern type="Registry">HKCU\SOFTWARE\Microsoft\Windows\Windows Error Reporting\RuntimeExceptionHelperModules [*]</pattern>
+            <pattern type="Registry">HKCU\SOFTWARE\Microsoft\Windows\Windows Error Reporting\WMR [*]</pattern>
+          </objectSet>
+        </include>
+      </rules>
+    </role>
+  </component>
+  
+  <component type="System">
+    <displayName _locID="Rejuv.IME">IME Settings</displayName>
+    <role role="Settings">
+      <rules context="User">
+        <exclude>
+          <objectSet>
+            <pattern type="Registry">HKCU\Software\Microsoft\IME\15.0\IMEJP\Dictionaries\* [*]</pattern>
+          </objectSet>
+        </exclude>
+        <include>
+          <objectSet>
+            <pattern type="File">%CSIDL_APPDATA%\Microsoft\IME\15.0\* [*]</pattern>
+            <pattern type="File">%FOLDERID_LocalAppDataLow%</pattern>
+            <pattern type="File">%FOLDERID_LocalAppDataLow%\Microsoft</pattern>
+            <pattern type="File">%FOLDERID_LocalAppDataLow%\Microsoft\IME\15.0\* [*]</pattern>
+            <pattern type="File">%CSIDL_LOCAL_APPDATA%\Microsoft\IME\15.0\* [*]</pattern>
+            <pattern type="File">%CSIDL_APPDATA%\Microsoft\Proof [custom.hhd]</pattern>
+            <pattern type="Registry">HKCU\Software\Microsoft\IME\15.0\* [*]</pattern>
+            <pattern type="Registry">HKCU\Software\AppDataLow\Software\Microsoft\IME\15.0\* [*]</pattern>
+            
+            <!-- Force the migration engine to include only the two values LearningLevel and MemoryLearning under IMEJP\Dictionaries -->
+            <pattern type="Registry">HKCU\Software\Microsoft\IME\15.0\IMEJP\Dictionaries [LearningLevel]</pattern>
+            <pattern type="Registry">HKCU\Software\Microsoft\IME\15.0\IMEJP\Dictionaries [MemoryLearning]</pattern>
+          </objectSet>
+        </include>
+      </rules>
+      <rules context="System">
+        <include>
+          <objectSet>
+            <pattern type="File">%WINDIR%\IME\IMESC\Dicts\DictUpdate\* [*]</pattern>
+          </objectSet>
+        </include>
+      </rules>
+    </role>
+  </component>
+
+  <component context="User" type="System">
+    <displayName _locID="Rejuv.WindowsLive">Windows Live</displayName>
+    <role role="Settings">
+      <rules context="System">
+        <include>
+          <objectSet>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\SystemCertificates\Windows Live ID Token Issuer\Certificates\* [*]</pattern>
+          </objectSet>
+        </include>
+      </rules>
+      <rules context="User">
+        <include>
+          <objectSet>
+            <pattern type="Registry">HKCU\Software\Microsoft\AuthCookies\Live\Default\* [*]</pattern>
+          </objectSet>
+        </include>
+      </rules>
+    </role>
+  </component>
+  
+  <component type="System" context="System">
+    <displayName _locID="Rejuv.MachineCertificates">Machine Certificates</displayName>
+    <role role="Settings">
+      <rules>
+        <include>
+          <objectSet>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\SystemCertificates\My\* [*]</pattern>
+          </objectSet>
+        </include>
+      </rules>
+    </role>
+  </component>
+
+  <component context="System" type="System">
+    <displayName _locID="Rejuv.Biometric">Windows Biometric Service</displayName>
+    <role role="Settings">
+      <rules context="System">
+        <include>
+          <objectSet>
+            <pattern type="Registry">HKLM\System\CurrentControlSet\Services\WbioSrvc\Parameters [EnrollmentCommitted]</pattern>
+            <pattern type="File">%WINDIR%\System32\WinBioDatabase\* [*]</pattern>
+          </objectSet>
+        </include>
+      </rules>
+    </role>
+  </component>
+
+</migration>

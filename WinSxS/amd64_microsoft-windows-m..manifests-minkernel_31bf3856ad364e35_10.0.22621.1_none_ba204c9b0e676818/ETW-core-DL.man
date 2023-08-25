@@ -1,0 +1,45 @@
+﻿<?xml version='1.0' encoding='utf-8' standalone='yes'?>
+<assembly
+    xmlns="urn:schemas-microsoft-com:asm.v3"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    authors="sabama"
+    buildFilter=""
+    company="Microsoft"
+    copyright=""
+    creationTimeStamp="2003-12-12T10:49:44.7745989-08:00"
+    description="ETW migration from downlevel OS"
+    displayName="Core ETW settings"
+    lastUpdateTimeStamp="2005-09-07T02:04:58.0140097-07:00"
+    manifestVersion="1.0"
+    owners="sabama"
+    supportInformation=""
+    testers=""
+    >
+  <assemblyIdentity
+      language="*"
+      name="Microsoft-Windows-ETW-core-DL"
+      processorArchitecture="*"
+      version="0.0.0.0"
+      />
+  <migration>
+    <machineSpecific>
+      <migXml xmlns="">
+        <detects>
+          <detect>
+            <condition>MigXmlHelper.DoesOSMatch("NT","5.0.*")</condition>
+            <condition>MigXmlHelper.DoesOSMatch("NT","5.1.*")</condition>
+            <condition>MigXmlHelper.DoesOSMatch("NT","5.2.*")</condition>
+          </detect>
+        </detects>
+        <rules context="System">
+          <include>
+            <objectSet>
+              <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Control\WMI\Security [*]</pattern>
+            </objectSet>
+          </include>
+        </rules>
+      </migXml>
+    </machineSpecific>
+  </migration>
+</assembly>

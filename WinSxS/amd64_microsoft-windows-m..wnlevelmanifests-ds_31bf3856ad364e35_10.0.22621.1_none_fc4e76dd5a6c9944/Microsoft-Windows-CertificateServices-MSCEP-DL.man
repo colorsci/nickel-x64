@@ -1,0 +1,51 @@
+﻿<?xml version='1.0' encoding='utf-8' standalone='yes'?>
+<assembly
+    xmlns="urn:schemas-microsoft-com:asm.v3"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    authors="charfa"
+    buildFilter=""
+    company="Microsoft"
+    copyright=""
+    creationTimeStamp="2005-01-01T00:35:52.6386021-08:00"
+    description="$(resourceString.description1)"
+    displayName="$(resourceString.displayName0)"
+    lastUpdateTimeStamp="2005-03-01T23:47:26.4788237-08:00"
+    manifestVersion="1.0"
+    owners="charfa"
+    supportInformation=""
+    testers=""
+    >
+  <assemblyIdentity
+      buildFilter=""
+      buildType="release"
+      language="*"
+      name="Microsoft-Windows-CertificateServices-MSCEP-DL"
+      processorArchitecture="*"
+      publicKeyToken=""
+      type=""
+      version="0.0.0.0"
+      versionScope="nonSxS"
+      />
+  <migration xmlns="">
+    <registerSDF name="NetworkDeviceEnrollmentServices"/>
+    <migXml xmlns="">
+      <detects>
+        <detect>
+          <condition>MigXmlHelper.DoesObjectExist("Registry", "HKLM\Software\Microsoft\Cryptography\MSCEP")</condition>
+        </detect>
+        <detect>
+          <condition>MigXmlHelper.IsOSEarlierThan("NT", "6.0.0.0")</condition>
+        </detect>
+      </detects>
+      <rules context="System">
+        <include>
+          <objectSet>
+            <pattern type="Registry">HKLM\Software\Microsoft\Cryptography\MSCEP\* [*]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\SystemCertificates\CEP\Certificates\*[*]</pattern>
+          </objectSet>
+        </include>
+      </rules>
+    </migXml>
+  </migration>
+</assembly>

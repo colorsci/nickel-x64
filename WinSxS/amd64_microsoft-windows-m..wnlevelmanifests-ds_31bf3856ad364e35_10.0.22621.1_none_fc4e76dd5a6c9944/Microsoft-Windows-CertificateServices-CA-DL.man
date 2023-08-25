@@ -1,0 +1,52 @@
+﻿<?xml version='1.0' encoding='utf-8' standalone='yes'?>
+<assembly
+    xmlns="urn:schemas-microsoft-com:asm.v3"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    authors="vishala"
+    buildFilter=""
+    company="MS"
+    copyright=""
+    creationTimeStamp="2004-10-15T21:30:37.0535545-07:00"
+    description="Downlevel manifest for Certificate Services"
+    displayName="Downlevel manifest for Certificate Services"
+    lastUpdateTimeStamp="2005-02-16T22:40:06.8387341-08:00"
+    manifestVersion="1.0"
+    owners="vishala"
+    supportInformation=""
+    testers="shawncor"
+    >
+  <assemblyIdentity
+      buildFilter=""
+      buildType="release"
+      language="*"
+      name="Microsoft-Windows-CertificateServices-CA-DL"
+      processorArchitecture="*"
+      publicKeyToken=""
+      type=""
+      version="0.0.0.0"
+      versionScope="nonSxS"
+      />
+  <migration xmlns="">
+    <registerSDF name="CertificateServices"/>
+    <migXml xmlns="">
+      <detects>
+        <detect>
+          <condition>MigXmlHelper.DoesObjectExist("Registry", "HKLM\SYSTEM\CurrentControlSet\Services\CertSvc\Security")</condition>
+        </detect>
+        <detect>
+          <condition>MigXmlHelper.IsOSEarlierThan("NT", "6.0.0.0")</condition>
+        </detect>
+      </detects>
+      <rules context="System">
+        <include>
+          <objectSet>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\CertSvc\Configuration\* [*]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\CertSvc\Security\* [*]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\CertSvc[start]</pattern>
+          </objectSet>
+        </include>
+      </rules>
+    </migXml>
+  </migration>
+</assembly>

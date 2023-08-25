@@ -1,0 +1,40 @@
+﻿<?xml version='1.0' encoding='utf-8' standalone='yes'?>
+<assembly
+    xmlns="urn:schemas-microsoft-com:asm.v3"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    manifestVersion="1.0"
+    >
+  <assemblyIdentity
+      buildFilter=""
+      buildType="$(build.buildType)"
+      language="neutral"
+      name="Microsoft-Windows-TabletPC-InputPanel-DL"
+      processorArchitecture="*"
+      publicKeyToken="$(Build.WindowsPublicKeyToken)"
+      version="0.0.0.0"
+      versionScope="nonSxS"
+      />
+  <migration scope="Upgrade,MigWiz,USMT">
+    <migXml xmlns="">
+      <rules context="User">
+        <detects>
+          <!-- We only support WinXP -->
+          <detect>
+            <condition>MigXmlHelper.DoesOSMatch("NT","5.1.*")</condition>
+          </detect>
+          <!-- With TabletPC bits installed -->
+          <detect>
+            <condition>MigXmlHelper.DoesObjectExist("Registry", "HKLM\Software\Classes\CLSID\{A5B020FD-E04B-4e67-B65A-E7DEED25B2CF}")</condition>
+          </detect>
+        </detects>
+        <include>
+          <objectSet>
+            <pattern type="Registry">HKCU\Software\Microsoft\TabletTip\1.7\* [*]</pattern>
+          </objectSet>
+        </include>
+      </rules>
+    </migXml>
+    <migrationDisplayID>Tablet_PC_Settings\Tablet_PC_Input_Panel</migrationDisplayID>
+  </migration>
+</assembly>

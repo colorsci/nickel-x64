@@ -1,0 +1,42 @@
+﻿<?xml version='1.0' encoding='utf-8' standalone='yes'?>
+<assembly
+    xmlns="urn:schemas-microsoft-com:asm.v3"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    authors="gpdev"
+    buildFilter=""
+    company="Microsoft"
+    copyright=""
+    creationTimeStamp="2003-07-16T13:40:23.7027464-07:00"
+    description="Downlevel manifest to upgrade Group Policy Administrative tools settings"
+    displayName="Downlevel manifest to upgrade Group Policy Administrative tools settings"
+    lastUpdateTimeStamp="2005-05-04T04:25:50.5317161Z"
+    manifestVersion="1.0"
+    owners="gpdev"
+    supportInformation=""
+    testers=""
+    >
+  <assemblyIdentity
+      language="*"
+      name="Microsoft-Windows-GroupPolicy-Admin-Gpedit-Snapin-DL"
+      processorArchitecture="*"
+      version="0.0.0.0"
+      />
+  <migration>
+    <migXml xmlns="">
+      <!-- Check as this is only valid for down-level OS < than Windows Vista ? -->
+      <detects>
+        <detect>
+          <condition>MigXmlHelper.IsOSEarlierThan("NT", "6.0.0.0")</condition>
+        </detect>
+      </detects>
+      <rules context="User">
+        <include>
+          <objectSet>
+            <pattern type="Registry">HKCU\Software\Microsoft\Windows\CurrentVersion\Group Policy Editor\* [*]</pattern>
+          </objectSet>
+        </include>
+      </rules>
+    </migXml>
+  </migration>
+</assembly>

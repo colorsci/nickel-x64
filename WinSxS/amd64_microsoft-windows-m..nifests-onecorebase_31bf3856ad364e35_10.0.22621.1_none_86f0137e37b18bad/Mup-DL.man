@@ -1,0 +1,47 @@
+﻿<?xml version='1.0' encoding='utf-8' standalone='yes'?>
+<assembly
+    xmlns="urn:schemas-microsoft-com:asm.v3"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    authors="dfsdev"
+    buildFilter=""
+    company="Microsoft Corp"
+    copyright="Microsoft"
+    creationTimeStamp="2003-07-24T13:56:28.257695-07:00"
+    description="$(resourceString.description)"
+    displayName="$(resourceString.displayName)"
+    lastUpdateTimeStamp="2005-05-09T18:53:42.942604Z"
+    manifestVersion="1.0"
+    owners="dfsdev"
+    supportInformation="dfsdev"
+    testers="dfsntest"
+    >
+  <assemblyIdentity
+      language="neutral"
+      name="Microsoft-Windows-Mup-DL"
+      processorArchitecture="*"
+      version="0.0.0.0"
+      />
+  <migration>
+    <!-- Begin migration to Vista from non-Vista Client OS -->
+    <machineSpecific>
+      <migXml xmlns="">
+        <!-- Ruleset for migrating Windows XP or Win2K3-->
+        <detects>
+          <detect>
+            <condition>MigXmlHelper.DoesOSMatch("NT", "5.*")</condition>
+          </detect>
+        </detects>
+        <rules context="System">
+          <rules>
+            <include>
+              <objectSet>
+                <pattern type="Registry">HKLM\System\CurrentControlSet\Services\Mup [ProviderCacheTimeoutInMinutes]</pattern>
+              </objectSet>
+            </include>
+          </rules>
+        </rules>
+      </migXml>
+    </machineSpecific>
+  </migration>
+</assembly>

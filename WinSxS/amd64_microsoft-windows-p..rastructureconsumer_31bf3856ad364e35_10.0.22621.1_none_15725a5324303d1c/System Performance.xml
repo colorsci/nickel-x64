@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?Copyright (c) Microsoft Corporation. All rights reserved.?>
+<DataCollectorSet>
+  <Name>System Performance</Name>
+  <DisplayName>@%systemroot%\system32\pla.dll,#10026</DisplayName>
+  <Description>@%systemroot%\system32\pla.dll,#10027</Description>
+  <Keyword>CPU</Keyword>
+  <Keyword>Memory</Keyword>
+  <Keyword>Disk</Keyword>
+  <Keyword>Network</Keyword>
+  <Keyword>Performance</Keyword>
+  <Duration>60</Duration>
+  <RootPath>%systemdrive%\perflogs\System\Performance</RootPath>
+  <SubdirectoryFormat>3</SubdirectoryFormat>
+  <SubdirectoryFormatPattern>yyyyMMdd\-NNNNNN</SubdirectoryFormatPattern>
+  <TraceDataCollector>
+    <Name>NT Kernel</Name>
+    <FileName>NtKernel</FileName>
+    <SessionName>NT Kernel Logger</SessionName>
+    <ClockType>1</ClockType>
+    <BufferSize>64</BufferSize>
+    <MaximumBuffers>200</MaximumBuffers>
+    <TraceDataProvider>
+      <Guid>{9E814AAD-3204-11D2-9A82-006008A86939}</Guid>
+      <KeywordsAny>
+        <Value>0x00010303</Value>
+      </KeywordsAny>
+    </TraceDataProvider>
+  </TraceDataCollector>
+  <PerformanceCounterDataCollector>
+    <Name>Performance Counter</Name>
+    <SampleInterval>1</SampleInterval>
+    <Counter>\Process(*)\*</Counter>
+    <Counter>\PhysicalDisk(*)\*</Counter>
+    <Counter>\Processor(*)\*</Counter>
+    <Counter>\Processor Performance(*)\*</Counter>
+    <Counter>\Memory\*</Counter>
+    <Counter>\System\*</Counter>
+    <Counter>\Server\*</Counter>
+    <Counter>\Network Interface(*)\*</Counter>
+    <Counter>\UDPv4\*</Counter>
+    <Counter>\TCPv4\*</Counter>
+    <Counter>\IPv4\*</Counter>
+    <Counter>\UDPV6\*</Counter>
+    <Counter>\TCPv6\*</Counter>
+    <Counter>\IPv6\*</Counter>
+  </PerformanceCounterDataCollector>
+  <Value name="PerformanceMonitorView" type="document">
+    <OBJECT ID="DISystemMonitor" CLASSID="CLSID:C4D2D8E0-D1DD-11CE-940F-008029004347">
+      <PARAM NAME="CounterCount" VALUE="4"/>
+      <PARAM NAME="Counter00001.Path" VALUE="\Processor(_Total)\% Processor Time"/>
+      <PARAM NAME="Counter00001.Color" VALUE="255"/>
+      <PARAM NAME="Counter00001.Width" VALUE="2"/>
+      <PARAM NAME="Counter00001.LineStyle" VALUE="0"/>
+      <PARAM NAME="Counter00001.ScaleFactor" VALUE="0"/>
+      <PARAM NAME="Counter00001.Show" VALUE="1"/>
+      <PARAM NAME="Counter00001.Selected" VALUE="1"/>
+      <PARAM NAME="Counter00002.Path" VALUE="\Memory\Pages/sec"/>
+      <PARAM NAME="Counter00002.Color" VALUE="65280"/>
+      <PARAM NAME="Counter00002.Width" VALUE="1"/>
+      <PARAM NAME="Counter00003.Path" VALUE="\PhysicalDisk(_Total)\Avg. Disk sec/Read"/>
+      <PARAM NAME="Counter00003.Color" VALUE="16711680"/>
+      <PARAM NAME="Counter00003.Width" VALUE="1"/>
+      <PARAM NAME="Counter00004.Path" VALUE="\PhysicalDisk(_Total)\Avg. Disk sec/Write"/>
+      <PARAM NAME="Counter00004.Color" VALUE="55295"/>
+      <PARAM NAME="Counter00004.Width" VALUE="1"/>
+    </OBJECT>
+  </Value>
+  <DataManager>
+    <Enabled>-1</Enabled>
+    <CheckBeforeRunning>-1</CheckBeforeRunning>
+    <MinFreeDisk>200</MinFreeDisk>
+    <MaxSize>1024</MaxSize>
+    <MaxFolderCount>100</MaxFolderCount>
+    <ResourcePolicy>0</ResourcePolicy>
+    <FolderAction>
+      <Size>0</Size>
+      <Age>1</Age>
+      <Actions>3</Actions>
+    </FolderAction>
+    <FolderAction>
+      <Size>0</Size>
+      <Age>56</Age>
+      <Actions>8</Actions>
+    </FolderAction>
+    <FolderAction>
+      <Size>0</Size>
+      <Age>168</Age>
+      <Actions>26</Actions>
+    </FolderAction>
+    <ReportSchema>
+      <Report name="systemPerformance" version="1" threshold="100">
+        <Import file="%systemroot%\pla\reports\Report.System.Common.xml"/>
+        <Import file="%systemroot%\pla\reports\Report.System.Summary.xml"/>
+        <Import file="%systemroot%\pla\reports\Report.System.Performance.xml"/>
+        <Import file="%systemroot%\pla\reports\Report.System.CPU.xml"/>
+        <Import file="%systemroot%\pla\reports\Report.System.Network.xml"/>
+        <Import file="%systemroot%\pla\reports\Report.System.Disk.xml"/>
+        <Import file="%systemroot%\pla\reports\Report.System.Memory.xml"/>
+      </Report>
+    </ReportSchema>
+    <Rules>
+      <Logging level="15" file="rules.log"/>
+      <Import file="%systemroot%\pla\rules\Rules.System.Common.xml"/>
+      <Import file="%systemroot%\pla\rules\Rules.System.Summary.xml"/>
+      <Import file="%systemroot%\pla\rules\Rules.System.Performance.xml"/>
+      <Import file="%systemroot%\pla\rules\Rules.System.CPU.xml"/>
+      <Import file="%systemroot%\pla\rules\Rules.System.Network.xml"/>
+      <Import file="%systemroot%\pla\rules\Rules.System.Disk.xml"/>
+      <Import file="%systemroot%\pla\rules\Rules.System.Memory.xml"/>
+    </Rules>
+  </DataManager>
+</DataCollectorSet>

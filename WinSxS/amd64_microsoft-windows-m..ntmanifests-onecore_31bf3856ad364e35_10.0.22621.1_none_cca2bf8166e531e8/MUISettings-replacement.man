@@ -1,0 +1,42 @@
+﻿<?xml version='1.0' encoding='utf-8' standalone='yes'?>
+<!-- Replacement manifest to allow offline migration in Vibranium. This manifest file can be removed once upgrades from pre-Vibranium are no longer supported. -->
+<assembly
+    xmlns="urn:schemas-microsoft-com:asm.v3"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    manifestVersion="1.0"
+    >
+  <assemblyIdentity
+      language="neutral"
+      name="Microsoft-Windows-MUI-Settings"
+      processorArchitecture="*"
+      version="0.0.0.0"
+      versionScope="nonSxS"
+      />
+  <migration
+      scope="Upgrade,MigWiz,USMT"
+      replacementSettingsVersionRange="0"
+      settingsVersion="1"
+      >
+    <migXml xmlns="">
+      <rules context="User">
+        <include>
+          <objectSet>
+            <pattern type="Registry">HKCU\Control Panel\Desktop [PreferredUILanguages]</pattern>
+            <pattern type="Registry">HKCU\Control Panel\Desktop\LanguageConfiguration\* [*]</pattern>
+          </objectSet>
+        </include>
+      </rules>
+      <rules context="System">
+        <include>
+          <objectSet>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Control\MUI\Settings [PreferredUILanguages]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Control\MUI\Settings\LanguageConfiguration\* [*]</pattern>
+          </objectSet>
+        </include>
+      </rules>
+    </migXml>
+    <!-- Migration display group id for migwiz -->
+    <migrationDisplayID>Date_Time_Language_and_Region\Regional_Language_Options</migrationDisplayID>
+  </migration>
+</assembly>

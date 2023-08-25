@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:wincap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/windowscapabilities">
+	<!--
+  Manual versioning is used for this app.
+  Appx version should be in sync with version used for the app name in Microsoft-Windows-ModalSharePickerHost.AppxSetup.man
+  This file uses .appxfragment extensions and it's hash needs to be calculated after those extension inserted into the final manifest.
+  Build error will show the new hash.
+  See https://osgwiki.com/wiki/System_Apps#Servicing
+  -->
+	<Identity Name="Microsoft.Windows.ModalSharePickerHost" Publisher="CN=Microsoft Windows, O=Microsoft Corporation, L=Redmond, S=Washington, C=US" Version="10.0.19580.1002" ResourceId="neutral"/>
+	<mp:PhoneIdentity PhoneProductId="B9C7A2D3-3438-4787-BC0C-0633B6CB1CF6" PhonePublisherId="ecb99882-54f5-4c51-adc3-e27619164fde"/>
+	<Properties>
+		<DisplayName>ms-resource:DisplayName</DisplayName>
+		<Description>ms-resource:Description</Description>
+		<PublisherDisplayName>ms-resource:PublisherDisplayName</PublisherDisplayName>
+		<Logo>Assets\StoreLogo.png</Logo>
+		<uap:SupportedUsers>multiple</uap:SupportedUsers>
+	</Properties>
+	<Resources>
+		<Resource Language="en-us"/>
+	</Resources>
+	<Dependencies>
+		<TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.0.0" MaxVersionTested="12.0.0.0"/>
+	</Dependencies>
+	<Applications>
+		<Application Id="ModalSharePickerHost" Executable="ModalSharePickerHost.exe" EntryPoint="ModalSharePickerHost.App">
+			<uap:VisualElements DisplayName="ms-resource:DisplayName" Square150x150Logo="Assets\Logo.png" Square44x44Logo="Assets\SmallLogo.png" Description="ms-resource:Description" BackgroundColor="#0078D7" AppListEntry="none">
+				<uap:SplashScreen Image="Assets\SplashScreen.png" BackgroundColor="#0078D7"/>
+			</uap:VisualElements>
+			<Extensions>
+				<!-- UAP extensions are added here from the .appxfragment files -->
+				<Extension  Category="windows.backgroundTasks" EntryPoint="SharePickerUI.ToastClearerBackgroundTask">
+					<BackgroundTasks>
+						<Task Type="systemEvent"/>
+					</BackgroundTasks>
+				</Extension>
+				<uap:Extension Category="windows.appService" EntryPoint="SharePickerUI.ToastClearerRegistrationService">
+					<uap:AppService Name="SharePickerUI.ToastClearerRegistration"/>
+				</uap:Extension>
+			</Extensions>
+		</Application>
+	</Applications>
+	<Capabilities>
+		<wincap:Capability Name="packageContents"/>
+		<wincap:Capability Name="shellExperience"/>
+		<!-- Capabilities are added here from the .appxfragment files -->
+		<wincap:Capability Name="userSigninSupport"/>
+		<rescap:Capability xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities" Name="activitySystem"/>
+		<wincap:Capability Name="cloudStore"/>
+		<wincap:Capability Name="targetedContent"/>
+		<wincap:Capability Name="visualElementsSystem"/>
+		<uap3:Capability xmlns:uap3="http://schemas.microsoft.com/appx/manifest/uap/windows10/3" Name="remoteSystem"/>
+		<DeviceCapability  Name="radios"/>
+	</Capabilities>
+	<Extensions>
+		<!-- Extensions are added here from the .appxfragment files -->
+		<Extension  Category="windows.activatableClass.inProcessServer">
+			<InProcessServer>
+				<Path>SharePickerUI.dll</Path>
+				<!-- ImportPath= SharePickerUI -->
+				<ActivatableClass ActivatableClassId="SharePickerUI.sharepickerui_XamlTypeInfo.XamlMetaDataProvider" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="SharePickerUI.App" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="SharePickerUI.CopyToClipboardItem" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="SharePickerUI.ErrorMessage" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="SharePickerUI.GetMoreAppsButton" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="SharePickerUI.ShareItem" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="SharePickerUI.SharePicker" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="SharePickerUI.SharePickerFrame" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="SharePickerUI.SharePromotedItem" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="SharePickerUI.ShareToApps" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="SharePickerUI.ShareToDevices" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="SharePickerUI.ShareToDevicesSection" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="SharePickerUI.ShareDeviceItem" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="SharePickerUI.ShareToPeople" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="SharePickerUI.SharePeoplePicker" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="SharePickerUI.ShowDeviceName" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="SharePickerUI.ToastClearerBackgroundTask" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="SharePickerUI.ToastClearerRegistrationService" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="SharePickerUI.TwoLinesTextBlock" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="SharePickerUI.InlineCompose" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="SharePickerUI.BadgedPersonPicture" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="SharePickerUI.MeControl" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="SharePickerUI.ShareToSuggestions" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="SharePickerUI.ShareSuggestedContactItem" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="SharePickerUI.ModalInlineCompose" ThreadingModel="both"/>
+				<ActivatableClass ActivatableClassId="SharePickerUI.OneDriveShare" ThreadingModel="both"/>
+			</InProcessServer>
+		</Extension>
+	</Extensions>
+</Package>

@@ -1,0 +1,96 @@
+﻿<?xml version='1.0' encoding='utf-8' standalone='yes'?>
+<assembly
+    xmlns="urn:schemas-microsoft-com:asm.v3"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    buildFilter=""
+    company="Microsoft Corporation"
+    copyright=""
+    creationTimeStamp="2003-11-18T11:27:15.1013997-08:00"
+    description="$(resourceString.description)"
+    displayName="$(resourceString.displayName)"
+    lastUpdateTimeStamp="2003-11-24T09:58:55.6473150-08:00"
+    manifestVersion="1.0"
+    supportInformation="http://support.microsoft.com"
+    >
+  <!-- This is a downlevel manifest to simulate the manifest for WinXP and Srv03, which is not a componentization OS. -->
+  <!-- This will only support the gather phrase, since USMT does not support migrate to WinXP or Srv03 -->
+  <assemblyIdentity
+      buildFilter=""
+      buildType="release"
+      language="neutral"
+      name="Microsoft-Windows-Microsoft-Data-Access-Components-(MDAC)-ODBC-DriverManager-Dll-DL"
+      processorArchitecture="*"
+      publicKeyToken=""
+      version="0.0.0.0"
+      versionScope="nonSxS"
+      />
+  <migration scope="Upgrade,MigWiz,USMT,SvrMig">
+    <migXml xmlns="">
+      <detects>
+        <detect>
+          <!-- This makes sure this DL manifest will only be used in WinXP and WinSrv03 -->
+          <condition>MigXmlHelper.IsOSEarlierThan("NT","6.0.0.0")</condition>
+        </detect>
+      </detects>
+      <!-- The default DSN location is "C:\program files\Common Files\ODBC\Data Sources", but it can be overriden by registry -->
+      <environment context="System">
+        <variable name="ODBCDSNDir_System">
+          <text>%CSIDL_PROGRAM_FILES_COMMON%\ODBC\Data Sources\</text>
+        </variable>
+        <variable name="ODBCDSNDir_System">
+          <script>MigXmlHelper.GetStringContent("Registry","HKLM\Software\ODBC\ODBC.INI\ODBC File DSN [DefaultDSNDir]")</script>
+        </variable>
+      </environment>
+      <environment context="System">
+        <!-- We left %ODBCDSNDir_SystemX86% undefined when the source machine is X86 -->
+        <!-- Otherwise, we will gather data from both user-defined DSN folder and "C:\program files\Common Files\ODBC\Data Sources", -->
+        <!-- since %CSIDL_PROGRAM_FILES_COMMONX86% is defined to be "C:\program files\Common Files" on x86 source machine -->
+        <!-- <pattern> below will be ignored, when it is referencing the undefined variable %ODBCDSNDir_SystemX86% -->
+        <conditions>
+          <condition>MigXmlHelper.IsNative64Bit()</condition>
+        </conditions>
+        <variable name="ODBCDSNDir_SystemX86">
+          <text>%CSIDL_PROGRAM_FILES_COMMONX86%\ODBC\Data Sources\</text>
+        </variable>
+        <variable name="ODBCDSNDir_SystemX86">
+          <script>MigXmlHelper.GetStringContent("Registry","HKLM\Software\Wow6432Node\ODBC\ODBC.INI\ODBC File DSN [DefaultDSNDir]")</script>
+        </variable>
+      </environment>
+      <!-- We are not going to migrate file DSN inside "C:\program files\Common Files\ODBC\Data Sources" under user context -->
+      <!-- We will leave that to the system context -->
+      <!-- Actually, the default file DSN location was no "My Documents" in WinXP / Srv03 -->
+      <!-- It was only changed to "My Documents" in Windows OS Bug #1633815 -->
+      <!-- But we are still using "My Documents" below to have a more similar logic as in Win8 manifest. This can simplify the testing -->
+      <environment context="User">
+        <variable name="ODBCDSNDir_User">
+          <text>%CSIDL_MYDOCUMENTS%\</text>
+        </variable>
+        <variable name="ODBCDSNDir_User">
+          <script>MigXmlHelper.GetStringContent("Registry","HKCU\Software\ODBC\ODBC.INI\ODBC File DSN [DefaultDSNDir]")</script>
+        </variable>
+      </environment>
+      <!-- User specific setting (Gather phrase) -->
+      <rules context="User">
+        <include>
+          <objectSet>
+            <pattern type="Registry">HKCU\Software\ODBC\ODBC.INI\* [*]</pattern>
+            <pattern type="File">%ODBCDSNDir_User% [*.DSN]</pattern>
+          </objectSet>
+        </include>
+      </rules>
+      <!-- System wide setting (Gather phrase) -->
+      <rules context="System">
+        <include>
+          <objectSet>
+            <pattern type="Registry">HKLM\Software\ODBC\ODBC.INI\* [*]</pattern>
+            <pattern type="Registry">HKLM\Software\Wow6432Node\ODBC\ODBC.INI\* [*]</pattern>
+            <pattern type="File">%ODBCDSNDir_System% [*.DSN]</pattern>
+            <pattern type="File">%ODBCDSNDir_SystemX86% [*.DSN]</pattern>
+          </objectSet>
+        </include>
+      </rules>
+    </migXml>      
+    <migrationDisplayID>DownlevelManifests</migrationDisplayID>
+  </migration>
+</assembly>

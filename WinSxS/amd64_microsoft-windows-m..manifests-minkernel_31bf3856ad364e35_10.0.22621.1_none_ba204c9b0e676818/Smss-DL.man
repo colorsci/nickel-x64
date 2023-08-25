@@ -1,0 +1,41 @@
+﻿<?xml version='1.0' encoding='utf-8' standalone='yes'?>
+<assembly
+    xmlns="urn:schemas-microsoft-com:asm.v3"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    >
+  <assemblyIdentity
+      language="*"
+      name="Microsoft-Windows-Smss-DL"
+      processorArchitecture="*"
+      publicKeyToken=""
+      version="0.0.0.0"
+      />
+  <migration>
+    <machineSpecific>
+      <migXml xmlns="">
+        <detects>
+          <detect>
+            <condition>MigXmlHelper.IsOSEarlierThan("NT","6.0.0.0")</condition>
+          </detect>
+        </detects>
+        <rules context="System">
+          <include>
+            <objectSet>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Control\Session Manager [ObjectDirectories]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Control\Session Manager\Memory Management [PagingFiles]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Control\Session Manager\Subsystems [*]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Control\Session Manager\Environment [PATHEXT]</pattern>
+            </objectSet>
+          </include>
+          <exclude>
+            <objectSet>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Control\Session Manager\Subsystems [Kmode]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Control\Session Manager\Subsystems [Windows]</pattern>
+            </objectSet>
+          </exclude>
+        </rules>
+      </migXml>
+    </machineSpecific>
+  </migration>
+</assembly>

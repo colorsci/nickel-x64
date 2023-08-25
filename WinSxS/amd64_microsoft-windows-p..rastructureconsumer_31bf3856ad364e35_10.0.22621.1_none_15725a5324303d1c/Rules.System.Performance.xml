@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?Copyright (c) Microsoft Corporation. All rights reserved.?>
+<Rules>
+  <Group name="$(GroupSummary)" enabled="true">
+    <Rule name="$(RuleNetworkSummary)">
+      <Step select="/Report/Section/Table[@name='tcpSendTable']" fatal="true">
+        <Exists>
+          <When expression="count(Item) &gt; 0">
+            <Insert>
+              <Node>
+                <Summary key="500" find="top" field="outbytes_sec" topic="tracerptNetwork">
+                  <Data name="machineoutbound" label="topNetworkOutbound"/>
+                  <Data name="outbytes_sec" label="topNetworkOutboundBytes" units="bytes" format="#,##0"/>
+                </Summary>
+              </Node>
+            </Insert>
+          </When>
+        </Exists>
+      </Step>
+      <Step select="/Report/Section/Table[@name='tcpRecvTable']" fatal="true">
+        <Exists>
+          <When expression="count(Item) &gt; 0">
+            <Insert>
+              <Node>
+                <Summary key="500" find="top" field="inbytes_sec" topic="tracerptNetwork">
+                  <Data name="machineinbound" label="topNetworkInbound"/>
+                  <Data name="inbytes_sec" label="topNetworkInboundBytes" units="bytes" format="#,##0"/>
+                </Summary>
+              </Node>
+            </Insert>
+          </When>
+        </Exists>
+      </Step>
+      <Step select="/Report/Section/Table[@name='sysHealthSummary']" fatal="true">
+        <Exists>
+          <Otherwise>
+            <Insert>
+              <Node>
+                <Summary key="100" find="field" field="component" value="SysHealthNetComponent" topic="tracerptNetwork">
+                  <Data name="util" label="SysHealthUtilizationHdr"/>
+                </Summary>
+              </Node>
+            </Insert>
+          </Otherwise>
+        </Exists>
+      </Step>
+    </Rule>
+    <Rule name="$(RuleMemorySummary)">
+      <Step select="/Report/Section[@name='tracerptHeader']/Table[@name='client']" fatal="true">
+        <Exists>
+          <Otherwise>
+            <Insert select=".">
+              <Node>
+                <Summary find="field" field="memory" topic="memory" key="200">
+                  <Data name="memory"/>
+                </Summary>
+              </Node>
+            </Insert>
+          </Otherwise>
+        </Exists>
+      </Step>
+    </Rule>
+    <Rule name="$(RuleDiskSummary)" enabled="true">
+      <Step select="/Report/Section/Table[@name='hotFile']">
+        <Exists>
+          <Otherwise>
+            <Delete select="Summary"/>
+          </Otherwise>
+        </Exists>
+      </Step>
+      <Step select="/Report/Section/Table[@name='physicalDiskCounters']" fatal="true">
+        <Exists>
+          <Otherwise>
+            <Insert>
+              <Node>
+                <Summary key="100" find="field" field="counter" value="Avg. Disk Queue Length" topic="diskInfo">
+                  <Data name="max" label="diskQueue"/>
+                </Summary>
+              </Node>
+            </Insert>
+          </Otherwise>
+        </Exists>
+      </Step>
+    </Rule>
+  </Group>
+  <StringTable>
+    <String ID="GroupSummary">Add Summary Blocks</String>
+    <String ID="RuleMemorySummary">Memory Summary</String>
+    <String ID="RuleDiskSummary">Disk Summary</String>
+    <String ID="RuleNetworkSummary">Network Summary</String>
+  </StringTable>
+</Rules>

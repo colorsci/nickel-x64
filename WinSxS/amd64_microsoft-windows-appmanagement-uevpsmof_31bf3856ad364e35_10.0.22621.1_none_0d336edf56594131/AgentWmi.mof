@@ -1,0 +1,517 @@
+#pragma autorecover
+#pragma namespace("\\\\.\\root\\Microsoft\\UEV")
+
+instance of __Win32Provider as $UserSettingsProvider
+{
+    Name    = "UserSettingsProvider" ;                      // Name
+    ClsId   = "{0C0B0642-1DEB-43DF-8032-7A9BF5811A74}" ;    // Provider GUID
+};    
+
+instance of __MethodProviderRegistration
+{
+    Provider = $UserSettingsProvider;
+};
+
+[Provider("UserSettingsProvider"), Description("The user settings")]
+class UserSettings 
+{
+    [Implemented, Static, Description("Restore users' application and Windows settings back to the original settings state.")]
+    void RestoreByTemplateId
+    (
+        [In, Description("Template ID")]
+        string TemplateId,
+
+        [In, Description("Restore Type")]
+        uint32 RestoreType
+    );
+
+    [Implemented, Static, Description("Export a settings package file to a XML file listing all the settings in the package.")]
+    string ExportPackage
+    (
+        [In, Description("Absolute path to the settings package file")]
+        string AbsolutePathToPackage
+    );
+
+    [Implemented, Static, Description("Get the version of a settings package.")]
+    uint32 GetPackageVersion
+    (
+        [In, Description("Absolute path to the settings package file")]
+        string AbsolutePathToPackage
+    );
+
+    [Implemented, Static, Description("Check if the user live ID is connected.")]
+    Boolean IsUserMsaConnected
+    ();
+    
+    [Implemented, static, Description("Restores the backup packages from another machine. Returns false if a restore is already pending, true otherwise")]
+    Boolean RestoreBackup
+    (
+        [In, Description("Fully qualified computer name from which to restore packages")]
+        string ComputerName
+    );
+};
+
+
+instance of __Win32Provider as $ComputerConfigurationProvider
+{
+    Name    = "ComputerConfigurationProvider" ;             // Name
+    ClsId   = "{D4950C79-806D-4ECE-9DB1-11B34D33F514}" ;    // Provider GUID
+};    
+
+instance of __InstanceProviderRegistration
+{
+    Provider = $ComputerConfigurationProvider;
+    SupportsGet = TRUE;
+    SupportsEnumeration = TRUE;
+    SupportsPut = TRUE;
+};
+
+[Singleton, Dynamic: ToInstance, SupportsUpdate: ToInstance, Provider("ComputerConfigurationProvider"), Description("Computer specific configuration")]
+class ComputerConfiguration
+{
+    [Read, Write, Description("Absolute path to the settings storage path")]
+    string SettingsStoragePath;
+
+    [Read, Write, Description("Enable ping of the sync provider")]
+    Boolean SyncProviderPingEnabled;
+
+    [Read, Write, Description("Absolute path to the settings template catalog path")]
+    string SettingsTemplateCatalogPath;
+  
+    [Read, Write, Description("Max package size (in bytes)")]
+    uint32 MaxPackageSizeInBytes;
+
+    [Read, Write, Description("Timeout for synchronization from the settings repository (in milliseconds)")]
+    uint32 SyncTimeoutInMilliseconds;
+
+    [Read, Write, Description("Synchronization method")]
+    string SyncMethod;
+
+    [Read, Write, Description("Sync enablement flag")]
+    Boolean SyncEnabled;
+
+    [Read, Write, Description("Sync over metered network flag")]
+    Boolean SyncOverMeteredNetwork;
+
+    [Read, Write, Description("Sync over metered network when roaming flag")]
+    Boolean SyncOverMeteredNetworkWhenRoaming;
+
+    [Read, Write, Description("Flag for displaying the notification on settings import")]
+    Boolean SettingsImportNotifyEnabled;
+
+    [Read, Write, Description("Delay in seconds before displaying the notification on settings import")]
+    uint32 SettingsImportNotifyDelayInSeconds;
+
+    [Read, Write, Description("Tray icon enablement flag")]
+    Boolean TrayIconEnabled;
+
+    [Read, Write, Description("Flag for enabling / disabling first use notification")]
+    Boolean FirstUseNotificationEnabled;
+
+    [Read, Write, Description("Contact IT URL")]
+    string ContactITUrl;
+
+    [Read, Write, Description("Contact IT Description")]
+    string ContactITDescription;
+
+    [Read, Write, Description("Flag for enabling / disabling sync settings for Windows apps")]
+    Boolean DontSyncWindows8AppSettings;
+
+    [Read, Write, Description("Flag for enabling / disabling default sync settings for Windows apps")]
+    Boolean SyncUnlistedWindows8Apps;
+
+    [Read, Write, Description("Wait timeout for synchronization from the settings repository (in milliseconds)")]
+    uint32 WaitForSyncTimeoutInMilliseconds;
+
+    [Read, Write, Description("Wait for sync when starting an application")]
+    Boolean WaitForSyncOnApplicationStart;
+
+    [Read, Write, Description("Wait for sync when logging on")]
+    Boolean WaitForSyncOnLogon;
+
+    [Read, Write, Description("VDI collection name for current computer")]
+    string VdiCollectionName;
+};
+
+
+instance of __Win32Provider as $UserConfigurationProvider
+{
+    Name    = "UserConfigurationProvider" ;                 // Name
+    ClsId   = "{55F7B88D-A254-4B22-B7BB-FCDBBA1AFA32}" ;    // Provider GUID
+};    
+
+instance of __InstanceProviderRegistration
+{
+    Provider = $UserConfigurationProvider;
+    SupportsGet = TRUE;
+    SupportsEnumeration = TRUE;
+    SupportsPut = TRUE;
+};
+
+[Singleton, Dynamic: ToInstance, SupportsUpdate: ToInstance, Provider("UserConfigurationProvider"), Description("User specific configuration")]
+class UserConfiguration
+{
+    [Read, Write, Description("Absolute path to the settings storage path")]
+    string SettingsStoragePath;
+
+    [Read, Write, Description("Enable ping of the sync provider")]
+    Boolean SyncProviderPingEnabled;
+  
+    [Read, Write, Description("Max package size (in bytes)")]
+    uint32 MaxPackageSizeInBytes;
+
+    [Read, Write, Description("Timeout for synchronization from the settings repository (in milliseconds)")]
+    uint32 SyncTimeoutInMilliseconds;
+
+    [Read, Write, Description("Synchronization method")]
+    string SyncMethod;
+
+    [Read, Write, Description("Sync enablement flag")]
+    Boolean SyncEnabled;
+
+    [Read, Write, Description("Sync over metered network flag")]
+    Boolean SyncOverMeteredNetwork;
+
+    [Read, Write, Description("Sync over metered network when roaming flag")]
+    Boolean SyncOverMeteredNetworkWhenRoaming;
+
+    [Read, Write, Description("Flag for displaying the notification on settings import")]
+    Boolean SettingsImportNotifyEnabled;
+
+    [Read, Write, Description("Delay in seconds before displaying the notification on settings import")]
+    uint32 SettingsImportNotifyDelayInSeconds;
+
+    [Read, Write, Description("Flag for enabling / disabling sync settings for Windows apps")]
+    Boolean DontSyncWindows8AppSettings;
+
+    [Read, Write, Description("Flag for enabling / disabling default sync settings for Windows apps")]
+    Boolean SyncUnlistedWindows8Apps;
+
+    [Read, Write, Description("Wait timeout for synchronization from the settings repository (in milliseconds)")]
+    uint32 WaitForSyncTimeoutInMilliseconds;
+
+    [Read, Write, Description("Wait for sync when starting an application")]
+    Boolean WaitForSyncOnApplicationStart;
+
+    [Read, Write, Description("Wait for sync when logging on")]
+    Boolean WaitForSyncOnLogon;
+
+    [Read, Write, Description("VDI collection name for current computer")]
+    string VdiCollectionName;
+};
+
+instance of __Win32Provider as $ConfigurationProvider
+{
+    Name    = "ConfigurationProvider" ;                     // Name
+    ClsId   = "{C7E9D3B9-E62B-4A90-8CC5-A3C5F662DA7B}" ;    // Provider GUID
+};
+
+instance of __InstanceProviderRegistration
+{
+    Provider = $ConfigurationProvider;
+    SupportsGet = TRUE;
+    SupportsEnumeration = TRUE;
+};
+
+[Singleton, Dynamic: ToInstance, SupportsUpdate: ToInstance, Provider("ConfigurationProvider"), Description("Configuration")]
+class Configuration
+{
+    [Read, Description("Absolute path to the settings storage path")]
+    string SettingsStoragePath;
+
+    [Read, Description("Enable ping of the sync provider")]
+    Boolean SyncProviderPingEnabled;
+
+    [Read, Description("Absolute path to the settings template catalog path")]
+    string SettingsTemplateCatalogPath;
+  
+    [Read, Description("Max package size (in bytes)")]
+    uint32 MaxPackageSizeInBytes;
+
+    [Read, Description("Timeout for synchronization from the settings repository (in milliseconds)")]
+    uint32 SyncTimeoutInMilliseconds;
+
+    [Read, Description("Synchronization method")]
+    string SyncMethod;
+
+    [Read, Description("Sync enablement flag")]
+    Boolean SyncEnabled;
+
+    [Read, Description("Sync over metered network flag")]
+    Boolean SyncOverMeteredNetwork;
+
+    [Read, Description("Sync over metered network when roaming flag")]
+    Boolean SyncOverMeteredNetworkWhenRoaming;
+
+    [Read, Description("Flag for displaying the notification on settings import")]
+    Boolean SettingsImportNotifyEnabled;
+
+    [Read, Description("Delay in seconds before displaying the notification on settings import")]
+    uint32 SettingsImportNotifyDelayInSeconds;
+    
+    [Read, Description("Tray icon enablement flag")]
+    Boolean TrayIconEnabled;
+
+    [Read, Description("Flag for enabling / disabling first use notification")]
+    Boolean FirstUseNotificationEnabled;
+
+    [Read, Description("Contact IT URL")]
+    string ContactITUrl;
+
+    [Read, Description("Contact IT Description")]
+    string ContactITDescription;
+
+    [Read, Description("Flag for enabling / disabling sync settings for Windows apps")]
+    Boolean DontSyncWindows8AppSettings;
+
+    [Read, Description("Flag for enabling / disabling default sync settings for Windows apps")]
+    Boolean SyncUnlistedWindows8Apps;
+
+    [Read, Description("Wait timeout for synchronization from the settings repository (in milliseconds)")]
+    uint32 WaitForSyncTimeoutInMilliseconds;
+
+    [Read, Description("Wait for sync when starting an application")]
+    Boolean WaitForSyncOnApplicationStart;
+
+    [Read, Description("Wait for sync when logging on")]
+    Boolean WaitForSyncOnLogon;
+
+    [Read, Description("List of template schemas supported")]
+    string SupportedTemplateSchemaVersions[];
+
+    [Read, Description("VDI collection name for current computer")]
+    string VdiCollectionName;
+};
+
+instance of __Win32Provider as $ConfigurationItemProvider
+{
+    Name    = "ConfigurationItemProvider" ;                 // Name
+    ClsId   = "{523A581F-EC58-40CE-99D3-36BF7897F3EC}" ;	// Provider GUID
+};
+
+instance of __InstanceProviderRegistration
+{
+    Provider = $ConfigurationItemProvider;
+    SupportsGet = TRUE;
+    SupportsEnumeration = TRUE;
+};
+
+[Dynamic: ToInstance, Provider("ConfigurationItemProvider"), Description("Configuration item")]
+class ConfigurationItem
+{
+    [Key, Read, Description("Setting name")]
+    string SettingName;
+
+    [Read, Description("Setting value")]
+    string SettingValue;
+  
+    [Read, Description("Setting source")]
+    string SettingSource;
+
+    [Read, Description("Is setting valid")]
+    Boolean IsValid;
+};
+
+instance of __Win32Provider as $SettingsLocationTemplateProvider
+{
+    Name    = "SettingsLocationTemplateProvider" ;	        // Name
+    ClsId   = "{A571F412-E3D2-4A32-BF42-1D3B2203FF17}" ;	// Provider GUID
+};    
+
+instance of __InstanceProviderRegistration
+{
+    Provider = $SettingsLocationTemplateProvider;
+    SupportsGet = TRUE;
+    SupportsEnumeration = TRUE;
+    SupportsDelete = TRUE;
+};
+
+instance of __MethodProviderRegistration
+{
+    Provider = $SettingsLocationTemplateProvider;
+};
+
+[Dynamic: ToInstance, Provider("SettingsLocationTemplateProvider"), Description("Settings location template")]
+class SettingsLocationTemplate
+{
+    [key, Read, Description("Unique ID of the settings location template.")]
+    string TemplateId;
+
+    [Read, Description("Friendly name of the settings location template.")]
+    string TemplateName;
+
+    [Read, Description("Description of the settings location template.")]
+    string TemplateDescription;
+
+    [Read, Description("Version of the settings location template.")]
+    uint32 TemplateVersion;
+
+    [Read, Description("Type of the settings location template (OS, Application).")]
+    string TemplateType;
+
+    [Read, Description("Profile the template is associated with.")]
+    string TemplateProfile;
+
+    [Read, Description("Flag indicating whether the template is enabled for the current user.")]
+    Boolean Enabled;
+
+    [Read, Description("Enable state of the settings location template.")]
+    string EnableStateLocation;
+
+    [Read, Description("Flag indicating whether the template is a suite parent.")]
+    Boolean IsSuiteParent;
+
+    [Read, Description("Flag indicating whether the template represents a template file.")]
+    Boolean IsTemplateFile;
+
+    [Read, Description("ID of the suite parent template.")]
+    string SuiteParentId;
+
+    [Read, Description("Flag indicating whether the template defers to MS account.")]
+    Boolean DeferToMSAccount;
+
+    [Implemented, Description("Get the content of the template file of the current instance.")]
+    string GetContent
+    (
+    );
+
+    [Implemented, Static, Description("Get the content of a setting location template file by template ID.")]
+    string GetContentByTemplateId
+    (
+        [In, Description("Unique ID of the settings location template")]
+        string TemplateId
+    );
+
+    [Implemented, Static, Description("Register a settings location template.")]
+    void Register
+    (
+        [In, Description("Absolute path to the settings location template file")]
+        string AbsolutePathToTemplate
+    );
+
+    [Implemented, Description("Unregister the current settings location template.")]
+    void Unregister
+    (
+    );
+
+    [Implemented, Static, Description("Unregister all settings location templates.")]
+    void UnregisterAll
+    (
+    );
+
+    [Implemented, Static, Description("Unregister a settings location template by template ID.")]
+    void UnregisterByTemplateId
+    (
+        [In, Description("Unique ID of the settings location template")]
+        string TemplateId
+    );
+
+    [Implemented, Static, Description("Validate a settings location template.")]
+    string Validate
+    (
+        [In, Description("Absolute path to the settings location template file")]
+        string AbsolutePathToTemplate
+    );
+
+    [Implemented, Static, Description("Update a settings location template by template file.")]
+    void Update
+    (
+        [In, Description("Absolute path to the settings location template file")]
+        string AbsolutePathToTemplate
+    );
+
+    [Implemented, Static, Description("Rebuild the template index from the existing registered template files.")]
+    void RebuildIndex
+    (
+    );
+
+    [Implemented, Description("Enable the current settings location template.")]
+    void Enable
+    (
+    );
+
+    [Implemented, static, Description("Enable a settings location template.")]
+    void EnableByTemplateId
+    (
+        [In, Description("Unique ID of the settings location template")]
+        string TemplateId
+    );
+
+    [Implemented, Description("Disable the current settings location template.")]
+    void Disable
+    (
+    );
+
+    [Implemented, static, Description("Disable a settings location template.")]
+    void DisableByTemplateId
+    (
+        [In, Description("Unique ID of the settings location template")]
+        string TemplateId
+    );
+
+    [Implemented, Description("Get the information about the processes monitored by the current settings location template.")]
+    string GetProcessInfo
+    (
+    );
+
+    [Implemented, static, Description("Get the information about the processes monitored by the given settings location template.")]
+    string GetProcessInfoByTemplateId
+    (
+        [In, Description("Unique ID of the settings location template")]
+        string TemplateId
+    );
+
+    [Implemented, Description("Get the schema used by the current settings location template.")]
+    string GetSchema
+    (
+    );
+
+    [Implemented, static, Description("Get the schema used by a settings location template.")]
+    string GetSchemaByTemplateId
+    (
+        [In, Description("Unique ID of the settings location template")]
+        string TemplateId
+    );
+
+    [Implemented, static, Description("Associate a template with a profile")]
+    void SetTemplateProfileByTemplateId
+    (
+        [In, Description("The template ID")]
+        string TemplateId,
+        [In, Description("The profile")]
+        string Profile
+    );
+
+};
+
+instance of __Win32Provider as $UevConfigurationProvider
+{
+    Name    = "UevConfigurationProvider";               // Name
+    ClsId   = "{EC231970-6AFD-4215-A72E-97242BB08680}"; // Provider GUID
+};    
+    
+instance of __MethodProviderRegistration
+{
+    Provider = $UevConfigurationProvider;
+};
+
+[Provider("UevConfigurationProvider"), Description("Enable/Disable UEV")]
+class UevConfiguration 
+{
+    [Implemented, Static, Description("Enable UEV.")]
+    void Enable
+    ();
+
+    [Implemented, Static, Description("Disable UEV.")]
+    void Disable
+    ();
+
+    [Implemented, Static, Description("Check if UEV is enabled.")]
+    Boolean IsEnabled
+    ();
+
+    [Implemented, Static, Description("Check if UEV is in reboot required state.")]
+    Boolean IsRebootRequired
+    ();
+};
+

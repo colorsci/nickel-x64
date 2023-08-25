@@ -1,0 +1,282 @@
+﻿<Page
+    x:Class="DesktopView.DirectXPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:DesktopView"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d" 
+    DataContext="{Binding RelativeSource={RelativeSource Self}}">
+
+    <Page.Resources>
+        <Style x:Key="flyoutPresenterStyleOutputPicker" TargetType="FlyoutPresenter">
+            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+            <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+            <Setter Property="IsTabStop" Value="False"/>
+            <Setter Property="Background" Value="#1E1E1E"/>
+            <Setter Property="BorderBrush" Value="{ThemeResource SystemControlForegroundChromeHighBrush}"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="MinWidth" Value="{ThemeResource FlyoutThemeMinWidth}"/>
+            <Setter Property="MaxWidth" Value="10000"/>
+            <Setter Property="MinHeight" Value="{ThemeResource FlyoutThemeMinHeight}"/>
+            <Setter Property="MaxHeight" Value="10000"/>
+            <Setter Property="ScrollViewer.HorizontalScrollMode" Value="Disabled"/>
+            <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Hidden"/>
+            <Setter Property="ScrollViewer.VerticalScrollMode" Value="Auto"/>
+            <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
+            <Setter Property="ScrollViewer.ZoomMode" Value="Disabled"/>
+        </Style>
+
+        <!-- Style for Windows.UI.Xaml.Controls.GridViewItem -->
+        <Style TargetType="GridViewItem" x:Key="DesktopViewGridViewItemExpanded">
+            <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}" />
+            <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}" />
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="{ThemeResource SystemControlForegroundBaseHighBrush}" />
+            <Setter Property="TabNavigation" Value="Local"/>
+            <Setter Property="IsHoldingEnabled" Value="True"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="0,0,0,0"/>
+            <Setter Property="MinWidth" Value="{ThemeResource GridViewItemMinWidth}"/>
+            <Setter Property="MinHeight" Value="{ThemeResource GridViewItemMinHeight}"/>
+            
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="GridViewItem">
+                        <Grid x:Name="ContentBorder" Background="{TemplateBinding Background}">
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="CommonStates">
+                                    <VisualState x:Name="Normal">
+                                        <Storyboard>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="PointerOver">
+                                        <Storyboard>
+                                            <DoubleAnimation Duration="0" To="1"
+                                                    Storyboard.TargetName="ContentPresenter"
+                                                    Storyboard.TargetProperty="Opacity" />
+                                            <DoubleAnimation From="1" To="1.05" Duration="0" 
+                                                    Storyboard.TargetName="ContentPresenter" 
+                                                    Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)" />
+                                            <DoubleAnimation From="1" To="1.05" Duration="0" 
+                                                    Storyboard.TargetName="ContentPresenter" 
+                                                    Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleX)" />
+                                            <ObjectAnimationUsingKeyFrames 
+                                                    Storyboard.TargetName="ContentPresenter"
+                                                    Storyboard.TargetProperty="BorderBrush">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="White"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="Pressed">
+                                        <Storyboard>
+                                            <DoubleAnimation To="1" Duration="0"
+                                                    Storyboard.TargetName="ContentPresenter"
+                                                    Storyboard.TargetProperty="Opacity" />
+                                            <ObjectAnimationUsingKeyFrames 
+                                                    Storyboard.TargetName="ContentPresenter"
+                                                    Storyboard.TargetProperty="BorderBrush">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="White"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                            <ContentPresenter x:Name="ContentPresenter"
+                                        CompositeMode="SourceOver"
+                                        RenderTransformOrigin=".5,.5"
+                                        Opacity="0.8"
+                                        Content="{Binding}"
+                                        Margin="{Binding Content.Margin, RelativeSource={RelativeSource TemplatedParent}}"
+                                        Width="{Binding Content.Width, RelativeSource={RelativeSource TemplatedParent}}"
+                                        Height="{Binding Content.Height, RelativeSource={RelativeSource TemplatedParent}}"
+                                        BorderThickness="{Binding Content.BorderThickness, RelativeSource={RelativeSource TemplatedParent}}"
+                                        Background="#1E1E1E">
+                                <ContentPresenter.BorderBrush>
+                                    <SolidColorBrush Color="{Binding Content.BorderColor, RelativeSource={RelativeSource TemplatedParent}}" />
+                                </ContentPresenter.BorderBrush>
+                                <ContentPresenter.RenderTransform>
+                                    <ScaleTransform  />
+                                </ContentPresenter.RenderTransform>
+                            </ContentPresenter>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Page.Resources>
+
+    <Grid x:Name="overallGrid" Background="{ThemeResource SystemControlBackgroundChromeBlackMediumBrush}">
+        <local:OutputSwapChainPanel x:Name="swapChainPanel">
+            <FlyoutBase.AttachedFlyout>
+                <Flyout x:Name="outputSwithFlyout" FlyoutPresenterStyle="{StaticResource flyoutPresenterStyleOutputPicker}">
+                    <Grid x:Name="outputSwitchGrid" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="84" />
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="84"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="44"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="44"/>
+                        </Grid.ColumnDefinitions>
+                        <local:OutputPreviewGridView Grid.Row="1" Grid.Column="1"
+                                                      x:Name="outputSwitchGridView"
+                                                      VerticalAlignment="Stretch"
+                                                      HorizontalAlignment="Stretch"
+                                                      ItemsSource="{Binding OutputSwitchItems, Mode=OneWay}"
+                                                      IsSwipeEnabled="False"
+                                                      IsItemClickEnabled="True"
+                                                      ScrollViewer.HorizontalScrollMode="Disabled"
+                                                      ScrollViewer.HorizontalScrollBarVisibility="Hidden"
+                                                      ScrollViewer.VerticalScrollMode="Disabled"
+                                                      ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                                                      SelectionMode="None"
+                                                      ItemContainerStyle="{StaticResource DesktopViewGridViewItemExpanded}" >
+                            <GridView.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <local:OutputPreviewItemsControl />
+                                </ItemsPanelTemplate>
+                            </GridView.ItemsPanel>
+                            <GridView.ItemTemplate>
+                                <DataTemplate>
+                                    <local:OutputSwapChainPanel Item="{Binding}" />
+                                </DataTemplate>
+                            </GridView.ItemTemplate>
+                        </local:OutputPreviewGridView>
+                        <Grid Grid.Row="2" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <ToggleSwitch Grid.Column="0" 
+                                      x:Name="autoSwitchToggleSwitch"
+                                      x:Uid="DirectXPage_AutoSwitchToggleSwitch"
+                                      Margin="0,0,0,0" />
+                        </Grid>
+                    </Grid>
+                </Flyout>
+            </FlyoutBase.AttachedFlyout>
+        </local:OutputSwapChainPanel>
+
+        <Grid x:Name="errorGrid" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="15*"/>
+                <ColumnDefinition Width="70*"/>
+                <ColumnDefinition Width="15*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="1" x:Name="errorMessage" 
+                       TextAlignment="Center"
+                       TextWrapping="Wrap"
+                       FontSize="25" 
+                       Foreground="Red" 
+                       FontWeight="Bold" 
+                       Text="{Binding Path=ErrorText, Mode=OneWay}"/>
+        </Grid>
+
+        <Grid x:Name="messageTextGrid" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="15*"/>
+                <ColumnDefinition Width="70*"/>
+                <ColumnDefinition Width="15*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="1" 
+                        x:Name="MessageText"
+                        TextAlignment="Center"
+                        TextWrapping="Wrap"
+                        FontSize="25" 
+                        FontWeight="Bold"/>
+        </Grid>
+
+        <Grid x:Name="NeedToStartInHolographicSpaceTextGrid" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="15*"/>
+                <ColumnDefinition Width="70*"/>
+                <ColumnDefinition Width="15*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="1" x:Uid="DirectXPage_HolographicSpaceMessage"
+                    TextAlignment="Center"
+                    TextWrapping="Wrap"
+                    FontSize="25" 
+                    FontWeight="Bold"/>
+        </Grid>
+
+        <Grid x:Name="NoDisplayTextGrid" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="15*"/>
+                <ColumnDefinition Width="70*"/>
+                <ColumnDefinition Width="15*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="1" x:Uid="DirectXPage_NoDisplayMessage"
+                    TextAlignment="Center"
+                    TextWrapping="Wrap"
+                    FontSize="25" 
+                    FontWeight="Bold"/>
+        </Grid>
+
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="CommonStates">
+                <VisualState x:Name="Normal">
+                    <Storyboard >
+                        <DoubleAnimation Storyboard.TargetName="errorGrid" Storyboard.TargetProperty="Opacity" Duration="0" To="0"/>
+                        <DoubleAnimation Storyboard.TargetName="swapChainPanel" Storyboard.TargetProperty="Opacity" Duration="0:0:0.4" To="1"/>
+                        <DoubleAnimation Storyboard.TargetName="messageTextGrid" Storyboard.TargetProperty="Opacity" Duration="0" To="0"/>
+                        <DoubleAnimation Storyboard.TargetName="overallGrid" Storyboard.TargetProperty="Opacity" Duration="0:0:0.6" To="1"/>
+                    </Storyboard>
+                </VisualState>
+                <VisualState x:Name="Error">
+                    <Storyboard >
+                        <DoubleAnimation Storyboard.TargetName="errorGrid" Storyboard.TargetProperty="Opacity" Duration="0:0:0.4" To="1"/>
+                        <DoubleAnimation Storyboard.TargetName="swapChainPanel" Storyboard.TargetProperty="Opacity" Duration="0" To="0"/>
+                        <DoubleAnimation Storyboard.TargetName="messageTextGrid" Storyboard.TargetProperty="Opacity" Duration="0" To="0"/>
+                        <DoubleAnimation Storyboard.TargetName="overallGrid" Storyboard.TargetProperty="Opacity" Duration="0:0:0.6" To="1"/>
+                    </Storyboard>
+                </VisualState>
+                <VisualState x:Name="Message">
+                    <Storyboard >
+                        <DoubleAnimation Storyboard.TargetName="errorGrid" Storyboard.TargetProperty="Opacity" Duration="0" To="0"/>
+                        <DoubleAnimation Storyboard.TargetName="swapChainPanel" Storyboard.TargetProperty="Opacity" Duration="0" To="0"/>
+                        <DoubleAnimation Storyboard.TargetName="messageTextGrid" Storyboard.TargetProperty="Opacity" Duration="0:0:0.4" To="1"/>
+                        <DoubleAnimation Storyboard.TargetName="overallGrid" Storyboard.TargetProperty="Opacity" Duration="0:0:0.6" To="1"/>
+                    </Storyboard>
+                </VisualState>
+                <VisualState x:Name="FlyoutOpen">
+                    <Storyboard >
+                        <DoubleAnimation Storyboard.TargetName="errorGrid" Storyboard.TargetProperty="Opacity" Duration="0" By="0"/>
+                        <DoubleAnimation Storyboard.TargetName="swapChainPanel" Storyboard.TargetProperty="Opacity" Duration="0" By="0"/>
+                        <DoubleAnimation Storyboard.TargetName="messageTextGrid" Storyboard.TargetProperty="Opacity" Duration="0" By="0"/>
+                        <DoubleAnimation Storyboard.TargetName="overallGrid" Storyboard.TargetProperty="Opacity" Duration="0:0:0.6" To="0.4"/>
+                    </Storyboard>
+                </VisualState>
+                <VisualState x:Name="GhostingMode">
+                    <Storyboard >
+                        <DoubleAnimation Storyboard.TargetName="errorGrid" Storyboard.TargetProperty="Opacity" Duration="0" To="0"/>
+                        <DoubleAnimation Storyboard.TargetName="swapChainPanel" Storyboard.TargetProperty="Opacity" Duration="0:0:0.4" To="0"/>
+                        <DoubleAnimation Storyboard.TargetName="messageTextGrid" Storyboard.TargetProperty="Opacity" Duration="0" To="1"/>
+                        <DoubleAnimation Storyboard.TargetName="overallGrid" Storyboard.TargetProperty="Opacity" Duration="0:0:0.6" To="1"/>
+                    </Storyboard>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+
+        <Grid.Triggers>
+            <EventTrigger RoutedEvent="Grid.Loaded">
+                <BeginStoryboard>
+                    <Storyboard>
+                        <DoubleAnimation Storyboard.TargetName="errorGrid" Storyboard.TargetProperty="Opacity" Duration="0" From="1" To="0"/>
+                        <DoubleAnimation Storyboard.TargetName="swapChainPanel" Storyboard.TargetProperty="Opacity" Duration="0" From="1" To="0"/>
+                        <DoubleAnimation Storyboard.TargetName="messageTextGrid" Storyboard.TargetProperty="Opacity" Duration="0" From="1" To="0"/>
+                        <DoubleAnimation Storyboard.TargetName="overallGrid" Storyboard.TargetProperty="Opacity" Duration="0" From="0" To="1"/>
+                    </Storyboard>
+                </BeginStoryboard>
+            </EventTrigger>
+        </Grid.Triggers>
+    </Grid>
+</Page>
+
+

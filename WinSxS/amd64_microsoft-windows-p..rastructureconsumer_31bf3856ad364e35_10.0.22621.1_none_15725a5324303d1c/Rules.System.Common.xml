@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?Copyright (c) Microsoft Corporation. All rights reserved.?>
+<Rules>
+  <Group name="$(GroupCommon)" enabled="true">
+    <Rule name="$(RuleWarningTable)" enabled="true">
+      <Step select="/Report/Section[1]">
+        <Exists>
+          <Otherwise>
+            <Variable name="warningTable">/Report/Section/Table[@name='warning']</Variable>
+            <Insert>
+              <Node axis="preceding-sibling">
+                <Section name="advice" key="100">
+                  <Table name="warning" style="info" key="2" topic="TopicTestResults" expand="true"/>
+                </Section>
+              </Node>
+            </Insert>
+          </Otherwise>
+        </Exists>
+      </Step>
+    </Rule>
+    <Rule name="$(RuleMiss)" enabled="true">
+      <Step select="/Report/Section/Table[@name='collection']/Item[Data[@name='events'] != 0 and Data[@name='lostEvents'] != 0]" fatal="true">
+        <Variable name="events" expression="format-number(Data[@name='events']+Data[@name='lostEvents'],'#,##0')"/>
+        <Variable name="lost" expression="format-number(Data[@name='lostEvents'],'#,##0')"/>
+        <Variable name="percentlost" expression="round((Data[@name='lostEvents'] div (Data[@name='events']+Data[@name='lostEvents']))*100)"/>
+        <Exists>
+          <When expression="{percentlost} &gt;= 10" description="Maximum allowable number of lost trace events. This rule will issue a warning if the number of lost events exceeds this value. The default value is greater than 10%">
+            <Variable name="symptom">$(missingEvents)</Variable>
+            <Variable name="details">$(missingEventsDetails)</Variable>
+            <Variable name="related">$(missingEventsRelated)</Variable>
+            <Warning tag="rptHighLostCount" select="Data[@name='lostEvents']" type="info" table="{warningTable}">
+              <Item>
+                <Data name="severity" img="info" link="rptHighLostCount" message="rptHighLostCount" translate="value">info</Data>
+                <Data name="symptom" message="rptHighLostCount">{symptom}</Data>
+                <Data name="details">{details}</Data>
+                <Data name="related" url="http://go.microsoft.com/fwlink/?LinkID=70094">{related}</Data>
+              </Item>
+            </Warning>
+          </When>
+        </Exists>
+      </Step>
+    </Rule>
+  </Group>
+  <StringTable>
+    <String ID="GroupCommon">Global Warning Table</String>
+    <String ID="RuleWarningTable">Global Warning Table</String>
+    <String ID="RuleMiss">Missing Events in Trace file</String>
+    <String ID="missingEvents">Missing Events in Event Log</String>
+    <String ID="missingEventsDetails">Investigate why {percentlost}% ({lost}) events were lost during data collection.  The settings for Event Tracing for Windows (ETW) maximum buffers and buffer size may not be optimal depending on which data sets are being collected.</String>
+    <String ID="missingEventsRelated">Event Tracing for Windows</String>
+  </StringTable>
+</Rules>

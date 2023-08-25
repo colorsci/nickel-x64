@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='utf-8' standalone='yes'?>
+<assembly
+    xmlns="urn:schemas-microsoft-com:asm.v3"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    manifestVersion="1.0"
+    >
+  <assemblyIdentity
+      buildType="$(build.buildType)"
+      language="neutral"
+      name="Microsoft-Windows-DirectAccessServerManagement"
+      processorArchitecture="*"
+      version="0.0.0.0"
+      />
+  <migration
+      scope="Upgrade,SvrMig"
+      replacementSettingsVersionRange="0"
+      replacementVersionRange="6.1.*"
+      settingsVersion="0"
+      alwaysProcess="yes">
+      >
+    <registerSDF name="RemoteAccessServer"/>
+    <registerSDF name="RemoteAccessPowershell"/>
+    <migXml xmlns="">
+        <detects>
+          <detect>
+            <condition>MigXmlHelper.DoesObjectExist("File","%WinDir%\System32 [damgmt.msc]")</condition>         
+          </detect>
+       </detects>
+      <rules context="System">
+        <include>
+          <objectSet>
+            <pattern type="File">%windir%\DirectAccess\ [DirectAccessConfig.xml]</pattern>
+          </objectSet>
+        </include>
+      </rules>
+    </migXml>
+  </migration>
+</assembly>

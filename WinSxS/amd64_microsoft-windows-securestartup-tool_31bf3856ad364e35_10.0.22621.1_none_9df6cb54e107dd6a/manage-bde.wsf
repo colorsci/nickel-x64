@@ -1,0 +1,32 @@
+<package>
+<job id="manage-bde">
+<script language="VBScript">
+
+'NOTE: manage-bde.wsf has been replaced. Please use the replacement tool,
+'      manage-bde.exe, to perform BitLocker Drive Encryption management
+'      operations. This script is provided as a wrapper for backwards
+'      compatibility only.
+
+strArgs = ""
+
+For I = 0 to WScript.Arguments.Count - 1
+   strArgs = strArgs & " " & WScript.Arguments(I)
+Next
+
+strArgs = strArgs & " -legacy_Vista"
+
+Set objShell = WScript.CreateObject("WScript.Shell")
+
+Set objExecObject = objShell.Exec("%comspec% /c manage-bde.exe " & strArgs)
+
+Do While Not objExecObject.StdOut.AtEndOfStream
+    WScript.StdOut.WriteLine objExecObject.StdOut.ReadLine()
+Loop
+
+Do While Not objExecObject.StdErr.AtEndOfStream
+    WScript.StdErr.WriteLine objExecObject.StdErr.ReadLine()
+Loop
+
+</script>
+</job>
+</package>

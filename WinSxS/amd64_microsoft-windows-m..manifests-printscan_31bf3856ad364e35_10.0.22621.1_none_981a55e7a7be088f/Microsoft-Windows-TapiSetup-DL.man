@@ -1,0 +1,65 @@
+﻿<?xml version='1.0' encoding='utf-8' standalone='yes'?>
+<assembly
+    xmlns="urn:schemas-microsoft-com:asm.v3"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    authors="anandsg"
+    buildFilter=""
+    company="Microsoft"
+    copyright=""
+    creationTimeStamp="2003-07-23T16:58:23.2516123-07:00"
+    description="$(resourceString.description)"
+    displayName="$(resourceString.displayName)"
+    lastUpdateTimeStamp="2004-08-10T10:14:55.3853460-07:00"
+    manifestVersion="1.0"
+    owners="anandsg"
+    supportInformation=""
+    testers="smeesala"
+    >
+  <assemblyIdentity
+      language="*"
+      name="Microsoft-Windows-TapiSetup-DL"
+      processorArchitecture="*"
+      version="0.0.0.0"
+      />
+  <migration scope="Upgrade,MigWiz,USMT">
+    <migXml xmlns="">
+      <rules context="System">
+        <detects>
+          <detect>
+            <!-- DL manifest should not run on Vista itself -->
+            <condition>MigXmlHelper.IsOSEarlierThan("NT", "6.0")</condition>
+          </detect>
+        </detects>
+        <include>
+          <objectSet>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Telephony\Locations\* [*]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Telephony\Server\* [*]</pattern>
+            <pattern type="File">%windir%\TAPI [tsec.ini]</pattern>
+            <!-- manually added, migtranslate tool failed to add this -->
+          </objectSet>
+        </include>
+      </rules>
+      <plugin
+          classId="{cf3b7cbe-c86a-4561-93a8-30e8036170a3}"
+          file="Microsoft-Windows-TapiSetup\TapiMigPlugin.dll"
+          />
+      <rules context="User">
+        <detects>
+          <detect>
+            <!-- DL manifest should not run on Vista itself -->
+            <condition>MigXmlHelper.IsOSEarlierThan("NT", "6.0")</condition>
+          </detect>
+        </detects>
+        <include>
+          <objectSet>
+            <pattern type="Registry">HKCU\Software\Microsoft\Windows\CurrentVersion\Telephony\Locations\* [*]</pattern>
+            <pattern type="Registry">HKCU\Software\Microsoft\Windows\CurrentVersion\Telephony\Cards\* [*]</pattern>
+            <pattern type="Registry">HKCU\Software\Microsoft\Windows\CurrentVersion\Telephony\HandoffPriorities\* [*]</pattern>
+          </objectSet>
+        </include>
+      </rules>
+    </migXml>
+    <migrationDisplayID>Hardware\Phone_and_Modem</migrationDisplayID>
+  </migration>
+</assembly>

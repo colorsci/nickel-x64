@@ -1,0 +1,116 @@
+﻿<?xml version='1.0' encoding='utf-8' standalone='yes'?>
+<assembly
+    xmlns="urn:schemas-microsoft-com:asm.v3"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    authors="gpdev"
+    buildFilter=""
+    company="Microsoft"
+    copyright=""
+    creationTimeStamp="2003-07-10T16:57:29.7034046-07:00"
+    description="Downlevel manifest to upgrade Group Policy Engine settings"
+    displayName="Downlevel manifest to upgrade Group Policy Engine settings"
+    lastUpdateTimeStamp="2005-05-04T04:33:18.0345801Z"
+    manifestVersion="1.0"
+    owners="gpdev"
+    supportInformation=""
+    testers=""
+    >
+  <assemblyIdentity
+      language="*"
+      name="Microsoft-Windows-GroupPolicy-Base-DL"
+      processorArchitecture="*"
+      version="0.0.0.0"
+      />
+  <migration scope="Upgrade,MigWiz">
+    <migrationDisplayID>Performance_and_Maintenance\System_Settings</migrationDisplayID>
+    <migXml xmlns="">
+      <!-- Check as this is only valid for down-level OS < than Windows Vista ? -->
+      <detects>
+        <detect>
+          <condition>MigXmlHelper.IsOSEarlierThan("NT", "6.0.0.0")</condition>
+        </detect>
+      </detects>
+      <rules context="System">
+        <include>
+          <objectSet>
+            <!-- migrate the default Local GPOs -->
+            <pattern type="File">%windir%\system32\GroupPolicy\*[*]</pattern>
+            <!-- migrate the admin, users group Local GPOs -->
+            <pattern type="File">%windir%\system32\GroupPolicyUsers\S-1-5-32-544\*[*]</pattern>
+            <pattern type="File">%windir%\system32\GroupPolicyUsers\S-1-5-32-545\*[*]</pattern>
+          </objectSet>
+        </include>
+      </rules>
+      <rules context="System">
+        <!-- "Upgrade" is the only migration scenario that we want the following items -->
+        <!-- migrated. For e.g., we do NOT want these items to be migrated on "PC-PC" -->
+        <!-- migration scenario. -->
+        <conditions>
+          <condition>MigXmlHelper.IsUpgrade()</condition>
+        </conditions>
+        <include>
+          <objectSet>
+            <!-- migrate the user/group Local GPOs -->
+            <pattern type="File">%windir%\system32\GroupPolicyUsers\*[*]</pattern>
+            <!-- Archive file of registry policy -->
+            <pattern type="File">%ALLUSERSPROFILE% [ntuser.pol]</pattern>
+            <!-- migrate specific winlogon registry keys -->
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [HideStartupScripts]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [HideShutdownScripts]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [RunStartupScriptSync]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [GpNetworkStartTimeoutPolicyValue]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [DenyUsersFromMachGP]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [DisableBkGndGroupPolicy]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [SyncForegroundPolicy]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [DisableLGPOProcessing]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [DenyRsopToInteractiveUser]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [RSoPGarbageCollectionInterval]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [GroupPolicyMinTransferRate]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [WaitForNetwork]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [UserenvDebugLevel]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [RsopDebugLevel]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Diagnostics [gpsvcDebugLevel]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Diagnostics [RunDiagnosticLoggingGlobal]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Diagnostics [RunDiagnosticLoggingGroupPolicy]</pattern>
+            <pattern type="Registry">HKLM\Software\Policies\* [*]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows\CurrentVersion\Policies\* [*]</pattern>
+            <pattern type="Registry">HKLM\System\CurrentControlSet\Policies\* [*]</pattern>
+          </objectSet>
+        </include>
+        <exclude>
+          <objectSet>
+            <!-- Extensibility point, handled by upgrade -->
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows\CurrentVersion\Policies\NonEnum\* [*]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Policies\Microsoft\WindowsFirewall\DomainProfile\* [EnableFirewall]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Policies\Microsoft\WindowsFirewall\StandardProfile\* [EnableFirewall]</pattern>
+          </objectSet>
+        </exclude>
+      </rules>
+      <rules context="User">
+        <!-- "Upgrade" is the only migration scenario that we want the following items -->
+        <!-- migrated. For e.g., we do NOT want these items to be migrated on "PC-PC" -->
+        <!-- migration scenario. -->
+        <conditions>
+          <condition>MigXmlHelper.IsUpgrade()</condition>
+        </conditions>
+        <include>
+          <objectSet>
+            <pattern type="Registry">HKCU\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [HideLogonScripts]</pattern>
+            <pattern type="Registry">HKCU\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [HideLogoffScripts]</pattern>
+            <pattern type="Registry">HKCU\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [RunLogonScriptSync]</pattern>
+            <pattern type="Registry">HKCU\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [GroupPolicyMinTransferRate]</pattern>
+            <pattern type="Registry">HKCU\Software\Policies\* [*]</pattern>
+            <pattern type="Registry">HKCU\Software\Microsoft\Windows\CurrentVersion\Policies\* [*]</pattern>
+            <pattern type="Registry">HKCU\System\CurrentControlSet\Policies\* [*]</pattern>
+          </objectSet>
+        </include>
+        <exclude>
+          <objectSet>
+            <pattern type="Registry">HKCU\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer [DisablePersonalDirChange]</pattern>
+          </objectSet>
+        </exclude>
+      </rules>
+    </migXml>
+  </migration>
+</assembly>

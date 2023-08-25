@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='utf-8' standalone='yes'?>
+<assembly
+    xmlns="urn:schemas-microsoft-com:asm.v3"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    manifestVersion="1.0"
+    >
+  <assemblyIdentity
+      name="Microsoft-Windows-Crypto-keys"
+      version="0.0.0.0"
+      processorArchitecture="*"
+      language="neutral"
+      />
+  <migration scope="Upgrade,MigWiz,USMT" 
+      replacementVersionRange="6.0-6.1"
+      replacementSettingsVersionRange="0"
+      settingsVersion="0"      
+    >
+    <migXml xmlns="">
+      <rules context="User">
+        <include>
+          <objectSet>
+            <pattern type="File">%CSIDL_APPDATA%\Microsoft\Crypto\RSA\*[*]</pattern>
+            <pattern type="File">%CSIDL_APPDATA%\Microsoft\Crypto\DSS\*[*]</pattern>
+            <pattern type="File">%CSIDL_APPDATA%\Microsoft\Crypto\Keys[*]</pattern>
+          </objectSet>
+        </include>
+      </rules>
+      <rules context="System">
+        <include>
+          <objectSet>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Cryptography[MachineGuid]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Cryptography\Defaults\Provider\*[*]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Cryptography\Defaults\Provider Types\*[*]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Wow6432Node\Microsoft\Cryptography\Defaults\Provider\*[*]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Wow6432Node\Microsoft\Cryptography\Defaults\Provider Types\*[*]</pattern>
+          </objectSet>
+        </include>
+      </rules>
+    </migXml>
+    <machineSpecific>
+      <migXml xmlns="">
+        <rules context="System">
+          <include>
+            <objectSet>
+              <pattern type="File">%SYSTEMROOT%\ServiceProfiles\LocalService\AppData\Roaming\Microsoft\Crypto\RSA\*[*]</pattern>
+              <pattern type="File">%SYSTEMROOT%\ServiceProfiles\LocalService\AppData\Roaming\Microsoft\Crypto\DSS\*[*]</pattern>
+              <pattern type="File">%SYSTEMROOT%\ServiceProfiles\LocalService\AppData\Roaming\Microsoft\Crypto\Keys\*[*]</pattern>
+              <pattern type="File">%SYSTEMROOT%\ServiceProfiles\NetworkService\AppData\Roaming\Microsoft\Crypto\RSA\*[*]</pattern>
+              <pattern type="File">%SYSTEMROOT%\ServiceProfiles\NetworkService\AppData\Roaming\Microsoft\Crypto\DSS\*[*]</pattern>
+              <pattern type="File">%ALLUSERSAPPDATA%\Microsoft\Crypto\RSA\MachineKeys[*]</pattern>
+              <pattern type="File">%ALLUSERSAPPDATA%\Microsoft\Crypto\DSS\MachineKeys[*]</pattern>
+            </objectSet>
+          </include>
+        </rules>
+      </migXml>
+    </machineSpecific>
+  </migration>
+</assembly>

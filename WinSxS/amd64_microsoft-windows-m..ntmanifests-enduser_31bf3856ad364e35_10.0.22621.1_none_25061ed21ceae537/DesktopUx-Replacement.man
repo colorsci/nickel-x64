@@ -1,0 +1,70 @@
+﻿<?xml version='1.0' encoding='utf-8' standalone='yes'?>
+<assembly
+    xmlns="urn:schemas-microsoft-com:asm.v3"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    manifestVersion="1.0"
+    >
+  <assemblyIdentity
+      language="neutral"
+      name="Microsoft-Windows-Update-Ux-MusScnHandlers"
+      version="0.0.0.0"
+      processorArchitecture="*"
+      />
+  <migration
+      replacementVersionRange="10.0.18267-10.0.18362"
+      replacementSettingsVersionRange="0"
+      settingsVersion="1"
+      >
+    <migXml xmlns="">
+      <rules context="System">
+        <include>
+          <objectSet>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings [UxOption]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings [ExcludeWUDriversInQualityUpdate]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings [DeferUpgrade]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings [ActiveHoursStart]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings [ActiveHoursEnd]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings [SmartActiveHoursState]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings [SmartActiveHoursSuggestionState]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings [SmartActiveHoursStart]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings [SmartActiveHoursEnd]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings [UserChoiceActiveHoursStart]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings [UserChoiceActiveHoursEnd]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings [LastToastAction]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings [RestartNotificationsAllowed2]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings [FlightCommitted]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings [AllowAutoWindowsUpdateDownloadOverMeteredNetwork]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings [IsExpedited]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\StateVariables [*]</pattern>
+          </objectSet>
+        </include>
+        <exclude>
+          <objectSet>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings [RestartNotificationsAllowed]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings [BranchReadinessLevel]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings [DeferUpgrade]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\StateVariables [RebootRequired]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\StateVariables [ScheduledRebootTime]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\StateVariables [RebootScheduledByUser]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\StateVariables [RebootConfirmedByUser]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\StateVariables [RebootScheduledBySmartScheduler]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\StateVariables [AutoAcceptShownToUser]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\StateVariables [AutoScheduledRebootFailed]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\StateVariables [ScheduledRebootFailed]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\StateVariables [LastAttemptedRebootTime]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\StateVariables [FairWarningLastDismissTime]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\StateVariables [ForcedReminderDisplayed]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\StateVariables [ForceRebootReminderNeeded]</pattern>
+          </objectSet>
+        </exclude>
+        <!-- Migrate RestartNotificationsAllowed to RestartNotificationsAllowed2 if it exists-->
+        <locationModify script="MigXmlHelper.ExactMove(&apos;HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings [RestartNotificationsAllowed2]&apos;)">
+          <objectSet>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings [RestartNotificationsAllowed]</pattern>
+          </objectSet>
+        </locationModify>
+      </rules>
+    </migXml>
+  </migration>
+</assembly>

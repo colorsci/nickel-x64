@@ -1,0 +1,182 @@
+﻿<?xml version='1.0' encoding='utf-8' standalone='yes'?>
+<assembly>
+  <assemblyIdentity
+      language="*"
+      name="Microsoft-Windows-Win32k-Settings-DL"
+      processorArchitecture="*"
+      version="0.0.0.0"
+      />
+  <migration scope="Upgrade,MigWiz,USMT">
+    <migXml xmlns="">
+      <!-- Gather the registry keys that need to be migrated -->
+      <rules context="System">
+        <!-- Check as this is only valid for down-level OS < than Windows Vista -->
+        <detects>
+          <detect>
+            <condition>MigXmlHelper.IsOSEarlierThan("NT", "6.0.0.0")</condition>
+          </detect>
+        </detects>
+        <include>
+          <objectSet>
+            <!-- Current control set settings -->
+            <pattern type="Registry">HKLM\System\CurrentControlSet\Control [WaitToKillServiceTimeout]</pattern>
+            <pattern type="Registry">HKLM\System\CurrentControlSet\Control [ProcessTerminateTimeout]</pattern>
+            <pattern type="Registry">HKLM\System\CurrentControlSet\Control\Windows [ErrorMode]</pattern>
+            <pattern type="Registry">HKLM\System\CurrentControlSet\Control\Terminal Server [NotificationTimeOut]</pattern>
+            <pattern type="Registry">HKLM\System\CurrentControlSet\Control\PriorityControl [Win32PrioritySeparation]</pattern>
+            <pattern type="Registry">HKLM\System\CurrentControlSet\Control\ErrorMessage Instrument\EnableLogging</pattern>
+            <pattern type="Registry">HKLM\System\CurrentControlSet\Control\ErrorMessage Instrument\LogSeverity</pattern>
+            <pattern type="Registry">HKLM\System\CurrentControlSet\Control\ErrorMessage Instrument\EnableDefaultReply</pattern>
+            <pattern type="Registry">HKLM\System\CurrentControlSet\Control\Terminal Server [SnapshotMonitors]</pattern>
+            <!-- Windows NT current version settings -->
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Windows [DisplayVersion]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Windows [ShutdownWarningDialogTimeout]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\IMM [LoadIMM]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\IMM [DontLoadCTFIME]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Console\FullScreen\* [*]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Console\TrueTypeFont\* [*]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Console\ [EnableConImeOnSystemProcess]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Windows [DdeSendTimeout]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Windows [DesktopHeapLogging]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Windows [USERProcessHandleQuota]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Windows [USERPostMessageLimit]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Windows [USERNestedWindowLimit]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Windows [GDIProcessHandleQuota]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\AeDebug [UserDebuggerHotKey]</pattern>
+            <!-- Software Policy settings -->
+            <pattern type="Registry">HKLM\Software\Policies\Microsoft\Windows\System [GPAllowBlockingApps]</pattern>
+            <!-- SystemFont user settings to migrate -->
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Windows [SystemFont]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Windows [SystemFontSize]</pattern>
+            <!-- Font driver settings to migrate -->
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Font Drivers\* [*]</pattern>
+          </objectSet>
+        </include>
+      </rules>
+      <rules context="User">
+        <!-- Check as this is only valid for down-level OS < than Windows Vista -->
+        <detects>
+          <detect>
+            <condition>MigXmlHelper.IsOSEarlierThan("NT", "6.0.0.0")</condition>
+          </detect>
+        </detects>
+        <include>
+          <objectSet>
+            <!-- Desktop settings -->
+            <pattern type="Registry">HKCU\Control Panel\Desktop\* [*]</pattern>
+            <!-- Console settings -->
+            <pattern type="Registry">HKCU\Console\* [*]</pattern>
+            <!-- Mouse settings -->
+            <pattern type="Registry">HKCU\Control Panel\Mouse\* [*]</pattern>
+            <!-- Keyboard settings -->
+            <pattern type="Registry">HKCU\Control Panel\Keyboard\* [*]</pattern>
+            <pattern type="Registry">HKCU\Keyboard Layout\* [*]</pattern>
+            <pattern type="Registry">HKU\.DEFAULT\Control Panel\Keyboard [InitialKeyboardIndicators]</pattern>
+            <!-- Cursor settings -->
+            <pattern type="Registry">HKCU\Control Panel\Cursors\* [*]</pattern>
+            <!-- Icon settings -->
+            <pattern type="Registry">HKCU\Control Panel\Icons\* [*]</pattern>
+            <!-- Input method settings -->
+            <pattern type="Registry">HKCU\Control Panel\Input Method\* [*]</pattern>
+            <!-- Accessibility settings -->
+            <pattern type="Registry">HKCU\Control Panel\Accessibility [MessageDuration]</pattern>
+            <pattern type="Registry">HKCU\Control Panel\Accessibility [MinimumHitRadius]</pattern>
+            <!-- Windows NT current version settings -->
+            <pattern type="Registry">HKCU\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Windows [MenuDropAlignment]</pattern>
+          </objectSet>
+        </include>
+        <!-- Some entries are intentionally not migrated because there is a
+                     difference in the setup sequence between staged and unstaged builds.
+                     On a staged build the values in the manifest overwrite the values
+                     the default Aero theme creates resulting in an inconsistent
+                     user experience. -->
+        <exclude>
+          <objectSet>
+            <!-- Desktop settings -->
+            <pattern type="Registry">HKCU\Control Panel\Desktop\WindowMetrics\* [*]</pattern>
+            <pattern type="Registry">HKCU\Control Panel\Desktop [Wallpaper]</pattern>
+            <pattern type="Registry">HKCU\Control Panel\Desktop [TileWallpaper]</pattern>
+            <pattern type="Registry">HKCU\Control Panel\Desktop [WallpaperStyle]</pattern>
+            <pattern type="Registry">HKCU\Control Panel\Desktop [ScreenSaveTimeOut]</pattern>
+            <pattern type="Registry">HKCU\Control Panel\Desktop [ScreenSaveActive]</pattern>
+            <pattern type="Registry">HKCU\Control Panel\Desktop [ScreenSaverIsSecure]</pattern>
+            <pattern type="Registry">HKCU\Control Panel\Desktop [SCRNSAVE.EXE]</pattern>
+            <pattern type="Registry">HKCU\Control Panel\Desktop [FontSmoothing]</pattern>
+            <pattern type="Registry">HKCU\Control Panel\Desktop [FontSmoothingType]</pattern>
+            <pattern type="Registry">HKCU\Control Panel\Desktop [FontSmoothingGamma]</pattern>
+            <pattern type="Registry">HKCU\Control Panel\Desktop [FontSmoothingOrientation]</pattern>
+            <pattern type="Registry">HKCU\Control Panel\Desktop [WallpaperOriginX]</pattern>
+            <pattern type="Registry">HKCU\Control Panel\Desktop [WallpaperOriginY]</pattern>
+            <pattern type="Registry">HKCU\Control Panel\Desktop [Pattern]</pattern>
+            <pattern type="Registry">HKCU\Control Panel\Desktop [LowLevelHooksTimeout]</pattern>
+            <pattern type="Registry">HKCU\Control Panel\Desktop [DragHeight]</pattern>
+            <pattern type="Registry">HKCU\Control Panel\Desktop [DragWidth]</pattern>
+            <pattern type="Registry">HKCU\Control Panel\Desktop [WheelScrollLines]</pattern>
+            <pattern type="Registry">HKCU\Control Panel\Desktop [WheelScrollChars]</pattern>
+            <pattern type="Registry">HKCU\Control Panel\Desktop [CursorBlinkRate]</pattern>
+            <pattern type="Registry">HKCU\Control Panel\Desktop [CoolSwitchColumns]</pattern>
+            <pattern type="Registry">HKCU\Control Panel\Desktop [CoolSwitchRows]</pattern>
+            <pattern type="Registry">HKCU\Control Panel\Desktop [ActiveWndTrkTimeout]</pattern>
+            <pattern type="Registry">HKCU\Control Panel\Desktop [CaretWidth]</pattern>
+            <pattern type="Registry">HKCU\Control Panel\Desktop [AutoEndTasks]</pattern>
+            <pattern type="Registry">HKCU\Control Panel\Desktop [ForegroundFlashCount]</pattern>
+            <pattern type="Registry">HKCU\Control Panel\Desktop [ForegroundLockTimeout]</pattern>
+            <pattern type="Registry">HKCU\Control Panel\Desktop [HungAppTimeOut]</pattern>
+            <pattern type="Registry">HKCU\Control Panel\Desktop [MenuShowDelay]</pattern>
+            <pattern type="Registry">HKCU\Control Panel\Desktop [PaintDesktopVersion]</pattern>
+            <pattern type="Registry">HKCU\Control Panel\Desktop [WaitToKillTimeOut]</pattern>
+            <pattern type="Registry">HKCU\Control Panel\Desktop [QuickAppShutdownTimeOut]</pattern>
+            <!-- Color settings -->
+            <pattern type="Registry">HKCU\Control Panel\Colors\* [*]</pattern>
+          </objectSet>
+        </exclude>
+      </rules>
+      <rules context="User">
+        <!-- Rule valid only for PC-to-PC migration -->
+        <detects>
+          <detect>
+            <condition negation="Yes">MigXmlHelper.IsUpgrade()</condition>
+          </detect>
+        </detects>
+        <exclude>
+          <objectSet>
+            <!-- Mouse settings -->
+            <pattern type="Registry">HKCU\Control Panel\Mouse [SwapMouseButtons]</pattern>
+            <pattern type="Registry">HKCU\Control Panel\Mouse [Beep]</pattern>
+            <pattern type="Registry">HKCU\Control Panel\Mouse [ExtendedSounds]</pattern>
+            <pattern type="Registry">HKCU\Control Panel\Mouse [MouseThreshold1]</pattern>
+            <pattern type="Registry">HKCU\Control Panel\Mouse [MouseThreshold2]</pattern>
+            <pattern type="Registry">HKCU\Control Panel\Mouse [MouseSpeed]</pattern>
+            <pattern type="Registry">HKCU\Control Panel\Mouse [MouseSensitivity]</pattern>
+            <pattern type="Registry">HKCU\Control Panel\Mouse [MouseTrails]</pattern>
+            <pattern type="Registry">HKCU\Control Panel\Mouse [MouseHoverWidth]</pattern>
+            <pattern type="Registry">HKCU\Control Panel\Mouse [MouseHoverHeight]</pattern>
+            <pattern type="Registry">HKCU\Control Panel\Mouse [MouseHoverTime]</pattern>
+            <pattern type="Registry">HKCU\Control Panel\Mouse [SmoothMouseXCurve]</pattern>
+            <pattern type="Registry">HKCU\Control Panel\Mouse [SmoothMouseYCurve]</pattern>
+            <pattern type="Registry">HKCU\Control Panel\Mouse [DoubleClickSpeed]</pattern>
+            <pattern type="Registry">HKCU\Control Panel\Mouse [DoubleClickHeight]</pattern>
+            <pattern type="Registry">HKCU\Control Panel\Mouse [DoubleClickWidth]</pattern>
+            <pattern type="Registry">HKCU\Control Panel\Mouse [SnapToDefaultButton]</pattern>
+          </objectSet>
+        </exclude>
+      </rules>
+      <rules context="User">
+        <!-- Check as this is only valid for down-level OS <= than Windows 7 -->
+        <detects>
+          <detect>
+            <condition>MigXmlHelper.IsOSEarlierThan("NT", "6.1.0.0")</condition>
+          </detect>
+        </detects>
+        <include>
+          <objectSet>
+            <!-- pen/touch settings -->
+            <!-- flicks and custom flick commands -->
+            <pattern type="Registry">HKCU\Software\Microsoft\Wisp\Pen\SysEventParameters [*]</pattern>
+          </objectSet>
+        </include>
+      </rules>
+    </migXml>
+    <migrationDisplayID>Additional_Options\Windows_Core_Settings</migrationDisplayID>
+  </migration>
+</assembly>

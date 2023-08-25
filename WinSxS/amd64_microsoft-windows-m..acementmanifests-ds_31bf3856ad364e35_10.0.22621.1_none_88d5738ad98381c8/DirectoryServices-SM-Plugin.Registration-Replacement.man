@@ -1,0 +1,45 @@
+﻿<?xml version='1.0' encoding='utf-8' standalone='yes'?>
+<assembly
+    xmlns="urn:schemas-microsoft-com:asm.v3"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    manifestVersion="1.0"
+    authors="algao"
+    >
+  <assemblyIdentity
+      name="Microsoft-Windows-DirectoryServices-SM-Plugin-Registration"
+      processorArchitecture="*"
+      language="neutral"
+      version="0.0.0.0"
+      />
+  <migration
+      settingsVersion="0"
+      replacementSettingsVersionRange="0"
+      replacementVersionRange="6.0.0-6.1.*"
+      alwaysProcess="yes"
+      >
+    <!-- In place upgrade only part -->
+    <machineSpecific>
+      <migXml xmlns="">
+        <rules context="System">
+          <!-- If the machine is a DC then create DS role configuration status for Server Manager -->
+          <conditions>
+            <condition>MigXmlHelper.DoesStringContentEqual("Registry", "HKLM\SYSTEM\CurrentControlSet\control\ProductOptions [ProductType]", "LanmanNT")</condition>
+          </conditions>
+          <addObjects>
+            <object>
+              <location type="Registry">HKLM\SOFTWARE\Microsoft\ServerManager\Roles\10 [ConfigurationStatus]</location>
+              <attributes>DWORD</attributes>
+              <bytes>02000000</bytes>
+            </object>
+          </addObjects>
+          <include>
+            <objectSet>
+              <pattern type="Registry">HKLM\SOFTWARE\Microsoft\ServerManager\Roles\10 [ConfigurationStatus]</pattern>
+            </objectSet>
+          </include>
+        </rules>
+      </migXml>
+    </machineSpecific>
+  </migration>
+</assembly>

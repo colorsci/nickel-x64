@@ -1,0 +1,64 @@
+﻿<?xml version='1.0' encoding='utf-8' standalone='yes'?>
+<assembly
+    xmlns="urn:schemas-microsoft-com:asm.v3"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    authors="joecast; danstrut"
+    buildFilter=""
+    company="Microsoft"
+    copyright=""
+    creationTimeStamp="2003-07-16T14:43:17.4178581-07:00"
+    description="Downlevel manifest for Windows Address book migration of WAB files"
+    displayName="Windows Address Book Downlevel Manifest"
+    lastUpdateTimeStamp="2004-10-12T18:25:46.3522392-07:00"
+    manifestVersion="1.0"
+    owners="joecast"
+    supportInformation=""
+    testers="kfour"
+    >
+  <assemblyIdentity
+      buildFilter=""
+      buildType="release"
+      language="neutral"
+      name="Microsoft-Windows-WAB-DL"
+      processorArchitecture="*"
+      publicKeyToken="$(Build.WindowsPublicKeyToken)"
+      version="0.0.0.0"
+      versionScope="nonSxS"
+      />
+  <migration scope="Upgrade,MigWiz,USMT">
+    <migXml xmlns="">
+      <environment context="System">
+        <variable
+            name="WabExePath"
+            remap="TRUE"
+            >
+          <script>MigXmlHelper.GetStringContent("Registry","HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\wab.exe []")</script>
+        </variable>
+      </environment>
+      <detects>
+        <detect>
+          <condition>MigXmlHelper.IsOSEarlierThan("NT", "6.0.0.0")</condition>
+        </detect>
+      </detects>
+      <rules context="User">
+        <include>
+          <objectSet>
+            <pattern type="File">%APPDATA%\Microsoft\Address Book [*.wab]</pattern>
+            <pattern type="Registry">HKCU\Software\Microsoft\Windows\CurrentVersion\RunOnce [WAB Migrate]</pattern>
+            <pattern type="Registry">HKCU\Software\Microsoft\WAB [WAB Migrate]</pattern>
+          </objectSet>
+        </include>
+        <addObjects>
+          <object>
+            <location type="Registry">HKCU\Software\Microsoft\Windows\CurrentVersion\RunOnce [WAB Migrate]</location>
+            <attributes>ExpandString</attributes>
+            <bytes>2500500072006F006700720061006D00460069006C006500730025005C00570069006E0064006F007700730020004D00610069006C005C007700610062002E0065007800650020002F0055007000670072006100640065000000</bytes>
+            <!-- %ProgramFiles%\Windows Mail\wab.exe /Upgrade -->
+          </object>
+        </addObjects>
+      </rules>
+    </migXml>
+    <migrationDisplayID>Communications_and_Sync\Windows_Mail</migrationDisplayID>
+  </migration>
+</assembly>

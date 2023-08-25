@@ -1,0 +1,51 @@
+﻿<?xml version='1.0' encoding='utf-8' standalone='yes'?>
+<assembly
+    xmlns="urn:schemas-microsoft-com:asm.v3"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    authors="richak"
+    buildFilter=""
+    company="Microsoft Corporation"
+    copyright=""
+    creationTimeStamp="2003-07-22T17:28:24.7884597-07:00"
+    description="Down-level manifest for ADSI Ldap Provider"
+    displayName="Down-level ADSI Ldap Provider"
+    lastUpdateTimeStamp="2005-03-23T19:16:19.5050264Z"
+    manifestVersion="1.0"
+    owners="richak"
+    supportInformation=""
+    testers="smithav"
+    >
+  <assemblyIdentity
+      buildFilter=""
+      buildType="release"
+      language="*"
+      name="Microsoft-Windows-Active-Directory-Services-Interface-LDAP-Provider-DL"
+      processorArchitecture="*"
+      publicKeyToken=""
+      version="0.0.0.0"
+      versionScope="nonSxS"
+      />
+  <migration>
+    <migXml xmlns="">
+      <detects>
+        <detect>
+          <condition>MigXmlHelper.IsOSEarlierThan("NT", "6.0.0")</condition>
+        </detect>
+      </detects>
+      <rules context="System">
+        <include>
+          <objectSet>
+            <pattern type="File">%windir%\SchCache\* [*]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\ADs\Providers\LDAP\* [*]</pattern>
+          </objectSet>
+        </include>
+        <exclude>
+          <objectSet>
+            <pattern type="Registry">HKLM\Software\Microsoft\ADs\Providers\LDAP\Extensions\* [*]</pattern>
+          </objectSet>
+        </exclude>
+      </rules>
+    </migXml>
+  </migration>
+</assembly>

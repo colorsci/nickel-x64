@@ -1,0 +1,225 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<taskGroup xmlns="http://schemas.microsoft.com/windows/2008/deviceExperienceTasks"
+    taskGroupGuid="{07deb856-fc6e-4fb9-8add-d8f2cf8722c9}">
+
+    <tasks>
+
+        <!--Pictures task-->
+        <task
+          id="{d5c93de7-5ac4-4698-acea-d9a02385cd04}"
+          rank="0"
+          issueTime="2008-09-26T12:00:00Z"
+          name="Picture_Task_Name"
+          description="Picture_Task_Description"
+          icon="pictures.ico"
+          changeableTaskType="Get_Pictures"
+          equivalentAutoPlayHandler="MSPhotoAcqHWEventHandler">
+
+            <requirements>
+                <deviceRequirements id="0">
+                    <propertyRequirement name="System.Devices.Connected">true</propertyRequirement>
+                    <functionRequirements id="1">
+                        <!--Must have WPD (WPD_CONTENT_TYPE_ALL) interface-->
+                        <interfaceRequirements id="2">
+                            <propertyRequirement fmtid="{026e516e-b814-414b-83cd-856d6fef4822}"  pid="4">
+                                {6AC27878-A6FA-4155-BA85-F98F491D4F33}
+                            </propertyRequirement>
+                            <propertyRequirement fmtid="{026e516e-b814-414b-83cd-856d6fef4822}"  pid="3">
+                                true
+                            </propertyRequirement>
+                        </interfaceRequirements>
+                        <!--Must have Video (GUID_DEVINTERFACE_IMAGE) interface-->
+                        <interfaceRequirements id="3">
+                            <propertyRequirement fmtid="{026e516e-b814-414b-83cd-856d6fef4822}"  pid="4">
+                                {6bdd1fc6-810f-11d0-bec7-08002be2092f}
+                            </propertyRequirement>
+                            <propertyRequirement fmtid="{026e516e-b814-414b-83cd-856d6fef4822}"  pid="3">
+                                true
+                            </propertyRequirement>
+                        </interfaceRequirements>
+                    </functionRequirements>
+                </deviceRequirements>
+            </requirements>
+
+            <command type="ShellExecute">
+                <arguments>
+                    <commandLine xml:space="preserve">%SystemRoot%\system32\rundll32.exe "%ProgramFiles%\Windows Photo Viewer\photoAcq.dll",PhotoAndVideoAcquire </commandLine>
+                    <commandLine xml:space="preserve"> /a </commandLine>
+                    <shellApplicationID/>
+                    <commandLine xml:space="preserve"> </commandLine>
+                    <property fmtid="{78C34FC8-104A-4ACA-9EA4-524D52996E57}" pid="256" requirementId="1"/>
+                    <commandLine>\</commandLine>
+                    <property fmtid="{026e516e-b814-414b-83cd-856d6fef4822}" pid="4" requirementId="2"/>
+                </arguments>
+            </command>
+        </task>
+
+        <!--Manage media task-->
+        <task
+          id="{54e6d7d6-c881-495f-8651-c47a803d2fce}"
+          rank="2"
+          issueTime="2008-09-26T12:00:00Z"
+          name="Manage_Media_Task_Name"
+          description="Manage_Media_Task_Description"
+          icon="wmp.ico"
+          changeableTaskType="Manage_Media"
+          equivalentAutoPlayHandler="MSWMDMHandler">
+
+            <!--Must have enabled WPD device interface-->
+            <requirements>
+                <deviceRequirements id="0">
+                    <propertyRequirement name="System.Devices.Connected">true</propertyRequirement>
+                    <functionRequirements id="1">
+                        <interfaceRequirements id="2">
+                            <propertyRequirement fmtid="{026e516e-b814-414b-83cd-856d6fef4822}"  pid="4">
+                                {6AC27878-A6FA-4155-BA85-F98F491D4F33}
+                            </propertyRequirement>
+                            <propertyRequirement fmtid="{026e516e-b814-414b-83cd-856d6fef4822}"  pid="3">
+                                true
+                            </propertyRequirement>
+                        </interfaceRequirements>
+                    </functionRequirements>
+                </deviceRequirements>
+              <registryValue path="HKEY_LOCAL_MACHINE\Software\Clients\Media\Windows Media Player\InstallInfo" value="IconsVisible" operator="NotEqual">0</registryValue>
+              <registryKeyExists path="HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\wmplayer.exe"/>
+            </requirements>
+
+            <command type="ShellExecute">
+                <arguments>
+                    <commandLine>&quot;</commandLine>
+                    <appPath>wmplayer.exe</appPath>
+                    <commandLine>&quot;</commandLine>
+                    <commandLine xml:space="preserve"> /Task:PortableDevice /Device:NonVolume:</commandLine>
+                    <!--Device symbolic link path-->
+                    <property fmtid="{53808008-07BB-4661-BC3C-B5953E708560}" pid="1" requirementId="2"/>
+                </arguments>
+            </command>
+        </task>
+
+        <!--Setup sync-->
+        <task
+          id="{241ed13e-92eb-4d9e-a47d-be3aff03b1b9}"
+          rank="3"
+          issueTime="2008-09-26T12:00:00Z"
+          name="Sync_Task_Name"
+          description="Sync_Task_Description"
+          icon="sync.ico">
+
+            <!--Must have enabled WPD device interface-->
+            <requirements>
+                <deviceRequirements id="0">
+                    <propertyRequirement name="System.Devices.Connected">true</propertyRequirement>
+                    <functionRequirements id="1">
+                        <interfaceRequirements id="2">
+                            <propertyRequirement fmtid="{026e516e-b814-414b-83cd-856d6fef4822}"  pid="4">
+                                {6AC27878-A6FA-4155-BA85-F98F491D4F33}
+                            </propertyRequirement>
+                            <propertyRequirement fmtid="{026e516e-b814-414b-83cd-856d6fef4822}"  pid="3">
+                                true
+                            </propertyRequirement>
+                        </interfaceRequirements>
+                    </functionRequirements>
+                </deviceRequirements>
+                <processor architecture="x86" />
+            </requirements>
+            <requirements>
+                <deviceRequirements id="0">
+                    <propertyRequirement name="System.Devices.Connected">true</propertyRequirement>
+                    <functionRequirements id="1">
+                        <interfaceRequirements id="2">
+                            <propertyRequirement fmtid="{026e516e-b814-414b-83cd-856d6fef4822}"  pid="4">
+                                {6AC27878-A6FA-4155-BA85-F98F491D4F33}
+                            </propertyRequirement>
+                            <propertyRequirement fmtid="{026e516e-b814-414b-83cd-856d6fef4822}"  pid="3">
+                                true
+                            </propertyRequirement>
+                        </interfaceRequirements>
+                    </functionRequirements>
+                </deviceRequirements>
+                <processor architecture="amd64" />
+            </requirements>
+
+            <command type="InPaneLayout">
+                <arguments>
+                    <commandLine>dxptasksync.dll,100</commandLine>
+                </arguments>
+            </command>
+        </task>
+
+        <!--Browse-->
+        <task
+          id="{29e7ef4e-b212-4bf9-b95b-1e073fba48e8}"
+          rank="4"
+          issueTime="2008-09-26T12:00:00Z"
+          name="Browse_Task_Name"
+          description="Browse_Task_Description"
+          icon="folder.ico"
+          equivalentAutoPlayHandler="MSWPDShellNamespaceHandler">
+
+            <!--Must have enabled WPD device interface-->
+            <requirements>
+                <deviceRequirements id="0">
+                    <propertyRequirement name="System.Devices.Connected">true</propertyRequirement>
+                    <functionRequirements id="1">
+                        <interfaceRequirements id="2">
+                            <propertyRequirement fmtid="{026e516e-b814-414b-83cd-856d6fef4822}"  pid="4">
+                                {6AC27878-A6FA-4155-BA85-F98F491D4F33}
+                            </propertyRequirement>
+                            <propertyRequirement fmtid="{026e516e-b814-414b-83cd-856d6fef4822}"  pid="3">
+                                true
+                            </propertyRequirement>
+                        </interfaceRequirements>
+                    </functionRequirements>
+                </deviceRequirements>
+            </requirements>
+
+            <command type="ShellExecute">
+                <arguments>
+                    <!--WPD Shell Extension GUID-->
+                    <commandLine>::{20D04FE0-3AEA-1069-A2D8-08002B30309D}\</commandLine>
+                    <!--Device symbolic link path-->
+                    <property fmtid="{53808008-07BB-4661-BC3C-B5953E708560}" pid="1" requirementId="2"/>
+                </arguments>
+            </command>
+        </task>
+
+        <!--Settings-->
+        <task
+          id="{c463887e-0db9-46b9-8c73-9de665d0a62b}"
+          rank="5"
+          issueTime="2008-09-26T12:00:00Z"
+          name="Settings_Task_Name"
+          description="Settings_Task_Description"
+          icon="settings.ico">
+
+            <!--Device must be connected-->
+            <requirements>
+                <deviceRequirements id="0">
+                    <propertyRequirement name="System.Devices.Connected">true</propertyRequirement>
+                </deviceRequirements>
+            </requirements>
+
+            <command type="InPaneLayout">
+                <arguments>
+                    <commandLine>dxp.dll,100</commandLine>
+                </arguments>
+            </command>
+        </task>
+
+    </tasks>
+
+    <taskCategoryMapping>
+        <!--Pictures-->
+        <taskRef taskGroupGuid="{07deb856-fc6e-4fb9-8add-d8f2cf8722c9}" taskId="{d5c93de7-5ac4-4698-acea-d9a02385cd04}"/>
+        <!--Ringtones-->
+        <taskRef taskGroupGuid="{07deb856-fc6e-4fb9-8add-d8f2cf8722c9}" taskId="{633bd6e8-0f50-4e28-b330-cc22fa995702}"/>
+        <!--Manage media-->
+        <taskRef taskGroupGuid="{07deb856-fc6e-4fb9-8add-d8f2cf8722c9}" taskId="{54e6d7d6-c881-495f-8651-c47a803d2fce}"/>
+        <!--Setup Sync-->
+        <taskRef taskGroupGuid="{07deb856-fc6e-4fb9-8add-d8f2cf8722c9}" taskId="{241ed13e-92eb-4d9e-a47d-be3aff03b1b9}"/>
+        <!--Browse-->
+        <taskRef taskGroupGuid="{07deb856-fc6e-4fb9-8add-d8f2cf8722c9}" taskId="{29e7ef4e-b212-4bf9-b95b-1e073fba48e8}"/>
+        <!--Settings-->
+        <taskRef taskGroupGuid="{07deb856-fc6e-4fb9-8add-d8f2cf8722c9}" taskId="{c463887e-0db9-46b9-8c73-9de665d0a62b}"/>
+    </taskCategoryMapping>
+</taskGroup>

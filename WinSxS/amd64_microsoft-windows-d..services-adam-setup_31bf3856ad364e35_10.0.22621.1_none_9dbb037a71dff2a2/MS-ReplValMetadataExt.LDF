@@ -1,0 +1,54 @@
+#==================================================================
+# @@UI-Description: AD LDS ReplValueMetaDataExt.
+#
+# This file contains user extensions for default schema, both AD and ADAM.
+# It should be imported with the following command:
+#   ldifde -i -f MS-ParentDistname.LDF -s server:port -b username domain password -k -j . -c "CN=Schema,CN=Configuration,DC=X" #schemaNamingContext
+#
+#==================================================================
+
+# Attributes
+
+dn:
+changetype: modify
+add: schemaUpgradeInProgress
+schemaUpdateInProgress: 1
+-
+
+dn: CN=ms-DS-Repl-Value-Meta-Data-Ext,CN=Schema,CN=Configuration,DC=X
+changetype: ntdsSchemaAdd
+objectClass: attributeSchema
+ldapDisplayName: msDS-ReplValueMetaDataExt
+adminDisplayName: ms-DS-Repl-Value-Meta-Data-Ext
+adminDescription: ms-DS-Repl-Value-Meta-Data-Ext
+attributeId: 1.2.840.113556.1.4.2235
+attributeSyntax: 2.5.5.12
+omSyntax: 64
+isSingleValued: FALSE
+systemOnly: FALSE
+searchFlags: 0
+schemaIdGuid:: 79ICHq1EskamfZ/RjXgLyg==
+showInAdvancedViewOnly: TRUE
+# 0x10 (base schema) + 
+# 0x04 (constructed)
+systemFlags: 20
+
+
+dn:
+changetype: modify
+add: schemaUpdateNow
+schemaUpdateNow: 1
+-
+
+dn: cn=Top,cn=Schema,cn=Configuration,dc=X
+changetype: ntdsschemamodify
+add: systemMayContain
+# mayContain: msDS-ReplValueMetaDataExt
+systemMayContain: 1.2.840.113556.1.4.2235
+-
+
+dn:
+changetype: modify
+add: schemaUpdateNow
+schemaUpdateNow: 1
+-

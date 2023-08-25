@@ -1,0 +1,53 @@
+﻿<?xml version='1.0' encoding='utf-8' standalone='yes'?>
+<assembly
+    xmlns="urn:schemas-microsoft-com:asm.v3"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    authors="noskov"
+    buildFilter=""
+    company="MS"
+    copyright=""
+    creationTimeStamp="2003-07-31T16:53:06.3611682-07:00"
+    description="Downlevel manifest for netlogon"
+    displayName="Downlevel manifest for netlogon"
+    lastUpdateTimeStamp="2003-07-31T16:53:06.3611682-07:00"
+    manifestVersion="1.0"
+    owners="noskov"
+    supportInformation=""
+    testers="divyan"
+    >
+  <assemblyIdentity
+      buildFilter=""
+      buildType="release"
+      language="neutral"
+      name="Microsoft-Windows-Security-Netlogon-DL"
+      processorArchitecture="*"
+      publicKeyToken="$(Build.WindowsPublicKeyToken)"
+      version="0.0.0.0"
+      versionScope="nonSxS"
+      />
+  <migration>
+    <machineSpecific>
+      <migXml xmlns="">
+        <detects>
+          <detect>
+            <condition>MigXmlHelper.IsOSEarlierThan("NT", "6.0.0.0")</condition>
+          </detect>
+        </detects>
+        <rules context="System">
+          <include>
+            <objectSet>
+              <pattern type="File">%windir%\system32\config [netlogon.dns]</pattern>
+              <pattern type="File">%windir%\system32\config [netlogon.dnb]</pattern>
+              <pattern type="File">%windir%\system32\config [netlogon.ftl]</pattern>
+              <pattern type="File">%windir%\system32\config [netlogon.ftj]</pattern>
+              <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\Netlogon\Parameters\* [*]</pattern>
+              <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\Netlogon [Start]</pattern>
+              <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\Netlogon [DependOnService]</pattern>
+            </objectSet>
+          </include>
+        </rules>
+      </migXml>
+    </machineSpecific>
+  </migration>
+</assembly>

@@ -1,0 +1,85 @@
+﻿<?xml version='1.0' encoding='utf-8' standalone='yes'?>
+<assembly>
+  <assemblyIdentity
+      language="neutral"
+      name="Microsoft-Windows-COM-DTC-Setup"
+      processorArchitecture="*"
+      version="0.0.0.0"
+      versionScope="nonSxS"
+      />
+  <migration
+     scope="Upgrade,MigWiz,USMT"
+     replacementSettingsVersionRange="0"
+     settingsVersion="1">
+    <machineSpecific>
+      <migXml xmlns="">
+        <environment context="System">
+          <variable name="CidGuid">
+            <script>MigXmlHelper.GetStringContent("Registry","HKLM\Software\Classes\SVCID.Local\488091f0-bff6-11ce-9de8-00aa00a3f464\DefaultProvider []")</script>
+          </variable>
+          <variable name="LogLocation">
+            <script>MigXmlHelper.GetStringContent("Registry","HKLM\Software\Classes\CID.Local\%CidGuid%\CustomProperties\LOG\Path []")</script>
+          </variable>
+        </environment>
+        <rules context="System">
+          <include>
+            <objectSet>
+              <pattern type="Registry">HKLM\Software\Microsoft\MSDTC\Security\XAKey\* [*]</pattern>
+              <pattern type="Registry">HKLM\Software\Microsoft\MSDTC\Security\XAKeyCNG\* [*]</pattern>
+              <pattern type="Registry">HKLM\Software\Microsoft\MSDTC\Security\XAKeyCNGKeyDataBlob\* [*]</pattern>
+              <pattern type="Registry">HKLM\Software\Microsoft\MSDTC\Security [AccountName]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\MSDTC [ObjectName]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\MSDTC [Start]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\MSDTC [DelayedAutostart]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\MSDTC [FailureActions]</pattern>
+              <pattern type="Registry">HKLM\Software\Microsoft\MSDTC\MTxOCI\* [*]</pattern>
+              <pattern type="Registry">HKLM\Software\Microsoft\MSDTC\XADLL\* [*]</pattern>
+              <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Control\BackupRestore\FilesNotToBackup [MS Distributed Transaction Coordinator]</pattern>
+              <pattern type="Registry">HKLM\Software\Microsoft\MSDTC\Setup [DownlevelVersion]</pattern>
+              <pattern type="File">%SYSTEMROOT%\System32\MSDTC\Trace [dtctrace.log*]</pattern>
+              <pattern type="File">%SYSTEMROOT%\System32\MSDTC [KtmRmTm*]</pattern>
+              <pattern type="File">%SYSTEMROOT% [DtcInstall.log]</pattern>
+              <pattern type="File">%LogLocation%</pattern>
+              <pattern type="File">%LogLocation% [MSDTC.LOG]</pattern>
+            </objectSet>
+          </include>
+          <addObjects>
+            <object>
+              <location type="Registry">HKLM\Software\Microsoft\MSDTC\Setup [DownlevelVersion]</location>
+              <attributes>dword</attributes>
+              <!-- Keep this value in sync with the "VISTA_VERSION" value defined in SharedSetup.h -->
+              <bytes>06000000</bytes>
+            </object>
+          </addObjects>
+        </rules>
+        <rules context="System">
+          <include>
+            <objectSet>
+              <pattern type="Registry">HKLM\Software\Classes\CID\* [*]</pattern>
+              <pattern type="Registry">HKLM\Software\Classes\CID.Local\* [*]</pattern>
+              <pattern type="Registry">HKLM\Software\Classes\SVCID\* [*]</pattern>
+              <pattern type="Registry">HKLM\Software\Classes\SVCID.Local\* [*]</pattern>
+            </objectSet>
+          </include>
+        </rules>
+      </migXml>
+    </machineSpecific>
+    <migXml xmlns="">
+      <rules context="System">
+        <include>
+          <objectSet>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Tracing\MSDTC\* [*]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\MSDTC [*]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\MSDTC\Security [*]</pattern>
+          </objectSet>
+        </include>
+        <exclude>
+          <objectSet>
+            <pattern type="Registry">HKLM\Software\Microsoft\MSDTC\Security [AccountName]</pattern>
+          </objectSet>
+        </exclude>
+      </rules>
+    </migXml>
+    <migrationDisplayID>Additional_Options\Windows_Core_Settings</migrationDisplayID>
+  </migration>
+</assembly>

@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Configuration>
+  <ViewDefinitions>
+    <!--
+
+    //
+    // StorageQoSPolicy
+    //
+
+    -->
+    <View>
+      <Name>PolicyTableView</Name>
+      <ViewSelectedBy>
+        <TypeName>Microsoft.Management.Infrastructure.CimInstance#MSFT_StorageQoSPolicy</TypeName>
+      </ViewSelectedBy>
+      <TableControl>
+          <TableHeaders>
+            <TableColumnHeader>
+              <Label>Name</Label>
+            </TableColumnHeader>
+            <TableColumnHeader>
+              <Label>MinimumIops</Label>
+            </TableColumnHeader>
+            <TableColumnHeader>
+              <Label>MaximumIops</Label>
+            </TableColumnHeader>
+            <TableColumnHeader>
+              <Label>MaximumIOBandwidth</Label>
+            </TableColumnHeader>
+            <TableColumnHeader>
+              <Label>Status</Label>
+            </TableColumnHeader>
+          </TableHeaders>
+          <TableRowEntries>
+            <TableRowEntry>
+              <TableColumnItems>
+                <TableColumnItem>
+                  <PropertyName>Name</PropertyName>
+                </TableColumnItem>
+                <TableColumnItem>
+                  <PropertyName>MinimumIops</PropertyName>
+                </TableColumnItem>
+                <TableColumnItem>
+                  <PropertyName>MaximumIops</PropertyName>
+                </TableColumnItem>
+                <TableColumnItem>
+                  <ScriptBlock>
+                    return [string][System.Math]::Round($_.MaximumIOBandwidth / 1000000, 1) + " MB/s"
+                  </ScriptBlock>
+                </TableColumnItem>
+                <TableColumnItem>
+                  <PropertyName>Status</PropertyName>
+                </TableColumnItem>
+              </TableColumnItems>
+            </TableRowEntry>
+          </TableRowEntries>
+      </TableControl>
+    </View>
+    <!--
+
+    //
+    // StorageQoSFlow
+    //
+
+    -->
+    <View>
+      <Name>FlowTableView</Name>
+      <ViewSelectedBy>
+        <TypeName>Microsoft.Management.Infrastructure.CimInstance#MSFT_StorageQoSFlow</TypeName>
+      </ViewSelectedBy>
+      <TableControl>
+          <TableHeaders>
+            <TableColumnHeader>
+              <Label>InitiatorName</Label>
+            </TableColumnHeader>
+            <TableColumnHeader>
+              <Label>FilePath</Label>
+            </TableColumnHeader>
+            <TableColumnHeader>
+              <Label>InitiatorIOPS</Label>
+            </TableColumnHeader>
+            <TableColumnHeader>
+              <Label>InitiatorLatency</Label>
+            </TableColumnHeader>
+            <TableColumnHeader>
+              <Label>InitiatorBandwidth</Label>
+            </TableColumnHeader>
+          </TableHeaders>
+          <TableRowEntries>
+            <TableRowEntry>
+              <TableColumnItems>
+                <TableColumnItem>
+                  <PropertyName>InitiatorName</PropertyName>
+                </TableColumnItem>
+                <TableColumnItem>
+                  <PropertyName>FilePath</PropertyName>
+                </TableColumnItem>
+                <TableColumnItem>
+                  <PropertyName>InitiatorIOPS</PropertyName>
+                </TableColumnItem>
+                <TableColumnItem>
+                  <ScriptBlock>
+                    return [string]([System.Math]::Round($_.InitiatorLatency, 1)) + " ms"
+                  </ScriptBlock>
+                </TableColumnItem>
+                <TableColumnItem>
+                  <ScriptBlock>
+                    return [string][System.Math]::Round($_.InitiatorBandwidth / 1000000, 1) + " MB/s"
+                  </ScriptBlock>
+                </TableColumnItem>
+              </TableColumnItems>
+            </TableRowEntry>
+          </TableRowEntries>
+      </TableControl>
+    </View>
+    <!--
+
+    //
+    // StorageQoSVolume
+    //
+
+    -->
+    <View>
+      <Name>VolumeTableView</Name>
+      <ViewSelectedBy>
+        <TypeName>Microsoft.Management.Infrastructure.CimInstance#MSFT_StorageQoSVolume</TypeName>
+      </ViewSelectedBy>
+      <TableControl>
+          <TableHeaders>
+            <TableColumnHeader>
+              <Label>Mountpoint</Label>
+            </TableColumnHeader>
+            <TableColumnHeader>
+              <Label>IOPS</Label>
+            </TableColumnHeader>
+            <TableColumnHeader>
+              <Label>Latency</Label>
+            </TableColumnHeader>
+            <TableColumnHeader>
+              <Label>Bandwidth</Label>
+            </TableColumnHeader>
+            <TableColumnHeader>
+              <Label>Status</Label>
+            </TableColumnHeader>
+          </TableHeaders>
+          <TableRowEntries>
+            <TableRowEntry>
+              <TableColumnItems>
+                <TableColumnItem>
+                  <PropertyName>Mountpoint</PropertyName>
+                </TableColumnItem>
+                <TableColumnItem>
+                  <PropertyName>IOPS</PropertyName>
+                </TableColumnItem>
+                <TableColumnItem>
+                  <ScriptBlock>
+                    return [string]([System.Math]::Round($_.Latency, 1)) + " ms"
+                  </ScriptBlock>
+                </TableColumnItem>
+                <TableColumnItem>
+                  <ScriptBlock>
+                    return [string][System.Math]::Round($_.Bandwidth / 1000000, 1) + " MB/s"
+                  </ScriptBlock>
+                </TableColumnItem>
+                <TableColumnItem>
+                  <PropertyName>Status</PropertyName>
+                </TableColumnItem>
+              </TableColumnItems>
+            </TableRowEntry>
+          </TableRowEntries>
+      </TableControl>
+    </View>
+    <!--
+
+    //
+    // StorageQoSPolicyStore
+    //
+
+    -->
+    <View>
+      <Name>PolicyStoreTableView</Name>
+      <ViewSelectedBy>
+        <TypeName>Microsoft.Management.Infrastructure.CimInstance#MSFT_StorageQoSPolicyStore</TypeName>
+      </ViewSelectedBy>
+      <TableControl>
+          <TableHeaders>
+            <TableColumnHeader>
+              <Label>IOPSNormalizationSize</Label>
+            </TableColumnHeader>
+          </TableHeaders>
+          <TableRowEntries>
+            <TableRowEntry>
+              <TableColumnItems>
+                <TableColumnItem>
+                  <PropertyName>IOPSNormalizationSize</PropertyName>
+                </TableColumnItem>
+              </TableColumnItems>
+            </TableRowEntry>
+          </TableRowEntries>
+      </TableControl>
+    </View>
+  </ViewDefinitions>
+</Configuration>

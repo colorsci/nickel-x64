@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?Copyright (c) Microsoft Corporation. All rights reserved.?>
+<Rules>
+  <Group name="$(GroupSysHealth)" enabled="true">
+    <Rule name="$(RuleSysHealthInsert)" enabled="true">
+      <Step select="/Report/Section[@name='advice']">
+        <Exists>
+          <Otherwise>
+            <Insert>
+              <Node axis="child">
+                <Table name="sysHealthSummary" level="1" style="custom" key="100" topic="TopicPerfSummary" expand="true">
+                  <Header>
+                    <Data name="SysHealthComponentHdr" class="string"/>
+                    <Data name="SysHealthStatusHdr" class="string"/>
+                    <Data name="SysHealthUtilizationHdr" class="string"/>
+                    <Data name="SysHealthDetailsHdr" class="string"/>
+                  </Header>
+                </Table>
+              </Node>
+            </Insert>
+          </Otherwise>
+        </Exists>
+      </Step>
+    </Rule>
+    <Rule name="$(RuleSysHealthCpu)" enabled="true">
+      <Step select="/Report/Section/Table[@name='imageStats']/Item[Data[@name='image']='Idle']" fatal="true">
+        <Exists>
+          <Otherwise>
+            <Variable name="cpu" expression="100 - Data[@name='cpu']"/>
+            <Variable name="cpu" expression="round('{cpu}')"/>
+          </Otherwise>
+        </Exists>
+      </Step>
+      <Step select="/Report/Section/Table[@name='imageStats']/Item[Data[@name='image']='Idle']" fatal="true">
+        <Exists>
+          <When expression="{cpu} &lt; 20" description="CPU usage for the idle state. The default value is less than or equal to 20% CPU usage">
+            <Variable name="syshealthicon">green</Variable>
+            <Variable name="syshealthstate">$(SysHealthStateIdle)</Variable>
+            <Variable name="syshealthdetail">$(SysHealthDetailCpuIdle)</Variable>
+          </When>
+          <When expression="{cpu} &gt;= 20 and {cpu} &lt;= 70" description="CPU usage range for a normal state. The default boundary values are less than 20% and greater than 80% CPU usage.">
+            <Variable name="syshealthicon">green</Variable>
+            <Variable name="syshealthstate">$(SysHealthStateNormal)</Variable>
+            <Variable name="syshealthdetail">$(SysHealthDetailCpuNormal)</Variable>
+          </When>
+          <When expression="{cpu} &gt;= 70 and {cpu} &lt;= 80">
+            <Variable name="syshealthicon">yellow</Variable>
+            <Variable name="syshealthstate">$(SysHealthStateNormal)</Variable>
+            <Variable name="syshealthdetail">$(SysHealthDetailCpuNormal)</Variable>
+          </When>
+          <When expression="{cpu} &gt; 80" description="CPU usage for the busy state. The default value is greater than or equal to 80% CPU usage">
+            <Variable name="syshealthicon">red</Variable>
+            <Variable name="syshealthstate">$(SysHealthStateBusy)</Variable>
+            <Variable name="syshealthdetail">$(SysHealthDetailCpuBusy)</Variable>
+          </When>
+        </Exists>
+      </Step>
+      <Step select="/Report/Section/Table[@name='sysHealthSummary']" fatal="true">
+        <Exists>
+          <Otherwise>
+            <Insert>
+              <Node>
+                <Item>
+                  <Data name="component" translate="value">SysHealthCpuComponent</Data>
+                  <Data name="status" img="{syshealthicon}">{syshealthstate}</Data>
+                  <Data name="util" format="0" units="%">{cpu}</Data>
+                  <Data name="detail">{syshealthdetail}</Data>
+                </Item>
+              </Node>
+            </Insert>
+          </Otherwise>
+        </Exists>
+      </Step>
+    </Rule>
+    <Rule name="$(RuleSysHealthNetwork)" enabled="true">
+      <Step select="/Report/Section/Table[@name='networkinterface']/Item[Data[@name='instance'] != 'MS TCP Loopback interface' and Data[@name='counter']='Bytes Total/sec']" sortDataType="number" sortType="max" sortNode="Data[@name='mean']" fatal="true">
+        <Exists>
+          <Otherwise>
+            <Variable name="netin" expression="Data[@name='instance']"/>
+            <Variable name="totalbits" expression="(Data[@name='mean']) * 8"/>
+            <Variable name="prttotalbits" expression="format-number({totalbits},'#,##0')"/>
+          </Otherwise>
+        </Exists>
+      </Step>
+      <Step select="/Report/Section/Table[@name='networkinterface']/Item[Data[@name='counter']='Current Bandwidth' and Data[@name='instance']='{netin}']" fatal="true">
+        <Exists>
+          <Otherwise>
+            <Variable name="bandwidth" expression="Data[@name='mean']"/>
+            <Variable name="prtbandwidth" expression="format-number(Data[@name='mean'],'#,##0')"/>
+            <Variable name="utilization" expression="format-number(({totalbits} div {bandwidth}) * 100,'0')"/>
+          </Otherwise>
+        </Exists>
+      </Step>
+      <Step select="/Report/Section/Table[@name='networkinterface']/Item[Data[@name='counter']='Current Bandwidth' and Data[@name='instance']='{netin}']" fatal="true">
+        <Exists>
+          <When expression="{utilization} &lt; 15" description="Network usage for the low state. The default value is less than or equal to 15% network usage.">
+            <Variable name="syshealthicon">green</Variable>
+            <Variable name="syshealthstate">$(SysHealthStateIdle)</Variable>
+            <Variable name="syshealthdetail">$(SysHealthDetailNetIdle)</Variable>
+          </When>
+          <When expression="{utilization} &gt;= 15  and {utilization}  &lt; 60" description="Network usage range for the normal state. The default boundary values are greater than 15% and less than 60% memory usage.">
+            <Variable name="syshealthicon">green</Variable>
+            <Variable name="syshealthstate">$(SysHealthStateNormal)</Variable>
+            <Variable name="syshealthdetail">$(SysHealthDetailNetNormal)</Variable>
+          </When>
+          <When expression="{utilization} &gt;= 60  and {utilization} &lt; 80">
+            <Variable name="syshealthicon">yellow</Variable>
+            <Variable name="syshealthstate">$(SysHealthStateBusy)</Variable>
+            <Variable name="syshealthdetail">$(SysHealthDetailNetBusy)</Variable>
+          </When>
+          <When expression="{utilization} &gt;= 80" description="Network usage for the high state. The default value is greater than or equal to 60% network usage.">
+            <Variable name="syshealthicon">red</Variable>
+            <Variable name="syshealthstate">$(SysHealthStateBusy)</Variable>
+            <Variable name="syshealthdetail">$(SysHealthDetailNetBusy)</Variable>
+          </When>
+        </Exists>
+      </Step>
+      <Step select="/Report/Section/Table[@name='sysHealthSummary']" fatal="true">
+        <Variable name="syshealthdetailnote">$(SysHealthDetailNetNote)</Variable>
+        <Exists>
+          <Otherwise>
+            <Insert>
+              <Node>
+                <Item>
+                  <Data name="component" translate="value">SysHealthNetComponent</Data>
+                  <Data name="status" img="{syshealthicon}">{syshealthstate}</Data>
+                  <Data name="util" format="0" units="%">{utilization}</Data>
+                  <Data name="detail" note="{syshealthdetailnote}">{syshealthdetail}</Data>
+                </Item>
+              </Node>
+            </Insert>
+          </Otherwise>
+        </Exists>
+      </Step>
+    </Rule>
+    <Rule name="$(RuleSysHealthDisk)" enabled="true">
+      <Step select="/Report/Section/Table[@name='diskTotals']/Item[Data[@name='ioRate']]" sortDataType="number" sortType="max" sortNode="Data[@name='ioRate']" fatal="true">
+        <Exists>
+          <Otherwise>
+            <Variable name="diskio" expression="Data[@name='ioRate']"/>
+            <Variable name="diskr" expression="format-number(Data[@name='readRate'],'#,##0.0')"/>
+            <Variable name="diskw" expression="format-number(Data[@name='writeRate'],'#,##0.0')"/>
+            <Variable name="disknumber" expression="Data[@name='diskNumber']"/>
+          </Otherwise>
+        </Exists>
+      </Step>
+      <Step select="/Report/Section/Table[@name='diskTotals']/Item[Data[@name='ioRate']]" sortDataType="number" sortType="max" sortNode="Data[@name='ioRate']" fatal="true">
+        <Exists>
+          <When expression="Data[@name='ioRate'] &lt; 100" description="Maximum I/O rate for the idle state. The default value is less than or equal to 100 I/O operations per second.">
+            <Variable name="syshealthicon">green</Variable>
+            <Variable name="syshealthstate">$(SysHealthStateIdle)</Variable>
+            <Variable name="syshealthdetail">$(SysHealthDetailDskIdle)</Variable>
+          </When>
+          <When expression="{diskio} &gt;= 100 and {diskio} &lt;= 500" description="I/O rate range for a normal state. The default boundary values are greater than 100. Minimum I/O rate for a busy state. The default value is greater than or equal to 500 I/O operations per second.">
+            <Variable name="syshealthicon">green</Variable>
+            <Variable name="syshealthstate">$(SysHealthStateNormal)</Variable>
+            <Variable name="syshealthdetail">$(SysHealthDetailDskNormal)</Variable>
+          </When>
+          <When expression="{diskio} &gt;= 500" description="I/O rate is high. The default boundary values are greater than I/O rate for a busy state. The default value is greater than or equal to 500 I/O operations per second.">
+            <Variable name="syshealthicon">red</Variable>
+            <Variable name="syshealthstate">$(SysHealthStateBusy)</Variable>
+            <Variable name="syshealthdetail">$(SysHealthDetailDskBusy)</Variable>
+          </When>
+        </Exists>
+      </Step>
+      <Step select="/Report/Section/Table[@name='sysHealthSummary']" fatal="true">
+        <Variable name="syshealthdetailnote">$(SysHealthDetailDskNote)</Variable>
+        <Exists>
+          <Otherwise>
+            <Insert>
+              <Node>
+                <Item>
+                  <Data name="component" translate="value">SysHealthDskComponent</Data>
+                  <Data name="status" img="{syshealthicon}">{syshealthstate}</Data>
+                  <Data name="util" format="0" units="/sec">{diskio}</Data>
+                  <Data name="detail" note="{syshealthdetailnote}">{syshealthdetail}</Data>
+                </Item>
+              </Node>
+            </Insert>
+          </Otherwise>
+        </Exists>
+      </Step>
+    </Rule>
+    <Rule name="$(RuleSysHealthMemory)" enabled="true">
+      <Step select="/Report/Section[@name='tracerptHeader']/Table[@name='client']/Item/Data[@name='memory']" fatal="true">
+        <Variable name="physicalmem" expression="."/>
+        <Exists>
+          <When expression="{physicalmem} &gt; 1"/>
+        </Exists>
+      </Step>
+      <Step select="/Report/Section/Table[@name='memory']/Item[Data[@name='counter']='Available Bytes']" fatal="true">
+        <Exists>
+          <Otherwise>
+            <Variable name="avamem" expression="Data[@name='mean']"/>
+            <Variable name="availablemem" expression="{avamem} div 1048576"/>
+            <Variable name="prettyavailablemem" expression="round('{availablemem}')"/>
+            <Variable name="ratiomem" expression="1 - ({availablemem} div {physicalmem})"/>
+            <Variable name="mem" expression="format-number({ratiomem} * 100,'0')"/>
+          </Otherwise>
+        </Exists>
+      </Step>
+      <Step select="/Report">
+        <Exists>
+          <When expression="{mem} &lt; 0">
+            <Variable name="mem" expression="'0'"/>
+          </When>
+        </Exists>
+      </Step>
+      <Step select="/Report/Section/Table[@name='memory']/Item[Data[@name='counter']='Available Bytes']" fatal="true">
+        <Exists>
+          <When expression="{mem} &lt; 15">
+            <Variable name="syshealthicon">green</Variable>
+            <Variable name="syshealthstate">$(SysHealthStateIdle)</Variable>
+            <Variable name="syshealthdetail">$(SysHealthDetailMemIdle)</Variable>
+          </When>
+          <When expression="{mem} &gt;= 15 and {mem} &lt; 60" description="Memory usage range for the low state. The default boundary values are greater than 0% Memory usage range for the normal state. The default boundary values are greater than 15% and less than 75% memory usage.">
+            <Variable name="syshealthicon">green</Variable>
+            <Variable name="syshealthstate">$(SysHealthStateNormal)</Variable>
+            <Variable name="syshealthdetail">$(SysHealthDetailMemNormal)</Variable>
+          </When>
+          <When expression="{mem} &gt;= 60 and {mem} &lt;= 75">
+            <Variable name="syshealthicon">yellow</Variable>
+            <Variable name="syshealthstate">$(SysHealthStateNormal)</Variable>
+            <Variable name="syshealthdetail">$(SysHealthDetailMemNormal)</Variable>
+          </When>
+          <When expression="{mem} &gt;= 75 and {mem} &lt;= 100" description="Memory usage range for the high state. The default boundary values are geater than 75% and less than 100% memory usage.">
+            <Variable name="syshealthicon">red</Variable>
+            <Variable name="syshealthstate">$(SysHealthStateBusy)</Variable>
+            <Variable name="syshealthdetail">$(SysHealthDetailMemBusy)</Variable>
+          </When>
+          <When expression="{mem} &gt; 100">
+            <Variable name="syshealthicon">red</Variable>
+            <Variable name="syshealthstate">$(SysHealthStateIdle)</Variable>
+            <Variable name="syshealthdetail">$(SysHealthDetailMemIdle)</Variable>
+            <Variable name="mem">0</Variable>
+          </When>
+          <When expression="{mem} &lt; 0">
+            <Variable name="syshealthicon">green</Variable>
+            <Variable name="syshealthstate">$(SysHealthStateIdle)</Variable>
+            <Variable name="syshealthdetail">$(SysHealthDetailMemIdle)</Variable>
+            <Variable name="mem">0</Variable>
+          </When>
+        </Exists>
+      </Step>
+      <Step select="/Report/Section/Table[@name='sysHealthSummary']" fatal="true">
+        <Exists>
+          <Otherwise>
+            <Insert>
+              <Node>
+                <Item>
+                  <Data name="component" translate="value">SysHealthMemComponent</Data>
+                  <Data name="status" img="{syshealthicon}">{syshealthstate}</Data>
+                  <Data name="util" format="0" units="%">{mem}</Data>
+                  <Data name="detail">{syshealthdetail}</Data>
+                </Item>
+              </Node>
+            </Insert>
+            <Insert>
+              <Node>
+                <Summary key="100" find="field" field="component" value="SysHealthMemComponent" topic="memory">
+                  <Data name="util" label="SysHealthUtilizationHdr"/>
+                </Summary>
+              </Node>
+            </Insert>
+          </Otherwise>
+        </Exists>
+      </Step>
+    </Rule>
+    <Rule name="$(RuleSysHealthInsertConfig)" enabled="true" visible="false">
+      <Step select="/Report/Section[@name='SystemConfig']" fatal="true">
+        <Exists>
+          <Otherwise>
+            <Insert>
+              <Node document="Configuration.xml" select="/Report/Section/*"/>
+            </Insert>
+            <Insert select="/Report/Section[@name='SystemConfig']/Table[@name='networkInformation']">
+              <Attribute name="topic" value="system"/>
+            </Insert>
+            <Insert select="/Report/Section[@name='SystemConfig']/Table[@name='registryKeys']">
+              <Attribute name="topic" value="settings"/>
+            </Insert>
+          </Otherwise>
+        </Exists>
+      </Step>
+    </Rule>
+    <Rule name="$(RuleSysHealthRptDisplay)" enabled="true">
+      <Step select="/Report" fatal="true">
+        <UserInput name="userlevel" expression="1"/>
+        <Exists>
+          <When expression="{userlevel} &lt;= 2" description="This value sets the level of detail in the Server Performance Advisor report. The default value is less than or equal to 2 (least detail).">
+            <Insert>
+              <Attribute name="level" value="{userlevel}"/>
+            </Insert>
+          </When>
+        </Exists>
+      </Step>
+    </Rule>
+  </Group>
+  <StringTable>
+    <String ID="GroupSysHealth">System Health</String>
+    <String ID="RuleSysHealthCpu">CPU Utilization</String>
+    <String ID="RuleSysHealthDisk">Disk Utilization</String>
+    <String ID="RuleSysHealthInsertConfig">Insert Configuration table into final report</String>
+    <String ID="RuleSysHealthMemory">Memory Utilization</String>
+    <String ID="RuleSysHealthNetwork">Network Utilization</String>
+    <String ID="RuleSysHealthInsert">System Health Table Insert</String>
+    <String ID="RuleSysHealthRptDisplay">Report Display Level</String>
+    <String ID="SysHealthDetailCpuBusy">High CPU load. Investigate Top Processes.</String>
+    <String ID="SysHealthDetailCpuIdle">Low CPU load.</String>
+    <String ID="SysHealthDetailCpuNormal">Normal CPU load.</String>
+    <String ID="SysHealthDetailDskBusy">Disk I/O is more than 500 (read/write) per second on disk {disknumber}.</String>
+    <String ID="SysHealthDetailDskIdle">Disk I/O is less than 100 (read/write) per second on disk {disknumber}.</String>
+    <String ID="SysHealthDetailDskNormal">Disk I/O is between 100 and 500 (read/write) per second on disk {disknumber}.</String>
+    <String ID="SysHealthDetailMemBusy">{prettyavailablemem} MB Available.</String>
+    <String ID="SysHealthDetailMemIdle">{prettyavailablemem} MB Available.</String>
+    <String ID="SysHealthDetailMemNormal">{prettyavailablemem} MB Available.</String>
+    <String ID="SysHealthDetailNetBusy">Busiest network adapter exceeded 60%.</String>
+    <String ID="SysHealthDetailNetIdle">Busiest network adapter is less than 15%.</String>
+    <String ID="SysHealthDetailNetNormal">Busiest network adapter is between 15% and 60%.</String>
+    <String ID="SysHealthDetailDskNote">Reads {diskr}/sec + Writes {diskw}/sec</String>
+    <String ID="SysHealthDetailNetNote">Nic {netin} using {prttotalbits} bits and has {prtbandwidth} bits capacity.</String>
+    <String ID="SysHealthStateBusy">Busy</String>
+    <String ID="SysHealthStateIdle">Idle</String>
+    <String ID="SysHealthStateNormal">Normal</String>
+  </StringTable>
+</Rules>

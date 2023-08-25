@@ -1,0 +1,810 @@
+<?xml version="1.0"?>
+
+<!--***************************************************************************
+
+  Copyright (c) Microsoft Corporation. All rights reserved.
+
+****************************************************************************-->
+
+<Rules>
+
+<StringTable>
+  <String ID="GroupWiredNetwork" loc.comment="Wired Network Repro The Problem Rule Group">Wired Network Troubleshooter</String>
+  <String ID="RuleInsertWiredNetworkTables" loc.comment="Rule to insert Wired Network Repro The Problem tables.">Insert Wired Network Troubleshooting Tables</String>
+  <String ID="RuleCreateRegistryWiredAdapterTable" loc.comment="Rule to create table of adapter information from the registry information">Create Registry Adapter Table</String>
+  <String ID="RuleNetworkWiredSetup" loc.comment="Rule to create summary table for Wired Network rules">Create Network Wired Summary Table</String>
+  <String ID="RuleDisabledWiredAdaptersCheck" loc.comment="Rule to check that wired adapters listed in the registry are enabled">Check For Enabled Wired Adapters</String>
+  <String ID="RuleNetworkWiredSummary" loc.comment="Rule to summarize summary table for Wired Network rules">Summarize Network Wired Summary Table</String>
+  <String ID="RuleWiredNetworkCleanup" loc.comment="Name of Rules to cleanup Wired Network report">Wired Network Cleanup</String>
+  <String ID="RuleInformationListInsert" loc.comment="Name of rule to insert summary table">Insert Information List</String>
+  <String ID="RuleAddWarningTable" loc.comment="Marked as not seen anywhere">Create Top Warning Table</String>
+
+  <String ID="RuleSlimServicesTable" loc.comment="Only used in WDC Console">Turn Services into notes</String>
+  <String ID="RuleNoteErrorCodes" loc.comment="Name of rule to change File error codes into descriptions" >Change Errors codes into descriptions</String>
+  <String ID="RuleFileHyper" loc.comment="Name of rule to insert a link to Files collected using PLA">Insert File To Link</String>
+
+  <String ID="LOC_TableNetworkWiredSummary" loc.comment="Title of Network Wired Summary Group in Rules Summary Table">Wired Network Checks</String>
+  <String ID="LOC_DescNetworkWiredSummary" loc.comment="Description of the Network Wired Summary Group in Rules Summary Table">Troubleshooter logic related to the Wired Network state</String>
+
+  <String ID="LOC_RuleDisabledWiredAdaptersCheck" loc.comment="Rule to check that wired adapters listed in the registry are enabled">Check For Enabled Wired Adapters</String>
+
+  <String ID="LOC_TrueString"  loc.comment="Text value of TRUE">True</String>
+  <String ID="LOC_FalseString" loc.comment="Text value of FALSE">False</String>
+  <String ID="LOC_Failed" loc.comment="Text to display when a rule or group of rules failed">Failed</String>
+  <String ID="LOC_Passed" loc.comment="Text to display when a rule or group of rules passed">Passed</String>
+
+  <String ID="LOC_EnvironmentInfoFileName" loc.comment="Name of file with config info">Environment Info</String>
+
+  <String ID="NoteServiceProperlyStopped0" loc.comment="Report service table comment">Service is stopped and Exit Code is 0 (Normal). {summary}</String>
+  <String ID="NoteServiceProperlyStopped1077" loc.comment="Report service table comment">Service is stopped and Exit Code is 1077 (Normal). {summary}</String>
+  <String ID="NoteServiceRunning" loc.comment="Report service table comment">Service is running. {summary}</String>
+
+  <String ID="NoteCode80070003" loc.comment="Text to display in note related to Open File result code 0x80070003">Code 0x8007003</String>
+  <String ID="LOC_PathNotFound" loc.comment="Text to display when File path is not found"                 >The system cannot find the path specified.</String>
+  <String ID="NoteCode0" loc.comment="Text to display in note related to Open File result code 0x0">Code 0x0</String>
+  <String ID="LOC_Success" loc.comment="Text to display when File operation succeeds"                 >Success</String>
+
+
+<String ID="WarnFailWiredAdapterCheck_symptom" loc.comment="Symptom string for warning message: WarnFailWiredAdapterCheck">A wired network adapter is disabled on the system.</String>
+<String ID="WarnFailWiredAdapterCheck_cause" loc.comment="Cause string for warning message: WarnFailWiredAdapterCheck">A wired network adapter installed on the system is listed as disabled.</String>
+<String ID="WarnFailWiredAdapterCheck_details" loc.comment="Details string for warning message: WarnFailWiredAdapterCheck">The wired network adapter {adaptername} is disabled.</String>
+<String ID="WarnFailWiredAdapterCheck_res1" loc.comment="Resolution string for warning message: WarnFailWiredAdapterCheck">Have user enter Device Manager.</String>
+<String ID="WarnFailWiredAdapterCheck_res2" loc.comment="Resolution string for warning message: WarnFailWiredAdapterCheck">Locate and enable {adaptername}.</String>
+
+<String ID="WarnFailNoWiredAdapterEnabled_symptom" loc.comment="Symptom string for warning message: WarnFailNoWiredAdapterEnabled">All wired network adapters on the system are disabled.</String>
+<String ID="WarnFailNoWiredAdapterEnabled_cause" loc.comment="Cause string for warning message: WarnFailNoWiredAdapterEnabled">No wired network adapter installed on the system is listed as enabled.</String>
+<String ID="WarnFailNoWiredAdapterEnabled_details" loc.comment="Details string for warning message: WarnFailNoWiredAdapterEnabled">The adapter: {adaptername} is disabled.</String>
+<String ID="WarnFailNoWiredAdapterEnabled_res1" loc.comment="Resolution string for warning message: WarnFailNoWiredAdapterEnabled">Have user enter Device Manager.</String>
+<String ID="WarnFailNoWiredAdapterEnabled_res2" loc.comment="Resolution string for warning message: WarnFailNoWiredAdapterEnabled">Locate and enable a wired network adapter, possibly {adaptername}.</String>
+
+</StringTable>
+
+
+ <Group name="$(GroupWiredNetwork)" enabled="true" > 
+
+   <Rule name="$(RuleInsertWiredNetworkTables)" enabled="true">
+    <Step select="/Report/Section[@name='SectionWired']">
+      <Exists>
+       <Otherwise>
+        <Insert select=".">
+          <Node axis="child">
+            <Table name="TableWiredOSInformation" anchor="TableWiredOSInformation" topic="TopicWiredSoftware" key="10">
+              <Header>
+                <Data name="managementObjectsProperty" />
+                <Data name="managementObjectsValue" />
+              </Header>
+            </Table>
+          </Node>
+        </Insert>
+        <Insert select="Table[@name='TableWiredOSInformation']">
+         <Node axis="child" document="temp/Operating System.xml" select="/Report/Section/Table[@name='managementObjects']/Item/Item/Item" /> 
+        </Insert>
+        <Delete select="Table[@name='TableWiredOSInformation']/Item[Data[@name='managementObjectsProperty'] = 'Manufacturer' or Data[@name='managementObjectsProperty'] = 'Model' or Data[@name='managementObjectsProperty'] = 'Name' or Data[@name='managementObjectsProperty'] = 'UserName' or Data[@name='managementObjectsProperty'] = 'PowerOnline']" />
+       </Otherwise>
+      </Exists>
+    </Step>
+
+
+    <Step select="/Report/Section[@name='SectionWired']">
+      <Exists>
+       <Otherwise>
+        <Insert select=".">
+          <Node axis="child">
+            <Table name="TableWiredFileVersions" anchor="TableWiredFileVersions" topic="TopicWiredSoftware" key="15">
+              <Header>
+              <Data name="managementObjectsRelativePath" />
+                <Header>
+                  <Data name="managementObjectsProperty" />
+                  <Data name="managementObjectsValue" />
+                </Header>
+              </Header>
+            </Table>
+          </Node>
+        </Insert>
+        <Insert select="Table[@name='TableWiredFileVersions']">
+         <Node axis="child" document="temp/fileversions.wired.xml" select="/Report/Section/Table[@name='managementObjects']/Item/Item" /> 
+        </Insert>
+       </Otherwise>
+      </Exists>
+    </Step>
+
+
+    <Step select="/Report/Section[@name='SectionWired']">
+      <Exists>
+       <Otherwise>
+        <Insert select=".">
+         <Node axis="child" document="temp/regAdapterInfo.wired.xml" select="/Report/Section/Table[@name='registryKeys']" /> 
+        </Insert>
+        <Insert select="Table[@name='registryKeys']">  
+         <Attribute name="name" value="TableTempWiredRegAdapterInfo"/>
+         <Attribute name="anchor" value="TableTempWiredRegAdapterInfo"/>
+<Attribute name="topic" value="TopicWiredHardware"/>
+<Attribute name="key" value="22"/>
+        </Insert>
+       </Otherwise>
+      </Exists>
+    </Step>
+
+
+    <Step select="/Report/Section[@name='SectionWired']">
+      <Exists>
+       <Otherwise>
+        <Insert select=".">
+          <Node axis="child">
+            <Table name="TableWiredSystemInformation" anchor="TableWiredSystemInformation" topic="TopicWiredHardware" key="20">
+              <Header>
+                <Data name="managementObjectsProperty" />
+                <Data name="managementObjectsValue" />
+              </Header>
+            </Table>
+          </Node>
+        </Insert>
+        <Insert select="Table[@name='TableWiredSystemInformation']">
+         <Node axis="child" document="temp/Operating System.xml" select="/Report/Section/Table[@name='managementObjects']/Item/Item/Item" /> 
+        </Insert>
+        <Delete select="Table[@name='TableWiredSystemInformation']/Item[Data[@name='managementObjectsProperty'] = 'BuildNumber' or Data[@name='managementObjectsProperty'] = 'BuildType' or Data[@name='managementObjectsProperty'] = 'Caption' or Data[@name='managementObjectsProperty'] = 'Version' or Data[@name='managementObjectsProperty'] = 'UserName' or Data[@name='managementObjectsProperty'] = 'PowerOnline']" />
+       </Otherwise>
+      </Exists>
+    </Step>
+
+
+    <Step select="/Report/Section[@name='SectionWired']">
+      <Exists>
+       <Otherwise>
+        <Insert select=".">
+         <Node axis="child" document="temp/adapterinfo.wired.xml" select="/Report/Section/Table[@name='managementObjects']" /> 
+        </Insert>
+        <Insert select="Table[@name='managementObjects']">  
+         <Attribute name="name" value="TableWiredAdapterInfo"/>
+         <Attribute name="anchor" value="TableWiredAdapterInfo"/>
+<Attribute name="topic" value="TopicWiredHardware"/>
+<Attribute name="key" value="30"/>
+        </Insert>
+       </Otherwise>
+      </Exists>
+    </Step>
+
+
+    <Step select="/Report/Section[@name='SectionWired']">
+      <Exists>
+       <Otherwise>
+        <Insert select=".">
+         <Node axis="child" document="temp/System Services.xml" select="/Report/Section/Table[@name='managementObjects']" /> 
+        </Insert>
+        <Insert select="Table[@name='managementObjects']">  
+         <Attribute name="name" value="TableWiredServicesInformation"/>
+         <Attribute name="anchor" value="TableWiredServicesInformation"/>
+<Attribute name="topic" value="TopicWiredSystemState"/>
+<Attribute name="key" value="47"/>
+        </Insert>
+       </Otherwise>
+      </Exists>
+    </Step>
+
+
+    <Step select="/Report/Section[@name='SectionWired']">
+      <Exists>
+       <Otherwise>
+        <Insert select=".">
+          <Node axis="child">
+            <Table name="TableWiredPowerInformation" anchor="TableWiredPowerInformation" topic="TopicWiredSystemState" key="48">
+              <Header>
+                <Data name="managementObjectsProperty" />
+                <Data name="managementObjectsValue" />
+              </Header>
+            </Table>
+          </Node>
+        </Insert>
+        <Insert select="Table[@name='TableWiredPowerInformation']">
+         <Node axis="child" document="temp/Operating System.xml" select="/Report/Section/Table[@name='managementObjects']/Item/Item/Item" /> 
+        </Insert>
+        <Delete select="Table[@name='TableWiredPowerInformation']/Item[Data[@name='managementObjectsProperty'] != 'PowerOnline']" />
+       </Otherwise>
+      </Exists>
+    </Step>
+
+
+    <Step select="/Report/Section[@name='SectionWired']">
+      <Exists>
+       <Otherwise>
+        <Insert select=".">
+          <Node axis="child">
+            <Table name="TableWiredUserInformation" anchor="TableWiredUserInformation" topic="TopicWiredSystemState" key="49">
+              <Header>
+                <Data name="managementObjectsProperty" />
+                <Data name="managementObjectsValue" />
+              </Header>
+            </Table>
+          </Node>
+        </Insert>
+        <Insert select="Table[@name='TableWiredUserInformation']">
+         <Node axis="child" document="temp/Operating System.xml" select="/Report/Section/Table[@name='managementObjects']/Item/Item/Item" /> 
+        </Insert>
+        <Delete select="Table[@name='TableWiredUserInformation']/Item[Data[@name='managementObjectsProperty'] != 'UserName']" />
+       </Otherwise>
+      </Exists>
+    </Step>
+
+    <Step select="/Report/Section[@name='SectionWired']">
+      <Exists>
+       <Otherwise>
+        <Insert select=".">
+         <Node axis="child" document="temp/wlanextProcesses.wired.xml" select="/Report/Section/Table[@name='managementObjects']" /> 
+        </Insert>
+        <Insert select="Table[@name='managementObjects']">  
+         <Attribute name="name" value="TableWiredWLanProcesses"/>
+         <Attribute name="anchor" value="TableWiredWLanProcesses"/>
+<Attribute name="topic" value="TopicWiredSystemState"/>
+<Attribute name="key" value="50"/>
+        </Insert>
+       </Otherwise>
+      </Exists>
+    </Step>
+
+    <Step select="/Report/Section[@name='SectionWired']">
+      <Exists>
+       <Otherwise>
+        <Insert select=".">
+		<Node axis="child">
+		   <Table name="TableEnvironmentInfo">
+             <Header>
+               <Data name="filename"/>
+             </Header>
+   		   </Table>
+ 		</Node>
+        </Insert>
+        <Insert select="Table[@name='TableEnvironmentInfo']">  
+<Attribute name="topic" value="TopicWiredSystemState"/>
+<Attribute name="key" value="52"/>
+        </Insert>
+
+       </Otherwise>
+      </Exists>
+    </Step>
+
+
+    <Step select="/Report/Section[@name='SectionWired']/Table[@name='TableEnvironmentInfo']">
+      <Exists>
+       <Otherwise>
+        <Variable name="filename">$(LOC_EnvironmentInfoFileName)</Variable>
+        <Insert select=".">
+	 <Node axis="child">
+           <Item>
+             <Data name="filename" url="envinfo.txt">{filename}</Data>
+           </Item>
+	 </Node>
+        </Insert>
+       </Otherwise>
+      </Exists>
+    </Step>
+
+    <Step select="/Report/Section[@name='SectionWired']">
+      <Exists>
+       <Otherwise>
+        <Insert select=".">
+         <Node axis="child" document="temp/GPInfo.wired.xml" select="/Report/Section/Table[@name='configurationFiles']" /> 
+        </Insert>
+        <Insert select="Table[@name='configurationFiles']">  
+         <Attribute name="name" value="TableWiredGPInfoFiles"/>
+         <Attribute name="anchor" value="TableWiredGPInfoFiles"/>
+<Attribute name="topic" value="TopicWiredConfiguration"/>
+<Attribute name="key" value="80"/>
+        </Insert>
+       </Otherwise>
+      </Exists>
+    </Step>
+
+
+    <Step select="/Report/Section[@name='SectionWired']">
+      <Exists>
+       <Otherwise>
+        <Insert select=".">
+         <Node axis="child" document="temp/ConfigData.wired.xml" select="/Report/Section/Table[@name='configurationFiles']" /> 
+        </Insert>
+        <Insert select="Table[@name='configurationFiles']">  
+         <Attribute name="name" value="TableWiredConfigDataFiles"/>
+         <Attribute name="anchor" value="TableWiredConfigDataFiles"/>
+<Attribute name="topic" value="TopicWiredConfiguration"/>
+<Attribute name="key" value="100"/>
+        </Insert>
+       </Otherwise>
+      </Exists>
+    </Step>
+
+  </Rule>
+
+  <Rule name="$(RuleInformationListInsert)" enabled="true">
+    <Step select="/Report/Section[@name='advice']/Table[last()]">
+      <Exists>
+       <Otherwise>
+        <Insert>
+          <Node axis="preceding-sibling">
+             <Table name="alltests" style="columns">
+                <Header>
+                  <Data name="alltestgroups"/>
+                  <Data name="allteststatus"/>
+                  <Data name="alltestdesc"/>
+                  <Header>
+                    <Data name="allchildtest"/>
+                    <Data name="allchildtotal"/>
+                    <Data name="allchildfail"/>
+                    <Data name="allchilddesc"/>
+                  </Header>
+                </Header>
+             </Table>
+          </Node>
+        </Insert>
+
+       </Otherwise>
+      </Exists>
+    </Step>
+  </Rule>
+
+  <Rule name="$(RuleAddWarningTable)" enabled="true" visible="false">
+   <Step select="/Report/Section[@name='advice']">
+    <Exists>
+     <Otherwise>
+      <Variable name="internalruleindex" expression="'0'"/>
+      <Insert select=".">
+       <Node axis="child">
+        <Table name="error" style="info" key="1">
+        </Table>
+       </Node>
+      </Insert>
+     </Otherwise>
+    </Exists>
+   </Step>
+
+   <Step select="/Report/Section[@name='advice']">
+    <Exists>
+     <Otherwise>
+      <Variable name="internalruleindex" expression="'0'"/>
+      <Insert select=".">
+       <Node axis="child">
+        <Table name="warning" style="info" key="2">
+        </Table>
+       </Node>
+      </Insert>
+     </Otherwise>
+    </Exists>
+   </Step>
+
+   <Step select="/Report/Section[@name='advice']">
+    <Exists>
+     <Otherwise>
+      <Variable name="internalruleindex" expression="'0'"/>
+      <Insert select=".">
+       <Node axis="child">
+        <Table name="info" style="info" key="3">
+        </Table>
+       </Node>
+      </Insert>
+     </Otherwise>
+    </Exists>
+   </Step>
+  </Rule>
+
+
+  <Rule name="$(RuleWiredNetworkCleanup)" enabled="true">
+        <Step select="/Report/Section/Table/Item/Item/Item[Data[@name='managementObjectsProperty']='Active' and Data[@name='managementObjectsValue'] = '-1']" sortType="all">
+         <Exists>
+          <Otherwise>
+           <Variable name="newwmivalue">$(LOC_TrueString)</Variable>
+           <Delete select="Data[@name='managementObjectsValue']"/>
+           <Insert select=".">
+            <Node axis="child">
+              <Data name="managementObjectsValue" note="-1">{newwmivalue}</Data>
+            </Node>
+           </Insert>
+          </Otherwise>
+         </Exists>
+        </Step>
+        
+
+        <Step select="/Report/Section/Table/Item/Item/Item[Data[@name='managementObjectsProperty']='Active' and Data[@name='managementObjectsValue'] = '0']" sortType="all">
+         <Exists>
+          <Otherwise>
+           <Variable name="newwmivalue">$(LOC_FalseString)</Variable>
+           <Delete select="Data[@name='managementObjectsValue']"/>
+           <Insert select=".">
+            <Node axis="child">
+              <Data name="managementObjectsValue" note="0">{newwmivalue}</Data>
+            </Node>
+           </Insert>
+          </Otherwise>
+         </Exists>
+        </Step>
+        
+
+    <Step select="/Report/Section[@name='tracerptDisk']">
+      <Exists>
+        <Otherwise>
+          <Delete select="." />
+        </Otherwise>
+      </Exists>
+    </Step>
+
+    <Step select="/Report/Section[@name='tracerptHeader']">
+      <Exists>
+        <Otherwise>
+          <Delete select="."/>
+        </Otherwise>
+      </Exists>
+    </Step>
+  </Rule>
+
+  <Rule name="$(RuleCreateRegistryWiredAdapterTable)" enabled="true">
+    <Step select="/Report/Section[@name='SectionWired']/Table[@name='TableTempWiredRegAdapterInfo']">
+      <Exists>
+        <Otherwise>
+          <Variable name="wiredregistrydataexists" expression="number('0')" />
+        </Otherwise>
+      </Exists>
+      <Otherwise>
+        <Variable name="wiredregistrydataexists" expression="number('0')" />
+      </Otherwise>
+    </Step>
+
+    <Step select="/Report/Section[@name='SectionWired']/Table[@name='TableWiredAdapterInfo']/Item[contains(Data[@name='managementObjectsQuery'], 'MSNdis_EnumerateAdapter')]">
+      <Exists>
+        <Otherwise>
+          <Variable name="wiredwmidataexists" expression="number('1')" />
+        </Otherwise>
+      </Exists>
+      <Otherwise>
+        <Variable name="wiredwmidataexists" expression="number('0')" />
+      </Otherwise>
+    </Step>
+
+    <Step select="/Report/Section[@name='SectionWired']/Table[@name='TableTempWiredRegAdapterInfo']" fatal="true">
+      <Exists>
+        <Otherwise />
+      </Exists>
+    </Step>
+
+    <Step select="/Report/Section[@name='SectionWired']/Table[@name='TableWiredAdapterInfo']/Item[contains(Data[@name='managementObjectsQuery'], 'MSNdis_EnumerateAdapter')]" fatal="true">
+      <Exists>
+        <Otherwise />
+      </Exists>
+    </Step>
+
+    <Step select="/Report/Section[@name='SectionWired']" fatal="true" >
+      <Exists>
+        <Otherwise>
+          <Insert select=".">
+            <Node axis="child">
+              <Table name="TableWiredRegAdapterInfo" topic="TopicWiredHardware" key="20">
+                <Header>
+                  <Data name="wireddriverdesc" class="string"/>
+                  <Data name="wirednetcfginstanceid" class="string"/>
+                  <Data name="wiredmatchingdeviceid" class="string"/>
+                  <Data name="wireddriverdate" class="string"/>
+                  <Data name="wireddriverversion" class="string"/>
+                  <Data name="wiredprovidername" class="string"/>
+                </Header>
+              </Table>
+            </Node>
+          </Insert>
+
+        </Otherwise>
+      </Exists>
+    </Step>
+
+    <Step select="/Report/Section[@name='SectionWired']/Table[@name='TableTempWiredRegAdapterInfo']/Item/Item" sortType="all">
+      <Variable name="keyname" expression="Data[@name='registryKeysKey']" />
+      <Variable name="keyvalue" expression="Data[@name='registryKeysValue']" />
+      <Exists>
+        <When expression="contains('{keyname}', '*IfType') and {keyvalue} = 6">
+          <Variable name="parentkeyname" expression="substring-before('{keyname}', '*IfType')" />
+          <Variable name="driverdesc" expression="../Item[Data[@name='registryKeysKey'] = concat('{parentkeyname}', 'DriverDesc')]/Data[@name='registryKeysValue']" />
+
+          <Variable name="netcfginstanceid" expression="../Item[Data[@name='registryKeysKey'] = concat('{parentkeyname}', 'NetCfgInstanceId')]/Data[@name='registryKeysValue']" />
+          <Variable name="matchingdeviceid" expression="../Item[Data[@name='registryKeysKey'] = concat('{parentkeyname}', 'MatchingDeviceId')]/Data[@name='registryKeysValue']" />
+          <Variable name="driverdate" expression="../Item[Data[@name='registryKeysKey'] = concat('{parentkeyname}', 'DriverDate')]/Data[@name='registryKeysValue']" />
+          <Variable name="driverversion" expression="../Item[Data[@name='registryKeysKey'] = concat('{parentkeyname}', 'DriverVersion')]/Data[@name='registryKeysValue']" />
+>
+          <Variable name="providername" expression="../Item[Data[@name='registryKeysKey'] = concat('{parentkeyname}', 'ProviderName')]/Data[@name='registryKeysValue']" />
+          <Variable name="wiredregistrydataexists" expression="number('1')" />
+          
+          <Insert select="/Report/Section[@name='SectionWired']/Table[@name='TableWiredRegAdapterInfo']/Header">
+            <Node axis="following-sibling">
+              <Item>
+                <Data name="wireddriverdesc">{driverdesc}</Data>
+                <Data name="wirednetcfginstanceid">{netcfginstanceid}</Data>
+                <Data name="wiredmatchingdeviceid">{matchingdeviceid}</Data>
+                <Data name="wireddriverdate">{driverdate}</Data>
+                <Data name="wireddriverversion">{driverversion}</Data>
+                <Data name="wiredprovidername">{providername}</Data>
+              </Item>
+            </Node>
+          </Insert>
+        </When>
+      </Exists>
+    </Step>
+
+    <Step select="/Report/Section[@name='SectionWired']">
+      <Exists>
+        <Otherwise>
+          <Delete select="Table[@name='TableTempWiredRegAdapterInfo']" />
+        </Otherwise>
+      </Exists>
+    </Step> 
+
+  </Rule>
+
+  <Rule name="$(RuleNetworkWiredSetup)" enabled="true">
+
+    <Step select="/Report/Section[@name='advice']/Table[@name='alltests']">
+      <Exists>
+       <When expression="{wiredregistrydataexists} = 1 and {wiredwmidataexists} = 1">
+        <Variable name="group">$(LOC_TableNetworkWiredSummary)</Variable>
+        <Variable name="description">$(LOC_DescNetworkWiredSummary)</Variable>
+        <Insert>
+          <Node axis="child">
+            <Item>
+              <Data name="alltestgroups" link="TableWiredRegAdapterInfo">{group}</Data>
+              <Data name="alltestdesc">{description}</Data>
+            </Item>
+          </Node>
+        </Insert>
+       </When>
+       <Otherwise/>
+      </Exists>
+    </Step>
+  </Rule>
+
+  <Rule name="$(RuleDisabledWiredAdaptersCheck)" enabled="true">
+    <Step select="/Report/Section[@name='SectionWired']/Table[@name='TableWiredRegAdapterInfo']/Item" fatal="true">
+      <Exists>
+        <Otherwise>
+          <Variable name="globaladapterexists" expression="number('0')" />
+          <Variable name="truestring">$(LOC_TrueString)</Variable>
+          <Variable name="falsestring">$(LOC_FalseString)</Variable>
+        </Otherwise>
+      </Exists>
+    </Step>
+
+    <Step select="/Report/Section[@name='SectionWired']/Table[@name='TableWiredAdapterInfo']/Item[contains(Data[@name='managementObjectsQuery'], 'MSNdis_EnumerateAdapter')]" fatal="true">
+      <Exists>
+        <Otherwise />
+      </Exists>
+    </Step>
+
+    <Step select="/Report/Section[@name='SectionWired']/Table[@name='TableWiredRegAdapterInfo']/Item" sortType="all">
+      <Variable name="instanceid" expression="Data[@name='wirednetcfginstanceid']" />
+      <Variable name="adapterdescription" expression="Data[@name='wireddriverdesc']" />
+      <Variable name="adapterexists" expression="count(/Report/Section[@name='SectionWired']/Table[@name='TableWiredAdapterInfo']/Item[contains(Data[@name='managementObjectsQuery'], 'MSNdis_EnumerateAdapter')]/Item[contains(Item[Data[@name='managementObjectsProperty'] = 'DeviceName']/Data[@name='managementObjectsValue'], '{instanceid}')])" />
+      <Variable name="adapterstate" expression="/Report/Section[@name='SectionWired']/Table[@name='TableWiredAdapterInfo']/Item[contains(Data[@name='managementObjectsQuery'], 'MSNdis_EnumerateAdapter')]/Item[contains(Item[Data[@name='managementObjectsProperty'] = 'DeviceName']/Data[@name='managementObjectsValue'], '{instanceid}')]/Item[Data[@name='managementObjectsProperty'] = 'Active']/Data[@name='managementObjectsValue']" />
+      <Variable name="adaptername" expression="/Report/Section[@name='SectionWired']/Table[@name='TableWiredAdapterInfo']/Item[contains(Data[@name='managementObjectsQuery'], 'MSNdis_EnumerateAdapter')]/Item[contains(Item[Data[@name='managementObjectsProperty'] = 'DeviceName']/Data[@name='managementObjectsValue'], '{instanceid}')]/Item[Data[@name='managementObjectsProperty'] = 'InstanceName']/Data[@name='managementObjectsValue']" />
+
+      <Exists>
+        <When expression="{adapterexists} >= 1 and not(contains('{adapterdescription}', 'Miniport')) and not(contains('{adapterdescription}', 'RAS')) and not(contains('{adapterdescription}', 'isatap')) and '{adapterstate}' = '{falsestring}'">
+                  
+          <Variable name="internalruleindex" expression="{internalruleindex} + 1"/>
+          <Variable name="ruleFailWiredAdapterCheck_symptom">$(WarnFailWiredAdapterCheck_symptom)</Variable>
+          <Variable name="ruleFailWiredAdapterCheck_cause">$(WarnFailWiredAdapterCheck_cause)</Variable>
+          <Variable name="ruleFailWiredAdapterCheck_details">$(WarnFailWiredAdapterCheck_details)</Variable>
+          <Variable name="ruleFailWiredAdapterCheck_res1">$(WarnFailWiredAdapterCheck_res1)</Variable>
+          <Variable name="ruleFailWiredAdapterCheck_res2">$(WarnFailWiredAdapterCheck_res2)</Variable>
+          <Warning tag="ruleFailWiredAdapterCheck_WarnFailWiredAdapterCheck_{internalruleindex}"  select="/Report/Section[@name='SectionWired']/Table[@name='TableWiredAdapterInfo']/Item/Item[contains(Item[Data[@name='managementObjectsProperty'] = 'DeviceName']/Data[@name='managementObjectsValue'], '{instanceid}')]/Item[Data[@name='managementObjectsProperty'] = 'InstanceName']/Data[@name='managementObjectsValue']" table="/Report/Section[@name='advice']/Table[@name='warning']">
+          <Item>
+            <Data name="symptom" img="warning" link="ruleFailWiredAdapterCheck_WarnFailWiredAdapterCheck_{internalruleindex}"  message="ruleFailWiredAdapterCheck_WarnFailWiredAdapterCheck_{internalruleindex}">{ruleFailWiredAdapterCheck_symptom}</Data>
+            <Data name="cause" message="ruleFailWiredAdapterCheck_WarnFailWiredAdapterCheck_{internalruleindex}" >{ruleFailWiredAdapterCheck_cause}</Data>
+            <Data name="details"  message="ruleFailWiredAdapterCheck_WarnFailWiredAdapterCheck_{internalruleindex}" >{ruleFailWiredAdapterCheck_details}</Data>
+            <Data name="resolution"  message="ruleFailWiredAdapterCheck_WarnFailWiredAdapterCheck_{internalruleindex}" >{ruleFailWiredAdapterCheck_res1}</Data>
+            <Data name="resolution"  message="ruleFailWiredAdapterCheck_WarnFailWiredAdapterCheck_{internalruleindex}" >{ruleFailWiredAdapterCheck_res2}</Data>
+          </Item>
+         </Warning>
+
+        </When>
+        <When expression="{adapterexists} >= 1 and not(contains('{adapterdescription}', 'Miniport')) and not(contains('{adapterdescription}', 'RAS')) and not(contains('{adapterdescription}', 'isatap')) and '{adapterstate}' = '{truestring}'">
+          <Variable name="globaladapterexists" expression="number('1')" />
+        </When>
+        <Otherwise>
+        </Otherwise>
+      </Exists>
+    </Step>
+
+    <Step select="/Report/Section[@name='SectionWired']/Table[@name='TableWiredRegAdapterInfo']">
+      <Exists>
+        <When expression="{globaladapterexists} = 0">
+          <Variable name="adaptername" expression="Item/Data[@name='wireddriverdesc' and not(contains(., 'Miniport')) and not(contains(., 'RAS')) and not(contains(., 'isatap'))]" />
+        <Variable name="internalruleindex" expression="{internalruleindex} + 1"/>
+        <Variable name="ruleFailNoWiredAdapterEnabled_symptom">$(WarnFailNoWiredAdapterEnabled_symptom)</Variable>
+        <Variable name="ruleFailNoWiredAdapterEnabled_cause">$(WarnFailNoWiredAdapterEnabled_cause)</Variable>
+        <Variable name="ruleFailNoWiredAdapterEnabled_details">$(WarnFailNoWiredAdapterEnabled_details)</Variable>
+        <Variable name="ruleFailNoWiredAdapterEnabled_res1">$(WarnFailNoWiredAdapterEnabled_res1)</Variable>
+        <Variable name="ruleFailNoWiredAdapterEnabled_res2">$(WarnFailNoWiredAdapterEnabled_res2)</Variable>
+         <Warning tag="ruleFailNoWiredAdapterEnabled_WarnFailNoWiredAdapterEnabled_{internalruleindex}"  select="Item/Data[@name='wireddriverdesc' and not(contains(., 'Miniport')) and not(contains(., 'RAS')) and not(contains(., 'isatap'))]" table="/Report/Section[@name='advice']/Table[@name='warning']">
+           <Item>
+
+              <Data name="symptom" img="warning" link="ruleFailNoWiredAdapterEnabled_WarnFailNoWiredAdapterEnabled_{internalruleindex}"  message="ruleFailNoWiredAdapterEnabled_WarnFailNoWiredAdapterEnabled_{internalruleindex}">{ruleFailNoWiredAdapterEnabled_symptom}</Data>
+              <Data name="cause" message="ruleFailNoWiredAdapterEnabled_WarnFailNoWiredAdapterEnabled_{internalruleindex}" >{ruleFailNoWiredAdapterEnabled_cause}</Data>
+              <Data name="details"  message="ruleFailNoWiredAdapterEnabled_WarnFailNoWiredAdapterEnabled_{internalruleindex}" >{ruleFailNoWiredAdapterEnabled_details}</Data>
+              <Data name="resolution"  message="ruleFailNoWiredAdapterEnabled_WarnFailNoWiredAdapterEnabled_{internalruleindex}" >{ruleFailNoWiredAdapterEnabled_res1}</Data>
+              <Data name="resolution"  message="ruleFailNoWiredAdapterEnabled_WarnFailNoWiredAdapterEnabled_{internalruleindex}" >{ruleFailNoWiredAdapterEnabled_res2}</Data>
+           </Item>
+         </Warning>
+
+        <Variable name="group">$(LOC_TableNetworkWiredSummary)</Variable>
+        <Variable name="test">$(LOC_RuleDisabledWiredAdaptersCheck)</Variable>
+        <Variable name="description">$(LOC_Failed)</Variable>
+<Insert select="/Report/Section[@name='advice']/Table[@name='alltests']/Item[Data[@name='alltestgroups'] = '{group}']">
+         <Node axis="child">
+           <Item>
+             <Data name="allchildtest">{test}</Data>
+             <Data name="allchildtotal">1</Data>
+             <Data name="allchildfail">1</Data>
+             <Data name="allchilddesc">{description}</Data>
+           </Item>
+         </Node>
+       </Insert>
+        </When>
+        <Otherwise>
+        <Variable name="group">$(LOC_TableNetworkWiredSummary)</Variable>
+        <Variable name="test">$(LOC_RuleDisabledWiredAdaptersCheck)</Variable>
+        <Variable name="description">$(LOC_Passed)</Variable>
+<Insert select="/Report/Section[@name='advice']/Table[@name='alltests']/Item[Data[@name='alltestgroups'] = '{group}']">
+         <Node axis="child">
+           <Item>
+             <Data name="allchildtest">{test}</Data>
+             <Data name="allchildtotal">1</Data>
+             <Data name="allchildfail">0</Data>
+             <Data name="allchilddesc">{description}</Data>
+           </Item>
+         </Node>
+       </Insert>
+        </Otherwise>
+      </Exists>
+      <Otherwise />
+    </Step>
+
+    <Step select="/Report/Section[@name='SectionWired']">
+      <Exists>
+        <Otherwise>
+          <Delete select="Table[@name='TableWiredAdapterInfo']" />
+        </Otherwise>
+      </Exists>
+    </Step> 
+  </Rule>
+
+
+  <Rule name="$(RuleNetworkWiredSummary)" enabled="true">
+     <Step select="/Report/Section[@name='advice']/Table[@name='alltests']" fatal="true">
+       <Variable name="group">$(LOC_TableNetworkWiredSummary)</Variable>
+       <Variable name="groupfailedtestscount" expression="count(Item[Data[@name='alltestgroups'] = '{group}']/Item[Data[@name='allchildfail'] != '0'])" />
+       <Exists>
+         <When expression="{wiredregistrydataexists} = 1 and {wiredwmidataexists} = 1 and {groupfailedtestscount} &gt; 0">
+           <Variable name="failedmsg">$(LOC_Failed)</Variable>
+           <Insert select="Item[Data[@name='alltestgroups'] = '{group}']/Data">
+             <Node axis="following-sibling">
+               <Data name="allteststatus">{failedmsg}</Data>
+             </Node>
+           </Insert>
+         </When>
+         <When expression="{wiredregistrydataexists} = 1 and {wiredwmidataexists} = 1 and {groupfailedtestscount} = 0">
+           <Variable name="passedmsg">$(LOC_Passed)</Variable>
+           <Insert select="Item[Data[@name='alltestgroups'] = '{group}']/Data">
+             <Node axis="following-sibling">
+               <Data name="allteststatus">{passedmsg}</Data>
+             </Node>
+           </Insert>
+         </When>
+       </Exists>
+     </Step>
+  </Rule>
+
+  <Rule name="$(RuleSlimServicesTable)" enabled="true">
+
+    <Step select="/Report/Section/Table[@name='TableWiredServicesInformation']/Item/Item[Item[Data[@name='managementObjectsProperty']='State' and Data[@name='managementObjectsValue'] = 'Running']]" sortType="all">
+      <Exists>
+        <When expression="count(Data[@warning]) = 0">
+          <Variable name="summary" expression="Item[Data[@name='managementObjectsProperty']='Description']/Data[@name='managementObjectsValue']"/>
+          <Insert select="Data[@name='managementObjectsRelativePath']">
+            <Attribute name="note" value="$(NoteServiceRunning)"/>
+          </Insert>
+          <Delete select="Item"/>
+        </When>
+      </Exists>
+    </Step>
+
+    <Step select="/Report/Section/Table[@name='TableWiredServicesInformation']/Item/Item[Item[Data[@name='managementObjectsProperty']='State' and Data[@name='managementObjectsValue'] = 'Stopped']][Item[Data[@name='managementObjectsProperty']='ExitCode' and Data[@name='managementObjectsValue'] = '1077']]" sortType="all">
+      <Exists>
+        <When expression="count(Data[@warning]) = 0">
+          <Variable name="summary" expression="Item/Item[Data[@name='managementObjectsProperty']='Description']/Data[@name='managementObjectsValue']"/>
+          <Insert select="Data[@name='managementObjectsRelativePath']">
+            <Attribute name="note" value="$(NoteServiceProperlyStopped1077)"/>
+          </Insert>
+          <Delete select="Item"/>
+        </When>
+      </Exists>
+    </Step>
+
+    <Step select="/Report/Section/Table[@name='TableWiredServicesInformation']/Item/Item[Item[Data[@name='managementObjectsProperty']='State' and Data[@name='managementObjectsValue'] = 'Stopped']][Item[Data[@name='managementObjectsProperty']='ExitCode' and Data[@name='managementObjectsValue'] = '0']]" sortType="all">
+      <Exists>
+        <When expression="count(Data[@warning]) = 0">
+          <Variable name="summary" expression="Item/Item[Data[@name='managementObjectsProperty']='Description']/Data[@name='managementObjectsValue']"/>
+          <Insert select="Data[@name='managementObjectsRelativePath']">
+            <Attribute name="note" value="$(NoteServiceProperlyStopped0)"/>
+          </Insert>
+          <Delete select="Item"/>
+        </When>
+      </Exists>
+    </Step>
+  </Rule>
+
+  <Rule name="$(RuleNoteErrorCodes)" enabled="true">
+    <Step select="/Report/Section/Table/Item[Data[@name='configurationFilesOpenResult']]" sortType="all">
+      <Variable name="pathnotfoundmsg">$(LOC_PathNotFound)</Variable>
+      <Variable name="successmsg">$(LOC_Success)</Variable>
+      <Exists>
+       <When expression="Data[@name='configurationFilesOpenResult'] = '0x80070003'" >
+        <Delete select="Data[@name='configurationFilesOpenResult']"/>
+        <Insert select=".">
+          <Node axis="child">
+            <Data name="configurationFilesOpenResult">{pathnotfoundmsg}</Data>
+          </Node>
+        </Insert>
+        <Insert select="Data[@name='configurationFilesOpenResult']">
+          <Attribute name="note" value="$(NoteCode80070003)" />
+        </Insert>
+       </When>
+       <When expression="Data[@name='configurationFilesOpenResult'] = '0x0'">
+        <Delete select="Data[@name='configurationFilesOpenResult']"/>
+        <Insert select=".">
+          <Node axis="child">
+            <Data name="configurationFilesOpenResult">{successmsg}</Data>
+          </Node>
+        </Insert>
+        <Insert select="Data[@name='configurationFilesOpenResult']">
+          <Attribute name="note" value="$(NoteCode0)" />
+        </Insert>
+       </When>
+      </Exists>
+      <Otherwise/>
+    </Step>
+
+    <Step select="/Report/Section/Table/Item/Item[Data[@name='configurationFilesCopyResult']]" sortType="all">
+      <Variable name="successmsg">$(LOC_Success)</Variable>
+      <Exists>
+        <When expression="Data[@name='configurationFilesCopyResult'] = '0x0'">
+         <Delete select="Data[@name='configurationFilesCopyResult']" />
+         <Insert select=".">
+           <Node axis="child">
+             <Data name="configurationFilesCopyResult">{successmsg}</Data>
+           </Node>
+         </Insert>
+         <Insert select="Data[@name='configurationFilesCopyResult']">
+           <Attribute name="note" value="$(NoteCode0)" />
+         </Insert>
+        </When>
+        <Otherwise>
+        </Otherwise>
+      </Exists>
+    </Step>
+
+  </Rule>
+
+  <Rule name="$(RuleFileHyper)" enabled="true">
+    <Step select="/Report/Section/Table/Item/Item[Data[@name='configurationFilesTo']]" sortType="all">
+      <Variable name="fullpath" expression="Data[@name='configurationFilesTo']"/>
+      <Exists>
+        <When expression="contains('{fullpath}', 'CabFolder\\')">
+          <Variable name="basename" expression="substring-after('{fullpath}', 'CabFolder\\')"/>
+          <Delete select="Data[@name='configurationFilesTo']"/>
+          <Insert select="Data[@name='configurationFilesFrom']">
+            <Node axis="following-sibling">
+              <Data name="configurationFilesTo">{basename}</Data>
+            </Node>
+          </Insert>
+          <Insert select="Data[@name='configurationFilesTo']">
+            <Attribute name="url" value="{basename}"/>
+          </Insert>
+        </When>
+      </Exists>
+    </Step>
+  </Rule>
+</Group>
+
+</Rules>
+

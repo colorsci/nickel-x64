@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?Copyright (c) Microsoft Corporation. All rights reserved.?>
+<Report version="1">
+  <Sections>
+    <Section name="tracerptCpusection" key="6000">
+      <CounterTable name="processCounters" topic="process" object="Process">
+        <Exclude column="machine"/>
+        <Exclude column="instance"/>
+        <Include instance="/_Total/"/>
+        <Exclude counter="/Creating Process*/"/>
+        <Exclude counter="/Elapsed*/"/>
+        <Exclude counter="/ID Process/"/>
+        <Exclude counter="/Handle Count/"/>
+        <Exclude counter="/* Peak/"/>
+      </CounterTable>
+      <CounterTable name="processorCounters" topic="process" object="Processor">
+        <Exclude column="machine"/>
+        <Exclude column="instance"/>
+        <Include instance="/_Total/"/>
+        <Exclude counter="/% C1*/"/>
+        <Exclude counter="/% C2*/"/>
+        <Exclude counter="/% C3*/"/>
+        <Exclude counter="/C1*/"/>
+        <Exclude counter="/C2*/"/>
+        <Exclude counter="/C3*/"/>
+      </CounterTable>
+      <CounterTable name="processorUserProcessorCounters" topic="process" object="Processor">
+        <Exclude column="counter"/>
+        <Exclude column="machine"/>
+        <Exclude counter="/% C*/"/>
+        <Exclude counter="/% D*/"/>
+        <Exclude counter="/% I*/"/>
+        <Exclude counter="/% Priv*/"/>
+        <Exclude counter="/% U*/"/>
+        <Exclude counter="/C*/"/>
+        <Exclude counter="/D*/"/>
+        <Exclude counter="/I*/"/>
+      </CounterTable>
+      <CounterTable name="processorInterruptCounters" topic="process" object="Processor">
+        <Exclude column="machine"/>
+        <Exclude column="counter"/>
+        <Exclude counter="/%*/"/>
+        <Exclude counter="/C*/"/>
+        <Exclude counter="/D*/"/>
+      </CounterTable>
+      <CounterTable name="processorPerformance" topic="process" object="Processor Performance">
+        <Exclude column="machine"/>
+      </CounterTable>
+      <CounterTable name="system" topic="system" object="System">
+        <Exclude column="machine"/>
+        <Exclude counter="/Alignment Fixups\/sec/"/>
+        <Exclude counter="/Floating Emulations*/"/>
+      </CounterTable>
+      <CounterTable name="server" topic="system" object="Server" threshold="30">
+        <Exclude column="machine"/>
+      </CounterTable>
+      <CounterTable name="filesystemcache" topic="system" object="Cache" threshold="30">
+        <Exclude column="machine"/>
+      </CounterTable>
+      <CounterTable name="thread" topic="system" object="Thread">
+        <Exclude column="machine"/>
+        <Include instance="/_Total/"/>
+      </CounterTable>
+      <EventTable name="configService" topic="services">
+        <Column name="process" align="left" groupby="true" sort="primary" order="ascending">
+          <EventField field="ProcessName" payloadGuid="{01853a65-418f-4f36-aefc-dc0f1d2fd235}" payloadId="15" version="3"/>
+        </Column>
+        <Column name="processId" align="left" groupby="true" order="ascending" outType="xs:long">
+          <EventField field="ProcessId" payloadGuid="{01853a65-418f-4f36-aefc-dc0f1d2fd235}" payloadId="15" version="3"/>
+        </Column>
+        <SubTable>
+          <Column name="displayName" align="left" order="ascending">
+            <EventField field="DisplayName" payloadGuid="{01853a65-418f-4f36-aefc-dc0f1d2fd235}" payloadId="15" version="3"/>
+          </Column>
+          <Column name="serviceName" align="left">
+            <EventField field="ServiceName" payloadGuid="{01853a65-418f-4f36-aefc-dc0f1d2fd235}" payloadId="15" version="3"/>
+          </Column>
+        </SubTable>
+      </EventTable>
+    </Section>
+  </Sections>
+  <StringTable>
+    <String ID="filesystemcache">File System Cache</String>
+    <String ID="processCounters">Process</String>
+    <String ID="processorCounters">Processor</String>
+    <String ID="processorInterruptCounters">Processor Interrupts by CPU</String>
+    <String ID="processorUserProcessorCounters">Processor User Time by CPU</String>
+    <String ID="processorPerformance">Processor Performance</String>
+    <String ID="configService">Services</String>
+    <String ID="displayName">Display Name</String>
+    <String ID="serviceName">Service</String>
+    <String ID="services">Services</String>
+    <String ID="stopped">Stopped Services</String>
+  </StringTable>
+</Report>

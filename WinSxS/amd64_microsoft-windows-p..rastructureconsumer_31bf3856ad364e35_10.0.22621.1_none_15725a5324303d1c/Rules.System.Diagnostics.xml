@@ -1,0 +1,2576 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?Copyright (c) Microsoft Corporation. All rights reserved.?>
+<Rules>
+  <Group name="$(GroupDiagnosticsSetup)" enabled="true">
+    <Rule name="$(RuleDiagnosticsSetup)" enabled="true">
+      <Step select="/Report/Section[@name='advice']/Table[last()]">
+        <Exists>
+          <Otherwise>
+            <Insert>
+              <Node axis="preceding-sibling">
+                <Table name="alltests" style="columns" topic="TopicTestResults">
+                  <Header>
+                    <Data name="alltestgroups" class="string"/>
+                    <Data name="allteststatus" class="string"/>
+                    <Data name="alltestdesc" class="string"/>
+                    <Header>
+                      <Data name="allchildtest" class="string"/>
+                      <Data name="allchildtotal" class="number"/>
+                      <Data name="allchildfail" class="number"/>
+                      <Data name="allchilddesc" class="string"/>
+                    </Header>
+                  </Header>
+                </Table>
+              </Node>
+            </Insert>
+          </Otherwise>
+        </Exists>
+      </Step>
+    </Rule>
+    <Rule name="$(RuleInsertSections)" enabled="true" visible="false">
+      <Step select="/Report/Section[last()]">
+        <Exists>
+          <When expression="string-length(/Report/Section[@name='SectionSoftwareConfig']) &gt; 0">
+            <Insert select="/Report/Section[@name='SectionSoftwareConfig']">
+              <Attribute name="key" value="300"/>
+            </Insert>
+          </When>
+          <Otherwise>
+            <Insert>
+              <Node axis="preceding-sibling">
+                <Section name="SectionSoftwareConfig" key="300"/>
+              </Node>
+            </Insert>
+          </Otherwise>
+        </Exists>
+      </Step>
+      <Step select="/Report/Section[last()]">
+        <Exists>
+          <When expression="string-length(/Report/Section[@name='SystemConfig']) &gt; 0">
+            <Insert select="/Report/Section[@name='SystemConfig']">
+              <Attribute name="key" value="300"/>
+            </Insert>
+          </When>
+          <Otherwise>
+            <Insert>
+              <Node axis="preceding-sibling">
+                <Section name="SystemConfig" key="300"/>
+              </Node>
+            </Insert>
+          </Otherwise>
+        </Exists>
+      </Step>
+      <Step select="/Report/Section[last()]">
+        <Exists>
+          <When expression="string-length(/Report/Section[@name='tracerptPrintSpooler']) &gt; 0">
+            <Insert select="/Report/Section[@name='tracerptPrintSpooler']">
+              <Attribute name="key" value="1000"/>
+            </Insert>
+          </When>
+          <Otherwise>
+            <Insert>
+              <Node axis="preceding-sibling">
+                <Section name="tracerptPrintSpooler" key="1000"/>
+              </Node>
+            </Insert>
+          </Otherwise>
+        </Exists>
+      </Step>
+      <Step select="/Report/Section[last()]">
+        <Exists>
+          <When expression="string-length(/Report/Section[@name='tracerptIis']) &gt; 0">
+            <Insert select="/Report/Section[@name='tracerptIis']">
+              <Attribute name="key" value="2000"/>
+            </Insert>
+          </When>
+          <Otherwise>
+            <Insert>
+              <Node axis="preceding-sibling">
+                <Section name="tracerptIis" key="2000"/>
+              </Node>
+            </Insert>
+          </Otherwise>
+        </Exists>
+      </Step>
+      <Step select="/Report/Section[last()]">
+        <Exists>
+          <When expression="string-length(/Report/Section[@name='tracerptUserPdh']) &gt; 0">
+            <Insert select="/Report/Section[@name='tracerptUserPdh']">
+              <Attribute name="key" value="5000"/>
+            </Insert>
+          </When>
+          <Otherwise>
+            <Insert>
+              <Node axis="preceding-sibling">
+                <Section name="tracerptUserPdh" key="5000"/>
+              </Node>
+            </Insert>
+          </Otherwise>
+        </Exists>
+      </Step>
+      <Step select="/Report/Section[last()]">
+        <Exists>
+          <When expression="string-length(/Report/Section[@name='tracerptCpusection']) &gt; 0">
+            <Insert select="/Report/Section[@name='tracerptCpusection']">
+              <Attribute name="key" value="6000"/>
+            </Insert>
+          </When>
+          <Otherwise>
+            <Insert>
+              <Node axis="preceding-sibling">
+                <Section name="tracerptCpusection" key="6000"/>
+              </Node>
+            </Insert>
+          </Otherwise>
+        </Exists>
+      </Step>
+      <Step select="/Report/Section[last()]">
+        <Exists>
+          <When expression="string-length(/Report/Section[@name='tracerptNetwork']) &gt; 0">
+            <Insert select="/Report/Section[@name='tracerptNetwork']">
+              <Attribute name="key" value="7000"/>
+            </Insert>
+          </When>
+          <Otherwise>
+            <Insert>
+              <Node axis="preceding-sibling">
+                <Section name="tracerptNetwork" key="7000"/>
+              </Node>
+            </Insert>
+          </Otherwise>
+        </Exists>
+      </Step>
+      <Step select="/Report/Section[last()]">
+        <Exists>
+          <When expression="string-length(/Report/Section[@name='tracerptDisk']) &gt; 0">
+            <Insert select="/Report/Section[@name='tracerptDisk']">
+              <Attribute name="key" value="8000"/>
+            </Insert>
+          </When>
+          <Otherwise>
+            <Insert>
+              <Node axis="preceding-sibling">
+                <Section name="tracerptDisk" key="8000"/>
+              </Node>
+            </Insert>
+          </Otherwise>
+        </Exists>
+      </Step>
+      <Step select="/Report/Section[last()]">
+        <Exists>
+          <When expression="string-length(/Report/Section[@name='tracerptMemory']) &gt; 0">
+            <Insert select="/Report/Section[@name='tracerptMemory']">
+              <Attribute name="key" value="9000"/>
+            </Insert>
+          </When>
+          <Otherwise>
+            <Insert>
+              <Node axis="preceding-sibling">
+                <Section name="tracerptMemory" key="9000"/>
+              </Node>
+            </Insert>
+          </Otherwise>
+        </Exists>
+      </Step>
+      <Step select="/Report/Section[last()]">
+        <Exists>
+          <When expression="string-length(/Report/Section[@name='tracerptDpcisr']) &gt; 0">
+            <Insert select="/Report/Section[@name='tracerptDpcisr']">
+              <Attribute name="key" value="10000"/>
+            </Insert>
+          </When>
+          <Otherwise>
+            <Insert>
+              <Node axis="preceding-sibling">
+                <Section name="tracerptDpcisr" key="10000"/>
+              </Node>
+            </Insert>
+          </Otherwise>
+        </Exists>
+      </Step>
+      <Step select="/Report/Section[last()]">
+        <Exists>
+          <When expression="string-length(/Report/Section[@name='detailsLast']) &gt; 0">
+            <Insert select="/Report/Section[@name='detailsLast']">
+              <Attribute name="key" value="20000"/>
+            </Insert>
+          </When>
+          <Otherwise>
+            <Insert>
+              <Node axis="preceding-sibling">
+                <Section name="detailsLast" key="20000"/>
+              </Node>
+            </Insert>
+          </Otherwise>
+        </Exists>
+      </Step>
+      <Step select="/Report/Section[last()]">
+        <Exists>
+          <When expression="string-length(/Report/Section[@name='tracerptHeader']) &gt; 0">
+            <Insert select="/Report/Section[@name='tracerptHeader']">
+              <Attribute name="key" value="-90000"/>
+            </Insert>
+          </When>
+          <Otherwise>
+            <Insert>
+              <Node axis="preceding-sibling">
+                <Section name="tracerptHeader" key="-90000"/>
+              </Node>
+            </Insert>
+          </Otherwise>
+        </Exists>
+      </Step>
+    </Rule>
+    <Rule name="$(RuleAddWarningTable)" enabled="true" visible="false">
+      <Step select="/Report/Section[@name='advice']">
+        <Exists>
+          <Otherwise>
+            <Variable name="internalruleindex" expression="'0'"/>
+            <Insert select=".">
+              <Node axis="child">
+                <Table name="error" style="info" key="1" topic="TopicTestResults" expand="true"/>
+              </Node>
+            </Insert>
+          </Otherwise>
+        </Exists>
+      </Step>
+      <Step select="/Report/Section[@name='advice']/Table[@name='warning']">
+        <Otherwise>
+          <Otherwise>
+            <Insert select="/Report/Section[@name='advice']">
+              <Node axis="child">
+                <Table name="warning" style="info" key="2" topic="TopicTestResults" expand="true"/>
+              </Node>
+            </Insert>
+          </Otherwise>
+        </Otherwise>
+      </Step>
+      <Step select="/Report/Section[@name='advice']">
+        <Exists>
+          <Otherwise>
+            <Insert select=".">
+              <Node axis="child">
+                <Table name="info" style="info" key="3" topic="TopicTestResults" expand="true"/>
+              </Node>
+            </Insert>
+          </Otherwise>
+        </Exists>
+      </Step>
+    </Rule>
+    <Rule name="$(RuleUpdateCounterSections)" enabled="true" visible="false">
+      <Step select="/Report/Section[not (@name)]" sortType="all">
+        <Exists>
+          <Otherwise>
+            <Insert select=".">
+              <Attribute name="name" value="Performance Counters"/>
+            </Insert>
+          </Otherwise>
+        </Exists>
+      </Step>
+    </Rule>
+  </Group>
+  <Group name="$(GroupBasic)" enabled="true">
+    <Rule name="$(RuleBasicInsert)" enabled="true" visible="false">
+      <Step select="/Report/Section[@name='SectionSoftwareConfig']">
+        <Exists>
+          <Otherwise>
+            <AddConfigStringTable/>
+            <Insert select=".">
+              <Node axis="child" document="Operating System.xml" select="/Report/Section/Table[@name='managementObjects']"/>
+            </Insert>
+            <Insert select="Table[@name='managementObjects']">
+              <Attribute name="name" value="TableBasicOperatingSystem"/>
+              <Attribute name="topic" value="TopicOsChecks"/>
+              <Attribute name="key" value="100"/>
+            </Insert>
+          </Otherwise>
+        </Exists>
+      </Step>
+      <Step select="/Report/Section[@name='SystemConfig']">
+        <Exists>
+          <Otherwise>
+            <Insert select=".">
+              <Node axis="child" document="Processor.xml" select="/Report/Section/Table[@name='managementObjects']"/>
+            </Insert>
+            <Insert select="Table[@name='managementObjects']">
+              <Attribute name="name" value="TableBasicProcessor"/>
+              <Attribute name="topic" value="system"/>
+              <Attribute name="key" value="101"/>
+            </Insert>
+          </Otherwise>
+        </Exists>
+      </Step>
+      <Step select="/Report/Section[@name='SystemConfig']">
+        <Exists>
+          <Otherwise>
+            <Insert select=".">
+              <Node axis="child" document="SMART Disk Check.xml" select="/Report/Section/Table[@name='managementObjects']"/>
+            </Insert>
+            <Insert select="Table[@name='managementObjects']">
+              <Attribute name="name" value="TableBasicSMART"/>
+              <Attribute name="topic" value="TopicDiskChecks"/>
+              <Attribute name="key" value="110"/>
+            </Insert>
+          </Otherwise>
+        </Exists>
+      </Step>
+      <Step select="/Report/Section[@name='SystemConfig']">
+        <Exists>
+          <Otherwise>
+            <Insert select=".">
+              <Node axis="child" document="Logical Disk Dirty Test.xml" select="/Report/Section/Table[@name='managementObjects']"/>
+            </Insert>
+            <Insert select="Table[@name='managementObjects']">
+              <Attribute name="name" value="TableBasicDirty"/>
+              <Attribute name="topic" value="TopicDiskChecks"/>
+              <Attribute name="key" value="111"/>
+            </Insert>
+          </Otherwise>
+        </Exists>
+      </Step>
+      <Step select="/Report/Section[@name='SectionSoftwareConfig']">
+        <Exists>
+          <Otherwise>
+            <Insert select=".">
+              <Node axis="child" document="AntiSpywareProduct.xml" select="/Report/Section/Table[@name='managementObjects']"/>
+            </Insert>
+            <Insert select="Table[@name='managementObjects']">
+              <Attribute name="name" value="TableBasicAntiSpywareProduct"/>
+              <Attribute name="topic" value="TopicSecurityCenter"/>
+              <Attribute name="key" value="200"/>
+            </Insert>
+          </Otherwise>
+        </Exists>
+      </Step>
+      <Step select="/Report/Section[@name='SectionSoftwareConfig']">
+        <Exists>
+          <Otherwise>
+            <Insert select=".">
+              <Node axis="child" document="AntiVirusProduct.xml" select="/Report/Section/Table[@name='managementObjects']"/>
+            </Insert>
+            <Insert select="Table[@name='managementObjects']">
+              <Attribute name="name" value="TableBasicAntiVirusProduct"/>
+              <Attribute name="topic" value="TopicSecurityCenter"/>
+              <Attribute name="key" value="201"/>
+            </Insert>
+          </Otherwise>
+        </Exists>
+      </Step>
+      <Step select="/Report/Section[@name='SectionSoftwareConfig']">
+        <Exists>
+          <Otherwise>
+            <Insert select=".">
+              <Node axis="child" document="FirewallProduct.xml" select="/Report/Section/Table[@name='managementObjects']"/>
+            </Insert>
+            <Insert select="Table[@name='managementObjects']">
+              <Attribute name="name" value="TableBasicFirewallProduct"/>
+              <Attribute name="topic" value="TopicSecurityCenter"/>
+              <Attribute name="key" value="202"/>
+            </Insert>
+          </Otherwise>
+        </Exists>
+      </Step>
+      <Step select="/Report/Section[@name='SectionSoftwareConfig']">
+        <Exists>
+          <Otherwise>
+            <Insert select=".">
+              <Node axis="child" document="UAC Settings.xml" select="/Report/Section/Table[@name='registryKeys']"/>
+            </Insert>
+            <Insert select="Table[@name='registryKeys']">
+              <Attribute name="name" value="TableBasicLUARegistry"/>
+              <Attribute name="topic" value="TopicSecurityCenter"/>
+              <Attribute name="key" value="203"/>
+            </Insert>
+          </Otherwise>
+        </Exists>
+      </Step>
+      <Step select="/Report/Section[@name='SectionSoftwareConfig']">
+        <Exists>
+          <Otherwise>
+            <Insert select=".">
+              <Node axis="child" document="Windows Update Settings.xml" select="/Report/Section/Table[@name='registryKeys']"/>
+            </Insert>
+            <Insert select="Table[@name='registryKeys']">
+              <Attribute name="name" value="TableBasicWURegistry"/>
+              <Attribute name="topic" value="TopicSecurityCenter"/>
+              <Attribute name="key" value="204"/>
+            </Insert>
+          </Otherwise>
+        </Exists>
+      </Step>
+      <Step select="/Report/Section[@name='SectionSoftwareConfig']">
+        <Exists>
+          <Otherwise>
+            <Insert select=".">
+              <Node axis="child" document="System Services.xml" select="/Report/Section/Table[@name='managementObjects']"/>
+            </Insert>
+            <Insert select="Table[@name='managementObjects']">
+              <Attribute name="name" value="TableBasicService"/>
+              <Attribute name="topic" value="TopicServicesChecks"/>
+              <Attribute name="key" value="300"/>
+            </Insert>
+          </Otherwise>
+        </Exists>
+      </Step>
+    </Rule>
+    <Rule name="$(RuleBasicCleanup)" enabled="true">
+      <Step select="/Report/Section/Table/Item/Item/Item[Data[@name='managementObjectsProperty']='enabled' and Data[@name='managementObjectsValue'] = '-1']" sortType="all">
+        <Exists>
+          <Otherwise>
+            <Delete select="Data[@name='managementObjectsValue']"/>
+            <Insert select=".">
+              <Node axis="child">
+                <Data name="managementObjectsValue" translate="value">tv_TrueString</Data>
+              </Node>
+            </Insert>
+          </Otherwise>
+        </Exists>
+      </Step>
+      <Step select="/Report/Section/Table/Item/Item/Item[Data[@name='managementObjectsProperty']='productEnabled' and Data[@name='managementObjectsValue'] = '-1']" sortType="all">
+        <Exists>
+          <Otherwise>
+            <Delete select="Data[@name='managementObjectsValue']"/>
+            <Insert select=".">
+              <Node axis="child">
+                <Data name="managementObjectsValue" translate="value">tv_TrueString</Data>
+              </Node>
+            </Insert>
+          </Otherwise>
+        </Exists>
+      </Step>
+      <Step select="/Report/Section/Table/Item/Item/Item[Data[@name='managementObjectsProperty']='productUptoDate' and Data[@name='managementObjectsValue'] = '-1']" sortType="all">
+        <Exists>
+          <Otherwise>
+            <Delete select="Data[@name='managementObjectsValue']"/>
+            <Insert select=".">
+              <Node axis="child">
+                <Data name="managementObjectsValue" translate="value">tv_TrueString</Data>
+              </Node>
+            </Insert>
+          </Otherwise>
+        </Exists>
+      </Step>
+      <Step select="/Report/Section/Table/Item/Item/Item[Data[@name='managementObjectsProperty']='onAccessScanningEnabled' and Data[@name='managementObjectsValue'] = '-1']" sortType="all">
+        <Exists>
+          <Otherwise>
+            <Delete select="Data[@name='managementObjectsValue']"/>
+            <Insert select=".">
+              <Node axis="child">
+                <Data name="managementObjectsValue" translate="value">tv_TrueString</Data>
+              </Node>
+            </Insert>
+          </Otherwise>
+        </Exists>
+      </Step>
+      <Step select="/Report/Section/Table/Item/Item/Item[Data[@name='managementObjectsProperty']='Active' and Data[@name='managementObjectsValue'] = '-1']" sortType="all">
+        <Exists>
+          <Otherwise>
+            <Delete select="Data[@name='managementObjectsValue']"/>
+            <Insert select=".">
+              <Node axis="child">
+                <Data name="managementObjectsValue" translate="value">tv_TrueString</Data>
+              </Node>
+            </Insert>
+          </Otherwise>
+        </Exists>
+      </Step>
+      <Step select="/Report/Section/Table/Item/Item/Item[Data[@name='managementObjectsProperty']='PredictFailure' and Data[@name='managementObjectsValue'] = '-1']" sortType="all">
+        <Exists>
+          <Otherwise>
+            <Delete select="Data[@name='managementObjectsValue']"/>
+            <Insert select=".">
+              <Node axis="child">
+                <Data name="managementObjectsValue" translate="value">tv_TrueString</Data>
+              </Node>
+            </Insert>
+          </Otherwise>
+        </Exists>
+      </Step>
+      <Step select="/Report/Section/Table/Item/Item/Item[Data[@name='managementObjectsProperty']='VolumeDirty' and Data[@name='managementObjectsValue'] = '-1']" sortType="all">
+        <Exists>
+          <Otherwise>
+            <Delete select="Data[@name='managementObjectsValue']"/>
+            <Insert select=".">
+              <Node axis="child">
+                <Data name="managementObjectsValue" translate="value">tv_TrueString</Data>
+              </Node>
+            </Insert>
+          </Otherwise>
+        </Exists>
+      </Step>
+      <Step select="/Report/Section/Table/Item/Item/Item[Data[@name='managementObjectsProperty']='Debug' and Data[@name='managementObjectsValue'] = '-1']" sortType="all">
+        <Exists>
+          <Otherwise>
+            <Delete select="Data[@name='managementObjectsValue']"/>
+            <Insert select=".">
+              <Node axis="child">
+                <Data name="managementObjectsValue" translate="value">tv_TrueString</Data>
+              </Node>
+            </Insert>
+          </Otherwise>
+        </Exists>
+      </Step>
+      <Step select="/Report/Section/Table/Item/Item/Item[Data[@name='managementObjectsProperty']='Primary' and Data[@name='managementObjectsValue'] = '-1']" sortType="all">
+        <Exists>
+          <Otherwise>
+            <Delete select="Data[@name='managementObjectsValue']"/>
+            <Insert select=".">
+              <Node axis="child">
+                <Data name="managementObjectsValue" translate="value">tv_TrueString</Data>
+              </Node>
+            </Insert>
+          </Otherwise>
+        </Exists>
+      </Step>
+      <Step select="/Report/Section/Table/Item/Item/Item[Data[@name='managementObjectsProperty']='DataExecutionPrevention_32BitApplications' and Data[@name='managementObjectsValue'] = '-1']" sortType="all">
+        <Exists>
+          <Otherwise>
+            <Delete select="Data[@name='managementObjectsValue']"/>
+            <Insert select=".">
+              <Node axis="child">
+                <Data name="managementObjectsValue" translate="value">tv_TrueString</Data>
+              </Node>
+            </Insert>
+          </Otherwise>
+        </Exists>
+      </Step>
+      <Step select="/Report/Section/Table/Item/Item/Item[Data[@name='managementObjectsProperty']='DataExecutionPrevention_Available' and Data[@name='managementObjectsValue'] = '-1']" sortType="all">
+        <Exists>
+          <Otherwise>
+            <Delete select="Data[@name='managementObjectsValue']"/>
+            <Insert select=".">
+              <Node axis="child">
+                <Data name="managementObjectsValue" translate="value">tv_TrueString</Data>
+              </Node>
+            </Insert>
+          </Otherwise>
+        </Exists>
+      </Step>
+      <Step select="/Report/Section/Table/Item/Item/Item[Data[@name='managementObjectsProperty']='DataExecutionPrevention_Drivers' and Data[@name='managementObjectsValue'] = '-1']" sortType="all">
+        <Exists>
+          <Otherwise>
+            <Delete select="Data[@name='managementObjectsValue']"/>
+            <Insert select=".">
+              <Node axis="child">
+                <Data name="managementObjectsValue" translate="value">tv_TrueString</Data>
+              </Node>
+            </Insert>
+          </Otherwise>
+        </Exists>
+      </Step>
+      <Step select="/Report/Section/Table/Item/Item/Item[Data[@name='managementObjectsProperty']='AutomaticManagedPagefile' and Data[@name='managementObjectsValue'] = '-1']" sortType="all">
+        <Exists>
+          <Otherwise>
+            <Delete select="Data[@name='managementObjectsValue']"/>
+            <Insert select=".">
+              <Node axis="child">
+                <Data name="managementObjectsValue" translate="value">tv_TrueString</Data>
+              </Node>
+            </Insert>
+          </Otherwise>
+        </Exists>
+      </Step>
+      <Step select="/Report/Section/Table/Item/Item/Item[Data[@name='managementObjectsProperty']='AutomaticResetBootOption' and Data[@name='managementObjectsValue'] = '-1']" sortType="all">
+        <Exists>
+          <Otherwise>
+            <Delete select="Data[@name='managementObjectsValue']"/>
+            <Insert select=".">
+              <Node axis="child">
+                <Data name="managementObjectsValue" translate="value">tv_TrueString</Data>
+              </Node>
+            </Insert>
+          </Otherwise>
+        </Exists>
+      </Step>
+      <Step select="/Report/Section/Table/Item/Item/Item[Data[@name='managementObjectsProperty']='AutomaticResetCapability' and Data[@name='managementObjectsValue'] = '-1']" sortType="all">
+        <Exists>
+          <Otherwise>
+            <Delete select="Data[@name='managementObjectsValue']"/>
+            <Insert select=".">
+              <Node axis="child">
+                <Data name="managementObjectsValue" translate="value">tv_TrueString</Data>
+              </Node>
+            </Insert>
+          </Otherwise>
+        </Exists>
+      </Step>
+      <Step select="/Report/Section/Table/Item/Item/Item[Data[@name='managementObjectsProperty']='BootROMSupported' and Data[@name='managementObjectsValue'] = '-1']" sortType="all">
+        <Exists>
+          <Otherwise>
+            <Delete select="Data[@name='managementObjectsValue']"/>
+            <Insert select=".">
+              <Node axis="child">
+                <Data name="managementObjectsValue" translate="value">tv_TrueString</Data>
+              </Node>
+            </Insert>
+          </Otherwise>
+        </Exists>
+      </Step>
+      <Step select="/Report/Section/Table/Item/Item/Item[Data[@name='managementObjectsProperty']='DaylightInEffect' and Data[@name='managementObjectsValue'] = '-1']" sortType="all">
+        <Exists>
+          <Otherwise>
+            <Delete select="Data[@name='managementObjectsValue']"/>
+            <Insert select=".">
+              <Node axis="child">
+                <Data name="managementObjectsValue" translate="value">tv_TrueString</Data>
+              </Node>
+            </Insert>
+          </Otherwise>
+        </Exists>
+      </Step>
+      <Step select="/Report/Section/Table/Item/Item/Item[Data[@name='managementObjectsProperty']='EnableDaylightSavingsTime' and Data[@name='managementObjectsValue'] = '-1']" sortType="all">
+        <Exists>
+          <Otherwise>
+            <Delete select="Data[@name='managementObjectsValue']"/>
+            <Insert select=".">
+              <Node axis="child">
+                <Data name="managementObjectsValue" translate="value">tv_TrueString</Data>
+              </Node>
+            </Insert>
+          </Otherwise>
+        </Exists>
+      </Step>
+      <Step select="/Report/Section/Table/Item/Item/Item[Data[@name='managementObjectsProperty']='InfraredSupported' and Data[@name='managementObjectsValue'] = '-1']" sortType="all">
+        <Exists>
+          <Otherwise>
+            <Delete select="Data[@name='managementObjectsValue']"/>
+            <Insert select=".">
+              <Node axis="child">
+                <Data name="managementObjectsValue" translate="value">tv_TrueString</Data>
+              </Node>
+            </Insert>
+          </Otherwise>
+        </Exists>
+      </Step>
+      <Step select="/Report/Section/Table/Item/Item/Item[Data[@name='managementObjectsProperty']='NetworkServerModeEnabled' and Data[@name='managementObjectsValue'] = '-1']" sortType="all">
+        <Exists>
+          <Otherwise>
+            <Delete select="Data[@name='managementObjectsValue']"/>
+            <Insert select=".">
+              <Node axis="child">
+                <Data name="managementObjectsValue" translate="value">tv_TrueString</Data>
+              </Node>
+            </Insert>
+          </Otherwise>
+        </Exists>
+      </Step>
+      <Step select="/Report/Section/Table/Item/Item/Item[Data[@name='managementObjectsProperty']='PartOfDomain' and Data[@name='managementObjectsValue'] = '-1']" sortType="all">
+        <Exists>
+          <Otherwise>
+            <Delete select="Data[@name='managementObjectsValue']"/>
+            <Insert select=".">
+              <Node axis="child">
+                <Data name="managementObjectsValue" translate="value">tv_TrueString</Data>
+              </Node>
+            </Insert>
+          </Otherwise>
+        </Exists>
+      </Step>
+      <Step select="/Report/Section/Table/Item/Item/Item[Data[@name='managementObjectsProperty']='PowerManagementSupported' and Data[@name='managementObjectsValue'] = '-1']" sortType="all">
+        <Exists>
+          <Otherwise>
+            <Delete select="Data[@name='managementObjectsValue']"/>
+            <Insert select=".">
+              <Node axis="child">
+                <Data name="managementObjectsValue" translate="value">tv_TrueString</Data>
+              </Node>
+            </Insert>
+          </Otherwise>
+        </Exists>
+      </Step>
+      <Step select="/Report/Section/Table/Item/Item/Item[Data[@name='managementObjectsProperty']='enabled' and Data[@name='managementObjectsValue'] = '0']" sortType="all">
+        <Exists>
+          <Otherwise>
+            <Delete select="Data[@name='managementObjectsValue']"/>
+            <Insert select=".">
+              <Node axis="child">
+                <Data name="managementObjectsValue" translate="value">tv_FalseString</Data>
+              </Node>
+            </Insert>
+          </Otherwise>
+        </Exists>
+      </Step>
+      <Step select="/Report/Section/Table/Item/Item/Item[Data[@name='managementObjectsProperty']='productEnabled' and Data[@name='managementObjectsValue'] = '0']" sortType="all">
+        <Exists>
+          <Otherwise>
+            <Delete select="Data[@name='managementObjectsValue']"/>
+            <Insert select=".">
+              <Node axis="child">
+                <Data name="managementObjectsValue" translate="value">tv_FalseString</Data>
+              </Node>
+            </Insert>
+          </Otherwise>
+        </Exists>
+      </Step>
+      <Step select="/Report/Section/Table/Item/Item/Item[Data[@name='managementObjectsProperty']='productUptoDate' and Data[@name='managementObjectsValue'] = '0']" sortType="all">
+        <Exists>
+          <Otherwise>
+            <Delete select="Data[@name='managementObjectsValue']"/>
+            <Insert select=".">
+              <Node axis="child">
+                <Data name="managementObjectsValue" translate="value">tv_FalseString</Data>
+              </Node>
+            </Insert>
+          </Otherwise>
+        </Exists>
+      </Step>
+      <Step select="/Report/Section/Table/Item/Item/Item[Data[@name='managementObjectsProperty']='onAccessScanningEnabled' and Data[@name='managementObjectsValue'] = '0']" sortType="all">
+        <Exists>
+          <Otherwise>
+            <Delete select="Data[@name='managementObjectsValue']"/>
+            <Insert select=".">
+              <Node axis="child">
+                <Data name="managementObjectsValue" translate="value">tv_FalseString</Data>
+              </Node>
+            </Insert>
+          </Otherwise>
+        </Exists>
+      </Step>
+      <Step select="/Report/Section/Table/Item/Item/Item[Data[@name='managementObjectsProperty']='Active' and Data[@name='managementObjectsValue'] = '0']" sortType="all">
+        <Exists>
+          <Otherwise>
+            <Delete select="Data[@name='managementObjectsValue']"/>
+            <Insert select=".">
+              <Node axis="child">
+                <Data name="managementObjectsValue" translate="value">tv_FalseString</Data>
+              </Node>
+            </Insert>
+          </Otherwise>
+        </Exists>
+      </Step>
+      <Step select="/Report/Section/Table/Item/Item/Item[Data[@name='managementObjectsProperty']='PredictFailure' and Data[@name='managementObjectsValue'] = '0']" sortType="all">
+        <Exists>
+          <Otherwise>
+            <Delete select="Data[@name='managementObjectsValue']"/>
+            <Insert select=".">
+              <Node axis="child">
+                <Data name="managementObjectsValue" translate="value">tv_FalseString</Data>
+              </Node>
+            </Insert>
+          </Otherwise>
+        </Exists>
+      </Step>
+      <Step select="/Report/Section/Table/Item/Item/Item[Data[@name='managementObjectsProperty']='VolumeDirty' and Data[@name='managementObjectsValue'] = '0']" sortType="all">
+        <Exists>
+          <Otherwise>
+            <Delete select="Data[@name='managementObjectsValue']"/>
+            <Insert select=".">
+              <Node axis="child">
+                <Data name="managementObjectsValue" translate="value">tv_FalseString</Data>
+              </Node>
+            </Insert>
+          </Otherwise>
+        </Exists>
+      </Step>
+      <Step select="/Report/Section/Table/Item/Item/Item[Data[@name='managementObjectsProperty']='Debug' and Data[@name='managementObjectsValue'] = '0']" sortType="all">
+        <Exists>
+          <Otherwise>
+            <Delete select="Data[@name='managementObjectsValue']"/>
+            <Insert select=".">
+              <Node axis="child">
+                <Data name="managementObjectsValue" translate="value">tv_FalseString</Data>
+              </Node>
+            </Insert>
+          </Otherwise>
+        </Exists>
+      </Step>
+      <Step select="/Report/Section/Table/Item/Item/Item[Data[@name='managementObjectsProperty']='Primary' and Data[@name='managementObjectsValue'] = '0']" sortType="all">
+        <Exists>
+          <Otherwise>
+            <Delete select="Data[@name='managementObjectsValue']"/>
+            <Insert select=".">
+              <Node axis="child">
+                <Data name="managementObjectsValue" translate="value">tv_FalseString</Data>
+              </Node>
+            </Insert>
+          </Otherwise>
+        </Exists>
+      </Step>
+      <Step select="/Report/Section/Table/Item/Item/Item[Data[@name='managementObjectsProperty']='DataExecutionPrevention_32BitApplications' and Data[@name='managementObjectsValue'] = '0']" sortType="all">
+        <Exists>
+          <Otherwise>
+            <Delete select="Data[@name='managementObjectsValue']"/>
+            <Insert select=".">
+              <Node axis="child">
+                <Data name="managementObjectsValue" translate="value">tv_FalseString</Data>
+              </Node>
+            </Insert>
+          </Otherwise>
+        </Exists>
+      </Step>
+      <Step select="/Report/Section/Table/Item/Item/Item[Data[@name='managementObjectsProperty']='DataExecutionPrevention_Available' and Data[@name='managementObjectsValue'] = '0']" sortType="all">
+        <Exists>
+          <Otherwise>
+            <Delete select="Data[@name='managementObjectsValue']"/>
+            <Insert select=".">
+              <Node axis="child">
+                <Data name="managementObjectsValue" translate="value">tv_FalseString</Data>
+              </Node>
+            </Insert>
+          </Otherwise>
+        </Exists>
+      </Step>
+      <Step select="/Report/Section/Table/Item/Item/Item[Data[@name='managementObjectsProperty']='DataExecutionPrevention_Drivers' and Data[@name='managementObjectsValue'] = '0']" sortType="all">
+        <Exists>
+          <Otherwise>
+            <Delete select="Data[@name='managementObjectsValue']"/>
+            <Insert select=".">
+              <Node axis="child">
+                <Data name="managementObjectsValue" translate="value">tv_FalseString</Data>
+              </Node>
+            </Insert>
+          </Otherwise>
+        </Exists>
+      </Step>
+      <Step select="/Report/Section/Table/Item/Item/Item[Data[@name='managementObjectsProperty']='AutomaticManagedPagefile' and Data[@name='managementObjectsValue'] = '0']" sortType="all">
+        <Exists>
+          <Otherwise>
+            <Delete select="Data[@name='managementObjectsValue']"/>
+            <Insert select=".">
+              <Node axis="child">
+                <Data name="managementObjectsValue" translate="value">tv_FalseString</Data>
+              </Node>
+            </Insert>
+          </Otherwise>
+        </Exists>
+      </Step>
+      <Step select="/Report/Section/Table/Item/Item/Item[Data[@name='managementObjectsProperty']='AutomaticResetBootOption' and Data[@name='managementObjectsValue'] = '0']" sortType="all">
+        <Exists>
+          <Otherwise>
+            <Delete select="Data[@name='managementObjectsValue']"/>
+            <Insert select=".">
+              <Node axis="child">
+                <Data name="managementObjectsValue" translate="value">tv_FalseString</Data>
+              </Node>
+            </Insert>
+          </Otherwise>
+        </Exists>
+      </Step>
+      <Step select="/Report/Section/Table/Item/Item/Item[Data[@name='managementObjectsProperty']='AutomaticResetCapability' and Data[@name='managementObjectsValue'] = '0']" sortType="all">
+        <Exists>
+          <Otherwise>
+            <Delete select="Data[@name='managementObjectsValue']"/>
+            <Insert select=".">
+              <Node axis="child">
+                <Data name="managementObjectsValue" translate="value">tv_FalseString</Data>
+              </Node>
+            </Insert>
+          </Otherwise>
+        </Exists>
+      </Step>
+      <Step select="/Report/Section/Table/Item/Item/Item[Data[@name='managementObjectsProperty']='BootROMSupported' and Data[@name='managementObjectsValue'] = '0']" sortType="all">
+        <Exists>
+          <Otherwise>
+            <Delete select="Data[@name='managementObjectsValue']"/>
+            <Insert select=".">
+              <Node axis="child">
+                <Data name="managementObjectsValue" translate="value">tv_FalseString</Data>
+              </Node>
+            </Insert>
+          </Otherwise>
+        </Exists>
+      </Step>
+      <Step select="/Report/Section/Table/Item/Item/Item[Data[@name='managementObjectsProperty']='DaylightInEffect' and Data[@name='managementObjectsValue'] = '0']" sortType="all">
+        <Exists>
+          <Otherwise>
+            <Delete select="Data[@name='managementObjectsValue']"/>
+            <Insert select=".">
+              <Node axis="child">
+                <Data name="managementObjectsValue" translate="value">tv_FalseString</Data>
+              </Node>
+            </Insert>
+          </Otherwise>
+        </Exists>
+      </Step>
+      <Step select="/Report/Section/Table/Item/Item/Item[Data[@name='managementObjectsProperty']='EnableDaylightSavingsTime' and Data[@name='managementObjectsValue'] = '0']" sortType="all">
+        <Exists>
+          <Otherwise>
+            <Delete select="Data[@name='managementObjectsValue']"/>
+            <Insert select=".">
+              <Node axis="child">
+                <Data name="managementObjectsValue" translate="value">tv_FalseString</Data>
+              </Node>
+            </Insert>
+          </Otherwise>
+        </Exists>
+      </Step>
+      <Step select="/Report/Section/Table/Item/Item/Item[Data[@name='managementObjectsProperty']='InfraredSupported' and Data[@name='managementObjectsValue'] = '0']" sortType="all">
+        <Exists>
+          <Otherwise>
+            <Delete select="Data[@name='managementObjectsValue']"/>
+            <Insert select=".">
+              <Node axis="child">
+                <Data name="managementObjectsValue" translate="value">tv_FalseString</Data>
+              </Node>
+            </Insert>
+          </Otherwise>
+        </Exists>
+      </Step>
+      <Step select="/Report/Section/Table/Item/Item/Item[Data[@name='managementObjectsProperty']='NetworkServerModeEnabled' and Data[@name='managementObjectsValue'] = '0']" sortType="all">
+        <Exists>
+          <Otherwise>
+            <Delete select="Data[@name='managementObjectsValue']"/>
+            <Insert select=".">
+              <Node axis="child">
+                <Data name="managementObjectsValue" translate="value">tv_FalseString</Data>
+              </Node>
+            </Insert>
+          </Otherwise>
+        </Exists>
+      </Step>
+      <Step select="/Report/Section/Table/Item/Item/Item[Data[@name='managementObjectsProperty']='PartOfDomain' and Data[@name='managementObjectsValue'] = '0']" sortType="all">
+        <Exists>
+          <Otherwise>
+            <Delete select="Data[@name='managementObjectsValue']"/>
+            <Insert select=".">
+              <Node axis="child">
+                <Data name="managementObjectsValue" translate="value">tv_FalseString</Data>
+              </Node>
+            </Insert>
+          </Otherwise>
+        </Exists>
+      </Step>
+      <Step select="/Report/Section/Table/Item/Item/Item[Data[@name='managementObjectsProperty']='PowerManagementSupported' and Data[@name='managementObjectsValue'] = '0']" sortType="all">
+        <Exists>
+          <Otherwise>
+            <Delete select="Data[@name='managementObjectsValue']"/>
+            <Insert select=".">
+              <Node axis="child">
+                <Data name="managementObjectsValue" translate="value">tv_FalseString</Data>
+              </Node>
+            </Insert>
+          </Otherwise>
+        </Exists>
+      </Step>
+    </Rule>
+    <Rule name="$(RuleOSSetup)" enabled="true">
+      <Step select="/Report/Section[@name='advice']/Table[@name='alltests']">
+        <Exists>
+          <When expression="1 = 1">
+            <Variable name="group">$(LOC_TableBasicOSSummary)</Variable>
+            <Variable name="description">$(LOC_DescOSSummary)</Variable>
+            <Insert>
+              <Node axis="child">
+                <Item>
+                  <Data name="alltestgroups" link="TableBasicOperatingSystem">{group}</Data>
+                  <Data name="alltestdesc">{description}</Data>
+                </Item>
+              </Node>
+            </Insert>
+          </When>
+          <Otherwise/>
+        </Exists>
+      </Step>
+    </Rule>
+    <Rule name="$(RuleSuccessOSVersionCheck)" enabled="true">
+      <Step select="/Report/Section/Table[@name='TableBasicOperatingSystem']">
+        <Exists>
+          <When expression="starts-with(Item/Item/Item[Data[@name = 'managementObjectsProperty'] = 'Version']/Data[@name='managementObjectsValue'], '10.')">
+            <Variable name="group">$(LOC_TableBasicOSSummary)</Variable>
+            <Variable name="test">$(LOC_Test_RuleSuccessOSVersionCheck)</Variable>
+            <Variable name="description">$(LOC_Passed)</Variable>
+            <Insert select="/Report/Section[@name='advice']/Table[@name='alltests']/Item[Data[@name='alltestgroups'] = '{group}']">
+              <Node axis="child">
+                <Item>
+                  <Data name="allchildtest">{test}</Data>
+                  <Data name="allchildtotal">1</Data>
+                  <Data name="allchildfail">0</Data>
+                  <Data name="allchilddesc">{description}</Data>
+                </Item>
+              </Node>
+            </Insert>
+          </When>
+          <Otherwise>
+            <Variable name="internalruleindex" expression="{internalruleindex} + 1"/>
+            <Variable name="ruleFailOSVersionCheck_symptom">$(WarnFailOSVersionCheck_symptom)</Variable>
+            <Variable name="ruleFailOSVersionCheck_cause">$(WarnFailOSVersionCheck_cause)</Variable>
+            <Variable name="ruleFailOSVersionCheck_details">$(WarnFailOSVersionCheck_details)</Variable>
+            <Variable name="ruleFailOSVersionCheck_res1">$(WarnFailOSVersionCheck_res1)</Variable>
+            <Variable name="ruleFailOSVersionCheck_related1">$(WarnFailOSVersionCheck_related1)</Variable>
+            <Warning tag="ruleFailOSVersionCheck_{internalruleindex}" select="/Report/Section/Table[@name='TableBasicOperatingSystem']/Item/Item/Item[Data[@name = 'managementObjectsProperty'] = 'Version']/Data[@name='managementObjectsValue']" table="/Report/Section[@name='advice']/Table[@name='warning']">
+              <Item>
+                <Data name="symptom" img="warning" link="ruleFailOSVersionCheck_{internalruleindex}" message="ruleFailOSVersionCheck_{internalruleindex}" translate="value">{ruleFailOSVersionCheck_symptom}</Data>
+                <Data name="cause" message="ruleFailOSVersionCheck_{internalruleindex}">{ruleFailOSVersionCheck_cause}</Data>
+                <Data name="details" message="ruleFailOSVersionCheck_{internalruleindex}">{ruleFailOSVersionCheck_details}</Data>
+                <Data name="resolution" message="ruleFailOSVersionCheck_{internalruleindex}">{ruleFailOSVersionCheck_res1}</Data>
+                <Data name="related" url="http://go.microsoft.com/fwlink/?LinkID=70097">{ruleFailOSVersionCheck_related1}</Data>
+              </Item>
+            </Warning>
+            <Variable name="group">$(LOC_TableBasicOSSummary)</Variable>
+            <Variable name="test">$(LOC_Test_RuleSuccessOSVersionCheck)</Variable>
+            <Variable name="description">$(LOC_Failed)</Variable>
+            <Insert select="/Report/Section[@name='advice']/Table[@name='alltests']/Item[Data[@name='alltestgroups'] = '{group}']">
+              <Node axis="child">
+                <Item>
+                  <Data name="allchildtest">{test}</Data>
+                  <Data name="allchildtotal">1</Data>
+                  <Data name="allchildfail">1</Data>
+                  <Data name="allchilddesc">{description}</Data>
+                </Item>
+              </Node>
+            </Insert>
+          </Otherwise>
+        </Exists>
+      </Step>
+    </Rule>
+    <Rule name="$(RuleAddressWidthCheck)" enabled="true">
+      <Step select="/Report/Section/Table[@name='TableBasicOperatingSystem']">
+        <Variable name="osarchitecture" expression="Item/Item/Item[Data[@name = 'managementObjectsProperty'] = 'OSArchitecture']/Data[@name='managementObjectsValue']"/>
+        <Variable name="processorwidth" expression="/Report/Section[@name='SystemConfig']/Table[@name='TableBasicProcessor']/Item/Item/Item[Data[@name = 'managementObjectsProperty'] = 'AddressWidth']/Data[@name='managementObjectsValue']"/>
+        <Exists>
+          <When expression="starts-with('{osarchitecture}', '{processorwidth}')">
+          </When>
+          <Otherwise>
+            <Variable name="internalruleindex" expression="{internalruleindex} + 1"/>
+            <Variable name="ruleFailAddressWidthCheck_symptom">$(WarnFailOSAddressWidthCheck_symptom)</Variable>
+            <Variable name="ruleFailAddressWidthCheck_cause">$(WarnFailOSAddressWidthCheck_cause)</Variable>
+            <Variable name="ruleFailAddressWidthCheck_details">$(WarnFailOSAddressWidthCheck_details)</Variable>
+            <Variable name="ruleFailAddressWidthCheck_res1">$(WarnFailOSAddressWidthCheck_res1)</Variable>
+            <Variable name="ruleFailAddressWidthCheck_related1">$(WarnFailOSAddressWidthCheck_related1)</Variable>
+            <Warning tag="ruleFailAddressWidthCheck_{internalruleindex}" select="/Report/Section/Table[@name='TableBasicOperatingSystem']/Item/Item/Item[Data[@name = 'managementObjectsProperty'] = 'OSArchitecture']/Data[@name='managementObjectsValue']" table="/Report/Section[@name='advice']/Table[@name='warning']">
+              <Item>
+                <Data name="symptom" img="warning" link="ruleFailAddressWidthCheck_{internalruleindex}" message="ruleFailAddressWidthCheck_{internalruleindex}" translate="value">{ruleFailAddressWidthCheck_symptom}</Data>
+                <Data name="cause" message="ruleFailAddressWidthCheck_{internalruleindex}">{ruleFailAddressWidthCheck_cause}</Data>
+                <Data name="details" message="ruleFailAddressWidthCheck_{internalruleindex}">{ruleFailAddressWidthCheck_details}</Data>
+                <Data name="resolution" message="ruleFailAddressWidthCheck_{internalruleindex}">{ruleFailAddressWidthCheck_res1}</Data>
+                <Data name="related" url="http://go.microsoft.com/fwlink/?LinkID=70098">{ruleFailAddressWidthCheck_related1}</Data>
+              </Item>
+            </Warning>
+          </Otherwise>
+        </Exists>
+      </Step>
+      <Step select="/Report/Section[@name='SystemConfig']/Table[@name='TableBasicProcessor']">
+        <Exists>
+          <When expression="1 = 1">
+            <Delete select="."/>
+          </When>
+        </Exists>
+      </Step>
+    </Rule>
+    <Rule name="$(RuleOSSummary)" enabled="true">
+      <Step select="/Report/Section[@name='advice']/Table[@name='alltests']" fatal="true">
+        <Variable name="group">$(LOC_TableBasicOSSummary)</Variable>
+        <Variable name="groupfailedtestscount" expression="count(Item[Data[@name='alltestgroups'] = '{group}']/Item[Data[@name='allchildfail'] != '0'])"/>
+        <Exists>
+          <When expression="{groupfailedtestscount} &gt; 0">
+            <Variable name="failedmsg">$(LOC_Failed)</Variable>
+            <Insert select="Item[Data[@name='alltestgroups'] = '{group}']/Data">
+              <Node axis="following-sibling">
+                <Data img="red" name="allteststatus">{failedmsg}</Data>
+              </Node>
+            </Insert>
+          </When>
+          <When expression="{groupfailedtestscount} = 0">
+            <Variable name="passedmsg">$(LOC_Passed)</Variable>
+            <Insert select="Item[Data[@name='alltestgroups'] = '{group}']/Data">
+              <Node axis="following-sibling">
+                <Data img="green" name="allteststatus">{passedmsg}</Data>
+              </Node>
+            </Insert>
+          </When>
+        </Exists>
+      </Step>
+    </Rule>
+    <Rule name="$(RuleDiskSetup)" enabled="true">
+      <Step select="/Report/Section[@name='advice']/Table[@name='alltests']">
+        <Exists>
+          <When expression="1 = 1">
+            <Variable name="group">$(LOC_TableBasicDiskSummary)</Variable>
+            <Variable name="description">$(LOC_DescDiskSummary)</Variable>
+            <Insert>
+              <Node axis="child">
+                <Item>
+                  <Data name="alltestgroups" link="TableBasicSMART">{group}</Data>
+                  <Data name="alltestdesc">{description}</Data>
+                </Item>
+              </Node>
+            </Insert>
+          </When>
+          <Otherwise/>
+        </Exists>
+      </Step>
+    </Rule>
+    <Rule name="$(RuleSuccessSMARTCheck)" enabled="true">
+      <Step select="/Report/Section[@name='SystemConfig']/Table[@name='TableBasicSMART']">
+        <Exists>
+          <When expression="Item[count(Item)=0] or Item/Item[count(Item)=0]">
+            <Variable name="group">$(LOC_TableBasicDiskSummary)</Variable>
+            <Variable name="test">$(LOC_Test_RuleSuccessSMARTCheck)</Variable>
+            <Variable name="description">$(LOC_Passed)</Variable>
+            <Insert select="/Report/Section[@name='advice']/Table[@name='alltests']/Item[Data[@name='alltestgroups'] = '{group}']">
+              <Node axis="child">
+                <Item>
+                  <Data name="allchildtest">{test}</Data>
+                  <Data name="allchildtotal">1</Data>
+                  <Data name="allchildfail">0</Data>
+                  <Data name="allchilddesc">{description}</Data>
+                </Item>
+              </Node>
+            </Insert>
+          </When>
+          <Otherwise>
+            <Variable name="internalruleindex" expression="{internalruleindex} + 1"/>
+            <Variable name="ruleFailSMART_symptom">$(WarnFailSMARTCheck_symptom)</Variable>
+            <Variable name="ruleFailSMART_cause">$(WarnFailSMARTCheck_cause)</Variable>
+            <Variable name="ruleFailSMART_details">$(WarnFailSMARTCheck_details)</Variable>
+            <Variable name="ruleFailSMART_res1">$(WarnFailSMARTCheck_res1)</Variable>
+            <Variable name="ruleFailSMART_res2">$(WarnFailSMARTCheck_res2)</Variable>
+            <Variable name="ruleFailSMART_related1">$(WarnFailSMARTCheck_related1)</Variable>
+            <Warning tag="ruleFailSMART_{internalruleindex}" select="/Report/Section[@name='SystemConfig']/Table[@name='TableBasicSMART']/Item/Data[@name='managementObjectsQuery']" table="/Report/Section[@name='advice']/Table[@name='error']">
+              <Item>
+                <Data name="symptom" img="error" link="ruleFailSMART_{internalruleindex}" message="ruleFailSMART_{internalruleindex}" translate="value">{ruleFailSMART_symptom}</Data>
+                <Data name="cause" message="ruleFailSMART_{internalruleindex}">{ruleFailSMART_cause}</Data>
+                <Data name="details" message="ruleFailSMART_{internalruleindex}">{ruleFailSMART_details}</Data>
+                <Data name="resolution" message="ruleFailSMART_{internalruleindex}">{ruleFailSMART_res1}</Data>
+                <Data name="resolution" message="ruleFailSMART_{internalruleindex}">{ruleFailSMART_res2}</Data>
+                <Data name="related" url="http://go.microsoft.com/fwlink/?LinkID=70099">{ruleFailSMART_related1}</Data>
+              </Item>
+            </Warning>
+            <Variable name="group">$(LOC_TableBasicDiskSummary)</Variable>
+            <Variable name="test">$(LOC_Test_RuleSuccessSMARTCheck)</Variable>
+            <Variable name="description">$(LOC_Failed)</Variable>
+            <Insert select="/Report/Section[@name='advice']/Table[@name='alltests']/Item[Data[@name='alltestgroups'] = '{group}']">
+              <Node axis="child">
+                <Item>
+                  <Data name="allchildtest">{test}</Data>
+                  <Data name="allchildtotal">1</Data>
+                  <Data name="allchildfail">1</Data>
+                  <Data name="allchilddesc">{description}</Data>
+                </Item>
+              </Node>
+            </Insert>
+          </Otherwise>
+        </Exists>
+      </Step>
+    </Rule>
+    <Rule name="$(RuleSuccessLogicalDiskDirty)" enabled="true">
+      <Step select="/Report/Section[@name='SystemConfig']/Table[@name='TableBasicDirty']">
+        <Exists>
+          <When expression="Item[count(Item)=0] or Item/Item[count(Item)=0]">
+            <Variable name="group">$(LOC_TableBasicDiskSummary)</Variable>
+            <Variable name="test">$(LOC_Test_RuleSuccessLogicalDiskDirty)</Variable>
+            <Variable name="description">$(LOC_Passed)</Variable>
+            <Insert select="/Report/Section[@name='advice']/Table[@name='alltests']/Item[Data[@name='alltestgroups'] = '{group}']">
+              <Node axis="child">
+                <Item>
+                  <Data name="allchildtest">{test}</Data>
+                  <Data name="allchildtotal">1</Data>
+                  <Data name="allchildfail">0</Data>
+                  <Data name="allchilddesc">{description}</Data>
+                </Item>
+              </Node>
+            </Insert>
+          </When>
+          <Otherwise>
+            <Variable name="internalruleindex" expression="{internalruleindex} + 1"/>
+            <Variable name="ruleFailLogicalDiskDirty_symptom">$(WarnFailLogicalDiskDirty_symptom)</Variable>
+            <Variable name="ruleFailLogicalDiskDirty_cause">$(WarnFailLogicalDiskDirty_cause)</Variable>
+            <Variable name="ruleFailLogicalDiskDirty_details">$(WarnFailLogicalDiskDirty_details)</Variable>
+            <Variable name="ruleFailLogicalDiskDirty_res1">$(WarnFailLogicalDiskDirty_res1)</Variable>
+            <Variable name="ruleFailLogicalDiskDirty_res2">$(WarnFailLogicalDiskDirty_res2)</Variable>
+            <Variable name="ruleFailLogicalDiskDirty_related1">$(WarnFailLogicalDiskDirty_related1)</Variable>
+            <Warning tag="ruleFailLogicalDiskDirty_{internalruleindex}" select="/Report/Section[@name='SystemConfig']/Table[@name='TableBasicDirty']/Item/Data[@name='managementObjectsQuery']" table="/Report/Section[@name='advice']/Table[@name='warning']">
+              <Item>
+                <Data name="symptom" img="warning" link="ruleFailLogicalDiskDirty_{internalruleindex}" message="ruleFailLogicalDiskDirty_{internalruleindex}" translate="value">{ruleFailLogicalDiskDirty_symptom}</Data>
+                <Data name="cause" message="ruleFailLogicalDiskDirty_{internalruleindex}">{ruleFailLogicalDiskDirty_cause}</Data>
+                <Data name="details" message="ruleFailLogicalDiskDirty_{internalruleindex}">{ruleFailLogicalDiskDirty_details}</Data>
+                <Data name="resolution" message="ruleFailLogicalDiskDirty_{internalruleindex}">{ruleFailLogicalDiskDirty_res1}</Data>
+                <Data name="resolution" message="ruleFailLogicalDiskDirty_{internalruleindex}">{ruleFailLogicalDiskDirty_res2}</Data>
+                <Data name="related" url="http://go.microsoft.com/fwlink/?LinkID=70100">{ruleFailLogicalDiskDirty_related1}</Data>
+              </Item>
+            </Warning>
+            <Variable name="group">$(LOC_TableBasicDiskSummary)</Variable>
+            <Variable name="test">$(LOC_Test_RuleSuccessLogicalDiskDirty)</Variable>
+            <Variable name="description">$(LOC_Failed)</Variable>
+            <Insert select="/Report/Section[@name='advice']/Table[@name='alltests']/Item[Data[@name='alltestgroups'] = '{group}']">
+              <Node axis="child">
+                <Item>
+                  <Data name="allchildtest">{test}</Data>
+                  <Data name="allchildtotal">1</Data>
+                  <Data name="allchildfail">1</Data>
+                  <Data name="allchilddesc">{description}</Data>
+                </Item>
+              </Node>
+            </Insert>
+          </Otherwise>
+        </Exists>
+      </Step>
+    </Rule>
+    <Rule name="$(RuleSuccessDiskFreeSpace)" enabled="true">
+      <Step select="/Report/Section/Table[@name='TableBasicOperatingSystem']/Item/Item/Item[Data[@name='managementObjectsProperty'] = 'SystemDrive']" fatal="true">
+        <Exists>
+          <Otherwise>
+            <Variable name="systemdrive" expression="Data[@name='managementObjectsValue']"/>
+          </Otherwise>
+        </Exists>
+      </Step>
+      <Step select="/Report/Section/Table[@name='configLogicalDisk']/Item" sortType="all">
+        <Variable name="freediskpercent" expression="ceiling( Data[@name='numberOfFreeClusters'] div Data[@name='totalNumberOfClusters'] * 100)"/>
+        <Variable name="freediskspacemb" expression="ceiling(Data[@name='bytesPerSector'] * Data[@name='sectorsPerCluster'] * Data[@name='numberOfFreeClusters'] div number('1024') div number('1024'))"/>
+        <Variable name="minfreediskspacemb" expression="number('5120')"/>
+        <Variable name="minfreediskpercent" expression="number('15')"/>
+        <Variable name="diskname" expression="Data[@name='driveLetterString']"/>
+        <Exists>
+          <When expression="'{diskname}' = '{systemdrive}' and ({freediskpercent} &lt; {minfreediskpercent} or {freediskspacemb} &lt; {minfreediskspacemb})">
+            <Variable name="internalruleindex" expression="{internalruleindex} + 1"/>
+            <Variable name="ruleFailSystemDiskFreeSpace_symptom">$(WarnFailSystemDiskSpaceFree_symptom)</Variable>
+            <Variable name="ruleFailSystemDiskFreeSpace_cause">$(WarnFailSystemDiskSpaceFree_cause)</Variable>
+            <Variable name="ruleFailSystemDiskFreeSpace_details">$(WarnFailSystemDiskSpaceFree_details)</Variable>
+            <Variable name="ruleFailSystemDiskFreeSpace_res1">$(WarnFailSystemDiskSpaceFree_res1)</Variable>
+            <Variable name="ruleFailSystemDiskFreeSpace_res2">$(WarnFailSystemDiskSpaceFree_res2)</Variable>
+            <Variable name="ruleFailSystemDiskFreeSpace_res3">$(WarnFailSystemDiskSpaceFree_res3)</Variable>
+            <Variable name="ruleFailSystemDiskFreeSpace_related1">$(WarnFailDiskSpaceFree_related1)</Variable>
+            <Warning tag="ruleFailSystemDiskFreeSpace_{internalruleindex}" select="Data[@name='numberOfFreeClusters']" table="/Report/Section[@name='advice']/Table[@name='warning']">
+              <Item>
+                <Data name="symptom" img="warning" link="ruleFailSystemDiskFreeSpace_{internalruleindex}" message="ruleFailSystemDiskFreeSpace_{internalruleindex}" translate="value">{ruleFailSystemDiskFreeSpace_symptom}</Data>
+                <Data name="cause" message="ruleFailSystemDiskFreeSpace_{internalruleindex}">{ruleFailSystemDiskFreeSpace_cause}</Data>
+                <Data name="details" message="ruleFailSystemDiskFreeSpace_{internalruleindex}">{ruleFailSystemDiskFreeSpace_details}</Data>
+                <Data name="resolution" message="ruleFailSystemDiskFreeSpace_{internalruleindex}">{ruleFailSystemDiskFreeSpace_res1}</Data>
+                <Data name="resolution" message="ruleFailSystemDiskFreeSpace_{internalruleindex}">{ruleFailSystemDiskFreeSpace_res2}</Data>
+                <Data name="resolution" message="ruleFailSystemDiskFreeSpace_{internalruleindex}">{ruleFailSystemDiskFreeSpace_res3}</Data>
+                <Data name="related" url="http://go.microsoft.com/fwlink/?LinkID=70101">{ruleFailSystemDiskFreeSpace_related1}</Data>
+              </Item>
+            </Warning>
+            <Variable name="group">$(LOC_TableBasicDiskSummary)</Variable>
+            <Variable name="test">$(LOC_Test_RuleSuccessDiskFreeSpace)</Variable>
+            <Variable name="description">$(LOC_DescDiskFreeSpace)</Variable>
+            <Insert select="/Report/Section[@name='advice']/Table[@name='alltests']/Item[Data[@name='alltestgroups'] = '{group}']">
+              <Node axis="child">
+                <Item>
+                  <Data name="allchildtest">{test}</Data>
+                  <Data name="allchildtotal">1</Data>
+                  <Data name="allchildfail">1</Data>
+                  <Data name="allchilddesc">{description}</Data>
+                </Item>
+              </Node>
+            </Insert>
+          </When>
+          <When expression="{freediskpercent} &lt; {minfreediskpercent}">
+            <Variable name="internalruleindex" expression="{internalruleindex} + 1"/>
+            <Variable name="ruleFailDiskFreeSpace_symptom">$(WarnFailDiskSpaceFree_symptom)</Variable>
+            <Variable name="ruleFailDiskFreeSpace_cause">$(WarnFailDiskSpaceFree_cause)</Variable>
+            <Variable name="ruleFailDiskFreeSpace_details">$(WarnFailDiskSpaceFree_details)</Variable>
+            <Variable name="ruleFailDiskFreeSpace_res1">$(WarnFailDiskSpaceFree_res1)</Variable>
+            <Variable name="ruleFailDiskFreeSpace_res2">$(WarnFailDiskSpaceFree_res2)</Variable>
+            <Variable name="ruleFailDiskFreeSpace_res3">$(WarnFailDiskSpaceFree_res3)</Variable>
+            <Variable name="ruleFailDiskFreeSpace_related1">$(WarnFailDiskSpaceFree_related1)</Variable>
+            <Warning tag="ruleFailDiskFreeSpace_{internalruleindex}" select="Data[@name='numberOfFreeClusters']" table="/Report/Section[@name='advice']/Table[@name='info']">
+              <Item>
+                <Data name="symptom" img="info" link="ruleFailDiskFreeSpace_{internalruleindex}" message="ruleFailDiskFreeSpace_{internalruleindex}" translate="value">{ruleFailDiskFreeSpace_symptom}</Data>
+                <Data name="cause" message="ruleFailDiskFreeSpace_{internalruleindex}">{ruleFailDiskFreeSpace_cause}</Data>
+                <Data name="details" message="ruleFailDiskFreeSpace_{internalruleindex}">{ruleFailDiskFreeSpace_details}</Data>
+                <Data name="resolution" message="ruleFailDiskFreeSpace_{internalruleindex}">{ruleFailDiskFreeSpace_res1}</Data>
+                <Data name="resolution" message="ruleFailDiskFreeSpace_{internalruleindex}">{ruleFailDiskFreeSpace_res2}</Data>
+                <Data name="resolution" message="ruleFailDiskFreeSpace_{internalruleindex}">{ruleFailDiskFreeSpace_res3}</Data>
+                <Data name="related" url="http://go.microsoft.com/fwlink/?LinkID=70101">{ruleFailDiskFreeSpace_related1}</Data>
+              </Item>
+            </Warning>
+            <Variable name="group">$(LOC_TableBasicDiskSummary)</Variable>
+            <Variable name="test">$(LOC_Test_RuleSuccessDiskFreeSpace)</Variable>
+            <Variable name="description">$(LOC_DescDiskFreeSpace)</Variable>
+            <Insert select="/Report/Section[@name='advice']/Table[@name='alltests']/Item[Data[@name='alltestgroups'] = '{group}']">
+              <Node axis="child">
+                <Item>
+                  <Data name="allchildtest">{test}</Data>
+                  <Data name="allchildtotal">1</Data>
+                  <Data name="allchildfail">1</Data>
+                  <Data name="allchilddesc">{description}</Data>
+                </Item>
+              </Node>
+            </Insert>
+          </When>
+          <Otherwise>
+            <Variable name="group">$(LOC_TableBasicDiskSummary)</Variable>
+            <Variable name="test">$(LOC_Test_RuleSuccessDiskFreeSpace)</Variable>
+            <Variable name="description">$(LOC_DescDiskFreeSpace)</Variable>
+            <Insert select="/Report/Section[@name='advice']/Table[@name='alltests']/Item[Data[@name='alltestgroups'] = '{group}']">
+              <Node axis="child">
+                <Item>
+                  <Data name="allchildtest">{test}</Data>
+                  <Data name="allchildtotal">1</Data>
+                  <Data name="allchildfail">0</Data>
+                  <Data name="allchilddesc">{description}</Data>
+                </Item>
+              </Node>
+            </Insert>
+          </Otherwise>
+        </Exists>
+        <Otherwise/>
+      </Step>
+    </Rule>
+    <Rule name="$(RuleDiskSummary)" enabled="true">
+      <Step select="/Report/Section[@name='advice']/Table[@name='alltests']" fatal="true">
+        <Variable name="group">$(LOC_TableBasicDiskSummary)</Variable>
+        <Variable name="groupfailedtestscount" expression="count(Item[Data[@name='alltestgroups'] = '{group}']/Item[Data[@name='allchildfail'] != '0'])"/>
+        <Exists>
+          <When expression="{groupfailedtestscount} &gt; 0">
+            <Variable name="failedmsg">$(LOC_Failed)</Variable>
+            <Insert select="Item[Data[@name='alltestgroups'] = '{group}']/Data">
+              <Node axis="following-sibling">
+                <Data img="red" name="allteststatus">{failedmsg}</Data>
+              </Node>
+            </Insert>
+          </When>
+          <When expression="1 = 1 and {groupfailedtestscount} = 0">
+            <Variable name="passedmsg">$(LOC_Passed)</Variable>
+            <Insert select="Item[Data[@name='alltestgroups'] = '{group}']/Data">
+              <Node axis="following-sibling">
+                <Data img="green" name="allteststatus">{passedmsg}</Data>
+              </Node>
+            </Insert>
+          </When>
+        </Exists>
+      </Step>
+    </Rule>
+    <Rule name="$(RuleSecurityCenterSetup)" enabled="true">
+      <Step select="/Report/Section[@name='advice']/Table[@name='alltests']">
+        <Exists>
+          <Otherwise>
+            <Variable name="group">$(LOC_TableBasicSecurityCenterGroupSummary)</Variable>
+            <Variable name="description">$(LOC_DescSecurityCenterSummary)</Variable>
+            <Insert>
+              <Node axis="child">
+                <Item>
+                  <Data name="alltestgroups" link="TableBasicAntiSpywareProduct">{group}</Data>
+                  <Data name="alltestdesc">{description}</Data>
+                </Item>
+              </Node>
+            </Insert>
+          </Otherwise>
+        </Exists>
+      </Step>
+    </Rule>
+    <Rule name="$(RuleSuccessAntiSpywareCheck)" enabled="false">
+      <Step select="/Report/Section/Table[@name='TableBasicAntiSpywareProduct']/Item/Item">
+        <Exists>
+          <Otherwise/>
+        </Exists>
+        <Otherwise>
+          <Variable name="internalruleindex" expression="{internalruleindex} + 1"/>
+          <Variable name="ruleFailAntiSpywareUnknown_symptom">$(WarnFailAntiSpywareUnknown_symptom)</Variable>
+          <Variable name="ruleFailAntiSpywareUnknown_cause">$(WarnFailAntiSpywareUnknown_cause)</Variable>
+          <Variable name="ruleFailAntiSpywareUnknown_res1">$(WarnFailAntiSpywareUnknown_res1)</Variable>
+          <Variable name="ruleFailAntiSpywareUnknown_res2">$(WarnFailAntiSpywareUnknown_res2)</Variable>
+          <Variable name="ruleFailAntiSpywareUnknown_related">$(LinkAntiSpyware)</Variable>
+          <Warning tag="ruleFailAntiSpywareUnknown_{internalruleindex}" select="/Report/Section/Table[@name='TableBasicAntiSpywareProduct']/Item/Data[@name='managementObjectsQuery']" table="/Report/Section[@name='advice']/Table[@name='info']">
+            <Item>
+              <Data name="symptom" img="info" link="ruleFailAntiSpywareUnknown_{internalruleindex}" message="ruleFailAntiSpywareUnknown_{internalruleindex}" translate="value">{ruleFailAntiSpywareUnknown_symptom}</Data>
+              <Data name="cause" message="ruleFailAntiSpywareUnknown_{internalruleindex}">{ruleFailAntiSpywareUnknown_cause}</Data>
+              <Data name="resolution" message="ruleFailAntiSpywareUnknown_{internalruleindex}">{ruleFailAntiSpywareUnknown_res1}</Data>
+              <Data name="resolution" message="ruleFailAntiSpywareUnknown_{internalruleindex}">{ruleFailAntiSpywareUnknown_res2}</Data>
+              <Data name="related" url="http://go.microsoft.com/fwlink/?LinkID=70102">{ruleFailAntiSpywareUnknown_related}</Data>
+            </Item>
+          </Warning>
+        </Otherwise>
+      </Step>
+      <Step select="/Report/Section/Table[@name='TableBasicAntiSpywareProduct']/Item/Item" fatal="true">
+        <Exists>
+          <Otherwise/>
+        </Exists>
+      </Step>
+      <Step select="/Report/Section/Table[@name='TableBasicAntiSpywareProduct']/Item/Item[Item[Data[@name='managementObjectsProperty'] = 'productEnabled' and Data[@name='managementObjectsValue'] = 'tv_TrueString']]">
+        <Variable name="antispywareproduct" expression="Item[Data[@name='managementObjectsProperty'] = 'displayName']/Data[@name='managementObjectsValue']"/>
+        <Variable name="antispywareproductuptodate" expression="Item[Data[@name='managementObjectsProperty'] = 'productUptoDate']/Data[@name='managementObjectsValue']"/>
+        <Exists>
+          <When expression="{antispywareproductuptodate} != 'tv_TrueString'">
+            <Variable name="group">$(LOC_TableBasicSecurityCenterGroupSummary)</Variable>
+            <Variable name="test">$(LOC_Test_CheckAntiSpywareEnabled)</Variable>
+            <Variable name="description">$(LOC_Passed)</Variable>
+            <Insert select="/Report/Section[@name='advice']/Table[@name='alltests']/Item[Data[@name='alltestgroups'] = '{group}']">
+              <Node axis="child">
+                <Item>
+                  <Data name="allchildtest">{test}</Data>
+                  <Data name="allchildtotal">1</Data>
+                  <Data name="allchildfail">0</Data>
+                  <Data name="allchilddesc">{description}</Data>
+                </Item>
+              </Node>
+            </Insert>
+            <Variable name="group">$(LOC_TableBasicSecurityCenterGroupSummary)</Variable>
+            <Variable name="test">$(LOC_Test_CheckAntiSpywareUpToDate)</Variable>
+            <Variable name="description">$(LOC_Failed)</Variable>
+            <Insert select="/Report/Section[@name='advice']/Table[@name='alltests']/Item[Data[@name='alltestgroups'] = '{group}']">
+              <Node axis="child">
+                <Item>
+                  <Data name="allchildtest">{test}</Data>
+                  <Data name="allchildtotal">1</Data>
+                  <Data name="allchildfail">1</Data>
+                  <Data name="allchilddesc">{description}</Data>
+                </Item>
+              </Node>
+            </Insert>
+            <Variable name="internalruleindex" expression="{internalruleindex} + 1"/>
+            <Variable name="ruleFailAntiSpywareCheckUpToDate_symptom">$(WarnFailAntiSpywareCheckUpToDate_symptom)</Variable>
+            <Variable name="ruleFailAntiSpywareCheckUpToDate_cause">$(WarnFailAntiSpywareCheckUpToDate_cause)</Variable>
+            <Variable name="ruleFailAntiSpywareCheckUpToDate_details">$(WarnFailAntiSpywareCheckUpToDate_details)</Variable>
+            <Variable name="ruleFailAntiSpywareCheckUpToDate_res1">$(WarnFailAntiSpywareCheckUpToDate_res1)</Variable>
+            <Variable name="ruleFailAntiSpywareCheckUpToDate_related1">$(LinkAntiSpyware)</Variable>
+            <Warning tag="ruleFailAntiSpywareCheckUpToDate_{internalruleindex}" select="Item[Data[@name='managementObjectsProperty'] = 'displayName']/Data[@name='managementObjectsValue']" table="/Report/Section[@name='advice']/Table[@name='warning']">
+              <Item>
+                <Data name="symptom" img="warning" link="ruleFailAntiSpywareCheckUpToDate_{internalruleindex}" message="ruleFailAntiSpywareCheckUpToDate_{internalruleindex}" translate="value">{ruleFailAntiSpywareCheckUpToDate_symptom}</Data>
+                <Data name="cause" message="ruleFailAntiSpywareCheckUpToDate_{internalruleindex}">{ruleFailAntiSpywareCheckUpToDate_cause}</Data>
+                <Data name="details" message="ruleFailAntiSpywareCheckUpToDate_{internalruleindex}">{ruleFailAntiSpywareCheckUpToDate_details}</Data>
+                <Data name="resolution" message="ruleFailAntiSpywareCheckUpToDate_{internalruleindex}">{ruleFailAntiSpywareCheckUpToDate_res1}</Data>
+                <Data name="related" url="http://go.microsoft.com/fwlink/?LinkID=70102">{ruleFailAntiSpywareCheckUpToDate_related1}</Data>
+              </Item>
+            </Warning>
+          </When>
+          <Otherwise>
+            <Variable name="group">$(LOC_TableBasicSecurityCenterGroupSummary)</Variable>
+            <Variable name="test">$(LOC_Test_CheckAntiSpywareUpToDate)</Variable>
+            <Variable name="description">$(LOC_Passed)</Variable>
+            <Insert select="/Report/Section[@name='advice']/Table[@name='alltests']/Item[Data[@name='alltestgroups'] = '{group}']">
+              <Node axis="child">
+                <Item>
+                  <Data name="allchildtest">{test}</Data>
+                  <Data name="allchildtotal">1</Data>
+                  <Data name="allchildfail">0</Data>
+                  <Data name="allchilddesc">{description}</Data>
+                </Item>
+              </Node>
+            </Insert>
+            <Variable name="group">$(LOC_TableBasicSecurityCenterGroupSummary)</Variable>
+            <Variable name="test">$(LOC_Test_CheckAntiSpywareEnabled)</Variable>
+            <Variable name="description">$(LOC_Passed)</Variable>
+            <Insert select="/Report/Section[@name='advice']/Table[@name='alltests']/Item[Data[@name='alltestgroups'] = '{group}']">
+              <Node axis="child">
+                <Item>
+                  <Data name="allchildtest">{test}</Data>
+                  <Data name="allchildtotal">1</Data>
+                  <Data name="allchildfail">0</Data>
+                  <Data name="allchilddesc">{description}</Data>
+                </Item>
+              </Node>
+            </Insert>
+          </Otherwise>
+        </Exists>
+        <Otherwise>
+          <Variable name="internalruleindex" expression="{internalruleindex} + 1"/>
+          <Variable name="ruleFailAntiSpywareCheckEnabled_symptom">$(WarnFailAntiSpywareCheckEnabled_symptom)</Variable>
+          <Variable name="ruleFailAntiSpywareCheckEnabled_cause">$(WarnFailAntiSpywareCheckEnabled_cause)</Variable>
+          <Variable name="ruleFailAntiSpywareCheckEnabled_res1">$(WarnFailAntiSpywareCheckEnabled_res1)</Variable>
+          <Variable name="ruleFailAntiSpywareCheckEnabled_res2">$(WarnFailAntiSpywareCheckEnabled_res2)</Variable>
+          <Variable name="ruleFailAntiSpywareCheckEnabled_related1">$(LinkAntiSpyware)</Variable>
+          <Warning tag="ruleFailAntiSpywareCheckEnabled_{internalruleindex}" select="/Report/Section/Table[@name='TableBasicAntiSpywareProduct']/Item/Data[@name='managementObjectsQuery']" table="/Report/Section[@name='advice']/Table[@name='warning']">
+            <Item>
+              <Data name="symptom" img="warning" link="ruleFailAntiSpywareCheckEnabled_{internalruleindex}" message="ruleFailAntiSpywareCheckEnabled_{internalruleindex}" translate="value">{ruleFailAntiSpywareCheckEnabled_symptom}</Data>
+              <Data name="cause" message="ruleFailAntiSpywareCheckEnabled_{internalruleindex}">{ruleFailAntiSpywareCheckEnabled_cause}</Data>
+              <Data name="resolution" message="ruleFailAntiSpywareCheckEnabled_{internalruleindex}">{ruleFailAntiSpywareCheckEnabled_res1}</Data>
+              <Data name="resolution" message="ruleFailAntiSpywareCheckEnabled_{internalruleindex}">{ruleFailAntiSpywareCheckEnabled_res2}</Data>
+              <Data name="related" url="http://go.microsoft.com/fwlink/?LinkID=70102">{ruleFailAntiSpywareCheckEnabled_related1}</Data>
+            </Item>
+          </Warning>
+          <Variable name="group">$(LOC_TableBasicSecurityCenterGroupSummary)</Variable>
+          <Variable name="test">$(LOC_Test_CheckAntiSpywareEnabled)</Variable>
+          <Variable name="description">$(LOC_Failed)</Variable>
+          <Insert select="/Report/Section[@name='advice']/Table[@name='alltests']/Item[Data[@name='alltestgroups'] = '{group}']">
+            <Node axis="child">
+              <Item>
+                <Data name="allchildtest">{test}</Data>
+                <Data name="allchildtotal">1</Data>
+                <Data name="allchildfail">1</Data>
+                <Data name="allchilddesc">{description}</Data>
+              </Item>
+            </Node>
+          </Insert>
+        </Otherwise>
+      </Step>
+    </Rule>
+    <Rule name="$(RuleSuccessAntiVirusCheck)" enabled="true">
+      <Step select="/Report/Section/Table[@name='TableBasicAntiVirusProduct']/Item/Item">
+        <Exists>
+          <Otherwise>
+          </Otherwise>
+        </Exists>
+        <Otherwise>
+          <Variable name="internalruleindex" expression="{internalruleindex} + 1"/>
+          <Variable name="ruleFailAntiVirusUnknown_symptom">$(WarnFailAntiVirusUnknown_symptom)</Variable>
+          <Variable name="ruleFailAntiVirusUnknown_cause">$(WarnFailAntiVirusUnknown_cause)</Variable>
+          <Variable name="ruleFailAntiVirusUnknown_res1">$(WarnFailAntiVirusUnknown_res1)</Variable>
+          <Variable name="ruleFailAntiVirusUnknown_res2">$(WarnFailAntiVirusUnknown_res2)</Variable>
+          <Variable name="ruleFailAntiVirusUnknown_related1">$(LinkAntiVirus)</Variable>
+          <Warning tag="ruleFailAntiVirusUnknown_{internalruleindex}" select="/Report/Section/Table[@name='TableBasicAntiVirusProduct']/Item/Data[@name='managementObjectsQuery']" table="/Report/Section[@name='advice']/Table[@name='info']">
+            <Item>
+              <Data name="symptom" img="info" link="ruleFailAntiVirusUnknown_{internalruleindex}" message="ruleFailAntiVirusUnknown_{internalruleindex}" translate="value">{ruleFailAntiVirusUnknown_symptom}</Data>
+              <Data name="cause" message="ruleFailAntiVirusUnknown_{internalruleindex}">{ruleFailAntiVirusUnknown_cause}</Data>
+              <Data name="resolution" message="ruleFailAntiVirusUnknown_{internalruleindex}">{ruleFailAntiVirusUnknown_res1}</Data>
+              <Data name="resolution" message="ruleFailAntiVirusUnknown_{internalruleindex}">{ruleFailAntiVirusUnknown_res2}</Data>
+              <Data name="related" url="http://go.microsoft.com/fwlink/?LinkID=70103">{ruleFailAntiVirusUnknown_related1}</Data>
+            </Item>
+          </Warning>
+        </Otherwise>
+      </Step>
+      <Step select="/Report/Section/Table[@name='TableBasicAntiVirusProduct']/Item/Item" fatal="true">
+        <Exists>
+          <Otherwise/>
+        </Exists>
+      </Step>
+    </Rule>
+    <Rule name="$(RuleSuccessFirewallCheck)" enabled="false">
+      <Step select="/Report/Section/Table[@name='TableBasicFirewallProduct']" fatal="true">
+        <Exists>
+          <Otherwise/>
+        </Exists>
+      </Step>
+      <Step select="/Report/Section/Table[@name='TableBasicFirewallProduct']/Item/Item[Item[Data[@name='managementObjectsProperty'] = 'enabled' and Data[@name='managementObjectsValue'] = 'tv_TrueString']]">
+        <Variable name="firewallproduct" expression="Item[Data[@name='managementObjectsProperty'] = 'displayName']/Data[@name='managementObjectsValue']"/>
+        <Exists>
+          <Otherwise>
+            <Variable name="group">$(LOC_TableBasicSecurityCenterGroupSummary)</Variable>
+            <Variable name="test">$(LOC_Test_CheckFirewallEnabled)</Variable>
+            <Variable name="description">$(LOC_Passed)</Variable>
+            <Insert select="/Report/Section[@name='advice']/Table[@name='alltests']/Item[Data[@name='alltestgroups'] = '{group}']">
+              <Node axis="child">
+                <Item>
+                  <Data name="allchildtest">{test}</Data>
+                  <Data name="allchildtotal">1</Data>
+                  <Data name="allchildfail">0</Data>
+                  <Data name="allchilddesc">{description}</Data>
+                </Item>
+              </Node>
+            </Insert>
+          </Otherwise>
+        </Exists>
+        <Otherwise>
+          <Variable name="internalruleindex" expression="{internalruleindex} + 1"/>
+          <Variable name="ruleFailFirewallCheckEnabled_symptom">$(WarnFailFirewallEnabled_symptom)</Variable>
+          <Variable name="ruleFailFirewallCheckEnabled_cause">$(WarnFailFirewallEnabled_cause)</Variable>
+          <Variable name="ruleFailFirewallCheckEnabled_details">$(WarnFailFirewallEnabled_details)</Variable>
+          <Variable name="ruleFailFirewallCheckEnabled_res1">$(WarnFailFirewallEnabled_res1)</Variable>
+          <Variable name="ruleFailFirewallCheckEnabled_res2">$(WarnFailFirewallEnabled_res2)</Variable>
+          <Variable name="ruleFailFirewallCheckEnabled_res3">$(WarnFailFirewallEnabled_res3)</Variable>
+          <Variable name="linkFirewall">$(LinkFirewall)</Variable>
+          <Warning tag="ruleFailFirewallCheckEnabled_{internalruleindex}" select="/Report/Section/Table[@name='TableBasicFirewallProduct']/Item/Data[@name='managementObjectsQuery']" table="/Report/Section[@name='advice']/Table[@name='warning']">
+            <Item>
+              <Data name="symptom" img="warning" link="ruleFailFirewallCheckEnabled_{internalruleindex}" message="ruleFailFirewallCheckEnabled_{internalruleindex}" translate="value">{ruleFailFirewallCheckEnabled_symptom}</Data>
+              <Data name="cause" message="ruleFailFirewallCheckEnabled_{internalruleindex}">{ruleFailFirewallCheckEnabled_cause}</Data>
+              <Data name="details" message="ruleFailFirewallCheckEnabled_{internalruleindex}">{ruleFailFirewallCheckEnabled_details}</Data>
+              <Data name="resolution" message="ruleFailFirewallCheckEnabled_{internalruleindex}">{ruleFailFirewallCheckEnabled_res1}</Data>
+              <Data name="resolution" message="ruleFailFirewallCheckEnabled_{internalruleindex}">{ruleFailFirewallCheckEnabled_res2}</Data>
+              <Data name="resolution" message="ruleFailFirewallCheckEnabled_{internalruleindex}">{ruleFailFirewallCheckEnabled_res3}</Data>
+              <Data name="related" url="http://go.microsoft.com/fwlink/?LinkID=70104">{linkFirewall}</Data>
+            </Item>
+          </Warning>
+          <Variable name="group">$(LOC_TableBasicSecurityCenterGroupSummary)</Variable>
+          <Variable name="test">$(LOC_Test_CheckFirewallEnabled)</Variable>
+          <Variable name="description">$(LOC_Failed)</Variable>
+          <Insert select="/Report/Section[@name='advice']/Table[@name='alltests']/Item[Data[@name='alltestgroups'] = '{group}']">
+            <Node axis="child">
+              <Item>
+                <Data name="allchildtest">{test}</Data>
+                <Data name="allchildtotal">1</Data>
+                <Data name="allchildfail">1</Data>
+                <Data name="allchilddesc">{description}</Data>
+              </Item>
+            </Node>
+          </Insert>
+        </Otherwise>
+      </Step>
+    </Rule>
+    <Rule name="$(RuleSuccessLUA)" enabled="true">
+      <Step select="/Report/Section/Table[@name='TableBasicLUARegistry']">
+        <Variable name="lualookupresult" expression="Item/Item[Data[@name='registryKeysKey'] = 'HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\System\\EnableLUA']/Data[@name='registryKeysLookupResult']"/>
+        <Variable name="luavalue" expression="Item/Item[Data[@name='registryKeysKey'] = 'HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\System\\EnableLUA']/Data[@name='registryKeysValue']"/>
+        <Exists>
+          <When expression="'{lualookupresult}' != '0x0'">
+            <Variable name="group">$(LOC_TableBasicSecurityCenterGroupSummary)</Variable>
+            <Variable name="test">$(LOC_Test_RuleSuccessLUA)</Variable>
+            <Variable name="description">$(LOC_Passed)</Variable>
+            <Insert select="/Report/Section[@name='advice']/Table[@name='alltests']/Item[Data[@name='alltestgroups'] = '{group}']">
+              <Node axis="child">
+                <Item>
+                  <Data name="allchildtest">{test}</Data>
+                  <Data name="allchildtotal">1</Data>
+                  <Data name="allchildfail">0</Data>
+                  <Data name="allchilddesc">{description}</Data>
+                </Item>
+              </Node>
+            </Insert>
+          </When>
+          <When expression="'{lualookupresult}' = '0x0' and {luavalue} = '1'">
+            <Variable name="group">$(LOC_TableBasicSecurityCenterGroupSummary)</Variable>
+            <Variable name="test">$(LOC_Test_RuleSuccessLUA)</Variable>
+            <Variable name="description">$(LOC_Passed)</Variable>
+            <Insert select="/Report/Section[@name='advice']/Table[@name='alltests']/Item[Data[@name='alltestgroups'] = '{group}']">
+              <Node axis="child">
+                <Item>
+                  <Data name="allchildtest">{test}</Data>
+                  <Data name="allchildtotal">1</Data>
+                  <Data name="allchildfail">0</Data>
+                  <Data name="allchilddesc">{description}</Data>
+                </Item>
+              </Node>
+            </Insert>
+          </When>
+          <Otherwise>
+            <Variable name="internalruleindex" expression="{internalruleindex} + 1"/>
+            <Variable name="ruleFailLUA_symptom">$(WarnFailLUA_symptom)</Variable>
+            <Variable name="ruleFailLUA_cause">$(WarnFailLUA_cause)</Variable>
+            <Variable name="ruleFailLUA_res1">$(WarnFailLUA_res1)</Variable>
+            <Variable name="ruleFailLUA_related1">$(WarnFailLUA_related1)</Variable>
+            <Warning tag="ruleFailLUA_{internalruleindex}" select="Item/Item[Data[@name='registryKeysKey'] = 'HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\System\\EnableLUA']/Data[@name='registryKeysValue']" table="/Report/Section[@name='advice']/Table[@name='info']">
+              <Item>
+                <Data name="symptom" img="info" link="ruleFailLUA_{internalruleindex}" message="ruleFailLUA_{internalruleindex}" translate="value">{ruleFailLUA_symptom}</Data>
+                <Data name="cause" message="ruleFailLUA_{internalruleindex}">{ruleFailLUA_cause}</Data>
+                <Data name="resolution" message="ruleFailLUA_{internalruleindex}">{ruleFailLUA_res1}</Data>
+                <Data name="related" url="http://go.microsoft.com/fwlink/?LinkID=70105">{ruleFailLUA_related1}</Data>
+              </Item>
+            </Warning>
+            <Variable name="group">$(LOC_TableBasicSecurityCenterGroupSummary)</Variable>
+            <Variable name="test">$(LOC_Test_RuleSuccessLUA)</Variable>
+            <Variable name="description">$(LOC_Failed)</Variable>
+            <Insert select="/Report/Section[@name='advice']/Table[@name='alltests']/Item[Data[@name='alltestgroups'] = '{group}']">
+              <Node axis="child">
+                <Item>
+                  <Data name="allchildtest">{test}</Data>
+                  <Data name="allchildtotal">1</Data>
+                  <Data name="allchildfail">1</Data>
+                  <Data name="allchilddesc">{description}</Data>
+                </Item>
+              </Node>
+            </Insert>
+          </Otherwise>
+        </Exists>
+        <Otherwise>
+          <Variable name="group">$(LOC_TableBasicSecurityCenterGroupSummary)</Variable>
+          <Variable name="test">$(LOC_Test_RuleSuccessLUA)</Variable>
+          <Variable name="description">$(LOC_Passed)</Variable>
+          <Insert select="/Report/Section[@name='advice']/Table[@name='alltests']/Item[Data[@name='alltestgroups'] = '{group}']">
+            <Node axis="child">
+              <Item>
+                <Data name="allchildtest">{test}</Data>
+                <Data name="allchildtotal">1</Data>
+                <Data name="allchildfail">0</Data>
+                <Data name="allchilddesc">{description}</Data>
+              </Item>
+            </Node>
+          </Insert>
+        </Otherwise>
+      </Step>
+    </Rule>
+    <Rule name="$(RuleSuccessWU)" enabled="true">
+      <Step select="/Report/Section/Table[@name='TableBasicWURegistry']">
+        <Variable name="wulookupresult" expression="Item/Item[Data[@name='registryKeysKey'] = 'HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\WindowsUpdate\\Auto Update\\AUOptions']/Data[@name='registryKeysLookupResult']"/>
+        <Variable name="wuvalue" expression="Item/Item[Data[@name='registryKeysKey'] = 'HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\WindowsUpdate\\Auto Update\\AUOptions']/Data[@name='registryKeysValue']"/>
+        <Exists>
+          <When expression="'{wulookupresult}' != '0x0'">
+            <Variable name="group">$(LOC_TableBasicSecurityCenterGroupSummary)</Variable>
+            <Variable name="test">$(LOC_Test_RuleSuccessLUA)</Variable>
+            <Variable name="description">$(LOC_Passed)</Variable>
+            <Insert select="/Report/Section[@name='advice']/Table[@name='alltests']/Item[Data[@name='alltestgroups'] = '{group}']">
+              <Node axis="child">
+                <Item>
+                  <Data name="allchildtest">{test}</Data>
+                  <Data name="allchildtotal">1</Data>
+                  <Data name="allchildfail">0</Data>
+                  <Data name="allchilddesc">{description}</Data>
+                </Item>
+              </Node>
+            </Insert>
+          </When>
+          <When expression="'{wulookupresult}' = '0x0' and {wuvalue} &gt; 1">
+            <Variable name="group">$(LOC_TableBasicSecurityCenterGroupSummary)</Variable>
+            <Variable name="test">$(LOC_Test_RuleSuccessWU)</Variable>
+            <Variable name="description">$(LOC_Passed)</Variable>
+            <Insert select="/Report/Section[@name='advice']/Table[@name='alltests']/Item[Data[@name='alltestgroups'] = '{group}']">
+              <Node axis="child">
+                <Item>
+                  <Data name="allchildtest">{test}</Data>
+                  <Data name="allchildtotal">1</Data>
+                  <Data name="allchildfail">0</Data>
+                  <Data name="allchilddesc">{description}</Data>
+                </Item>
+              </Node>
+            </Insert>
+          </When>
+          <Otherwise>
+            <Variable name="internalruleindex" expression="{internalruleindex} + 1"/>
+            <Variable name="ruleFailWU_symptom">$(WarnFailWU_symptom)</Variable>
+            <Variable name="ruleFailWU_cause">$(WarnFailWU_cause)</Variable>
+            <Variable name="ruleFailWU_res1">$(WarnFailWU_res1)</Variable>
+            <Variable name="ruleFailWU_related1">$(WarnFailWU_related1)</Variable>
+            <Warning tag="ruleFailWU_{internalruleindex}" select="Item/Item[Data[@name='registryKeysKey'] = 'HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\WindowsUpdate\\Auto Update\\AUOptions']/Data[@name='registryKeysValue']" table="/Report/Section[@name='advice']/Table[@name='warning']">
+              <Item>
+                <Data name="symptom" img="warning" link="ruleFailWU_{internalruleindex}" message="ruleFailWU_{internalruleindex}" translate="value">{ruleFailWU_symptom}</Data>
+                <Data name="cause" message="ruleFailWU_{internalruleindex}">{ruleFailWU_cause}</Data>
+                <Data name="resolution" message="ruleFailWU_{internalruleindex}">{ruleFailWU_res1}</Data>
+                <Data name="related" url="http://go.microsoft.com/fwlink/?LinkID=70106">{ruleFailWU_related1}</Data>
+              </Item>
+            </Warning>
+            <Variable name="group">$(LOC_TableBasicSecurityCenterGroupSummary)</Variable>
+            <Variable name="test">$(LOC_Test_RuleSuccessWU)</Variable>
+            <Variable name="description">$(LOC_Failed)</Variable>
+            <Insert select="/Report/Section[@name='advice']/Table[@name='alltests']/Item[Data[@name='alltestgroups'] = '{group}']">
+              <Node axis="child">
+                <Item>
+                  <Data name="allchildtest">{test}</Data>
+                  <Data name="allchildtotal">1</Data>
+                  <Data name="allchildfail">1</Data>
+                  <Data name="allchilddesc">{description}</Data>
+                </Item>
+              </Node>
+            </Insert>
+          </Otherwise>
+        </Exists>
+        <Otherwise>
+          <Variable name="group">$(LOC_TableBasicSecurityCenterGroupSummary)</Variable>
+          <Variable name="test">$(LOC_Test_RuleSuccessWU)</Variable>
+          <Variable name="description">$(LOC_Passed)</Variable>
+          <Insert select="/Report/Section[@name='advice']/Table[@name='alltests']/Item[Data[@name='alltestgroups'] = '{group}']">
+            <Node axis="child">
+              <Item>
+                <Data name="allchildtest">{test}</Data>
+                <Data name="allchildtotal">1</Data>
+                <Data name="allchildfail">0</Data>
+                <Data name="allchilddesc">{description}</Data>
+              </Item>
+            </Node>
+          </Insert>
+        </Otherwise>
+      </Step>
+    </Rule>
+    <Rule name="$(RuleSecurityCenterSummary)" enabled="true">
+      <Step select="/Report/Section[@name='advice']/Table[@name='alltests']" fatal="true">
+        <Variable name="group">$(LOC_TableBasicSecurityCenterGroupSummary)</Variable>
+        <Variable name="groupfailedtestscount" expression="count(Item[Data[@name='alltestgroups'] = '{group}']/Item[Data[@name='allchildfail'] != '0'])"/>
+        <Exists>
+          <When expression="{groupfailedtestscount} &gt; 0">
+            <Variable name="failedmsg">$(LOC_Failed)</Variable>
+            <Insert select="Item[Data[@name='alltestgroups'] = '{group}']/Data">
+              <Node axis="following-sibling">
+                <Data img="red" name="allteststatus">{failedmsg}</Data>
+              </Node>
+            </Insert>
+          </When>
+          <When expression="{groupfailedtestscount} = 0">
+            <Variable name="passedmsg">$(LOC_Passed)</Variable>
+            <Insert select="Item[Data[@name='alltestgroups'] = '{group}']/Data">
+              <Node axis="following-sibling">
+                <Data img="green" name="allteststatus">{passedmsg}</Data>
+              </Node>
+            </Insert>
+          </When>
+        </Exists>
+      </Step>
+    </Rule>
+    <Rule name="$(RuleSuccessService)" enabled="true">
+      <Step select="/Report/Section[@name='advice']/Table[@name='alltests']">
+        <Exists>
+          <Otherwise>
+            <Variable name="group">$(LOC_TableBasicServiceSummary)</Variable>
+            <Variable name="description">$(LOC_DescServicesSummary)</Variable>
+            <Insert>
+              <Node axis="child">
+                <Item>
+                  <Data name="alltestgroups" link="TableBasicService">{group}</Data>
+                  <Data name="alltestdesc">{description}</Data>
+                </Item>
+              </Node>
+            </Insert>
+          </Otherwise>
+        </Exists>
+      </Step>
+      <Step select="/Report/Section/Table[@name='TableBasicService']/Item/Item/Item[Data[@name='managementObjectsProperty']='Started' and Data[@name='managementObjectsValue'] = '-1']" sortType="all">
+        <Exists>
+          <Otherwise>
+            <Delete select="Data[@name='managementObjectsValue']"/>
+            <Insert select=".">
+              <Node axis="child">
+                <Data name="managementObjectsValue" translate="value">tv_TrueString</Data>
+              </Node>
+            </Insert>
+          </Otherwise>
+        </Exists>
+      </Step>
+      <Step select="/Report/Section/Table[@name='TableBasicService']/Item/Item/Item[Data[@name='managementObjectsProperty']='Started' and Data[@name='managementObjectsValue'] = '0']" sortType="all">
+        <Exists>
+          <Otherwise>
+            <Delete select="Data[@name='managementObjectsValue']"/>
+            <Insert select=".">
+              <Node axis="child">
+                <Data name="managementObjectsValue" translate="value">tv_FalseString</Data>
+              </Node>
+            </Insert>
+          </Otherwise>
+        </Exists>
+      </Step>
+      <Step select="/Report/Section[@name='SectionSoftwareConfig']">
+        <Exists>
+          <Otherwise>
+            <Insert select=".">
+              <Node axis="child">
+                <Table name="TableBasicAbnormallyStoppedServices"/>
+              </Node>
+            </Insert>
+            <Insert select="Table[@name='TableBasicAbnormallyStoppedServices']">
+              <Attribute name="topic" value="TopicServicesChecks"/>
+              <Attribute name="key" value="300"/>
+            </Insert>
+            <Insert select="Table[@name='TableBasicAbnormallyStoppedServices']">
+              <Node axis="child">
+                <Header>
+                  <Data name="servicename"/>
+                  <Header style="info">
+                    <Data name="displayname"/>
+                    <Data name="exitcode"/>
+                    <Data name="scname"/>
+                    <Data name="pathname"/>
+                    <Data name="servicespecificexitcode"/>
+                    <Data name="started"/>
+                    <Data name="state"/>
+                  </Header>
+                </Header>
+              </Node>
+            </Insert>
+          </Otherwise>
+        </Exists>
+      </Step>
+      <Step select="/Report/Section[@name='SectionSoftwareConfig']/Table[@name='TableBasicService']/Item/Item[Item[Data[@name='managementObjectsProperty'] = 'ExitCode']/Data[@name='managementObjectsValue'][. != '0'][. != '1077']]" sortType="all">
+        <Exists>
+          <Otherwise>
+            <Variable name="servicename" expression="Item[Data[@name='managementObjectsProperty'] = 'Name']/Data[@name='managementObjectsValue']"/>
+            <Variable name="displayname" expression="/Report/Section[@name='SectionSoftwareConfig']/Table[@name='TableBasicService']/Item/Item[Item[Data[@name='managementObjectsProperty'] = 'Name']/Data[@name='managementObjectsValue'] = '{servicename}']/Item[Data[@name='managementObjectsProperty'] = 'DisplayName']/Data[@name='managementObjectsValue']"/>
+            <Variable name="description" expression="/Report/Section[@name='SectionSoftwareConfig']/Table[@name='TableBasicService']/Item/Item[Item[Data[@name='managementObjectsProperty'] = 'Name']/Data[@name='managementObjectsValue'] = '{servicename}']/Item[Data[@name='managementObjectsProperty'] = 'Description']/Data[@name='managementObjectsValue']"/>
+            <Variable name="exitcode" expression="/Report/Section[@name='SectionSoftwareConfig']/Table[@name='TableBasicService']/Item/Item[Item[Data[@name='managementObjectsProperty'] = 'Name']/Data[@name='managementObjectsValue'] = '{servicename}']/Item[Data[@name='managementObjectsProperty'] = 'ExitCode']/Data[@name='managementObjectsValue']"/>
+            <Variable name="scname" expression="/Report/Section[@name='SectionSoftwareConfig']/Table[@name='TableBasicService']/Item/Item[Item[Data[@name='managementObjectsProperty'] = 'Name']/Data[@name='managementObjectsValue'] = '{servicename}']/Item[Data[@name='managementObjectsProperty'] = 'Name']/Data[@name='managementObjectsValue']"/>
+            <Variable name="pathname" expression="/Report/Section[@name='SectionSoftwareConfig']/Table[@name='TableBasicService']/Item/Item[Item[Data[@name='managementObjectsProperty'] = 'Name']/Data[@name='managementObjectsValue'] = '{servicename}']/Item[Data[@name='managementObjectsProperty'] = 'PathName']/Data[@name='managementObjectsValue']"/>
+            <Variable name="servicespecificexitcode" expression="/Report/Section[@name='SectionSoftwareConfig']/Table[@name='TableBasicService']/Item/Item[Item[Data[@name='managementObjectsProperty'] = 'Name']/Data[@name='managementObjectsValue'] = '{servicename}']/Item[Data[@name='managementObjectsProperty'] = 'ServiceSpecificExitCode']/Data[@name='managementObjectsValue']"/>
+            <Variable name="started" expression="/Report/Section[@name='SectionSoftwareConfig']/Table[@name='TableBasicService']/Item/Item[Item[Data[@name='managementObjectsProperty'] = 'Name']/Data[@name='managementObjectsValue'] = '{servicename}']/Item[Data[@name='managementObjectsProperty'] = 'Started']/Data[@name='managementObjectsValue']"/>
+            <Variable name="state" expression="/Report/Section[@name='SectionSoftwareConfig']/Table[@name='TableBasicService']/Item/Item[Item[Data[@name='managementObjectsProperty'] = 'Name']/Data[@name='managementObjectsValue'] = '{servicename}']/Item[Data[@name='managementObjectsProperty'] = 'State']/Data[@name='managementObjectsValue']"/>
+            <Insert select="/Report/Section[@name='SectionSoftwareConfig']/Table[@name='TableBasicAbnormallyStoppedServices']">
+              <Node axis="child">
+                <Item>
+                  <Data name="servicename">{servicename}</Data>
+                  <Item>
+                    <Data name="displayname">{displayname}</Data>
+                    <Data name="exitcode">{exitcode}</Data>
+                    <Data name="scname">{scname}</Data>
+                    <Data name="pathname">{pathname}</Data>
+                    <Data name="servicespecificexitcode">{servicespecificexitcode}</Data>
+                    <Data name="started" translate="value">{started}</Data>
+                    <Data name="state">{state}</Data>
+                  </Item>
+                </Item>
+              </Node>
+            </Insert>
+          </Otherwise>
+        </Exists>
+      </Step>
+      <Step select="/Report/Section[@name='SectionSoftwareConfig']/Table[@name='TableBasicAbnormallyStoppedServices']">
+        <Variable name="badservicecount" expression="count(Item)"/>
+        <Exists>
+          <When expression="{badservicecount} = 0">
+            <Variable name="group">$(LOC_TableBasicServiceSummary)</Variable>
+            <Variable name="test">$(LOC_Test_RuleSuccessService)</Variable>
+            <Variable name="description">$(LOC_Passed)</Variable>
+            <Insert select="/Report/Section[@name='advice']/Table[@name='alltests']/Item[Data[@name='alltestgroups'] = '{group}']">
+              <Node axis="child">
+                <Item>
+                  <Data name="allchildtest">{test}</Data>
+                  <Data name="allchildtotal">1</Data>
+                  <Data name="allchildfail">0</Data>
+                  <Data name="allchilddesc">{description}</Data>
+                </Item>
+              </Node>
+            </Insert>
+          </When>
+          <Otherwise>
+            <Variable name="internalruleindex" expression="{internalruleindex} + 1"/>
+            <Variable name="ruleFailService_symptom">$(WarnFailService_symptom)</Variable>
+            <Variable name="ruleFailService_cause">$(WarnFailService_cause)</Variable>
+            <Variable name="ruleFailService_details">$(WarnFailService_details)</Variable>
+            <Variable name="ruleFailService_res1">$(WarnFailService_res1)</Variable>
+            <Variable name="ruleFailService_related1">$(WarnFailService_related1)</Variable>
+            <Warning tag="ruleFailService_{internalruleindex}" select="/Report/Section[@name='SectionSoftwareConfig']/Table[@name='TableBasicAbnormallyStoppedServices']" table="/Report/Section[@name='advice']/Table[@name='error']">
+              <Item>
+                <Data name="symptom" img="error" link="ruleFailService_{internalruleindex}" message="ruleFailService_{internalruleindex}" translate="value">{ruleFailService_symptom}</Data>
+                <Data name="cause" message="ruleFailService_{internalruleindex}">{ruleFailService_cause}</Data>
+                <Data name="details" message="ruleFailService_{internalruleindex}">{ruleFailService_details}</Data>
+                <Data name="resolution" message="ruleFailService_{internalruleindex}">{ruleFailService_res1}</Data>
+                <Data name="related" url="http://go.microsoft.com/fwlink/?LinkID=70107">{ruleFailService_related1}</Data>
+              </Item>
+            </Warning>
+            <Variable name="group">$(LOC_TableBasicServiceSummary)</Variable>
+            <Variable name="test">$(LOC_Test_RuleSuccessService)</Variable>
+            <Variable name="description">$(LOC_Failed)</Variable>
+            <Insert select="/Report/Section[@name='advice']/Table[@name='alltests']/Item[Data[@name='alltestgroups'] = '{group}']">
+              <Node axis="child">
+                <Item>
+                  <Data name="allchildtest">{test}</Data>
+                  <Data name="allchildtotal">1</Data>
+                  <Data name="allchildfail">{badservicecount}</Data>
+                  <Data name="allchilddesc">{description}</Data>
+                </Item>
+              </Node>
+            </Insert>
+          </Otherwise>
+        </Exists>
+      </Step>
+      <Step select="/Report/Section[@name='advice']/Table[@name='alltests']" fatal="true">
+        <Variable name="group">$(LOC_TableBasicServiceSummary)</Variable>
+        <Variable name="groupfailedtestscount" expression="count(Item[Data[@name='alltestgroups'] = '{group}']/Item[Data[@name='allchildfail'] != '0'])"/>
+        <Exists>
+          <When expression="{groupfailedtestscount} &gt; 0">
+            <Variable name="failedmsg">$(LOC_Failed)</Variable>
+            <Insert select="Item[Data[@name='alltestgroups'] = '{group}']/Data">
+              <Node axis="following-sibling">
+                <Data img="red" name="allteststatus">{failedmsg}</Data>
+              </Node>
+            </Insert>
+          </When>
+          <When expression="{groupfailedtestscount} = 0">
+            <Variable name="passedmsg">$(LOC_Passed)</Variable>
+            <Insert select="Item[Data[@name='alltestgroups'] = '{group}']/Data">
+              <Node axis="following-sibling">
+                <Data img="green" name="allteststatus">{passedmsg}</Data>
+              </Node>
+            </Insert>
+          </When>
+        </Exists>
+      </Step>
+    </Rule>
+    <Rule name="$(RuleCheckWorkstationService)" enabled="true">
+      <Step select="/Report/Section[@name='SectionSoftwareConfig']">
+        <Exists>
+          <Otherwise>
+            <Insert select=".">
+              <Node axis="child">
+                <Table name="TableWorkstationServices" topic="TopicServicesChecks"/>
+              </Node>
+            </Insert>
+            <Insert select="Table[@name='TableWorkstationServices']">
+              <Node axis="child">
+                <Header>
+                  <Data name="servicename" class="string"/>
+                  <Header style="info">
+                    <Data name="displayname"/>
+                    <Data name="exitcode"/>
+                    <Data name="scname"/>
+                    <Data name="pathname"/>
+                    <Data name="servicespecificexitcode"/>
+                    <Data name="started"/>
+                    <Data name="state"/>
+                  </Header>
+                </Header>
+              </Node>
+            </Insert>
+          </Otherwise>
+        </Exists>
+      </Step>
+      <Step select="/Report/Section[@name='SectionSoftwareConfig']/Table[@name='TableWorkstationServices']" fatal="true">
+        <Exists>
+          <Otherwise>
+            <Variable name="workstationservicename">$(LOC_Workstation)</Variable>
+          </Otherwise>
+        </Exists>
+      </Step>
+      <Step select="/Report/Section[@name='SectionSoftwareConfig']/Table[@name='TableBasicService']/Item/Item[Item[Data[@name='managementObjectsProperty'] = 'Name']/Data[@name='managementObjectsValue'] = '{workstationservicename}']" fatal="true">
+        <Exists>
+          <Otherwise>
+            <Variable name="displayname" expression="/Report/Section[@name='SectionSoftwareConfig']/Table[@name='TableBasicService']/Item/Item[Item[Data[@name='managementObjectsProperty'] = 'Name']/Data[@name='managementObjectsValue'] = '{workstationservicename}']/Item[Data[@name='managementObjectsProperty'] = 'DisplayName']/Data[@name='managementObjectsValue']"/>
+            <Variable name="description" expression="/Report/Section[@name='SectionSoftwareConfig']/Table[@name='TableBasicService']/Item/Item[Item[Data[@name='managementObjectsProperty'] = 'Name']/Data[@name='managementObjectsValue'] = '{workstationservicename}']/Item[Data[@name='managementObjectsProperty'] = 'Description']/Data[@name='managementObjectsValue']"/>
+            <Variable name="exitcode" expression="/Report/Section[@name='SectionSoftwareConfig']/Table[@name='TableBasicService']/Item/Item[Item[Data[@name='managementObjectsProperty'] = 'Name']/Data[@name='managementObjectsValue'] = '{workstationservicename}']/Item[Data[@name='managementObjectsProperty'] = 'ExitCode']/Data[@name='managementObjectsValue']"/>
+            <Variable name="scname" expression="/Report/Section[@name='SectionSoftwareConfig']/Table[@name='TableBasicService']/Item/Item[Item[Data[@name='managementObjectsProperty'] = 'Name']/Data[@name='managementObjectsValue'] = '{workstationservicename}']/Item[Data[@name='managementObjectsProperty'] = 'Name']/Data[@name='managementObjectsValue']"/>
+            <Variable name="pathname" expression="/Report/Section[@name='SectionSoftwareConfig']/Table[@name='TableBasicService']/Item/Item[Item[Data[@name='managementObjectsProperty'] = 'Name']/Data[@name='managementObjectsValue'] = '{workstationservicename}']/Item[Data[@name='managementObjectsProperty'] = 'PathName']/Data[@name='managementObjectsValue']"/>
+            <Variable name="servicespecificexitcode" expression="/Report/Section[@name='SectionSoftwareConfig']/Table[@name='TableBasicService']/Item/Item[Item[Data[@name='managementObjectsProperty'] = 'Name']/Data[@name='managementObjectsValue'] = '{workstationservicename}']/Item[Data[@name='managementObjectsProperty'] = 'ServiceSpecificExitCode']/Data[@name='managementObjectsValue']"/>
+            <Variable name="started" expression="/Report/Section[@name='SectionSoftwareConfig']/Table[@name='TableBasicService']/Item/Item[Item[Data[@name='managementObjectsProperty'] = 'Name']/Data[@name='managementObjectsValue'] = '{workstationservicename}']/Item[Data[@name='managementObjectsProperty'] = 'Started']/Data[@name='managementObjectsValue']"/>
+            <Variable name="state" expression="/Report/Section[@name='SectionSoftwareConfig']/Table[@name='TableBasicService']/Item/Item[Item[Data[@name='managementObjectsProperty'] = 'Name']/Data[@name='managementObjectsValue'] = '{workstationservicename}']/Item[Data[@name='managementObjectsProperty'] = 'State']/Data[@name='managementObjectsValue']"/>
+            <Insert select="/Report/Section[@name='SectionSoftwareConfig']/Table[@name='TableWorkstationServices']">
+              <Node axis="child">
+                <Item>
+                  <Data name="servicename">{workstationservicename}</Data>
+                  <Item>
+                    <Data name="displayname">{displayname}</Data>
+                    <Data name="exitcode">{exitcode}</Data>
+                    <Data name="scname">{scname}</Data>
+                    <Data name="pathname">{pathname}</Data>
+                    <Data name="servicespecificexitcode">{servicespecificexitcode}</Data>
+                    <Data name="started" translate="value">{started}</Data>
+                    <Data name="state">{state}</Data>
+                  </Item>
+                </Item>
+              </Node>
+            </Insert>
+          </Otherwise>
+        </Exists>
+      </Step>
+      <Step select="/Report/Section[@name='SectionSoftwareConfig']/Table[@name='TableWorkstationServices']/Item[Data[@name='servicename'] = '{workstationservicename}']">
+        <Variable name="exitcode" expression="Item/Data[@name='exitcode']"/>
+        <Variable name="state" expression="Item/Data[@name='state']"/>
+        <Variable name="test">$(LOC_RuleCheckWorkstationService)</Variable>
+        <Variable name="servicename">{workstationservicename}</Variable>
+        <Exists>
+          <When expression="({exitcode} != 0 and {exitcode} != 1077) or ('{state}' != 'Running')">
+            <Variable name="internalruleindex" expression="{internalruleindex} + 1"/>
+            <Variable name="ruleFailCheckWorkstationServiceAbnormallyStopped_symptom">$(WarnFailCheckWorkstationServiceAbnormallyStopped_symptom)</Variable>
+            <Variable name="ruleFailCheckWorkstationServiceAbnormallyStopped_cause">$(WarnFailCheckWorkstationServiceAbnormallyStopped_cause)</Variable>
+            <Variable name="ruleFailCheckWorkstationServiceAbnormallyStopped_res1">$(WarnFailCheckWorkstationServiceAbnormallyStopped_res1)</Variable>
+            <Variable name="ruleFailCheckWorkstationServiceAbnormallyStopped_related1">$(WarnFailCheckWorkstationServiceAbnormallyStopped_related1)</Variable>
+            <Warning tag="ruleFailCheckWorkstationServiceAbnormallyStopped_{internalruleindex}" select="Item/Data[@name='exitcode']" table="/Report/Section[@name='advice']/Table[@name='error']">
+              <Item>
+                <Data name="symptom" img="error" link="ruleFailCheckWorkstationServiceAbnormallyStopped_{internalruleindex}" message="ruleFailCheckWorkstationServiceAbnormallyStopped_{internalruleindex}">{ruleFailCheckWorkstationServiceAbnormallyStopped_symptom}</Data>
+                <Data name="cause" message="ruleFailCheckWorkstationServiceAbnormallyStopped_{internalruleindex}">{ruleFailCheckWorkstationServiceAbnormallyStopped_cause}</Data>
+                <Data name="resolution" message="ruleFailCheckWorkstationServiceAbnormallyStopped_{internalruleindex}">{ruleFailCheckWorkstationServiceAbnormallyStopped_res1}</Data>
+                <Data name="related" url="http://go.microsoft.com/fwlink/?LinkID=70116">{ruleFailCheckWorkstationServiceAbnormallyStopped_related1}</Data>
+              </Item>
+            </Warning>
+            <Variable name="group">$(LOC_TableBasicServiceSummary)</Variable>
+            <Variable name="test">$(LOC_RuleCheckWorkstationService)</Variable>
+            <Variable name="description">$(LOC_Failed)</Variable>
+            <Insert select="/Report/Section[@name='advice']/Table[@name='alltests']/Item[Data[@name='alltestgroups'] = '{group}']">
+              <Node axis="child">
+                <Item>
+                  <Data name="allchildtest">{test}</Data>
+                  <Data name="allchildtotal">1</Data>
+                  <Data name="allchildfail">1</Data>
+                  <Data name="allchilddesc">{description}</Data>
+                </Item>
+              </Node>
+            </Insert>
+          </When>
+          <Otherwise>
+            <Variable name="group">$(LOC_TableBasicServiceSummary)</Variable>
+            <Variable name="test">$(LOC_RuleCheckWorkstationService)</Variable>
+            <Variable name="description">$(LOC_Passed)</Variable>
+            <Insert select="/Report/Section[@name='advice']/Table[@name='alltests']/Item[Data[@name='alltestgroups'] = '{group}']">
+              <Node axis="child">
+                <Item>
+                  <Data name="allchildtest">{test}</Data>
+                  <Data name="allchildtotal">1</Data>
+                  <Data name="allchildfail">0</Data>
+                  <Data name="allchilddesc">{description}</Data>
+                </Item>
+              </Node>
+            </Insert>
+          </Otherwise>
+        </Exists>
+        <Otherwise>
+          <Variable name="group">$(LOC_TableBasicServiceSummary)</Variable>
+          <Variable name="test">$(LOC_RuleCheckWorkstationService)</Variable>
+          <Variable name="description">$(LOC_Failed)</Variable>
+          <Insert select="/Report/Section[@name='advice']/Table[@name='alltests']/Item[Data[@name='alltestgroups'] = '{group}']">
+            <Node axis="child">
+              <Item>
+                <Data name="allchildtest">{test}</Data>
+                <Data name="allchildtotal">1</Data>
+                <Data name="allchildfail">1</Data>
+                <Data name="allchilddesc">{description}</Data>
+              </Item>
+            </Node>
+          </Insert>
+          <Variable name="group">$(LOC_TableBasicServiceSummary)</Variable>
+          <Variable name="internalruleindex" expression="{internalruleindex} + 1"/>
+          <Variable name="ruleFailCheckWorkstationService_symptom">$(WarnFailServiceNotFound_symptom)</Variable>
+          <Variable name="ruleFailCheckWorkstationService_cause">$(WarnFailServiceNotFound_cause)</Variable>
+          <Variable name="ruleFailCheckWorkstationService_res1">$(WarnFailServiceNotFound_res1)</Variable>
+          <Variable name="ruleFailCheckWorkstationService_related1">$(WarnFailServiceNotFound_related1)</Variable>
+          <Warning tag="ruleFailCheckWorkstationService_{internalruleindex}" select="/Report/Section[@name='advice']/Table[@name='alltests']/Item[Data[@name='alltestgroups'] = '{group}']/Item/Data[@name='allchildtest'][. = '{test}']" table="/Report/Section[@name='advice']/Table[@name='error']">
+            <Item>
+              <Data name="symptom" img="error" link="ruleFailCheckWorkstationService_{internalruleindex}" message="ruleFailCheckWorkstationService_{internalruleindex}">{ruleFailCheckWorkstationService_symptom}</Data>
+              <Data name="cause" message="ruleFailCheckWorkstationService_{internalruleindex}">{ruleFailCheckWorkstationService_cause}</Data>
+              <Data name="resolution" message="ruleFailCheckWorkstationService_{internalruleindex}">{ruleFailCheckWorkstationService_res1}</Data>
+              <Data name="related" url="http://go.microsoft.com/fwlink/?LinkID=70116">{ruleFailCheckWorkstationService_related1}</Data>
+            </Item>
+          </Warning>
+        </Otherwise>
+      </Step>
+    </Rule>
+  </Group>
+  <Group name="$(GroupTrbTbl)" enabled="true">
+    <Rule name="$(RuleTrbInsert)" enabled="true" visible="false">
+      <Step select="/Report/Section[@name='SystemConfig']">
+        <Exists>
+          <Otherwise>
+            <Insert select=".">
+              <Node axis="child" document="Interactive Session Processes.xml" select="/Report/Section/Table[@name='managementObjects']"/>
+            </Insert>
+            <Insert select="Table[@name='managementObjects']">
+              <Attribute name="name" value="TablePerfInteractiveSessionProcess"/>
+            </Insert>
+          </Otherwise>
+        </Exists>
+      </Step>
+      <Step select="/Report/Section[@name='SystemConfig']">
+        <Exists>
+          <Otherwise>
+            <Insert select=".">
+              <Node axis="child" document="Interactive Sessions.xml" select="/Report/Section/Table[@name='managementObjects']"/>
+            </Insert>
+            <Insert select="Table[@name='managementObjects']">
+              <Attribute name="name" value="TablePerfInteractiveSession"/>
+            </Insert>
+          </Otherwise>
+        </Exists>
+      </Step>
+      <Step select="/Report/Section[@name='SystemConfig']">
+        <Exists>
+          <Otherwise>
+            <Insert select=".">
+              <Node axis="child" document="Processes.xml" select="/Report/Section/Table[@name='managementObjects']"/>
+            </Insert>
+            <Insert select="Table[@name='managementObjects']">
+              <Attribute name="name" value="TablePerfProcess"/>
+            </Insert>
+          </Otherwise>
+        </Exists>
+      </Step>
+      <Step select="/Report/Section[@name='SystemConfig']">
+        <Exists>
+          <Otherwise>
+            <Insert select=".">
+              <Node axis="child" document="Logged On Users.xml" select="/Report/Section/Table[@name='managementObjects']"/>
+            </Insert>
+            <Insert select="Table[@name='managementObjects']">
+              <Attribute name="name" value="TablePerfLoggedOnUsers"/>
+            </Insert>
+          </Otherwise>
+        </Exists>
+      </Step>
+      <Step select="/Report/Section[@name='SystemConfig']">
+        <Exists>
+          <Otherwise>
+            <Insert select=".">
+              <Node axis="child" document="User Accounts.xml" select="/Report/Section/Table[@name='managementObjects']"/>
+            </Insert>
+            <Insert select="Table[@name='managementObjects']">
+              <Attribute name="name" value="TablePerfUserAccounts"/>
+            </Insert>
+          </Otherwise>
+        </Exists>
+      </Step>
+      <Step select="/Report/Section[@name='SectionSoftwareConfig']">
+        <Exists>
+          <Otherwise>
+            <Insert select=".">
+              <Node axis="child" document="Startup Programs.xml" select="/Report/Section/Table[@name='managementObjects']"/>
+            </Insert>
+            <Insert select="Table[@name='managementObjects']">
+              <Attribute name="name" value="TablePerfStartupPrograms"/>
+            </Insert>
+          </Otherwise>
+        </Exists>
+      </Step>
+      <Step select="/Report/Section[@name='SectionSoftwareConfig']">
+        <Exists>
+          <Otherwise>
+            <Insert select=".">
+              <Node axis="child" document="Startup Settings.xml" select="/Report/Section/Table[@name='registryKeys']"/>
+            </Insert>
+            <Insert select="Table[@name='registryKeys']">
+              <Attribute name="name" value="TablePerfStartupRegistry"/>
+            </Insert>
+          </Otherwise>
+        </Exists>
+      </Step>
+      <Step select="/Report/Section[@name='SystemConfig']">
+        <Exists>
+          <Otherwise>
+            <Insert select=".">
+              <Node axis="child" document="Desktop Rating.xml" select="/Report/Section/Table[@name='managementObjects']"/>
+            </Insert>
+            <Insert select="Table[@name='managementObjects']">
+              <Attribute name="name" value="TablePerfDesktopRating"/>
+              <Attribute name="topic" value="TopicDesktopRating"/>
+            </Insert>
+          </Otherwise>
+        </Exists>
+      </Step>
+    </Rule>
+    <Rule name="$(RuleListInteractiveSessionProcesses)" enabled="true">
+      <Step select="/Report/Section[@name='SystemConfig']/Table[last()]">
+        <Exists>
+          <Otherwise>
+            <Insert>
+              <Node axis="following-sibling">
+                <Table name="TableInterProc" style="columns">
+                  <Header>
+                    <Data name="HeaderProcName" class="string"/>
+                    <Data name="HeaderUserName" class="string"/>
+                  </Header>
+                </Table>
+              </Node>
+            </Insert>
+          </Otherwise>
+        </Exists>
+      </Step>
+      <Step select="/Report/Section[@name='SystemConfig']/Table[@name='TablePerfInteractiveSessionProcess']/Item/Item[Item/Data[@name='managementObjectsProperty'] = 'Antecedent'][Item/Data[@name='managementObjectsProperty'] = 'Dependent']" sortType="all">
+        <Variable name="processhandle" expression="Item[Data[@name='managementObjectsProperty'] = 'Dependent']/Data[@name='managementObjectsValue']"/>
+        <Variable name="logonid" expression="Item[Data[@name='managementObjectsProperty'] = 'Antecedent']/Data[@name='managementObjectsValue']"/>
+        <Variable name="counthandle" expression="count(/Report/Section[@name='SystemConfig']/Table[@name='TablePerfProcess']/Item/Item[contains('{processhandle}', Item[Data[@name='managementObjectsProperty'] = '__RELPATH']/Data[@name='managementObjectsValue'])])"/>
+        <Variable name="countsessions" expression="count(/Report/Section[@name='SystemConfig']/Table[@name='TablePerfInteractiveSession']/Item/Item[contains('{logonid}', Item[Data[@name='managementObjectsProperty'] = '__RELPATH']/Data[@name='managementObjectsValue'])])"/>
+        <Variable name="countusers" expression="count(/Report/Section[@name='SystemConfig']/Table[@name='TablePerfLoggedOnUsers']/Item/Item[contains('{logonid}', Item[Data[@name='managementObjectsProperty'] = 'Dependent']/Data[@name='managementObjectsValue'])])"/>
+        <Variable name="useraccount" expression="/Report/Section[@name='SystemConfig']/Table[@name='TablePerfLoggedOnUsers']/Item/Item[contains('{logonid}', Item[Data[@name='managementObjectsProperty'] = 'Dependent']/Data[@name='managementObjectsValue'])]/Item[Data[@name='managementObjectsProperty'] = 'Antecedent']/Data[@name='managementObjectsValue']"/>
+        <Variable name="username" expression="/Report/Section[@name='SystemConfig']/Table[@name='TablePerfUserAccounts']/Item/Item[contains('{useraccount}', substring-after(Item[Data[@name='managementObjectsProperty'] = '__RELPATH']/Data[@name='managementObjectsValue'], 'Win32_UserAccount.'))]/Item[Data[@name='managementObjectsProperty'] = 'Name']/Data[@name='managementObjectsValue']"/>
+        <Variable name="accountlen" expression="string-length('{useraccount}')"/>
+        <Variable name="namelen" expression="string-length('{username}')"/>
+        <Exists>
+          <When expression="{counthandle} &gt; 0 and {countsessions} &gt; 0 and {countusers} &gt; 0 and {accountlen} &gt; 0 and {namelen} &gt; 0">
+            <Variable name="processname" expression="/Report/Section[@name='SystemConfig']/Table[@name='TablePerfProcess']/Item/Item[contains('{processhandle}', Item[Data[@name='managementObjectsProperty'] = '__RELPATH']/Data[@name='managementObjectsValue'])]/Item[Data[@name='managementObjectsProperty'] = 'Name']/Data[@name='managementObjectsValue']"/>
+            <Insert select="/Report/Section[@name='SystemConfig']/Table[@name='TableInterProc']">
+              <Node axis="child">
+                <Item>
+                  <Data name="HeaderProcName">{processname}</Data>
+                  <Data name="HeaderUserName">{username}</Data>
+                </Item>
+              </Node>
+            </Insert>
+          </When>
+          <Otherwise/>
+        </Exists>
+        <Otherwise/>
+      </Step>
+      <Step select="/Report/Section[@name='SystemConfig']/Table[@name='TableInterProc']">
+        <Variable name="tempuser" expression="Item/Data[@name='HeaderUserName']"/>
+        <Variable name="counttempuser" expression="count(Item[contains('{tempuser}', Data[@name='HeaderUserName'])])"/>
+        <Variable name="counttotaluser" expression="count(Item)"/>
+        <Exists>
+          <When expression="{counttempuser} = {counttotaluser}">
+            <Delete select="/Report/Section[@name='SystemConfig']/Table[@name='TableInterProc']"/>
+          </When>
+          <Otherwise>
+            <Variable name="internalruleindex" expression="{internalruleindex} + 1"/>
+            <Variable name="severitymsg">$(Information)</Variable>
+            <Variable name="msgstring">$(LOC_MultipleLoggedOnUsers)</Variable>
+            <Variable name="msglink">$(WarnListInteractiveSessionProcesses_related1)</Variable>
+            <Warning tag="RuleListInteractiveSessionProcesses_78_{internalruleindex}" select="/Report/Section[@name='SystemConfig']/Table[@name='TableInterProc']/Item/Data[@name='username']" table="/Report/Section[@name='advice']/Table[@name='info']">
+              <Item>
+                <Data name="severity" img="info" link="RuleListInteractiveSessionProcesses_78_{internalruleindex}" message="RuleListInteractiveSessionProcesses_78_{internalruleindex}" translate="value">{severitymsg}</Data>
+                <Data name="warning" message="RuleListInteractiveSessionProcesses_78_{internalruleindex}">{msgstring}</Data>
+                <Data name="related" url="http://go.microsoft.com/fwlink/?LinkID=70108">{msglink}</Data>
+              </Item>
+            </Warning>
+          </Otherwise>
+        </Exists>
+        <Otherwise/>
+      </Step>
+    </Rule>
+    <Rule name="$(RuleListStartupPrograms)" enabled="true">
+      <Step select="/Report/Section[@name='SectionSoftwareConfig']/Table[last()]">
+        <Exists>
+          <Otherwise>
+            <Insert>
+              <Node axis="following-sibling">
+                <Table name="TableStartup" topic="TopicStartupPrograms">
+                  <Header>
+                    <Data name="HeaderStartupItem" class="string"/>
+                    <Data name="HeaderCommand" class="string"/>
+                  </Header>
+                </Table>
+              </Node>
+            </Insert>
+          </Otherwise>
+        </Exists>
+      </Step>
+      <Step select="/Report/Section[@name='SectionSoftwareConfig']/Table[@name='TablePerfStartupRegistry']/Item/Item" sortType="all">
+        <Variable name="startupitem" expression="substring-after(Data[@name='registryKeysKey'], 'Run\\')"/>
+        <Variable name="command" expression="Data[@name='registryKeysValue']"/>
+        <Variable name="startupitemlen" expression="string-length('{startupitem}')"/>
+        <Exists>
+          <When expression="{startupitemlen} &gt; 0">
+            <Insert select="/Report/Section[@name='SectionSoftwareConfig']/Table[@name='TableStartup']">
+              <Node axis="child">
+                <Item>
+                  <Data name="HeaderStartupItem">{startupitem}</Data>
+                  <Data name="HeaderCommand">{command}</Data>
+                </Item>
+              </Node>
+            </Insert>
+          </When>
+          <Otherwise/>
+        </Exists>
+        <Otherwise/>
+      </Step>
+      <Step select="/Report/Section[@name='SectionSoftwareConfig']/Table[@name='TablePerfStartupPrograms']/Item/Item" sortType="all">
+        <Variable name="startupitem" expression="Item[Data[@name='managementObjectsProperty'] = 'FileName']/Data[@name='managementObjectsValue']"/>
+        <Variable name="command" expression="Item[Data[@name='managementObjectsProperty'] = 'Name']/Data[@name='managementObjectsValue']"/>
+        <Exists>
+          <Otherwise>
+            <Insert select="/Report/Section[@name='SectionSoftwareConfig']/Table[@name='TableStartup']">
+              <Node axis="child">
+                <Item>
+                  <Data name="HeaderStartupItem">{startupitem}</Data>
+                  <Data name="HeaderCommand">{command}</Data>
+                </Item>
+              </Node>
+            </Insert>
+          </Otherwise>
+        </Exists>
+        <Otherwise/>
+      </Step>
+    </Rule>
+    <Rule name="$(RuleDesktopRating)" enabled="true">
+      <Step select="/Report/Section[@name='SystemConfig']/Table[@name='TablePerfDesktopRating']/Item/Item/Item">
+        <Variable name="cpurating" expression="../Item[Data[@name='managementObjectsProperty'] = 'CPUScore']/Data[@name='managementObjectsValue']"/>
+        <Exists>
+          <When expression="{cpurating} &lt; 2">
+            <Variable name="internalruleindex" expression="{internalruleindex} + 1"/>
+            <Variable name="severitymsg">$(Information)</Variable>
+            <Variable name="msgstring">$(LOC_CPUScore)</Variable>
+            <Variable name="msglink">$(LinkPerformanceDiagnosis)</Variable>
+            <Warning tag="RuleDesktopRating_79_{internalruleindex}" select="/Report/Section[@name='SystemConfig']/Table[@name='TablePerfDesktopRating']/Item/Item/Item[Data[@name='managementObjectsProperty'] = 'CPUScore']/Data[@name='managementObjectsValue']" table="/Report/Section[@name='advice']/Table[@name='info']">
+              <Item>
+                <Data name="severity" img="info" link="RuleDesktopRating_79_{internalruleindex}" message="RuleDesktopRating_79_{internalruleindex}" translate="value">{severitymsg}</Data>
+                <Data name="warning" message="RuleDesktopRating_79_{internalruleindex}">{msgstring}</Data>
+                <Data name="related" url="http://go.microsoft.com/fwlink/?LinkID=70109">{msglink}</Data>
+              </Item>
+            </Warning>
+          </When>
+          <Otherwise/>
+        </Exists>
+        <Otherwise/>
+      </Step>
+      <Step select="/Report/Section[@name='SystemConfig']/Table[@name='TablePerfDesktopRating']/Item/Item/Item">
+        <Variable name="gamingrating" expression="../Item[Data[@name='managementObjectsProperty'] = 'D3DScore']/Data[@name='managementObjectsValue']"/>
+        <Exists>
+          <When expression="{gamingrating} &lt; 2">
+            <Variable name="internalruleindex" expression="{internalruleindex} + 1"/>
+            <Variable name="severitymsg">$(Information)</Variable>
+            <Variable name="msgstring">$(LOC_D3DScore)</Variable>
+            <Variable name="msglink">$(LinkPerformanceDiagnosis)</Variable>
+            <Warning tag="RuleDesktopRating_80_{internalruleindex}" select="/Report/Section[@name='SystemConfig']/Table[@name='TablePerfDesktopRating']/Item/Item/Item[Data[@name='managementObjectsProperty'] = 'D3DScore']/Data[@name='managementObjectsValue']" table="/Report/Section[@name='advice']/Table[@name='info']">
+              <Item>
+                <Data name="severity" img="info" link="RuleDesktopRating_80_{internalruleindex}" message="RuleDesktopRating_80_{internalruleindex}" translate="value">{severitymsg}</Data>
+                <Data name="warning" message="RuleDesktopRating_80_{internalruleindex}">{msgstring}</Data>
+                <Data name="related" url="http://go.microsoft.com/fwlink/?LinkID=70110">{msglink}</Data>
+              </Item>
+            </Warning>
+          </When>
+          <Otherwise/>
+        </Exists>
+        <Otherwise/>
+      </Step>
+      <Step select="/Report/Section[@name='SystemConfig']/Table[@name='TablePerfDesktopRating']/Item/Item/Item">
+        <Variable name="graphicsrating" expression="../Item[Data[@name='managementObjectsProperty'] = 'GraphicsScore']/Data[@name='managementObjectsValue']"/>
+        <Exists>
+          <When expression="{graphicsrating} &lt; 2">
+            <Variable name="internalruleindex" expression="{internalruleindex} + 1"/>
+            <Variable name="severitymsg">$(Information)</Variable>
+            <Variable name="msgstring">$(LOC_GraphicsScore)</Variable>
+            <Variable name="msglink">$(LinkPerformanceDiagnosis)</Variable>
+            <Warning tag="RuleDesktopRating_81_{internalruleindex}" select="/Report/Section[@name='SystemConfig']/Table[@name='TablePerfDesktopRating']/Item/Item/Item[Data[@name='managementObjectsProperty'] = 'GraphicsScore']/Data[@name='managementObjectsValue']" table="/Report/Section[@name='advice']/Table[@name='info']">
+              <Item>
+                <Data name="severity" img="info" link="RuleDesktopRating_81_{internalruleindex}" message="RuleDesktopRating_81_{internalruleindex}" translate="value">{severitymsg}</Data>
+                <Data name="warning" message="RuleDesktopRating_81_{internalruleindex}">{msgstring}</Data>
+                <Data name="related" url="http://go.microsoft.com/fwlink/?LinkID=70111">{msglink}</Data>
+              </Item>
+            </Warning>
+          </When>
+          <Otherwise/>
+        </Exists>
+        <Otherwise/>
+      </Step>
+      <Step select="/Report/Section[@name='SystemConfig']/Table[@name='TablePerfDesktopRating']/Item/Item/Item">
+        <Variable name="diskrating" expression="../Item[Data[@name='managementObjectsProperty'] = 'DiskScore']/Data[@name='managementObjectsValue']"/>
+        <Exists>
+          <When expression="{diskrating} &lt; 2">
+            <Variable name="internalruleindex" expression="{internalruleindex} + 1"/>
+            <Variable name="severitymsg">$(Information)</Variable>
+            <Variable name="msgstring">$(LOC_DiskScore)</Variable>
+            <Variable name="msglink">$(LinkPerformanceDiagnosis)</Variable>
+            <Warning tag="RuleDesktopRating_82_{internalruleindex}" select="/Report/Section[@name='SystemConfig']/Table[@name='TablePerfDesktopRating']/Item/Item/Item[Data[@name='managementObjectsProperty'] = 'DiskScore']/Data[@name='managementObjectsValue']" table="/Report/Section[@name='advice']/Table[@name='info']">
+              <Item>
+                <Data name="severity" img="info" link="RuleDesktopRating_82_{internalruleindex}" message="RuleDesktopRating_82_{internalruleindex}" translate="value">{severitymsg}</Data>
+                <Data name="warning" message="RuleDesktopRating_82_{internalruleindex}">{msgstring}</Data>
+                <Data name="related" url="http://go.microsoft.com/fwlink/?LinkID=70112">{msglink}</Data>
+              </Item>
+            </Warning>
+          </When>
+          <Otherwise/>
+        </Exists>
+        <Otherwise/>
+      </Step>
+      <Step select="/Report/Section[@name='SystemConfig']/Table[@name='TablePerfDesktopRating']/Item/Item/Item">
+        <Variable name="memoryrating" expression="../Item[Data[@name='managementObjectsProperty'] = 'MemoryScore']/Data[@name='managementObjectsValue']"/>
+        <Exists>
+          <When expression="{memoryrating} &lt; 2">
+            <Variable name="internalruleindex" expression="{internalruleindex} + 1"/>
+            <Variable name="severitymsg">$(Information)</Variable>
+            <Variable name="msgstring">$(LOC_MemoryScore)</Variable>
+            <Variable name="msglink">$(LinkPerformanceDiagnosis)</Variable>
+            <Warning tag="RuleDesktopRating_83_{internalruleindex}" select="/Report/Section[@name='SystemConfig']/Table[@name='TablePerfDesktopRating']/Item/Item/Item[Data[@name='managementObjectsProperty'] = 'MemoryScore']/Data[@name='managementObjectsValue']" table="/Report/Section[@name='advice']/Table[@name='info']">
+              <Item>
+                <Data name="severity" img="info" link="RuleDesktopRating_83_{internalruleindex}" message="RuleDesktopRating_83_{internalruleindex}" translate="value">{severitymsg}</Data>
+                <Data name="warning" message="RuleDesktopRating_83_{internalruleindex}">{msgstring}</Data>
+                <Data name="related" url="http://go.microsoft.com/fwlink/?LinkID=70113">{msglink}</Data>
+              </Item>
+            </Warning>
+          </When>
+          <Otherwise/>
+        </Exists>
+        <Otherwise/>
+      </Step>
+    </Rule>
+    <Rule name="$(RulePerfCleanup)" enabled="true">
+      <Step select="/Report">
+        <Exists>
+          <Otherwise>
+            <Delete select="/Report/Section[@name='SystemConfig']/Table[@name='TablePerfInteractiveSessionProcess']"/>
+            <Delete select="/Report/Section[@name='SystemConfig']/Table[@name='TablePerfInteractiveSession']"/>
+            <Delete select="/Report/Section[@name='SystemConfig']/Table[@name='TablePerfProcess']"/>
+            <Delete select="/Report/Section[@name='SystemConfig']/Table[@name='TablePerfLoggedOnUsers']"/>
+            <Delete select="/Report/Section[@name='SystemConfig']/Table[@name='TablePerfUserAccounts']"/>
+            <Delete select="/Report/Section[@name='SectionSoftwareConfig']/Table[@name='TablePerfStartupRegistry']"/>
+            <Delete select="/Report/Section[@name='SectionSoftwareConfig']/Table[@name='TablePerfStartupPrograms']"/>
+          </Otherwise>
+        </Exists>
+      </Step>
+    </Rule>
+  </Group>
+  <StringTable>
+    <String ID="Information" loc.comment="Only used in WDC Console">Information</String>
+    <String ID="GroupDiagnosticsSetup">Basic Troubleshooter Group Setup</String>
+    <String ID="GroupBasic">Basic Troubleshooter Rules</String>
+    <String ID="RuleDiskSummary">Disk Check Summary</String>
+    <String ID="RuleUpdateCounterSections" loc.comment="Marked as not seen anywhere">Add Name to Nameless Coutner Sections</String>
+    <String ID="RuleAddWarningTable" loc.comment="Marked as not seen anywhere">Create Top Warning Table</String>
+    <String ID="RuleDiagnosticsSetup">Basic Troubleshooter Rules Setup</String>
+    <String ID="RuleInsertSections" loc.comment="Marked as not seen anywhere">Insert Sections</String>
+    <String ID="RuleBasicInsert" loc.comment="Rule name for inserting general Support Information into final report">Insert Support Information table into final report</String>
+    <String ID="RuleDiskSetup" loc.comment="Rule name for setting up the summary group for Disk in the Rules Summary Table">Disk Summary Table Setup</String>
+    <String ID="RuleSuccessLogicalDiskDirty" loc.comment="Rule name for checking for the Logical Disk Dirty Bit being set">Logical Disk Dirty Bit Check</String>
+    <String ID="RuleSuccessSMARTCheck" loc.comment="Rule name for checking for the SMART status of disks in the system">SMART Predict Failure Check</String>
+    <String ID="RuleSuccessDiskFreeSpace" loc.comment="Rule name for checking for the amount of free disk space per drive">Free Disk Space Available</String>
+    <String ID="RuleOSSetup" loc.comment="Rule name for setting up the summary group for OS in the Rules Summary Table">OS Summary Table Setup</String>
+    <String ID="RuleSuccessOSVersionCheck" loc.comment="Rule name for checking for OS Version">OS Version Check</String>
+    <String ID="RuleAddressWidthCheck" loc.comment="Rule name for checking for OS architecture against hardware">OS Architecture Check</String>
+    <String ID="RuleOSSummary" loc.comment="Rule name for setting up the summary group for OS in the Rules Summary Table">OS Summary Table Summary</String>
+    <String ID="RuleSuccessService" loc.comment="Rule name for checking for abnormally stopped services">Abnormally Terminated Services Check</String>
+    <String ID="RuleSecurityCenterSetup" loc.comment="Rule name for setting up the summary group for Security Center in the Rules Summary Table">Security Center Summary Table Setup</String>
+    <String ID="RuleSecurityCenterSummary" loc.comment="Rule name for summarizing the Security Center rules run in the Rules Summary Table">Security Center Summary</String>
+    <String ID="RuleSuccessLUA" loc.comment="Rule name for checking to see if user has LUA enabled or not">User Account Control Enabled Check</String>
+    <String ID="RuleSuccessWU" loc.comment="Rule name for checking to see if user has WU enabled or not">Windows Update Enabled Check</String>
+    <String ID="RuleSuccessAntiSpywareCheck" loc.comment="Rule name for checking to see if anti-spyware is enabled and up-to-date">Anti-Spyware Check</String>
+    <String ID="RuleSuccessAntiVirusCheck" loc.comment="Rule name for checking to see if anti-virus is enabled and up-to-date">Anti-Virus Check</String>
+    <String ID="RuleSuccessFirewallCheck" loc.comment="Rule name for checking to see if firewall is enabled and up-to-date">Firewall Check</String>
+    <String ID="RuleBasicCleanup" loc.comment="Rule name for cleaning up tables in Basic System Information">Support Information Cleanup</String>
+    <String ID="RuleCheckWorkstationService" loc.comment="Name of rule that checks the status of the workstation service seen in WPDC">Workstation Service Check</String>
+    <String ID="LOC_Workstation" loc.comment="Name of workstation service seen in report">LanmanWorkstation</String>
+    <String ID="LOC_RuleCheckWorkstationService" loc.comment="Name of check for the status of the workstation service seen in WPDC">Workstation Service Check</String>
+    <String ID="LOC_Test_RuleSuccessLogicalDiskDirty" loc.comment="Test name description checking for the Logical Disk Dirty Bit being set">Logical Disk Dirty Bit Check</String>
+    <String ID="LOC_Test_RuleSuccessSMARTCheck" loc.comment="Test name description checking for the SMART status of disks in the system">SMART Predict Failure Check</String>
+    <String ID="LOC_Test_RuleSuccessDiskFreeSpace" loc.comment="Test name description checking for the amount of free disk space per drive">Free Disk Space Available {diskname}</String>
+    <String ID="LOC_Test_RuleSuccessOSVersionCheck" loc.comment="Test name description checking for OS Version">OS Version Check</String>
+    <String ID="LOC_Test_RuleSuccessService" loc.comment="Test name description checking for abnormally stopped services">Abnormally Terminated Services Check</String>
+    <String ID="LOC_Test_RuleSuccessLUA" loc.comment="Test name description checking to see if user has LUA enabled or not">User Account Control Enabled Check</String>
+    <String ID="LOC_Test_RuleSuccessWU" loc.comment="Test name description checking to see if user has WU enabled or not">Windows Update Enabled Check</String>
+    <String ID="LOC_TableBasicServiceSummary" loc.comment="Title used to describe table of System Services Checks">System Service Checks</String>
+    <String ID="LOC_TableBasicOSSummary" loc.comment="Title used to describe table with Operating System Checks">OS Checks</String>
+    <String ID="LOC_TableBasicDiskSummary" loc.comment="Title used to describe table with Disk Checks">Disk Checks</String>
+    <String ID="LOC_TableBasicSecurityCenterGroupSummary" loc.comment="Title used to describe Summary Table Group for Security Center Tests">Security Center Tests</String>
+    <String ID="LOC_DescOSSummary" loc.comment="Description of the Operation System Summary Group in Rules Summary Table">Checks for attributes of the operating system</String>
+    <String ID="LOC_DescServicesSummary" loc.comment="Description of the System Services Summary Group in Rules Summary Table">Checks for state of system services</String>
+    <String ID="LOC_DescDiskSummary" loc.comment="Description of the Disk Summary Group in the Rules Summary Table">Checks for disk status</String>
+    <String ID="LOC_DescSecurityCenterSummary" loc.comment="Description of the Security Center Summary Group in the Rules Summary Table">Checks for state of Security Center related information.</String>
+    <String ID="LOC_DescDiskFreeSpace" loc.comment="Description of the disk free space check results">Drive {diskname} has {freediskpercent}% free disk space [{freediskspacemb} MB]</String>
+    <String ID="LOC_Test_CheckAntiVirusEnabled" loc.comment="Test that checks to see if there is at least one anti-virus product with on access scanning enabled on the machine">Check for Anti-Virus Product with on access scanning enabled.</String>
+    <String ID="LOC_Test_CheckAntiVirusUpToDate" loc.comment="Test that checks to see if that the anti-virus product is used is up-to-date">Check that Anti-Virus Product is up-to-date.</String>
+    <String ID="LOC_Test_CheckAntiSpywareEnabled" loc.comment="Test that checks to see if there is at least one anti-spyware product that is enabled on the machine">Check for Anti-Spyware Product that is enabled.</String>
+    <String ID="LOC_Test_CheckAntiSpywareUpToDate" loc.comment="Test that checks to see if that the anti-spyware product is used is up-to-date">Check that Anti-Spyware Product is up-to-date.</String>
+    <String ID="LOC_Test_CheckFirewallEnabled" loc.comment="Test that checks to see if there is at least one firewall product that is enabled on the machine">Check for Firewall Product that is enabled.</String>
+    <String ID="LOC_Failed" loc.comment="Text to display when a rule or group of rules failed">Failed</String>
+    <String ID="LOC_Passed" loc.comment="Text to display when a rule or group of rules passed">Passed</String>
+    <String ID="LOC_Running" loc.comment="String that matches the running state for a service">Running</String>
+    <String ID="WarnFailCheckWorkstationServiceAbnormallyStopped_symptom" loc.comment="Symptom string for warning message: WarnFailCheckWorkstationServiceAbnormallyStopped">The Workstation service has stopped abnormally.</String>
+    <String ID="WarnFailCheckWorkstationServiceAbnormallyStopped_cause" loc.comment="Cause string for warning message: WarnFailCheckWorkstationServiceAbnormallyStopped">Application Error. Exit code {exitcode}.</String>
+    <String ID="WarnFailCheckWorkstationServiceAbnormallyStopped_res1" loc.comment="Resolution string for warning message: WarnFailCheckWorkstationServiceAbnormallyStopped">Restart the service</String>
+    <String ID="WarnFailCheckWorkstationServiceAbnormallyStopped_related1">System Diagnosis</String>
+    <String ID="WarnFailServiceNotFound_symptom" loc.comment="Symptom string for warning message: WarnFailServiceNotFound">Service {servicename} not found in system services.</String>
+    <String ID="WarnFailServiceNotFound_cause" loc.comment="Cause string for warning message: WarnFailServiceNotFound">Service not registered with system.</String>
+    <String ID="WarnFailServiceNotFound_res1" loc.comment="Resolution string for warning message: WarnFailServiceNotFound">Register service with system.</String>
+    <String ID="WarnFailServiceNotFound_related1">System Diagnosis</String>
+    <String ID="WarnFailOSVersionCheck_symptom" loc.comment="Symptom string for warning message: WarnFailOSVersionCheck">This computer has failed the Operating System version check</String>
+    <String ID="WarnFailOSVersionCheck_cause" loc.comment="Cause string for warning message: WarnFailOSVersionCheck">This diagnostic was written for a different version of the Operating System.  Elements in this report may be invalid.</String>
+    <String ID="WarnFailOSVersionCheck_details" loc.comment="Details string for warning message: WarnFailOSVersionCheck">OS Version string does not contain 6.1</String>
+    <String ID="WarnFailOSVersionCheck_res1" loc.comment="Resolution string for warning message: WarnFailOSVersionCheck">Verify the Operating System by running winver.exe.</String>
+    <String ID="WarnFailOSVersionCheck_related1">Operating System version</String>
+    <String ID="WarnFailOSAddressWidthCheck_symptom" loc.comment="Symptom string for warning message: WarnFailOSAddressWidthCheck">This computer has failed the Operating System architecture check</String>
+    <String ID="WarnFailOSAddressWidthCheck_cause" loc.comment="Cause string for warning message: WarnFailOSAddressWidthCheck">The architecture for the installed Operating System is not recommended for this hardware</String>
+    <String ID="WarnFailOSAddressWidthCheck_details" loc.comment="Details string for warning message: WarnFailOSAddressWidthCheck">The Operating System architecture is {osarchitecture} whereas the Processor address width is {processorwidth} bit.</String>
+    <String ID="WarnFailOSAddressWidthCheck_res1" loc.comment="Resolution string for warning message: WarnFailOSAddressWidthCheck">Consider reinstalling a {processorwidth} bit Operating System for greater performance</String>
+    <String ID="WarnFailOSAddressWidthCheck_related1">Hardware Compatibility</String>
+    <String ID="WarnFailLogicalDiskDirty_symptom" loc.comment="Symptom string for warning message: WarnFailLogicalDiskDirty">The VolumeDirty flag is set on the disk</String>
+    <String ID="WarnFailLogicalDiskDirty_cause" loc.comment="Cause string for warning message: WarnFailLogicalDiskDirty">A logical disk has the dirty bit set.</String>
+    <String ID="WarnFailLogicalDiskDirty_details" loc.comment="Details string for warning message: WarnFailLogicalDiskDirty">This disk has been marked as dirty, it may be experiencing errors or might have not been shut down correctly</String>
+    <String ID="WarnFailLogicalDiskDirty_res1" loc.comment="Resolution string for warning message: WarnFailLogicalDiskDirty">1. Run chkdsk on the drive and document any errors identified.</String>
+    <String ID="WarnFailLogicalDiskDirty_res2" loc.comment="Resolution string for warning message: WarnFailLogicalDiskDirty">2. If chkdsk determines that there are errors on the drive run chkdsk /f to repair the errors.</String>
+    <String ID="WarnFailLogicalDiskDirty_related1">Disk Diagnosis</String>
+    <String ID="WarnFailService_symptom" loc.comment="Symptom string for warning message: WarnFailService">A service is reported as having an unexpected error code</String>
+    <String ID="WarnFailService_cause" loc.comment="Cause string for warning message: WarnFailService">One or more services has failed. The service did not stop gracefully, suggesting the service may have crashed or one of its components stopped in an unsupported way.</String>
+    <String ID="WarnFailService_details" loc.comment="Details string for warning message: WarnFailService">Service exited with code not equal to 0 or 1077</String>
+    <String ID="WarnFailService_res1" loc.comment="Resolution string for warning message: WarnFailService">Restart the service</String>
+    <String ID="WarnFailService_related1">Performance Diagnosis</String>
+    <String ID="WarnFailSMARTCheck_symptom" loc.comment="Symptom string for warning message: WarnFailSMARTCheck">The PredictFailure flag is set on the disk </String>
+    <String ID="WarnFailSMARTCheck_cause" loc.comment="Cause string for warning message: WarnFailSMARTCheck">A logical disk has the SMART Predict Failure bit set.</String>
+    <String ID="WarnFailSMARTCheck_details" loc.comment="Details string for warning message: WarnFailSMARTCheck">This disk is experiencing a problem and predicts that the drive will fail.  </String>
+    <String ID="WarnFailSMARTCheck_res1" loc.comment="Resolution string for warning message: WarnFailSMARTCheck">1. Back up any critical data on this drive.</String>
+    <String ID="WarnFailSMARTCheck_res2" loc.comment="Resolution string for warning message: WarnFailSMARTCheck">2. After backing up your data you can attempt to run chkdsk /f to repair minor errors.  Do not run chkdsk /f on the drive unless the data has been backed up. Data loss may occur if the drive is experiencing physical failure.</String>
+    <String ID="WarnFailSMARTCheck_related1">Disk Diagnosis</String>
+    <String ID="WarnFailDiskSpaceFree_symptom" loc.comment="Symptom string for warning message: WarnFailDiskSpaceFree">{diskname} has less than {minfreediskpercent}% free disk space</String>
+    <String ID="WarnFailDiskSpaceFree_cause" loc.comment="Cause string for warning message: WarnFailDiskSpaceFree">A logical disk has a low amount of free disk space.</String>
+    <String ID="WarnFailDiskSpaceFree_details" loc.comment="Details string for warning message: WarnFailDiskSpaceFree">{diskname} has {freediskspacemb} MB free disk space. There is {freediskpercent}% free.  Low disk space may cause poor performance and low virtual memory errors</String>
+    <String ID="WarnFailDiskSpaceFree_res1" loc.comment="Resolution string for warning message: WarnFailDiskSpaceFree">1. Verify disk space is low by viewing the drive using "Computer" from the Start menu.</String>
+    <String ID="WarnFailDiskSpaceFree_res2" loc.comment="Resolution string for warning message: WarnFailDiskSpaceFree">2. Back up non-critical files and then remove them from the drive.</String>
+    <String ID="WarnFailDiskSpaceFree_res3" loc.comment="Resolution string for warning message: WarnFailDiskSpaceFree">3. Perform a disk cleanup.</String>
+    <String ID="WarnFailSystemDiskSpaceFree_symptom" loc.comment="Symptom string for warning message: WarnFailSystemDiskSpaceFree">{diskname} has less than {minfreediskpercent}% free or less than {minfreediskspacemb} MB disk space</String>
+    <String ID="WarnFailSystemDiskSpaceFree_cause" loc.comment="Cause string for warning message: WarnFailSystemDiskSpaceFree">The main system disk is low on space.</String>
+    <String ID="WarnFailSystemDiskSpaceFree_details" loc.comment="Details string for warning message: WarnFailSystemDiskSpaceFree">{diskname} has {freediskspacemb} MB of free disk space. There is {freediskpercent}% free.</String>
+    <String ID="WarnFailSystemDiskSpaceFree_res1" loc.comment="Resolution string for warning message: WarnFailSystemDiskSpaceFree">1. Verify disk space is low by viewing the drive in using "Computer" from the Start menu.</String>
+    <String ID="WarnFailSystemDiskSpaceFree_res2" loc.comment="Resolution string for warning message: WarnFailSystemDiskSpaceFree">2. Back up non-critical files and then remove them from the drive.</String>
+    <String ID="WarnFailSystemDiskSpaceFree_res3" loc.comment="Resolution string for warning message: WarnFailSystemDiskSpaceFree">3. Perform a disk cleanup.</String>
+    <String ID="WarnFailDiskSpaceFree_related1">Free up disk space</String>
+    <String ID="WarnFailLUA_symptom" loc.comment="Symptom string for warning message: WarnFailLUA">The Security Center reports that User Access Control is disabled.</String>
+    <String ID="WarnFailLUA_cause" loc.comment="Cause string for warning message: WarnFailLUA">User Access Control is disabled. It is highly recommended that you run Windows with User Access Control enabled.</String>
+    <String ID="WarnFailLUA_res1" loc.comment="Resolution string for warning message: WarnFailLUA">Enable User Access Control using the Security Center.</String>
+    <String ID="WarnFailLUA_related1">User Acess Control</String>
+    <String ID="WarnFailWU_symptom" loc.comment="Symptom string for warning message: WarnFailWU">The Security Center reports that Windows Update is disabled.</String>
+    <String ID="WarnFailWU_cause" loc.comment="Cause string for warning message: WarnFailWU">Windows Update is disabled. It is highly recommended that you run Windows with Windows Update enabled.</String>
+    <String ID="WarnFailWU_res1" loc.comment="Resolution string for warning message: WarnFailWU">1. Enable Windows Update in the Security Center.</String>
+    <String ID="WarnFailWU_related1">Windows Update</String>
+    <String ID="WarnFailAntiVirusCheckEnabled_symptom" loc.comment="Symptom string for warning message: WarnFailAntiVirusCheckEnabled">The Security Center reports that there is no anti-virus product actively protecting this system.</String>
+    <String ID="WarnFailAntiVirusCheckEnabled_cause" loc.comment="Cause string for warning message: WarnFailAntiVirusCheckEnabled">The Security Center has reported that on-access virus scanning is disabled. Either on-access scanning is disabled, or the anti-virus application is not recognized.</String>
+    <String ID="WarnFailAntiVirusCheckEnabled_res1" loc.comment="Resolution string for warning message: WarnFailAntiVirusCheckEnabled">Verify that an anti-virus product is installed.</String>
+    <String ID="WarnFailAntiVirusUnknown_symptom" loc.comment="Symptom string for warning message: WarnFailAntiVirusUnknown">The Security Center has not recorded an anti-virus product.</String>
+    <String ID="WarnFailAntiVirusUnknown_cause" loc.comment="Cause string for warning message: WarnFailAntiVirusUnknown">The Security Center is unable to identify an active anti-virus application. Either there is no anti-virus product installed or it is not recognized.</String>
+    <String ID="WarnFailAntiVirusUnknown_res1" loc.comment="Resolution string for warning message: WarnFailAntiVirusUnknown">1. Verify that an anti-virus product is installed.</String>
+    <String ID="WarnFailAntiVirusUnknown_res2" loc.comment="Resolution string for warning message: WarnFailAntiVirusUnknown">2. If an anti-virus product is installed and functioning configure Security Center to stop monitoring anti-virus status.</String>
+    <String ID="WarnFailAntiVirusCheckUpToDate_symptom" loc.comment="Symptom string for warning message: WarnFailAntiVirusCheckUpToDate">The Security Center has recorded that the anti-virus product: {antivirusproduct} is not up-to-date.</String>
+    <String ID="WarnFailAntiVirusCheckUpToDate_cause" loc.comment="Cause string for warning message: WarnFailAntiVirusCheckUpToDate">{antivirusproduct} is not up-to-date.  It is highly recommended that you run Windows with an anti-virus product that is as up-to-date as possible.</String>
+    <String ID="WarnFailAntiVirusCheckUpToDate_details" loc.comment="Details string for warning message: WarnFailAntiVirusCheckUpToDate">Anti-virus product registered with the Security Center reports that it is not up-to-date.</String>
+    <String ID="WarnFailAntiVirusCheckUpToDate_res1" loc.comment="Resolution string for warning message: WarnFailAntiVirusCheckUpToDate">Refer to the product documentation or manufacturer of {antivirusproduct} for information on how to get up-to-date.</String>
+    <String ID="WarnFailAntiSpywareUnknown_symptom" loc.comment="Symptom string for warning message: WarnFailAntiSpywareUnknown">The Security Center has not recorded an anti-spyware product.</String>
+    <String ID="WarnFailAntiSpywareUnknown_cause" loc.comment="Cause string for warning message: WarnFailAntiSpywareUnknown">The Security Center is unable to identify an active anti-spyware application. Either there is no anti-spyware product installed, or it is not recognized.</String>
+    <String ID="WarnFailAntiSpywareUnknown_res1" loc.comment="Resolution string for warning message: WarnFailAntiSpywareUnknown">1. Verify that an anti-spyware product is installed.</String>
+    <String ID="WarnFailAntiSpywareUnknown_res2" loc.comment="Resolution string for warning message: WarnFailAntiSpywareUnknown">2. If an anti-spyware product is installed and functioning configure Security Center to stop monitoring anti-spyware status.</String>
+    <String ID="WarnFailAntiSpywareCheckEnabled_symptom" loc.comment="Symptom string for warning message: WarnFailAntiSpywareCheckEnabled">The Security Center reports that there is no anti-spyware product actively protecting this system.</String>
+    <String ID="WarnFailAntiSpywareCheckEnabled_cause" loc.comment="Cause string for warning message: WarnFailAntiSpywareCheckEnabled">The Security Center has reported that on-access spyware scanning is disabled. Either on-access scanning is disabled, or the anti-spyware application is not recognized.</String>
+    <String ID="WarnFailAntiSpywareCheckEnabled_res1" loc.comment="Resolution string for warning message: WarnFailAntiSpywareCheckEnabled">1. Verify that an anti-spyware product is installed.</String>
+    <String ID="WarnFailAntiSpywareCheckEnabled_res2" loc.comment="Resolution string for warning message: WarnFailAntiSpywareCheckEnabled">2. If an anti-spyware product is installed and functioning configure Security Center to stop monitoring anti-spyware status.</String>
+    <String ID="WarnFailAntiSpywareCheckUpToDate_symptom" loc.comment="Symptom string for warning message: WarnFailAntiSpywareCheckUpToDate">The Security Center has recorded that the anti-spyware product: {antispywareproduct} is not up-to-date.</String>
+    <String ID="WarnFailAntiSpywareCheckUpToDate_cause" loc.comment="Cause string for warning message: WarnFailAntiSpywareCheckUpToDate">{antispywareproduct} is not up-to-date.  It is highly recommended that you run Windows with an anti-spyware product that is as up-to-date as possible.</String>
+    <String ID="WarnFailAntiSpywareCheckUpToDate_details" loc.comment="Details string for warning message: WarnFailAntiSpywareCheckUpToDate">The Anti-spyware product registered with the Security Center reports that it is not up-to-date.</String>
+    <String ID="WarnFailAntiSpywareCheckUpToDate_res1" loc.comment="Resolution string for warning message: WarnFailAntiSpywareCheckUpToDate">Refer to the product documentation or manufacturer of {antispywareproduct} for information on how to get up-to-date.</String>
+    <String ID="WarnFailFirewallEnabled_symptom" loc.comment="Symptom string for warning message: WarnFailFirewallEnabled">The Security Center reports that there is no firewall product actively protecting this system.</String>
+    <String ID="WarnFailFirewallEnabled_cause" loc.comment="Cause string for warning message: WarnFailFirewallEnabled">A firewall product is not enabled on this system. It is highly recommended you run Windows with one enabled firewall product.</String>
+    <String ID="WarnFailFirewallEnabled_details" loc.comment="Details string for warning message: WarnFailFirewallEnabled">No Firewall products registered with the Security Center reports that it is enabled.</String>
+    <String ID="WarnFailFirewallEnabled_res1" loc.comment="Resolution string for warning message: WarnFailFirewallEnabled">1. Verify that a firewall product is installed.</String>
+    <String ID="WarnFailFirewallEnabled_res2" loc.comment="Resolution string for warning message: WarnFailFirewallEnabled">2. If you are using a 3rd party firewall that does not register with the Security Center you can configure Security Center not to monitor this setting.</String>
+    <String ID="WarnFailFirewallEnabled_res3" loc.comment="Resolution string for warning message: WarnFailFirewallEnabled">3. If you do not have a firewall product installed you should enable the Windows Firewall.</String>
+    <String ID="LinkAntiSpyware">Anti-spyware</String>
+    <String ID="LinkAntiVirus">Anti-virus</String>
+    <String ID="LinkFirewall">Firewall</String>
+    <String ID="LinkPerformanceDiagnosis">Performance Diagnosis</String>
+    <String ID="GroupTrbTbl" loc.comment="Name of PLA rules group">WMI Performance Queries</String>
+    <String ID="RuleTrbInsert" loc.comment="Name of rule that inserts performance sections and tables seen in WPDC">Insert Configuration table into final report</String>
+    <String ID="RuleListInteractiveSessionProcesses" loc.comment="Name of rule that lists all the interactive processes seen in WPDC">Create table of interactive session processes</String>
+    <String ID="RuleListStartupPrograms" loc.comment="Name of rule that lists all the startup programs seen in WPDC">Startup Programs</String>
+    <String ID="RulePerfCleanup" loc.comment="Name of rule that removes all the unwanted performance tables seen in WPDC">Cleanup unwanted performance tables</String>
+    <String ID="RuleDesktopRating" loc.comment="Name of rule that summarizes the desktop rating seen in WPDC">Desktop Rating</String>
+    <String ID="LOC_CPUScore" loc.comment="Informational warning for poor CPU score seen in report">The "CPU" rating for the system is poor and may be the cause of performance problems. Reducing the number of open applications may improve system performance. Check for unnecessary startup applications and disable those that are not required. If the problem continues the CPU may need to be upgraded.</String>
+    <String ID="LOC_D3DScore" loc.comment="Informational warning for poor D3D score seen in report">The "Gaming graphics" rating for the system is poor and may be the cause of performance problems in multimedia applications or games. Disabling Aero Glass may improve performance in multimedia applications or games. If the problem continues the display adapter may need an updated driver or may need to be upgraded.</String>
+    <String ID="LOC_GraphicsScore" loc.comment="Informational warning for poor Graphics score seen in report">The "Graphics" rating for the system is poor and may be the cause of performance problems. Disabling Desktop Composition or reducing screen resolution may improve graphical performance. If the problem continues the display adapter may need an updated driver or may need to be upgraded. </String>
+    <String ID="LOC_DiskScore" loc.comment="Informational warning for poor Disk score seen in report">The "Disk" rating for the system is poor and may be the cause of performance problems. Reducing the number of open applications may improve system performance. Ensure the disk has adequate free space and is defragmented. Check for unnecessary startup applications and disable those that are not required. If the problem continues the disk may need to be upgraded.</String>
+    <String ID="LOC_MemoryScore" loc.comment="Informational warning for poor Memory score seen in report">The "Memory" rating for the system is very poor and may be the cause for performance issues.  Reducing the number of open applications may improve system performance. Check for unnecessary startup applications and disable those that are not required.  If the problem continues the memory may need to be upgraded.</String>
+    <String ID="LOC_MultipleLoggedOnUsers" loc.comment="Informational warning for multiple logged on users seen in report">Multiple users are logged on to the machine and this may be the cause of performance problems. Log off any inactive users to reclaim system resources.</String>
+    <String ID="WarnListInteractiveSessionProcesses_related1">Performance Diagnosis</String>
+  </StringTable>
+</Rules>

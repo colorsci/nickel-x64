@@ -1,0 +1,59 @@
+﻿<?xml version='1.0' encoding='utf-8' standalone='yes'?>
+<assembly
+    xmlns="urn:schemas-microsoft-com:asm.v3"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    authors="mikedice"
+    buildFilter=""
+    company="Microsoft"
+    copyright=""
+    creationTimeStamp="2003-07-21T16:37:03.6090709-07:00"
+    description="Downleve manifest for MSMQ HTTP component"
+    displayName="Downleve manifest for MSMQ HTTP component"
+    lastUpdateTimeStamp="2004-11-11T23:01:42.1450255-08:00"
+    manifestVersion="1.0"
+    owners="MikeDice;AnandRaj"
+    supportInformation=""
+    testers="AshishW"
+    >
+  <assemblyIdentity
+      buildFilter=""
+      buildType="$(build.buildType)"
+      language="neutral"
+      name="Microsoft-Windows-msmq-http-DL"
+      processorArchitecture="*"
+      publicKeyToken="$(Build.WindowsPublicKeyToken)"
+      version="0.0.0.0"
+      versionScope="nonSxS"
+      />
+  <migration>
+    <registerSDF name="MSMQ-HTTP"/>
+    <migXml xmlns="">
+      <!-- Plugin is used to transform old format XML routing files to new format -->
+      <plugin
+          classId="{3107f3af-3aae-4eba-aba4-4a57f5a29c86}"
+          file="Microsoft-Windows-msmq-messagingcoreservice\mqmigplugin.dll"
+          />
+      <detects>
+        <!-- Platform detection -->
+        <detect>
+          <condition>MigXmlHelper.DoesOSMatch("NT","5.1.*")</condition>
+          <condition>MigXmlHelper.DoesOSMatch("NT","5.2.*")</condition>
+        </detect>
+        <!-- Detect presence of MSMQ ISAPI by using the HTTP component installation in the registry. 
+             We can't rely on mqise.dll existence because it is always there.  -->
+        <detect>
+          <condition>MigXmlHelper.DoesStringContentEqual("Registry", "HKLM\SOFTWARE\Microsoft\MSMQ\Setup[msmq_HTTPSupport]", "0x00000001")</condition>
+        </detect>
+      </detects>
+      <rules context="System">
+        <!-- If the VROOT is created under %windir%\MSMQ\WEB - we need to move this over too -->
+        <include>
+          <objectSet>
+            <pattern type="File">%windir%\system32\msmq\web</pattern>
+          </objectSet>
+        </include>
+      </rules>
+    </migXml>
+  </migration>
+</assembly>

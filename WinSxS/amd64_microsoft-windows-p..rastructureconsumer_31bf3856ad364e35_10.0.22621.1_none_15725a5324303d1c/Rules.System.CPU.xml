@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?Copyright (c) Microsoft Corporation. All rights reserved.?>
+<Rules>
+  <Group name="$(GroupSystem)" enabled="true">
+    <Rule name="$(RuleInterrupts)" enabled="true">
+      <Variable name="nicconfig" expression="' '"/>
+      <Variable name="processconfig" expression="' '"/>
+      <Variable name="highvalue" expression="' '"/>
+      <Variable name="numprocessors" expression="1"/>
+      <Step select="/Report/Section/Table[@name='processorInterruptCounters']/Item[Data[@name='instance']='_Total']" fatal="true">
+        <Variable name="totalinterrupt" expression="Data[@name='mean']"/>
+        <Exists>
+          <When expression="{totalinterrupt} &gt; 1000">
+            <Variable name="numprocessors" expression="/Report/Section[@name='tracerptHeader']/Table[@name='client']/Item/Data[@name='processors']"/>
+          </When>
+        </Exists>
+      </Step>
+      <Step select="/Report/Section/Table[@name='processorInterruptCounters']/Item[Data[@name='instance']='_Total']" fatal="true">
+        <Variable name="averageinterrupts" expression="format-number({totalinterrupt} div {numprocessors},'0')"/>
+        <Exists>
+          <When tag="High Average Interrupt/Processor" expression="{averageinterrupts} &gt;= 5000">
+            <Variable name="numnics" expression="/Report/Section/Table[@name='events']/Item[Data[@name='event']='SystemConfig' and Data[@name='opcode']='NIC']/Data[@name='count']"/>
+            <Variable name="internalruleindex" expression="{internalruleindex} + 1"/>
+            <Variable name="severitymsg">$(Information)</Variable>
+            <Variable name="msgstring">$(LOC_IntHighValue)</Variable>
+            <Variable name="relatedperflink">$(PerformanceDiagnosis)</Variable>
+            <Warning tag="sysInterruptHighUp_18_{internalruleindex}" select="/Report/Section/Table[@name='processorCounters']/Item[Data[@name='counter'] = 'Interrupts/sec']/Data[@name='counter']" table="/Report/Section[@name='advice']/Table[@name='info']">
+              <Item>
+                <Data name="severity" img="info" link="sysInterruptHighUp_18_{internalruleindex}" message="sysInterruptHighUp_18_{internalruleindex}" translate="value">{severitymsg}</Data>
+                <Data name="warning" message="sysInterruptHighUp_18_{internalruleindex}">{msgstring}</Data>
+                <Data name="related" url="http://go.microsoft.com/fwlink/?LinkID=70096">{relatedperflink}</Data>
+              </Item>
+            </Warning>
+          </When>
+        </Exists>
+      </Step>
+    </Rule>
+    <Rule name="$(RuleHideMultiCpu)" enabled="true">
+      <Step select="/Report/Section[@name='tracerptHeader']/Table[@name='client']/Item/Data[@name='processors']" fatal="true">
+        <Variable name="processor" expression="."/>
+        <Exists>
+          <When expression="{processor} = 1">
+            <Insert select="/Report/Section/Table[@name='processorInterruptCounters']">
+              <Attribute name="level" value="2"/>
+            </Insert>
+            <Insert select="/Report/Section/Table[@name='processorUserProcessorCounters']">
+              <Attribute name="level" value="2"/>
+            </Insert>
+          </When>
+        </Exists>
+      </Step>
+    </Rule>
+    <Rule name="$(RuleSingleImageCpu)" enabled="true">
+      <Step select="/Report/Section/Table[@name='imageStats']/Item" sortType="all">
+        <Variable name="cpuusage" expression="format-number(Data[@name='cpu'],'#,##0.0')"/>
+        <Variable name="processname" expression="Data[@name='image']"/>
+        <Variable name="processid" expression="Data[@name='pid']"/>
+        <Exists>
+          <When expression="{cpuusage} &gt; 80 and '{processname}' != 'Idle'">
+            <Variable name="internalruleindex" expression="{internalruleindex} + 1"/>
+            <Variable name="severitymsg">$(Error)</Variable>
+            <Variable name="msgstring">$(LOC_HSingleImageCPU)</Variable>
+            <Variable name="relatedperflink">$(PerformanceDiagnosis)</Variable>
+            <Warning tag="sysHighSingleImageCPU_21_{internalruleindex}" select="Data[@name='cpu']" table="/Report/Section[@name='advice']/Table[@name='error']">
+              <Item>
+                <Data name="severity" img="error" link="sysHighSingleImageCPU_21_{internalruleindex}" message="sysHighSingleImageCPU_21_{internalruleindex}" translate="value">{severitymsg}</Data>
+                <Data name="warning" message="sysHighSingleImageCPU_21_{internalruleindex}">{msgstring}</Data>
+                <Data name="related" url="http://go.microsoft.com/fwlink/?LinkID=70096">{relatedperflink}</Data>
+              </Item>
+            </Warning>
+          </When>
+          <When expression="{cpuusage} &gt; 60 and '{processname}' != 'Idle'">
+            <Variable name="internalruleindex" expression="{internalruleindex} + 1"/>
+            <Variable name="severitymsg">$(Warning)</Variable>
+            <Variable name="msgstring">$(LOC_HSingleImageCPU)</Variable>
+            <Variable name="relatedperflink">$(PerformanceDiagnosis)</Variable>
+            <Warning tag="sysHighSingleImageCPU_22_{internalruleindex}" select="Data[@name='cpu']" table="/Report/Section[@name='advice']/Table[@name='warning']">
+              <Item>
+                <Data name="severity" img="warning" link="sysHighSingleImageCPU_22_{internalruleindex}" message="sysHighSingleImageCPU_22_{internalruleindex}" translate="value">{severitymsg}</Data>
+                <Data name="warning" message="sysHighSingleImageCPU_22_{internalruleindex}">{msgstring}</Data>
+                <Data name="related" url="http://go.microsoft.com/fwlink/?LinkID=70096">{relatedperflink}</Data>
+              </Item>
+            </Warning>
+          </When>
+        </Exists>
+      </Step>
+    </Rule>
+    <Rule name="$(RuleServices)" enabled="true">
+      <Step select="/Report/Section/Table[@name='configService']/Item[Data[@name='processId'] = 0]">
+        <Exists>
+          <Otherwise>
+            <Delete select="Data[@name='processId']"/>
+            <Delete select="Data[@name='process']"/>
+            <Insert>
+              <Node>
+                <Data name="process" translate="value" class="string italic">stopped</Data>
+                <Data name="processId">-</Data>
+                <Data name="cpu">0</Data>
+              </Node>
+            </Insert>
+          </Otherwise>
+        </Exists>
+      </Step>
+      <Step select="/Report/Section/Table[@name='configService']/Item[Data[@name='processId'] != '-']" sortType="all">
+        <Exists>
+          <Otherwise>
+            <Variable name="pid" expression="Data[@name='processId']"/>
+            <Insert select=".">
+              <Node document="{_document}" select="/Report/Section/Table[@name='imageStats']/Item[Data[@name='pid']='{pid}']/Data[@name='cpu']"/>
+            </Insert>
+          </Otherwise>
+        </Exists>
+      </Step>
+      <Step select="/Report/Section/Table[@name='configService']/Header">
+        <Exists>
+          <Otherwise>
+            <Delete select="Sort"/>
+            <Insert select="Data[1]">
+              <Node axis="preceding-sibling">
+                <Sort field="cpu" type="number" order="descending"/>
+                <Sort field="process" type="text" order="ascending"/>
+              </Node>
+            </Insert>
+            <Insert select="Data[last()]">
+              <Node axis="following-sibling">
+                <Data name="cpu" class="number" format="#,##0.0"/>
+              </Node>
+            </Insert>
+          </Otherwise>
+        </Exists>
+      </Step>
+    </Rule>
+  </Group>
+  <StringTable>
+    <String ID="Error" loc.comment="Only used in WDC Console">Error</String>
+    <String ID="Warning" loc.comment="Only used in WDC Console">Warning</String>
+    <String ID="Information" loc.comment="Only used in WDC Console">Information</String>
+    <String ID="GroupSystem" loc.comment="Only used in WDC Console">System</String>
+    <String ID="RuleHideMultiCpu" loc.comment="Only used in WDC Console">Hide Multi-CPU tables on Single CPU</String>
+    <String ID="RuleInterrupts" loc.comment="Only used in WDC Console">High Per-Processor Interrupt Rate</String>
+    <String ID="RuleSingleImageCpu" loc.comment="Only used in WDC Console">High Single Image CPU consumption</String>
+    <String ID="RuleServices">Service Table</String>
+    <String ID="LOC_IntHighValue" loc.comment="Interrupt Rule">High average interrupts / processor. This machine has {numprocessors} processors and {numnics} network cards. Total Interrupts/sec on the machine is {totalinterrupt}. The average interrupts per processor per sec is {averageinterrupts}.</String>
+    <String ID="PerformanceDiagnosis">Performance Diagnosis</String>
+    <String ID="LOC_HSingleImageCPU" loc.comment="Process has high CPU">Process {processname} [ProcessId: {processid}] has a high CPU consumption of {cpuusage}%.</String>
+  </StringTable>
+</Rules>

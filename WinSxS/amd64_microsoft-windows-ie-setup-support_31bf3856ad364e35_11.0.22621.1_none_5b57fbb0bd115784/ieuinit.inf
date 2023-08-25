@@ -1,0 +1,91 @@
+
+[version]
+signature="$CHICAGO$"
+AdvancedINF=2.0
+
+[DefaultInstall.Windows7]
+ComponentName="IE UserData NT"
+ComponentVersion=6.0
+RegisterOCXs=MSIE4RegisterOCX.Windows7
+DelReg=Remove.Reg
+
+; For Windows 7, do not try and register browseui and webcheck. There are no
+; DllInstall exports for those binaries
+[MSIE4RegisterOCX.Windows7]
+%11%\urlmon.dll,NI,HKCU
+%11%\inetcpl.cpl,NI,HKCUSoft.NoClobber
+
+;******************************************
+; IE Hardening setup, called by iodver.cpp
+;******************************************
+[IEHardenAdmin]
+AddReg=IEHarden.Reg
+RegisterOCXs=IEHardenRegisterDll
+
+[IEHardenUser]
+AddReg=IEHarden.Reg
+RegisterOCXs=IEHardenRegisterDll
+
+[IESoftenAdmin]
+DelReg=IEHarden.Reg
+RegisterOCXs=IESoftenRegisterDll
+
+[IESoftenUser]
+DelReg=IEHarden.Reg
+RegisterOCXs=IESoftenRegisterDll
+
+[IEHarden.Reg]
+HKCU,"Software\Microsoft\Windows\CurrentVersion\Internet Settings\ZoneMap","IEHarden",0x10001,0x1
+
+[IEHardenMachine]
+RegisterOCXs=IEHardenMachineRegisterDll
+
+[IESoftenMachine]
+RegisterOCXs=IESoftenMachineRegisterDll
+
+[IEHardenRegisterDll]
+; First register with default settings, then harden/soften as needed
+%11%\urlmon.dll,NI,HKCU
+
+%11%\urlmon.dll,NI,HKCUHard
+%11%\inetcpl.cpl,NI,HKCUHard
+%11%\wininet.dll,NI,HKCUHard
+
+[IESoftenRegisterDll]
+; First register with default settings, then harden/soften as needed
+%11%\urlmon.dll,NI,HKCU
+
+%11%\urlmon.dll,NI,HKCUSoft
+%11%\inetcpl.cpl,NI,HKCUSoft
+%11%\wininet.dll,NI,HKCUSoft
+
+[IEHardenMachineRegisterDll]
+%11%\urlmon.dll,NI,HKLMHard
+%11%\inetcpl.cpl,NI,HKLMHard
+
+[IESoftenMachineRegisterDll]
+%11%\urlmon.dll,NI,HKLMSoft
+%11%\inetcpl.cpl,NI,HKLMSoft
+
+[Remove.Reg]
+HKCU,"SOFTWARE\Microsoft\Windows\CurrentVersion\Internet Settings","WarnAlwaysOnPost"
+HKCU,"SOFTWARE\Microsoft\Windows\CurrentVersion\Internet Settings","HeaderExclusionListForCache"
+HKCU,"SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\MenuOrder\Start Menu\&Favorites"
+HKCU,"Software\Microsoft\Internet Explorer\Main","Default Channels"
+HKCU,"Software\Microsoft\Internet Explorer\Main","Additional Channels"
+HKCU,"Software\Microsoft\Internet Explorer\Main","FavIntelliMenus"
+HKCU,"Software\Microsoft\Internet Explorer\International","Default_CodePage"
+HKCU,"Software\Microsoft\Internet Explorer\International","CodePointToFontMap"
+HKCU,"Software\Microsoft\Windows\CurrentVersion\Internet Settings\Zones\LMZL"
+; Alexa "what's related" shell extension
+HKCU,"Software\Microsoft\Internet Explorer\Extensions\CmdMapping","{c95fe080-8f5d-11d2-a20b-00aa003c157a}"
+; clear Compat List cache versions
+HKCU,"Software\Microsoft\Internet Explorer\BrowserEmulation\LowMic","IECompatVersionHigh"
+HKCU,"Software\Microsoft\Internet Explorer\BrowserEmulation\LowMic","IECompatVersionLow"
+HKCU,"Software\Microsoft\Internet Explorer\BrowserEmulation","IECompatVersionHigh"
+HKCU,"Software\Microsoft\Internet Explorer\BrowserEmulation","IECompatVersionLow"
+
+HKCU,"Software\Microsoft\Internet Explorer\TabbedBrowsing","QuickTabsThreshold"
+; Remove Content-cache container's size limit to allow for re-defaulting to new defaults
+HKCU,"SOFTWARE\Microsoft\Windows\CurrentVersion\Internet Settings\5.0\Cache\Content","CacheLimit"
+HKCU,"SOFTWARE\Microsoft\Windows\CurrentVersion\Internet Settings\5.0\LowCache\Content","CacheLimit"

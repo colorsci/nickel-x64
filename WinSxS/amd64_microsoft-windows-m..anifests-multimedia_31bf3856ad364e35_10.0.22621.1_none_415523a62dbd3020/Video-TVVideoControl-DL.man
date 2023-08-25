@@ -1,0 +1,57 @@
+﻿<?xml version='1.0' encoding='utf-8' standalone='yes'?>
+<assembly
+    xmlns="urn:schemas-microsoft-com:asm.v3"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    manifestVersion="1.0"
+    >
+  <assemblyIdentity
+      language="neutral"
+      name="Microsoft-Windows-Video-TVVideoControl-DL"
+      processorArchitecture="$(build.processorArchitecture)"
+      publicKeyToken="$(Build.WindowsPublicKeyToken)"
+      version="0.0.0.0"
+      versionScope="nonSxS"
+      />
+  <migration scope="Upgrade,USMT">
+    <migXml xmlns="">
+      <rules context="System">
+        <detects>
+          <detect>
+            <condition>MigXmlHelper.IsOSEarlierThan("NT", "6.0.0.0")</condition>
+          </detect>
+        </detects>
+        <!--
+            we're doing something a little cheesy here.  we depending on the fact that the tuning spaces are either
+            in wow6432(xpsp2 x64 pro) or not(everything else).  so, we're not messing with detects to separate these two
+            cases.  note, that we move out of wow6432node in the uplevel manifest
+          -->
+        <include>
+          <objectSet>
+            <pattern type="Registry">HKLM\SOFTWARE\Wow6432Node\Microsoft\Tuning Spaces\* [*]</pattern>
+          </objectSet>
+        </include>
+        <include>
+          <objectSet>
+            <pattern type="Registry">HKLM\Software\Microsoft\Tuning Spaces\* [*]</pattern>
+          </objectSet>
+        </include>
+      </rules>
+    </migXml>
+    <migrationDisplayID>Programs\Media_Center_Settings</migrationDisplayID>
+  </migration>
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string
+            id="displayName0"
+            value="Microsoft-Windows-Video-TVVideoControl-DL"
+            />
+        <string
+            id="description1"
+            value="Migrates downlevel tuning space settings."
+            />
+      </stringTable>
+    </resources>
+  </localization>
+</assembly>

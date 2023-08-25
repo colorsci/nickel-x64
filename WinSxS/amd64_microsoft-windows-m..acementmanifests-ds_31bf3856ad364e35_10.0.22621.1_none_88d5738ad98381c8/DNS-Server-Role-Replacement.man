@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='utf-8' standalone='yes'?>
+<assembly>
+  <assemblyIdentity
+      name="Microsoft-Windows-DNS-Server-Role-RM"
+      processorArchitecture="*"
+      version="0.0.0.0"
+      versionScope="nonSxS"
+      />
+
+  <migration replacementSettingsVersionRange="0"
+     settingsVersion="0"
+     alwaysProcess="yes">
+    <registerSDF name="DNS-Server-Full-Role"/>
+    <migXml xmlns="">
+      <detects>
+        <detect>
+          <condition>MigXmlHelper.DoesObjectExist("Registry", "HKLM\SYSTEM\CurrentControlSet\Services\DNS [ImagePath]")</condition>
+        </detect>
+        <detect>
+          <condition>MigXmlHelper.DoesObjectExist("File", "%windir%\system32 [dns.exe]")</condition>
+        </detect>
+      </detects>
+    </migXml>
+  </migration>
+</assembly>

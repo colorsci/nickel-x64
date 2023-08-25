@@ -1,0 +1,350 @@
+#pragma autorecover
+#pragma namespace ( "\\\\.\\ROOT\\Microsoft\\Windows")
+[NamespaceSecuritySDDL ("O:BAG:BAD:(A;CI;0x23;;;AU)")]
+Instance of __Namespace
+{
+Name = "SMB";
+};
+
+#pragma namespace ( "\\\\.\\ROOT\\Microsoft\\Windows\\Smb")
+
+Instance of __Win32Provider as $prov
+{
+ Name = "smbwmiv2";
+ ClsId = "{3B873591-9427-4418-A086-79175735738F}";
+ ImpersonationLevel = 1;
+ HostingModel = "NetworkServiceHost";
+ version=0x40000001;
+};
+
+Instance of __MethodProviderRegistration
+{
+ Provider = $prov;
+};
+
+Instance of __EventProviderRegistration
+{
+ Provider = $prov;
+ eventQueryList = {"select * from MSFT_SmbShareChangeEvent"};
+};
+
+Instance of __InstanceProviderRegistration
+{
+ Provider = $prov;
+
+ supportsGet = TRUE;
+ supportsPut = TRUE;
+ supportsDelete = TRUE;
+ supportsEnumeration = TRUE;
+ QuerySupportLevels = {"WQL:UnarySelect"};
+};
+
+[dynamic: ToInstance, provider("smbwmiv2"): ToInstance, ClassVersion("7"): Amended, Description("55"): ToSubClass Amended]
+class MSFT_SmbBandwidthLimit
+{
+	[ValueMap{"0", "1", "2"}: ToSubClass, Values{"9", "53", "54"}: ToSubClass Amended, key, read: ToSubClass] uint32 Category;
+	[read: ToSubClass] uint64 BytesPerSecond;
+	[implemented, static: DisableOverride ToSubClass] uint32 Set([In] uint32 Category, [In] uint64 BytesPerSecond, [Out, EmbeddedInstance("MSFT_SmbBandwidthLimit"): ToSubClass] MSFT_SmbBandwidthLimit Output[]);
+};
+[dynamic: ToInstance, provider("smbwmiv2"): ToInstance, ClassVersion("30"): Amended, Description("35"): ToSubClass Amended]
+class MSFT_SmbClientConfiguration
+{
+	[read: ToSubClass, write: ToSubClass] uint32 ConnectionCountPerRssNetworkInterface;
+	[read: ToSubClass, write: ToSubClass] uint32 DirectoryCacheEntriesMax;
+	[read: ToSubClass, write: ToSubClass] uint32 DirectoryCacheEntrySizeMax;
+	[read: ToSubClass, write: ToSubClass] uint32 DirectoryCacheLifetime;
+	[read: ToSubClass, write: ToSubClass] boolean EnableBandwidthThrottling;
+	[read: ToSubClass, write: ToSubClass] boolean EnableByteRangeLockingOnReadOnlyFiles;
+	[read: ToSubClass, write: ToSubClass] boolean EnableLargeMtu;
+	[read: ToSubClass, write: ToSubClass] boolean EnableMultiChannel;
+	[read: ToSubClass, write: ToSubClass] uint32 DormantFileLimit;
+	[read: ToSubClass, write: ToSubClass] boolean EnableSecuritySignature;
+	[read: ToSubClass, write: ToSubClass] uint32 ExtendedSessionTimeout;
+	[read: ToSubClass, write: ToSubClass] uint32 FileInfoCacheEntriesMax;
+	[read: ToSubClass, write: ToSubClass] uint32 FileInfoCacheLifetime;
+	[read: ToSubClass, write: ToSubClass] uint32 FileNotFoundCacheEntriesMax;
+	[read: ToSubClass, write: ToSubClass] uint32 FileNotFoundCacheLifetime;
+	[read: ToSubClass, write: ToSubClass] uint32 KeepConn;
+	[read: ToSubClass, write: ToSubClass] uint32 MaxCmds;
+	[read: ToSubClass, write: ToSubClass] uint32 MaximumConnectionCountPerServer;
+	[read: ToSubClass, write: ToSubClass] boolean OplocksDisabled;
+	[read: ToSubClass, write: ToSubClass] boolean RequireSecuritySignature;
+	[read: ToSubClass, write: ToSubClass] uint32 SessionTimeout;
+	[read: ToSubClass, write: ToSubClass] boolean UseOpportunisticLocking;
+	[read: ToSubClass, write: ToSubClass] uint32 WindowSizeThreshold;
+	[read: ToSubClass, write: ToSubClass] boolean EnableLoadBalanceScaleOut;
+	[read: ToSubClass, write: ToSubClass] boolean EnableInsecureGuestLogons;
+	[read: ToSubClass, write: ToSubClass] boolean ForceSMBEncryptionOverQuic;
+	[read: ToSubClass, write: ToSubClass] boolean SkipCertificateCheck;
+	[read: ToSubClass, write: ToSubClass] boolean DisableCompression;
+	[read: ToSubClass, write: ToSubClass] string EncryptionCiphers;
+	[implemented, static: DisableOverride ToSubClass] uint32 GetConfiguration([Out, EmbeddedInstance("MSFT_SmbClientConfiguration"): ToSubClass] MSFT_SmbClientConfiguration Output);
+	[implemented, static: DisableOverride ToSubClass] uint32 ResetConfiguration([Out, EmbeddedInstance("MSFT_SmbClientConfiguration"): ToSubClass] MSFT_SmbClientConfiguration Output, [In] boolean All, [In] boolean ConnectionCountPerRssNetworkInterface, [In] boolean DirectoryCacheEntriesMax, [In] boolean DirectoryCacheEntrySizeMax, [In] boolean DirectoryCacheLifetime, [In] boolean EnableBandwidthThrottling, [In] boolean EnableByteRangeLockingOnReadOnlyFiles, [In] boolean EnableLargeMtu, [In] boolean EnableMultiChannel, [In] boolean DormantFileLimit, [In] boolean ExtendedSessionTimeout, [In] boolean FileInfoCacheEntriesMax, [In] boolean FileInfoCacheLifetime, [In] boolean FileNotFoundCacheEntriesMax, [In] boolean FileNotFoundCacheLifetime, [In] boolean KeepConn, [In] boolean MaxCmds, [In] boolean MaximumConnectionCountPerServer, [In] boolean OplocksDisabled, [In] boolean SessionTimeout, [In] boolean UseOpportunisticLocking, [In] boolean WindowSizeThreshold, [In] boolean EnableLoadBalanceScaleOut, [In] boolean ForceSMBEncryptionOverQuic, [In] boolean SkipCertificateCheck, [In] boolean DisableCompression, [In] boolean EncryptionCiphers);
+	[implemented, static: DisableOverride ToSubClass] uint32 SetConfiguration([In] uint32 ConnectionCountPerRssNetworkInterface, [In] uint32 DirectoryCacheEntriesMax, [In] uint32 DirectoryCacheEntrySizeMax, [In] uint32 DirectoryCacheLifetime, [In] boolean EnableBandwidthThrottling, [In] boolean EnableByteRangeLockingOnReadOnlyFiles, [In] boolean EnableLargeMtu, [In] boolean EnableMultiChannel, [In] uint32 DormantFileLimit, [In] boolean EnableSecuritySignature, [In] uint32 ExtendedSessionTimeout, [In] uint32 FileInfoCacheEntriesMax, [In] uint32 FileInfoCacheLifetime, [In] uint32 FileNotFoundCacheEntriesMax, [In] uint32 FileNotFoundCacheLifetime, [In] uint32 KeepConn, [In] uint32 MaxCmds, [In] uint32 MaximumConnectionCountPerServer, [In] boolean OplocksDisabled, [In] boolean RequireSecuritySignature, [In] uint32 SessionTimeout, [In] boolean UseOpportunisticLocking, [In] uint32 WindowSizeThreshold, [In] boolean EnableLoadBalanceScaleOut, [In] boolean EnableInsecureGuestLogons, [In] boolean ForceSMBEncryptionOverQuic, [In] boolean SkipCertificateCheck, [In] boolean DisableCompression, [In] string EncryptionCiphers);
+};
+[dynamic: ToInstance, provider("smbwmiv2"): ToInstance, ClassVersion("7"): Amended, Description("44"): ToSubClass Amended]
+class MSFT_SmbClientNetworkInterface
+{
+	[key, read: ToSubClass] uint32 InterfaceIndex;
+	[read: ToSubClass] string IpAddresses[];
+	[read: ToSubClass] string FriendlyName;
+	[read: ToSubClass] uint64 LinkSpeed;
+	[read: ToSubClass] boolean RdmaCapable;
+	[read: ToSubClass] boolean RssCapable;
+};
+[dynamic: ToInstance, provider("smbwmiv2"): ToInstance, ClassVersion("7"): Amended, Description("63"): ToSubClass Amended]
+class MSFT_SmbComponent
+{
+	[implemented, static: DisableOverride ToSubClass] uint32 RemoveSmbComponent([In] string Name[]);
+};
+[dynamic: ToInstance, provider("smbwmiv2"): ToInstance, ClassVersion("7"): Amended, Description("51"): ToSubClass Amended]
+class MSFT_SmbConnection
+{
+	[key, read: ToSubClass] string ServerName;
+	[key, read: ToSubClass] string ShareName;
+	[key, read: ToSubClass] string UserName;
+	[ValueMap{"0", "1", "2", "3"}: ToSubClass, Values{"9", "10", "56", "57"}: ToSubClass Amended, read: ToSubClass] uint32 SmbInstance;
+	[read: ToSubClass] string Credential;
+	[read: ToSubClass] uint64 NumOpens;
+	[read: ToSubClass] string Dialect;
+	[read: ToSubClass] boolean ContinuouslyAvailable;
+	[read: ToSubClass] boolean Encrypted;
+	[read: ToSubClass] boolean Redirected;
+	[read: ToSubClass] boolean Signed;
+};
+[dynamic: ToInstance, provider("smbwmiv2"): ToInstance, ClassVersion("7"): Amended, Description("59"): ToSubClass Amended]
+class MSFT_SmbGlobalMapping
+{
+	[key, read: ToSubClass] string LocalPath;
+	[key, read: ToSubClass] string RemotePath;
+	[ValueMap{"0", "1", "2", "3", "4", "5", "6"}: ToSubClass, Values{"36", "37", "38", "39", "40", "41", "42"}: ToSubClass Amended, read: ToSubClass] uint32 Status;
+	[read: ToSubClass] boolean RequireIntegrity;
+	[read: ToSubClass] boolean RequirePrivacy;
+	[read: ToSubClass] boolean UseWriteThrough;
+	[implemented, static: DisableOverride ToSubClass] uint32 Create([In] string LocalPath, [In] string RemotePath, [In] string Credential, [In] boolean Persistent, [Out, EmbeddedInstance("MSFT_SmbGlobalMapping"): ToSubClass] MSFT_SmbGlobalMapping CreatedMapping, [In] boolean RequireIntegrity, [In] boolean RequirePrivacy, [In] string FullAccess[], [In] string DenyAccess[], [In] boolean UseWriteThrough);
+	[implemented, static: DisableOverride ToSubClass] uint32 Remove([In] boolean Force);
+};
+[dynamic: ToInstance, provider("smbwmiv2"): ToInstance, ClassVersion("7"): Amended, Description("43"): ToSubClass Amended]
+class MSFT_SmbMapping
+{
+	[key, read: ToSubClass] string LocalPath;
+	[key, read: ToSubClass] string RemotePath;
+	[ValueMap{"0", "1", "2", "3", "4", "5", "6"}: ToSubClass, Values{"36", "37", "38", "39", "40", "41", "42"}: ToSubClass Amended, read: ToSubClass] uint32 Status;
+	[read: ToSubClass] boolean RequireIntegrity;
+	[read: ToSubClass] boolean RequirePrivacy;
+	[read: ToSubClass] boolean UseWriteThrough;
+	[ValueMap{"0", "1", "2"}: ToSubClass, Values{"18", "68", "61"}: ToSubClass Amended, read: ToSubClass] uint32 TransportType;
+	[read: ToSubClass] boolean SkipCertificateCheck;
+	[read: ToSubClass] sint32 CompressNetworkTraffic;
+	[read: ToSubClass] boolean GlobalMapping;
+	[implemented] uint32 Remove([In] boolean UpdateProfile, [In] boolean Force, [In] boolean GlobalMapping);
+	[implemented, static: DisableOverride ToSubClass] uint32 Create([In] string LocalPath, [In] string RemotePath, [In] string UserName, [In] string Password, [In] boolean Persistent, [In] boolean SaveCredentials, [In] boolean HomeFolder, [Out, EmbeddedInstance("MSFT_SmbMapping"): ToSubClass] MSFT_SmbMapping CreatedMapping, [In] boolean RequireIntegrity, [In] boolean RequirePrivacy, [In] boolean UseWriteThrough, [In] uint32 TransportType, [In] boolean SkipCertificateCheck, [In] boolean CompressNetworkTraffic, [In] boolean GlobalMapping);
+};
+[dynamic: ToInstance, provider("smbwmiv2"): ToInstance, ClassVersion("7"): Amended, Description("45"): ToSubClass Amended]
+class MSFT_SmbMultichannelConnection
+{
+	[key, read: ToSubClass] string ServerName;
+	[key, read: ToSubClass] uint32 ClientInterfaceIndex;
+	[key, read: ToSubClass] uint32 ServerInterfaceIndex;
+	[key, read: ToSubClass] string ServerIpAddress;
+	[ValueMap{"0", "1", "2", "3"}: ToSubClass, Values{"9", "10", "56", "57"}: ToSubClass Amended, read: ToSubClass] uint32 SmbInstance;
+	[read: ToSubClass] string ClientIpAddress;
+	[read: ToSubClass] string ClientInterfaceFriendlyName;
+	[read: ToSubClass] boolean Selected;
+	[read: ToSubClass] boolean ClientRSSCapable;
+	[read: ToSubClass] boolean ServerRSSCapable;
+	[read: ToSubClass] boolean ClientRdmaCapable;
+	[read: ToSubClass] boolean ServerRdmaCapable;
+	[read: ToSubClass] uint64 ClientLinkSpeed;
+	[read: ToSubClass] uint64 ServerLinkSpeed;
+	[read: ToSubClass] uint32 MaxChannels;
+	[read: ToSubClass] uint32 CurrentChannels;
+	[read: ToSubClass] boolean Failed;
+	[read: ToSubClass] uint32 FailureCount;
+	[read: ToSubClass] uint16 RdmaConnectionCount;
+	[read: ToSubClass] uint16 TcpConnectionCount;
+	[read: ToSubClass] uint16 QuicConnectionCount;
+	[implemented, static: DisableOverride ToSubClass] uint32 Refresh([In] string ServerName);
+};
+[dynamic: ToInstance, provider("smbwmiv2"): ToInstance, ClassVersion("7"): Amended, Description("52"): ToSubClass Amended]
+class MSFT_SmbMultichannelConstraint
+{
+	[key, read: ToSubClass] string ServerName;
+	[key, read: ToSubClass] string InterfaceGuid;
+	[read: ToSubClass] uint32 InterfaceIndex;
+	[read: ToSubClass] string InterfaceAlias;
+	[implemented, static: DisableOverride ToSubClass] uint32 CreateConstraint([In] string ServerName, [In] uint32 InterfaceIndex[], [In] string InterfaceAlias[], [Out, EmbeddedInstance("MSFT_SmbMultichannelConstraint"): ToSubClass] MSFT_SmbMultichannelConstraint Output[]);
+};
+[dynamic: ToInstance, provider("smbwmiv2"): ToInstance, ClassVersion("30"): Amended, Description("33"): ToSubClass Amended]
+class MSFT_SmbOpenFile
+{
+	[key, read: ToSubClass] uint64 FileId;
+	[ValueMap{"0", "1", "2", "3"}: ToSubClass, Values{"9", "10", "56", "57"}: ToSubClass Amended, read: ToSubClass] uint32 SmbInstance;
+	[read: ToSubClass] uint64 SessionId;
+	[read: ToSubClass] string ScopeName;
+	[read: ToSubClass] string ClusterNodeName;
+	[read: ToSubClass] string Path;
+	[read: ToSubClass] string ShareRelativePath;
+	[read: ToSubClass] string ClientComputerName;
+	[read: ToSubClass] string ClientUserName;
+	[read: ToSubClass] uint32 Permissions;
+	[read: ToSubClass] uint32 Locks;
+	[read: ToSubClass] boolean ContinuouslyAvailable;
+	[read: ToSubClass] boolean Encrypted;
+	[read: ToSubClass] boolean Signed;
+	[implemented] uint32 ForceClose();
+};
+[dynamic: ToInstance, provider("smbwmiv2"): ToInstance, ClassVersion("7"): Amended, Description("60"): ToSubClass Amended]
+class MSFT_SmbServerCertificateMapping
+{
+	[key, read: ToSubClass] string Name;
+	[read: ToSubClass, write: ToSubClass] string Thumbprint;
+	[read: ToSubClass, write: ToSubClass] string StoreName;
+	[read: ToSubClass] string Subject;
+	[read: ToSubClass] string DisplayName;
+	[read: ToSubClass] string RenewalChain;
+	[ValueMap{"0"}: ToSubClass, Values{"61"}: ToSubClass Amended, read: ToSubClass] uint32 Type;
+	[ValueMap{"0", "1", "2"}: ToSubClass, Values{"18", "67", "65"}: ToSubClass Amended, read: ToSubClass, write: ToSubClass] uint32 Flags;
+	[read: ToSubClass] uint32 MappingStatus;
+	[implemented, static: DisableOverride ToSubClass] uint32 AddServerCertificateMapping([In] string Name, [In] string Subject, [In] string Thumbprint, [In] string DisplayName, [In] string StoreName, [In] uint32 Type, [In] uint32 Flags, [Out, EmbeddedInstance("MSFT_SmbServerCertificateMapping"): ToSubClass] MSFT_SmbServerCertificateMapping CreatedMapping);
+	[implemented, static: DisableOverride ToSubClass] uint32 SetServerCertificateMapping([In] string Name, [In] string Thumbprint, [In] string StoreName, [In] uint32 Flags, [Out, EmbeddedInstance("MSFT_SmbServerCertificateMapping"): ToSubClass] MSFT_SmbServerCertificateMapping CreatedMapping);
+};
+[dynamic: ToInstance, provider("smbwmiv2"): ToInstance, ClassVersion("7"): Amended, Description("34"): ToSubClass Amended]
+class MSFT_SmbServerConfiguration
+{
+	[read: ToSubClass, write: ToSubClass] boolean AnnounceServer;
+	[read: ToSubClass, write: ToSubClass] uint32 AsynchronousCredits;
+	[read: ToSubClass, write: ToSubClass] boolean AutoShareServer;
+	[read: ToSubClass, write: ToSubClass] boolean AutoShareWorkstation;
+	[read: ToSubClass, write: ToSubClass] uint32 CachedOpenLimit;
+	[read: ToSubClass, write: ToSubClass] string AnnounceComment;
+	[read: ToSubClass, write: ToSubClass] boolean EnableDownlevelTimewarp;
+	[read: ToSubClass, write: ToSubClass] boolean EnableLeasing;
+	[read: ToSubClass, write: ToSubClass] boolean EnableMultiChannel;
+	[read: ToSubClass, write: ToSubClass] boolean EnableStrictNameChecking;
+	[read: ToSubClass, write: ToSubClass] uint32 AutoDisconnectTimeout;
+	[read: ToSubClass, write: ToSubClass] uint32 DurableHandleV2TimeoutInSeconds;
+	[read: ToSubClass, write: ToSubClass] boolean EnableAuthenticateUserSharing;
+	[read: ToSubClass, write: ToSubClass] boolean EnableForcedLogoff;
+	[read: ToSubClass, write: ToSubClass] boolean EnableOplocks;
+	[read: ToSubClass, write: ToSubClass] boolean EnableSecuritySignature;
+	[read: ToSubClass, write: ToSubClass] boolean ServerHidden;
+	[read: ToSubClass, write: ToSubClass] uint32 IrpStackSize;
+	[read: ToSubClass, write: ToSubClass] uint32 KeepAliveTime;
+	[read: ToSubClass, write: ToSubClass] uint32 MaxChannelPerSession;
+	[read: ToSubClass, write: ToSubClass] uint32 MaxMpxCount;
+	[read: ToSubClass, write: ToSubClass] uint32 MaxSessionPerConnection;
+	[read: ToSubClass, write: ToSubClass] uint32 MaxThreadsPerQueue;
+	[read: ToSubClass, write: ToSubClass] uint32 MaxWorkItems;
+	[read: ToSubClass, write: ToSubClass] string NullSessionPipes;
+	[read: ToSubClass, write: ToSubClass] string NullSessionShares;
+	[read: ToSubClass, write: ToSubClass] uint32 OplockBreakWait;
+	[read: ToSubClass, write: ToSubClass] uint32 PendingClientTimeoutInSeconds;
+	[read: ToSubClass, write: ToSubClass] boolean RequireSecuritySignature;
+	[read: ToSubClass, write: ToSubClass] boolean EnableSMB1Protocol;
+	[read: ToSubClass, write: ToSubClass] boolean EnableSMB2Protocol;
+	[read: ToSubClass, write: ToSubClass] uint32 Smb2CreditsMax;
+	[read: ToSubClass, write: ToSubClass] uint32 Smb2CreditsMin;
+	[read: ToSubClass, write: ToSubClass] uint32 SmbServerNameHardeningLevel;
+	[read: ToSubClass, write: ToSubClass] boolean TreatHostAsStableStorage;
+	[read: ToSubClass, write: ToSubClass] boolean ValidateAliasNotCircular;
+	[read: ToSubClass, write: ToSubClass] boolean ValidateShareScope;
+	[read: ToSubClass, write: ToSubClass] boolean ValidateShareScopeNotAliased;
+	[read: ToSubClass, write: ToSubClass] boolean ValidateTargetName;
+	[read: ToSubClass, write: ToSubClass] boolean EncryptData;
+	[read: ToSubClass, write: ToSubClass] boolean RejectUnencryptedAccess;
+	[read: ToSubClass, write: ToSubClass] boolean AuditSmb1Access;
+	[read: ToSubClass, write: ToSubClass] boolean DisableSmbEncryptionOnSecureConnection;
+	[read: ToSubClass, write: ToSubClass] boolean RestrictNamedpipeAccessViaQuic;
+	[read: ToSubClass, write: ToSubClass] boolean EnableSMBQUIC;
+	[read: ToSubClass, write: ToSubClass] boolean EnableDirectoryHandleLeasing;
+	[read: ToSubClass, write: ToSubClass] string EncryptionCiphers;
+	[read: ToSubClass, write: ToSubClass] uint32 InvalidAuthenticationDelayTimeInMs;
+	[implemented, static: DisableOverride ToSubClass] uint32 GetConfiguration([Out, EmbeddedInstance("MSFT_SmbServerConfiguration"): ToSubClass] MSFT_SmbServerConfiguration Output);
+	[implemented, static: DisableOverride ToSubClass] uint32 ResetConfiguration([Out, EmbeddedInstance("MSFT_SmbServerConfiguration"): ToSubClass] MSFT_SmbServerConfiguration Output, [In] boolean All, [In] boolean AnnounceServer, [In] boolean AsynchronousCredits, [In] boolean AutoShareServer, [In] boolean AutoShareWorkstation, [In] boolean CachedOpenLimit, [In] boolean AnnounceComment, [In] boolean EnableDownlevelTimewarp, [In] boolean EnableLeasing, [In] boolean EnableMultiChannel, [In] boolean EnableStrictNameChecking, [In] boolean DurableHandleV2TimeoutInSeconds, [In] boolean EnableOplocks, [In] boolean ServerHidden, [In] boolean IrpStackSize, [In] boolean KeepAliveTime, [In] boolean MaxChannelPerSession, [In] boolean MaxMpxCount, [In] boolean MaxSessionPerConnection, [In] boolean MaxThreadsPerQueue, [In] boolean MaxWorkItems, [In] boolean NullSessionShares, [In] boolean OplockBreakWait, [In] boolean PendingClientTimeoutInSeconds, [In] boolean EnableSMB2Protocol, [In] boolean Smb2CreditsMax, [In] boolean Smb2CreditsMin, [In] boolean SmbServerNameHardeningLevel, [In] boolean TreatHostAsStableStorage, [In] boolean ValidateAliasNotCircular, [In] boolean ValidateShareScope, [In] boolean ValidateShareScopeNotAliased, [In] boolean ValidateTargetName, [In] boolean EncryptData, [In] boolean RejectUnencryptedAccess, [In] boolean AuditSmb1Access, [In] boolean DisableSmbEncryptionOnSecureConnection, [In] boolean RestrictNamedpipeAccessViaQuic, [In] boolean EnableSMBQUIC, [In] boolean EnableDirectoryHandleLeasing, [In] boolean EncryptionCiphers);
+	[implemented, static: DisableOverride ToSubClass] uint32 SetConfiguration([In] boolean AnnounceServer, [In] uint32 AsynchronousCredits, [In] boolean AutoShareServer, [In] boolean AutoShareWorkstation, [In] uint32 CachedOpenLimit, [In] string AnnounceComment, [In] boolean EnableDownlevelTimewarp, [In] boolean EnableLeasing, [In] boolean EnableMultiChannel, [In] boolean EnableStrictNameChecking, [In] uint32 AutoDisconnectTimeout, [In] uint32 DurableHandleV2TimeoutInSeconds, [In] boolean EnableAuthenticateUserSharing, [In] boolean EnableForcedLogoff, [In] boolean EnableOplocks, [In] boolean EnableSecuritySignature, [In] boolean ServerHidden, [In] uint32 IrpStackSize, [In] uint32 KeepAliveTime, [In] uint32 MaxChannelPerSession, [In] uint32 MaxMpxCount, [In] uint32 MaxSessionPerConnection, [In] uint32 MaxThreadsPerQueue, [In] uint32 MaxWorkItems, [In] string NullSessionPipes, [In] string NullSessionShares, [In] uint32 OplockBreakWait, [In] uint32 PendingClientTimeoutInSeconds, [In] boolean RequireSecuritySignature, [In] boolean EnableSMB1Protocol, [In] boolean EnableSMB2Protocol, [In] uint32 Smb2CreditsMax, [In] uint32 Smb2CreditsMin, [In] uint32 SmbServerNameHardeningLevel, [In] boolean TreatHostAsStableStorage, [In] boolean ValidateAliasNotCircular, [In] boolean ValidateShareScope, [In] boolean ValidateShareScopeNotAliased, [In] boolean ValidateTargetName, [In] boolean EncryptData, [In] boolean RejectUnencryptedAccess, [In] boolean AuditSmb1Access, [In] boolean DisableSmbEncryptionOnSecureConnection, [In] boolean RestrictNamedpipeAccessViaQuic, [In] boolean EnableSMBQUIC, [In] boolean EnableDirectoryHandleLeasing, [In] string EncryptionCiphers, [In] uint32 InvalidAuthenticationDelayTimeInMs);
+};
+[dynamic: ToInstance, provider("smbwmiv2"): ToInstance, ClassVersion("7"): Amended, Description("46"): ToSubClass Amended]
+class MSFT_SmbServerNetworkInterface
+{
+	[key, read: ToSubClass] uint32 InterfaceIndex;
+	[key, read: ToSubClass] string ScopeName;
+	[key, read: ToSubClass] string IpAddress;
+	[read: ToSubClass] string FriendlyName;
+	[read: ToSubClass] uint64 LinkSpeed;
+	[read: ToSubClass] boolean RdmaCapable;
+	[read: ToSubClass] boolean RssCapable;
+};
+[dynamic: ToInstance, provider("smbwmiv2"): ToInstance, ClassVersion("30"): Amended, Description("32"): ToSubClass Amended]
+class MSFT_SmbSession
+{
+	[key, read: ToSubClass] uint64 SessionId;
+	[ValueMap{"0", "1", "2", "3"}: ToSubClass, Values{"9", "10", "56", "57"}: ToSubClass Amended, read: ToSubClass] uint32 SmbInstance;
+	[read: ToSubClass] string ScopeName;
+	[read: ToSubClass] string ClusterNodeName;
+	[read: ToSubClass] string ClientComputerName;
+	[read: ToSubClass] string ClientUserName;
+	[read: ToSubClass] uint64 NumOpens;
+	[read: ToSubClass] uint32 SecondsIdle;
+	[read: ToSubClass] uint32 SecondsExists;
+	[read: ToSubClass] string Dialect;
+	[read: ToSubClass] string TransportName;
+	[implemented] uint32 ForceClose();
+};
+[dynamic: ToInstance, provider("smbwmiv2"): ToInstance, ClassVersion("30"): Amended, Description("31"): ToSubClass Amended]
+class MSFT_SmbShare
+{
+	[key, read: ToSubClass] string Name;
+	[key, read: ToSubClass] string ScopeName;
+	[ValueMap{"0", "1", "2", "3"}: ToSubClass, Values{"9", "10", "56", "57"}: ToSubClass Amended, read: ToSubClass] uint32 SmbInstance;
+	[read: ToSubClass] boolean Scoped;
+	[ValueMap{"0", "1", "2", "3", "4"}: ToSubClass, Values{"11", "12", "13", "14", "15"}: ToSubClass Amended, read: ToSubClass] uint32 ShareType;
+	[read: ToSubClass] boolean Special;
+	[read: ToSubClass] boolean Temporary;
+	[read: ToSubClass] boolean ShadowCopy;
+	[read: ToSubClass] string Path;
+	[read: ToSubClass] string Volume;
+	[read: ToSubClass, write: ToSubClass] string Description;
+	[read: ToSubClass, write: ToSubClass] uint32 ConcurrentUserLimit;
+	[read: ToSubClass, write: ToSubClass] uint32 CurrentUsers;
+	[read: ToSubClass, write: ToSubClass] string SecurityDescriptor;
+	[read: ToSubClass, write: ToSubClass] boolean EncryptData;
+	[read: ToSubClass, write: ToSubClass] boolean CompressData;
+	[read: ToSubClass, write: ToSubClass] boolean IsolatedTransport;
+	[read: ToSubClass, write: ToSubClass] boolean DirectoryHandleLeasing;
+	[ValueMap{"0", "1", "2"}: ToSubClass, Values{"3", "58", "18"}: ToSubClass Amended, read: ToSubClass, write: ToSubClass] uint32 LeasingMode;
+	[ValueMap{"0", "1"}: ToSubClass, Values{"16", "17"}: ToSubClass Amended, read: ToSubClass, write: ToSubClass] uint32 FolderEnumerationMode;
+	[ValueMap{"0", "1", "2", "3", "4", "5"}: ToSubClass, Values{"18", "19", "20", "21", "22", "15"}: ToSubClass Amended, read: ToSubClass, write: ToSubClass] uint32 CachingMode;
+	[read: ToSubClass, write: ToSubClass] boolean ContinuouslyAvailable;
+	[read: ToSubClass, write: ToSubClass] uint32 CATimeout;
+	[ValueMap{"0", "1", "2"}: ToSubClass, Values{"23", "24", "25"}: ToSubClass Amended, read: ToSubClass] uint32 ShareState;
+	[ValueMap{"0", "1", "2", "3", "4"}: ToSubClass, Values{"26", "27", "28", "10", "29"}: ToSubClass Amended, read: ToSubClass] uint32 AvailabilityType;
+	[read: ToSubClass] boolean Infrastructure;
+	[read: ToSubClass] boolean IdentityRemoting;
+	[ValueMap{"0", "1", "2", "3"}: ToSubClass, Values{"69", "70", "71", "72"}: ToSubClass Amended, read: ToSubClass, write: ToSubClass] uint32 QoSFlowScope;
+	[read: ToSubClass, write: ToSubClass] string QoSPolicyId;
+	[implemented, static: DisableOverride ToSubClass] uint32 CreateShare([In] string Name, [In] string ScopeName, [In] string Path, [In] string Description, [In] uint32 ConcurrentUserLimit, [In] uint32 FolderEnumerationMode, [In] uint32 CachingMode, [In] boolean Temporary, [In] boolean ContinuouslyAvailable, [In] uint32 CATimeout, [In] boolean EncryptData, [In] boolean CompressData, [In] boolean IsolatedTransport, [In] string FullAccess[], [In] string ChangeAccess[], [In] string ReadAccess[], [In] string NoAccess[], [In] string SecurityDescriptor, [In] uint32 LeasingMode, [In] boolean DirectoryHandleLeasing, [In] uint32 QoSFlowScope, [In] string QoSPolicyId, [Out, EmbeddedInstance("MSFT_SmbShare"): ToSubClass] MSFT_SmbShare CreatedShare);
+	[implemented] uint32 GrantAccess([In] string AccountName[], [In] uint32 AccessRight, [Out, EmbeddedInstance("MSFT_SmbShareAccessControlEntry"): ToSubClass] MSFT_SmbShareAccessControlEntry Output[]);
+	[implemented] uint32 RevokeAccess([In] string AccountName[], [Out, EmbeddedInstance("MSFT_SmbShareAccessControlEntry"): ToSubClass] MSFT_SmbShareAccessControlEntry Output[]);
+	[implemented] uint32 BlockAccess([In] string AccountName[], [Out, EmbeddedInstance("MSFT_SmbShareAccessControlEntry"): ToSubClass] MSFT_SmbShareAccessControlEntry Output[]);
+	[implemented] uint32 UnblockAccess([In] string AccountName[], [Out, EmbeddedInstance("MSFT_SmbShareAccessControlEntry"): ToSubClass] MSFT_SmbShareAccessControlEntry Output[]);
+	[implemented] uint32 GetAccessControlEntries([Out, EmbeddedInstance("MSFT_SmbShareAccessControlEntry"): ToSubClass] MSFT_SmbShareAccessControlEntry Output[]);
+	[implemented, static: DisableOverride ToSubClass] uint32 EnumerateShares([In] string ScopeName, [In] boolean PopulateVolumeProperty, [Out, Stream: ToSubClass, EmbeddedInstance("MSFT_SmbShare"): ToSubClass] MSFT_SmbShare Output[]);
+	[implemented, static: DisableOverride ToSubClass] uint32 GetShare([In] string ScopeName, [In] string ShareName, [In] boolean GetAclNonAdmin, [Out, EmbeddedInstance("MSFT_SmbShare"): ToSubClass] MSFT_SmbShare Output);
+	[implemented, static: DisableOverride ToSubClass] uint32 FireShareChangeEvent([In] uint32 EventType, [In] string ScopeName, [In] string ShareName, [In] string Path, [In] string Remark, [In] string SecurityDescriptor, [In] uint32 ShareState, [In] uint32 CATimeout, [In] uint32 Flags, [In] uint32 Type, [In] uint32 ConcurrentUserLimit, [In] uint32 QoSFlowScope, [In] string QoSPolicyId);
+};
+[ClassVersion("7"): Amended, Description("8"): ToSubClass Amended]
+class MSFT_SmbShareAccessControlEntry
+{
+	[read: ToSubClass] string Name;
+	[read: ToSubClass] string ScopeName;
+	[read: ToSubClass] string AccountName;
+	[ValueMap{"0", "1"}: ToSubClass, Values{"1", "2"}: ToSubClass Amended, read: ToSubClass] uint32 AccessControlType;
+	[ValueMap{"0", "1", "2", "3"}: ToSubClass, Values{"3", "4", "5", "6"}: ToSubClass Amended, read: ToSubClass] uint32 AccessRight;
+};
+[Indication: DisableOverride ToSubClass, dynamic: ToInstance, provider("smbwmiv2"): ToInstance, ClassVersion("7"): Amended, Description("50"): ToSubClass Amended]
+class MSFT_SmbShareChangeEvent
+{
+	[ValueMap{"0", "1", "2"}: ToSubClass, Values{"47", "48", "49"}: ToSubClass Amended] uint32 EventType;
+	[EmbeddedInstance("MSFT_SmbShare"): ToSubClass] MSFT_SmbShare Share;
+};

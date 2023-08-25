@@ -1,0 +1,40 @@
+﻿<?xml version='1.0' encoding='utf-8' standalone='yes'?>
+<assembly
+    xmlns="urn:schemas-microsoft-com:asm.v3"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    manifestVersion="1.0"
+    >
+  <assemblyIdentity
+      name="Microsoft-Windows-PerformanceCounterInfrastructureNonExecutable"
+      processorArchitecture="*"
+      version="0.0.0.0"
+      />
+  <migration
+      ignoreConfigurationSection="Yes"
+      settingsVersion="1"
+      replacementSettingsVersionRange="0"
+      >
+    <migXml xmlns="">
+      <rules context="System">
+        <include>
+          <objectSet>
+            <pattern type="Registry">HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Perflib [Last Counter]</pattern>
+            <pattern type="Registry">HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Perflib [Last Help]</pattern>
+          </objectSet>
+        </include>
+        <merge>
+          <objectSet script="MigXmlHelper.DestinationPriority()">
+            <pattern type="Registry">HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Perflib [Last Counter]</pattern>
+            <pattern type="Registry">HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Perflib [Last Help]</pattern>
+          </objectSet>
+        </merge>
+        <excludeAttributes attributes="Security">
+          <objectSet>
+            <pattern type="Registry">HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Perflib</pattern>
+          </objectSet>
+        </excludeAttributes>
+      </rules>
+    </migXml>
+  </migration>
+</assembly>

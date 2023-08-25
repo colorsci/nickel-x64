@@ -1,0 +1,63 @@
+﻿<?xml version='1.0' encoding='utf-8' standalone='yes'?>
+<assembly
+    xmlns="urn:schemas-microsoft-com:asm.v3"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    authors="johnlue"
+    buildFilter=""
+    company="Microsoft"
+    copyright=""
+    creationTimeStamp="2004-08-20T22:01:03.3397033-07:00"
+    description="$(resourceString.description)"
+    displayName="$(resourceString.displayName)"
+    lastUpdateTimeStamp="2004-08-20T22:06:41.4113372-07:00"
+    manifestVersion="1.0"
+    owners="johnlue"
+    supportInformation=""
+    testers="robertr"
+    >
+  <assemblyIdentity
+      language="*"
+      name="Microsoft-Windows-IE-Feeds-Platform-DL"
+      processorArchitecture="*"
+      version="0.0.0.0"
+      />
+  <migration scope="Upgrade,MigWiz,USMT">
+    <migXml
+        xmlns=""
+        xmlns:auto-ns2="urn:schemas-microsoft-com:asm.v3"
+        >
+      <detects>
+        <detect>
+          <condition>MigXmlHelper.IsOSEarlierThan("NT", "6.0")</condition>
+        </detect>
+      </detects>
+      <rules context="User">
+        <include>
+          <objectSet>
+            <pattern type="Registry">HKCU\SOFTWARE\Microsoft\Feeds\* [*]</pattern>
+            <pattern type="File">%CSIDL_LOCAL_APPDATA%\Microsoft\Feeds\* [*]</pattern>
+            <pattern type="File">%CSIDL_LOCAL_APPDATA%\Microsoft\Feeds Cache\* [*]</pattern>
+            <pattern type="File">%CSIDL_INTERNET_CACHE%\Enclosure\* [*]</pattern>
+          </objectSet>
+        </include>
+      </rules>
+      <rules context="User">
+        <!-- Exclude additional keys from migration on PC-2-PC migration. -->
+        <detects>
+          <detect>
+            <condition negation="Yes">MigXmlHelper.IsUpgrade()</condition>
+          </detect>
+        </detects>
+        <exclude>
+          <objectSet>
+            <pattern type="Registry">HKCU\SOFTWARE\Microsoft\Feeds [SyncStatus]</pattern>
+            <pattern type="Registry">HKCU\SOFTWARE\Microsoft\Feeds [SyncTaskName]</pattern>
+            <pattern type="Registry">HKCU\SOFTWARE\Microsoft\Feeds [SyncTask]</pattern>
+          </objectSet>
+        </exclude>
+      </rules>
+    </migXml>
+    <migrationDisplayID>Network_and_Internet\Internet_Options</migrationDisplayID>
+  </migration>
+</assembly>

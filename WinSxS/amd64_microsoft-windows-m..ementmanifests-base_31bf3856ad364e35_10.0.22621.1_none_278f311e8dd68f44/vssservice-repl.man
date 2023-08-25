@@ -1,0 +1,85 @@
+﻿<?xml version='1.0' encoding='utf-8' standalone='yes'?>
+<assembly
+    xmlns="urn:schemas-microsoft-com:asm.v3"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    manifestVersion="1.0"
+    >
+  <assemblyIdentity
+      buildType="release"
+      language="neutral"
+      name="Microsoft-Windows-VssService"
+      processorArchitecture="*"
+      version="0.0.0.0"
+      versionScope="nonSxS"
+      />
+  <migration
+      xmlns:auto-ns1="urn:schemas-microsoft-com:asm.v3"
+      replacementSettingsVersionRange="0"
+      replacementVersionRange="6.0.*"
+      scope="Upgrade"
+      settingsVersion="0"
+      >
+    <supportedComponents>
+      <supportedComponent>
+        <supportedComponentIdentity
+            buildFilter=""
+            buildType="$(build.buildType)"
+            language="neutral"
+            name="Microsoft-Windows-VssService"
+            processorArchitecture="*"
+            publicKeyToken="$(Build.WindowsPublicKeyToken)"
+            settingsVersionRange="0"
+            versionScope="nonSxS"
+            />
+        <migXml xmlns="">
+          <rules context="System">
+            <merge script="MigXmlHelper.SourcePriority()">
+              <objectSet>
+                <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\VSS\* [*]</pattern>
+                <pattern type="File">%systemdrive%\System Volume Information [*.{7cc467ef-6865-4831-853f-2a4817fd1bca}DB]</pattern>
+                <pattern type="File">%systemdrive%\System Volume Information [*.{7cc467ef-6865-4831-853f-2a4817fd1bca}ALT]</pattern>
+              </objectSet>
+            </merge>
+            <merge script="MigXmlHelper.DestinationPriority()">
+              <objectSet>
+                <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Control\BackupRestore\FilesNotToSnapshot [*]</pattern>
+              </objectSet>
+            </merge>
+          </rules>
+        </migXml>
+      </supportedComponent>
+    </supportedComponents>
+    <!-- Begin migration from Vista. This is the build-to-build upgrade or pc-to-pc case.
+         Everything else comes from the -DL manifest. -->
+    <migXml xmlns="">
+      <rules context="System">
+        <include>
+          <objectSet>
+            <!-- List values in same order as in the <configuration> section. -->
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\VSS\Settings\* [*]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\VSS\Volumes\* [*]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\VSS\VssAccessControl\* [*]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\VSS\Providers\* [*]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Control\BackupRestore\FilesNotToSnapshot [*]</pattern>
+            <pattern type="File">%systemdrive%\System Volume Information [*.{7cc467ef-6865-4831-853f-2a4817fd1bca}DB]</pattern>
+            <pattern type="File">%systemdrive%\System Volume Information [*.{7cc467ef-6865-4831-853f-2a4817fd1bca}ALT]</pattern>
+          </objectSet>
+        </include>
+        <!-- We use the default merge rule, so we don't need to specify a merge script. -->
+        <merge script="MigXmlHelper.SourcePriority()">
+          <objectSet>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\VSS\* [*]</pattern>
+            <pattern type="File">%systemdrive%\System Volume Information [*.{7cc467ef-6865-4831-853f-2a4817fd1bca}DB]</pattern>
+            <pattern type="File">%systemdrive%\System Volume Information [*.{7cc467ef-6865-4831-853f-2a4817fd1bca}ALT]</pattern>
+          </objectSet>
+        </merge>
+        <merge script="MigXmlHelper.DestinationPriority()">
+          <objectSet>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Control\BackupRestore\FilesNotToSnapshot [*]</pattern>
+          </objectSet>
+        </merge>
+      </rules>
+    </migXml>
+  </migration>
+</assembly>

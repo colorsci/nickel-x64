@@ -1,0 +1,80 @@
+#==================================================================
+# @@UI-Description: AD LDS memberhsip transitive.
+#
+# This file contains user extensions for default schema, both AD and ADAM.
+# It should be imported with the following command:
+#   ldifde -i -f MS-MembershipTransitive.LDF -s server:port -b username domain password -k -j . -c "CN=Schema,CN=Configuration,DC=X" #schemaNamingContext
+#
+#==================================================================
+
+# Attributes
+
+dn:
+changetype: modify
+add: schemaUpgradeInProgress
+schemaUpdateInProgress: 1
+-
+
+dn: CN=ms-DS-Is-Member-Of-DL-Transitive,CN=Schema,CN=Configuration,DC=X
+# This constructed attribute transitively expands the 
+# linked attribute "isMemberOfDL"
+changetype: ntdsschemaadd
+objectClass: attributeSchema
+lDAPDisplayName: msds-memberOfTransitive
+adminDisplayName: msds-memberOfTransitive
+adminDescription: msds-memberOfTransitive
+attributeID: 1.2.840.113556.1.4.2236
+attributeSyntax: 2.5.5.1
+oMSyntax: 127
+oMObjectClass:: KwwCh3McAIVK
+isSingleValued: FALSE
+systemOnly: TRUE
+# 0x800(only return on base search) 
+searchFlags: 2048
+showInAdvancedViewOnly: TRUE
+# 0x10 (base schema) +
+# 0x08 (operational) +
+# 0x04 (constructed) +
+# 0x01 (not replicated)
+systemFlags: 29
+
+dn: CN=ms-DS-Member-Transitive,CN=Schema,CN=Configuration,DC=X
+# This constructed attribute transitively expands the 
+# linked attribute "member"
+changetype: ntdsschemaadd
+objectClass: attributeSchema
+lDAPDisplayName: msds-memberTransitive
+adminDisplayName: msds-memberTransitive
+adminDescription: msds-memberTransitive
+attributeID: 1.2.840.113556.1.4.2238
+attributeSyntax: 2.5.5.1
+oMSyntax: 127
+oMObjectClass:: KwwCh3McAIVK
+isSingleValued: FALSE
+systemOnly: TRUE
+# 0x800(only return on base search) 
+searchFlags: 2048
+showInAdvancedViewOnly: TRUE
+# 0x10 (base schema) +
+# 0x08 (operational) +
+# 0x04 (constructed) +
+# 0x01 (not replicated)
+systemFlags: 29
+
+dn:
+changetype: modify
+add: schemaUpdateNow
+schemaUpdateNow: 1
+-
+
+dn: cn=Top,cn=Schema,cn=Configuration,dc=X
+changetype: ntdsschemamodify
+add: systemMayContain
+systemMayContain: 1.2.840.113556.1.4.2236
+-
+
+dn: cn=Top,cn=Schema,cn=Configuration,dc=X
+changetype: ntdsschemamodify
+add: systemMayContain
+systemMayContain: 1.2.840.113556.1.4.2238
+-

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/webapps/inclusiveOobe/css/inclusive-common.css" />
+    <link rel="stylesheet" href="/webapps/shubOobe/css/shub-common.css" />
+    <!-- WinJS references -->
+    <script src="/Microsoft.WinJS-reduced/js/base.js"></script>
+
+    <!-- requirejs references -->
+    <script src="/core/js/require-helpers.js"></script>
+    <script src="/core/js/requirePath-config-core.js"></script>
+    <script data-main="/webapps/shubOobe/js/teamfriendlyname-page.js" src="/lib/require.js"></script>
+</head>
+<body class="webapp-inner">
+    <div class="body-container">
+        <div class="container-content">
+            <oobe-header params="title: $root.title"></oobe-header>
+
+            <div class="content-description label-text">
+                <strong data-bind="text: friendlyNameLabel"></strong>
+            </div>
+            <br />
+            <div class="content-description label-text">
+                <p data-bind="text: friendlyNameInfo"></p>
+            </div>
+
+            <oobe-textinput params="placeHolder: friendlyNamePlaceHolder,
+                                inputText: friendlyName,
+                                errorText: friendlyNameErrorText,
+                                showError: $root.friendlyNameErrorText() !== '',
+                                ariaLabel: friendlyNamePlaceHolder,
+                                voiceOverText: friendlyNamePlaceHolder,
+                                errorVoiceOver: friendlyNameErrorText,
+                                maxLength: 32">
+            </oobe-textinput>
+            <div class="content-description label-text">
+                <strong data-bind="text: computerNameLabel"></strong>
+            </div>
+            <br />
+            <div class="content-description label-text">
+                <p data-bind="text: computerNameInfo"></p>
+            </div>
+            <oobe-textinput params="placeHolder: computerNamePlaceHolder,
+                                inputText: computerName,
+                                errorText: computerNameErrorText,
+                                showError: $root.computerNameErrorText() !== '',
+                                ariaLabel: computerNamePlaceHolder,
+                                voiceOverText: computerNamePlaceHolder,
+                                errorVoiceOver: computerNameErrorText,
+                                disable: disableComputerName,
+                                maxLength: 15">
+            </oobe-textinput>
+
+            <div class="content-description input-errorDialog">
+                <div class="errorDialog-dialogRoot tooltipType_error template-tooltip" data-bind="if: ($root.setNameErrorText && $root.setNameErrorText() != ''" role="alert">
+                    <p data-bind="text: setNameErrorText"></p>
+                </div>
+            </div>
+        </div>
+        <oobe-footer params="flexStartHyperLinks: $root.flexStartHyperLinks, flexEndButtons: $root.flexEndButtons"></oobe-footer>
+    </div>
+</body>
+</html>

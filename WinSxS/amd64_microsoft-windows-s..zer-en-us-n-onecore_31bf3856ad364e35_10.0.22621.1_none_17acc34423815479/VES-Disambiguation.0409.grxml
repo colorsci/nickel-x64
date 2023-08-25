@@ -1,0 +1,82 @@
+<?xml version= "1.0" encoding="utf-8"?>
+<grammar sapi:CarrierPhraseGr="{7B57C1BA-F097-4C29-AF93-57F73D231073}" mode="voice" root="Disambiguation_SpeechRoot" tag-format="semantics/1.0" version="1.0" xml:lang="en-us" xmlns="http://www.w3.org/2001/06/grammar" xmlns:sapi="http://schemas.microsoft.com/Speech/2002/06/SRGSExtensions">
+
+  <rule id="d_">
+    <item>
+      <one-of>
+        <item>click</item>
+        <item>tap</item>
+        <item>press</item>
+        <item>item</item>
+      </one-of>
+      <ruleref uri="#c_"/>
+    </item>
+    <tag>out.d_domain_="Disambiguation";out.__aumid="Disambig";out.d_intent_="Click";if(rules.c_!=null){out.c_DisambigElementName=rules.c_;}if(rules.b_!=null){out.b_ControlList=rules.b_;}</tag>
+  </rule>
+
+  <rule id="c_">
+    <item weight="1">
+      <ruleref uri="sharing:DisambigElementName"/>
+      <tag>out=rules.latest()</tag>
+    </item>
+  </rule>
+
+  <rule id="b_">
+    <item>
+      OK<tag>out="ok_btn"</tag>
+    </item>
+  </rule>
+
+  <rule id="e_">
+    <item>
+      <one-of>
+        <item>click</item>
+        <item>tap</item>
+        <item>press</item>
+        <item>item</item>
+      </one-of>
+      <ruleref uri="#c_"/>
+    </item>
+    <tag>out.e_domain_="Disambiguation";out.out.__aumid="Disambig";out.e_intent_="Click";if(rules.c_!=null){out.c_DisambigElementName=rules.c_;}if(rules.b_!=null){out.b_ControlList=rules.b_;}</tag>
+  </rule>
+
+  <rule id="f_">
+    cancel
+    <tag>out.f_domain_="Disambiguation";out.f_intent_="Cancel";</tag>
+  </rule>
+
+  <rule id="g_">
+    cancel
+    <tag>out.g_domain_="Disambiguation";out.g_intent_="Cancel";</tag>
+  </rule>
+
+  <rule id="Disambiguation_SpeechRoot" scope="public">
+    <item>
+      <one-of>
+        <item>
+          <ruleref uri="#d_"/>
+        </item>
+        <item>
+          <ruleref uri="#f_"/>
+        </item>
+      </one-of>
+      <tag>out.rule=rules.latest();</tag>
+    </item>
+    <tag>out=out.rule;</tag>
+  </rule>
+
+  <rule id="Disambiguation_TextRoot" scope="public">
+    <item>
+      <one-of>
+        <item>
+          <ruleref uri="#e_"/>
+        </item>
+        <item>
+          <ruleref uri="#g_"/>
+        </item>
+      </one-of>
+      <tag>out.rule=rules.latest();</tag>
+    </item>
+    <tag>out=out.rule;</tag>
+  </rule>
+</grammar>

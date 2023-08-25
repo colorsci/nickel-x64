@@ -1,0 +1,852 @@
+<?xml version="1.0"?>
+
+<!--***************************************************************************
+
+  Copyright (c) Microsoft Corporation. All rights reserved.
+
+****************************************************************************-->
+
+<Rules>
+
+
+
+<StringTable>
+  <String ID="GroupNetDiagFramework" loc.comment="Name of Network Diagnostics Framework Rules Group">Network Diagnostics Framework Group</String>
+  <String ID="RuleNetDiagFrameworkSetup" loc.comment="Name of Rule to setup Network Diagnostics Framework Summary Group">Network Diagnostics Framework Checks Setup</String>
+  <String ID="RuleBuildNetDiagResultsTable" loc.comment="Name of Rule to Network Diagnostics Results Table">Build Network Diagnostics Table</String>
+  <String ID="RuleDiagResultsCheck" loc.comment="Name of Rule to check Net Diag Event results">Check Network Diagnostics Results</String>
+  <String ID="RuleNetDiagFrameworkSummary" loc.comment="Name of Rule to summary Network Diagnostics Framework Rules">Network Diagnostics Framework Checks Summary</String>
+  <String ID="RuleNetworkingDiagnosticsFrameworkCleanup" loc.comment="Name of Rule to cleanup Networking Diagnostics Framework ETW Tables">Cleanup Network Diagnostics Framework Tables</String>
+
+  <String ID="LOC_TitleNetDiagFrameworkSummary" loc.comment="Title of Network Diagnostics Framework Rules Summary Group">Network Diagnostics Framework Checks</String>
+  <String ID="LOC_DescNetDiagFramework" loc.comment="Description of Network Diagnostics Framework Rules Summary Group">Checks relating to the Network Diagnostics Framework events</String>
+
+
+  <String ID="LOC_RuleDiagResultsCheck" loc.comment="Name of Rule to check Net Diag Event results">Check Network Diagnostics Results</String>
+
+  <String ID="LOC_Failed" loc.comment="Text to display when a rule or group of rules failed">Failed</String>
+  <String ID="LOC_Passed" loc.comment="Text to display when a rule or group of rules passed">Passed</String>
+
+
+<String ID="WarnSuccessDiagNoProblem_symptom" loc.comment="Symptom string for warning message: WarnSuccessDiagNoProblem">Network Diagnosis was successful.</String>
+<String ID="WarnSuccessDiagNoProblem_cause" loc.comment="Cause string for warning message: WarnSuccessDiagNoProblem">The Network Diagnostics determined there is no problem with your network.</String>
+<String ID="WarnSuccessDiagNoProblem_details" loc.comment="Details string for warning message: WarnSuccessDiagNoProblem">The Network Diagnostics result revealed that there is no obvious problem with your network connection.</String>
+<String ID="WarnSuccessDiagNoProblem_res1" loc.comment="Resolution string for warning message: WarnSuccessDiagNoProblem">Contact your Internet Service Provider if you are still having issues with your network connection.</String>
+
+<String ID="WarnCancelDiag_symptom" loc.comment="Symptom string for warning message: WarnCancelDiag">Network Diagnosis was cancelled by the user.</String>
+<String ID="WarnCancelDiag_cause" loc.comment="Cause string for warning message: WarnCancelDiag">The Network Diagnostics was not permitted to complete its work.</String>
+<String ID="WarnCancelDiag_details" loc.comment="Details string for warning message: WarnCancelDiag">The user canceled Network Diagnostics before it was able to complete its analysis of the system.</String>
+<String ID="WarnCancelDiag_res1" loc.comment="Resolution string for warning message: WarnCancelDiag">Please rerun Network Diagnostics and allow it run until it has completed its analysis.</String>
+
+<String ID="WarnFailInHelper_symptom" loc.comment="Symptom string for warning message: WarnFailInHelper">Network Diagnosis failed to diagnose the problem.</String>
+<String ID="WarnFailInHelper_cause" loc.comment="Cause string for warning message: WarnFailInHelper">The Network Diagnostics tool failed to diagnosis the problem because a Helper Class failure.</String>
+<String ID="WarnFailInHelper_details" loc.comment="Details string for warning message: WarnFailInHelper">The helper class: {helperclassname} failed while trying to diagnose the problem.  It returned the following error code: {errorcode}.</String>
+<String ID="WarnFailInHelper_res1" loc.comment="Resolution string for warning message: WarnFailInHelper">Please rerun Network Diagnostics and contact your Internet Service Provider to determine if there are any currently known issues with your Internet service.</String>
+
+<String ID="WarnFailInFramework_symptom" loc.comment="Symptom string for warning message: WarnFailInFramework">Network Diagnosis failed to diagnosis the problem.</String>
+<String ID="WarnFailInFramework_cause" loc.comment="Cause string for warning message: WarnFailInFramework">The Network Diagnostics failed to diagnose the problem because the framework failed to complete.</String>
+<String ID="WarnFailInFramework_details" loc.comment="Details string for warning message: WarnFailInFramework">The Network Diagnostic framework returned the following error code: {errorcode}.</String>
+<String ID="WarnFailInFramework_res1" loc.comment="Resolution string for warning message: WarnFailInFramework">Please rerun Network Diagnostics and contact your Internet Service Provider to determine if there are any currently known issues with your Internet service.</String>
+
+<String ID="WarnSuccessValidation_symptom" loc.comment="Symptom string for warning message: WarnSuccessValidation">Network Diagnosis diagnosed the problem and validated the work done to repair the problem.</String>
+<String ID="WarnSuccessValidation_cause" loc.comment="Cause string for warning message: WarnSuccessValidation">The Network Diagnostics diagnosed the problem and verified the selected repair option solved the issue.</String>
+<String ID="WarnSuccessValidation_details" loc.comment="Details string for warning message: WarnSuccessValidation">The user chose the following repair option to fix their network problems: {repairoption}</String>
+<String ID="WarnSuccessValidation_res1" loc.comment="Resolution string for warning message: WarnSuccessValidation">The network appears to be working fine now.</String>
+
+<String ID="WarnFailValidation_symptom" loc.comment="Symptom string for warning message: WarnFailValidation">Network Diagnosis diagnosed the problem but could not validate the repair work.</String>
+<String ID="WarnFailValidation_cause" loc.comment="Cause string for warning message: WarnFailValidation">The Network Diagnostics diagnosed the problem but could not verify the selected repair option selected fixed the issue.</String>
+<String ID="WarnFailValidation_details" loc.comment="Details string for warning message: WarnFailValidation">The user attempted the following repair option: {repairoption}.  This was recommended by the following helper class: {helperclassname}.  This repair required the follow Security Identifier Type: {sidtyperequired}.</String>
+<String ID="WarnFailValidation_res1" loc.comment="Resolution string for warning message: WarnFailValidation">The user can try the other repair options given during diagnosis. If all repair options have been attempted, the user may also want to contact their Internet Service Provider to determine if there is a known issue with the network.</String>
+
+<String ID="WarnFailRepair_symptom" loc.comment="Symptom string for warning message: WarnFailRepair">Network Diagnosis diagnosed the problem but could not perform the repair option selected by the user.</String>
+<String ID="WarnFailRepair_cause" loc.comment="Cause string for warning message: WarnFailRepair">The Network Diagnostics diagnosed the problem but could not the repair the network connection.</String>
+<String ID="WarnFailRepair_details" loc.comment="Details string for warning message: WarnFailRepair">The user selected the following repair option: {repairoption}.  The repair option required the following Security Identifier Type: {sidtyperequired}. This choice did not resolve the problem.</String>
+<String ID="WarnFailRepair_res1" loc.comment="Resolution string for warning message: WarnFailRepair">The user should contact their Internet Service Provider to determine if there is a known issue with the network.</String>
+
+<String ID="WarnCancelRepair_symptom" loc.comment="Symptom string for warning message: WarnCancelRepair">Network Diagnosis repair operation was cancelled by the user.</String>
+<String ID="WarnCancelRepair_cause" loc.comment="Cause string for warning message: WarnCancelRepair">The Network Diagnostics was not permitted to complete.</String>
+<String ID="WarnCancelRepair_details" loc.comment="Details string for warning message: WarnCancelRepair">The user cancelled Network Diagnostics before it was able to complete the repair operation selected by the user.</String>
+<String ID="WarnCancelRepair_res1" loc.comment="Resolution string for warning message: WarnCancelRepair">Please rerun Network Diagnostics and allow it run until it has completed its analysis and repair.</String>
+
+<String ID="WarnSuccessDiagSingleOption_symptom" loc.comment="Symptom string for warning message: WarnSuccessDiagSingleOption">Network Diagnosis was successful, but the user may have selected a repair option that could not be validated by the Network Diagnostic Framework.</String>
+<String ID="WarnSuccessDiagSingleOption_cause" loc.comment="Cause string for warning message: WarnSuccessDiagSingleOption">The Network Diagnostics determined that there is a problem with your network that requires the user to take action to fix.</String>
+<String ID="WarnSuccessDiagSingleOption_details" loc.comment="Details string for warning message: WarnSuccessDiagSingleOption">The Network Diagnostics result revealed that the user may be able to resolve their networking issue(s).</String>
+<String ID="WarnSuccessDiagSingleOption_res1" loc.comment="Resolution string for warning message: WarnSuccessDiagSingleOption">The user has been prompted to implement: {repairoption}</String>
+
+<String ID="WarnSuccessDiagMultipleOptions_symptom" loc.comment="Symptom string for warning message: WarnSuccessDiagMultipleOptions">Network Diagnosis was successful, but the user may have selected a repair option that could not be validated by the Network Diagnostic Framework.</String>
+<String ID="WarnSuccessDiagMultipleOptions_cause" loc.comment="Cause string for warning message: WarnSuccessDiagMultipleOptions">The Network Diagnostics determined that there is a problem with your network that requires the user to take action to fix.</String>
+<String ID="WarnSuccessDiagMultipleOptions_details" loc.comment="Details string for warning message: WarnSuccessDiagMultipleOptions">The Network Diagnostics result revealed that the user may be able to resolve their networking issue(s).</String>
+<String ID="WarnSuccessDiagMultipleOptions_res1" loc.comment="Resolution string for warning message: WarnSuccessDiagMultipleOptions">The user has been offered multiple repair options. See the Networking Diagnostics section for more details.</String>
+
+</StringTable>
+
+
+ <Group name="$(GroupNetDiagFramework)" enabled="true" > 
+  <Rule name="$(RuleNetDiagFrameworkSetup)" enabled="true">
+    <Step select="/Report/Section[@name='tracerptNetworkDiag']/Table[@name='start']">
+      <Exists>
+        <Otherwise>
+          <Variable name="diagnosticsrun" expression="count(Item)" />
+          <Variable name="diagnosticsresultsreported" expression="number('0')" />
+        </Otherwise>
+      </Exists>
+      <Otherwise>
+        <Variable name="diagnosticsrun" expression="number('0')" />
+        <Variable name="diagnosticsresultsreported" expression="number('0')" />
+      </Otherwise>
+    </Step>
+
+    <Step select="/Report[{diagnosticsrun} &gt; 0]" fatal="true">
+      <Exists>
+        <Otherwise />
+      </Exists>
+    </Step>
+
+    <Step select="/Report/Section[@name='advice']/Table[@name='alltests']">
+      <Exists>
+       <When expression="1 = 1">
+        <Variable name="group">$(LOC_TitleNetDiagFrameworkSummary)</Variable>
+        <Variable name="description">$(LOC_DescNetDiagFramework)</Variable>
+        <Insert>
+          <Node axis="child">
+            <Item>
+              <Data name="alltestgroups" link="TableNetDiagResults">{group}</Data>
+              <Data name="alltestdesc">{description}</Data>
+            </Item>
+          </Node>
+        </Insert>
+       </When>
+       <Otherwise/>
+      </Exists>
+    </Step>
+
+    <Step select="/Report/Section[@name='tracerptNetworkDiag']/Table[@name='start']">
+      <Exists>
+        <When expression="{diagnosticsrun} &gt; 0">
+          <Insert select=".">
+            <Node axis="preceding-sibling">
+              <Table name="TableNetDiagResults" topic="netdiagframework" >
+                <Header>
+                  <Sort field="diagstarttime" type="number" order="ascending" />
+                  <Data name="diagstarttime" class="number" />
+                  <Data name="diagstopstate" class="string" />
+                  <Data name="activityid" class="string" />
+                  <Data name="helperclassname" class="string" />
+                  <Data name="numberofattributes" class="string" />
+                  <Data name="helperclassattributes" class="string" />
+                  <Data name="resulthr" class="number" />
+                  <Header>
+                    <Data name="diagstep" class="string" />
+                    <Data name="timestamp" class="number" />
+                    <Header>
+                      <Data name="diagstepproperty" class="string" />
+                      <Data name="diagstepvalue" class="string" />
+                    </Header>
+                  </Header>
+                </Header>
+              </Table>
+            </Node>
+          </Insert>
+        </When>
+        <Otherwise />
+      </Exists>
+    </Step>
+  </Rule>
+
+  <Rule name="$(RuleBuildNetDiagResultsTable)" enabled="true">
+    <Step select="/Report[{diagnosticsrun} &gt; 0]" fatal="true">
+      <Exists>
+        <Otherwise/>
+      </Exists>
+    </Step>
+
+    <Step select="/Report/Section[@name='tracerptNetworkDiag']/Table[@name='start']/Item" sortType="all">
+      <Variable name="diagstarttime" expression="Data[@name='timestamp']" />
+      <Variable name="diagrunactivityid" expression="Data[@name='activityid']" />
+      <Variable name="helperclassname" expression="Data[@name='helperclassname']" />
+      <Variable name="numberofattributes" expression="Data[@name='numberofattributes']" />
+      <Variable name="helperclassattributes" expression="Data[@name='helperclassattributes']" />
+      <Exists>
+        <Otherwise>
+          <Variable name="diagstopstate" expression="/Report/Section[@name='tracerptNetworkDiag']/Table[@name='stopsuccessdiag' or @name='stopfaildiag' or @name='stopcanceldiag' or @name='stopsuccessrepair' or @name='stopfailrepair' or @name='stopcancelrepair'][Item/Data[@name='activityid' and . = '{diagrunactivityid}']]/@name" />
+          <Variable name="diagstopstatestring" expression="'{diagstopstate}'" />
+          <Variable name="resulthr" expression="/Report/Section[@name='tracerptNetworkDiag']/Table[@name='stopsuccessdiag' or @name='stopfaildiag' or @name='stopcanceldiag' or @name='stopsuccessrepair' or @name='stopfailrepair' or @name='stopcancelrepair']/Item[Data[@name='activityid' and . = '{diagrunactivityid}']]/Data[@name='resulthr']" />
+
+          <Insert select="/Report/Section[@name='tracerptNetworkDiag']/Table[@name='TableNetDiagResults']">
+            <Node axis="child">
+              <Item>
+                <Data name="diagstarttime">{diagstarttime}</Data>
+                <Data name="diagstopstate" translate="value">{diagstopstatestring}</Data>
+                <Data name="activityid">{diagrunactivityid}</Data>
+                <Data name="helperclassname">{helperclassname}</Data>
+                <Data name="numberofattributes">{numberofattributes}</Data>
+                <Data name="helperclassattributes">{helperclassattributes}</Data>
+                <Data name="resulthr">{resulthr}</Data>
+              </Item>
+            </Node>
+          </Insert>
+        </Otherwise>
+      </Exists>
+    </Step>
+
+    <Step select="/Report/Section[@name='tracerptNetworkDiag']/Table[@name='failinframework']/Item" sortType="all">
+      <Exists>
+        <Otherwise>
+          <Variable name="activityid" expression="Data[@name='activityid']" />
+          <Variable name="failinframeworktime" expression="Data[@name='timestamp']" />
+          <Variable name="errorcode" expression="Data[@name='resulthr']" />
+
+          <Insert select="/Report/Section[@name='tracerptNetworkDiag']/Table[@name='TableNetDiagResults']/Item[Data[@name='activityid'] = '{activityid}']">
+            <Node axis="child">
+              <Item>
+                <Data name="diagstep" translate="value">failinframework</Data>
+                <Data name="timestamp">{failinframeworktime}</Data>
+                <Item>
+                  <Data name="diagstepproperty" translate="value">resulthr</Data>
+                  <Data name="diagstepvalue">{errorcode}</Data>
+                </Item>
+              </Item>
+            </Node>
+          </Insert>
+        </Otherwise>
+      </Exists>
+      <Otherwise/>
+    </Step>
+
+    <Step select="/Report/Section[@name='tracerptNetworkDiag']/Table[@name='failinhelper']/Item" sortType="all">
+      <Exists>
+        <Otherwise>
+          <Variable name="activityid" expression="Data[@name='activityid']" />
+          <Variable name="failinhelpertime" expression="Data[@name='timestamp']" />
+          <Variable name="errorcode" expression="Data[@name='resulthr']" />
+
+          <Insert select="/Report/Section[@name='tracerptNetworkDiag']/Table[@name='TableNetDiagResults']/Item[Data[@name='activityid'] = '{activityid}']">
+            <Node axis="child">
+              <Item>
+                <Data name="diagstep" translate="value">failinhelper</Data>
+                <Data name="timestamp">{failinhelpertime}</Data>
+                <Item>
+                  <Data name="diagstepproperty" translate="value">resulthr</Data>
+                  <Data name="diagstepvalue">{errorcode}</Data>
+                </Item>
+              </Item>
+            </Node>
+          </Insert>
+        </Otherwise>
+      </Exists>
+      <Otherwise />
+    </Step>
+
+    <Step select="/Report/Section[@name='tracerptNetworkDiag']/Table[@name='diagsuccess']/Item" sortType="all">
+      <Exists>
+        <Otherwise>
+          <Variable name="activityid" expression="Data[@name='activityid']" />
+          <Variable name="diagsuccesstime" expression="Data[@name='timestamp']" />
+          <Variable name="repairoption" expression="Data[@name='repairoption']" />
+          <Variable name="repairguid" expression="Data[@name='repairguid']" />
+          <Variable name="secondsrequired" expression="Data[@name='secondsrequired']" />
+          <Variable name="sidtyperequired" expression="Data[@name='sidtyperequired']" />
+
+          <Insert select="/Report/Section[@name='tracerptNetworkDiag']/Table[@name='TableNetDiagResults']/Item[Data[@name='activityid'] = '{activityid}']">
+            <Node axis="child">
+              <Item>
+                <Data name="diagstep" translate="value">diagsuccess</Data>
+                <Data name="timestamp">{diagsuccesstime}</Data>
+                <Item>
+                  <Data name="diagstepproperty" translate="value">repairoption</Data>
+                  <Data name="diagstepvalue">{repairoption}</Data>
+                </Item>
+                <Item>
+                  <Data name="diagstepproperty" translate="value">repairguid</Data>
+                  <Data name="diagstepvalue">{repairguid}</Data>
+                </Item>
+                <Item>
+                  <Data name="diagstepproperty" translate="value">secondsrequired</Data>
+                  <Data name="diagstepvalue">{secondsrequired}</Data>
+                </Item>
+                <Item>
+                  <Data name="diagstepproperty" translate="value">sidtyperequired</Data>
+                  <Data name="diagstepvalue">{sidtyperequired}</Data>
+                </Item>
+              </Item>
+            </Node>
+          </Insert>
+        </Otherwise>
+      </Exists>
+      <Otherwise />
+    </Step>
+
+    <Step select="/Report/Section[@name='tracerptNetworkDiag']/Table[@name='diagsuccessnp']/Item" sortType="all">
+      <Exists>
+        <Otherwise>
+          <Variable name="activityid" expression="Data[@name='activityid']" />
+          <Variable name="diagsuccessnptime" expression="Data[@name='timestamp']" />
+
+          <Insert select="/Report/Section[@name='tracerptNetworkDiag']/Table[@name='TableNetDiagResults']/Item[Data[@name='activityid'] = '{activityid}']">
+            <Node axis="child">
+              <Item>
+                <Data name="diagstep" translate="value">diagsuccessnp</Data>
+                <Data name="timestamp">{diagsuccessnptime}</Data>
+              </Item>
+            </Node>
+          </Insert>
+        </Otherwise>
+      </Exists>
+      <Otherwise />
+    </Step>
+
+    <Step select="/Report/Section[@name='tracerptNetworkDiag']/Table[@name='diagfail']/Item" sortType="all">
+      <Exists>
+        <Otherwise>
+          <Variable name="activityid" expression="Data[@name='activityid']" />
+          <Variable name="diagfailtime" expression="Data[@name='timestamp']" />
+          <Variable name="errorcode" expression="Data[@name='resulthr']" />
+
+          <Insert select="/Report/Section[@name='tracerptNetworkDiag']/Table[@name='TableNetDiagResults']/Item[Data[@name='activityid'] = '{activityid}']">
+            <Node axis="child">
+              <Item>
+                <Data name="diagstep" translate="value">diagfail</Data>
+                <Data name="timestamp">{diagfailtime}</Data>
+                <Item>
+                  <Data name="diagstepproperty" translate="value">resulthr</Data>
+                  <Data name="diagstepvalue">{errorcode}</Data>
+                </Item>
+              </Item>
+            </Node>
+          </Insert>
+        </Otherwise>
+      </Exists>
+      <Otherwise />
+    </Step>
+
+    <Step select="/Report/Section[@name='tracerptNetworkDiag']/Table[@name='validationsuccess']/Item" sortType="all">
+      <Exists>
+        <Otherwise>
+          <Variable name="activityid" expression="Data[@name='activityid']" />
+          <Variable name="validationsuccesstime" expression="Data[@name='timestamp']" />
+          <Variable name="repairoption" expression="Data[@name='repairoption']" />
+          <Variable name="repairguid" expression="Data[@name='repairguid']" />
+          <Variable name="secondsrequired" expression="Data[@name='secondsrequired']" />
+          <Variable name="sidtyperequired" expression="Data[@name='sidtyperequired']" />
+          <Variable name="helperclassname" expression="Data[@name='helperclassname']" />
+
+          <Insert select="/Report/Section[@name='tracerptNetworkDiag']/Table[@name='TableNetDiagResults']/Item[Data[@name='activityid'] = '{activityid}']">
+            <Node axis="child">
+              <Item>
+                <Data name="diagstep" translate="value">validationsuccess</Data>
+                <Data name="timestamp">{validationsuccesstime}</Data>
+                <Item>
+                  <Data name="diagstepproperty" translate="value">repairoption</Data>
+                  <Data name="diagstepvalue">{repairoption}</Data>
+                </Item>
+                <Item>
+                  <Data name="diagstepproperty" translate="value">repairguid</Data>
+                  <Data name="diagstepvalue">{repairguid}</Data>
+                </Item>
+                <Item>
+                  <Data name="diagstepproperty" translate="value">secondsrequired</Data>
+                  <Data name="diagstepvalue">{secondsrequired}</Data>
+                </Item>
+                <Item>
+                  <Data name="diagstepproperty" translate="value">sidtyperequired</Data>
+                  <Data name="diagstepvalue">{sidtyperequired}</Data>
+                </Item>
+                <Item>
+                  <Data name="diagstepproperty" translate="value">helperclassname</Data>
+                  <Data name="diagstepvalue">{helperclassname}</Data>
+                </Item>
+              </Item>
+            </Node>
+          </Insert>
+        </Otherwise>
+      </Exists>
+      <Otherwise />
+    </Step>
+
+    <Step select="/Report/Section[@name='tracerptNetworkDiag']/Table[@name='validationfail']/Item" sortType="all">
+      <Exists>
+        <Otherwise>
+          <Variable name="activityid" expression="Data[@name='activityid']" />
+          <Variable name="validationfailtime" expression="Data[@name='timestamp']" />
+          <Variable name="repairoption" expression="Data[@name='repairoption']" />
+          <Variable name="repairguid" expression="Data[@name='repairguid']" />
+          <Variable name="secondsrequired" expression="Data[@name='secondsrequired']" />
+          <Variable name="sidtyperequired" expression="Data[@name='sidtyperequired']" />
+          <Variable name="helperclassname" expression="Data[@name='helperclassname']" />
+
+          <Insert select="/Report/Section[@name='tracerptNetworkDiag']/Table[@name='TableNetDiagResults']/Item[Data[@name='activityid'] = '{activityid}']">
+            <Node axis="child">
+              <Item>
+                <Data name="diagstep" translate="value">validationfail</Data>
+                <Data name="timestamp">{validationfailtime}</Data>
+                <Item>
+                  <Data name="diagstepproperty" translate="value">repairoption</Data>
+                  <Data name="diagstepvalue">{repairoption}</Data>
+                </Item>
+                <Item>
+                  <Data name="diagstepproperty" translate="value">repairguid</Data>
+                  <Data name="diagstepvalue">{repairguid}</Data>
+                </Item>
+                <Item>
+                  <Data name="diagstepproperty" translate="value">secondsrequired</Data>
+                  <Data name="diagstepvalue">{secondsrequired}</Data>
+                </Item>
+                <Item>
+                  <Data name="diagstepproperty" translate="value">sidtyperequired</Data>
+                  <Data name="diagstepvalue">{sidtyperequired}</Data>
+                </Item>
+                <Item>
+                  <Data name="diagstepproperty" translate="value">helperclassname</Data>
+                  <Data name="diagstepvalue">{helperclassname}</Data>
+                </Item>
+              </Item>
+            </Node>
+          </Insert>
+        </Otherwise>
+      </Exists>
+      <Otherwise />
+    </Step>
+
+    <Step select="/Report/Section[@name='tracerptNetworkDiag']/Table[@name='repairoptfail']/Item" sortType="all">
+      <Exists>
+        <Otherwise>
+          <Variable name="activityid" expression="Data[@name='activityid']" />
+          <Variable name="repairoptfailtime" expression="Data[@name='timestamp']" />
+          <Variable name="repairoption" expression="Data[@name='repairoption']" />
+          <Variable name="repairguid" expression="Data[@name='repairguid']" />
+          <Variable name="secondsrequired" expression="Data[@name='secondsrequired']" />
+          <Variable name="sidtyperequired" expression="Data[@name='sidtyperequired']" />
+
+          <Insert select="/Report/Section[@name='tracerptNetworkDiag']/Table[@name='TableNetDiagResults']/Item[Data[@name='activityid'] = '{activityid}']">
+            <Node axis="child">
+              <Item>
+                <Data name="diagstep" translate="value">repairoptfail</Data>
+                <Data name="timestamp">{repairoptfailtime}</Data>
+                <Item>
+                  <Data name="diagstepproperty" translate="value">repairoption</Data>
+                  <Data name="diagstepvalue">{repairoption}</Data>
+                </Item>
+                <Item>
+                  <Data name="diagstepproperty" translate="value">repairguid</Data>
+                  <Data name="diagstepvalue">{repairguid}</Data>
+                </Item>
+                <Item>
+                  <Data name="diagstepproperty" translate="value">secondsrequired</Data>
+                  <Data name="diagstepvalue">{secondsrequired}</Data>
+                </Item>
+                <Item>
+                  <Data name="diagstepproperty" translate="value">sidtyperequired</Data>
+                  <Data name="diagstepvalue">{sidtyperequired}</Data>
+                </Item>
+              </Item>
+            </Node>
+          </Insert>
+        </Otherwise>
+      </Exists>
+      <Otherwise />
+    </Step>
+
+    <Step select="/Report/Section[@name='tracerptNetworkDiag']/Table[@name='repairfail']/Item" sortType="all">
+      <Exists>
+        <Otherwise>
+          <Variable name="activityid" expression="Data[@name='activityid']" />
+          <Variable name="repairfailtime" expression="Data[@name='timestamp']" />
+          <Variable name="errorcode" expression="Data[@name='resulthr']" />
+
+          <Insert select="/Report/Section[@name='tracerptNetworkDiag']/Table[@name='TableNetDiagResults']/Item[Data[@name='activityid'] = '{activityid}']">
+            <Node axis="child">
+              <Item>
+                <Data name="diagstep" translate="value">repairfail</Data>
+                <Data name="timestamp">{repairfailtime}</Data>
+                <Item>
+                  <Data name="diagstepproperty" translate="value">resulthr</Data>
+                  <Data name="diagstepvalue">{errorcode}</Data>
+                </Item>
+              </Item>
+            </Node>
+          </Insert>
+        </Otherwise>
+      </Exists>
+      <Otherwise />
+    </Step>
+  </Rule>
+
+  <Rule name="$(RuleDiagResultsCheck)" enabled="true">
+    <Step select="/Report/Section[@name='tracerptNetworkDiag']/Table[@name='TableNetDiagResults']/Item[Data[@name='diagstopstate'] = 'stopcanceldiag' or Data[@name='diagstopstate'] = 'stopcancelrepair' or Item/Data[@name='diagstep' and (. = 'diagsuccessnp' or . = 'diagfail' or . = 'validationsuccess' or . = 'validationfail' or . = 'repairoptfail' or . = 'failinframework' or . = 'failinhelper')]]" sortType="max" sortNode="Data[@name='diagstarttime']" sortDataType="number" >
+      <Variable name="diagstopstate" expression="Data[@name='diagstopstate']" />
+      <Variable name="validationfailed" expression="count(Item/Data[@name='diagstep' and . = 'validationfail'])" />
+      <Variable name="repairfailed" expression="count(Item/Data[@name='diagstep' and . = 'repairoptfail'])" />
+      <Variable name="failinframework" expression="count(Item/Data[@name='diagstep' and . = 'failinframework'])" />
+      <Variable name="failinhelper" expression="count(Item/Data[@name='diagstep' and . = 'failinhelper'])" />
+      <Exists>
+        <When expression="'{diagstopstate}' = 'stopsuccessdiag'">
+        <Variable name="internalruleindex" expression="{internalruleindex} + 1"/>
+        <Variable name="ruleDiagResultsCheck_symptom">$(WarnSuccessDiagNoProblem_symptom)</Variable>
+        <Variable name="ruleDiagResultsCheck_cause">$(WarnSuccessDiagNoProblem_cause)</Variable>
+        <Variable name="ruleDiagResultsCheck_details">$(WarnSuccessDiagNoProblem_details)</Variable>
+        <Variable name="ruleDiagResultsCheck_res1">$(WarnSuccessDiagNoProblem_res1)</Variable>
+         <Warning tag="ruleDiagResultsCheck_WarnSuccessDiagNoProblem_{internalruleindex}"  select="Data[@name='diagstopstate']" table="/Report/Section[@name='advice']/Table[@name='info']">
+           <Item>
+
+              <Data name="symptom" img="info" link="ruleDiagResultsCheck_WarnSuccessDiagNoProblem_{internalruleindex}"  message="ruleDiagResultsCheck_WarnSuccessDiagNoProblem_{internalruleindex}">{ruleDiagResultsCheck_symptom}</Data>
+              <Data name="cause" message="ruleDiagResultsCheck_WarnSuccessDiagNoProblem_{internalruleindex}" >{ruleDiagResultsCheck_cause}</Data>
+              <Data name="details"  message="ruleDiagResultsCheck_WarnSuccessDiagNoProblem_{internalruleindex}" >{ruleDiagResultsCheck_details}</Data>
+              <Data name="resolution"  message="ruleDiagResultsCheck_WarnSuccessDiagNoProblem_{internalruleindex}" >{ruleDiagResultsCheck_res1}</Data>
+           </Item>
+         </Warning>
+
+        <Variable name="group">$(LOC_TitleNetDiagFrameworkSummary)</Variable>
+        <Variable name="test">$(LOC_RuleDiagResultsCheck)</Variable>
+        <Variable name="description">$(LOC_Passed)</Variable>
+<Insert select="/Report/Section[@name='advice']/Table[@name='alltests']/Item[Data[@name='alltestgroups'] = '{group}']">
+         <Node axis="child">
+           <Item>
+             <Data name="allchildtest">{test}</Data>
+             <Data name="allchildtotal">1</Data>
+             <Data name="allchildfail">0</Data>
+             <Data name="allchilddesc">{description}</Data>
+           </Item>
+         </Node>
+       </Insert>
+          <Variable name="diagnosticsresultsreported" expression="number('1')" />
+        </When>
+        <When expression="'{diagstopstate}' = 'stopcanceldiag'">
+        <Variable name="internalruleindex" expression="{internalruleindex} + 1"/>
+        <Variable name="ruleDiagResultsCheck_symptom">$(WarnCancelDiag_symptom)</Variable>
+        <Variable name="ruleDiagResultsCheck_cause">$(WarnCancelDiag_cause)</Variable>
+        <Variable name="ruleDiagResultsCheck_details">$(WarnCancelDiag_details)</Variable>
+        <Variable name="ruleDiagResultsCheck_res1">$(WarnCancelDiag_res1)</Variable>
+         <Warning tag="ruleDiagResultsCheck_WarnCancelDiag_{internalruleindex}"  select="Data[@name='diagstopstate']" table="/Report/Section[@name='advice']/Table[@name='warning']">
+           <Item>
+
+              <Data name="symptom" img="warning" link="ruleDiagResultsCheck_WarnCancelDiag_{internalruleindex}"  message="ruleDiagResultsCheck_WarnCancelDiag_{internalruleindex}">{ruleDiagResultsCheck_symptom}</Data>
+              <Data name="cause" message="ruleDiagResultsCheck_WarnCancelDiag_{internalruleindex}" >{ruleDiagResultsCheck_cause}</Data>
+              <Data name="details"  message="ruleDiagResultsCheck_WarnCancelDiag_{internalruleindex}" >{ruleDiagResultsCheck_details}</Data>
+              <Data name="resolution"  message="ruleDiagResultsCheck_WarnCancelDiag_{internalruleindex}" >{ruleDiagResultsCheck_res1}</Data>
+           </Item>
+         </Warning>
+
+        <Variable name="group">$(LOC_TitleNetDiagFrameworkSummary)</Variable>
+        <Variable name="test">$(LOC_RuleDiagResultsCheck)</Variable>
+        <Variable name="description">$(LOC_Failed)</Variable>
+<Insert select="/Report/Section[@name='advice']/Table[@name='alltests']/Item[Data[@name='alltestgroups'] = '{group}']">
+         <Node axis="child">
+           <Item>
+             <Data name="allchildtest">{test}</Data>
+             <Data name="allchildtotal">1</Data>
+             <Data name="allchildfail">1</Data>
+             <Data name="allchilddesc">{description}</Data>
+           </Item>
+         </Node>
+       </Insert>
+          <Variable name="diagnosticsresultsreported" expression="number('1')" />
+        </When>
+        <When expression="'{diagstopstate}' = 'stopfaildiag' and {failinframework} &gt; 0">
+          <Variable name="errorcode" expression="Item[Data[@name='diagstep' and . = 'failinframework']]/Item[Data[@name='diagstepproperty'] = 'errorcode']/Data[@name='diagstepvalue']" />
+
+        <Variable name="internalruleindex" expression="{internalruleindex} + 1"/>
+        <Variable name="ruleDiagResultsCheck_symptom">$(WarnFailInFramework_symptom)</Variable>
+        <Variable name="ruleDiagResultsCheck_cause">$(WarnFailInFramework_cause)</Variable>
+        <Variable name="ruleDiagResultsCheck_details">$(WarnFailInFramework_details)</Variable>
+        <Variable name="ruleDiagResultsCheck_res1">$(WarnFailInFramework_res1)</Variable>
+         <Warning tag="ruleDiagResultsCheck_WarnFailInFramework_{internalruleindex}"  select="Item/Data[@name='diagstep' and . = 'failinframework']" table="/Report/Section[@name='advice']/Table[@name='error']">
+           <Item>
+
+              <Data name="symptom" img="error" link="ruleDiagResultsCheck_WarnFailInFramework_{internalruleindex}"  message="ruleDiagResultsCheck_WarnFailInFramework_{internalruleindex}">{ruleDiagResultsCheck_symptom}</Data>
+              <Data name="cause" message="ruleDiagResultsCheck_WarnFailInFramework_{internalruleindex}" >{ruleDiagResultsCheck_cause}</Data>
+              <Data name="details"  message="ruleDiagResultsCheck_WarnFailInFramework_{internalruleindex}" >{ruleDiagResultsCheck_details}</Data>
+              <Data name="resolution"  message="ruleDiagResultsCheck_WarnFailInFramework_{internalruleindex}" >{ruleDiagResultsCheck_res1}</Data>
+           </Item>
+         </Warning>
+
+        <Variable name="group">$(LOC_TitleNetDiagFrameworkSummary)</Variable>
+        <Variable name="test">$(LOC_RuleDiagResultsCheck)</Variable>
+        <Variable name="description">$(LOC_Failed)</Variable>
+<Insert select="/Report/Section[@name='advice']/Table[@name='alltests']/Item[Data[@name='alltestgroups'] = '{group}']">
+         <Node axis="child">
+           <Item>
+             <Data name="allchildtest">{test}</Data>
+             <Data name="allchildtotal">1</Data>
+             <Data name="allchildfail">1</Data>
+             <Data name="allchilddesc">{description}</Data>
+           </Item>
+         </Node>
+       </Insert>
+          <Variable name="diagnosticsresultsreported" expression="number('1')" />
+        </When>
+        <When expression="'{diagstopstate}' = 'stopfaildiag' and {failinhelper} &gt; 0">
+          <Variable name="errorcode" expression="Item[Data[@name='diagstep' and . = 'failinhelper']]/Item[Data[@name='diagstepproperty'] = 'errorcode']/Data[@name='diagstepvalue']" />
+          <Variable name="helperclassname" expression="Data[@name='helperclassname']" />
+
+        <Variable name="internalruleindex" expression="{internalruleindex} + 1"/>
+        <Variable name="ruleDiagResultsCheck_symptom">$(WarnFailInHelper_symptom)</Variable>
+        <Variable name="ruleDiagResultsCheck_cause">$(WarnFailInHelper_cause)</Variable>
+        <Variable name="ruleDiagResultsCheck_details">$(WarnFailInHelper_details)</Variable>
+        <Variable name="ruleDiagResultsCheck_res1">$(WarnFailInHelper_res1)</Variable>
+         <Warning tag="ruleDiagResultsCheck_WarnFailInHelper_{internalruleindex}"  select="Item/Data[@name='diagstep' and . = 'failinhelper']" table="/Report/Section[@name='advice']/Table[@name='error']">
+           <Item>
+
+              <Data name="symptom" img="error" link="ruleDiagResultsCheck_WarnFailInHelper_{internalruleindex}"  message="ruleDiagResultsCheck_WarnFailInHelper_{internalruleindex}">{ruleDiagResultsCheck_symptom}</Data>
+              <Data name="cause" message="ruleDiagResultsCheck_WarnFailInHelper_{internalruleindex}" >{ruleDiagResultsCheck_cause}</Data>
+              <Data name="details"  message="ruleDiagResultsCheck_WarnFailInHelper_{internalruleindex}" >{ruleDiagResultsCheck_details}</Data>
+              <Data name="resolution"  message="ruleDiagResultsCheck_WarnFailInHelper_{internalruleindex}" >{ruleDiagResultsCheck_res1}</Data>
+           </Item>
+         </Warning>
+
+        <Variable name="group">$(LOC_TitleNetDiagFrameworkSummary)</Variable>
+        <Variable name="test">$(LOC_RuleDiagResultsCheck)</Variable>
+        <Variable name="description">$(LOC_Failed)</Variable>
+<Insert select="/Report/Section[@name='advice']/Table[@name='alltests']/Item[Data[@name='alltestgroups'] = '{group}']">
+         <Node axis="child">
+           <Item>
+             <Data name="allchildtest">{test}</Data>
+             <Data name="allchildtotal">1</Data>
+             <Data name="allchildfail">1</Data>
+             <Data name="allchilddesc">{description}</Data>
+           </Item>
+         </Node>
+       </Insert>
+          <Variable name="diagnosticsresultsreported" expression="number('1')" />
+        </When>
+        <When expression="'{diagstopstate}' = 'stopsuccessrepair'">
+        <Variable name="internalruleindex" expression="{internalruleindex} + 1"/>
+        <Variable name="ruleDiagResultsCheck_symptom">$(WarnSuccessValidation_symptom)</Variable>
+        <Variable name="ruleDiagResultsCheck_cause">$(WarnSuccessValidation_cause)</Variable>
+        <Variable name="ruleDiagResultsCheck_details">$(WarnSuccessValidation_details)</Variable>
+        <Variable name="ruleDiagResultsCheck_res1">$(WarnSuccessValidation_res1)</Variable>
+         <Warning tag="ruleDiagResultsCheck_WarnSuccessValidation_{internalruleindex}"  select="Data[@name='diagstopstate']" table="/Report/Section[@name='advice']/Table[@name='info']">
+           <Item>
+
+              <Data name="symptom" img="info" link="ruleDiagResultsCheck_WarnSuccessValidation_{internalruleindex}"  message="ruleDiagResultsCheck_WarnSuccessValidation_{internalruleindex}">{ruleDiagResultsCheck_symptom}</Data>
+              <Data name="cause" message="ruleDiagResultsCheck_WarnSuccessValidation_{internalruleindex}" >{ruleDiagResultsCheck_cause}</Data>
+              <Data name="details"  message="ruleDiagResultsCheck_WarnSuccessValidation_{internalruleindex}" >{ruleDiagResultsCheck_details}</Data>
+              <Data name="resolution"  message="ruleDiagResultsCheck_WarnSuccessValidation_{internalruleindex}" >{ruleDiagResultsCheck_res1}</Data>
+           </Item>
+         </Warning>
+
+        <Variable name="group">$(LOC_TitleNetDiagFrameworkSummary)</Variable>
+        <Variable name="test">$(LOC_RuleDiagResultsCheck)</Variable>
+        <Variable name="description">$(LOC_Passed)</Variable>
+<Insert select="/Report/Section[@name='advice']/Table[@name='alltests']/Item[Data[@name='alltestgroups'] = '{group}']">
+         <Node axis="child">
+           <Item>
+             <Data name="allchildtest">{test}</Data>
+             <Data name="allchildtotal">1</Data>
+             <Data name="allchildfail">0</Data>
+             <Data name="allchilddesc">{description}</Data>
+           </Item>
+         </Node>
+       </Insert>
+          <Variable name="diagnosticsresultsreported" expression="number('1')" />
+        </When>
+        <When expression="'{diagstopstate}' = 'stopcancelrepair'">
+        <Variable name="internalruleindex" expression="{internalruleindex} + 1"/>
+        <Variable name="ruleDiagResultsCheck_symptom">$(WarnCancelRepair_symptom)</Variable>
+        <Variable name="ruleDiagResultsCheck_cause">$(WarnCancelRepair_cause)</Variable>
+        <Variable name="ruleDiagResultsCheck_details">$(WarnCancelRepair_details)</Variable>
+        <Variable name="ruleDiagResultsCheck_res1">$(WarnCancelRepair_res1)</Variable>
+         <Warning tag="ruleDiagResultsCheck_WarnCancelRepair_{internalruleindex}"  select="Data[@name='diagstopstate']" table="/Report/Section[@name='advice']/Table[@name='warning']">
+           <Item>
+
+              <Data name="symptom" img="warning" link="ruleDiagResultsCheck_WarnCancelRepair_{internalruleindex}"  message="ruleDiagResultsCheck_WarnCancelRepair_{internalruleindex}">{ruleDiagResultsCheck_symptom}</Data>
+              <Data name="cause" message="ruleDiagResultsCheck_WarnCancelRepair_{internalruleindex}" >{ruleDiagResultsCheck_cause}</Data>
+              <Data name="details"  message="ruleDiagResultsCheck_WarnCancelRepair_{internalruleindex}" >{ruleDiagResultsCheck_details}</Data>
+              <Data name="resolution"  message="ruleDiagResultsCheck_WarnCancelRepair_{internalruleindex}" >{ruleDiagResultsCheck_res1}</Data>
+           </Item>
+         </Warning>
+
+        <Variable name="group">$(LOC_TitleNetDiagFrameworkSummary)</Variable>
+        <Variable name="test">$(LOC_RuleDiagResultsCheck)</Variable>
+        <Variable name="description">$(LOC_Failed)</Variable>
+<Insert select="/Report/Section[@name='advice']/Table[@name='alltests']/Item[Data[@name='alltestgroups'] = '{group}']">
+         <Node axis="child">
+           <Item>
+             <Data name="allchildtest">{test}</Data>
+             <Data name="allchildtotal">1</Data>
+             <Data name="allchildfail">1</Data>
+             <Data name="allchilddesc">{description}</Data>
+           </Item>
+         </Node>
+       </Insert>
+          <Variable name="diagnosticsresultsreported" expression="number('1')" />
+        </When>
+        <When expression="'{diagstopstate}' = 'stopfailrepair' and {validationfailed} &gt; 0">
+          <Variable name="repairoption" expression="Item[Data[@name='diagstep' and . = 'validationfail']]/Item[Data[@name='diagstepproperty'] = 'repairoption']/Data[@name='diagstepvalue']" />
+          <Variable name="sidtyperequired" expression="Item[Data[@name='diagstep' and . = 'validationfail']]/Item[Data[@name='diagstepproperty'] = 'sidtyperequired']/Data[@name='diagstepvalue']" />
+          <Variable name="helperclassname" expression="Item[Data[@name='diagstep' and . = 'validationfail']]/Item[Data[@name='diagstepproperty'] = 'helperclassname']/Data[@name='diagstepvalue']" />
+
+        <Variable name="internalruleindex" expression="{internalruleindex} + 1"/>
+        <Variable name="ruleDiagResultsCheck_symptom">$(WarnFailValidation_symptom)</Variable>
+        <Variable name="ruleDiagResultsCheck_cause">$(WarnFailValidation_cause)</Variable>
+        <Variable name="ruleDiagResultsCheck_details">$(WarnFailValidation_details)</Variable>
+        <Variable name="ruleDiagResultsCheck_res1">$(WarnFailValidation_res1)</Variable>
+         <Warning tag="ruleDiagResultsCheck_WarnFailValidation_{internalruleindex}"  select="Item/Data[@name='diagstep' and . = 'validationfail']" table="/Report/Section[@name='advice']/Table[@name='error']">
+           <Item>
+
+              <Data name="symptom" img="error" link="ruleDiagResultsCheck_WarnFailValidation_{internalruleindex}"  message="ruleDiagResultsCheck_WarnFailValidation_{internalruleindex}">{ruleDiagResultsCheck_symptom}</Data>
+              <Data name="cause" message="ruleDiagResultsCheck_WarnFailValidation_{internalruleindex}" >{ruleDiagResultsCheck_cause}</Data>
+              <Data name="details"  message="ruleDiagResultsCheck_WarnFailValidation_{internalruleindex}" >{ruleDiagResultsCheck_details}</Data>
+              <Data name="resolution"  message="ruleDiagResultsCheck_WarnFailValidation_{internalruleindex}" >{ruleDiagResultsCheck_res1}</Data>
+           </Item>
+         </Warning>
+
+        <Variable name="group">$(LOC_TitleNetDiagFrameworkSummary)</Variable>
+        <Variable name="test">$(LOC_RuleDiagResultsCheck)</Variable>
+        <Variable name="description">$(LOC_Failed)</Variable>
+<Insert select="/Report/Section[@name='advice']/Table[@name='alltests']/Item[Data[@name='alltestgroups'] = '{group}']">
+         <Node axis="child">
+           <Item>
+             <Data name="allchildtest">{test}</Data>
+             <Data name="allchildtotal">1</Data>
+             <Data name="allchildfail">1</Data>
+             <Data name="allchilddesc">{description}</Data>
+           </Item>
+         </Node>
+       </Insert>
+          <Variable name="diagnosticsresultsreported" expression="number('1')" />
+        </When>
+        <When expression="'{diagstopstate}' = 'stopfailrepair' and {repairfailed} &gt; 0">
+          <Variable name="repairoption" expression="Item[Data[@name='diagstep' and . = 'repairoptfail']]/Item[Data[@name='diagstepproperty'] = 'repairoption']/Data[@name='diagstepvalue']" />
+          <Variable name="sidtyperequired" expression="Item[Data[@name='diagstep' and . = 'repairoptfail']]/Item[Data[@name='diagstepproperty'] = 'sidtyperequired']/Data[@name='diagstepvalue']" />
+
+        <Variable name="internalruleindex" expression="{internalruleindex} + 1"/>
+        <Variable name="ruleDiagResultsCheck_symptom">$(WarnFailRepair_symptom)</Variable>
+        <Variable name="ruleDiagResultsCheck_cause">$(WarnFailRepair_cause)</Variable>
+        <Variable name="ruleDiagResultsCheck_details">$(WarnFailRepair_details)</Variable>
+        <Variable name="ruleDiagResultsCheck_res1">$(WarnFailRepair_res1)</Variable>
+         <Warning tag="ruleDiagResultsCheck_WarnFailRepair_{internalruleindex}"  select="Item/Data[@name='diagstep' and . = 'repairoptfail']" table="/Report/Section[@name='advice']/Table[@name='error']">
+           <Item>
+
+              <Data name="symptom" img="error" link="ruleDiagResultsCheck_WarnFailRepair_{internalruleindex}"  message="ruleDiagResultsCheck_WarnFailRepair_{internalruleindex}">{ruleDiagResultsCheck_symptom}</Data>
+              <Data name="cause" message="ruleDiagResultsCheck_WarnFailRepair_{internalruleindex}" >{ruleDiagResultsCheck_cause}</Data>
+              <Data name="details"  message="ruleDiagResultsCheck_WarnFailRepair_{internalruleindex}" >{ruleDiagResultsCheck_details}</Data>
+              <Data name="resolution"  message="ruleDiagResultsCheck_WarnFailRepair_{internalruleindex}" >{ruleDiagResultsCheck_res1}</Data>
+           </Item>
+         </Warning>
+
+        <Variable name="group">$(LOC_TitleNetDiagFrameworkSummary)</Variable>
+        <Variable name="test">$(LOC_RuleDiagResultsCheck)</Variable>
+        <Variable name="description">$(LOC_Failed)</Variable>
+<Insert select="/Report/Section[@name='advice']/Table[@name='alltests']/Item[Data[@name='alltestgroups'] = '{group}']">
+         <Node axis="child">
+           <Item>
+             <Data name="allchildtest">{test}</Data>
+             <Data name="allchildtotal">1</Data>
+             <Data name="allchildfail">1</Data>
+             <Data name="allchilddesc">{description}</Data>
+           </Item>
+         </Node>
+       </Insert>
+          <Variable name="diagnosticsresultsreported" expression="number('1')" />
+        </When>
+      </Exists>
+    </Step>
+
+    <Step select="/Report/Section[@name='tracerptNetworkDiag']/Table[@name='TableNetDiagResults']/Item[last()]">
+      <Variable name="diagnosticsteps" expression="count(Item)" />
+      <Exists>
+        <When expression="{diagnosticsresultsreported} = 0 and {diagnosticsrun} = 1 and {diagnosticsteps} = 1">
+          <Variable name="repairoption" expression="Item/Item[Data[@name='diagstepproperty'] = 'repairoption']/Data[@name='diagstepvalue']" />
+
+        <Variable name="internalruleindex" expression="{internalruleindex} + 1"/>
+        <Variable name="ruleDiagResultsCheck_symptom">$(WarnSuccessDiagSingleOption_symptom)</Variable>
+        <Variable name="ruleDiagResultsCheck_cause">$(WarnSuccessDiagSingleOption_cause)</Variable>
+        <Variable name="ruleDiagResultsCheck_details">$(WarnSuccessDiagSingleOption_details)</Variable>
+        <Variable name="ruleDiagResultsCheck_res1">$(WarnSuccessDiagSingleOption_res1)</Variable>
+         <Warning tag="ruleDiagResultsCheck_WarnSuccessDiagSingleOption_{internalruleindex}"  select="Data[@name='diagstopstate' and . = 'stopsuccessdiag']" table="/Report/Section[@name='advice']/Table[@name='warning']">
+           <Item>
+
+              <Data name="symptom" img="warning" link="ruleDiagResultsCheck_WarnSuccessDiagSingleOption_{internalruleindex}"  message="ruleDiagResultsCheck_WarnSuccessDiagSingleOption_{internalruleindex}">{ruleDiagResultsCheck_symptom}</Data>
+              <Data name="cause" message="ruleDiagResultsCheck_WarnSuccessDiagSingleOption_{internalruleindex}" >{ruleDiagResultsCheck_cause}</Data>
+              <Data name="details"  message="ruleDiagResultsCheck_WarnSuccessDiagSingleOption_{internalruleindex}" >{ruleDiagResultsCheck_details}</Data>
+              <Data name="resolution"  message="ruleDiagResultsCheck_WarnSuccessDiagSingleOption_{internalruleindex}" >{ruleDiagResultsCheck_res1}</Data>
+           </Item>
+         </Warning>
+
+        <Variable name="group">$(LOC_TitleNetDiagFrameworkSummary)</Variable>
+        <Variable name="test">$(LOC_RuleDiagResultsCheck)</Variable>
+        <Variable name="description">$(LOC_Failed)</Variable>
+<Insert select="/Report/Section[@name='advice']/Table[@name='alltests']/Item[Data[@name='alltestgroups'] = '{group}']">
+         <Node axis="child">
+           <Item>
+             <Data name="allchildtest">{test}</Data>
+             <Data name="allchildtotal">1</Data>
+             <Data name="allchildfail">1</Data>
+             <Data name="allchilddesc">{description}</Data>
+           </Item>
+         </Node>
+       </Insert>
+        </When>
+        <When expression="{diagnosticsresultsreported} = 0 and {diagnosticsrun} = 1 and {diagnosticsteps} &gt; 1">
+        <Variable name="internalruleindex" expression="{internalruleindex} + 1"/>
+        <Variable name="ruleDiagResultsCheck_symptom">$(WarnSuccessDiagMultipleOptions_symptom)</Variable>
+        <Variable name="ruleDiagResultsCheck_cause">$(WarnSuccessDiagMultipleOptions_cause)</Variable>
+        <Variable name="ruleDiagResultsCheck_details">$(WarnSuccessDiagMultipleOptions_details)</Variable>
+        <Variable name="ruleDiagResultsCheck_res1">$(WarnSuccessDiagMultipleOptions_res1)</Variable>
+         <Warning tag="ruleDiagResultsCheck_WarnSuccessDiagMultipleOptions_{internalruleindex}"  select="Data[@name='diagstopstate' and . = 'stopsuccessdiag']" table="/Report/Section[@name='advice']/Table[@name='warning']">
+           <Item>
+
+              <Data name="symptom" img="warning" link="ruleDiagResultsCheck_WarnSuccessDiagMultipleOptions_{internalruleindex}"  message="ruleDiagResultsCheck_WarnSuccessDiagMultipleOptions_{internalruleindex}">{ruleDiagResultsCheck_symptom}</Data>
+              <Data name="cause" message="ruleDiagResultsCheck_WarnSuccessDiagMultipleOptions_{internalruleindex}" >{ruleDiagResultsCheck_cause}</Data>
+              <Data name="details"  message="ruleDiagResultsCheck_WarnSuccessDiagMultipleOptions_{internalruleindex}" >{ruleDiagResultsCheck_details}</Data>
+              <Data name="resolution"  message="ruleDiagResultsCheck_WarnSuccessDiagMultipleOptions_{internalruleindex}" >{ruleDiagResultsCheck_res1}</Data>
+           </Item>
+         </Warning>
+
+        <Variable name="group">$(LOC_TitleNetDiagFrameworkSummary)</Variable>
+        <Variable name="test">$(LOC_RuleDiagResultsCheck)</Variable>
+        <Variable name="description">$(LOC_Failed)</Variable>
+<Insert select="/Report/Section[@name='advice']/Table[@name='alltests']/Item[Data[@name='alltestgroups'] = '{group}']">
+         <Node axis="child">
+           <Item>
+             <Data name="allchildtest">{test}</Data>
+             <Data name="allchildtotal">1</Data>
+             <Data name="allchildfail">1</Data>
+             <Data name="allchilddesc">{description}</Data>
+           </Item>
+         </Node>
+       </Insert>
+        </When>
+      </Exists>
+    </Step>
+  </Rule>
+
+  <Rule name="$(RuleNetDiagFrameworkSummary)" enabled="true">
+     <Step select="/Report/Section[@name='advice']/Table[@name='alltests']" fatal="true">
+       <Variable name="group">$(LOC_TitleNetDiagFrameworkSummary)</Variable>
+       <Variable name="groupfailedtestscount" expression="count(Item[Data[@name='alltestgroups'] = '{group}']/Item[Data[@name='allchildfail'] != '0'])" />
+       <Exists>
+         <When expression="{diagnosticsrun} &gt; 0 and {groupfailedtestscount} &gt; 0">
+           <Variable name="failedmsg">$(LOC_Failed)</Variable>
+           <Insert select="Item[Data[@name='alltestgroups'] = '{group}']/Data">
+             <Node axis="following-sibling">
+               <Data name="allteststatus">{failedmsg}</Data>
+             </Node>
+           </Insert>
+         </When>
+         <When expression="{diagnosticsrun} &gt; 0 and {groupfailedtestscount} = 0">
+           <Variable name="passedmsg">$(LOC_Passed)</Variable>
+           <Insert select="Item[Data[@name='alltestgroups'] = '{group}']/Data">
+             <Node axis="following-sibling">
+               <Data name="allteststatus">{passedmsg}</Data>
+             </Node>
+           </Insert>
+         </When>
+       </Exists>
+     </Step>
+  </Rule>
+
+  <Rule name="$(RuleNetworkingDiagnosticsFrameworkCleanup)" enabled="true">
+    <Step select="/Report/Section[@name='tracerptNetworkDiag']/Table[@name='start' or @name='stopsuccessdiag' or @name='stopsuccessrepair' or @name='stopfaildiag' or @name='stopfailrepair' or @name='stopcanceldiag' or @name='stopcancelrepair' or @name='failinframework' or @name='failinhelper' or @name='diagsuccess' or @name='diagsuccessnp' or @name='diagfail' or @name='validationsuccess' or @name='validationfail' or @name='repairoptfail' or @name='repairfail' or @name='helperclassdebuginfo' or @name='diagnosticsdebug' or @name='hypothesisdebug' or @name='repairdebug' or @name='validationdebug' or @name='cachehitdebug' or @name='registrydebug' or @name='unclassifieddebug']" sortType="all">
+      <Exists>
+        <Otherwise>
+          <Delete select="." />
+        </Otherwise>
+      </Exists>
+    </Step>
+  </Rule>
+
+</Group>
+
+</Rules>
+

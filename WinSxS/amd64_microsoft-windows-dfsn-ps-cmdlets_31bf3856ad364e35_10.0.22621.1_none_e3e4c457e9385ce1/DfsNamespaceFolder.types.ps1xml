@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" ?>  
+<Types>  
+  <!--  
+  
+  //  
+  // Namespace folder  
+  //  
+  
+  -->  
+  <Type>  
+    <Name>Microsoft.Management.Infrastructure.CimInstance#MSFT_DFSNamespaceFolder</Name>
+    <Members>
+        <ScriptProperty>
+            <Name>State</Name>
+            <GetScriptBlock>  
+              switch ($this.psBase.CimInstanceProperties["State"].Value)  
+              {  
+                4 { "Online" }  
+                3 { "Offline" }  
+                Default { "Unknown" }  
+              }  
+            </GetScriptBlock>  
+        </ScriptProperty>  
+        <ScriptProperty>
+            <Name>Flags</Name>
+            <GetScriptBlock>
+              $flags =@{1 = "Insite Referrals" ; 8 = "Target Failback" }              
+              $flags.Keys | where {$this.psBase.CimInstanceProperties["Flags"].Value -band $_} | foreach { $flags.Get_Item($_) }
+            </GetScriptBlock>  
+        </ScriptProperty>
+        <AliasProperty>
+            <Name>Path</Name>
+            <ReferencedMemberName>NamespacePath</ReferencedMemberName>
+        </AliasProperty>
+        <AliasProperty>
+            <Name>TimeToLiveSec</Name>
+            <ReferencedMemberName>TimeToLive</ReferencedMemberName>
+        </AliasProperty>                
+    </Members>
+  </Type>
+</Types>
+

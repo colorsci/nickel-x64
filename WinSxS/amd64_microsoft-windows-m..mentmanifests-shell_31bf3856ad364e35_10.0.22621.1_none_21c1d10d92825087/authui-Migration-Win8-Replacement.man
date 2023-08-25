@@ -1,0 +1,122 @@
+﻿<?xml version='1.0' encoding='utf-8' standalone='yes'?>
+<assembly>
+  <assemblyIdentity
+      buildType="release"
+      language="neutral"
+      name="Microsoft-Windows-Authentication-AuthUI-Component"
+      processorArchitecture="*"
+      publicKeyToken=""
+      version="0.0.0.0"
+      versionScope="nonSxS"
+      />
+  <migration
+      optimizePatterns="no"
+      offlineApply="no"
+      replacementSettingsVersionRange="0"
+      replacementVersionRange="6.2-10.0"
+      scope="MigWiz,Upgrade"
+      settingsVersion="0"
+      >
+    <migXml xmlns="">
+      <rules context="System">
+        <include>
+          <objectSet>
+            <!-- Downlevel settings -->
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [DefaultUserName]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [DefaultDomainName]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [DefaultPassword]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [AutoAdminLogon]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [AutoLogonCount]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [ForceAutoLogon]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [IgnoreShiftOverride]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [DontDisplayLastUserName]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [DontDisplayLockedUserId]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [ShutdownWithoutLogon]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [IsConnectedAutoLogon]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [ConnectedCredentials]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon\SpecialAccounts\* [*]</pattern>
+            <!-- Vista settings -->
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows\CurrentVersion\Authentication\LogonUI [LastLoggedOnProvider]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows\CurrentVersion\Authentication\LogonUI [LastLoggedOnUser]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows\CurrentVersion\Authentication\LogonUI [LastLoggedOnSAMUser]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows\CurrentVersion\Authentication\LogonUI\BootAnimation [DisableStartupSound]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows\CurrentVersion\Authentication\Credential Providers\* [*]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows\CurrentVersion\Authentication\Credential Provider Filters\* [*]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows\CurrentVersion\Authentication\PLAP Providers\* [*]</pattern>
+            <!-- Win7 settings -->
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows\CurrentVersion\Authentication\LogonUI [ButtonSet]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows\CurrentVersion\Authentication\LogonUI [ShowTabletKeyboard]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows\CurrentVersion\Authentication\LogonUI\Background [OEMBackground]</pattern>
+            <!-- Win8 settings -->
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows\CurrentVersion\Authentication\LogonUI [LastLoggedOnUserSID]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows\CurrentVersion\Authentication\LogonUI [LastLoggedOnDisplayName]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows\CurrentVersion\Authentication\LogonUI\AccessPage\UserConfigurableSettings [Enabled]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows\CurrentVersion\Authentication\LogonUI\PicturePassword\* [*]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows\CurrentVersion\Authentication\LogonUI\PINLogonEnrollment\* [*]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows\CurrentVersion\Authentication\LogonUI\UserTile\* [*]</pattern>
+            <!-- Win10 settings -->
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows\CurrentVersion\Authentication\LogonUI\Creative\* [*]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows\CurrentVersion\Authentication\LogonUI [SecondFactorLoggedOnProvider]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows\CurrentVersion\Authentication\LogonUI\OverrideColor [ForegroundColorInbbggrr]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows\CurrentVersion\Authentication\LogonUI\OverrideColor [BackgroundColorInbbggrr]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows\CurrentVersion\SystemProtectedUserData\$\AnyoneRead\Colors [ShouldOverrideUserTheme]</pattern>
+            <!-- Win11 settings -->
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows\CurrentVersion\Authentication\LogonUI [LastLoggedOnUserIsPrimaryUser]</pattern>
+          </objectSet>
+        </include>
+        <exclude>
+          <objectSet>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows\CurrentVersion\Authentication\Credential Providers\{5fd3d285-0dd9-4362-8855-e0abaacd4af6}\* [*]</pattern>
+            <!-- Skip migrating FIDO credential provider since the provider manifest has its own migration section -->
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Authentication\Credential Providers\{F8A1793B-7873-4046-B2A7-1F318747F427}\* [*]</pattern>
+          </objectSet>
+        </exclude>
+        <merge script="MigXmlHelper.SourcePriority()">
+          <objectSet>
+            <!-- Downlevel settings -->
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [DefaultUserName]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [DefaultDomainName]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [DefaultPassword]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [AutoAdminLogon]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [AutoLogonCount]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [ForceAutoLogon]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [IgnoreShiftOverride]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [DontDisplayLastUserName]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [DontDisplayLockedUserId]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [ShutdownWithoutLogon]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [IsConnectedAutoLogon]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [ConnectedCredentials]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon\SpecialAccounts\* [*]</pattern>
+            <!-- Vista settings -->
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows\CurrentVersion\Authentication\LogonUI [LastLoggedOnProvider]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows\CurrentVersion\Authentication\LogonUI [LastLoggedOnUser]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows\CurrentVersion\Authentication\LogonUI [LastLoggedOnSAMUser]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows\CurrentVersion\Authentication\LogonUI\BootAnimation [DisableStartupSound]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows\CurrentVersion\Authentication\Credential Providers\* [*]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows\CurrentVersion\Authentication\Credential Provider Filters\* [*]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows\CurrentVersion\Authentication\PLAP Providers\* [*]</pattern>
+            <!-- Win7 settings -->
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows\CurrentVersion\Authentication\LogonUI [ButtonSet]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows\CurrentVersion\Authentication\LogonUI [ShowTabletKeyboard]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows\CurrentVersion\Authentication\LogonUI\Background [OEMBackground]</pattern>
+            <!-- Win8 settings -->
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows\CurrentVersion\Authentication\LogonUI [LastLoggedOnUserSID]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows\CurrentVersion\Authentication\LogonUI [LastLoggedOnDisplayName]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows\CurrentVersion\Authentication\LogonUI\AccessPage\UserConfigurableSettings [Enabled]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows\CurrentVersion\Authentication\LogonUI\PicturePassword\* [*]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows\CurrentVersion\Authentication\LogonUI\PINLogonEnrollment\* [*]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows\CurrentVersion\Authentication\LogonUI\UserTile\* [*]</pattern>
+            <!-- Win10 settings -->
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows\CurrentVersion\Authentication\LogonUI\Creative\* [*]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows\CurrentVersion\Authentication\LogonUI [SecondFactorLoggedOnProvider]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows\CurrentVersion\Authentication\LogonUI\OverrideColor [ForegroundColorInbbggrr]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows\CurrentVersion\Authentication\LogonUI\OverrideColor [BackgroundColorInbbggrr]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows\CurrentVersion\SystemProtectedUserData\$\AnyoneRead\Colors [ShouldOverrideUserTheme]</pattern>
+            <!-- Win11 settings -->
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows\CurrentVersion\Authentication\LogonUI [LastLoggedOnUserIsPrimaryUser]</pattern>
+          </objectSet>
+        </merge>
+      </rules>
+    </migXml>
+  </migration>
+</assembly>

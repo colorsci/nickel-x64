@@ -1,0 +1,50 @@
+﻿<?xml version='1.0' encoding='utf-8' standalone='yes'?>
+<assembly
+    xmlns="urn:schemas-microsoft-com:asm.v3"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    authors="mikedice"
+    buildFilter=""
+    company="Microsoft"
+    copyright=""
+    creationTimeStamp="2003-07-21T16:37:03.6090709-07:00"
+    description="Downlevel manifest for MSMQ triggers component"
+    displayName="Downlevel manifest for MSMQ triggers component"
+    lastUpdateTimeStamp="2004-11-11T23:01:42.1450255-08:00"
+    manifestVersion="1.0"
+    owners="MikeDice;AnandRaj"
+    supportInformation=""
+    testers="AshishW"
+    >
+  <assemblyIdentity
+      buildFilter=""
+      buildType="$(build.buildType)"
+      language="neutral"
+      name="Microsoft-Windows-msmq-triggers-DL"
+      processorArchitecture="*"
+      publicKeyToken="$(Build.WindowsPublicKeyToken)"
+      version="0.0.0.0"
+      versionScope="nonSxS"
+      />
+  <migration>
+    <registerSDF name="MSMQ-Triggers"/>
+    <migXml xmlns="">
+      <detects>
+        <detect>
+          <condition>MigXmlHelper.DoesOSMatch("NT","5.1.*")</condition>
+          <condition>MigXmlHelper.DoesOSMatch("NT","5.2.*")</condition>
+        </detect>
+        <detect>
+          <condition>MigXmlHelper.DoesStringContentEqual("Registry", "HKLM\SOFTWARE\Microsoft\MSMQ\Setup[msmq_TriggersService]", "0x00000001")</condition>
+        </detect>
+      </detects>
+      <rules context="System">
+        <include>
+          <objectSet>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\MSMQ\Triggers\* [*]</pattern>
+          </objectSet>
+        </include>
+      </rules>
+    </migXml>
+  </migration>
+</assembly>

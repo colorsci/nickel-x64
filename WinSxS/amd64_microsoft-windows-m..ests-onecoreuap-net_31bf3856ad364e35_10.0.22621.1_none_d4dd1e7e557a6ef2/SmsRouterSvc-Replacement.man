@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<assembly>
+  <assemblyIdentity name="Microsoft-Windows-CoreSystem-SmsRouter"
+                    version="0.0.0.0"
+                    processorArchitecture="*"
+                    language="*"/>
+  <migration scope="Upgrade"
+             settingsVersion="1"
+             replacementSettingsVersionRange="0">
+    <migXml xmlns="">
+      <rules context="System">
+        <include>
+          <objectSet>
+            <!-- OS-swap upgrade will remove all keys under HKLM\Software\Microsoft\Cellular\Sms\Router unless they are specifically "included". -->
+            <pattern type="Registry">HKLM\Software\Microsoft\Cellular\Sms\Router\* [*]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\SmsRouter\State\* [*]</pattern>
+            <!-- OS-swap upgrade will remove all files under %programdata%\Microsoft\SmsRouter unless they are specifically "included". -->
+            <pattern type="File">%programdata%\Microsoft\SmsRouter\* [*]</pattern>
+          </objectSet>
+        </include>
+        <locationModify script="MigXmlHelper.RelativeMove(&apos;HKLM\Software\Microsoft\Cellular\Sms\Router&apos;,&apos;HKLM\SYSTEM\CurrentControlSet\Services\SmsRouter\State&apos;)">
+          <objectSet>
+            <pattern type="Registry">HKLM\Software\Microsoft\Cellular\Sms\Router\* [*]</pattern>
+          </objectSet>
+        </locationModify>
+        <merge script="MigXmlHelper.SourcePriority()">
+          <objectSet>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\SmsRouter\State\* [*]</pattern>
+          </objectSet>
+        </merge>
+      </rules>
+    </migXml>
+    <supportedComponents>
+      <supportedComponent>
+        <supportedComponentIdentity
+            language="neutral"
+            name="Microsoft-Windows-CoreSystem-SmsRouter"
+            processorArchitecture="*"
+            settingsVersionRange="0"
+            />
+      </supportedComponent>
+    </supportedComponents>
+  </migration>
+</assembly>

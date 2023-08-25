@@ -1,0 +1,93 @@
+﻿<?xml version='1.0' encoding='utf-8' standalone='yes'?>
+<assembly
+    xmlns="urn:schemas-microsoft-com:asm.v3"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    authors="dfsrdev"
+    buildFilter=""
+    company="Microsoft Corp"
+    copyright="Microsoft"
+    creationTimeStamp="2004-05-24T17:39:48.5440428-07:00"
+    description="$(resourceString.description)"
+    displayName="$(resourceString.displayName)"
+    lastUpdateTimeStamp="2005-05-10T17:21:13.088724Z"
+    manifestVersion="1.0"
+    owners="dfsrdev"
+    supportInformation="dfsrdev"
+    testers="dfsrtst"
+    >
+  <assemblyIdentity
+      buildFilter=""
+      buildType="$(build.buildType)"
+      language="*"
+      name="Microsoft-Windows-FRS-Core-DL"
+      processorArchitecture="*"
+      publicKeyToken="$(Build.WindowsPublicKeyToken)"
+      type=""
+      version="0.0.0.0"
+      versionScope="nonSxS"
+      />
+  <migration>
+    <!-- Begin migration to Vista from non-Vista Server OS -->
+    <!-- In-place section. Declarations here will not be migrated pc-to-pc. -->
+    <machineSpecific>
+      <migXml xmlns="">
+        <!-- Ruleset for migrating Windows 2003 and R2 -->
+        <rules context="System">
+          <detects>
+            <detect>
+              <condition>MigXmlHelper.DoesOSMatch("NT", "5.2.*")</condition>
+            </detect>
+          </detects>
+          <include>
+            <objectSet>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\NtFrs\Parameters\* [*]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\Netlogon\Parameters [SysvolReady]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\NtFrs [Start]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\NtFrs [DependOnService]</pattern>
+              <pattern type="File">%windir%\ntfrs\*[*]</pattern>
+              <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\control\ProductOptions [ProductType]</pattern>
+            </objectSet>
+          </include>
+          <!-- Specify merge resolution handler. Source priority forces migrate from downlevel. -->
+          <merge script="MigXmlHelper.SourcePriority()">
+            <objectSet>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\NtFrs\* [*]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\Netlogon\Parameters\* [*]</pattern>
+              <pattern type="File">%windir%\ntfrs\*[*]</pattern>
+            </objectSet>
+          </merge>
+        </rules>
+        <!-- ******************************************************* -->
+        <!-- Ruleset for migrating Windows 2000 -->
+        <rules context="System">
+          <detects>
+            <detect>
+              <condition>MigXmlHelper.DoesOSMatch("NT", "5.0.*")</condition>
+            </detect>
+          </detects>
+          <include>
+            <objectSet>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\NtFrs\Parameters\* [*]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\Netlogon\Parameters [SysvolReady]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\NtFrs [Start]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\NtFrs [DependOnService]</pattern>
+              <pattern type="File">%windir%\ntfrs\*[*]</pattern>
+              <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\control\ProductOptions [ProductType]</pattern>
+            </objectSet>
+          </include>
+          <!-- Specify merge resolution handler. Source priority forces migrate from downlevel. -->
+          <merge script="MigXmlHelper.SourcePriority()">
+            <objectSet>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\NtFrs\* [*]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\Netlogon\Parameters\* [*]</pattern>
+              <pattern type="File">%windir%\ntfrs\*[*]</pattern>
+            </objectSet>
+          </merge>
+        </rules>
+        <!-- Ruleset for migrating Windows 2003+ registry settings -->
+      </migXml>
+    </machineSpecific>
+    <!-- No pc-to-pc migration. -->
+  </migration>
+</assembly>

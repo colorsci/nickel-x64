@@ -1,0 +1,42 @@
+﻿<?xml version='1.0' encoding='utf-8' standalone='yes'?>
+<assembly
+    xmlns="urn:schemas-microsoft-com:asm.v3"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    authors="gpdev"
+    buildFilter=""
+    company="Microsoft Corporation"
+    copyright=""
+    creationTimeStamp="2005-07-01T21:42:41.1667237Z"
+    description="Downlevel manifest to migrate GPMC UI settings"
+    displayName="Downlevel manifest to migrate GPMC UI settings"
+    lastUpdateTimeStamp="2005-07-06T21:51:03.5983541Z"
+    manifestVersion="1.0"
+    owners="gpdev"
+    supportInformation=""
+    testers=""
+    >
+  <assemblyIdentity
+      language="*"
+      name="Microsoft-Windows-GroupPolicy-GPMC-DL"
+      processorArchitecture="*"
+      version="0.0.0.0"
+      />
+  <migration>
+    <migXml xmlns="">
+      <!-- Check as this is only valid for down-level OS < than Windows Vista ? -->
+      <detects>
+        <detect>
+          <condition>MigXmlHelper.IsOSEarlierThan("NT", "6.0.0.0")</condition>
+        </detect>
+      </detects>
+      <rules context="User">
+        <include>
+          <objectSet>
+            <pattern type="Registry">HKCU\Software\Microsoft\Group Policy Management Console\* [*]</pattern>
+          </objectSet>
+        </include>
+      </rules>
+    </migXml>
+  </migration>
+</assembly>

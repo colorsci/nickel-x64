@@ -1,0 +1,403 @@
+#pragma namespace("\\\\.\\root\\wmi")
+
+instance of __Win32Provider as $BcdProv {
+    Name = "BcdProv";
+    CLSID = "{f8a56d3e-e304-4a9f-a916-5187019d7759}";
+};
+
+instance of __MethodProviderRegistration {
+    Provider = $BcdProv;
+};
+
+instance of __InstanceProviderRegistration {
+    Provider = $BcdProv;
+    SupportsGet = TRUE;
+};
+
+[
+Dynamic,
+Provider("BcdProv"),
+Description("This class represents a BCD store which holds a collection of BCD objects.") : Amended
+]
+class BcdStore {
+
+    [
+    Key,
+    Read,
+    Description("A BcdStore is uniquely identified by its file path. The system store is denoted via an empty file path.") : Amended
+    ]
+    string FilePath;
+
+    [implemented, static]
+    boolean OpenStore([in] string File, [out] BcdStore Store);
+
+    [implemented, static]
+    boolean ImportStore([in] string File);
+
+    [implemented, static]
+    boolean ImportStoreWithFlags([in] string File, [in, BitMap{"0"}, BitValues{"Clean"}] uint32 Flags);
+
+    [implemented, static]
+    boolean ExportStore([in] string File);
+
+    [implemented, static]
+    boolean CreateStore([in] string File, [out] BcdStore Store);
+
+    [implemented, static]
+    boolean DeleteSystemStore();
+
+    [implemented, static]
+    boolean GetSystemDisk([out] string Disk);
+
+    [implemented, static]
+    boolean GetSystemPartition([out] string Partition);
+
+    [implemented, static]
+    boolean SetSystemStoreDevice([in] string Partition);
+
+    [implemented]
+    boolean EnumerateObjects([in] uint32 Type, [out] BcdObject Objects[]);
+
+    [implemented]
+    boolean OpenObject([in] string Id, [out] BcdObject Object);
+
+    [implemented]
+    boolean CreateObject([in] string Id, [in] uint32 Type, [out] BcdObject Object);
+
+    [implemented]
+    boolean DeleteObject([in] string Id);
+
+    [implemented]
+    boolean CopyObject([in] string SourceStoreFile, [in] string SourceId, [in, BitMap{"0", "1"}, BitValues{"CreateNewId", "DeleteExistingObject"}] uint32 Flags, [out] BcdObject Object);
+
+    [implemented]
+    boolean CopyObjects([in] string SourceStoreFile, [in] uint32 Type, [in, BitMap{"0", "1"}, BitValues{"CreateNewId", "DeleteExistingObject"}] uint32 Flags);
+};
+
+[
+Dynamic,
+Provider("BcdProv"),
+Description("This class represents a BCD object which holds a collection of BCD elements. Each BCD object is is identified by a guid.") : Amended
+]
+class BcdObject {
+    [
+    Key,
+    Read,
+    Description("This is the file path of the store that this object belongs to.") : Amended
+    ]
+    string StoreFilePath;
+
+    [
+    Key,
+    Read,
+    Description("This is the guid id of this object, unique to this store.") : Amended
+    ]
+    string Id;
+
+    [
+    Read,
+    Description("The upper 4 bits (28-31) represent the object type. The meaning of the lower 28 bits (0-27) is dependent on the object type.") : Amended
+    ]
+    uint32 Type;
+
+    [implemented]
+    boolean EnumerateElementTypes([out] uint32 Types[]);
+
+    [implemented]
+    boolean EnumerateElements([out] BcdElement Elements[]);
+
+    [implemented]
+    boolean GetElement([in] uint32 Type, [out] BcdElement Element);
+
+    [implemented]
+    boolean GetElementWithFlags([in] uint32 Type, [in, BitMap{"0"}, BitValues{"Qualified"}] uint32 Flags, [out] BcdElement Element);
+
+    [implemented]
+    boolean SetDeviceElement([in] uint32 Type, [in, ValueMap{"1", "2", "3", "4", "5"}, Values{"BootDevice", "PartitionDevice", "FileDevice", "RamdiskDevice", "UnknownDevice"}] uint32 DeviceType, [in] string AdditionalOptions);
+
+    [implemented]
+    boolean SetPartitionDeviceElement([in] uint32 Type, [in, ValueMap{"1", "2", "3", "4", "5"}, Values{"BootDevice", "PartitionDevice", "FileDevice", "RamdiskDevice", "UnknownDevice"}] uint32 DeviceType, [in] string AdditionalOptions, [in] string Path);
+
+    [implemented]
+    boolean SetPartitionDeviceElementWithFlags([in] uint32 Type, [in, ValueMap{"1", "2", "3", "4", "5"}, Values{"BootDevice", "PartitionDevice", "FileDevice", "RamdiskDevice", "UnknownDevice"}] uint32 DeviceType, [in] string AdditionalOptions, [in] string Path, [in, BitMap{"6"}, BitValues{"DisableVhdDeviceDetection"}] uint32 Flags);
+
+    [implemented]
+    boolean SetFileDeviceElement([in] uint32 Type, [in, ValueMap{"1", "2", "3", "4", "5"}, Values{"BootDevice", "PartitionDevice", "FileDevice", "RamdiskDevice", "UnknownDevice"}] uint32 DeviceType, [in] string AdditionalOptions, [in] string Path, [in] uint32 ParentDeviceType, [in] string ParentAdditionalOptions, [in] string ParentPath);
+
+    [implemented]
+    boolean SetQualifiedPartitionDeviceElement([in] uint32 Type, [in, ValueMap{"0", "1"}, Values{"MBR", "GPT"}] uint32 PartitionStyle, [in] string DiskSignature, [in] string PartitionIdentifier);
+
+    [implemented]
+    boolean SetVhdDeviceElement([in] uint32 Type, [in] string Path, [in] uint32 ParentDeviceType, [in] string ParentAdditionalOptions, [in] string ParentPath, [in] uint32 CustomLocate);
+
+    [implemented]
+    boolean SetStringElement([in] uint32 Type, [in] string String);
+
+    [implemented]
+    boolean SetObjectElement([in] uint32 Type, [in] string Id);
+
+    [implemented]
+    boolean SetObjectListElement([in] uint32 Type, [in] string Ids[]);
+
+    [implemented]
+    boolean SetIntegerElement([in] uint32 Type, [in] uint64 Integer);
+    
+    [implemented]
+    boolean SetIntegerListElement([in] uint32 Type, [in] uint64 Integers[]);
+
+    [implemented]
+    boolean SetBooleanElement([in] uint32 Type, [in] boolean Boolean);
+
+    [implemented]
+    boolean DeleteElement([in] uint32 Type);
+};
+
+[
+Description("This is the base class for all BCD elements. The Type field identifies the specific sub-type of element.") : Amended
+]
+class BcdElement {
+    [
+    Read,
+    Description("This is the file path of the store that this element is a part of.") : Amended
+    ]
+    string StoreFilePath;
+
+    [
+    Read,
+    Description("This is the id of the object that this element belongs to.") : Amended
+    ]
+    string ObjectId;
+
+    [
+    Read,
+    Description("The upper 4 bits (28-31) determine the class of the element. The next 4 bits (24-27) determine the format of the element data. The lower 24 bits (0-23) determine the sub-type of the element.") : Amended
+    ]
+    uint32 Type;
+};
+
+[
+Description("This is the root class of all device data types.") : Amended
+]
+class BcdDeviceData {
+    [
+    Read,
+    Description("This identifies the type of device element. This value dictates whether this is a file device element or a partition device element.") : Amended,
+    ValueMap{"1", "2", "3", "4", "5", "6", "7", "8"},
+    Values{"BootDevice", "PartitionDevice", "FileDevice", "RamdiskDevice", "UnknownDevice", "QualifiedPartition", "LocateDevice", "LocateExDevice"}
+    ]
+    uint32 DeviceType;
+
+    [
+    Read,
+    Description("This represents the additional options for the element.") : Amended
+    ]
+    string AdditionalOptions;
+};
+
+[
+Description("This is the base device element class. Device elements come in two flavors, File and Partition, and can be distinguished by the DeviceType field.") : Amended
+]
+class BcdDeviceElement : BcdElement {
+    [
+    Read,
+    Description("This field contains information about the device.") : Amended
+    ]
+    BcdDeviceData Device;
+};
+
+[
+Description("This class represents unknown device data and exposes the data as a binary blob.") : Amended
+]
+class BcdDeviceUnknownData : BcdDeviceData {
+    [
+    Read,
+    Description("This is the binary data of the unknown device element.") : Amended
+    ]
+    uint8 Data[];
+};
+
+[
+Description("This represents a file device element.") : Amended
+]
+class BcdDeviceFileData : BcdDeviceData {
+    [
+    Read,
+    Description("This is the parent device of this file device.") : Amended
+    ]
+    BcdDeviceData Parent;
+
+    [
+    Read,
+    Description("This is the device path.") : Amended
+    ]
+    string Path;
+};
+
+[
+Description("This represents a locate device element.") : Amended
+]
+class BcdDeviceLocateData : BcdDeviceData {
+    [
+    Read,
+    Description("This provides the locate device type.") : Amended,
+    ValueMap{"0", "1", "2"},
+    Values{"Element", "String", "ElementChild"}
+    ]
+    uint32 Type;
+};
+
+[
+Description("This represents a locate element device element.") : Amended
+]
+class BcdDeviceLocateElementData : BcdDevicelocateData {
+    [
+    Read,
+    Description("This provides the locate device element.") : Amended
+    ]
+    uint32 Element;
+};
+
+[
+Description("This represents a child locate element device element.") : Amended
+]
+class BcdDeviceLocateElementChildData : BcdDevicelocateData {
+    [
+    Read,
+    Description("This provides the locate device element.") : Amended
+    ]
+    uint32 Element;
+
+    [
+    Read,
+    Description("This is the parent device of this locate device.") : Amended
+    ]
+    BcdDeviceData Parent;
+};
+
+[
+Description("This represents a string locate device element.") : Amended
+]
+class BcdDeviceLocateStringData : BcdDevicelocateData {
+    [
+    Read,
+    Description("This provides the locate device element.") : Amended
+    ]
+    string Path;
+};
+
+[
+Description("This represents a partition device element.") : Amended
+]
+class BcdDevicePartitionData : BcdDeviceData {
+    [
+    Read,
+    Description("This is the device path.") : Amended
+    ]
+    string Path;
+};
+
+[
+Description("This represents a qualified partition device element.") : Amended
+]
+class BcdDeviceQualifiedPartitionData : BcdDeviceData {
+    [
+    Read,
+    Description("This is the type of partition, MBR or GPT..") : Amended,
+    ValueMap{"0", "1"},
+    Values{"MBR", "GPT"}
+    ]
+    uint32 PartitionStyle;
+
+    [
+    Read,
+    Description("This is the disk signature.") : Amended
+    ]
+    string DiskSignature;
+
+    [
+    Read,
+    Description("This is the partition identifier.") : Amended
+    ]
+    string PartitionIdentifier;
+};
+
+[
+Description("This represents a string element.") : Amended
+]
+class BcdStringElement : BcdElement {
+    [
+    Read,
+    Description("This is the string value of the element.") : Amended
+    ]
+    string String;
+};
+
+[
+Description("This represents an object element. The Id field specifies a BcdObject in the same store.") : Amended
+]
+class BcdObjectElement : BcdElement {
+    [
+    Read,
+    Description("This is the guid id of the object this element refers to.") : Amended
+    ]
+    string Id;
+};
+
+[
+Description("This represents a list of objects. Each element in the Ids array specifies the guid id of an object in the same store.") : Amended
+]
+class BcdObjectListElement : BcdElement {
+    [
+    Read,
+    Description("This is the array of object ids this element refers to.") : Amended
+    ]
+    string Ids[];
+};
+
+[
+Description("This represents an integer element. Note that although Integer is a 64bit number, it must be passed as a string since Automation has no native 64bit type.") : Amended
+]
+class BcdIntegerElement : BcdElement {
+    [
+    Read,
+    Description("This is the integer value of the element.") : Amended
+    ]
+    uint64 Integer;
+};
+
+[
+Description("This represents an integer list element. Note that although Integers are 64bit numbers, they must be passed as strings since Automation has no native 64bit type.") : Amended
+]
+class BcdIntegerListElement : BcdElement {
+    [
+    Read,
+    Description("This is the array of integer values of the element.") : Amended
+    ]
+    uint64 Integers[];
+};
+
+[
+Description("This represents a boolean element.") : Amended
+]
+class BcdBooleanElement : BcdElement {
+    [
+    Read,
+    Description("This is the boolean value of the element.") : Amended
+    ]
+    boolean Boolean;
+};
+
+[
+Description("This represents an unknown element.") : Amended
+]
+class BcdUnknownElement : BcdElement {
+    [
+    Read,
+    Description("This is the actual value of the element inside the BCD store.") : Amended
+    ]
+    uint32 ActualType;
+};
+
+
+
+

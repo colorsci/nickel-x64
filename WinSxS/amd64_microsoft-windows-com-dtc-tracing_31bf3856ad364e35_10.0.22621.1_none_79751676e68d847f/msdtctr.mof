@@ -1,0 +1,406 @@
+// Project		DTC Messages
+// Category 	DTC process status
+// ***************************************************************************
+
+9DC9C33D-ADE5-469f-8F18-DAC2D836657D g_TraceDTCProcessStatusGuid
+
+#typev	TRANSACTION_MANAGER_STARTED 						11	"pid=%11!-10d! ;tid=%3!-10d! ;time=%4!-25s! ;seq=%10!-10d! ;eventid=%2!-40s! ;;%"TM Identifier='%18!-50s!'%" ;%"MS DTC started with the following settings: Security Configuration (OFF = 0 and ON = 1): Network Administration of Transactions = %12!-1d!, Network Clients = %13!-1d!, Distributed Transactions using Native MSDTC Protocol, In bound Network Enabled = %14!-1d!, Out bound Network Enabled = %15!-1d!, Transaction Internet Protocol (TIP) = %16!-1d!, XA Transactions = %17!-1d!.%""
+
+{
+	SequenceNumber, 			ItemUlong			// 10
+	ProcessId,				ItemUlong			// 11
+	bNetworkAdminEnabled,			ItemUlong			// 12
+	bNetworkClientsEnabled, 		ItemUlong			// 13
+	bNetworkInboundEnabled,			ItemUlong			// 14
+	bNetworkOutboundEnabled,		ItemUlong			// 15
+	bTipEnabled,				ItemUlong			// 16
+	bXaTransactionsEnabled, 		ItemUlong			// 17
+	TMIdentifier				ItemWString			// 18
+}
+
+#typev	TRANSACTION_MANAGER_STOPPED 						12	"pid=%11!-10d! ;tid=%3!-10d! ;time=%4!-25s! ;seq=%10!-10d! ;eventid=%2!-40s! ;;%"TM Identifier='%12!-50s!'%" ;%"The MS DTC service is stopping.%""
+{
+	SequenceNumber, 			ItemUlong			// 10
+	ProcessId,				ItemUlong			// 11
+	TMIdentifier				ItemWString			// 12
+}
+
+
+#typev	CHECKPOINTING_STOPPED 				        		13	"pid=%11!-10d! ;tid=%3!-10d! ;time=%4!-25s! ;seq=%10!-10d! ;eventid=%2!-40s! ;;%"TM Identifier='%12!-50s!'%" ;%"MSDTC is suspending the checkpointing of transactions due to lack of activity%""
+{
+	SequenceNumber, 			ItemUlong			// 10
+	ProcessId,				ItemUlong			// 11
+	TMIdentifier				ItemWString			// 12
+}
+
+
+#typev	CHECKPOINTING_STARTED 				        		14	"pid=%11!-10d! ;tid=%3!-10d! ;time=%4!-25s! ;seq=%10!-10d! ;eventid=%2!-40s! ;;%"TM Identifier='%12!-50s!'%" ;%"MSDTC is resuming the checkpointing of transactions %""
+{
+	SequenceNumber, 			ItemUlong			// 10
+	ProcessId,				ItemUlong			// 11
+	TMIdentifier				ItemWString			// 12
+}
+
+// Added more information in the supportability DCR. Added a new trace in case we have trace files that contain both
+// old and new traces.
+#typev	TRANSACTION_MANAGER_STARTED_2               15	"pid=%11!-10d! ;tid=%3!-10d! ;time=%4!-25s! ;seq=%10!-10d! ;eventid=%2!-40s! ;;%"TM Identifier='%23!-50s!'%" ;%"MS DTC started with the following settings: Security Configuration (OFF = 0 and ON = 1): Network Administration of Transactions = %12!-1d!, Network Clients = %13!-1d!, Inbound Transactions = %14!-1d!, Outbound Transactions = %15!-1d!, Transaction Internet Protocol (TIP) = %16!-1d!, XA Transactions = %17!-1d!, MSDTC RPC Security = %18!s!, Account = %19!s!, Firewall Exclusion = %20!-1d!, Transaction Bridge Installed = %21!-1d!, Filtering duplicate events = %22!-1d!.%""
+{
+	SequenceNumber, 			ItemUlong			// 10
+	ProcessId,				ItemUlong               	// 11
+	bNetworkAdminEnabled,			ItemUlong                    	// 12
+	bNetworkClientsEnabled, 		ItemUlong			// 13
+	bInboundTxEnabled,          		ItemUlong			// 14
+	bOutboundTxEnabled,         		ItemUlong			// 15
+	bTipEnabled,				ItemUlong			// 16
+	bXaTransactionsEnabled, 		ItemUlong			// 17
+	RpcSecurity,                		ItemWString 			// 18
+	AccountName,                		ItemWString 			// 19
+	bFirewallExclusion,         		ItemUlong           		// 20
+	bTxBridgeInstalled,         		ItemUlong           		// 21
+	bFilteringDupEvents,        		ItemUlong                       // 22
+	TMIdentifier				ItemWString			// 23
+}
+
+
+// Project		DTC Messages
+// Category 	DTC process status
+// ***************************************************************************
+
+715E95BB-FC0A-4442-950B-9D1D1F1F964B g_TraceDTCTraceSettingsGuid
+
+#typev	TRACE_SETTINGS								11	"pid=%11!-10d! ;tid=%3!-10d! ;time=%4!-25s! ;seq=%10!-10d! ;eventid=%2!-40s! ;;%"TM Identifier='%18!-50s!'%" ;%"Trace Configuration (OFF = 0 and ON = 1): Tracing Of DTC = %12!-1d!, Tracing Of Transactions = %13!-1d!, Tracing Of Aborted Transactions = %14!-1d!, Tracing Of Long-Lived Transactions = %15!-1d!, Tracing Of All Transactions = %16!-1d!, Max Limit on Memory Buffers = %17!-1d!.%""
+
+{
+	SequenceNumber, 			ItemUlong			// 10
+	ProcessId,				ItemUlong			// 11
+	bTraceDTC,				ItemUlong			// 12
+	bTraceTrans,				ItemUlong			// 13
+	bTraceAbortedTrans, 			ItemUlong			// 14
+	bTraceLLTrans,				ItemUlong			// 15
+	bTraceAllTrans, 			ItemUlong			// 16
+	dwMaxBuffers				ItemUlong			// 17
+	TMIdentifier				ItemWString			// 18
+}
+
+
+#typev	TRACING_STARTED 				        		12	"pid=%11!-10d! ;tid=%3!-10d! ;time=%4!-25s! ;seq=%10!-10d! ;eventid=%2!-40s! ;;%"TM Identifier='%12!-50s!'%" ;%"MSDTC is resuming the tracing of long - lived transactions%""
+{
+	SequenceNumber, 			ItemUlong			// 10
+	ProcessId,				ItemUlong			// 11
+	TMIdentifier				ItemWString			// 12
+}
+
+
+#typev	TRACING_STOPPED 				        		13	"pid=%11!-10d! ;tid=%3!-10d! ;time=%4!-25s! ;seq=%10!-10d! ;eventid=%2!-40s! ;;%"TM Identifier='%12!-50s!'%" ;%"MSDTC is suspending the tracing of long - lived transactions due to lack of activity%""
+{
+	SequenceNumber, 			ItemUlong			// 10
+	ProcessId,				ItemUlong			// 11
+	TMIdentifier				ItemWString			// 12
+}
+
+
+// Project		TM Messages
+// Category 	Summary Level Transaction
+// SubCategory	Client related messages
+// ***************************************************************************
+
+0B9B7BB9-E1AD-4657-8D90-736FA3B79492 g_TraceTMXactsClientGuid
+
+#typev	TRANSACTION_BEGUN							11	"pid=%11!-10d! ;tid=%13!-10d! ;time=%14!-25s! ;seq=%10!-10d! ;eventid=%2!-40s! ;tx_guid=%12!-40s! ;%"TM Identifier='%16!-50s!'%" ;%"transaction has begun, description :'%15!s!'%""
+#typev	AT_RESTART_COMMITTED_TRANSACTION_FOUND					12	"pid=%11!-10d! ;tid=%13!-10d! ;time=%14!-25s! ;seq=%10!-10d! ;eventid=%2!-40s! ;tx_guid=%12!-40s! ;%"TM Identifier='%16!-50s!'%" ;%"committed transaction found during dtc restart. Description = '%15!s!'%""
+{
+	SequenceNumber, 			ItemUlong			// 10
+	ProcessId,				ItemUlong			// 11
+	Guid,					ItemGuid			// 12
+	ThreadId,				ItemUlong			// 13
+	TimeStamp,				ItemTimestamp			// 14
+	Description,				ItemString			// 15
+	TMIdentifier				ItemWString			// 16
+}
+#typev	RECEIVED_COMMIT_REQUEST_FROM_BEGINNER					13	"pid=%11!-10d! ;tid=%13!-10d! ;time=%14!-25s! ;seq=%10!-10d! ;eventid=%2!-40s! ;tx_guid=%12!-40s! ;%"TM Identifier='%15!-50s!'%" ;%"received request to commit the transaction from beginner%""
+#typev	TRANSACTION_COMMITTED							14	"pid=%11!-10d! ;tid=%13!-10d! ;time=%14!-25s! ;seq=%10!-10d! ;eventid=%2!-40s! ;tx_guid=%12!-40s! ;%"TM Identifier='%15!-50s!'%" ;%"transaction has got committed%""
+#typev	TRANSACTION_ABORTING							15	"pid=%11!-10d! ;tid=%13!-10d! ;time=%14!-25s! ;seq=%10!-10d! ;eventid=%2!-40s! ;tx_guid=%12!-40s! ;%"TM Identifier='%15!-50s!'%" ;%"transaction is aborting%""
+#typev	TRANSACTION_ABORTED 							16	"pid=%11!-10d! ;tid=%13!-10d! ;time=%14!-25s! ;seq=%10!-10d! ;eventid=%2!-40s! ;tx_guid=%12!-40s! ;%"TM Identifier='%15!-50s!'%" ;%"transaction has been aborted%""
+#typev	TRANSACTION_READ_ONLY							17	"pid=%11!-10d! ;tid=%13!-10d! ;time=%14!-25s! ;seq=%10!-10d! ;eventid=%2!-40s! ;tx_guid=%12!-40s! ;%"TM Identifier='%15!-50s!'%" ;%"transaction is read only%""
+#typev	TRANSACTION_IN_DOUBT							18	"pid=%11!-10d! ;tid=%13!-10d! ;time=%14!-25s! ;seq=%10!-10d! ;eventid=%2!-40s! ;tx_guid=%12!-40s! ;%"TM Identifier='%15!-50s!'%" ;%"transaction is in_doubt%""
+#typev	ABORT_DUE_TO_CONNECTION_DOWN_FROM_BEGINNER				19	"pid=%11!-10d! ;tid=%13!-10d! ;time=%14!-25s! ;seq=%10!-10d! ;eventid=%2!-40s! ;tx_guid=%12!-40s! ;%"TM Identifier='%15!-50s!'%" ;%"connection to the beginner went down%""
+#typev	ABORT_DUE_TO_TRANSACTION_TIMER_EXPIRED					20	"pid=%11!-10d! ;tid=%13!-10d! ;time=%14!-25s! ;seq=%10!-10d! ;eventid=%2!-40s! ;tx_guid=%12!-40s! ;%"TM Identifier='%15!-50s!'%" ;%"transaction timeout expired%""
+#typev	RECEIVED_ABORT_REQUEST_FROM_BEGINNER					21	"pid=%11!-10d! ;tid=%13!-10d! ;time=%14!-25s! ;seq=%10!-10d! ;eventid=%2!-40s! ;tx_guid=%12!-40s! ;%"TM Identifier='%15!-50s!'%" ;%"received request to abort the transaction from beginner%""
+#typev  RECEIVED_ABORT_REQUEST_FROM_NON_BEGINNER				22 	"pid=%11!-10d! ;tid=%13!-10d! ;time=%14!-25s! ;seq=%10!-10d! ;eventid=%2!-40s! ;tx_guid=%12!-40s! ;%"TM Identifier='%15!-50s!'%" ;%"received request to abort the transaction from non beginner%""
+
+{
+	SequenceNumber, 			ItemUlong			// 10
+	ProcessId,				ItemUlong			// 11
+	Guid,					ItemGuid			// 12
+	ThreadId,				ItemUlong			// 13
+	TimeStamp,				ItemTimestamp			// 14
+	TMIdentifier				ItemWString			// 15
+}
+// ***************************************************************************
+
+
+// Project		TM Messages
+// Category 	Summary Level Transaction
+// SubCategory	RM related messages
+// ***************************************************************************
+
+75F91E0E-D50C-47c9-B06F-3F2013E9DA73 g_TraceTMXactsRMGuid
+
+#typev	RM_ENLISTED_IN_TRANSACTION						11	"pid=%11!-10d! ;tid=%13!-10d! ;time=%14!-25s! ;seq=%10!-10d! ;eventid=%2!-40s! ;tx_guid=%12!-40s! ;%"TM Identifier='%18!-50s!'%" ;%"resource manager #%16!d! enlisted as transaction enlistment #%15!d!. RM guid = '%17'%""
+{
+	SequenceNumber, 			ItemUlong			// 10
+	ProcessId,				ItemUlong			// 11
+	Guid,					ItemGuid			// 12
+	ThreadId,				ItemUlong			// 13
+	TimeStamp,				ItemTimestamp			// 14
+	ResourceNum,				ItemUlong			// 15
+	TransResourceNum,			ItemUlong			// 16
+	RMGuid, 				ItemGuid			// 17
+	TMIdentifier				ItemWString			// 18
+}
+#typev	RM_VOTED_COMMIT 							12	"pid=%11!-10d! ;tid=%13!-10d! ;time=%14!-25s! ;seq=%10!-10d! ;eventid=%2!-40s! ;tx_guid=%12!-40s! ;%"TM Identifier='%17!-50s!'%" ;%"resource manager #%16!d! voted commit for transaction enlistment #%15!d!%""
+#typev	RM_VOTED_ABORT								13	"pid=%11!-10d! ;tid=%13!-10d! ;time=%14!-25s! ;seq=%10!-10d! ;eventid=%2!-40s! ;tx_guid=%12!-40s! ;%"TM Identifier='%17!-50s!'%" ;%"resource manager #%16!d! voted abort for transaction enlistment #%15!d!%""
+#typev	RM_VOTED_READ_ONLY							14	"pid=%11!-10d! ;tid=%13!-10d! ;time=%14!-25s! ;seq=%10!-10d! ;eventid=%2!-40s! ;tx_guid=%12!-40s! ;%"TM Identifier='%17!-50s!'%" ;%"resource manager #%16!d! voted read-only for transaction enlistment #%15!d!%""
+#typev	COMMIT_REDELIVERY_ACKD_WITH_REENLISTMENT_COMPLETE_FROM_RM		15	"pid=%11!-10d! ;tid=%13!-10d! ;time=%14!-25s! ;seq=%10!-10d! ;eventid=%2!-40s! ;tx_guid=%12!-40s! ;%"TM Identifier='%17!-50s!'%" ;%"commit redelivered to resource manager #%16!d! for transaction enlistment #%15!d!%""
+#typev	ABORT_DUE_TO_CONNECTION_DOWN_FROM_RM					16	"pid=%11!-10d! ;tid=%13!-10d! ;time=%14!-25s! ;seq=%10!-10d! ;eventid=%2!-40s! ;tx_guid=%12!-40s! ;%"TM Identifier='%17!-50s!'%" ;%"connection to the resource manager #%16!d! for transaction enlistment #%15!d! went down%""
+{
+	SequenceNumber, 			ItemUlong			// 10
+	ProcessId,				ItemUlong			// 11
+	Guid,					ItemGuid			// 12
+	ThreadId,				ItemUlong			// 13
+	TimeStamp,				ItemTimestamp			// 14
+	ResourceNum,				ItemUlong			// 15
+	TransResourceNum,			ItemUlong			// 16
+	TMIdentifier				ItemWString			// 17
+}
+#typev	AT_RESTART_COMMIT_REDELIVERY_NEEDED_TO_RM				17	"pid=%11!-10d! ;tid=%13!-10d! ;time=%14!-25s! ;seq=%10!-10d! ;eventid=%2!-40s! ;tx_guid=%12!-40s! ;%"TM Identifier='%17!-50s!'%" ;%"commit redelivery needed for transaction resource #%15!d! at dtc restart. RM guid	= '%16'%""
+#typev	AT_RESTART_TRANSACTION_IS_INDOUBT_HAS_RM				18	"pid=%11!-10d! ;tid=%13!-10d! ;time=%14!-25s! ;seq=%10!-10d! ;eventid=%2!-40s! ;tx_guid=%12!-40s! ;%"TM Identifier='%17!-50s!'%" ;%"indoubt transaction has transaction resource #%15!d! at dtc restart. RM guid = '%16'%""
+{
+	SequenceNumber, 			ItemUlong			// 10
+	ProcessId,				ItemUlong			// 11
+	Guid,					ItemGuid			// 12
+	ThreadId,				ItemUlong			// 13
+	TimeStamp,				ItemTimestamp			// 14
+	TransResourceNum,			ItemUlong			// 15
+	RMGuid, 				ItemGuid			// 16
+	TMIdentifier				ItemWString			// 17
+}
+#typev	RM_ISSUED_PREPARE							19	"pid=%11!-10d! ;tid=%13!-10d! ;time=%14!-25s! ;seq=%10!-10d! ;eventid=%2!-40s! ;tx_guid=%12!-40s! ;%"TM Identifier='%17!-50s!'%" ;%"prepare request issued to resource manager #%16!d! for transaction enlistment #%15!d!%""
+#typev	RM_ISSUED_COMMIT							20	"pid=%11!-10d! ;tid=%13!-10d! ;time=%14!-25s! ;seq=%10!-10d! ;eventid=%2!-40s! ;tx_guid=%12!-40s! ;%"TM Identifier='%17!-50s!'%" ;%"commit request issued to resource manager #%16!d! for transaction enlistment #%15!d!%""
+#typev	RM_ISSUED_ABORT 							21	"pid=%11!-10d! ;tid=%13!-10d! ;time=%14!-25s! ;seq=%10!-10d! ;eventid=%2!-40s! ;tx_guid=%12!-40s! ;%"TM Identifier='%17!-50s!'%" ;%"abort request issued to resource manager #%16!d! for transaction enlistment #%15!d!%""
+#typev	RM_ACKNOWLEDGED_COMMIT							22	"pid=%11!-10d! ;tid=%13!-10d! ;time=%14!-25s! ;seq=%10!-10d! ;eventid=%2!-40s! ;tx_guid=%12!-40s! ;%"TM Identifier='%17!-50s!'%" ;%"received acknowledgement of commit request from the resource manager #%16!d! for transaction enlistment #%15!d!%""
+#typev	RM_ACKNOWLEDGED_ABORT							23	"pid=%11!-10d! ;tid=%13!-10d! ;time=%14!-25s! ;seq=%10!-10d! ;eventid=%2!-40s! ;tx_guid=%12!-40s! ;%"TM Identifier='%17!-50s!'%" ;%"received acknowledgement of abort request from the resource manager #%16!d! for transaction enlistment #%15!d!%""
+#typev	RM_COMMIT_DELIVERY_FAILED_DUE_TO_CONNECTION_DOWN			24	"pid=%11!-10d! ;tid=%13!-10d! ;time=%14!-25s! ;seq=%10!-10d! ;eventid=%2!-40s! ;tx_guid=%12!-40s! ;%"TM Identifier='%17!-50s!'%" ;%"received connection down on commit request to resource manager #%16!d! for transaction enlistment #%15!d!%""
+#typev	RM_ABORT_DELIVERY_FAILED_DUE_TO_CONNECTION_DOWN_NO_RETRY		25	"pid=%11!-10d! ;tid=%13!-10d! ;time=%14!-25s! ;seq=%10!-10d! ;eventid=%2!-40s! ;tx_guid=%12!-40s! ;%"TM Identifier='%17!-50s!'%" ;%"received connection down on abort request to resource manager #%16!d! for transaction enlistment #%15!d!. No retries will be made to deliver this message. RM will learn outcome during recovery%""
+{
+	SequenceNumber, 			ItemUlong			// 10
+	ProcessId,				ItemUlong			// 11
+	Guid,					ItemGuid			// 12
+	ThreadId,				ItemUlong			// 13
+	TimeStamp,				ItemTimestamp			// 14
+	ResourceNum,				ItemUlong			// 15
+	TransResourceNum,			ItemUlong			// 16
+	TMIdentifier				ItemWString			// 17
+}
+#typev	RM_ENLIST_FAILED_CONNECTION_DOWN_FROM_RM				26	"pid=%11!-10d! ;tid=%13!-10d! ;time=%14!-25s! ;seq=%10!-10d! ;eventid=%2!-40s! ;tx_guid=%12!-40s! ;%"TM Identifier='%16!-50s!'%" ;%"attempt to enlist the resource manager failed because the connection to the resource manager went down. RM guid = '%15'%""
+#typev	RM_ENLIST_FAILED_LOG_FULL						27	"pid=%11!-10d! ;tid=%13!-10d! ;time=%14!-25s! ;seq=%10!-10d! ;eventid=%2!-40s! ;tx_guid=%12!-40s! ;%"TM Identifier='%16!-50s!'%" ;%"attempt to enlist the resource manager failed because the log was full. RM guid = '%15'%""
+#typev	RM_ENLIST_FAILED_TRANSACTION_PAST_ACTIVE				28	"pid=%11!-10d! ;tid=%13!-10d! ;time=%14!-25s! ;seq=%10!-10d! ;eventid=%2!-40s! ;tx_guid=%12!-40s! ;%"TM Identifier='%16!-50s!'%" ;%"attempt to enlist the resource manager failed because the transaction had already aborted. RM guid = '%15'%""
+#typev	RM_ENLIST_FAILED_TOO_MANY_ENLISTS					29	"pid=%11!-10d! ;tid=%13!-10d! ;time=%14!-25s! ;seq=%10!-10d! ;eventid=%2!-40s! ;tx_guid=%12!-40s! ;%"TM Identifier='%16!-50s!'%" ;%"attempt to enlist the resource manager failed because the limit on number of maximum enlistments has been reached. RM guid = '%15'%""
+{
+	SequenceNumber, 			ItemUlong			// 10
+	ProcessId,				ItemUlong			// 11
+	Guid,					ItemGuid			// 12
+	ThreadId,				ItemUlong			// 13
+	TimeStamp,				ItemTimestamp			// 14
+	RMGuid, 				ItemGuid			// 15
+	TMIdentifier				ItemWString			// 16
+}
+
+// ***************************************************************************
+
+
+// Project		TM Messages
+// Category 	Summary Level Transaction
+// SubCategory	Child Node related messages
+// **************************************************************************
+
+3C6DE2F3-BF53-461f-B199-2E2D1C24C5ED g_TraceTMXactsChildGuid
+
+#typev	TRANSACTION_PROPOGATED_TO_CHILD_NODE					11	"pid=%11!-10d! ;tid=%13!-10d! ;time=%14!-25s! ;seq=%10!-10d! ;eventid=%2!-40s! ;tx_guid=%12!-40s! ;%"TM Identifier='%17!-50s!'%" ;%"transaction propagated to '%16!s!' as transaction child node #%15!d!%""
+#typev	CHILD_NODE_VOTED_COMMIT 						12	"pid=%11!-10d! ;tid=%13!-10d! ;time=%14!-25s! ;seq=%10!-10d! ;eventid=%2!-40s! ;tx_guid=%12!-40s! ;%"TM Identifier='%17!-50s!'%" ;%"transaction child node #%15!d! '%16!s!' voted commit%""
+#typev	CHILD_NODE_VOTED_ABORT							13	"pid=%11!-10d! ;tid=%13!-10d! ;time=%14!-25s! ;seq=%10!-10d! ;eventid=%2!-40s! ;tx_guid=%12!-40s! ;%"TM Identifier='%17!-50s!'%" ;%"transaction child node #%15!d! '%16!s!' voted abort%""
+#typev	CHILD_NODE_VOTED_READ_ONLY						14	"pid=%11!-10d! ;tid=%13!-10d! ;time=%14!-25s! ;seq=%10!-10d! ;eventid=%2!-40s! ;tx_guid=%12!-40s! ;%"TM Identifier='%17!-50s!'%" ;%"transaction child node #%15!d! '%16!s!' voted read-only%""
+#typev	AT_RESTART_COMMIT_REDELIVERY_NEEDED_TO_CHILD_NODE			15	"pid=%11!-10d! ;tid=%13!-10d! ;time=%14!-25s! ;seq=%10!-10d! ;eventid=%2!-40s! ;tx_guid=%12!-40s! ;%"TM Identifier='%17!-50s!'%" ;%"commit redelivery needed for transaction child #%15!d! '%16!s!' at dtc restart%""
+#typev	AT_RESTART_TRANSACTION_IS_INDOUBT_HAS_CHILD_NODE			16	"pid=%11!-10d! ;tid=%13!-10d! ;time=%14!-25s! ;seq=%10!-10d! ;eventid=%2!-40s! ;tx_guid=%12!-40s! ;%"TM Identifier='%17!-50s!'%" ;%"indoubt transaction has transaction child #%15!d! '%16!s!' at dtc restart%""
+#typev	CHILD_NODE_ACKNOWLEDGED_COMMIT						17	"pid=%11!-10d! ;tid=%13!-10d! ;time=%14!-25s! ;seq=%10!-10d! ;eventid=%2!-40s! ;tx_guid=%12!-40s! ;%"TM Identifier='%17!-50s!'%" ;%"received acknowledgement of commit request from transaction child node #%15!d! '%16!s!'%""
+#typev	CHILD_NODE_ACKNOWLEDGED_ABORT						18	"pid=%11!-10d! ;tid=%13!-10d! ;time=%14!-25s! ;seq=%10!-10d! ;eventid=%2!-40s! ;tx_guid=%12!-40s! ;%"TM Identifier='%17!-50s!'%" ;%"received acknowledgement of abort request from transaction child node #%15!d! '%16!s!'%""
+#typev	CHILD_NODE_ISSUED_PREPARE						19	"pid=%11!-10d! ;tid=%13!-10d! ;time=%14!-25s! ;seq=%10!-10d! ;eventid=%2!-40s! ;tx_guid=%12!-40s! ;%"TM Identifier='%17!-50s!'%" ;%"prepare request issued to transaction child node #%15!d! '%16!s!'%""
+#typev	CHILD_NODE_ISSUED_COMMIT						20	"pid=%11!-10d! ;tid=%13!-10d! ;time=%14!-25s! ;seq=%10!-10d! ;eventid=%2!-40s! ;tx_guid=%12!-40s! ;%"TM Identifier='%17!-50s!'%" ;%"commit request issued to transaction child node #%15!d! '%16!s!'%""
+#typev	CHILD_NODE_COMMIT_DELIVERY_FAILED_DUE_TO_CONNECTION_DOWN		21	"pid=%11!-10d! ;tid=%13!-10d! ;time=%14!-25s! ;seq=%10!-10d! ;eventid=%2!-40s! ;tx_guid=%12!-40s! ;%"TM Identifier='%17!-50s!'%" ;%"received connection down on commit request to transaction child node #%15!d! '%16!s!'%""
+#typev	CHILD_NODE_ISSUED_REDELIVER_COMMIT					22	"pid=%11!-10d! ;tid=%13!-10d! ;time=%14!-25s! ;seq=%10!-10d! ;eventid=%2!-40s! ;tx_guid=%12!-40s! ;%"TM Identifier='%17!-50s!'%" ;%"commit redelivery request issued to transaction child node #%15!d! '%16!s!'%""
+#typev	CHILD_NODE_COMMIT_REDELIVERY_FAILED_DUE_TO_CONNECTION_DOWN		23	"pid=%11!-10d! ;tid=%13!-10d! ;time=%14!-25s! ;seq=%10!-10d! ;eventid=%2!-40s! ;tx_guid=%12!-40s! ;%"TM Identifier='%17!-50s!'%" ;%"received connection down on commit redelivery request to transaction child node #%15!d! '%16!s!'%""
+#typev	CHILD_NODE_COMMIT_REDELIVERY_ACKNOWLEDGED				24	"pid=%11!-10d! ;tid=%13!-10d! ;time=%14!-25s! ;seq=%10!-10d! ;eventid=%2!-40s! ;tx_guid=%12!-40s! ;%"TM Identifier='%17!-50s!'%" ;%"commit redelivery request successfully acknowleged by transaction child node #%15!d! '%16!s!'%""
+#typev	CHILD_NODE_ISSUED_ABORT 						25	"pid=%11!-10d! ;tid=%13!-10d! ;time=%14!-25s! ;seq=%10!-10d! ;eventid=%2!-40s! ;tx_guid=%12!-40s! ;%"TM Identifier='%17!-50s!'%" ;%"abort request issued to transaction child node #%15!d! '%16!s!'%""
+#typev	CHILD_NODE_ABORT_DELIVERY_FAILED_DUE_TO_CONNECTION_DOWN_NO_RETRY	26	"pid=%11!-10d! ;tid=%13!-10d! ;time=%14!-25s! ;seq=%10!-10d! ;eventid=%2!-40s! ;tx_guid=%12!-40s! ;%"TM Identifier='%17!-50s!'%" ;%"received connection down on abort request to transaction child node #%15!d! '%16!s!'. No retries will be made to deliver this message. Child node will learn outcome during recovery%""
+{
+	SequenceNumber, 			ItemUlong			// 10
+	ProcessId,				ItemUlong			// 11
+	Guid,					ItemGuid			// 12
+	ThreadId,				ItemUlong			// 13
+	TimeStamp,				ItemTimestamp			// 14
+	ChildNodeNum,				ItemUlong			// 15
+	ChildNodeName,				ItemWString 			// 16
+	TMIdentifier				ItemWString			// 17
+}
+#typev	REPLYING_ABORT_TO_QUERY_ABORT_REQUEST_FROM_CHILD_NODE			27	"pid=%11!-10d! ;tid=%13!-10d! ;time=%14!-25s! ;seq=%10!-10d! ;eventid=%2!-40s! ;tx_guid=%12!-40s! ;%"TM Identifier='%15!-50s!'%" ;%"Child node queried about transaction abort. Transacton was not found, so we presume abort.  Replying aborted to child node%""
+#typev	REPLYING_RETRY_TO_QUERY_ABORT_REQUEST_FROM_CHILD_NODE			28	"pid=%11!-10d! ;tid=%13!-10d! ;time=%14!-25s! ;seq=%10!-10d! ;eventid=%2!-40s! ;tx_guid=%12!-40s! ;%"TM Identifier='%15!-50s!'%" ;%"Child node queried about transaction abort. Transaction was found, so outcome not known yet.  If transaction commits, parent will redeliver commit on separate connnection.  If transaction aborts, child will get abort reply when it retries later. Replying retry child node%""
+{
+	SequenceNumber, 			ItemUlong			// 10
+	ProcessId,				ItemUlong			// 11
+	Guid,					ItemGuid			// 12
+	ThreadId,				ItemUlong			// 13
+	TimeStamp,				ItemTimestamp			// 14
+	TMIdentifier				ItemWString			// 15
+}
+#typev	TRANSACTION_PROPOGATION_FAILED_LOG_FULL_LOCAL_TM			29	"pid=%11!-10d! ;tid=%13!-10d! ;time=%14!-25s! ;seq=%10!-10d! ;eventid=%2!-40s! ;tx_guid=%12!-40s! ;%"TM Identifier='%16!-50s!'%" ;%"failed to propogate transaction to child node '%15!s!' because the log of the local transaction manager became full%""
+#typev	TRANSACTION_PROPOGATION_FAILED_NO_MEM_LOCAL_TM				30	"pid=%11!-10d! ;tid=%13!-10d! ;time=%14!-25s! ;seq=%10!-10d! ;eventid=%2!-40s! ;tx_guid=%12!-40s! ;%"TM Identifier='%16!-50s!'%" ;%"failed to propogate transaction to child node '%15!s!' because of lack of enough memory at the local transaction manager%""
+#typev	TRANSACTION_PROPOGATION_FAILED_TOO_MANY_CHILDREN_ON_LOCAL_TM		31	"pid=%11!-10d! ;tid=%13!-10d! ;time=%14!-25s! ;seq=%10!-10d! ;eventid=%2!-40s! ;tx_guid=%12!-40s! ;%"TM Identifier='%16!-50s!'%" ;%"failed to propogate transaction to child node '%15!s!' because the limit on the number of children has been reached at the local transaction manager%""
+#typev	TRANSACTION_PROPOGATION_FAILED_LOG_FULL_REMOTE_TM			32	"pid=%11!-10d! ;tid=%13!-10d! ;time=%14!-25s! ;seq=%10!-10d! ;eventid=%2!-40s! ;tx_guid=%12!-40s! ;%"TM Identifier='%16!-50s!'%" ;%"failed to propogate transaction to child node '%15!s!' because the log of the remote transaction manager became full%""
+#typev	TRANSACTION_PROPOGATION_FAILED_NO_MEM_REMOTE_TM 			33	"pid=%11!-10d! ;tid=%13!-10d! ;time=%14!-25s! ;seq=%10!-10d! ;eventid=%2!-40s! ;tx_guid=%12!-40s! ;%"TM Identifier='%16!-50s!'%" ;%"failed to propogate transaction to child node '%15!s!' because of lack of enough memory at the remote transaction manager%""
+#typev	TRANSACTION_PROPOGATION_FAILED_CONNECTION_DOWN_FROM_REMOTE_TM		34	"pid=%11!-10d! ;tid=%13!-10d! ;time=%14!-25s! ;seq=%10!-10d! ;eventid=%2!-40s! ;tx_guid=%12!-40s! ;%"TM Identifier='%16!-50s!'%" ;%"failed to propogate transaction to child node '%15!s!' because the connection with the remote transaction manager went down%""
+#typev	TRANSACTION_PROPOGATION_FAILED_TRANSACTION_PAST_ACTIVE			35	"pid=%11!-10d! ;tid=%13!-10d! ;time=%14!-25s! ;seq=%10!-10d! ;eventid=%2!-40s! ;tx_guid=%12!-40s! ;%"TM Identifier='%16!-50s!'%" ;%"failed to propogate transaction to child node '%15!s!' because the transaction is past the stage where new children can be added. Some possible reasons include, client might have already called commit or transaction might have got aborted.%""
+{
+	SequenceNumber, 			ItemUlong			// 10
+	ProcessId,				ItemUlong			// 11
+	Guid,					ItemGuid			// 12
+	ThreadId,				ItemUlong			// 13
+	TimeStamp,				ItemTimestamp			// 14
+	ChildNodeName,				ItemWString 			// 15
+	TMIdentifier				ItemWString			// 16
+}
+#typev  CHILD_NODE_ABORT_DUE_TO_RESTART_OVERFLOW                            	36  "pid=%10!-10d! ;tid=%12!-10d! ;time=%13!-25s! ;tx_guid=%11!-40s! ;eventid=%2!-40s! ;%"TM Identifier='%14!-50s!'%" ;failed to update the restart info for a subordinate, because it was too large to fit in the log. The transaction will be aborted."
+{
+	ProcessId,				ItemUlong			// 10
+	Guid,					ItemGuid			// 11
+	ThreadId,				ItemUlong			// 12
+	TimeStamp,				ItemTimestamp			// 13
+	TMIdentifier				ItemWString			// 14
+}
+// **************************************************************************
+
+
+// Project		TM Messages
+// Category 	Summary Level Transaction
+// SubCategory	Parent Node related messages
+// ***************************************************************************
+
+92AA39C6-6F52-4677-B297-8A2E8C19ED2A g_TraceTMXactsParentGuid
+
+#typev	TRANSACTION_PROPOGATED_FROM_PARENT					11	"pid=%11!-10d! ;tid=%13!-10d! ;time=%14!-25s! ;seq=%10!-10d! ;eventid=%2!-40s! ;tx_guid=%12!-40s! ;%"TM Identifier='%17!-50s!'%" ;%"transaction propagated from parent node '%15!s!', Description = '%16!s!'%""
+{
+	SequenceNumber, 			ItemUlong			// 10
+	ProcessId,				ItemUlong			// 11
+	Guid,					ItemGuid			// 12
+	ThreadId,				ItemUlong			// 13
+	TimeStamp,				ItemTimestamp			// 14
+	ParentNodeName, 			ItemWString 			// 15
+	XactDescription,			ItemAString 			// 16
+	TMIdentifier				ItemWString			// 17
+}
+#typev	VOTING_COMMIT_TO_PARENT 						12	"pid=%11!-10d! ;tid=%13!-10d! ;time=%14!-25s! ;seq=%10!-10d! ;eventid=%2!-40s! ;tx_guid=%12!-40s! ;%"TM Identifier='%16!-50s!'%" ;%"child node votes commit to parent node '%15!s!'%""
+#typev	VOTING_ABORT_TO_PARENT							13	"pid=%11!-10d! ;tid=%13!-10d! ;time=%14!-25s! ;seq=%10!-10d! ;eventid=%2!-40s! ;tx_guid=%12!-40s! ;%"TM Identifier='%16!-50s!'%" ;%"child node votes abort to parent node '%15!s!'%""
+#typev	VOTING_READ_ONLY_TO_PARENT						14	"pid=%11!-10d! ;tid=%13!-10d! ;time=%14!-25s! ;seq=%10!-10d! ;eventid=%2!-40s! ;tx_guid=%12!-40s! ;%"TM Identifier='%16!-50s!'%" ;%"child node votes read-only to parent node '%15!s!'%""
+#typev	AT_RESTART_TRANSACTION_IS_INDOUBT_HAS_PARENT				15	"pid=%11!-10d! ;tid=%13!-10d! ;time=%14!-25s! ;seq=%10!-10d! ;eventid=%2!-40s! ;tx_guid=%12!-40s! ;%"TM Identifier='%16!-50s!'%" ;%"indoubt transaction with parent node '%15!s!' found at dtc restart%""
+#typev	RECEIVED_PREPARE_FROM_PARENT						16	"pid=%11!-10d! ;tid=%13!-10d! ;time=%14!-25s! ;seq=%10!-10d! ;eventid=%2!-40s! ;tx_guid=%12!-40s! ;%"TM Identifier='%16!-50s!'%" ;%"child node received prepare request from parent node '%15!s!'%""
+#typev	RECEIVED_COMMIT_FROM_PARENT 						17	"pid=%11!-10d! ;tid=%13!-10d! ;time=%14!-25s! ;seq=%10!-10d! ;eventid=%2!-40s! ;tx_guid=%12!-40s! ;%"TM Identifier='%16!-50s!'%" ;%"child node received commit request from parent node '%15!s!'%""
+#typev	RECEIVED_ABORT_FROM_PARENT						18	"pid=%11!-10d! ;tid=%13!-10d! ;time=%14!-25s! ;seq=%10!-10d! ;eventid=%2!-40s! ;tx_guid=%12!-40s! ;%"TM Identifier='%16!-50s!'%" ;%"child node received abort request from parent node '%15!s!'%""
+#typev	ABORT_DUE_TO_CONNECTION_DOWN_FROM_PARENT				19	"pid=%11!-10d! ;tid=%13!-10d! ;time=%14!-25s! ;seq=%10!-10d! ;eventid=%2!-40s! ;tx_guid=%12!-40s! ;%"TM Identifier='%16!-50s!'%" ;%"child node received connection down from parent node '%15!s!'. Transaction is aborted.%""
+#typev	INDOUBT_DUE_TO_CONNECTION_DOWN_FROM_PARENT				20	"pid=%11!-10d! ;tid=%13!-10d! ;time=%14!-25s! ;seq=%10!-10d! ;eventid=%2!-40s! ;tx_guid=%12!-40s! ;%"TM Identifier='%16!-50s!'%" ;%"child node received connection down from parent node '%15!s!'. Transaction is in-doubt.%""
+#typev	PARENT_REPLIED_ABORT_TO_QUERY_ABORT_REQUEST 				21	"pid=%11!-10d! ;tid=%13!-10d! ;time=%14!-25s! ;seq=%10!-10d! ;eventid=%2!-40s! ;tx_guid=%12!-40s! ;%"TM Identifier='%16!-50s!'%" ;%"child node received abort to transaction query status from parent node '%15!s!'%""
+#typev	PARENT_REPLIED_RETRY_TO_QUERY_ABORT_REQUEST 				22	"pid=%11!-10d! ;tid=%13!-10d! ;time=%14!-25s! ;seq=%10!-10d! ;eventid=%2!-40s! ;tx_guid=%12!-40s! ;%"TM Identifier='%16!-50s!'%" ;%"child node received retry to transaction query status from parent node '%15!s!'%""
+#typev	RECEIVED_COMMIT_REDELIVERY_FROM_PARENT					23	"pid=%11!-10d! ;tid=%13!-10d! ;time=%14!-25s! ;seq=%10!-10d! ;eventid=%2!-40s! ;tx_guid=%12!-40s! ;%"TM Identifier='%16!-50s!'%" ;%"child node received commit redelivery request from parent node '%15!s!'%""
+#typev	ACKNOWLEDGING_COMMIT_TO_PARENT						24	"pid=%11!-10d! ;tid=%13!-10d! ;time=%14!-25s! ;seq=%10!-10d! ;eventid=%2!-40s! ;tx_guid=%12!-40s! ;%"TM Identifier='%16!-50s!'%" ;%"child node achnowledging the delivery of commit request from parent node '%15!s!'%""
+#typev	ACKNOWLEDGING_ABORT_TO_PARENT						25	"pid=%11!-10d! ;tid=%13!-10d! ;time=%14!-25s! ;seq=%10!-10d! ;eventid=%2!-40s! ;tx_guid=%12!-40s! ;%"TM Identifier='%16!-50s!'%" ;%"child node achnowledging the delivery of abort request from parent node '%15!s!'%""
+{
+	SequenceNumber, 			ItemUlong			// 10
+	ProcessId,				ItemUlong			// 11
+	Guid,					ItemGuid			// 12
+	ThreadId,				ItemUlong			// 13
+	TimeStamp,				ItemTimestamp			// 14
+	ParentNodeName, 			ItemWString 			// 15
+	TMIdentifier				ItemWString			// 16
+}
+#typev  PARENT_ABORTING_DUE_TO_RESTART_OVERFLOW             			26  "pid=%10!-10d! ;tid=%12!-10d! ;time=%13!-25s! ;tx_guid=%11!-40s! ;eventid=%2!-40s! ;%"TM Identifier='%14!-50s!'%" ;failed to update the restart info for the parent node, because it was too large to fit in the log. The transaction will be aborted."
+{
+	ProcessId,				ItemUlong			// 10
+	Guid,					ItemGuid			// 11
+	ThreadId,				ItemUlong			// 12
+	TimeStamp,				ItemTimestamp			// 13
+	TMIdentifier				ItemWString			// 14
+}
+// ***************************************************************************
+
+
+// Project		TM Messages
+// Category 	Summary Level Transaction
+// SubCategory	Operator related messages
+// ***************************************************************************
+
+6BBFB565-408B-407c-A3E9-AC917DB411D6 g_TraceTMXactsOperatorGuid
+
+#typev	OPERATOR_RESOLVE_COMMIT 						11	"pid=%11!-10d! ;tid=%13!-10d! ;time=%14!-25s! ;seq=%10!-10d! ;eventid=%2!-40s! ;tx_guid=%12!-40s! ;%"TM Identifier='%15!-50s!'%" ;%"operator resolve commit%""
+#typev	OPERATOR_RESOLVE_ABORT							12	"pid=%11!-10d! ;tid=%13!-10d! ;time=%14!-25s! ;seq=%10!-10d! ;eventid=%2!-40s! ;tx_guid=%12!-40s! ;%"TM Identifier='%15!-50s!'%" ;%"operator resolve abort%""
+#typev	OPERATOR_RESOLVE_FORGET 						13	"pid=%11!-10d! ;tid=%13!-10d! ;time=%14!-25s! ;seq=%10!-10d! ;eventid=%2!-40s! ;tx_guid=%12!-40s! ;%"TM Identifier='%15!-50s!'%" ;%"operator resolve forget%""
+{
+	SequenceNumber, 			ItemUlong		// 10
+	ProcessId,				ItemUlong		// 11
+	Guid,					ItemGuid		// 12
+	ThreadId,				ItemUlong		// 13
+	TimeStamp,				ItemTimestamp		// 14
+	TMIdentifier				ItemWString		// 15
+}
+// ***************************************************************************
+
+
+// Project		TM Messages
+// Category 	Summary Level Transaction
+// SubCategory	Non transaction specefic messages (i.e. messages which are relevant to transactions but which are pertinent to multiple transactions)
+// ***************************************************************************
+
+9708D2D4-C019-4c50-B671-6E166CE710F3 g_TraceTMXactsGlobalGuid
+
+#typev	EXPORT_SESSION_CREATION_FAILED_BAD_TMADDR				11	"pid=%11!-10d! ;tid=%3!-10d! ;time=%4!-25s! ;seq=%10!-10d! ;eventid=%2!-40s! ;;%"TM Identifier='%12!-50s!'%" ;%"failed to create export session because the address of the remote transaction manager was malformed%""
+{
+	SequenceNumber, 			ItemUlong			// 10
+	ProcessId,				ItemUlong			// 11
+	TMIdentifier				ItemWString			// 12
+}
+#typev	EXPORT_SESSION_CREATION_FAILED_NET_TX_DISABLED				12	"pid=%11!-10d! ;tid=%3!-10d! ;time=%4!-25s! ;seq=%10!-10d! ;eventid=%2!-40s! ;;%"TM Identifier='%13!-50s!'%" ;%"failed to create export session to child node '%12!s!' because network transactions have been disabled at the local transaction manager%""
+#typev	EXPORT_SESSION_CREATION_FAILED_NETWORK_FAILURE				13	"pid=%11!-10d! ;tid=%3!-10d! ;time=%4!-25s! ;seq=%10!-10d! ;eventid=%2!-40s! ;;%"TM Identifier='%13!-50s!'%" ;%"failed to create export session to child node '%12!s!' because of network failure%""
+{
+	SequenceNumber, 			ItemUlong			// 10
+	ProcessId,				ItemUlong			// 11
+	ChildNodeName,				ItemWString 			// 12
+	TMIdentifier				ItemWString			// 13
+}
+#typev	TRANSACTION_PROPAGATION_FAILED_TRANSACTION_NOT_FOUND			14	"pid=%11!-10d! ;tid=%3!-10d! ;time=%4!-25s! ;seq=%10!-10d! ;eventid=%2!-40s! ;tx_guid=%12!-40s! ;%"TM Identifier='%14!-50s!'%" ;%"failed to propagate transaction to child node '%13!s!' because the transaction could not be found. Some possible reasons include, client might have already called commit or transaction might have got aborted due to timeout.%""
+{
+	SequenceNumber, 			ItemUlong			// 10
+	ProcessId,				ItemUlong			// 11
+	Guid,					ItemGuid			// 12
+	ChildNodeName,				ItemWString 			// 13
+	TMIdentifier				ItemWString			// 14
+}
+#typev	RM_ENLIST_FAILED_TRANSACTION_NOT_FOUND					15	"pid=%11!-10d! ;tid=%3!-10d! ;time=%4!-25s! ;seq=%10!-10d! ;eventid=%2!-40s! ;tx_guid=%12!-40s! ;%"TM Identifier='%14!-50s!'%" ;%"attempt to enlist the resource manager failed cause the transaction could not be found. Some possible reasons include, client might have already called commit or transaction might have got aborted due to timeout. RM guid = '%13'%""
+{
+	SequenceNumber, 			ItemUlong			// 10
+	ProcessId,				ItemUlong			// 11
+	Guid,					ItemGuid			// 12
+	RMGuid, 				ItemGuid			// 13
+	TMIdentifier				ItemWString			// 14
+}
+// ***************************************************************************
+
+
+
+

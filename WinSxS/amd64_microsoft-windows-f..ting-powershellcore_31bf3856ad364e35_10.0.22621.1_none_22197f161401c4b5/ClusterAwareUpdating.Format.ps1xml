@@ -1,0 +1,1348 @@
+<Configuration>
+<ViewDefinitions>
+  <View>
+    <Name>ClusterResultList</Name>
+    <ViewSelectedBy>
+      <TypeName>Microsoft.ClusterAwareUpdating.ClusterResult</TypeName>
+    </ViewSelectedBy>
+    <ListControl>
+      <ListEntries>
+        <ListEntry>
+          <ListItems>
+            <ListItem>
+              <Label>Cluster</Label>
+              <ScriptBlock>
+                $_.Name
+              </ScriptBlock>
+            </ListItem>
+            <ListItem>
+              <PropertyName>Status</PropertyName>
+            </ListItem>
+            <ListItem>
+              <PropertyName>RunId</PropertyName>
+            </ListItem>
+            <ListItem>
+              <Label>StartTimestamp</Label>
+              <ScriptBlock>
+                [System.TimeZoneInfo]::ConvertTimeFromUtc($_.StartTimestamp, ([System.TimeZoneInfo]::Local))
+              </ScriptBlock>
+            </ListItem>
+            <ListItem>
+              <Label>RunDuration</Label>
+              <ScriptBlock>
+                $_.RunDuration.ToString( "g" )
+              </ScriptBlock>
+            </ListItem>
+            <ListItem>
+              <Label>NodeResults</Label>
+              <ScriptBlock>
+                foreach( $nr in $_.NodeResults )
+                {
+                    "`n" + $nr.Node + ": " + $nr.Status + ", ..."
+                }
+              </ScriptBlock>
+            </ListItem>
+            <ListItem>
+              <PropertyName>ErrorRecordData</PropertyName>
+            </ListItem>
+          </ListItems>
+        </ListEntry>
+      </ListEntries>
+    </ListControl>
+  </View>
+  <View>
+    <Name>NodeResultList</Name>
+    <ViewSelectedBy>
+      <TypeName>Microsoft.ClusterAwareUpdating.NodeResult</TypeName>
+    </ViewSelectedBy>
+    <ListControl>
+      <ListEntries>
+        <!-- Quality update node result will be default -->
+        <ListEntry>
+          <ListItems>
+            <ListItem>
+              <PropertyName>Node</PropertyName>
+            </ListItem>
+            <ListItem>
+              <PropertyName>Status</PropertyName>
+            </ListItem>
+            <ListItem>
+              <Label>ErrorRecordData</Label>
+              <ScriptBlock>
+                $erd = $_.ErrorRecordData
+
+                if( $null -eq $erd )
+                {
+                    return
+                }
+
+                function TrimErrorId( $errorId )
+                {
+                    if( [string]::IsNullOrEmpty( $errorId ) )
+                    {
+                        return [string]::Empty
+                    }
+                    [int] $idx = $errorId.IndexOf( "," )
+                    if( $idx -lt 0 )
+                    {
+                        return $errorId
+                    }
+                    else
+                    {
+                        return $errorId.Substring( 0, $idx )
+                    }
+                }
+
+                $msg = $erd.ExceptionData.Message
+                if( $null -ne $erd.ErrorDetails )
+                {
+                    if( $null -ne $erd.ErrorDetails.Message )
+                    {
+                        $msg = $erd.ErrorDetails.Message
+                    }
+                }
+
+                $result = "($(TrimErrorId $erd.FullyQualifiedErrorId)) $msg"
+                return $result
+              </ScriptBlock>
+            </ListItem>
+            <ListItem>
+              <PropertyName>NumberOfSucceededUpdates</PropertyName>
+            </ListItem>
+            <ListItem>
+              <PropertyName>NumberOfFailedUpdates</PropertyName>
+            </ListItem>
+            <ListItem>
+              <Label>InstallResults</Label>
+              <ScriptBlock>
+                foreach( $uir in $_.InstallResults )
+                {
+                    "`n" + $uir.UpdateId + ": " + $uir.UpdateResultCode
+                }
+              </ScriptBlock>
+            </ListItem>
+            <ListItem>
+              <PropertyName>TransientInstallErrors</PropertyName>
+            </ListItem>
+            <ListItem>
+              <ScriptBlock>
+                if( $_.NodeSuspendedTimestamp -eq [DateTime]::MinValue )
+                {
+                    return [string]::Empty
+                }
+
+                [System.TimeZoneInfo]::ConvertTimeFromUtc($_.NodeSuspendedTimestamp, ([System.TimeZoneInfo]::Local))
+              </ScriptBlock>
+              <Label>NodeSuspendedTimestamp</Label>
+            </ListItem>
+            <ListItem>
+              <Label>NodeSuspendedDuration</Label>
+              <ScriptBlock>
+                if( ($_.NodeSuspendedDuration -eq [TimeSpan]::MinValue) -or
+                    ($_.NodeSuspendedDuration -eq [TimeSpan]::Zero) )
+                {
+                    return [string]::Empty
+                }
+                $_.NodeSuspendedDuration.ToString( "g" )
+              </ScriptBlock>
+            </ListItem>
+          </ListItems>
+        </ListEntry>
+        <!-- This will be for Feature Updates (OS upgrade) formatting -->
+        <ListEntry>
+          <EntrySelectedBy>
+            <SelectionCondition>
+              <TypeName>Microsoft.ClusterAwareUpdating.NodeResult</TypeName>
+              <PropertyName>UpgradingOs</PropertyName>
+            </SelectionCondition>
+          </EntrySelectedBy>
+          <ListItems>
+            <ListItem>
+              <PropertyName>Node</PropertyName>
+            </ListItem>
+            <ListItem>
+              <PropertyName>Status</PropertyName>
+            </ListItem>
+            <ListItem>
+              <Label>ErrorRecordData</Label>
+                <ScriptBlock>
+                  $erd = $_.ErrorRecordData
+
+                  if( $null -eq $erd )
+                  {
+                    return
+                  }
+
+                  function TrimErrorId( $errorId )
+                  {
+                    if( [string]::IsNullOrEmpty( $errorId ) )
+                    {
+                      return [string]::Empty
+                    }
+                    [int] $idx = $errorId.IndexOf( "," )
+                    if( $idx -lt 0 )
+                    {
+                      return $errorId
+                    }
+                    else
+                    {
+                      return $errorId.Substring( 0, $idx )
+                    }
+                  }
+
+                  $msg = $erd.ExceptionData.Message
+                  if( $null -ne $erd.ErrorDetails )
+                  {
+                    if( $null -ne $erd.ErrorDetails.Message )
+                    {
+                      $msg = $erd.ErrorDetails.Message
+                    }
+                  }
+
+                  $result = "($(TrimErrorId $erd.FullyQualifiedErrorId)) $msg"
+                  return $result
+                </ScriptBlock>
+              </ListItem>
+              <ListItem>
+                <PropertyName>UpgradeResult</PropertyName>
+              </ListItem>
+            </ListItems>
+          </ListEntry>
+      </ListEntries>
+    </ListControl>
+  </View>
+  <View>
+    <Name>NodeResultTable</Name>
+    <!-- PLACEHOLDER: to write upgrade node result for this view IF needed -->
+    <ViewSelectedBy>
+      <TypeName>Microsoft.ClusterAwareUpdating.NodeResult</TypeName>
+    </ViewSelectedBy>
+    <TableControl>
+      <TableHeaders>
+        <TableColumnHeader>
+          <Width>18</Width>
+        </TableColumnHeader>
+        <TableColumnHeader>
+          <Width>18</Width>
+        </TableColumnHeader>
+        <TableColumnHeader>
+          <Label>SucceededUpdates</Label>
+          <Width>18</Width>
+        </TableColumnHeader>
+        <TableColumnHeader>
+          <Label>FailedUpdates</Label>
+          <Width>18</Width>
+        </TableColumnHeader>
+        <TableColumnHeader>
+          <Label>NodeSuspendedTimestamp</Label>
+          <Width>24</Width>
+        </TableColumnHeader>
+      </TableHeaders>
+      <TableRowEntries>
+        <TableRowEntry>
+          <TableColumnItems>
+            <TableColumnItem>
+              <PropertyName>Node</PropertyName>
+            </TableColumnItem>
+            <TableColumnItem>
+              <PropertyName>Status</PropertyName>
+            </TableColumnItem>
+            <TableColumnItem>
+              <PropertyName>NumberOfSucceededUpdates</PropertyName>
+            </TableColumnItem>
+            <TableColumnItem>
+              <PropertyName>NumberOfFailedUpdates</PropertyName>
+            </TableColumnItem>
+            <TableColumnItem>
+              <ScriptBlock>
+                if( $_.NodeSuspendedTimestamp -eq [DateTime]::MinValue )
+                {
+                    return [string]::Empty
+                }
+                [System.TimeZoneInfo]::ConvertTimeFromUtc($_.NodeSuspendedTimestamp, ([System.TimeZoneInfo]::Local))
+              </ScriptBlock>
+            </TableColumnItem>
+          </TableColumnItems>
+        </TableRowEntry>
+      </TableRowEntries>
+    </TableControl>
+  </View>
+  <View>
+    <Name>CauRun</Name>
+    <ViewSelectedBy>
+      <TypeName>Microsoft.ClusterAwareUpdating.CauRun</TypeName>
+    </ViewSelectedBy>
+    <ListControl>
+      <ListEntries>
+        <ListEntry>
+          <ListItems>
+            <ListItem>
+              <PropertyName>RunId</PropertyName>
+            </ListItem>
+            <ListItem>
+              <ScriptBlock>
+                [System.TimeZoneInfo]::ConvertTimeFromUtc($_.RunStartTime, ([System.TimeZoneInfo]::Local))
+              </ScriptBlock>
+              <Label>RunStartTime</Label>
+            </ListItem>
+            <ListItem>
+              <PropertyName>CurrentOrchestrator</PropertyName>
+            </ListItem>
+            <ListItem>
+              <PropertyName>NodeStatusNotifications</PropertyName>
+            </ListItem>
+            <ListItem>
+              <PropertyName>NodeResults</PropertyName>
+            </ListItem>
+          </ListItems>
+        </ListEntry>
+      </ListEntries>
+    </ListControl>
+  </View>
+  <View>
+    <Name>CauWmiObject</Name>
+    <ViewSelectedBy>
+      <TypeName>Microsoft.ClusterAwareUpdating.CauWmiObject</TypeName>
+    </ViewSelectedBy>
+    <TableControl>
+      <TableHeaders>
+        <TableColumnHeader>
+          <Width>38</Width>
+        </TableColumnHeader>
+        <TableColumnHeader>
+          <Width>20</Width>
+        </TableColumnHeader>
+        <TableColumnHeader>
+          <Width>20</Width>
+        </TableColumnHeader>
+      </TableHeaders>
+      <TableRowEntries>
+        <TableRowEntry>
+          <TableColumnItems>
+            <TableColumnItem>
+              <PropertyName>CurrentOrchestratorId</PropertyName>
+            </TableColumnItem>
+            <TableColumnItem>
+              <PropertyName>WmiObjectType</PropertyName>
+            </TableColumnItem>
+            <TableColumnItem>
+              <PropertyName>NodeName</PropertyName>
+            </TableColumnItem>
+          </TableColumnItems>
+        </TableRowEntry>
+      </TableRowEntries>
+    </TableControl>
+  </View>
+  <View>
+    <Name>CauPluginTable</Name>
+    <ViewSelectedBy>
+      <TypeName>Microsoft.ClusterAwareUpdating.CauPlugin</TypeName>
+    </ViewSelectedBy>
+    <TableControl>
+      <TableHeaders>
+        <TableColumnHeader>
+          <Width>34</Width>
+        </TableColumnHeader>
+        <TableColumnHeader>
+        </TableColumnHeader>
+      </TableHeaders>
+      <TableRowEntries>
+        <TableRowEntry>
+          <TableColumnItems>
+            <TableColumnItem>
+              <PropertyName>Name</PropertyName>
+            </TableColumnItem>
+            <TableColumnItem>
+              <PropertyName>BinaryPath</PropertyName>
+            </TableColumnItem>
+          </TableColumnItems>
+        </TableRowEntry>
+      </TableRowEntries>
+    </TableControl>
+  </View>
+  <View>
+    <Name>NodeStatusNotificationTable</Name>
+    <ViewSelectedBy>
+      <TypeName>Microsoft.ClusterAwareUpdating.NodeStatusNotification</TypeName>
+    </ViewSelectedBy>
+    <TableControl>
+      <TableHeaders>
+        <TableColumnHeader>
+          <Width>18</Width>
+        </TableColumnHeader>
+        <TableColumnHeader>
+          <Width>18</Width>
+        </TableColumnHeader>
+        <TableColumnHeader>
+          <Label>Timestamp</Label>
+          <Width>28</Width>
+        </TableColumnHeader>
+      </TableHeaders>
+      <TableRowEntries>
+        <TableRowEntry>
+          <TableColumnItems>
+            <TableColumnItem>
+              <PropertyName>Node</PropertyName>
+            </TableColumnItem>
+            <TableColumnItem>
+              <PropertyName>Status</PropertyName>
+            </TableColumnItem>
+            <TableColumnItem>
+              <ScriptBlock>
+                [System.TimeZoneInfo]::ConvertTimeFromUtc($_.Timestamp, ([System.TimeZoneInfo]::Local))
+              </ScriptBlock>
+            </TableColumnItem>
+          </TableColumnItems>
+        </TableRowEntry>
+      </TableRowEntries>
+    </TableControl>
+  </View>
+  <View>
+    <Name>NodeStatusNotificationList</Name>
+    <ViewSelectedBy>
+      <TypeName>Microsoft.ClusterAwareUpdating.NodeStatusNotification</TypeName>
+    </ViewSelectedBy>
+    <ListControl>
+      <ListEntries>
+        <ListEntry>
+          <ListItems>
+            <ListItem>
+              <PropertyName>Node</PropertyName>
+            </ListItem>
+            <ListItem>
+              <PropertyName>Status</PropertyName>
+            </ListItem>
+            <ListItem>
+              <Label>Timestamp</Label>
+              <ScriptBlock>
+                [System.TimeZoneInfo]::ConvertTimeFromUtc($_.Timestamp, ([System.TimeZoneInfo]::Local))
+              </ScriptBlock>
+            </ListItem>
+          </ListItems>
+        </ListEntry>
+      </ListEntries>
+    </ListControl>
+  </View>
+  <View>
+    <Name>UpdateInfoTable</Name>
+    <ViewSelectedBy>
+      <TypeName>Microsoft.ClusterAwareUpdating.UpdateInfo</TypeName>
+    </ViewSelectedBy>
+    <TableControl>
+      <TableHeaders>
+        <TableColumnHeader>
+          <Width>18</Width>
+        </TableColumnHeader>
+        <TableColumnHeader>
+          <Width>40</Width>
+        </TableColumnHeader>
+        <TableColumnHeader>
+          <Width>26</Width>
+        </TableColumnHeader>
+        <TableColumnHeader>
+          <Width>40</Width>
+        </TableColumnHeader>
+      </TableHeaders>
+      <TableRowEntries>
+        <TableRowEntry>
+          <TableColumnItems>
+            <TableColumnItem>
+              <PropertyName>NodeName</PropertyName>
+            </TableColumnItem>
+            <TableColumnItem>
+              <PropertyName>UpdateId</PropertyName>
+            </TableColumnItem>
+            <TableColumnItem>
+              <PropertyName>UpdateTitle</PropertyName>
+            </TableColumnItem>
+            <TableColumnItem>
+              <PropertyName>UpdateDescription</PropertyName>
+            </TableColumnItem>
+          </TableColumnItems>
+        </TableRowEntry>
+      </TableRowEntries>
+    </TableControl>
+  </View>
+  <View>
+    <Name>UpdateStagingResultList</Name>
+    <ViewSelectedBy>
+      <TypeName>Microsoft.ClusterAwareUpdating.UpdateStagingResult</TypeName>
+    </ViewSelectedBy>
+    <ListControl>
+      <ListEntries>
+        <ListEntry>
+          <ListItems>
+            <ListItem>
+              <PropertyName>NodeName</PropertyName>
+            </ListItem>
+            <ListItem>
+              <PropertyName>UpdateResultCode</PropertyName>
+            </ListItem>
+            <ListItem>
+              <Label>UpdateTimestamp</Label>
+              <ScriptBlock>
+                [System.TimeZoneInfo]::ConvertTimeFromUtc($_.UpdateTimestamp, ([System.TimeZoneInfo]::Local))
+              </ScriptBlock>
+            </ListItem>
+            <ListItem>
+              <Label>ErrorCode</Label>
+              <ScriptBlock>
+                if( 0 -eq $_.ErrorCode )
+                {
+                    "0"
+                }
+                else
+                {
+                    "0x" + $_.ErrorCode.ToString( "x8" )
+                }
+              </ScriptBlock>
+            </ListItem>
+            <ListItem>
+              <PropertyName>UpdateId</PropertyName>
+            </ListItem>
+            <ListItem>
+              <PropertyName>UpdateTitle</PropertyName>
+            </ListItem>
+            <ListItem>
+              <PropertyName>UpdateDescription</PropertyName>
+            </ListItem>
+            <ListItem>
+              <PropertyName>SourcePlugin</PropertyName>
+            </ListItem>
+          </ListItems>
+        </ListEntry>
+      </ListEntries>
+    </ListControl>
+  </View>
+  <View>
+    <Name>UpdateStagingResultTable</Name>
+    <ViewSelectedBy>
+      <TypeName>Microsoft.ClusterAwareUpdating.UpdateStagingResult</TypeName>
+    </ViewSelectedBy>
+    <TableControl>
+      <TableHeaders>
+        <TableColumnHeader>
+          <Width>18</Width>
+        </TableColumnHeader>
+        <TableColumnHeader>
+          <Width>18</Width>
+        </TableColumnHeader>
+        <TableColumnHeader>
+          <Label>Timestamp</Label>
+          <Width>25</Width>
+        </TableColumnHeader>
+        <TableColumnHeader>
+          <Width>40</Width>
+        </TableColumnHeader>
+      </TableHeaders>
+      <TableRowEntries>
+        <TableRowEntry>
+          <TableColumnItems>
+            <TableColumnItem>
+              <PropertyName>NodeName</PropertyName>
+            </TableColumnItem>
+            <TableColumnItem>
+              <PropertyName>UpdateResultCode</PropertyName>
+            </TableColumnItem>
+            <TableColumnItem>
+              <ScriptBlock>
+                [System.TimeZoneInfo]::ConvertTimeFromUtc($_.UpdateTimestamp, ([System.TimeZoneInfo]::Local))
+              </ScriptBlock>
+            </TableColumnItem>
+            <TableColumnItem>
+              <PropertyName>UpdateId</PropertyName>
+            </TableColumnItem>
+          </TableColumnItems>
+        </TableRowEntry>
+      </TableRowEntries>
+    </TableControl>
+  </View>
+  <View>
+    <Name>UpdateInstallResultList</Name>
+    <ViewSelectedBy>
+      <TypeName>Microsoft.ClusterAwareUpdating.UpdateInstallResult</TypeName>
+    </ViewSelectedBy>
+    <ListControl>
+      <ListEntries>
+        <ListEntry>
+          <ListItems>
+            <ListItem>
+              <PropertyName>NodeName</PropertyName>
+            </ListItem>
+            <ListItem>
+              <PropertyName>UpdateResultCode</PropertyName>
+            </ListItem>
+            <ListItem>
+              <Label>UpdateTimestamp</Label>
+              <ScriptBlock>
+                [System.TimeZoneInfo]::ConvertTimeFromUtc($_.UpdateTimestamp, ([System.TimeZoneInfo]::Local))
+              </ScriptBlock>
+            </ListItem>
+            <ListItem>
+              <Label>ErrorCode</Label>
+              <ScriptBlock>
+                if( 0 -eq $_.ErrorCode )
+                {
+                    "0"
+                }
+                else
+                {
+                    "0x" + $_.ErrorCode.ToString( "x8" )
+                }
+              </ScriptBlock>
+            </ListItem>
+            <ListItem>
+              <PropertyName>RebootRequired</PropertyName>
+            </ListItem>
+            <ListItem>
+              <PropertyName>LongRebootHint</PropertyName>
+            </ListItem>
+            <ListItem>
+              <PropertyName>UpdateId</PropertyName>
+            </ListItem>
+            <ListItem>
+              <PropertyName>UpdateTitle</PropertyName>
+            </ListItem>
+            <ListItem>
+              <PropertyName>UpdateDescription</PropertyName>
+            </ListItem>
+            <ListItem>
+              <PropertyName>SourcePlugin</PropertyName>
+            </ListItem>
+          </ListItems>
+        </ListEntry>
+      </ListEntries>
+    </ListControl>
+  </View>
+  <View>
+    <Name>UpdateInstallResultTable</Name>
+    <ViewSelectedBy>
+      <TypeName>Microsoft.ClusterAwareUpdating.UpdateInstallResult</TypeName>
+    </ViewSelectedBy>
+    <TableControl>
+      <TableHeaders>
+        <TableColumnHeader>
+          <Width>18</Width>
+        </TableColumnHeader>
+        <TableColumnHeader>
+          <Width>18</Width>
+        </TableColumnHeader>
+        <TableColumnHeader>
+          <Label>Timestamp</Label>
+          <Width>25</Width>
+        </TableColumnHeader>
+        <TableColumnHeader>
+          <Width>15</Width>
+        </TableColumnHeader>
+        <TableColumnHeader>
+          <Width>40</Width>
+        </TableColumnHeader>
+      </TableHeaders>
+      <TableRowEntries>
+        <TableRowEntry>
+          <TableColumnItems>
+            <TableColumnItem>
+              <PropertyName>NodeName</PropertyName>
+            </TableColumnItem>
+            <TableColumnItem>
+              <PropertyName>UpdateResultCode</PropertyName>
+            </TableColumnItem>
+            <TableColumnItem>
+              <ScriptBlock>
+                [System.TimeZoneInfo]::ConvertTimeFromUtc($_.UpdateTimestamp, ([System.TimeZoneInfo]::Local))
+              </ScriptBlock>
+            </TableColumnItem>
+            <TableColumnItem>
+              <PropertyName>RebootRequired</PropertyName>
+            </TableColumnItem>
+            <TableColumnItem>
+              <PropertyName>UpdateId</PropertyName>
+            </TableColumnItem>
+          </TableColumnItems>
+        </TableRowEntry>
+      </TableRowEntries>
+    </TableControl>
+  </View>
+  <View>
+    <Name>ErrorRecordDataList</Name>
+    <ViewSelectedBy>
+      <TypeName>Microsoft.ClusterAwareUpdating.ErrorRecordData</TypeName>
+    </ViewSelectedBy>
+    <ListControl>
+      <ListEntries>
+        <ListEntry>
+          <ListItems>
+            <ListItem>
+              <Label>Message</Label>
+              <ScriptBlock>
+                if( $null -ne $_.ErrorDetails )
+                {
+                    if( $null -ne $_.ErrorDetails.Message )
+                    {
+                        return $_.ErrorDetails.Message
+                    }
+                }
+                return $_.ExceptionData.Message
+              </ScriptBlock>
+            </ListItem>
+            <ListItem>
+              <PropertyName>Category</PropertyName>
+            </ListItem>
+            <ListItem>
+              <PropertyName>FullyQualifiedErrorId</PropertyName>
+            </ListItem>
+            <ListItem>
+              <PropertyName>InvocationName</PropertyName>
+            </ListItem>
+            <ListItem>
+              <PropertyName>ErrorDetails</PropertyName>
+            </ListItem>
+            <ListItem>
+              <PropertyName>ScriptStackTrace</PropertyName>
+            </ListItem>
+            <ListItem>
+              <PropertyName>TargetObjectString</PropertyName>
+            </ListItem>
+            <ListItem>
+              <Label>ExceptionData</Label>
+              <ScriptBlock>
+                $ed = $_.ExceptionData
+                $typeName = $ed.ExceptionType
+                $idx = $typeName.LastIndexOf( "." )
+                if( ($idx -gt 0) -and ($typeName.Length -gt $idx) )
+                {
+                    $typeName = $typeName.Substring( $idx + 1 )
+                }
+
+                $result = "($typeName) $($ed.Message)"
+                if( $null -ne $ed.InnerExceptionData )
+                {
+                    return $result + " (+)"
+                }
+                else
+                {
+                    return $result
+                }
+              </ScriptBlock>
+            </ListItem>
+          </ListItems>
+        </ListEntry>
+      </ListEntries>
+    </ListControl>
+  </View>
+  <View>
+    <Name>ErrorRecordDataTable</Name>
+    <ViewSelectedBy>
+      <TypeName>Microsoft.ClusterAwareUpdating.ErrorRecordData</TypeName>
+    </ViewSelectedBy>
+    <TableControl>
+      <TableHeaders>
+        <TableColumnHeader>
+          <Width>20</Width>
+        </TableColumnHeader>
+        <TableColumnHeader>
+          <Width>30</Width>
+        </TableColumnHeader>
+        <TableColumnHeader>
+          <Label>Message</Label>
+        </TableColumnHeader>
+      </TableHeaders>
+      <TableRowEntries>
+        <TableRowEntry>
+          <TableColumnItems>
+            <TableColumnItem>
+              <PropertyName>Category</PropertyName>
+            </TableColumnItem>
+            <TableColumnItem>
+              <PropertyName>FullyQualifiedErrorId</PropertyName>
+            </TableColumnItem>
+            <TableColumnItem>
+              <ScriptBlock>
+                if( $null -ne $_.ErrorDetails )
+                {
+                    if( $null -ne $_.ErrorDetails.Message )
+                    {
+                        return $_.ErrorDetails.Message
+                    }
+                }
+                return $_.ExceptionData.Message
+              </ScriptBlock>
+            </TableColumnItem>
+          </TableColumnItems>
+        </TableRowEntry>
+      </TableRowEntries>
+    </TableControl>
+  </View>
+  <View>
+    <Name>ExceptionDataList</Name>
+    <ViewSelectedBy>
+      <TypeName>Microsoft.ClusterAwareUpdating.ExceptionData</TypeName>
+    </ViewSelectedBy>
+    <ListControl>
+      <ListEntries>
+        <ListEntry>
+          <ListItems>
+            <ListItem>
+              <PropertyName>ExceptionType</PropertyName>
+            </ListItem>
+            <ListItem>
+              <PropertyName>Message</PropertyName>
+            </ListItem>
+            <ListItem>
+              <PropertyName>NeutralMessage</PropertyName>
+            </ListItem>
+            <ListItem>
+              <PropertyName>StackTrace</PropertyName>
+            </ListItem>
+            <ListItem>
+              <Label>ErrorCode</Label>
+              <ScriptBlock>
+                if( 0 -eq $_.ErrorCode )
+                {
+                    "0"
+                }
+                else
+                {
+                    "0x" + $_.ErrorCode.ToString( "x8" )
+                }
+              </ScriptBlock>
+            </ListItem>
+            <ListItem>
+              <PropertyName>Data</PropertyName>
+            </ListItem>
+            <ListItem>
+              <Label>InnerExceptionData</Label>
+              <ScriptBlock>
+                $ed = $_.InnerExceptionData
+                if( $null -eq $ed )
+                {
+                    return [string]::Empty
+                }
+
+                $typeName = $ed.ExceptionType
+                $idx = $typeName.LastIndexOf( "." )
+                if( ($idx -gt 0) -and ($typeName.Length -gt $idx) )
+                {
+                    $typeName = $typeName.Substring( $idx + 1 )
+                }
+
+                $result = "($typeName) $($ed.Message)"
+                if( $null -ne $ed.InnerExceptionData )
+                {
+                    return $result + " (+)"
+                }
+                else
+                {
+                    return $result
+                }
+              </ScriptBlock>
+            </ListItem>
+          </ListItems>
+        </ListEntry>
+      </ListEntries>
+    </ListControl>
+  </View>
+  <View>
+    <Name>CauParameterTable</Name>
+    <ViewSelectedBy>
+      <TypeName>Microsoft.ClusterAwareUpdating.CauParameter</TypeName>
+    </ViewSelectedBy>
+    <TableControl>
+      <TableHeaders>
+        <TableColumnHeader>
+          <Label>Name</Label>
+        </TableColumnHeader>
+        <TableColumnHeader>
+          <Label>Value</Label>
+        </TableColumnHeader>
+      </TableHeaders>
+      <TableRowEntries>
+        <TableRowEntry>
+          <TableColumnItems>
+            <TableColumnItem>
+              <PropertyName>Name</PropertyName>
+            </TableColumnItem>
+            <TableColumnItem>
+              <ScriptBlock>
+                function FormatHashtable( $ht )
+                {
+                    if( $null -eq $ht )
+                    {
+                        return '$null'
+                    }
+
+                    $displayString = [System.Text.StringBuilder]@{}
+                    [void] $displayString.Append( "@{" )
+                    $first = $true
+                    
+                    foreach($key in $ht.Keys)
+                    {
+                        if ($first)
+                        {
+                            $first = $false;
+                        }
+                        else
+                        {
+                            [void] $displayString.Append( ";" )
+                        }
+                        [void] $displayString.Append( " '" )
+                        [void] $displayString.Append( $key.ToString() )
+                        [void] $displayString.Append( "' = " )
+                        $val = ""
+                        if( $null -eq $ht[ $key ] )
+                        {
+                            $val = '$null'
+                        }
+                        else
+                        {
+                            $val = "'$($ht[ $key ].ToString())'"
+                        }
+                        [void] $displayString.Append( $val )
+                    }
+
+                    [void] $displayString.Append( " }" )
+                    return $displayString.ToString()
+                } # end function FormatHashtable
+
+                if ($_.Value -is [Hashtable])
+                {
+                    return FormatHashtable( $_.Value )
+                }
+                elseif ($_.Value -is [Hashtable[]])
+                {
+                    $_.Value | % { FormatHashtable( $_ ) }
+                }
+                elseif ($_.Name -eq "ResourceGroupName")
+                {
+                    [string] $groupName = $_.Value
+                    [void] ($c = Get-Cluster)
+                    if( $null -ne $c )
+                    {
+                        # We are running on a cluster node, so we don't need to
+                        # know the cluster name to look up the owning node.
+                        return "$groupName ($((Get-ClusterGroup $groupName).OwnerNode.Name))"
+                    }
+                    else
+                    {
+                        return $groupName
+                    }
+                }
+                elseif ($null -eq $_.Value)
+                {
+                    return '$null'
+                }
+                else
+                {
+                    return $_.Value;
+                }
+              </ScriptBlock>
+            </TableColumnItem>
+          </TableColumnItems>
+        </TableRowEntry>
+      </TableRowEntries>
+    </TableControl>
+  </View>
+  <View>
+    <Name>CauParameterList</Name>
+    <ViewSelectedBy>
+      <TypeName>Microsoft.ClusterAwareUpdating.CauParameter</TypeName>
+    </ViewSelectedBy>
+    <ListControl>
+      <ListEntries>
+        <ListEntry>
+          <ListItems>
+            <ListItem>
+              <PropertyName>Name</PropertyName>
+            </ListItem>
+            <ListItem>
+              <Label>Value</Label>
+              <ScriptBlock>
+                function FormatHashtable( $ht )
+                {
+                    if( $null -eq $ht )
+                    {
+                        return '$null'
+                    }
+
+                    $displayString = [System.Text.StringBuilder]@{}
+                    [void] $displayString.Append( "@{" )
+                    $first = $true
+                    
+                    foreach($key in $ht.Keys)
+                    {
+                        if ($first)
+                        {
+                            $first = $false;
+                        }
+                        else
+                        {
+                            [void] $displayString.Append( ";" )
+                        }
+                        [void] $displayString.Append( " '" )
+                        [void] $displayString.Append( $key.ToString() )
+                        [void] $displayString.Append( "' = " )
+                        $val = ""
+                        if( $null -eq $ht[ $key ] )
+                        {
+                            $val = '$null'
+                        }
+                        else
+                        {
+                            $val = "'$($ht[ $key ].ToString())'"
+                        }
+                        [void] $displayString.Append( $val )
+                    }
+
+                    [void] $displayString.Append( " }" )
+                    return $displayString.ToString()
+                } # end function FormatHashtable
+
+                if ($_.Value -is [Hashtable])
+                {
+                    return FormatHashtable( $_.Value )
+                }
+                elseif ($_.Value -is [Hashtable[]])
+                {
+                    $_.Value | % { FormatHashtable( $_ ) }
+                }
+                elseif ($_.Name -eq "ResourceGroupName")
+                {
+                    [string] $groupName = $_.Value
+                    [void] ($c = Get-Cluster)
+                    if( $null -ne $c )
+                    {
+                        # We are running on a cluster node, so we don't need to
+                        # know the cluster name to look up the owning node.
+                        return "$groupName ($((Get-ClusterGroup $groupName).OwnerNode.Name))"
+                    }
+                    else
+                    {
+                        return $groupName
+                    }
+                }
+                elseif ($null -eq $_.Value)
+                {
+                    return '$null'
+                }
+                else
+                {
+                    return $_.Value;
+                }
+              </ScriptBlock>
+            </ListItem>
+          </ListItems>
+        </ListEntry>
+      </ListEntries>
+    </ListControl>
+  </View>
+  <View>
+    <Name>CauReportSummaryList</Name>
+    <ViewSelectedBy>
+      <TypeName>Microsoft.ClusterAwareUpdating.CauReportSummary</TypeName>
+    </ViewSelectedBy>
+    <ListControl>
+      <ListEntries>
+        <!-- Quality update will be default view -->
+        <ListEntry>
+          <ListItems>
+            <ListItem>
+              <PropertyName>ClusterName</PropertyName>
+            </ListItem>
+            <ListItem>
+              <PropertyName>Status</PropertyName>
+            </ListItem>
+            <ListItem>
+              <Label>StartTimestamp</Label>
+              <ScriptBlock>
+                if( $_.StartTimestamp -ne [DateTime]::MinValue )
+                {
+                    [System.TimeZoneInfo]::ConvertTimeFromUtc($_.StartTimestamp, ([System.TimeZoneInfo]::Local))
+                }
+              </ScriptBlock>
+            </ListItem>
+            <ListItem>
+              <PropertyName>CountOfSucceededResults</PropertyName>
+            </ListItem>
+            <ListItem>
+              <PropertyName>CountOfFailedResults</PropertyName>
+            </ListItem>
+            <ListItem>
+              <PropertyName>CountOfCanceledResults</PropertyName>
+            </ListItem>
+            <ListItem>
+              <PropertyName>HadTransientInstallError</PropertyName>
+            </ListItem>
+          </ListItems>
+        </ListEntry>
+        <!-- Feature update (OS upgrade) view -->
+        <ListEntry>
+          <EntrySelectedBy>
+            <SelectionCondition>
+              <TypeName>Microsoft.ClusterAwareUpdating.CauReportSummary</TypeName>
+              <PropertyName>UpgradingOs</PropertyName>
+            </SelectionCondition>
+          </EntrySelectedBy>
+          <ListItems>
+            <ListItem>
+              <PropertyName>ClusterName</PropertyName>
+            </ListItem>
+            <ListItem>
+              <PropertyName>Status</PropertyName>
+            </ListItem>
+            <ListItem>
+              <Label>StartTimestamp</Label>
+              <ScriptBlock>
+                if( $_.StartTimestamp -ne [DateTime]::MinValue )
+                {
+                    [System.TimeZoneInfo]::ConvertTimeFromUtc($_.StartTimestamp, ([System.TimeZoneInfo]::Local))
+                }
+              </ScriptBlock>
+            </ListItem>
+            <ListItem>
+              <Label>CountOfSucceededNodes</Label>
+              <PropertyName>CountOfSucceededResults</PropertyName>
+            </ListItem>
+            <ListItem>
+              <Label>CountOfFailedNodes</Label>
+              <PropertyName>CountOfFailedResults</PropertyName>
+            </ListItem>
+            <ListItem>
+              <Label>CountOfCanceledNodes</Label>
+              <PropertyName>CountOfCanceledResults</PropertyName>
+            </ListItem>
+          </ListItems>
+        </ListEntry>
+      </ListEntries>
+    </ListControl>
+  </View>
+  <View>
+    <!-- PLACEHOLDER: to add feature update (OS upgrade CauReportSummary) if necessary -->
+    <Name>CauReportSummaryTable</Name>
+    <ViewSelectedBy>
+      <TypeName>Microsoft.ClusterAwareUpdating.CauReportSummary</TypeName>
+    </ViewSelectedBy>
+    <TableControl>
+      <TableHeaders>
+        <TableColumnHeader>
+          <Width>18</Width>
+        </TableColumnHeader>
+        <TableColumnHeader>
+          <Width>14</Width>
+        </TableColumnHeader>
+        <TableColumnHeader>
+          <Label>StartTimestamp</Label>
+          <Width>25</Width>
+        </TableColumnHeader>
+        <TableColumnHeader>
+          <Label>Updates succeeded / failed / canceled</Label>
+          <Width>39</Width>
+        </TableColumnHeader>
+      </TableHeaders>
+      <TableRowEntries>
+        <TableRowEntry>
+          <TableColumnItems>
+            <TableColumnItem>
+              <PropertyName>ClusterName</PropertyName>
+            </TableColumnItem>
+            <TableColumnItem>
+              <PropertyName>Status</PropertyName>
+            </TableColumnItem>
+            <TableColumnItem>
+              <ScriptBlock>
+                if( $_.StartTimestamp -ne [DateTime]::MinValue )
+                {
+                    [System.TimeZoneInfo]::ConvertTimeFromUtc($_.StartTimestamp, ([System.TimeZoneInfo]::Local))
+                }
+              </ScriptBlock>
+            </TableColumnItem>
+            <TableColumnItem>
+              <ScriptBlock>
+              try
+              {
+                function pad( [int] $i, [int] $len )
+                {
+                    if( $i -eq 0 )
+                    {
+                        return (New-Object string @( " ", $len ))
+                    }
+                    [string] $s = $i.ToString();
+                    if( $s.Length -lt $len )
+                    {
+                        return (New-Object string @( " ", ($len - $s.Length) )) + $s
+                    }
+                    else
+                    {
+                        return $s
+                    }
+                }
+                "        $(pad $_.CountOfSucceededResults 4) / $(pad $_.CountOfFailedResults 4) / $(pad $_.CountOfCanceledResults 4)"
+              }
+              catch
+              {
+                  [console]::WriteLine( $_ )
+              }
+              </ScriptBlock>
+            </TableColumnItem>
+          </TableColumnItems>
+        </TableRowEntry>
+      </TableRowEntries>
+    </TableControl>
+  </View>
+  <View>
+    <Name>CauReportList</Name>
+    <ViewSelectedBy>
+      <TypeName>Microsoft.ClusterAwareUpdating.CauReport</TypeName>
+    </ViewSelectedBy>
+    <ListControl>
+      <ListEntries>
+        <ListEntry>
+          <ListItems>
+            <ListItem>
+              <Label>ClusterName</Label>
+              <ScriptBlock>
+                $_.ClusterResult.Name
+              </ScriptBlock>
+            </ListItem>
+            <ListItem>
+              <Label>ClusterResult.Status</Label>
+              <ScriptBlock>
+                $_.ClusterResult.Status
+              </ScriptBlock>
+            </ListItem>
+            <ListItem>
+              <Label>ClusterResult.StartTimestamp</Label>
+              <ScriptBlock>
+                if( $_.ClusterResult.StartTimestamp -ne [DateTime]::MinValue )
+                {
+                    [System.TimeZoneInfo]::ConvertTimeFromUtc($_.ClusterResult.StartTimestamp, ([System.TimeZoneInfo]::Local))
+                }
+              </ScriptBlock>
+            </ListItem>
+            <ListItem>
+              <Label>ClusterResult.RunDuration</Label>
+              <ScriptBlock>
+                if( $_.ClusterResult.RunDuration -ne [TimeSpan]::MinValue )
+                {
+                    [TimeSpan]::FromSeconds( [Math]::Round( $_.ClusterResult.RunDuration.TotalSeconds ) ).ToString( "g" )
+                }
+              </ScriptBlock>
+            </ListItem>
+            <ListItem>
+              <Label>ClusterResult.NodeResults</Label>
+              <ScriptBlock>
+                #$_.ClusterResult.NodeResults
+                foreach( $nr in $_.ClusterResult.NodeResults )
+                {
+                    "`n" + $nr.Node + ": " + $nr.Status + ", ..."
+                }
+              </ScriptBlock>
+            </ListItem>
+            <ListItem>
+              <Label>ClusterResult.RunId</Label>
+              <ScriptBlock>
+                $_.ClusterResult.RunId
+              </ScriptBlock>
+            </ListItem>
+            <ListItem>
+              <Label>ClusterResult.ErrorRecordData</Label>
+              <ScriptBlock>
+                $_.ClusterResult.ErrorRecordData
+              </ScriptBlock>
+            </ListItem>
+            <ListItem>
+              <PropertyName>OrchestratorMachine</PropertyName>
+            </ListItem>
+            <ListItem>
+              <PropertyName>OrchestratorUser</PropertyName>
+            </ListItem>
+            <ListItem>
+              <PropertyName>OrchestratorUpdateAccount</PropertyName>
+            </ListItem>
+            <ListItem>
+              <PropertyName>Plugin</PropertyName>
+            </ListItem>
+            <ListItem>
+              <PropertyName>Command</PropertyName>
+            </ListItem>
+          </ListItems>
+        </ListEntry>
+      </ListEntries>
+    </ListControl>
+  </View>
+  <View>
+    <Name>CauReportTable</Name>
+    <ViewSelectedBy>
+      <TypeName>Microsoft.ClusterAwareUpdating.CauReport</TypeName>
+    </ViewSelectedBy>
+    <TableControl>
+      <TableHeaders>
+        <TableColumnHeader>
+          <Label>ClusterName</Label>
+          <Width>18</Width>
+        </TableColumnHeader>
+        <TableColumnHeader>
+          <Label>Status</Label>
+          <Width>14</Width>
+        </TableColumnHeader>
+        <TableColumnHeader>
+          <Label>StartTimestamp</Label>
+          <Width>25</Width>
+        </TableColumnHeader>
+        <TableColumnHeader>
+        </TableColumnHeader>
+        <TableColumnHeader>
+          <Label>Plugins</Label>
+        </TableColumnHeader>
+      </TableHeaders>
+      <TableRowEntries>
+        <TableRowEntry>
+          <TableColumnItems>
+            <TableColumnItem>
+              <ScriptBlock>
+                $_.ClusterResult.Name
+              </ScriptBlock>
+            </TableColumnItem>
+            <TableColumnItem>
+              <ScriptBlock>
+                $_.ClusterResult.Status
+              </ScriptBlock>
+            </TableColumnItem>
+            <TableColumnItem>
+              <ScriptBlock>
+                if( $_.StartTimestamp -ne [DateTime]::MinValue )
+                {
+                    [System.TimeZoneInfo]::ConvertTimeFromUtc($_.ClusterResult.StartTimestamp, ([System.TimeZoneInfo]::Local))
+                }
+              </ScriptBlock>
+            </TableColumnItem>
+            <TableColumnItem>
+              <PropertyName>OrchestratorMachine</PropertyName>
+            </TableColumnItem>
+            <TableColumnItem>
+              <ScriptBlock>
+                function shortenPluginName( [string] $n )
+                {
+                    [int] $idx = $n.LastIndexOf( '.' )
+                    if( ($idx -gt 0) -and ($idx -ne ($n.Length - 1)) )
+                    {
+                        $n = $n.Substring( ($idx + 1) )
+                    }
+                    if( $n.EndsWith( 'Plugin' ) )
+                    {
+                        $n = $n.Substring( 0, ($n.Length - 6) )
+                    }
+                    return $n
+                }
+                foreach( $plugin in $_.Plugin.Split( @( ", " ), [StringSplitOptions]::None ) )
+                {
+                    shortenPluginName $plugin
+                }
+              </ScriptBlock>
+            </TableColumnItem>
+          </TableColumnItems>
+        </TableRowEntry>
+      </TableRowEntries>
+    </TableControl>
+  </View>
+</ViewDefinitions>
+</Configuration>

@@ -1,0 +1,134 @@
+﻿<?xml version='1.0' encoding='utf-8' standalone='yes'?>
+<assembly
+    xmlns="urn:schemas-microsoft-com:asm.v3"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    authors="mikedice"
+    buildFilter=""
+    company="Microsoft"
+    copyright=""
+    creationTimeStamp="2003-07-21T16:37:03.6090709-07:00"
+    description="Downlevel manifest for MSMQ core messaging."
+    displayName="Downlevel manifest for MSMQ core messaging"
+    lastUpdateTimeStamp="2004-11-11T23:01:42.1450255-08:00"
+    manifestVersion="1.0"
+    owners="MikeDice;AnandRaj"
+    supportInformation=""
+    testers="AshishW"
+    >
+  <assemblyIdentity
+      buildFilter=""
+      buildType="$(build.buildType)"
+      language="neutral"
+      name="Microsoft-Windows-msmq-messagingcoreservice-DL"
+      processorArchitecture="*"
+      publicKeyToken="$(Build.WindowsPublicKeyToken)"
+      version="0.0.0.0"
+      versionScope="nonSxS"
+      />
+  <migration>
+    <registerSDF name="MSMQ-Server"/>
+    <migXml xmlns="">
+      <!-- Plugin is used only to shut down services so files can be reliably collected. Service shutdown should be synchronous -->
+      <plugin
+          classId="{ebe40fc9-925b-4f97-9ca1-f905a52b1c3c}"
+          file="Microsoft-Windows-msmq-messagingcoreservice\mqmigplugin.dll"
+          />
+      <detects>
+        <!-- Detect supported platform: Win2k, WinXP, Win2k3 -->
+        <detect>
+          <condition>MigXmlHelper.DoesOSMatch("NT","5.1.*")</condition>
+          <condition>MigXmlHelper.DoesOSMatch("NT","5.2.*")</condition>
+        </detect>
+        <!-- Detect installation of MQSVC and MQAC -->
+        <detect>
+          <condition>MigXmlHelper.DoesObjectExist("Registry", "HKLM\SYSTEM\CurrentControlSet\Services\MSMQ")</condition>
+        </detect>
+        <detect>
+          <condition>MigXmlHelper.DoesStringContentContain("Registry", "HKLM\SYSTEM\CurrentControlSet\Services\MSMQ[ImagePath]", "mqsvc.exe")</condition>
+        </detect>
+        <detect>
+          <condition>MigXmlHelper.DoesObjectExist("Registry", "HKLM\SYSTEM\CurrentControlSet\Services\MQAC")</condition>
+        </detect>
+        <detect>
+          <condition>MigXmlHelper.DoesStringContentContain("Registry", "HKLM\SYSTEM\CurrentControlSet\Services\MQAC[ImagePath]", "mqac.sys")</condition>
+        </detect>
+        <!-- Detect presence of main MSMQ files -->
+        <detect>
+          <condition>MigXmlHelper.DoesObjectExist("File", "%windir%\system32\mqsvc.exe");</condition>
+        </detect>
+        <detect>
+          <condition>MigXmlHelper.DoesObjectExist("File", "%windir%\system32\drivers\mqac.sys");</condition>
+        </detect>
+        <detect>
+          <condition>MigXmlHelper.DoesObjectExist("File", "%windir%\system32\mqrt.dll");</condition>
+        </detect>
+        <!-- Detect registry conditions -->
+        <detect>
+          <condition>MigXmlHelper.DoesObjectExist("Registry", "HKLM\SOFTWARE\Microsoft\MSMQ\Parameters")</condition>
+        </detect>
+        <detect>
+          <condition>MigXmlHelper.DoesObjectExist("Registry", "HKLM\SOFTWARE\Microsoft\MSMQ\Parameters\Setup")</condition>
+        </detect>
+      </detects>
+    </migXml>
+    <!-- machineSpecific stuff is only used for Upgrade scenarios and not for machine to machine migration -->
+    <machineSpecific>
+      <migXml
+          xmlns=""
+          xmlns:auto-ns1="urn:schemas-microsoft-com:asm.v3"
+          xmlns:auto-ns2="urn:schemas-microsoft-com:asm.v3"
+          >
+        <!-- Set environment variables so we get storage files from the right place. -->
+        <environment context="System">
+          <variable name="varStoreReliablePath">
+            <script>MigXmlHelper.GetStringContent("Registry","HKLM\Software\Microsoft\MSMQ\Parameters [StoreReliablePath]")</script>
+          </variable>
+          <variable name="varStoreXactLogPath">
+            <script>MigXmlHelper.GetStringContent("Registry","HKLM\Software\Microsoft\MSMQ\Parameters [StoreXactLogPath]")</script>
+          </variable>
+          <variable name="varStoreLogPath">
+            <script>MigXmlHelper.GetStringContent("Registry","HKLM\Software\Microsoft\MSMQ\Parameters [StoreLogPath]")</script>
+          </variable>
+          <variable name="varStorePersistentPath">
+            <script>MigXmlHelper.GetStringContent("Registry","HKLM\Software\Microsoft\MSMQ\Parameters [StorePersistentPath]")</script>
+          </variable>
+          <variable name="varStoreJournalPath">
+            <script>MigXmlHelper.GetStringContent("Registry","HKLM\Software\Microsoft\MSMQ\Parameters [StoreJournalPath]")</script>
+          </variable>
+          <variable name="varMsmqRootPath">
+            <script>MigXmlHelper.GetStringContent("Registry","HKLM\Software\Microsoft\MSMQ\Parameters [MsmqRootPath]")</script>
+          </variable>
+        </environment>
+        <!-- Settings and data to be collected for the System. -->
+        <rules context="System">
+          <include>
+            <objectSet>
+              <pattern type="File">%varStoreReliablePath%[*.mq]</pattern>
+              <pattern type="File">%varStorePersistentPath%[*.mq]</pattern>
+              <pattern type="File">%varStoreXactLogPath%[*.lg*]</pattern>
+              <pattern type="File">%varStoreLogPath%[*.mq]</pattern>
+              <pattern type="File">%varStoreJournalPath%[*.mq]</pattern>
+              <pattern type="File">%varMsmqRootPath%\storage\lqs[*]</pattern>
+              <pattern type="File">%varMsmqRootPath%\storage\[QMLog]</pattern>
+            </objectSet>
+            <objectSet>
+              <pattern type="Registry">HKLM\SOFTWARE\Microsoft\MSMQ\Parameters\* [*]</pattern>
+              <pattern type="Registry">HKLM\SOFTWARE\Microsoft\MSMQ\Setup\* [*]</pattern>
+            </objectSet>
+          </include>
+          <exclude>
+            <objectSet>
+              <pattern type="Registry">HKLM\Software\Microsoft\MSMQ\Parameters\CertificationAuthorities\* [*]</pattern>
+              <pattern type="Registry">HKLM\Software\Microsoft\MSMQ\Parameters\MachineCache[StaticMQISServer]</pattern>
+              <pattern type="Registry">HKLM\Software\Microsoft\MSMQ\Parameters\MachineCache[ForcedDSServer]</pattern>
+              <pattern type="Registry">HKLM\Software\Microsoft\MSMQ\Parameters\MachineCache[PerThreadDSServer]</pattern>
+              <pattern type="Registry">HKLM\Software\Microsoft\MSMQ\Parameters\OCMsetup</pattern>
+              <pattern type="Registry">HKLM\Software\Microsoft\MSMQ\Parameters\setup[AlwaysWithoutDS]</pattern>
+            </objectSet>
+          </exclude>
+        </rules>
+      </migXml>
+    </machineSpecific>
+  </migration>
+</assembly>

@@ -1,0 +1,124 @@
+<?xml version= "1.0" encoding="utf-8"?>
+<grammar sapi:CarrierPhraseGr="{B2CD2657-539B-4CD4-A9EC-8EA4C77B8F20}" mode="voice" root="SeeItSayIt_SpeechRoot" tag-format="semantics/1.0" version="1.0" xml:lang="en-us" xmlns="http://www.w3.org/2001/06/grammar" xmlns:sapi="http://schemas.microsoft.com/Speech/2002/06/SRGSExtensions">
+
+  <rule id="f_">
+    <item>
+      <item repeat="0-1">
+        <one-of>
+          <item>click</item>
+          <item>press</item>
+          <item>tap</item>
+          <item>toggle</item>
+        </one-of>
+      </item>
+      <ruleref uri="#d_"/>
+    </item>
+    <tag>out.f_domain_="SeeItSayIt";out.f_intent_="Click";if(rules.d_!=null){out.d_ControlName=rules.d_;}if(rules.b_!=null){out.b_ControlList=rules.b_;}</tag>
+  </rule>
+
+  <rule id="d_">
+    <item weight="1">
+      <ruleref uri="sharing:ControlName"/>
+      <tag>out=rules.latest()</tag>
+    </item>
+  </rule>
+
+  <rule id="b_">
+    <one-of>
+      <item>
+        OK<tag>out="ok_btn"</tag>
+      </item>
+      <item>
+        Next<tag>out="next_btn"</tag>
+      </item>
+    </one-of>
+  </rule>
+
+  <rule id="g_">
+    <item>
+      <item repeat="0-1">
+        <one-of>
+          <item>click</item>
+          <item>press</item>
+          <item>tap</item>
+          <item>toggle</item>
+        </one-of>
+      </item>
+      <ruleref uri="#d_"/>
+    </item>
+    <tag>out.g_domain_="SeeItSayIt";out.g_intent_="Click";if(rules.d_!=null){out.d_ControlName=rules.d_;}if(rules.b_!=null){out.b_ControlList=rules.b_;}</tag>
+  </rule>
+
+  <rule id="h_">
+    <one-of>
+      <item>
+        <item>start dictating to</item>
+        <ruleref uri="#e_"/>
+      </item>
+      <item>start dictating</item>
+    </one-of>
+    <tag>out.h_domain_="SeeItSayIt";out.__aumid="KWS";out.h_intent_="Dictate";if(rules.e_!=null){out.e_TextBoxName=rules.e_;}if(rules.c_!=null){out.c_TextBoxList=rules.c_;}</tag>
+  </rule>
+
+  <rule id="e_">
+    <item weight="1">
+      <ruleref uri="sharing:TextBoxName"/>
+      <tag>out=rules.latest()</tag>
+    </item>
+  </rule>
+
+  <rule id="c_">
+    <one-of>
+      <item>
+        firstName<tag>out="First Name"</tag>
+      </item>
+      <item>
+        lastName<tag>out="Last Name"</tag>
+      </item>
+      <item>
+        email<tag>out="E-Mail Address"</tag>
+      </item>
+    </one-of>
+  </rule>
+
+  <rule id="i_">
+    <one-of>
+      <item>
+        <item>start dictating to</item>
+        <ruleref uri="#e_"/>
+      </item>
+      <item>start dictating</item>
+    </one-of>
+    <tag>out.i_domain_="SeeItSayIt";out.__aumid="KWS";out.i_intent_="Dictate";if(rules.e_!=null){out.e_TextBoxName=rules.e_;}if(rules.c_!=null){out.c_TextBoxList=rules.c_;}</tag>
+  </rule>
+
+  <rule id="SeeItSayIt_SpeechRoot" scope="public">
+    <item>
+      <one-of>
+        <item>
+          <ruleref uri="#f_"/>
+        </item>
+        <item>
+          <ruleref uri="#h_"/>
+        </item>
+      </one-of>
+      <tag>out.rule=rules.latest();</tag>
+    </item>
+    <tag>out=out.rule;</tag>
+  </rule>
+
+  <rule id="SeeItSayIt_TextRoot" scope="public">
+    <item>
+      <one-of>
+        <item>
+          <ruleref uri="#g_"/>
+        </item>
+        <item>
+          <ruleref uri="#i_"/>
+        </item>
+      </one-of>
+      <tag>out.rule=rules.latest();</tag>
+    </item>
+    <tag>out=out.rule;</tag>
+  </rule>
+</grammar>

@@ -1,0 +1,100 @@
+﻿<?xml version='1.0' encoding='utf-8' standalone='yes'?>
+<assembly>
+  <!-- AuthUI has 3 different component names that matter in its migration story.
+       The one that applies during the migration gather phase is as follows:
+           Microsoft-Windows-Authentication-AuthUI: Vista and Win7
+           Microsoft-Windows-Authentication-AuthUI-Component: Win8 (and beyond)
+       In order to support migration from Vista/Win7 to Win8, we update the Microsoft-Windows-Authentication-AuthUI component
+       to gather in the MigWiz scope (in addition to the Upgrade scope, which it already supported).
+       -->
+  <assemblyIdentity
+      buildType="$(build.buildType)"
+      language="neutral"
+      name="Microsoft-Windows-Authentication-AuthUI"
+      processorArchitecture="*"
+      publicKeyToken=""
+      version="0.0.0.0"
+      versionScope="nonSxS"
+      />
+  <migration 
+      optimizePatterns="no"
+      offlineApply="no"
+      alwaysProcess="yes"
+      scope="MigWiz,Upgrade"
+      replacementVersionRange="6.0-6.1" 
+      replacementSettingsVersionRange="0"
+      settingsVersion="0"
+    >
+    <migXml xmlns="">
+      <rules context="System">
+        <include>
+          <objectSet>
+            <!-- Downlevel settings -->
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [DefaultUserName]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [DefaultDomainName]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [DefaultPassword]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [AutoAdminLogon]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [AutoLogonCount]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [ForceAutoLogon]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [IgnoreShiftOverride]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [DontDisplayLastUserName]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [DontDisplayLockedUserId]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [ShutdownWithoutLogon]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon\SpecialAccounts\* [*]</pattern>
+            <!-- Vista settings -->
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows\CurrentVersion\Authentication\LogonUI [LastLoggedOnProvider]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows\CurrentVersion\Authentication\LogonUI [LastLoggedOnUser]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows\CurrentVersion\Authentication\LogonUI [LastLoggedOnSAMUser]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows\CurrentVersion\Authentication\LogonUI\BootAnimation [DisableStartupSound]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows\CurrentVersion\Authentication\Credential Providers\* [*]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows\CurrentVersion\Authentication\Credential Provider Filters\* [*]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows\CurrentVersion\Authentication\PLAP Providers\* [*]</pattern>
+            <!-- Win7 settings -->
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows\CurrentVersion\Authentication\LogonUI [ShowTabletKeyboard]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows\CurrentVersion\Authentication\LogonUI\Background [OEMBackground]</pattern>
+            <!-- OEM backgrounds -->
+            <pattern type="File">%windir%\system32\oobe\info\backgrounds [background*.jpg]</pattern>
+          </objectSet>
+        </include>
+        <exclude>
+          <objectSet>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows\CurrentVersion\Authentication\Credential Providers\{6f45dc1e-5384-457a-bc13-2cd81b0d28ed}\* [*]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows\CurrentVersion\Authentication\Credential Providers\{8bf9a910-a8ff-457f-999f-a5ca10b4a885}\* [*]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows\CurrentVersion\Authentication\Credential Providers\{AC3AC249-E820-4343-A65B-377AC634DC09}\* [*]</pattern>
+            <!-- Skip migrating FIDO credential provider since the provider manifest has its own migration section -->
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Authentication\Credential Providers\{F8A1793B-7873-4046-B2A7-1F318747F427}\* [*]</pattern>
+          </objectSet>
+        </exclude>
+        <merge script="MigXmlHelper.SourcePriority()">
+          <objectSet>
+            <!-- Downlevel settings -->
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [DefaultUserName]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [DefaultDomainName]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [DefaultPassword]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [AutoAdminLogon]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [AutoLogonCount]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [ForceAutoLogon]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [IgnoreShiftOverride]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [DontDisplayLastUserName]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [DontDisplayLockedUserId]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [ShutdownWithoutLogon]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon\SpecialAccounts\* [*]</pattern>
+            <!-- Vista settings -->
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows\CurrentVersion\Authentication\LogonUI [LastLoggedOnProvider]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows\CurrentVersion\Authentication\LogonUI [LastLoggedOnUser]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows\CurrentVersion\Authentication\LogonUI [LastLoggedOnSAMUser]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows\CurrentVersion\Authentication\LogonUI\BootAnimation [DisableStartupSound]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows\CurrentVersion\Authentication\Credential Providers</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows\CurrentVersion\Authentication\Credential Provider Filters</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows\CurrentVersion\Authentication\PLAP Providers</pattern>
+            <!-- Win7 settings -->
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows\CurrentVersion\Authentication\LogonUI [ShowTabletKeyboard]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows\CurrentVersion\Authentication\LogonUI\Background [OEMBackground]</pattern>
+            <!-- OEM backgrounds -->
+            <pattern type="File">%windir%\system32\oobe\info\backgrounds [background*.jpg]</pattern>
+          </objectSet>
+        </merge>
+      </rules>
+    </migXml>
+  </migration>
+</assembly>

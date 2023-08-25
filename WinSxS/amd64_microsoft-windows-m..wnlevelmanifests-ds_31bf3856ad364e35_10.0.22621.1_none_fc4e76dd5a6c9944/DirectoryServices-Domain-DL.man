@@ -1,0 +1,63 @@
+﻿<?xml version='1.0' encoding='utf-8' standalone='yes'?>
+<assembly
+    xmlns="urn:schemas-microsoft-com:asm.v3"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    manifestVersion="1.0"
+    >
+  <assemblyIdentity
+      buildFilter=""
+      buildType="*"
+      language="*"
+      name="Microsoft-Windows-DirectoryServices-Domain-DL"
+      processorArchitecture="*"
+      version="0.0.0.0"
+      versionScope="nonSxS"
+      />
+  <migration>
+    <registerSDF name="DirectoryServices-DomainController"/>
+    <migXml xmlns="">
+      <detects>
+        <detect>
+          <condition>MigXmlHelper.IsOSEarlierThan("NT", "6.0.*.*")</condition>
+        </detect>
+        <detect context="System">
+          <condition>MigXmlHelper.DoesStringContentEqual("Registry", "HKLM\SYSTEM\CurrentControlSet\control\ProductOptions [ProductType]", "LanManNT")</condition>
+        </detect>
+      </detects>
+      <rules context="System">
+       <include>
+         <objectSet>
+	    <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\IsmServ [Start]</pattern>
+	 </objectSet>
+	</include>
+      </rules>
+    </migXml>
+  </migration>
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string
+            buildFilter=""
+            id="description0"
+            value="This manifest contains downlevel upgrade support for Directory Services Domain Controller."
+            />
+        <string
+            buildFilter=""
+            id="displayName0"
+            value="Directory Services Domain Controller Down-Level manifest"
+            />
+        <string
+            buildFilter=""
+            id="displayName1"
+            value="WRP_FILE_DEFAULT_SDDL"
+            />
+        <string
+            buildFilter=""
+            id="description2"
+            value="Default SDDL for Windows Resource Protected file"
+            />
+      </stringTable>
+    </resources>
+  </localization>
+</assembly>

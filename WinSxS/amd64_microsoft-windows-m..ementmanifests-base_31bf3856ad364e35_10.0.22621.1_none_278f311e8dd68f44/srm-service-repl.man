@@ -1,0 +1,83 @@
+﻿<?xml version='1.0' encoding='utf-8' standalone='yes'?>
+<assembly
+    xmlns="urn:schemas-microsoft-com:asm.v3"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    manifestVersion="1.0"
+    >
+  <assemblyIdentity
+      buildType="release"
+      language="neutral"
+      name="Microsoft-Windows-FSRM-Service"
+      processorArchitecture="*"
+      version="0.0.0.0"
+      versionScope="nonSxS"
+      />
+  <migration
+      xmlns:auto-ns1="urn:schemas-microsoft-com:asm.v3"
+      replacementSettingsVersionRange="0"
+      replacementVersionRange="6.0.*"
+      scope="Upgrade,SvrMig"
+      settingsVersion="0"
+      >
+    <supportedComponents>
+      <!-- Self-declare this component for migrating from Vista -->
+      <supportedComponent>
+        <supportedComponentIdentity
+            buildFilter=""
+            buildType="$(build.buildType)"
+            language="*"
+            name="Microsoft-Windows-FSRM-Service"
+            processorArchitecture="*"
+            publicKeyToken="$(Build.WindowsPublicKeyToken)"
+            settingsVersionRange="0"
+            type=""
+            versionScope="nonSxS"
+            />
+        <migXml xmlns="">
+          <rules context="System">
+            <merge script="MigXmlHelper.SourcePriority()">
+              <objectSet>
+                <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\SrmSvc\Settings\* [*]</pattern>
+                <pattern type="File">%systemdrive%\System Volume Information\SRM\* [*]</pattern>
+              </objectSet>
+            </merge>
+          </rules>
+        </migXml>
+      </supportedComponent>
+    </supportedComponents>
+    <migXml xmlns="">
+      <rules context="System">
+        <include>
+          <objectSet>
+            <!-- List values in same order as in the <configuration> section. -->
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\SrmSvc\Settings [DisableSearchDfs]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\SrmSvc\Settings [SharePathRefreshMinutes]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\SrmSvc\Settings [MaxThreadPoolWorkItems]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\SrmSvc\Settings [MaxQueuedEvents]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\SrmSvc\Settings [QuotaDeleteBatchQueueLength]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\SrmSvc\Settings [AutoQuotaCreateBatchQueueLength]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\SrmSvc\Settings [QuotaDeleteBatchQueueFlushPeriodSeconds]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\SrmSvc\Settings [AutoQuotaCreateBatchQueueFlushPeriodSeconds]</pattern>
+            <pattern type="File">%systemdrive%\System Volume Information\SRM\* [*]</pattern>
+          </objectSet>
+        </include>
+        <exclude>
+          <objectSet>
+            <pattern type="File">%systemdrive%\System Volume Information\SRM [quota.md]</pattern>
+            <pattern type="File">%systemdrive%\System Volume Information\SRM [quota.xml]</pattern>
+            <pattern type="File">%systemdrive%\System Volume Information\SRM [datascrn.md]</pattern>
+            <pattern type="File">%systemdrive%\System Volume Information\SRM [DataScreenDatabase.xml]</pattern>
+          </objectSet>
+        </exclude>
+        <!-- Specify merge resolution handler. Source priority forces migrate from source. -->
+        <merge script="MigXmlHelper.SourcePriority()">
+          <objectSet>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\SrmSvc\Settings\* [*]</pattern>
+            <pattern type="File">%systemdrive%\System Volume Information\SRM\* [*]</pattern>
+          </objectSet>
+        </merge>
+      </rules>
+    </migXml>
+  </migration>
+</assembly>

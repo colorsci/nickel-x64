@@ -1,0 +1,100 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?Copyright (c) Microsoft Corporation. All rights reserved.?>
+<!-- ==========================================Security Warning==========================================-->
+<!-- This configuration file controls how the Microsoft.HotfixPlugin coordinates the installation of 
+     hotfixes in a failover cluster. You should maintain this file in a secure location and ensure that 
+     appropriate safeguards are in place to restrict access to authorized users.
+     If a malicious user tampers with this file, it is possible to corrupt or destroy important data or 
+     functionality on the failover cluster when hotfixes are applied.
+-->
+<root>
+  <DefaultRules>
+    <ExtensionRules>
+      <Extension name="MSI">
+        <Template path="%systemroot%\system32\msiexec.exe" parameters="/i $update$ /quiet /norestart"/>
+        <ExitConditions>
+          <Success>
+            <ExitCode code="0"/>
+          </Success>
+          <Success_RebootRequired>
+            <ExitCode code="3010"/> <!-- ERROR_SUCCESS_REBOOT_REQUIRED -->
+          </Success_RebootRequired>
+          <Fail_RebootRequired>
+            <ExitCode code="3017"/> <!-- ERROR_FAIL_REBOOT_REQUIRED -->
+          </Fail_RebootRequired>
+          <NotApplicable>
+            <ExitCode code="1642"/> <!-- ERROR_PATCH_TARGET_NOT_FOUND -->
+          </NotApplicable>
+        </ExitConditions>             
+      </Extension>
+      <Extension name="MSU">
+        <Template path="%systemroot%\system32\wusa.exe" parameters="$update$ /quiet /norestart"/>
+        <ExitConditions>
+          <Success>
+            <ExitCode code="0"/>
+          </Success>
+          <Success_RebootRequired>
+            <ExitCode code="0x00240005"/> <!-- WU_S_REBOOT_REQUIRED -->
+            <ExitCode code="3010"/>       <!-- ERROR_SUCCESS_REBOOT_REQUIRED -->
+          </Success_RebootRequired>
+          <Fail_RebootRequired>
+            <ExitCode code="3017"/>        <!-- ERROR_FAIL_REBOOT_REQUIRED -->
+            <ExitCode code="0x8024D00E"/> <!-- WU_E_SETUP_REBOOTREQUIRED -->
+          </Fail_RebootRequired>
+          <NotApplicable>
+            <ExitCode code="0x80240017"/>  <!-- WU_E_NOT_APPLICABLE -->
+          </NotApplicable>
+          <AlreadyInstalled>
+            <ExitCode code="0x00240006" /> <!-- WU_S_ALREADY_INSTALLED -->
+          </AlreadyInstalled>
+        </ExitConditions>
+      </Extension>
+      <Extension name="MSP">
+        <Template path="%systemroot%\system32\msiexec.exe" parameters="/update $update$ /quiet /norestart"/>
+        <ExitConditions>
+          <Success>
+            <ExitCode code="0"/>
+          </Success>
+          <Success_RebootRequired>
+            <ExitCode code="3010"/>        <!-- ERROR_SUCCESS_REBOOT_REQUIRED -->
+          </Success_RebootRequired>
+          <Fail_RebootRequired>
+            <ExitCode code="3017"/>        <!-- ERROR_FAIL_REBOOT_REQUIRED -->           
+          </Fail_RebootRequired>
+          <NotApplicable>
+            <ExitCode code="1642"/>        <!-- ERROR_PATCH_TARGET_NOT_FOUND -->
+        </NotApplicable>
+        </ExitConditions>
+      </Extension>
+    </ExtensionRules>
+  </DefaultRules>
+  <!-- Folder Rules section below can be used for extending the hotfix plugin to install other type of updates
+  <FolderRules>
+    <Folder name="Custom_Update" alwaysReboot="true">      
+      <Template path="$update$" parameters="/i /q"/>
+      <ExitConditions>
+        <Success>
+          <ExitCode code="0"/>
+        </Success>
+        <Success_RebootRequired>
+          <ExitCode code="3010"/>
+        </Success_RebootRequired>
+        <Fail_RebootRequired>
+          <ExitCode code="3017"/>
+        </Fail_RebootRequired>
+      </ExitConditions>
+    </Folder>
+    <Folder name="Firmware_Update">
+      <Template path="$update$" parameters="/install /quiet /noreboot"/>
+      <ExitConditions>
+        <Success>
+          <ExitCode code="0"/>
+        </Success>
+        <Success_RebootRequired>
+          <ExitCode code="1"/>
+        </Success_RebootRequired>
+      </ExitConditions>
+    </Folder>
+  </FolderRules>
+  -->  
+</root>

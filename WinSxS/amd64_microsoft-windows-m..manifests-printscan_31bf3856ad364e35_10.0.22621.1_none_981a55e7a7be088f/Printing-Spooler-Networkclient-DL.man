@@ -1,0 +1,69 @@
+﻿<?xml version='1.0' encoding='utf-8' standalone='yes'?>
+<assembly
+    xmlns="urn:schemas-microsoft-com:asm.v3"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    authors="cmjones"
+    buildFilter=""
+    company="Microsoft"
+    copyright=""
+    creationTimeStamp="2003-07-16T15:16:31.1697380-07:00"
+    description="$(resourceString.description10)"
+    displayName="$(resourceString.displayName9)"
+    lastUpdateTimeStamp="2005-02-14T00:02:35.0559845-08:00"
+    manifestVersion="1.0"
+    owners="cmjones"
+    supportInformation=""
+    testers="alanmo"
+    >
+  <assemblyIdentity
+      buildFilter=""
+      buildType="release"
+      language="neutral"
+      name="Microsoft-Windows-Printing-Spooler-Networkclient-DL"
+      processorArchitecture="*"
+      publicKeyToken="$(Build.WindowsPublicKeyToken)"
+      type=""
+      version="0.0.0.0"
+      versionScope="nonSxS"
+      />
+  <migration
+      xmlns=""
+      scope="Upgrade,MigWiz,USMT"
+      >
+    <migXml>
+      <!-- Only call on 2K, XP .. not pre RTM LH -->
+      <detects>
+        <detect>
+          <condition>MigXmlHelper.IsOSEarlierThan("NT","6.0.0.0")</condition>
+        </detect>
+      </detects>
+      <rules context="System">
+        <include>
+          <objectSet>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Control\Print\Providers\LanMan Print Services\Servers [AddPrinterDrivers]</pattern>
+            <!--
+             ListOfPerMachinePrinterConnection.
+            -->
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Control\Print\Connections\* [*]</pattern>
+          </objectSet>
+        </include>
+      </rules>
+      <rules context="User">
+        <include>
+          <objectSet>
+            <!--
+             DevModes2ListType.
+            -->
+            <pattern type="Registry">HKCU\Printers\DevModes2 [\\*]</pattern>
+            <!--
+             ListOfPrinterConnection.
+            -->
+            <pattern type="Registry">HKCU\Printers\Connections\* [*]</pattern>
+          </objectSet>
+        </include>
+      </rules>
+    </migXml>
+    <migrationDisplayID>Hardware\Printers_and_Faxes</migrationDisplayID>
+  </migration>
+</assembly>

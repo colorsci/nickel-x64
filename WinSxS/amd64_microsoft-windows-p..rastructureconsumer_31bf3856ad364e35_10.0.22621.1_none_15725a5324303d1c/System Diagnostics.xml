@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?Copyright (c) Microsoft Corporation. All rights reserved.?>
+<DataCollectorSet>
+  <Name>System Diagnostics</Name>
+  <DisplayName>@%systemroot%\system32\pla.dll,#10035</DisplayName>
+  <Description>@%systemroot%\system32\pla.dll,#10036</Description>
+  <Keyword>Diagnostics</Keyword>
+  <Duration>600</Duration>
+  <SegmentMaxDuration>60</SegmentMaxDuration>
+  <StopOnCompletion>-1</StopOnCompletion>
+  <RootPath>%systemdrive%\perflogs\System\Diagnostics</RootPath>
+  <SubdirectoryFormat>3</SubdirectoryFormat>
+  <SubdirectoryFormatPattern>yyyyMMdd\-NNNNNN</SubdirectoryFormatPattern>
+  <TraceDataCollector>
+    <Name>NT Kernel</Name>
+    <FileName>NtKernel</FileName>
+    <SessionName>NT Kernel Logger</SessionName>
+    <ClockType>1</ClockType>
+    <BufferSize>16</BufferSize>
+    <MaximumBuffers>200</MaximumBuffers>
+    <TraceDataProvider>
+      <Guid>{9E814AAD-3204-11D2-9A82-006008A86939}</Guid>
+      <KeywordsAny>
+        <Value>0x00010303</Value>
+      </KeywordsAny>
+    </TraceDataProvider>
+  </TraceDataCollector>
+  <ConfigurationDataCollector>
+    <Name>Operating System</Name>
+    <ManagementQuery>root\cimv2:SELECT * FROM Win32_OperatingSystem</ManagementQuery>
+    <ManagementQuery>root\cimv2:SELECT * FROM Win32_ComputerSystem</ManagementQuery>
+  </ConfigurationDataCollector>
+  <ConfigurationDataCollector>
+    <Name>Processor</Name>
+    <ManagementQuery>root\cimv2:SELECT * FROM Win32_Processor</ManagementQuery>
+  </ConfigurationDataCollector>
+  <ConfigurationDataCollector>
+    <Name>System Services</Name>
+    <ManagementQuery>root\cimv2:SELECT __Relpath, Name, Caption, Description, DisplayName, PathName, Started, ExitCode, State, ServiceSpecificExitCode FROM Win32_Service</ManagementQuery>
+  </ConfigurationDataCollector>
+  <ConfigurationDataCollector>
+    <Name>Logical Disk Dirty Test</Name>
+    <ManagementQuery>root\cimv2:SELECT __Relpath, Name, Description, FileSystem, VolumeDirty FROM Win32_LogicalDisk Where DriveType = 3 and VolumeDirty = true</ManagementQuery>
+  </ConfigurationDataCollector>
+  <ConfigurationDataCollector>
+    <Name>SMART Disk Check</Name>
+    <ManagementQuery>root\wmi:SELECT * FROM MSStorageDriver_FailurePredictStatus WHERE PredictFailure = true</ManagementQuery>
+  </ConfigurationDataCollector>
+  <ConfigurationDataCollector>
+    <Name>AntiSpywareProduct</Name>
+    <ManagementQuery>root\SecurityCenter:SELECT * FROM AntiSpywareProduct</ManagementQuery>
+  </ConfigurationDataCollector>
+  <ConfigurationDataCollector>
+    <Name>FirewallProduct</Name>
+    <ManagementQuery>root\SecurityCenter:SELECT * FROM FirewallProduct</ManagementQuery>
+  </ConfigurationDataCollector>
+  <ConfigurationDataCollector>
+    <Name>AntiVirusProduct</Name>
+    <ManagementQuery>root\SecurityCenter2:SELECT * FROM AntiVirusProduct</ManagementQuery>
+  </ConfigurationDataCollector>
+  <ConfigurationDataCollector>
+    <DataCollectorType>2</DataCollectorType>
+    <Name>UAC Settings</Name>
+    <RegistryKey>HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System\EnableLUA</RegistryKey>
+  </ConfigurationDataCollector>
+  <ConfigurationDataCollector>
+    <DataCollectorType>2</DataCollectorType>
+    <Name>Windows Update Settings</Name>
+    <RegistryKey>HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsUpdate\\</RegistryKey>
+    <RegistryKey>HKLM\SOFTWARE\Policies\Windows\WindowsUpdate\\</RegistryKey>
+  </ConfigurationDataCollector>
+  <PerformanceCounterDataCollector>
+    <Name>Performance Counter</Name>
+    <SampleInterval>1</SampleInterval>
+    <Counter>\Process(*)\*</Counter>
+    <Counter>\PhysicalDisk(*)\*</Counter>
+    <Counter>\Processor(*)\*</Counter>
+    <Counter>\Memory\*</Counter>
+    <Counter>\System\*</Counter>
+    <Counter>\Server\*</Counter>
+    <Counter>\Network Interface(*)\*</Counter>
+    <Counter>\UDPv4\*</Counter>
+    <Counter>\TCPv4\*</Counter>
+    <Counter>\IPv4\*</Counter>
+    <Counter>\UDPV6\*</Counter>
+    <Counter>\TCPv6\*</Counter>
+    <Counter>\IPv6\*</Counter>
+  </PerformanceCounterDataCollector>
+  <ConfigurationDataCollector>
+    <Name>BIOS</Name>
+    <ManagementQuery>root\cimv2:SELECT * FROM Win32_BIOS</ManagementQuery>
+    <ManagementQuery>root\cimv2:SELECT * FROM Win32_SystemBIOS</ManagementQuery>
+  </ConfigurationDataCollector>
+  <ConfigurationDataCollector>
+    <Name>Controller Classes</Name>
+    <ManagementQuery>root\cimv2:SELECT * FROM Win32_1394Controller</ManagementQuery>
+    <ManagementQuery>root\cimv2:SELECT * FROM Win32_FloppyController</ManagementQuery>
+    <ManagementQuery>root\cimv2:SELECT * FROM Win32_IDEController</ManagementQuery>
+    <ManagementQuery>root\cimv2:SELECT * FROM Win32_SCSIController</ManagementQuery>
+    <ManagementQuery>root\cimv2:SELECT * FROM Win32_USBController</ManagementQuery>
+    <ManagementQuery>root\cimv2:SELECT * FROM Win32_USBHub</ManagementQuery>
+  </ConfigurationDataCollector>
+  <ConfigurationDataCollector>
+    <Name>Cooling Classes</Name>
+    <ManagementQuery>root\cimv2:SELECT * FROM Win32_Fan</ManagementQuery>
+    <ManagementQuery>root\cimv2:SELECT * FROM Win32_HeatPipe</ManagementQuery>
+    <ManagementQuery>root\cimv2:SELECT * FROM Win32_Refrigeration</ManagementQuery>
+    <ManagementQuery>root\cimv2:SELECT * FROM Win32_TemperatureProbe</ManagementQuery>
+  </ConfigurationDataCollector>
+  <ConfigurationDataCollector>
+    <Name>Input Classes</Name>
+    <ManagementQuery>root\cimv2:SELECT * FROM Win32_Keyboard</ManagementQuery>
+    <ManagementQuery>root\cimv2:SELECT * FROM Win32_PointingDevice</ManagementQuery>
+  </ConfigurationDataCollector>
+  <ConfigurationDataCollector>
+    <Name>Memory Classes</Name>
+    <ManagementQuery>root\cimv2:SELECT __RELPATH, Availability, Status, StatusInfo FROM Win32_CacheMemory</ManagementQuery>
+    <ManagementQuery>root\cimv2:SELECT __RELPATH, Availability, Status FROM Win32_DMAChannel</ManagementQuery>
+    <ManagementQuery>root\cimv2:SELECT __RELPATH, Description, Status FROM Win32_SystemMemoryResource</ManagementQuery>
+  </ConfigurationDataCollector>
+  <ConfigurationDataCollector>
+    <Name>Motherboard Classes</Name>
+    <ManagementQuery>root\cimv2:SELECT * FROM Win32_Bus</ManagementQuery>
+    <ManagementQuery>root\cimv2:SELECT * FROM Win32_InfraredDevice</ManagementQuery>
+    <ManagementQuery>root\cimv2:SELECT * FROM Win32_MotherboardDevice</ManagementQuery>
+    <ManagementQuery>root\cimv2:SELECT * FROM Win32_OnBoardDevice</ManagementQuery>
+    <ManagementQuery>root\cimv2:SELECT * FROM Win32_PCMCIAController</ManagementQuery>
+    <ManagementQuery>root\cimv2:SELECT * FROM Win32_Processor</ManagementQuery>
+    <ManagementQuery>root\cimv2:SELECT * FROM Win32_SoundDevice</ManagementQuery>
+    <ManagementQuery>root\cimv2:SELECT * FROM Win32_SystemSlot</ManagementQuery>
+  </ConfigurationDataCollector>
+  <ConfigurationDataCollector>
+    <Name>Network Classes</Name>
+    <ManagementQuery>root\cimv2:SELECT * FROM Win32_NetworkAdapter</ManagementQuery>
+  </ConfigurationDataCollector>
+  <ConfigurationDataCollector>
+    <Name>Port Classes</Name>
+    <ManagementQuery>root\cimv2:SELECT * FROM Win32_ParallelPort</ManagementQuery>
+    <ManagementQuery>root\cimv2:SELECT __RELPATH, Description, Status FROM Win32_PortResource</ManagementQuery>
+    <ManagementQuery>root\cimv2:SELECT __RELPATH, Availability, ConfigManagerUserConfig, Description, Status, StatusInfo FROM Win32_SerialPort</ManagementQuery>
+  </ConfigurationDataCollector>
+  <ConfigurationDataCollector>
+    <Name>PlugAndPlay Classes</Name>
+    <ManagementQuery>root\cimv2:SELECT * FROM Win32_PNPEntity</ManagementQuery>
+  </ConfigurationDataCollector>
+  <ConfigurationDataCollector>
+    <Name>Power Classes</Name>
+    <ManagementQuery>root\cimv2:SELECT * FROM Win32_Battery</ManagementQuery>
+    <ManagementQuery>root\cimv2:SELECT * FROM Win32_PortableBattery</ManagementQuery>
+  </ConfigurationDataCollector>
+  <ConfigurationDataCollector>
+    <Name>Printing Classes</Name>
+    <ManagementQuery>root\cimv2:SELECT * FROM Win32_Printer</ManagementQuery>
+    <ManagementQuery>root\cimv2:SELECT * FROM Win32_PrinterDriver</ManagementQuery>
+  </ConfigurationDataCollector>
+  <ConfigurationDataCollector>
+    <Name>Storage Classes</Name>
+    <ManagementQuery>root\cimv2:SELECT * FROM Win32_CDROMDrive</ManagementQuery>
+    <ManagementQuery>root\cimv2:SELECT * FROM Win32_DiskDrive</ManagementQuery>
+    <ManagementQuery>root\cimv2:SELECT * FROM Win32_FloppyDrive</ManagementQuery>
+    <ManagementQuery>root\cimv2:SELECT * FROM Win32_TapeDrive</ManagementQuery>
+  </ConfigurationDataCollector>
+  <ConfigurationDataCollector>
+    <Name>Video Classes</Name>
+    <ManagementQuery>root\cimv2:SELECT * FROM Win32_DesktopMonitor</ManagementQuery>
+    <ManagementQuery>root\cimv2:SELECT * FROM Win32_VideoController</ManagementQuery>
+  </ConfigurationDataCollector>
+  <ConfigurationDataCollector>
+    <DataCollectorType>2</DataCollectorType>
+    <Name>NTFS Performance</Name>
+    <RegistryKey>HKLM\SYSTEM\CurrentControlSet\Control\FileSystem\NtfsDisable8dot3NameCreation</RegistryKey>
+    <RegistryKey>HKLM\SYSTEM\CurrentControlSet\Control\FileSystem\NtfsDisableLastAccessUpdate</RegistryKey>
+  </ConfigurationDataCollector>
+  <ConfigurationDataCollector>
+    <Name>Interactive Session Processes</Name>
+    <ManagementQuery>root\cimv2:SELECT * FROM Win32_SessionProcess</ManagementQuery>
+  </ConfigurationDataCollector>
+  <ConfigurationDataCollector>
+    <Name>Interactive Sessions</Name>
+    <ManagementQuery>root\cimv2:SELECT LogonId FROM Win32_LogonSession WHERE LogonType = 2</ManagementQuery>
+  </ConfigurationDataCollector>
+  <ConfigurationDataCollector>
+    <Name>Processes</Name>
+    <ManagementQuery>root\cimv2:SELECT * FROM Win32_Process</ManagementQuery>
+  </ConfigurationDataCollector>
+  <ConfigurationDataCollector>
+    <Name>Logged On Users</Name>
+    <ManagementQuery>root\cimv2:SELECT * FROM Win32_LoggedOnUser</ManagementQuery>
+  </ConfigurationDataCollector>
+  <ConfigurationDataCollector>
+    <Name>User Accounts</Name>
+    <ManagementQuery>root\cimv2:SELECT Name FROM Win32_UserAccount WHERE LocalAccount=TRUE</ManagementQuery>
+  </ConfigurationDataCollector>
+  <ConfigurationDataCollector>
+    <Name>Startup Programs</Name>
+    <ManagementQuery>root\cimv2:SELECT Name, FileName  FROM cim_datafile WHERE Path="\\ProgramData\\Microsoft\\Windows\\Start Menu\\Programs\\Startup\\" and System="false"</ManagementQuery>
+  </ConfigurationDataCollector>
+  <ConfigurationDataCollector>
+    <Name>Desktop Rating</Name>
+    <ManagementQuery>root\cimv2:SELECT CPUScore, D3DScore, DiskScore, GraphicsScore, MemoryScore FROM Win32_WinSAT</ManagementQuery>
+  </ConfigurationDataCollector>
+  <ConfigurationDataCollector>
+    <DataCollectorType>2</DataCollectorType>
+    <Name>Startup Settings</Name>
+    <RegistryKey>HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Run\</RegistryKey>
+    <RegistryKey>HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Run\</RegistryKey>
+    <RegistryKey>HKLM\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Run\</RegistryKey>
+  </ConfigurationDataCollector>
+  <ConfigurationDataCollector>
+    <DataCollectorType>2</DataCollectorType>
+    <Name>Disk Settings</Name>
+    <RegistryKey>HKLM\SYSTEM\CurrentControlSet\Enum\\</RegistryKey>
+  </ConfigurationDataCollector>
+  <DataManager>
+    <Enabled>-1</Enabled>
+    <CheckBeforeRunning>-1</CheckBeforeRunning>
+    <MinFreeDisk>200</MinFreeDisk>
+    <MaxSize>1024</MaxSize>
+    <MaxFolderCount>100</MaxFolderCount>
+    <ResourcePolicy>0</ResourcePolicy>
+    <FolderAction>
+      <Size>0</Size>
+      <Age>1</Age>
+      <Actions>3</Actions>
+    </FolderAction>
+    <FolderAction>
+      <Size>0</Size>
+      <Age>56</Age>
+      <Actions>8</Actions>
+    </FolderAction>
+    <FolderAction>
+      <Size>0</Size>
+      <Age>168</Age>
+      <Actions>26</Actions>
+    </FolderAction>
+    <ReportFileName>report.html</ReportFileName>
+    <ReportSchema>
+      <Report name="systemDiagnostics" version="1" threshold="999">
+        <Import file="%systemroot%\pla\reports\Report.System.Common.xml"/>
+        <Import file="%systemroot%\pla\reports\Report.System.Summary.xml"/>
+        <Import file="%systemroot%\pla\reports\Report.System.Diagnostics.xml"/>
+        <Import file="%systemroot%\pla\reports\Report.System.CPU.xml"/>
+        <Import file="%systemroot%\pla\reports\Report.System.Network.xml"/>
+        <Import file="%systemroot%\pla\reports\Report.System.Memory.xml"/>
+        <Import file="%systemroot%\pla\reports\Report.System.Disk.xml"/>
+        <Import file="%systemroot%\pla\reports\Report.System.Configuration.xml"/>
+      </Report>
+    </ReportSchema>
+    <Rules>
+      <Logging level="15" file="rules.log"/>
+      <Import file="%systemroot%\pla\rules\Rules.System.Common.xml"/>
+      <Import file="%systemroot%\pla\rules\Rules.System.Summary.xml"/>
+      <Import file="%systemroot%\pla\rules\Rules.System.Diagnostics.xml"/>
+      <Import file="%systemroot%\pla\rules\Rules.System.CPU.xml"/>
+      <Import file="%systemroot%\pla\rules\Rules.System.Network.xml"/>
+      <Import file="%systemroot%\pla\rules\Rules.System.Memory.xml"/>
+      <Import file="%systemroot%\pla\rules\Rules.System.Disk.xml"/>
+      <Import file="%systemroot%\pla\rules\Rules.System.Configuration.xml"/>
+      <Import file="%systemroot%\pla\rules\Rules.System.Finale.xml"/>
+    </Rules>
+  </DataManager>
+</DataCollectorSet>

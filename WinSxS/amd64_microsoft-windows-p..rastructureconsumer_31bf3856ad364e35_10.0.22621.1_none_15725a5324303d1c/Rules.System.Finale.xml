@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?Copyright (c) Microsoft Corporation. All rights reserved.?>
+<Rules>
+  <Group name="$(GroupCleanup)">
+    <Rule name="$(RuleRemovePropertiesForHwOnly)" enabled="true">
+      <Step select="/Report/Section/Table/Summary" sortType="all">
+        <Exists>
+          <Otherwise>
+            <Delete select="."/>
+          </Otherwise>
+        </Exists>
+      </Step>
+      <Step select="/Report/Section[@name='SystemConfig']/Table/Item/Item[not(*/@warning)]" sortType="all">
+        <Exists>
+          <Otherwise>
+            <Delete select="Item[Data[@name='managementObjectsProperty']='ClassGuid']"/>
+            <Delete select="Item[Data[@name='managementObjectsProperty']='PNPDeviceID']"/>
+            <Delete select="Item[Data[@name='managementObjectsProperty']='Caption']"/>
+          </Otherwise>
+        </Exists>
+      </Step>
+      <Step select="/Report/Section[@name='SystemConfig']/Table/Item/Item[not (*/@warning)][Item[Data[@name='managementObjectsProperty']='Status' and Data[@name='managementObjectsValue']='OK']]" sortType="all">
+        <Exists>
+          <Otherwise>
+            <Delete select="Item[Data[@name='managementObjectsProperty']='ConfigManagerUserConfig']"/>
+            <Delete select="Item[Data[@name='managementObjectsProperty']='Manufacturer']"/>
+            <Delete select="Item[Data[@name='managementObjectsProperty']='Service']"/>
+            <Delete select="Item[Data[@name='managementObjectsProperty']='Status']"/>
+          </Otherwise>
+        </Exists>
+      </Step>
+      <Step select="/Report">
+        <Exists>
+          <Otherwise>
+            <Delete select="Section/Table/Item/Item/Item[Data[@name='managementObjectsProperty']='DeviceID']"/>
+          </Otherwise>
+        </Exists>
+      </Step>
+    </Rule>
+    <Rule name="$(RuleDeleteNoWarningTables)" enabled="true">
+      <Step select="/Report/Section/Table[@name='configPnp']">
+        <Exists>
+          <When expression="count(Item/Data[@warning]) = 0">
+            <Delete select="."/>
+          </When>
+        </Exists>
+      </Step>
+      <Step select="/Report/Section/Table[@name='configVideo']">
+        <Exists>
+          <When expression="count(Item/Data[@warning]) = 0">
+            <Delete select="."/>
+          </When>
+        </Exists>
+      </Step>
+      <Step select="/Report/Section/Table[@name='configPower']">
+        <Exists>
+          <When expression="count(Item/Data[@warning]) = 0">
+            <Delete select="."/>
+          </When>
+        </Exists>
+      </Step>
+      <Step select="/Report/Section/Table[@name='configIdeChannel']">
+        <Exists>
+          <When expression="count(Item/Data[@warning]) = 0">
+            <Delete select="."/>
+          </When>
+        </Exists>
+      </Step>
+      <Step select="/Report/Section/Table[@name='inclusiveTrans']">
+        <Exists>
+          <Otherwise>
+            <Delete select="."/>
+          </Otherwise>
+        </Exists>
+      </Step>
+      <Step select="/Report/Section/Table[@name='exclusiveTrans']">
+        <Exists>
+          <Otherwise>
+            <Delete select="."/>
+          </Otherwise>
+        </Exists>
+      </Step>
+    </Rule>
+    <Rule name="$(RuleSuccessMessageNotNeeded)" enabled="true">
+      <Step select="/Report">
+        <Exists>
+          <When expression="count(//*[@warning]) = 0">
+            <Variable name="internalruleindex" expression="{internalruleindex} + 1"/>
+            <Variable name="severitymsg">$(Information)</Variable>
+            <Variable name="msgstring">$(LOC_AllIsWell)</Variable>
+            <Warning tag="ruleSuccessMessage_84_{internalruleindex}" select="." table="/Report/Section[@name='advice']/Table[@name='info']">
+              <Item>
+                <Data name="severity" img="info" link="ruleSuccessMessage_84_{internalruleindex}" message="ruleSuccessMessage_84_{internalruleindex}" translate="value">{severitymsg}</Data>
+                <Data name="warning" message="ruleSuccessMessage_84_{internalruleindex}">{msgstring}</Data>
+              </Item>
+            </Warning>
+          </When>
+        </Exists>
+      </Step>
+    </Rule>
+    <Rule name="$(RuleRemoveBinaryRegistry)" enabled="true">
+      <Step select="/Report/Section/Table/Item/Item[Data[@name='registryKeysType']='{binaryregkeytype}']" sortType="all">
+        <Exists>
+          <Otherwise>
+            <Delete select="."/>
+          </Otherwise>
+        </Exists>
+      </Step>
+    </Rule>
+  </Group>
+  <Group name="$(GroupDataCheck)">
+    <Rule name="$(RuleEmptyTables)" enabled="true">
+      <Step select="/Report">
+        <Exists>
+          <Otherwise>
+            <Delete select="/Report/Section/Table[count(Item)=0]"/>
+          </Otherwise>
+        </Exists>
+      </Step>
+    </Rule>
+  </Group>
+  <Group name="$(GroupNotify)">
+    <Rule name="$(RuleNotify)" enabled="true">
+      <Step select="/Report">
+        <Variable name="computer" expression="Section[@name='tracerptHeader']/Table[@name='client']/Item/Data[@name='computer']"/>
+        <Variable name="info" expression="count(warnings/warning[@type='info'])"/>
+        <Variable name="warn" expression="count(warnings/warning[@type='warning' or not(@type)] )"/>
+        <Variable name="error" expression="count(warnings/warning[@type='error'] )"/>
+        <Exists>
+          <When expression="{error} &gt; 0">
+            <Variable name="type">error</Variable>
+          </When>
+          <When expression="{warn} &gt; 0">
+            <Variable name="type">warning</Variable>
+          </When>
+          <Otherwise>
+            <Variable name="type">info</Variable>
+          </Otherwise>
+        </Exists>
+        <Notify type="{type}">$(Warnings)</Notify>
+      </Step>
+    </Rule>
+  </Group>
+  <StringTable>
+    <String ID="Information" loc.comment="Only used in WDC Console">Information</String>
+    <String ID="GroupDataCheck">Invalid Data Sets</String>
+    <String ID="GroupNotify">Notification</String>
+    <String ID="RuleNotify">Notification</String>
+    <String ID="Warnings">
+Computer: {computer}
+Error: {error}
+Warning: {warn}
+Information: {info}
+Report: {_document}
+    </String>
+    <String ID="RuleEmptyTables">Delete Empty Tables</String>
+    <String ID="GroupCleanup" loc.comment="Only used in WDC Console">Report Cleanup</String>
+    <String ID="RuleDeleteNoWarningTables" loc.comment="Only used in WDC Console">Delete Events Table if it has no warnings</String>
+    <String ID="RuleSuccessMessageNotNeeded" loc.comment="Only used in WDC Console">Take out message for success case</String>
+    <String ID="RuleRemoveBinaryRegistry" loc.comment="Only used in WDC Console">Remove all binary key data from registry tables</String>
+    <String ID="LOC_AllIsWell" loc.comment="Message when no error, warning or informational is found">No problems found on this computer.</String>
+    <String ID="RuleRemovePropertiesForHwOnly" loc.comment="Insert rule name seen in WPDC">Remove Unnecessary WMI Properties</String>
+  </StringTable>
+</Rules>

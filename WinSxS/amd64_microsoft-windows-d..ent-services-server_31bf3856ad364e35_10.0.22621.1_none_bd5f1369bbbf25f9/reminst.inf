@@ -1,0 +1,76 @@
+
+;
+; Windows Deployment Services
+;
+;
+; Copyright (c) Microsoft Corporation.  All rights reserved.
+;
+
+[version]
+signature   =   "$Windows NT$"
+FileVersion =   6.1.7600.16385
+DriverVer = 06/21/2006,10.0.22621.1
+
+;
+; The following sections describe files that are installed during
+; WdsMgmt Server Setup.
+;
+; The syntax for these sections follows the following format:
+; <DestinationPath>,<SourcePath>,<Optional: AlternateSourcePath>
+; The expected path formats are described by each section, but
+; the first two paths must always be provided.
+; Currently, the AlternateSourcePath is only used by boot files.
+;
+
+;
+; Copied during WdsMgmt Server Setup using the following paths:
+; Source: \\server\admin$\System32\RemInst\<SourcePath>
+; Destination: \\server\REMINT\<DestinationPath>
+;
+[WdsMgmt]
+Templates\WdsSysprepTemplate.inf,Templates\WdsSysprepTemplate.inf
+
+;
+; Copied during WdsMgmt Server Setup using the following paths:
+; Source: \\server\admin$\System32\RemInst\<SourcePath>
+; Destination: \\server\REMINT\Boot\<DestinationPath>
+;
+; Some of these files are also copied during Boot Image addition
+; using the following paths:
+; Source: %TEMP%\<RandomlyGeneratedSubfolder>\<AlternateSourcePath>
+; Destination: \\server\REMINT\Boot\<DestinationPath>
+;
+; The .NT sections denote files that apply to all CPU
+; architectures while the other sections are CPU-specific.
+;
+[BootFiles.NT]
+boot.sdi,boot\boot.sdi
+
+[BootFonts.NT]
+Fonts\*,,\%SystemRoot%\Boot\Fonts\*
+
+[BootFiles.NTX86]
+x86\pxeboot.com,boot\x86\pxeboot.com,\%SystemRoot%\Boot\PXE\pxeboot.com
+x86\pxeboot.n12,boot\x86\pxeboot.n12,\%SystemRoot%\Boot\PXE\pxeboot.n12
+x86\bootmgr.exe,boot\x86\bootmgr.exe,\%SystemRoot%\Boot\PXE\bootmgr.exe
+x86\wdsnbp.com,boot\x86\wdsnbp.com,\%SystemRoot%\Boot\PXE\wdsnbp.com
+x86\abortpxe.com,boot\x86\abortpxe.com,\%SystemRoot%\Boot\PXE\abortpxe.com
+x86\hdlscom1.com,boot\x86\hdlscom1.com,\%SystemRoot%\Boot\PXE\hdlscom1.com
+x86\hdlscom2.com,boot\x86\hdlscom2.com,\%SystemRoot%\Boot\PXE\hdlscom2.com
+x86\hdlscom1.n12,boot\x86\hdlscom1.n12,\%SystemRoot%\Boot\PXE\hdlscom1.n12
+x86\hdlscom2.n12,boot\x86\hdlscom2.n12,\%SystemRoot%\Boot\PXE\hdlscom2.n12
+x86\*\bootmgr.exe.mui,,\%SystemRoot%\Boot\PCAT\*\bootmgr.exe.mui
+
+[BootFiles.NTAMD64]
+x64\pxeboot.com,boot\x64\pxeboot.com,\%SystemRoot%\Boot\PXE\pxeboot.com
+x64\pxeboot.n12,boot\x64\pxeboot.n12,\%SystemRoot%\Boot\PXE\pxeboot.n12
+x64\bootmgr.exe,boot\x64\bootmgr.exe,\%SystemRoot%\Boot\PXE\bootmgr.exe
+x64\wdsnbp.com,boot\x64\wdsnbp.com,\%SystemRoot%\Boot\PXE\wdsnbp.com
+x64\abortpxe.com,boot\x64\abortpxe.com,\%SystemRoot%\Boot\PXE\abortpxe.com
+x64\hdlscom1.com,boot\x64\hdlscom1.com,\%SystemRoot%\Boot\PXE\hdlscom1.com
+x64\hdlscom2.com,boot\x64\hdlscom2.com,\%SystemRoot%\Boot\PXE\hdlscom2.com
+x64\hdlscom1.n12,boot\x64\hdlscom1.n12,\%SystemRoot%\Boot\PXE\hdlscom1.n12
+x64\hdlscom2.n12,boot\x64\hdlscom2.n12,\%SystemRoot%\Boot\PXE\hdlscom2.n12
+x64\bootmgfw.efi,boot\x64\bootmgfw.efi,\%SystemRoot%\Boot\EFI\bootmgfw.efi
+x64\*\bootmgr.exe.mui,,\%SystemRoot%\Boot\PCAT\*\bootmgr.exe.mui
+x64\*\bootmgfw.efi.mui,,\%SystemRoot%\Boot\EFI\*\bootmgfw.efi.mui

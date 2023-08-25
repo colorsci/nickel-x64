@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    This file (AppxManifest.xml) is generated from XSLT transforms applied to XML source
+    file(s). Changes needed should be made to the appropriate source XML files
+    and/or the source xslt files used to generate AppxManifest.xml.
+
+    xsl:version    == 1
+    xsl:vendor     == Microsoft
+    xsl:vendor-url == http://www.microsoft.com
+    msxsl:version  == v4.0.30319-->
+
+<Package
+  xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
+  xmlns:msxsl="urn:schemas-microsoft-com:xslt"
+  xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
+  xmlns:wincap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/windowscapabilities"
+  xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities"
+  xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest">
+
+  <Identity Publisher="CN=Microsoft Windows, O=Microsoft Corporation, L=Redmond, S=Washington, C=US" Version="10.0.22621.1" Name="WebAuthBridgeInternetSso" />
+  <mp:PhoneIdentity PhoneProductId="919269fc-3cee-46da-a20a-92f342086eb6" PhonePublisherId="ecb99882-54f5-4c51-adc3-e27619164fde" />
+
+  <Properties>
+    <DisplayName>Sign In</DisplayName>
+    <Description>WebAuthenticationBroker for internet single sign on</Description>
+    <PublisherDisplayName>ms-resource:PublisherDisplayName</PublisherDisplayName>
+    <Logo>Assets\StoreLogo.scale-100.png</Logo>
+  </Properties>
+  <Dependencies>
+    <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.0.0" MaxVersionTested="12.0.0.0" />
+  </Dependencies>
+  <Resources>
+    <Resource Language="en-us" />
+  </Resources>
+  <Applications>
+    <Application Id="WebAuthBridgeInternetSso" EntryPoint="WebAuthBroker.App" Executable="WebAuthBridge.exe">
+      <uap:VisualElements BackgroundColor="#B9AAE6" Description="ms-resource:Description" DisplayName="ms-resource:DisplayName" AppListEntry="none" Square150x150Logo="Assets\StoreLogo.scale-100.png" Square44x44Logo="Assets\StoreLogo.scale-100.png">
+        <uap:SplashScreen Image="Assets\SplashScreen.scale-100.png" />
+        <uap:DefaultTile>
+          <uap:ShowNameOnTiles>
+            <uap:ShowOn Tile="square150x150Logo" />
+          </uap:ShowNameOnTiles>
+        </uap:DefaultTile>
+      </uap:VisualElements>
+      <Extensions>
+        <uap:Extension Category="windows.webAccountProvider">
+          <!-- WAB API takes advantage of the webAccountProvider plugin mechanism to hook to the WAB app.
+               The following URL is used only as a hook for the WAB API to find and activate the app.
+               The real URL is passed in a property set as part of the token request -->
+          <!-- :TODO: TFS MSFT 4065275 - implement Background.GetTokenSilently -->
+          <uap:WebAccountProvider Url="https://internet-sso.WAB-23B4D62B-952A-47E7-969C-B95DBF145D3D.local" BackgroundEntryPoint="Background.GetTokenSilently" />
+        </uap:Extension>
+        <uap:Extension Category="windows.appService">
+          <uap:AppService Name="wab.microsoft.GetTokenSilently"/>
+        </uap:Extension>
+      </Extensions>
+    </Application>
+  </Applications>
+  <Capabilities>
+    <Capability Name="internetClient" />
+    <rescap:Capability Name="windowsHelloCredentialAccess" />
+  </Capabilities>
+</Package>

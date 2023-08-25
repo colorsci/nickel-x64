@@ -1,0 +1,349 @@
+﻿<Activity x:Class="Microsoft.Windows.ServerManager.Deployment.Tasks.AddWindowsRoleActivity" this:AddWindowsRoleActivity.Remove="False" this:AddWindowsRoleActivity.TestRebootOnly="False" this:AddWindowsRoleActivity.PermitReboot="False" this:AddWindowsRoleActivity.DeleteComponents="False"
+ xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities"
+ xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+ xmlns:mmi="clr-namespace:Microsoft.Management.Infrastructure;assembly=Microsoft.Management.Infrastructure"
+ xmlns:mpa="clr-namespace:Microsoft.PowerShell.Activities;assembly=Microsoft.PowerShell.Activities"
+ xmlns:mpma="clr-namespace:Microsoft.PowerShell.Management.Activities;assembly=Microsoft.PowerShell.Management.Activities"
+ xmlns:mpua="clr-namespace:Microsoft.PowerShell.Utility.Activities;assembly=Microsoft.PowerShell.Utility.Activities"
+ xmlns:mv="clr-namespace:Microsoft.VisualBasic;assembly=System"
+ xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities"
+ xmlns:mwsa="clr-namespace:Microsoft.Windows.ServerManager.Activities;assembly=Microsoft.Windows.ServerManager.Activities"
+ xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib"
+ xmlns:sma="clr-namespace:System.Management.Automation;assembly=System.Management.Automation"
+ xmlns:this="clr-namespace:Microsoft.Windows.ServerManager.Deployment.Tasks"
+ xmlns:ns0="clr-namespace:System;assembly=mscorlib"
+ xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <x:Members>
+    <x:Property Name="ServerComponentDescriptors" Type="InArgument(sma:PSObject[])" />
+    <x:Property Name="Remove" Type="InArgument(x:Boolean)" />
+    <x:Property Name="PathToVhdFile" Type="InArgument(x:String)" />
+    <x:Property Name="TestRebootOnly" Type="InArgument(x:Boolean)" />
+    <x:Property Name="PermitReboot" Type="InArgument(x:Boolean)" />
+    <x:Property Name="Source" Type="InArgument(ns0:String[])" />
+    <x:Property Name="DeleteComponents" Type="InArgument(x:Boolean)" />
+  </x:Members>
+  <this:AddWindowsRoleActivity.PathToVhdFile>
+    <InArgument x:TypeArguments="x:String">
+      <Literal x:TypeArguments="x:String" Value="" />
+    </InArgument>
+  </this:AddWindowsRoleActivity.PathToVhdFile>
+  <mva:VisualBasic.Settings>Assembly references and imported namespaces for internal implementation</mva:VisualBasic.Settings>
+  <Sequence DisplayName="Outer Sequence">
+    <Sequence.Variables>
+      <Variable x:TypeArguments="x:Boolean" Default="False" Name="Done" />
+      <Variable x:TypeArguments="x:Boolean" Default="False" Name="RebootRequired" />
+      <Variable x:TypeArguments="mmi:CimInstance" Name="RequestGuid" />
+      <Variable x:TypeArguments="ns0:Guid" Name="RequestGuidRaw" />
+      <Variable x:TypeArguments="sma:PSDataCollection(sma:PSObject)" Name="PSObjectTempArray" />
+      <Variable x:TypeArguments="mmi:CimInstance" Name="AlterationState" />
+      <Variable x:TypeArguments="sma:PSDataCollection(sma:ProgressRecord)" Default="[New PSDataCollection(Of ProgressRecord)]" Name="DumpProgress" />
+      <Variable x:TypeArguments="x:String" Name="SMDeploymentHelpers" />
+      <Variable x:TypeArguments="ns0:String[]" Default="[{}]" Name="TargetComputers" />
+    </Sequence.Variables>
+    <mpa:GetPSWorkflowData x:TypeArguments="ns0:String[]" DisplayName="Get target computer name" Result="[TargetComputers]" VariableToRetrieve="PSComputerName" />
+    <mpa:PowerShellValue x:TypeArguments="x:String" DisplayName="Load path to SMDeploymentHelpers.psm1" Expression="&quot;$($env:windir)\\System32\\ServerManagerInternal\\ServerManagerShell\\SMDeploymentHelpers.psm1&quot;" Result="[SMDeploymentHelpers]" />
+    <mpa:InlineScript Command="WFTraceAddWorkflowEnter -TargetComputers $using:TargetComputers -ServerComponentDescriptors $using:ServerComponentDescriptors -Remove $using:Remove -PathToVhdFile $using:PathToVhdFile -PermitReboot $using:PermitReboot -Source $using:Source -DeleteComponents $using:DeleteComponents" DisplayName="WFTraceAddWorkflowEnter" PSComputerName="[{}]" PSRequiredModules="[{SMDeploymentHelpers}]" PSProgress="[DumpProgress]" />
+    <If Condition="[TestRebootOnly]" DisplayName="If TestRebootOnly" >
+      <If.Then>
+        <Sequence DisplayName="TestRebootOnly Sequence" >
+          <Assign DisplayName="Assign Done" >
+            <Assign.To>
+              <OutArgument x:TypeArguments="x:Boolean">[Done]</OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="x:Boolean">True</InArgument>
+            </Assign.Value>
+          </Assign>
+          <Assign DisplayName="Assign RebootRequired" >
+            <Assign.To>
+              <OutArgument x:TypeArguments="x:Boolean">[RebootRequired]</OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="x:Boolean">True</InArgument>
+            </Assign.Value>
+          </Assign>
+        </Sequence>
+      </If.Then>
+      <If.Else>
+        <Sequence DisplayName="AddRemove Sequence" >
+          <Sequence.Variables>
+            <Variable x:TypeArguments="scg:List(mmi:CimInstance)" Default="[New List(Of CimInstance)]" Name="LiveDescriptors" />
+          </Sequence.Variables>
+          <mpa:InlineScript Command="WFGetCimGuid" DisplayName="WFGetCimGuid" PSComputerName="[{}]" PSRequiredModules="[{SMDeploymentHelpers}]" PSProgress="[DumpProgress]" Result="[PSObjectTempArray]" ErrorAction="[ActionPreference.Stop]" />
+          <Assign DisplayName="Assign RequestGuid" >
+            <Assign.To>
+              <OutArgument x:TypeArguments="mmi:CimInstance">[RequestGuid]</OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="mmi:CimInstance">[CType(PSObject.AsPSObject(PSObjectTempArray(0)).BaseObject, Microsoft.Management.Infrastructure.CimInstance)]</InArgument>
+            </Assign.Value>
+          </Assign>
+          <Assign DisplayName="Assign RequestGuidRaw" >
+            <Assign.To>
+              <OutArgument x:TypeArguments="ns0:Guid">[RequestGuidRaw]</OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="ns0:Guid">[CType(PSObject.AsPSObject(PSObjectTempArray(1)).BaseObject, System.Guid)]</InArgument>
+            </Assign.Value>
+          </Assign>
+          <ForEach x:TypeArguments="sma:PSObject" DisplayName="Copy Descriptors" Values="[ServerComponentDescriptors]">
+            <ActivityAction x:TypeArguments="sma:PSObject">
+              <ActivityAction.Argument>
+                <DelegateInArgument x:TypeArguments="sma:PSObject" Name="item" />
+              </ActivityAction.Argument>
+              <InvokeMethod DisplayName="Add Descriptor" MethodName="Add">
+                <InvokeMethod.TargetObject>
+                  <InArgument x:TypeArguments="scg:List(mmi:CimInstance)">[LiveDescriptors]</InArgument>
+                </InvokeMethod.TargetObject>
+                <InArgument x:TypeArguments="mmi:CimInstance">[CType(item.BaseObject, CimInstance)]</InArgument>
+              </InvokeMethod>
+            </ActivityAction>
+          </ForEach>
+          <mpa:InlineScript Command="WFTraceAddWindowsRoleWorkflowInstallLaunchStarted -TargetComputers $using:TargetComputers -RequestGuid $using:RequestGuidRaw" DisplayName="WFTraceAddWindowsRoleWorkflowInstallLaunchStarted" PSComputerName="[{}]" PSRequiredModules="[{SMDeploymentHelpers}]" PSProgress="[DumpProgress]" />
+          <If Condition="[String.IsNullOrEmpty(PathToVhdFile)]" DisplayName="If PathToVhdFile" >
+            <If.Then>
+              <If Condition="[Remove]" DisplayName="If Remove" >
+                <If.Then>
+                  <mwsa:RemoveServerComponentAsync DisplayName="Remove-ServerComponentAsync" ErrorAction="[ActionPreference.Stop]" RequestGuid="[RequestGuid]" Result="[PSObjectTempArray]" ServerComponentDescriptors="[LiveDescriptors.ToArray()]" DeleteComponents="[DeleteComponents]" PSProgress="[DumpProgress]" PSPersist="[True]" />
+                </If.Then>
+                <If.Else>
+                  <mwsa:AddServerComponentAsync DisplayName="Add-ServerComponentAsync" ErrorAction="[ActionPreference.Stop]" RequestGuid="[RequestGuid]" Result="[PSObjectTempArray]" ServerComponentDescriptors="[LiveDescriptors.ToArray()]" Source="[Source]" PSProgress="[DumpProgress]" PSPersist="[True]" />
+                </If.Else>
+              </If>
+            </If.Then>
+            <If.Else>
+              <If Condition="[Remove]" DisplayName="If Vhd Remove" >
+                <If.Then>
+                  <mwsa:RemoveServerComponentVhdAsync DisplayName="Remove-ServerComponentVhdAsync" ErrorAction="[ActionPreference.Stop]" RequestGuid="[RequestGuid]" Result="[PSObjectTempArray]" ServerComponentDescriptors="[LiveDescriptors.ToArray()]" VhdPath="[PathToVhdFile]" DeleteComponents="[DeleteComponents]" PSProgress="[DumpProgress]" PSPersist="[True]" />
+                </If.Then>
+                <If.Else>
+                  <mwsa:AddServerComponentVhdAsync DisplayName="Add-ServerComponentVhdAsync" ErrorAction="[ActionPreference.Stop]" RequestGuid="[RequestGuid]" Result="[PSObjectTempArray]" ServerComponentDescriptors="[LiveDescriptors.ToArray()]" VhdPath="[PathToVhdFile]" Source="[Source]" PSProgress="[DumpProgress]" PSPersist="[True]" />
+                </If.Else>
+              </If>
+            </If.Else>
+          </If>
+          <Assign DisplayName="Assign AlterationState initial" >
+            <Assign.To>
+              <OutArgument x:TypeArguments="mmi:CimInstance">[AlterationState]</OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="mmi:CimInstance">[CType(PSObject.AsPSObject(PSObjectTempArray(PSObjectTempArray.Count - 1)).BaseObject, Microsoft.Management.Infrastructure.CimInstance)]</InArgument>
+            </Assign.Value>
+          </Assign>
+          <mpa:PSPersist/>
+          <mpa:InlineScript Command="WFTraceAddWindowsRoleWorkflowInstallLaunchEnded -TargetComputers $using:TargetComputers -RequestGuid $using:RequestGuidRaw -AlterationState $using:AlterationState" DisplayName="WFTraceAddWindowsRoleWorkflowInstallLaunchEnded" PSComputerName="[{}]" PSRequiredModules="[{SMDeploymentHelpers}]" PSProgress="[DumpProgress]" />
+          <While DisplayName="While 0 == RequestState" Condition="[(0 = CType(AlterationState.CimInstanceProperties(&quot;RequestState&quot;).Value, Integer)) And (Not CType(AlterationState.CimInstanceProperties(&quot;RestartRequired&quot;).Value, Boolean))]">
+            <Sequence DisplayName="Loop Sequence" >
+              <Sequence.Variables>
+                <Variable x:TypeArguments="x:Int32" Default="[CType(AlterationState.CimInstanceProperties(&quot;ProgressTicks&quot;).Value, Integer)]" Name="ProgressTicks" />
+                <Variable x:TypeArguments="x:Int32" Default="[CType(AlterationState.CimInstanceProperties(&quot;TotalTicks&quot;).Value, Integer)]" Name="TotalTicks" />
+              </Sequence.Variables>
+              <If Condition="[TotalTicks &lt; 1]">
+                <If.Then>
+                  <Assign>
+                    <Assign.To>
+                      <OutArgument x:TypeArguments="x:Int32">[TotalTicks]</OutArgument>
+                    </Assign.To>
+                    <Assign.Value>
+                      <InArgument x:TypeArguments="x:Int32">1</InArgument>
+                    </Assign.Value>
+                  </Assign>
+                </If.Then>
+              </If>
+              <mpua:WriteProgress Activity="Install/Remove Components(s)" DisplayName="Write-Progress" PercentComplete="[((ProgressTicks * 60) \ TotalTicks) + 10]" SourceId="1" PSPersist="[False]" />
+              <Delay DisplayName="Alteration in progress" Duration="00:00:10" />
+              <mpa:InlineScript Command="WFTraceAddWindowsRoleWorkflowPollStarted -TargetComputers $using:TargetComputers -RequestGuid $using:RequestGuidRaw" DisplayName="WFTraceAddWindowsRoleWorkflowPollStarted" PSComputerName="[{}]" PSRequiredModules="[{SMDeploymentHelpers}]" PSProgress="[DumpProgress]" />
+              <mwsa:GetAlterationRequestState DisplayName="Get-AlterationRequestState" ErrorAction="[ActionPreference.Stop]" RequestGuid="[RequestGuid]" KeepAlterationStateOnRestartRequired="[PermitReboot]" Result="[PSObjectTempArray]" PSProgress="[DumpProgress]" />
+              <Assign DisplayName="Assign AlterationState in progress" >
+                <Assign.To>
+                  <OutArgument x:TypeArguments="mmi:CimInstance">[AlterationState]</OutArgument>
+                </Assign.To>
+                <Assign.Value>
+                  <InArgument x:TypeArguments="mmi:CimInstance">[CType(PSObject.AsPSObject(PSObject.AsPSObject(PSObjectTempArray(PSObjectTempArray.Count - 1)).Properties("AlterationState").Value).BaseObject, Microsoft.Management.Infrastructure.CimInstance)]</InArgument>
+                </Assign.Value>
+              </Assign>
+              <mpa:InlineScript Command="WFTraceAddWindowsRoleWorkflowPollEnded -TargetComputers $using:TargetComputers -RequestGuid $using:RequestGuidRaw -AlterationState $using:AlterationState" DisplayName="WFTraceAddWindowsRoleWorkflowPollEnded" PSComputerName="[{}]" PSRequiredModules="[{SMDeploymentHelpers}]" PSProgress="[DumpProgress]" />
+            </Sequence>
+          </While>
+          <If Condition="[CType(AlterationState.CimInstanceProperties(&quot;RestartRequired&quot;).Value, Boolean)]" DisplayName="If RebootRequired" >
+            <If.Then>
+              <Sequence DisplayName="Setting RebootRequired" >
+                <Assign DisplayName="Assign RebootRequired" >
+                  <Assign.To>
+                    <OutArgument x:TypeArguments="x:Boolean">[RebootRequired]</OutArgument>
+                  </Assign.To>
+                  <Assign.Value>
+                    <InArgument x:TypeArguments="x:Boolean">True</InArgument>
+                  </Assign.Value>
+                </Assign>
+              </Sequence>
+            </If.Then>
+          </If>
+        </Sequence>
+      </If.Else>
+    </If>
+    <If Condition="[RebootRequired And PermitReboot]" DisplayName="If RebootRequired And PermitReboot" >
+      <If.Then>
+        <Sequence DisplayName="Reboot Sequence" >
+          <Sequence.Variables>
+            <Variable x:TypeArguments="sma:PSDataCollection(sma:PSObject)" Name="StartTime" />
+            <Variable x:TypeArguments="sma:PSDataCollection(sma:PSObject)" Name="Win32OperatingSystem" />
+            <Variable x:TypeArguments="x:Object" Name="InitialLastBootTime" />
+            <Variable x:TypeArguments="sma:PSCredential" Name="TargetCredential" />
+          </Sequence.Variables>
+          <mpa:InlineScript Command="Get-Date" DisplayName="Get starting time" PSComputerName="[{}]" Result="[StartTime]" PSProgress="[DumpProgress]" ErrorAction="[ActionPreference.Stop]" />
+          <mpa:PSPersist/>
+          <mpa:GetCimInstance ClassName="Win32_OperatingSystem" DisplayName="Get-CimInstance Win32_OperatingSystem" ErrorAction="[ActionPreference.Stop]" Result="[Win32OperatingSystem]" PSPersist="[True]" />
+          <Assign DisplayName="Assign InitialLastBootTime" >
+            <Assign.To>
+              <OutArgument x:TypeArguments="x:Object">[InitialLastBootTime]</OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="x:Object">[PSObject.AsPSObject(PSObject.AsPSObject(Win32OperatingSystem(0)).Properties("LastBootUpTime").Value).BaseObject]</InArgument>
+            </Assign.Value>
+          </Assign>
+          <mpa:PSPersist/>
+          <mpa:GetPSWorkflowData x:TypeArguments="sma:PSCredential" DisplayName="Get credential" Result="[TargetCredential]" VariableToRetrieve="PSCredential" />
+          <mpa:InlineScript Command="WFRestartComputer -TargetComputers $using:TargetComputers -StartTime $using:StartTime -InitialLastBootTime $using:InitialLastBootTime -Credential $using:TargetCredential" DisplayName="WFRestartComputer" PSComputerName="[{}]" PSRequiredModules="[{SMDeploymentHelpers}]" ErrorAction="[ActionPreference.Stop]" PSPersist="[True]" />
+          <If Condition="[Not TestRebootOnly]" DisplayName="If Not TestRebootOnly">
+            <If.Then>
+              <Sequence DisplayName="Sequence final GetAlterationRequestState">
+                <Sequence.Variables>
+                  <Variable x:TypeArguments="x:Boolean" Default="True" Name="ContinueLoop" />
+                  <Variable x:TypeArguments="x:Boolean" Default="True" Name="KeepState" />
+                </Sequence.Variables>
+                <While DisplayName="Loop on final GetAlterationRequestState" Condition="[ContinueLoop]">
+                  <Sequence DisplayName="Final GetAlterationRequestState Loop Sequence" >
+                    <TryCatch>
+                      <TryCatch.Try>
+                        <Sequence DisplayName="Sequence GetAlterationRequestState Try">
+                          <mpa:InlineScript Command="WFTraceAddWindowsRoleWorkflowPollStarted -TargetComputers $using:TargetComputers -RequestGuid $using:RequestGuidRaw" DisplayName="WFTraceAddWindowsRoleWorkflowPollStarted post-reboot" PSComputerName="[{}]" PSRequiredModules="[{SMDeploymentHelpers}]" PSProgress="[DumpProgress]" />
+                          <mwsa:GetAlterationRequestState DisplayName="Get-AlterationRequestState" ErrorAction="[ActionPreference.Stop]" RequestGuid="[RequestGuid]" Result="[PSObjectTempArray]" KeepAlterationStateOnRestartRequired="[KeepState]" PSProgress="[DumpProgress]" />
+                          <!-- These will only happen if the preceding activity succeeds -->
+                          <If Condition="[KeepState]" DisplayName="If KeepState" >
+                            <If.Then>
+                              <Sequence DisplayName="KeepState True sequence" >
+                                <Assign DisplayName="Assign AlterationState post-reboot" >
+                                  <Assign.To>
+                                    <OutArgument x:TypeArguments="mmi:CimInstance">[AlterationState]</OutArgument>
+                                  </Assign.To>
+                                  <Assign.Value>
+                                    <InArgument x:TypeArguments="mmi:CimInstance">[CType(PSObject.AsPSObject(PSObject.AsPSObject(PSObjectTempArray(PSObjectTempArray.Count - 1)).Properties("AlterationState").Value).BaseObject, Microsoft.Management.Infrastructure.CimInstance)]</InArgument>
+                                  </Assign.Value>
+                                </Assign>
+                                <mpa:InlineScript Command="WFTraceAddWindowsRoleWorkflowPollEnded -TargetComputers $using:TargetComputers -RequestGuid $using:RequestGuidRaw -AlterationState $using:AlterationState" DisplayName="WFTraceAddWindowsRoleWorkflowPollEnded" PSComputerName="[{}]" PSRequiredModules="[{SMDeploymentHelpers}]" PSProgress="[DumpProgress]" />
+                                <Switch x:TypeArguments="x:Int32" Expression="[CType(AlterationState.CimInstanceProperties(&quot;RequestState&quot;).Value, Integer)]">
+                                  <Sequence x:Key="0" DisplayName="InProgress post-reboot sequence" >
+                                    <Delay DisplayName="Alteration in progress post-reboot" Duration="00:00:10" />
+                                  </Sequence>
+                                  <Sequence x:Key="1" DisplayName="Completed post-reboot sequence" >
+                                    <If Condition="[CType(AlterationState.CimInstanceProperties(&quot;RestartRequired&quot;).Value, Boolean)]" DisplayName="If RestartRequired post-reboot" >
+                                      <If.Then>
+                                        <Assign DisplayName="Assign KeepState false post-reboot Completed" >
+                                          <Assign.To>
+                                            <OutArgument x:TypeArguments="x:Boolean">[KeepState]</OutArgument>
+                                          </Assign.To>
+                                          <Assign.Value>
+                                            <InArgument x:TypeArguments="x:Boolean">False</InArgument>
+                                          </Assign.Value>
+                                        </Assign>
+                                      </If.Then>
+                                     <If.Else>
+                                       <Assign DisplayName="Assign ContinueLoop false post-reboot Completed" >
+                                         <Assign.To>
+                                            <OutArgument x:TypeArguments="x:Boolean">[ContinueLoop]</OutArgument>
+                                          </Assign.To>
+                                          <Assign.Value>
+                                            <InArgument x:TypeArguments="x:Boolean">False</InArgument>
+                                          </Assign.Value>
+                                        </Assign>
+                                      </If.Else>
+                                    </If>
+                                  </Sequence>
+                                  <Switch.Default>
+                                    <Sequence DisplayName="Failed post-reboot sequence" >
+                                      <Assign DisplayName="Assign ContinueLoop false post-reboot Failed" >
+                                        <Assign.To>
+                                          <OutArgument x:TypeArguments="x:Boolean">[ContinueLoop]</OutArgument>
+                                        </Assign.To>
+                                        <Assign.Value>
+                                          <InArgument x:TypeArguments="x:Boolean">False</InArgument>
+                                        </Assign.Value>
+                                      </Assign>
+                                    </Sequence>
+                                  </Switch.Default>
+                                </Switch>
+                              </Sequence>
+                            </If.Then>
+                            <If.Else>
+                              <Sequence DisplayName="KeepState False sequence" >
+                                <Assign DisplayName="Assign ContinueLoop false" >
+                                  <Assign.To>
+                                    <OutArgument x:TypeArguments="x:Boolean">[ContinueLoop]</OutArgument>
+                                  </Assign.To>
+                                  <Assign.Value>
+                                    <InArgument x:TypeArguments="x:Boolean">False</InArgument>
+                                  </Assign.Value>
+                                </Assign>
+                              </Sequence>
+                            </If.Else>
+                          </If>
+                        </Sequence>
+                      </TryCatch.Try>
+                      <TryCatch.Catches>
+                        <!-- failed to reach target machine -->
+                        <Catch x:TypeArguments="sma:CmdletInvocationException"> 
+                          <ActivityAction x:TypeArguments="sma:CmdletInvocationException"> 
+                            <ActivityAction.Argument> 
+                              <DelegateInArgument x:TypeArguments="sma:CmdletInvocationException" Name="exception" /> 
+                            </ActivityAction.Argument> 
+                            <Sequence DisplayName="GetAlterationRequestState caught CmdletInvocationException sequence">
+                              <mpa:InlineScript Command="WFCheckTimeout -TargetComputers $using:TargetComputers -StartTime $using:StartTime" DisplayName="WFCheckTimeout" PSComputerName="[{}]" PSRequiredModules="[{SMDeploymentHelpers}]" PSProgress="[DumpProgress]" Result="[PSObjectTempArray]" ErrorAction="[ActionPreference.Stop]" />
+                              <If Condition="[CType(PSObject.AsPSObject(PSObjectTempArray(0)).BaseObject, System.Boolean)]" DisplayName="If Timeout" >
+                                <If.Then>
+                                  <Sequence DisplayName="Timeout rethrow sequence" >
+                                    <Rethrow />
+                                  </Sequence>
+                                </If.Then>
+                              </If>
+                            </Sequence> 
+                          </ActivityAction> 
+                        </Catch>
+                        <!-- Invalid SOAP Headers error comes wrapped in ActionPreferenceStopException -->
+                        <Catch x:TypeArguments="sma:ActionPreferenceStopException"> 
+                          <ActivityAction x:TypeArguments="sma:ActionPreferenceStopException"> 
+                            <ActivityAction.Argument> 
+                              <DelegateInArgument x:TypeArguments="sma:ActionPreferenceStopException" Name="exception" /> 
+                            </ActivityAction.Argument> 
+                            <Sequence DisplayName="GetAlterationRequestState caught ActionPreferenceStopException sequence">
+                              <mpa:InlineScript Command="WFCheckTimeout -TargetComputers $using:TargetComputers -StartTime $using:StartTime" DisplayName="WFCheckTimeout" PSComputerName="[{}]" PSRequiredModules="[{SMDeploymentHelpers}]" PSProgress="[DumpProgress]" Result="[PSObjectTempArray]" ErrorAction="[ActionPreference.Stop]" />
+                              <If Condition="[CType(PSObject.AsPSObject(PSObjectTempArray(0)).BaseObject, System.Boolean)]" DisplayName="If Timeout" >
+                                <If.Then>
+                                  <Sequence DisplayName="Timeout rethrow sequence" >
+                                    <Rethrow />
+                                  </Sequence>
+                                </If.Then>
+                              </If>
+                            </Sequence> 
+                          </ActivityAction> 
+                        </Catch>
+                      </TryCatch.Catches>
+                    </TryCatch>
+                  </Sequence>
+                </While>
+              </Sequence>
+            </If.Then>
+          </If>
+        </Sequence>
+      </If.Then>
+    </If>
+    <If Condition="[Not TestRebootOnly]" DisplayName="If Not TestRebootOnly Write Results">
+      <If.Then>
+        <Sequence DisplayName="Write Results">
+          <mpua:WriteOutput DisplayName="Write-Output" InputObject="[{New PSObject(AlterationState)}]" PSProgress="[DumpProgress]" />
+          <mpa:InlineScript Command="WFTraceAddWorkflowExit -TargetComputers $using:TargetComputers -AlterationState $using:AlterationState" DisplayName="WFTraceAddWorkflowExit" PSComputerName="[{}]" PSRequiredModules="[{SMDeploymentHelpers}]" PSProgress="[DumpProgress]" />
+        </Sequence>
+      </If.Then>
+    </If>
+  </Sequence>
+</Activity>

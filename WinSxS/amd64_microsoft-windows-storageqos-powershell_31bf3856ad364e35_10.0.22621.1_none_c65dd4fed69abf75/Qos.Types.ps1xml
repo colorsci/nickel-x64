@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Types>
+  <!--
+  
+  //
+  // StorageQoSPolicy
+  //
+
+  -->
+  <Type>
+    <Name>Microsoft.Management.Infrastructure.CimInstance#root/Microsoft/Windows/storage/MSFT_StorageQoSPolicy</Name>
+    <Members>
+      <MemberSet>
+        <Name>PSStandardMembers</Name>
+        <Members>
+          <PropertySet>
+            <Name>DefaultDisplayPropertySet</Name>
+            <ReferencedProperties>
+              <Name>Name</Name>
+              <Name>PolicyId</Name>
+              <Name>MaximumIops</Name>
+              <Name>MinimumIops</Name>
+              <Name>PolicyType</Name>
+              <Name>ParentPolicy</Name>
+              <Name>Status</Name>
+            </ReferencedProperties>
+          </PropertySet>
+        </Members>
+      </MemberSet>
+      <ScriptProperty>
+        <Name>Status</Name>
+        <GetScriptBlock>
+          return [Microsoft.StorageQos.Status] [int] $this.psBase.CimInstanceProperties["Status"].Value
+        </GetScriptBlock>
+      </ScriptProperty>
+      <ScriptProperty>
+        <Name>PolicyType</Name>
+        <GetScriptBlock>
+          return [Microsoft.StorageQos.PolicyType] [int] $this.psBase.CimInstanceProperties["PolicyType"].Value
+        </GetScriptBlock>
+      </ScriptProperty>
+      <AliasProperty>
+        <Name>MaximumIops</Name>
+        <ReferencedMemberName>ThroughputLimit</ReferencedMemberName>
+      </AliasProperty>
+      <AliasProperty>
+        <Name>MinimumIops</Name>
+        <ReferencedMemberName>ThroughputReservation</ReferencedMemberName>
+      </AliasProperty>
+      <AliasProperty>
+        <Name>MaximumIOBandwidth</Name>
+        <ReferencedMemberName>BandwidthLimit</ReferencedMemberName>
+      </AliasProperty>
+      <ScriptProperty>
+        <Name>PolicyId</Name>
+        <GetScriptBlock>
+          New-Object System.Guid $this.psBase.CimInstanceProperties["PolicyId"].Value
+        </GetScriptBlock>
+      </ScriptProperty>
+      <ScriptProperty>
+        <Name>ParentPolicy</Name>
+        <GetScriptBlock>
+          if (!$this.psBase.CimInstanceProperties["ParentPolicy"].Value -eq "")
+          {
+            New-Object System.Guid $this.psBase.CimInstanceProperties["ParentPolicy"].Value
+          }
+          else
+          {
+            [System.Guid]::Empty
+          }
+        </GetScriptBlock>
+      </ScriptProperty>
+    </Members>
+  </Type>
+  <!--
+  
+  //
+  // StorageQoSFlow
+  //
+
+  -->
+  <Type>
+    <Name>Microsoft.Management.Infrastructure.CimInstance#root/Microsoft/Windows/storage/MSFT_StorageQoSFlow</Name>
+    <Members>
+      <ScriptProperty>
+        <Name>FlowId</Name>
+        <GetScriptBlock>
+          New-Object System.Guid $this.psBase.CimInstanceProperties["FlowId"].Value
+        </GetScriptBlock>
+      </ScriptProperty>
+      <ScriptProperty>
+        <Name>PolicyId</Name>
+        <GetScriptBlock>
+          if (!$this.psBase.CimInstanceProperties["PolicyId"].Value -eq "")
+          {
+            New-Object System.Guid $this.psBase.CimInstanceProperties["PolicyId"].Value
+          }
+          else
+          {
+            [System.Guid]::Empty
+          }
+        </GetScriptBlock>
+      </ScriptProperty>
+      <ScriptProperty>
+        <Name>InitiatorId</Name>
+        <GetScriptBlock>
+          New-Object System.Guid $this.psBase.CimInstanceProperties["InitiatorId"].Value
+        </GetScriptBlock>
+      </ScriptProperty>
+      <ScriptProperty>
+        <Name>VolumeId</Name>
+        <GetScriptBlock>
+          New-Object System.Guid $this.psBase.CimInstanceProperties["VolumeId"].Value
+        </GetScriptBlock>
+      </ScriptProperty>
+      <ScriptProperty>
+        <Name>Status</Name>
+        <GetScriptBlock>
+          return [Microsoft.StorageQos.Status] [int] $this.psBase.CimInstanceProperties["Status"].Value
+        </GetScriptBlock>
+      </ScriptProperty>
+      <ScriptProperty>
+        <Name>InitiatorLatency</Name>
+          <GetScriptBlock>
+            return ([uint64]$this.psBase.CimInstanceProperties["InitiatorLatency"].Value) / 10000
+          </GetScriptBlock>
+      </ScriptProperty>
+      <ScriptProperty>
+        <Name>StorageNodeLatency</Name>
+          <GetScriptBlock>
+            return ([uint64]$this.psBase.CimInstanceProperties["StorageNodeLatency"].Value) / 10000
+          </GetScriptBlock>
+      </ScriptProperty>
+      <ScriptProperty>
+        <Name>Interval</Name>
+          <GetScriptBlock>
+            return ([uint64]$this.psBase.CimInstanceProperties["Interval"].Value) / 10000
+          </GetScriptBlock>
+      </ScriptProperty>
+      <ScriptProperty>
+        <Name>TimeStamp</Name>
+        <GetScriptBlock>
+          return  [System.DateTime]::FromFileTime([uint64]$this.psBase.CimInstanceProperties["TimeStamp"].Value)
+        </GetScriptBlock>
+      </ScriptProperty>
+      <AliasProperty>
+        <Name>MaximumIops</Name>
+        <ReferencedMemberName>Limit</ReferencedMemberName>
+      </AliasProperty>
+      <AliasProperty>
+        <Name>MinimumIops</Name>
+        <ReferencedMemberName>Reservation</ReferencedMemberName>
+      </AliasProperty>
+    </Members>
+  </Type>
+  <!--
+  
+  //
+  // StorageQoSVolume
+  //
+
+  -->
+  <Type>
+    <Name>Microsoft.Management.Infrastructure.CimInstance#root/Microsoft/Windows/storage/MSFT_StorageQoSVolume</Name>
+    <Members>
+      <ScriptProperty>
+        <Name>VolumeId</Name>
+        <GetScriptBlock>
+          New-Object System.Guid $this.psBase.CimInstanceProperties["VolumeId"].Value
+        </GetScriptBlock>
+      </ScriptProperty>
+      <ScriptProperty>
+        <Name>Status</Name>
+        <GetScriptBlock>
+          return [Microsoft.StorageQos.Status] [int] $this.psBase.CimInstanceProperties["Status"].Value
+        </GetScriptBlock>
+      </ScriptProperty>
+      <ScriptProperty>
+        <Name>Latency</Name>
+          <GetScriptBlock>
+            return ([uint64]$this.psBase.CimInstanceProperties["Latency"].Value) / 10000
+          </GetScriptBlock>
+      </ScriptProperty>
+      <ScriptProperty>
+        <Name>Interval</Name>
+          <GetScriptBlock>
+            return ([uint64]$this.psBase.CimInstanceProperties["Interval"].Value) / 10000
+          </GetScriptBlock>
+      </ScriptProperty>
+      <ScriptProperty>
+        <Name>TimeStamp</Name>
+        <GetScriptBlock>
+          return  [System.DateTime]::FromFileTime([uint64]$this.psBase.CimInstanceProperties["TimeStamp"].Value)
+        </GetScriptBlock>
+      </ScriptProperty>
+      <AliasProperty>
+        <Name>MaximumIops</Name>
+        <ReferencedMemberName>Limit</ReferencedMemberName>
+      </AliasProperty>
+      <AliasProperty>
+        <Name>MinimumIops</Name>
+        <ReferencedMemberName>Reservation</ReferencedMemberName>
+      </AliasProperty>
+    </Members>
+  </Type>
+</Types>

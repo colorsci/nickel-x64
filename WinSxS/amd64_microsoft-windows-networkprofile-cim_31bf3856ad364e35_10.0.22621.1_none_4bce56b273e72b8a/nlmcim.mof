@@ -1,0 +1,54 @@
+#pragma autorecover
+#pragma namespace("\\\\.\\root\\StandardCimv2")
+
+Instance of __Win32Provider as $prov
+{
+  Name = "NlmCim";
+  ClsId = "{7924BBA8-1913-4B0E-8E6F-6F45CE499731}";
+  ImpersonationLevel = 1;
+  HostingModel = "NetworkServiceHost";
+  version = 1073741825;
+};
+
+Instance of __InstanceProviderRegistration
+{
+  Provider = $prov;
+  supportsGet = TRUE;
+  supportsPut = TRUE;
+  supportsDelete = TRUE;
+  supportsEnumeration = TRUE;
+  QuerySupportLevels;
+};
+
+[Abstract,UMLPackagePath("CIM::Core::CoreElements") : ToSubclass,locale(1033)] 
+class CIM_ManagedElement
+{
+  string InstanceID;
+  [MaxLen(64) : ToSubclass] string Caption;
+  string Description;
+  string ElementName;
+};
+
+[UMLPackagePath("CIM::Core::Settings") : ToSubclass,Abstract,locale(1033)] 
+class CIM_SettingData : CIM_ManagedElement
+{
+  [key,Override("InstanceID")] string InstanceID;
+  [Required : ToSubclass DisableOverride,Override("ElementName")] string ElementName;
+};
+
+[UMLPackagePath("CIM::Core::Settings") : ToSubclass,locale(1033)] 
+class MSFT_NetSettingData : CIM_SettingData
+{
+};
+
+[UMLPackagePath("CIM::Core::Settings") : ToSubclass,ClassVersion("2.0.0"),locale(1033),dynamic : ToInstance,provider("NlmCim") : ToInstance] 
+class MSFT_NetConnectionProfile : MSFT_NetSettingData
+{
+  [read : ToSubclass] string Name;
+  [read : ToSubclass] string InterfaceAlias;
+  [read : ToSubclass] uint32 InterfaceIndex;
+  [ValueMap{"0", "1", "2"} : ToSubclass] uint32 NetworkCategory;
+  [ValueMap{"0", "1", "2"} : ToSubclass] uint32 DomainAuthenticationKind;
+  [read : ToSubclass,ValueMap{"0", "1", "2", "3", "4"} : ToSubclass] uint32 IPv4Connectivity;
+  [read : ToSubclass,ValueMap{"0", "1", "2", "3", "4"} : ToSubclass] uint32 IPv6Connectivity;
+};

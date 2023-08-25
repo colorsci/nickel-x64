@@ -1,0 +1,55 @@
+﻿<?xml version='1.0' encoding='utf-8' standalone='yes'?>
+<assembly
+    xmlns="urn:schemas-microsoft-com:asm.v3"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    authors="zinap; erikhe; shbrown"
+    buildFilter=""
+    company="MICROSOFT"
+    copyright=""
+    creationTimeStamp="2003-07-29T16:10:46.6864982-07:00"
+    description="$(resourceString.description)"
+    displayName="$(resourceString.displayName)"
+    lastUpdateTimeStamp="2005-02-22T07:14:18.1645118-08:00"
+    manifestVersion="1.0"
+    owners="vasilep"
+    supportInformation=""
+    testers="yinghany"
+    >
+  <assemblyIdentity
+      language="neutral"
+      name="Microsoft-Windows-TaskScheduler-Service-DL"
+      processorArchitecture="*"
+      publicKeyToken="$(Build.WindowsPublicKeyToken)"
+      version="0.0.0.0"
+      />
+  <migration>
+    <machineSpecific>
+      <migXml xmlns="">
+        <environment context="System">
+          <variable name="TasksFolderPath">
+            <script>MigXmlHelper.GetStringContent("Registry","HKLM\Software\Microsoft\SchedulingAgent [TasksFolder]")</script>
+          </variable>
+        </environment>
+        <rules context="System">
+          <include>
+            <objectSet>
+              <pattern type="File">%TasksFolderPath%\* [*]</pattern>
+              <pattern type="Registry">HKLM\Software\Microsoft\SchedulingAgent [*]</pattern>
+            </objectSet>
+          </include>
+          <exclude>
+            <objectSet>
+              <pattern type="File">%TasksFolderPath% [SCHEDLGU.TXT]</pattern>
+            </objectSet>
+          </exclude>
+          <detects>
+            <detect>
+              <condition>MigXmlHelper.IsOSEarlierThan("NT", "6.0")</condition>
+            </detect>
+          </detects>
+        </rules>
+      </migXml>
+    </machineSpecific>
+  </migration>
+</assembly>

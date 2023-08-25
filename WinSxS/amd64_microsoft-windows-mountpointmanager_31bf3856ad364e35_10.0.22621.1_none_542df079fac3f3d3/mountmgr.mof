@@ -1,0 +1,61 @@
+#pragma classflags("forceupdate")
+#pragma namespace("\\\\.\\root\\WMI")
+
+[Dynamic,
+ Description("Mount Manager Trace"),
+ guid("{467c1914-37f0-4c7d-b6db-5cd7dfe7bd5e}"),
+ locale("MS\\0x409")]
+class Mountmgr : EventTrace
+{
+    [Description ("Enable Flags"),
+        ValueDescriptions{
+             "TracingGeneral Flag",
+             "TracingIoctl Flag",
+             "TracingMemory Flag",
+             "TracingCache Flag"},
+        DefineValues{
+             "TracingGeneral",
+             "TracingIoctl",
+             "TracingMemory",
+             "TracingCache"},
+        Values{
+             "TracingGeneral",
+             "TracingIoctl",
+             "TracingMemory",
+             "TracingCache"},
+        ValueMap{
+             "0x00000001",
+             "0x00000002",
+             "0x00000004",
+             "0x00000008"}
+    ]
+    uint32 Flags;
+    [Description ("Levels"),
+        ValueDescriptions{
+            "Abnormal exit or termination",
+            "Severe errors that need logging",
+            "Warnings such as allocation failure",
+            "Includes non-error cases",
+            "Detailed traces from intermediate steps" },
+         DefineValues{
+            "TRACE_LEVEL_FATAL",
+            "TRACE_LEVEL_ERROR",
+            "TRACE_LEVEL_WARNING"
+            "TRACE_LEVEL_INFORMATION",
+            "TRACE_LEVEL_VERBOSE" },
+        Values{
+            "Fatal",
+            "Error",
+            "Warning",
+            "Information",
+            "Verbose" },
+        ValueMap{
+            "0x1",
+            "0x2",
+            "0x3",
+            "0x4",
+            "0x5" },
+        ValueType("index")
+    ]
+    uint32 Level;
+};

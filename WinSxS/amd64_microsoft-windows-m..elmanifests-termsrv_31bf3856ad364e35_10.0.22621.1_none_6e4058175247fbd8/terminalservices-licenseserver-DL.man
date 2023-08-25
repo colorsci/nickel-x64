@@ -1,0 +1,55 @@
+﻿<?xml version='1.0' encoding='utf-8' standalone='yes'?>
+<assembly
+    xmlns="urn:schemas-microsoft-com:asm.v3"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    authors="ajayku"
+    buildFilter=""
+    company="Microsoft"
+    copyright=""
+    creationTimeStamp="2005-01-19T23:09:09.7164046-08:00"
+    description="$(resourceString.description1)"
+    displayName="$(resourceString.displayName0)"
+    lastUpdateTimeStamp="2005-02-03T00:33:01.6861768-08:00"
+    manifestVersion="1.0"
+    owners="ajayku"
+    supportInformation=""
+    testers=""
+    >
+  <assemblyIdentity
+      language="*"
+      name="Microsoft-Windows-TerminalServices-LicenseServer-DL"
+      processorArchitecture="*"
+      version="0.0.0.0"
+      />
+  <!-- We support only W2k3 to LH+upgrades-->
+  <migration>
+    <registerSDF name="Licensing"/>
+    <registerSDF name="Licensing-UI"/>
+    <migXml xmlns="">
+      <plugin
+          classId="{999293E6-7830-45f3-9E3E-A0403E828EFB}"
+          file="Microsoft-Windows-TerminalServices-LicenseServer\TlsMigPlugin.dll"
+          />
+      <detects>
+        <detect>
+          <condition>MigXmlHelper.DoesOSMatch("NT", "5.2.*")</condition>
+        </detect>
+        <detect>
+          <condition>MigXmlHelper.DoesObjectExist("Registry","HKLM\System\CurrentControlSet\Services\TermServLicensing\Parameters")</condition>
+        </detect>
+      </detects>
+      <rules context="System">
+        <include>
+          <objectSet>
+            <pattern type="Registry">HKLM\System\CurrentControlset\Services\TermServLicensing\Parameters [Role]</pattern>
+            <pattern type="Registry">HKLM\System\CurrentControlset\Services\TermServLicensing\Parameters [DBPath]</pattern>
+	    <pattern type="Registry">HKLM\Software\Microsoft\TermServLicensing\Policy\Microsoft Corporation\* [*]</pattern>
+	    <pattern type="Registry">HKLM\Software\Microsoft\TermServLicensing\LrWiz\Params [2.5.4.*]</pattern>
+	    <pattern type="Registry">HKLM\Software\Microsoft\TermServLicensing\LrWiz\Params [ACTIVATIONMETHOD]</pattern>
+          </objectSet>
+        </include>
+      </rules>
+    </migXml>
+  </migration>
+</assembly>

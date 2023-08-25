@@ -1,0 +1,58 @@
+﻿<?xml version='1.0' encoding='utf-8' standalone='yes'?>
+<assembly>
+  <assemblyIdentity
+      language="neutral"
+      name="Microsoft-Windows-IPv4IPv6CoexistenceMigration-Net"
+      processorArchitecture="*"
+      version="6.0.6001.0"
+      />
+  <migration
+      alwaysProcess="yes"
+      replacementSettingsVersionRange="1"
+      replacementVersionRange="6.1-10.0.17134"
+      settingsVersion="1"
+      >
+    <machineSpecific xmlns="urn:schemas-microsoft-com:asm.v3">
+      <migXml xmlns="">
+        <rules context="System">
+          <include>
+            <objectSet>
+              <!-- Isatap settings -->
+              <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\IPHLPSVC\Config [IsatapState]</pattern>
+              <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\IPHLPSVC\Config [IsatapResolutionInterval]</pattern>
+              <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\IPHLPSVC\Config [EnableIsatapResolution]</pattern>
+              <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\IPHLPSVC\Config [IsatapRouterName]</pattern>
+              <!-- 6To4 settings -->
+              <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\IPHLPSVC\Config [Enable6to4]</pattern>
+              <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\IPHLPSVC\Config [EnableResolution]</pattern>
+              <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\IPHLPSVC\Config [EnableRouting]</pattern>
+              <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\IPHLPSVC\Config [EnableSiteLocals]</pattern>
+              <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\IPHLPSVC\Config [ResolutionInterval]</pattern>
+              <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\IPHLPSVC\Config [RelayName]</pattern>
+              <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\IPHLPSVC\Config [UndoOnStop]</pattern>
+              <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\IPHLPSVC\Interfaces\* [*]</pattern>
+              <!-- Teredo settings -->
+              <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\IPHLPSVC\Teredo [RefreshInterval]</pattern>
+              <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\IPHLPSVC\Teredo [ServerName]</pattern>
+              <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\IPHLPSVC\Teredo [ServerVirtualIp]</pattern>
+              <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\IPHLPSVC\Teredo [ClientPort]</pattern>
+              <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\IPHLPSVC\Teredo [DefaultQualified]</pattern>
+              <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\IPHLPSVC\Teredo [DisableOffload]</pattern>
+              <!-- IPHTTPS settings -->
+              <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\IPHLPSVC\Parameters\IPHTTPS\* [*]</pattern>
+            </objectSet>
+          </include>
+          <exclude>
+            <objectSet>
+              <!-- Exclude Teredo Type on upgrade to reset to default -->
+              <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\IPHLPSVC\Teredo [Type]</pattern>
+              <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\IPHLPSVC\Teredo [TeredoConfigBySvc]</pattern>
+              <!-- Exclude Direct tunnel interfaces on upgrade -->
+              <pattern type="Registry">HKEY_LOCAL_MACHINE\System\CurrentControlSet\Services\iphlpsvc\Direct\* [*]</pattern>
+            </objectSet>
+          </exclude>
+        </rules>
+      </migXml>
+    </machineSpecific>
+  </migration>
+</assembly>

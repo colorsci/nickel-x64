@@ -1,0 +1,31 @@
+<assembly manifestVersion="1.0" description="ESC's Downlevel Settings" displayName="Microsoft-Windows-IE-ESC-DL" company="Microsoft Corporation" copyright="" supportInformation="" creationTimeStamp="2006-10-05T00:28:14.1973236-07:00" lastUpdateTimeStamp="2006-10-05T00:28:14.1973236-07:00" authors="durgav" owners="mpurohit" testers="anupamv" buildFilter="" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="urn:schemas-microsoft-com:asm.v3">
+	<!-- 
+    in DL manifest, we only care about name, processorArch, language and version 
+    elements in the <assemblyIdentity> hence can delete the rest if you like 
+    -->
+  <assemblyIdentity name="Microsoft-Windows-IE-ESC-DL" version="0.0.0.0" processorArchitecture="*" language="*" versionScope="nonSxS"></assemblyIdentity>
+
+  <migration scope="Upgrade,MigWiz,USMT"> 
+    <migXml xmlns="">
+            <!-- Check this is only valid for down-level OS < than Windows Vista
+                 Upgrade to LH server is only allowed from Win2k3 server machines. (XP etc will be excluded by setup itself)
+            -->
+     <detects>
+       <detect>
+         <condition>MigXmlHelper.IsOSEarlierThan("NT", "6.0.0.0")</condition>
+       </detect>
+     </detects>
+
+      <!-- reg keys in HKLM (wcm:scope="allUsers") -->
+      <rules context="System">
+        <include>  
+          <objectSet>
+            <pattern type="Registry">HKLM\Software\Microsoft\Active Setup\Installed Components\{A509B1A7-37EF-4b3f-8CFC-4F3A74704073} [IsInstalled]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Active Setup\Installed Components\{A509B1A8-37EF-4b3f-8CFC-4F3A74704073} [IsInstalled]</pattern>
+          </objectSet>
+        </include>
+      </rules>
+    </migXml>
+    <migrationDisplayID>Internet_Explorer\Enhanced_Security_Configuration</migrationDisplayID>
+  </migration>
+</assembly>

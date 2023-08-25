@@ -1,0 +1,2617 @@
+<?xml version="1.0"?>
+
+<!--***************************************************************************
+
+  Copyright (c) Microsoft Corporation. All rights reserved.
+
+****************************************************************************-->
+
+<Rules>
+
+
+
+<StringTable>
+  <String ID="GroupWirelessNetwork" loc.comment="Wireless Network Repro The Problem Rule Group">Wireless Network Troubleshooter</String>
+  <String ID="RuleInsertWirelessNetworkTables" loc.comment="Rule to insert Wireless Network Repro The Problem tables.">Insert Wireless Network Troubleshooting Tables</String>
+  <String ID="RuleCreateRegistryWirelessAdapterTable" loc.comment="Rule to create table of adapter information from the registry information">Create Registry Wireless Adapter Table</String>
+  <String ID="RuleCreateWirelessConnectionAttemptTable" loc.comment="Rule to create table of wireless network connection attempts">Create Wireless Network Connection Attempts Table</String>
+
+  <String ID="RuleNetworkWirelessSetup" loc.comment="Rule to create summary table for Wireless Network rules">Create Network Wireless Summary Table</String>
+  <String ID="RuleDisabledWirelessAdaptersCheck" loc.comment="Rule to check that wireless adapters listed in the registry are enabled">Check For Enabled Wireless Adapters</String>
+  <String ID="RuleWirelessServiceCheck" loc.comment="Rule to check the state of the wireless auto-configuration service">Check For Wireless Auto-Configuration Service</String>
+  <String ID="LOC_WlanSvcStopped" loc.comment="Text to denote the Wireless Auto-Configuration Service has been stopped while the manifest is running">Stopped</String>
+  <String ID="RuleConnectionAttemptsCheck" loc.comment="Rule to check the various connection attempts made by the user">Check Wireless Network Connection Attempts</String>
+  <String ID="RuleNetworkWirelessSummary" loc.comment="Rule to summarize summary table for Wireless Network rules">Summarize Network Wireless Summary Table</String>
+  <String ID="RuleWirelessNetworkCleanup" loc.comment="Name of Rules to cleanup Wireless Network report">Wireless Network Cleanup</String>
+  <String ID="RuleInformationListInsert" loc.comment="Name of rule to insert summary table">Insert Information List</String>
+  <String ID="RuleAddWarningTable" loc.comment="Marked as not seen anywhere">Create Top Warning Table</String>
+  <String ID="RuleSlimServicesTable" loc.comment="Only used in WDC Console">Turn Services into notes</String>
+  <String ID="RuleNoteErrorCodes" loc.comment="Name of rule to change File error codes into descriptions" >Change Errors codes into descriptions</String>
+  <String ID="RuleFileHyper" loc.comment="Name of rule to insert a link to Files collected using PLA">Insert File To Link</String>
+
+  <String ID="LOC_DescNetworkWirelessSummary" loc.comment="Description of the Wireless Network Summary Group in Rules Summary Table">Troubleshooter logic related to the Wireless Network state</String>
+  <String ID="LOC_TableNetworkWirelessSummary" loc.comment="Title of Network Wireless Summary Group in Rules Summary Table">Wireless Network Checks</String>
+
+  <String ID="LOC_RuleDisabledWirelessAdaptersCheck" loc.comment="Rule to check that wireless adapters listed in the registry are enabled">Check For Enabled Wireless Adapters</String>
+  <String ID="LOC_RuleWirelessServiceCheck" loc.comment="Rule to check the state of the wireless auto-configuration service">Check For Wireless Auto-Configuration Service</String>
+  <String ID="LOC_RuleConnectionAttemptsCheck" loc.comment="Rule to check the various connection attempts made by the user">Check Wireless Network Connection Attempts</String>
+
+  <String ID="LOC_Failed" loc.comment="Text to display when a rule or group of rules failed">Failed</String>
+  <String ID="LOC_Passed" loc.comment="Text to display when a rule or group of rules passed">Passed</String>
+  <String ID="LOC_TrueString"  loc.comment="Text value of TRUE">True</String>
+  <String ID="LOC_FalseString" loc.comment="Text value of FALSE">False</String>
+
+  <String ID="LOC_CredProviderFileName" loc.comment="Name of file with config info">Credential Providers</String>
+  <String ID="LOC_CredProviderFilterFileName" loc.comment="Name of file with config info">Credential Provider Filters</String>
+  <String ID="LOC_WinlogonFileName" loc.comment="Name of file with config info">Winlogon Notifications Subscribers</String>
+  <String ID="LOC_WlanAPIFileName" loc.comment="Name of file with config info">WLAN API permissions</String>
+  <String ID="LOC_WirelessGPFileName" loc.comment="Name of file with config info">Wireless Group Policy</String>
+  <String ID="LOC_EnvironmentInfoFileName" loc.comment="Name of file with config info">Environment Info</String>
+
+  <String ID="LOC_PathNotFound" loc.comment="Text to display when File path is not found"                 >The system cannot find the path specified.</String>
+  <String ID="LOC_Success" loc.comment="Text to display when File operation succeeds"                 >Success</String>
+
+  <String ID="NoteCode0" loc.comment="Text to display in note related to Open File result code 0x0">Code 0x0</String>
+  <String ID="NoteServiceProperlyStopped0" loc.comment="Report service table comment">Service is stopped and Exit Code is 0 (Normal). {summary}</String>
+  <String ID="NoteServiceProperlyStopped1077" loc.comment="Report service table comment">Service is stopped and Exit Code is 1077 (Normal). {summary}</String>
+  <String ID="NoteServiceRunning" loc.comment="Report service table comment">Service is running. {summary}</String>
+
+  <String ID="NoteCode80070003" loc.comment="Text to display in note related to Open File result code 0x80070003">Code 0x8007003</String>
+
+
+<String ID="WarnFailWirelessAdapterCheck_symptom" loc.comment="Symptom string for warning message: WarnFailWirelessAdapterCheck">A wireless network adapter is disabled on the system.</String>
+<String ID="WarnFailWirelessAdapterCheck_cause" loc.comment="Cause string for warning message: WarnFailWirelessAdapterCheck">A wireless network adapter installed on the system is listed as disabled.</String>
+<String ID="WarnFailWirelessAdapterCheck_details" loc.comment="Details string for warning message: WarnFailWirelessAdapterCheck">The wireless network adapter {adaptername} is disabled.</String>
+<String ID="WarnFailWirelessAdapterCheck_res1" loc.comment="Resolution string for warning message: WarnFailWirelessAdapterCheck">Have user enter Device Manager.</String>
+<String ID="WarnFailWirelessAdapterCheck_res2" loc.comment="Resolution string for warning message: WarnFailWirelessAdapterCheck">Locate and enable {adaptername}.</String>
+
+
+<String ID="WarnFailNoWirelessAdapterEnabled_symptom" loc.comment="Symptom string for warning message: WarnFailNoWirelessAdapterEnabled">All wireless network adapters on the system are disabled.</String>
+<String ID="WarnFailNoWirelessAdapterEnabled_cause" loc.comment="Cause string for warning message: WarnFailNoWirelessAdapterEnabled">No wireless network adapter installed on the system is listed as enabled.</String>
+<String ID="WarnFailNoWirelessAdapterEnabled_details" loc.comment="Details string for warning message: WarnFailNoWirelessAdapterEnabled">The wireless network adapter: {adaptername} is disabled.</String>
+<String ID="WarnFailNoWirelessAdapterEnabled_res1" loc.comment="Resolution string for warning message: WarnFailNoWirelessAdapterEnabled">Have user enter Device Manager.</String>
+<String ID="WarnFailNoWirelessAdapterEnabled_res2" loc.comment="Resolution string for warning message: WarnFailNoWirelessAdapterEnabled">Locate and enable a wireless network adapter, possibly {adaptername}.</String>
+
+<String ID="WarnFailCheckWirelessServiceAbnormallyStopped_symptom" loc.comment="Symptom string for warning message: WarnFailCheckWirelessServiceAbnormallyStopped">The Wireless Auto-Configuration service has stopped abnormally.</String>
+<String ID="WarnFailCheckWirelessServiceAbnormallyStopped_cause" loc.comment="Cause string for warning message: WarnFailCheckWirelessServiceAbnormallyStopped">Application error. Exit code {exitcode}.</String>
+<String ID="WarnFailCheckWirelessServiceAbnormallyStopped_res1" loc.comment="Resolution string for warning message: WarnFailCheckWirelessServiceAbnormallyStopped">Restart the Wireless Auto-Configuration Service</String>
+<String ID="WarnFailCheckWirelessServiceNotRunning_symptom" loc.comment="Symptom string for warning message: WarnFailCheckWirelessServiceNotRunning">The Wireless Auto-Configuration service is not running.</String>
+<String ID="WarnFailCheckWirelessServiceNotRunning_cause" loc.comment="Cause string for warning message: WarnFailCheckWirelessServiceNotRunning">User or application has set the service to be in the {state} state.</String>
+<String ID="WarnFailCheckWirelessServiceNotRunning_res1" loc.comment="Resolution string for warning message: WarnFailCheckWirelessServiceNotRunning">Restart the Wireless Auto-Configuration service.</String>
+
+<String ID="WarnFailServiceNotFound_symptom" loc.comment="Symptom string for warning message: WarnFailServiceNotFound">Service {servicename} not found in system services.</String>
+<String ID="WarnFailServiceNotFound_cause" loc.comment="Cause string for warning message: WarnFailServiceNotFound">Service not registered with system.</String>
+<String ID="WarnFailServiceNotFound_res1" loc.comment="Resolution string for warning message: WarnFailServiceNotFound">Register service with system.</String>
+
+<String ID="WarnFailWirelessConnection_symptom" loc.comment="Symptom string for warning message: WarnFailWirelessConnection">The user failed to connect to the desired wireless network.</String>
+<String ID="WarnFailWirelessConnection_cause" loc.comment="Cause string for warning message: WarnFailWirelessConnection">The reason for the failure of the most recent wireless network connection attempt is: {failurereason}.</String>
+<String ID="WarnFailWirelessConnection_details" loc.comment="Details string for warning message: WarnFailWirelessConnection">The user attempted to connect to the wireless network with the SSID: {ssid}</String>
+<String ID="WarnFailWirelessConnection_res1" loc.comment="Resolution string for warning message: WarnFailWirelessConnection">Confirm that both the wireless network adapter and the wireless network access point are using the same version of the 802.11 protocol.</String>
+<String ID="WarnFailWirelessConnection_res2" loc.comment="Resolution string for warning message: WarnFailWirelessConnection">Also, confirm that both the wireless network adapter and the wireless network access point are using the same encryption scheme.</String>
+<String ID="WarnWirelessConnectionSuccess_symptom" loc.comment="Symptom string for warning message: WarnWirelessConnectionSuccess">The user successfully connected to a wireless network.</String>
+<String ID="WarnWirelessConnectionSuccess_cause" loc.comment="Cause string for warning message: WarnWirelessConnectionSuccess">The most recent wireless network connection attempt was successful.</String>
+<String ID="WarnWirelessConnectionSuccess_details" loc.comment="Details string for warning message: WarnWirelessConnectionSuccess">The user connected to the wireless network with the following SSID: {ssid}</String>
+<String ID="WarnWirelessConnectionSuccess_res1" loc.comment="Resolution string for warning message: WarnWirelessConnectionSuccess">No resolution required.</String>
+<String ID="WarnWirelessConnectionDisconnect_symptom" loc.comment="Symptom string for warning message: WarnWirelessConnectionDisconnect">The user disconnected from a wireless network.</String>
+<String ID="WarnWirelessConnectionDisconnect_cause" loc.comment="Cause string for warning message: WarnWirelessConnectionDisconnect">The Wireless Auto-Configuration service logged an event denoting that the user disconnected from a wireless network.</String>
+<String ID="WarnWirelessConnectionDisconnect_details" loc.comment="Details string for warning message: WarnWirelessConnectionDisconnect">The user disconnected from the wireless network with the following SSID: {ssid}.</String>
+<String ID="WarnWirelessConnectionDisconnect_res1" loc.comment="Resolution string for warning message: WarnWirelessConnectionDisconnect">Visit the Network Center and attempt to connect to the wireless network with the following SSID: {ssid}.</String>
+<String ID="WarnWirelessConnectionIncomplete_symptom" loc.comment="Symptom string for warning message: WarnWirelessConnectionIncomplete">The user failed to connect to the desired wireless network.</String>
+<String ID="WarnWirelessConnectionIncomplete_cause" loc.comment="Cause string for warning message: WarnWirelessConnectionIncomplete">The connection attempt stopped during the following step: {wirelessconnectionstep}.</String>
+<String ID="WarnWirelessConnectionIncomplete_details" loc.comment="Details string for warning message: WarnWirelessConnectionIncomplete">The user attempted to connect to the wireless network with the SSID: {ssid}</String>
+<String ID="WarnWirelessConnectionIncomplete_res1" loc.comment="Resolution string for warning message: WarnWirelessConnectionIncomplete">Retry connecting to the wireless network with the SSID: {ssid} and be sure to acknowledge all prompts displayed by the Networking Center.</String>
+</StringTable>
+
+
+ <Group name="$(GroupWirelessNetwork)" enabled="true" >
+
+   <Rule name="$(RuleInsertWirelessNetworkTables)" enabled="true">
+    <Step select="/Report/Section[@name='SectionWireless']">
+      <Exists>
+       <Otherwise>
+        <Insert select=".">
+          <Node axis="child">
+            <Table name="TableWirelessOSInformation" anchor="TableWirelessOSInformation" topic="TopicWirelessSoftware" key="10">
+              <Header>
+                <Data name="managementObjectsProperty" />
+                <Data name="managementObjectsValue" />
+              </Header>
+            </Table>
+          </Node>
+        </Insert>
+        <Insert select="Table[@name='TableWirelessOSInformation']">
+         <Node axis="child" document="temp/Operating System.xml" select="/Report/Section/Table[@name='managementObjects']/Item/Item/Item" />
+        </Insert>
+        <Delete select="Table[@name='TableWirelessOSInformation']/Item[Data[@name='managementObjectsProperty'] = 'Manufacturer' or Data[@name='managementObjectsProperty'] = 'Model' or Data[@name='managementObjectsProperty'] = 'Name' or Data[@name='managementObjectsProperty'] = 'UserName' or Data[@name='managementObjectsProperty'] = 'PowerOnline']" />
+       </Otherwise>
+      </Exists>
+    </Step>
+
+
+    <Step select="/Report/Section[@name='SectionWireless']">
+      <Exists>
+       <Otherwise>
+        <Insert select=".">
+          <Node axis="child">
+            <Table name="TableWirelessFileVersions" anchor="TableWirelessFileVersions" topic="TopicWirelessSoftware" key="15">
+              <Header>
+              <Data name="managementObjectsRelativePath" />
+                <Header>
+                  <Data name="managementObjectsProperty" />
+                  <Data name="managementObjectsValue" />
+                </Header>
+              </Header>
+            </Table>
+          </Node>
+        </Insert>
+        <Insert select="Table[@name='TableWirelessFileVersions']">
+         <Node axis="child" document="temp/fileversions.wireless.xml" select="/Report/Section/Table[@name='managementObjects']/Item/Item" />
+        </Insert>
+       </Otherwise>
+      </Exists>
+    </Step>
+
+
+    <Step select="/Report/Section[@name='SectionWireless']">
+      <Exists>
+       <Otherwise>
+        <Insert select=".">
+         <Node axis="child" document="temp/regAdapterInfo.wireless.xml" select="/Report/Section/Table[@name='registryKeys']" />
+        </Insert>
+        <Insert select="Table[@name='registryKeys']">
+         <Attribute name="name" value="TableTempWirelessRegAdapterInfo"/>
+         <Attribute name="anchor" value="TableTempWirelessRegAdapterInfo"/>
+<Attribute name="topic" value="TopicWirelessHardware"/>
+<Attribute name="key" value="22"/>
+        </Insert>
+       </Otherwise>
+      </Exists>
+    </Step>
+
+
+    <Step select="/Report/Section[@name='SectionWireless']">
+      <Exists>
+       <Otherwise>
+        <Insert select=".">
+          <Node axis="child">
+            <Table name="TableWirelessSystemInformation" anchor="TableWirelessSystemInformation" topic="TopicWirelessHardware" key="20">
+              <Header>
+                <Data name="managementObjectsProperty" />
+                <Data name="managementObjectsValue" />
+              </Header>
+            </Table>
+          </Node>
+        </Insert>
+        <Insert select="Table[@name='TableWirelessSystemInformation']">
+         <Node axis="child" document="temp/Operating System.xml" select="/Report/Section/Table[@name='managementObjects']/Item/Item/Item" />
+        </Insert>
+        <Delete select="Table[@name='TableWirelessSystemInformation']/Item[Data[@name='managementObjectsProperty'] = 'BuildNumber' or Data[@name='managementObjectsProperty'] = 'BuildType' or Data[@name='managementObjectsProperty'] = 'Caption' or Data[@name='managementObjectsProperty'] = 'Version' or Data[@name='managementObjectsProperty'] = 'UserName' or Data[@name='managementObjectsProperty'] = 'PowerOnline']" />
+       </Otherwise>
+      </Exists>
+    </Step>
+
+
+    <Step select="/Report/Section[@name='SectionWireless']">
+      <Exists>
+       <Otherwise>
+        <Insert select=".">
+         <Node axis="child" document="temp/adapterinfo.wireless.xml" select="/Report/Section/Table[@name='managementObjects']" />
+        </Insert>
+        <Insert select="Table[@name='managementObjects']">
+         <Attribute name="name" value="TableWirelessAdapterInfo"/>
+         <Attribute name="anchor" value="TableWirelessAdapterInfo"/>
+<Attribute name="topic" value="TopicWirelessHardware"/>
+<Attribute name="key" value="30"/>
+        </Insert>
+       </Otherwise>
+      </Exists>
+    </Step>
+
+
+    <Step select="/Report/Section[@name='SectionWireless']">
+      <Exists>
+       <Otherwise>
+        <Insert select=".">
+         <Node axis="child" document="temp/System Services.xml" select="/Report/Section/Table[@name='managementObjects']" />
+        </Insert>
+        <Insert select="Table[@name='managementObjects']">
+         <Attribute name="name" value="TableWirelessServicesInformation"/>
+         <Attribute name="anchor" value="TableWirelessServicesInformation"/>
+<Attribute name="topic" value="TopicWirelessSystemState"/>
+<Attribute name="key" value="47"/>
+        </Insert>
+       </Otherwise>
+      </Exists>
+    </Step>
+
+
+    <Step select="/Report/Section[@name='SectionWireless']">
+      <Exists>
+       <Otherwise>
+        <Insert select=".">
+          <Node axis="child">
+            <Table name="TableWirelessPowerInformation" anchor="TableWirelessPowerInformation" topic="TopicWirelessSystemState" key="48">
+              <Header>
+                <Data name="managementObjectsProperty" />
+                <Data name="managementObjectsValue" />
+              </Header>
+            </Table>
+          </Node>
+        </Insert>
+        <Insert select="Table[@name='TableWirelessPowerInformation']">
+         <Node axis="child" document="temp/Operating System.xml" select="/Report/Section/Table[@name='managementObjects']/Item/Item/Item" />
+        </Insert>
+        <Delete select="Table[@name='TableWirelessPowerInformation']/Item[Data[@name='managementObjectsProperty'] != 'PowerOnline']" />
+       </Otherwise>
+      </Exists>
+    </Step>
+
+
+    <Step select="/Report/Section[@name='SectionWireless']">
+      <Exists>
+       <Otherwise>
+        <Insert select=".">
+          <Node axis="child">
+            <Table name="TableWirelessUserInformation" anchor="TableWirelessUserInformation" topic="TopicWirelessSystemState" key="49">
+              <Header>
+                <Data name="managementObjectsProperty" />
+                <Data name="managementObjectsValue" />
+              </Header>
+            </Table>
+          </Node>
+        </Insert>
+        <Insert select="Table[@name='TableWirelessUserInformation']">
+         <Node axis="child" document="temp/Operating System.xml" select="/Report/Section/Table[@name='managementObjects']/Item/Item/Item" />
+        </Insert>
+        <Delete select="Table[@name='TableWirelessUserInformation']/Item[Data[@name='managementObjectsProperty'] != 'UserName']" />
+       </Otherwise>
+      </Exists>
+    </Step>
+
+    <Step select="/Report/Section[@name='SectionWireless']">
+      <Exists>
+       <Otherwise>
+        <Insert select=".">
+         <Node axis="child" document="temp/wlanextProcesses.wireless.xml" select="/Report/Section/Table[@name='managementObjects']" />
+        </Insert>
+        <Insert select="Table[@name='managementObjects']">
+         <Attribute name="name" value="TableWirelessWLanProcesses"/>
+         <Attribute name="anchor" value="TableWirelessWLanProcesses"/>
+<Attribute name="topic" value="TopicWirelessSystemState"/>
+<Attribute name="key" value="50"/>
+        </Insert>
+       </Otherwise>
+      </Exists>
+    </Step>
+
+    <Step select="/Report/Section[@name='SectionWireless']">
+      <Exists>
+       <Otherwise>
+        <Insert select=".">
+	 <Node axis="child">
+	   <Table name="TableWirelessServices">
+	   </Table>
+	 </Node>
+        </Insert>
+        <!-- insert attributes on table -->
+        <Insert select="Table[@name='TableWirelessServices']">
+<Attribute name="topic" value="TopicWirelessSystemState"/>
+<Attribute name="key" value="51"/>
+        </Insert>
+        <!-- insert header -->
+	<Insert select="Table[@name='TableWirelessServices']">
+          <Node axis="child">
+            <Header>
+              <Data name="servicename" />
+              <Header>
+                <Data name="displayname" />
+                <Data name="exitcode" />
+                <Data name="scname" />
+                <Data name="pathname"/>
+                <Data name="servicespecificexitcode" />
+                <Data name="started" />
+                <Data name="state" />
+              </Header>
+            </Header>
+          </Node>
+        </Insert>
+       </Otherwise>
+      </Exists>
+    </Step>
+
+
+    <Step select="/Report/Section[@name='SectionWireless']">
+      <Exists>
+       <Otherwise>
+        <Insert select=".">
+		<Node axis="child">
+		   <Table name="TableEnvironmentInfo">
+             <Header>
+               <Data name="filename"/>
+             </Header>
+   		   </Table>
+ 		</Node>
+        </Insert>
+        <Insert select="Table[@name='TableEnvironmentInfo']">
+<Attribute name="topic" value="TopicWirelessSystemState"/>
+<Attribute name="key" value="52"/>
+        </Insert>
+
+       </Otherwise>
+      </Exists>
+    </Step>
+
+
+    <Step select="/Report/Section[@name='SectionWireless']/Table[@name='TableEnvironmentInfo']">
+      <Exists>
+       <Otherwise>
+        <Variable name="filename">$(LOC_EnvironmentInfoFileName)</Variable>
+        <Insert select=".">
+     <Node axis="child">
+           <Item>
+             <Data name="filename" url="envinfo.txt">{filename}</Data>
+           </Item>
+     </Node>
+        </Insert>
+       </Otherwise>
+      </Exists>
+    </Step>
+
+
+    <Step select="/Report/Section[@name='SectionWireless']">
+      <Exists>
+       <Otherwise>
+        <Insert select=".">
+         <Node axis="child" document="temp/GPInfo.wireless.xml" select="/Report/Section/Table[@name='configurationFiles']" />
+        </Insert>
+        <Insert select="Table[@name='configurationFiles']">
+         <Attribute name="name" value="TableWirelessGPInfoFiles"/>
+         <Attribute name="anchor" value="TableWirelessGPInfoFiles"/>
+<Attribute name="topic" value="TopicWirelessConfiguration"/>
+<Attribute name="key" value="80"/>
+        </Insert>
+       </Otherwise>
+      </Exists>
+    </Step>
+
+
+    <Step select="/Report/Section[@name='SectionWireless']">
+      <Exists>
+       <Otherwise>
+        <Insert select=".">
+         <Node axis="child" document="temp/ConfigData.wireless.xml" select="/Report/Section/Table[@name='configurationFiles']" />
+        </Insert>
+        <Insert select="Table[@name='configurationFiles']">
+         <Attribute name="name" value="TableWirelessConfigDataFiles"/>
+         <Attribute name="anchor" value="TableWirelessConfigDataFiles"/>
+<Attribute name="topic" value="TopicWirelessConfiguration"/>
+<Attribute name="key" value="100"/>
+        </Insert>
+       </Otherwise>
+      </Exists>
+    </Step>
+
+
+    <Step select="/Report/Section[@name='SectionWireless']">
+      <Exists>
+       <Otherwise>
+        <Insert select=".">
+		<Node axis="child">
+		   <Table name="TableWirelessRegConfig">
+             <Header>
+               <Data name="filename"/>
+             </Header>
+   		   </Table>
+ 		</Node>
+        </Insert>
+        <Insert select="Table[@name='TableWirelessRegConfig']">
+<Attribute name="topic" value="TopicWirelessConfiguration"/>
+<Attribute name="key" value="110"/>
+        </Insert>
+
+       </Otherwise>
+      </Exists>
+    </Step>
+
+
+    <Step select="/Report/Section[@name='SectionWireless']/Table[@name='TableWirelessRegConfig']">
+      <Exists>
+       <Otherwise>
+        <Variable name="filename">$(LOC_CredProviderFileName)</Variable>
+        <Insert select=".">
+	 <Node axis="child">
+           <Item>
+             <Data name="filename" url="allcred.reg.txt">{filename}</Data>
+           </Item>
+	 </Node>
+        </Insert>
+
+        <Variable name="filename">$(LOC_CredProviderFilterFileName)</Variable>
+        <Insert select=".">
+	 <Node axis="child">
+           <Item>
+             <Data name="filename" url="AllCredFilter.reg.txt">{filename}</Data>
+           </Item>
+	 </Node>
+        </Insert>
+
+        <Variable name="filename">$(LOC_WinlogonFileName)</Variable>
+        <Insert select=".">
+	 <Node axis="child">
+           <Item>
+             <Data name="filename" url="Notif.reg.txt">{filename}</Data>
+           </Item>
+	 </Node>
+        </Insert>
+
+        <Variable name="filename">$(LOC_WlanAPIFileName)</Variable>
+        <Insert select=".">
+	 <Node axis="child">
+           <Item>
+             <Data name="filename" url="APIPerm.reg.txt">{filename}</Data>
+           </Item>
+	 </Node>
+        </Insert>
+
+        <Variable name="filename">$(LOC_WirelessGPFileName)</Variable>
+        <Insert select=".">
+	 <Node axis="child">
+           <Item>
+             <Data name="filename" url="GPT.reg.txt">{filename}</Data>
+           </Item>
+	 </Node>
+        </Insert>
+       </Otherwise>
+      </Exists>
+    </Step>
+  </Rule>
+
+  <Rule name="$(RuleInformationListInsert)" enabled="true">
+    <Step select="/Report/Section[@name='advice']/Table[last()]">
+      <Exists>
+       <Otherwise>
+        <Insert>
+          <Node axis="preceding-sibling">
+             <Table name="alltests" style="columns">
+                <Header>
+                  <Data name="alltestgroups"/>
+                  <Data name="allteststatus"/>
+                  <Data name="alltestdesc"/>
+                  <Header>
+                    <Data name="allchildtest"/>
+                    <Data name="allchildtotal"/>
+                    <Data name="allchildfail"/>
+                    <Data name="allchilddesc"/>
+                  </Header>
+                </Header>
+             </Table>
+          </Node>
+        </Insert>
+
+       </Otherwise>
+      </Exists>
+    </Step>
+  </Rule>
+
+  <Rule name="$(RuleAddWarningTable)" enabled="true" visible="false">
+   <Step select="/Report/Section[@name='advice']">
+    <Exists>
+     <Otherwise>
+      <Variable name="internalruleindex" expression="'0'"/>
+      <Insert select=".">
+       <Node axis="child">
+        <Table name="error" style="info" key="1">
+        </Table>
+       </Node>
+      </Insert>
+     </Otherwise>
+    </Exists>
+   </Step>
+
+   <Step select="/Report/Section[@name='advice']">
+    <Exists>
+     <Otherwise>
+      <Variable name="internalruleindex" expression="'0'"/>
+      <Insert select=".">
+       <Node axis="child">
+        <Table name="warning" style="info" key="2">
+        </Table>
+       </Node>
+      </Insert>
+     </Otherwise>
+    </Exists>
+   </Step>
+
+   <Step select="/Report/Section[@name='advice']">
+    <Exists>
+     <Otherwise>
+      <Variable name="internalruleindex" expression="'0'"/>
+      <Insert select=".">
+       <Node axis="child">
+        <Table name="info" style="info" key="3">
+        </Table>
+       </Node>
+      </Insert>
+     </Otherwise>
+    </Exists>
+   </Step>
+  </Rule>
+
+  <Rule name="$(RuleWirelessNetworkCleanup)" enabled="true">
+        <Step select="/Report/Section/Table/Item/Item/Item[Data[@name='managementObjectsProperty']='Active' and Data[@name='managementObjectsValue'] = '-1']" sortType="all">
+         <Exists>
+          <Otherwise>
+           <Variable name="newwmivalue">$(LOC_TrueString)</Variable>
+           <Delete select="Data[@name='managementObjectsValue']"/>
+           <Insert select=".">
+            <Node axis="child">
+              <Data name="managementObjectsValue" note="-1">{newwmivalue}</Data>
+            </Node>
+           </Insert>
+          </Otherwise>
+         </Exists>
+        </Step>
+
+
+        <Step select="/Report/Section/Table/Item/Item/Item[Data[@name='managementObjectsProperty']='Active' and Data[@name='managementObjectsValue'] = '0']" sortType="all">
+         <Exists>
+          <Otherwise>
+           <Variable name="newwmivalue">$(LOC_FalseString)</Variable>
+           <Delete select="Data[@name='managementObjectsValue']"/>
+           <Insert select=".">
+            <Node axis="child">
+              <Data name="managementObjectsValue" note="0">{newwmivalue}</Data>
+            </Node>
+           </Insert>
+          </Otherwise>
+         </Exists>
+        </Step>
+
+
+    <Step select="/Report/Section[@name='tracerptDisk']">
+      <Exists>
+        <Otherwise>
+          <Delete select="." />
+        </Otherwise>
+      </Exists>
+    </Step>
+
+    <Step select="/Report/Section[@name='tracerptHeader']">
+      <Exists>
+        <Otherwise>
+          <Delete select="." />
+        </Otherwise>
+      </Exists>
+    </Step>
+  </Rule>
+
+  <Rule name="$(RuleCreateRegistryWirelessAdapterTable)" enabled="true">
+    <Step select="/Report/Section[@name='SectionWireless']/Table[@name='TableTempWirelessRegAdapterInfo']">
+      <Exists>
+        <Otherwise>
+          <Variable name="wirelessregistrydataexists" expression="number('0')" />
+        </Otherwise>
+      </Exists>
+      <Otherwise>
+        <Variable name="wirelessregistrydataexists" expression="number('0')" />
+      </Otherwise>
+    </Step>
+
+    <Step select="/Report/Section[@name='SectionWireless']/Table[@name='TableWirelessAdapterInfo']/Item[contains(Data[@name='managementObjectsQuery'], 'MSNdis_EnumerateAdapter')]">
+      <Exists>
+        <Otherwise>
+          <Variable name="wirelesswmidataexists" expression="number('1')" />
+        </Otherwise>
+      </Exists>
+      <Otherwise>
+        <Variable name="wirelesswmidataexists" expression="number('0')" />
+      </Otherwise>
+    </Step>
+
+
+    <Step select="/Report/Section[@name='SectionWireless']/Table[@name='TableTempWirelessRegAdapterInfo']" fatal="true">
+      <Exists>
+        <Otherwise />
+      </Exists>
+    </Step>
+
+    <Step select="/Report/Section[@name='SectionWireless']/Table[@name='TableWirelessAdapterInfo']/Item[contains(Data[@name='managementObjectsQuery'], 'MSNdis_EnumerateAdapter')]" fatal="true">
+      <Exists>
+        <Otherwise />
+      </Exists>
+    </Step>
+
+    <Step select="/Report/Section[@name='SectionWireless']" fatal="true" >
+      <Exists>
+        <Otherwise>
+          <Insert select=".">
+            <Node axis="child">
+              <Table name="TableWirelessRegAdapterInfo" topic="TopicWirelessHardware" key="20">
+                <Header>
+                  <Data name="wirelessdriverdesc" class="string"/>
+                  <Data name="wirelessnetcfginstanceid" class="string"/>
+                  <Data name="wirelessmatchingdeviceid" class="string" />
+                  <Data name="wirelessdriverdate" class="string"/>
+                  <Data name="wirelessdriverversion" class="string"/>
+                  <Data name="wirelessprovidername" class="string"/>
+                  <Header>
+                    <Data name="wirelessextensibilitydll" class="string" />
+                    <Data name="wirelessuiextensibilityclsid" class="string" />
+                    <Data name="wirelessgroupname" class="string" />
+                    <Data name="wirelessdiagnosticsid" class="string" />
+                    <Data name="wirelessadapteroui" class="string" />
+                  </Header>
+                </Header>
+              </Table>
+            </Node>
+          </Insert>
+
+        </Otherwise>
+      </Exists>
+    </Step>
+
+    <Step select="/Report/Section[@name='SectionWireless']/Table[@name='TableTempWirelessRegAdapterInfo']/Item/Item" sortType="all">
+      <Variable name="keyname" expression="Data[@name='registryKeysKey']" />
+      <Variable name="keyvalue" expression="Data[@name='registryKeysValue']" />
+      <Exists>
+        <When expression="contains('{keyname}', '*IfType') and {keyvalue} = 71">
+          <Variable name="parentkeyname" expression="substring-before('{keyname}', '*IfType')" />
+          <Variable name="driverdesc" expression="../Item[Data[@name='registryKeysKey'] = concat('{parentkeyname}', 'DriverDesc')]/Data[@name='registryKeysValue']" />
+
+          <Variable name="netcfginstanceid" expression="../Item[Data[@name='registryKeysKey'] = concat('{parentkeyname}', 'NetCfgInstanceId')]/Data[@name='registryKeysValue']" />
+          <Variable name="matchingdeviceid" expression="../Item[Data[@name='registryKeysKey'] = concat('{parentkeyname}', 'MatchingDeviceId')]/Data[@name='registryKeysValue']" />
+          <Variable name="driverdate" expression="../Item[Data[@name='registryKeysKey'] = concat('{parentkeyname}', 'DriverDate')]/Data[@name='registryKeysValue']" />
+          <Variable name="driverversion" expression="../Item[Data[@name='registryKeysKey'] = concat('{parentkeyname}', 'DriverVersion')]/Data[@name='registryKeysValue']" />
+>
+          <Variable name="providername" expression="../Item[Data[@name='registryKeysKey'] = concat('{parentkeyname}', 'ProviderName')]/Data[@name='registryKeysValue']" />
+          <Variable name="extensibilitydll" expression="../Item[Data[@name='registryKeysKey'] = concat('{parentkeyname}', 'Ndi\\IHVExtensions\\ExtensibilityDLL')]/Data[@name='registryKeysValue']" />
+          <Variable name="uiextensibilityclsid" expression="../Item[Data[@name='registryKeysKey'] = concat('{parentkeyname}', 'Ndi\\IHVExtensions\\UIExtensibilityCLSID')]/Data[@name='registryKeysValue']" />
+          <Variable name="groupname" expression="../Item[Data[@name='registryKeysKey'] = concat('{parentkeyname}', 'Ndi\\IHVExtensions\\GroupName')]/Data[@name='registryKeysValue']" />
+          <Variable name="diagnosticsid" expression="../Item[Data[@name='registryKeysKey'] = concat('{parentkeyname}', 'Ndi\\IHVExtensions\\DiagnosticsID')]/Data[@name='registryKeysValue']" />
+          <Variable name="adapteroui" expression="../Item[Data[@name='registryKeysKey'] = concat('{parentkeyname}', 'Ndi\\IHVExtensions\\AdapterOUI')]/Data[@name='registryKeysValue']" />
+
+          <Variable name="wirelessregistrydataexists" expression="number('1')" />
+
+          <Insert select="/Report/Section[@name='SectionWireless']/Table[@name='TableWirelessRegAdapterInfo']/Header">
+            <Node axis="following-sibling">
+              <Item>
+                <Data name="wirelessdriverdesc">{driverdesc}</Data>
+                <Data name="wirelessnetcfginstanceid">{netcfginstanceid}</Data>
+                <Data name="wirelessmatchingdeviceid">{matchingdeviceid}</Data>
+                <Data name="wirelessdriverdate">{driverdate}</Data>
+                <Data name="wirelessdriverversion">{driverversion}</Data>
+                <Data name="wirelessprovidername">{providername}</Data>
+                <Item>
+                  <Data name="wirelessextensibilitydll">{extensibilitydll}</Data>
+                  <Data name="wirelessuiextensibilityclsid">{uiextensibilityclsid}</Data>
+                  <Data name="wirelessgroupname">{groupname}</Data>
+                  <Data name="wirelessdiagnosticsid">{diagnosticsid}</Data>
+                  <Data name="wirelessadapteroui">{adapteroui}</Data>
+                </Item>
+              </Item>
+            </Node>
+          </Insert>
+        </When>
+      </Exists>
+    </Step>
+
+    <Step select="/Report/Section[@name='SectionWireless']">
+      <Exists>
+        <Otherwise>
+          <Delete select="Table[@name='TableTempWirelessRegAdapterInfo']" />
+        </Otherwise>
+      </Exists>
+    </Step>
+
+    <Step select="/Report/Section[@name='SectionWireless']/Table[@name='TableWirelessRegAdapterInfo']/Item" sortType="all">
+      <Exists>
+        <When expression="string-length(Item/Data[@name='wirelessextensibilitydll']) = 0 and string-length(Item/Data[@name='wirelessuiextensibilityclsid']) = 0 and string-length(Item/Data[@name='wirelessgroupname']) = 0 and string-length(Item/Data[@name='wirelessdiagnosticsid']) = 0 and string-length(Item/Data[@name='wirelessadapteroui']) = 0">
+          <Delete select="Item" />
+        </When>
+      </Exists>
+    </Step>
+
+  </Rule>
+
+  <Rule name="$(RuleCreateWirelessConnectionAttemptTable)" enabled="true">
+    <Step select="/Report/Section[@name='SectionWireless']" fatal="true">
+      <Exists>
+        <Otherwise>
+          <Variable name="wirelessconnectionattempts" expression="count(Table[@name='wlansvcconnectstart' or @name='wlansvcdisconnect']/Item)" />
+          <Variable name="wirelessconnectionattemptsreported" expression="number('0')" />
+        </Otherwise>
+      </Exists>
+    </Step>
+
+    <Step select="/Report[{wirelessconnectionattempts} &gt; 0]" fatal="true">
+      <Exists>
+        <Otherwise>
+          <Variable name="msmassociationstartstring" expression="/Report/StringTable/String[@ID='msmassociationstart']" />
+          <Variable name="msmassociationsuccessstring" expression="/Report/StringTable/String[@ID='msmassociationsuccess']" />
+          <Variable name="msmassociationfailurestring" expression="/Report/StringTable/String[@ID='msmassociationfailure']" />
+          <Variable name="wlansvcconnectstartstring" expression="/Report/StringTable/String[@ID='wlansvcconnectstart']" />
+          <Variable name="wlansvcconnectfailedstring" expression="/Report/StringTable/String[@ID='wlansvcconnectfailed']" />
+          <Variable name="wlansecstartstring" expression="/Report/StringTable/String[@ID='wlansecstart']" />
+          <Variable name="wlansecsuccessstring" expression="/Report/StringTable/String[@ID='wlansecsuccess']" />
+          <Variable name="wlansecfailurestring" expression="/Report/StringTable/String[@ID='wlansecfailure']" />
+          <Variable name="wlanseconexstartstring" expression="/Report/StringTable/String[@ID='wlanseconexstart']" />
+          <Variable name="wlanseconexsuccessstring" expression="/Report/StringTable/String[@ID='wlanseconexsuccess']" />
+          <Variable name="wlanseconexfailurestring" expression="/Report/StringTable/String[@ID='wlanseconexfailure']" />
+          <Variable name="wlansvcconnectionstring" expression="/Report/StringTable/String[@ID='wlansvcconnection']" />
+          <Variable name="wlansvcdisconnectstring" expression="/Report/StringTable/String[@ID='wlansvcdisconnect']" />
+        </Otherwise>
+      </Exists>
+    </Step>
+
+    <Step select="/Report/Section[@name='SectionWireless']" fatal="true">
+      <Exists>
+        <When expression="{wirelessconnectionattempts} &gt; 0">
+          <Insert select="/Report/Section[@name='SectionWireless']">
+            <Node axis="child">
+              <Table name="TableWirelessConnectionAttempts" topic="TopicWirelessConnectionAttempts" key="200" >
+                <Header>
+                  <Sort field="timestamp" type="number" order="ascending" />
+                  <Data name="wirelessconnectionssid" class="string" />
+                  <Data name="wirelessconnectionid" class="number" />
+                  <Data name="timestamp" class="number" />
+                  <Header>
+                    <Sort field="timestamp" type="number" order="ascending" />
+                    <Data name="wirelessconnectionstep" class="string" />
+                    <Data name="timestamp" class="number" />
+                    <Data name="wirelessconnectionid" class="number" visible="false" />
+                    <Header>
+                      <Data name="wirelessconnectionstepproperty" class="string" />
+                      <Data name="wirelessconnectionstepvalue" class="string" />
+                    </Header>
+                  </Header>
+                </Header>
+              </Table>
+            </Node>
+          </Insert>
+        </When>
+        <Otherwise />
+      </Exists>
+    </Step>
+
+    <Step select="/Report/Section[@name='SectionWireless']/Table[@topic='TopicWirelessConnectionAttempts' and @name='wlansvcconnectstart']/Item" sortType="all" >
+      <Exists>
+        <Otherwise>
+          <Variable name="timestamp" expression="Data[@name='timestamp']" />
+          <Variable name="wirelessconnectionid" expression="Data[@name='connectionid']" />
+          <Variable name="wirelessconnectionssid" expression="Data[@name='ssid']" />
+
+          <Insert select="/Report/Section[@name='SectionWireless']/Table[@name='TableWirelessConnectionAttempts']">
+            <Node axis="child">
+              <Item>
+                <Data name="wirelessconnectionssid">{wirelessconnectionssid}</Data>
+                <Data name="wirelessconnectionid">{wirelessconnectionid}</Data>
+                <Data name="timestamp">{timestamp}</Data>
+              </Item>
+            </Node>
+          </Insert>
+        </Otherwise>
+      </Exists>
+    </Step>
+
+    <Step select="/Report/Section[@name='SectionWireless']/Table[@topic='TopicWirelessConnectionAttempts' and @name = 'msmassociationstart']/Item" sortType="all" >
+      <Variable name="timestamp" expression="Data[@name='timestamp']" />
+      <Variable name="wirelessconnectionid" expression="Data[@name='connectionid']" />
+      <Variable name="wirelessconnectionssid" expression="Data[@name='ssid']" />
+      <Variable name="cntconnectionid" expression="count(/Report/Section[@name='SectionWireless']/Table[@name='TableWirelessConnectionAttempts']/Item[Data[@name='wirelessconnectionid'] = '{wirelessconnectionid}'])" />
+
+      <Exists>
+	<When expression="{cntconnectionid} = 0">
+          <Insert select="/Report/Section[@name='SectionWireless']/Table[@name='TableWirelessConnectionAttempts']">
+            <Node axis="child">
+              <Item>
+                <Data name="wirelessconnectionssid">{wirelessconnectionssid}</Data>
+                <Data name="wirelessconnectionid">{wirelessconnectionid}</Data>
+                <Data name="timestamp">{timestamp}</Data>
+              </Item>
+            </Node>
+          </Insert>
+        </When>
+        <Otherwise />
+      </Exists>
+    </Step>
+
+    <Step select="/Report/Section[@name='SectionWireless']/Table[@topic='TopicWirelessConnectionAttempts' and @name = 'wlansvcdisconnect']/Item" sortType="all" >
+      <Variable name="timestamp" expression="Data[@name='timestamp']" />
+      <Variable name="wirelessconnectionssid" expression="Data[@name='ssid']" />
+      <Variable name="wirelessconnectionid" expression="Data[@name='connectionid']" />
+      <Variable name="cntconnectionid" expression="count(/Report/Section[@name='SectionWireless']/Table[@name='TableWirelessConnectionAttempts']/Item[Data[@name='wirelessconnectionid'] = '{wirelessconnectionid}'])" />
+
+      <Exists>
+        <When expression="{cntconnectionid} = 0">
+          <Insert select="/Report/Section[@name='SectionWireless']/Table[@name='TableWirelessConnectionAttempts']">
+            <Node axis="child">
+              <Item>
+                <Data name="wirelessconnectionssid">{wirelessconnectionssid}</Data>
+                <Data name="wirelessconnectionid">{wirelessconnectionid}</Data>
+                <Data name="timestamp">{timestamp}</Data>
+              </Item>
+            </Node>
+          </Insert>
+        </When>
+      </Exists>
+      <Otherwise/>
+    </Step>
+
+    <Step select="/Report/Section[@name='SectionWireless']/Table[@topic='TopicWirelessConnectionAttempts' and @name != 'TableWirelessConnectionAttempts']/Item" sortType="all" >
+      <Variable name="wirelessconnectionevent" expression="../@name" />
+      <Variable name="timestamp" expression="Data[@name='timestamp']" />
+      <Variable name="wirelessconnectionid" expression="Data[@name='connectionid']" />
+
+      <Exists>
+        <When expression="'{wirelessconnectionevent}' = 'wlansvcconnectstart'">
+          <Variable name="wirelessconnectioninterfaceguid" expression="Data[@name='interfaceguid']" />
+          <Variable name="wirelessconnectioninterfacedescription" expression="Data[@name='interfacedescription']" />
+          <Variable name="wirelessconnectionconnectionmode" expression="Data[@name='connectionmode']" />
+          <Variable name="wirelessconnectionprofilename" expression="Data[@name='profilename']" />
+          <Variable name="wirelessconnectionbsstype" expression="Data[@name='bsstype']" />
+
+          <Insert select="/Report/Section[@name='SectionWireless']/Table[@name='TableWirelessConnectionAttempts']/Item[Data[@name='wirelessconnectionid'] = '{wirelessconnectionid}']">
+            <Node axis="child">
+              <Item>
+                <Data name="wirelessconnectionstep" translate="value">wlansvcconnectstart</Data>
+                <Data name="timestamp">{timestamp}</Data>
+                <Data name="wirelessconnectionid" visible="false">{wirelessconnectionid}</Data>
+              </Item>
+            </Node>
+          </Insert>
+
+          <Insert select="/Report/Section[@name='SectionWireless']/Table[@name='TableWirelessConnectionAttempts']/Item[Data[@name='wirelessconnectionid'] = '{wirelessconnectionid}']/Item[Data[@name='timestamp'] = '{timestamp}']">
+            <Node axis="child">
+              <Item>
+                <Data name="wirelessconnectionstepproperty" translate="value">interfaceguid</Data>
+                <Data name="wirelessconnectionstepvalue">{wirelessconnectioninterfaceguid}</Data>
+              </Item>
+            </Node>
+          </Insert>
+
+          <Insert select="/Report/Section[@name='SectionWireless']/Table[@name='TableWirelessConnectionAttempts']/Item[Data[@name='wirelessconnectionid'] = '{wirelessconnectionid}']/Item[Data[@name='timestamp'] = '{timestamp}']">
+            <Node axis="child">
+              <Item>
+                <Data name="wirelessconnectionstepproperty" translate="value">interfacedescription</Data>
+                <Data name="wirelessconnectionstepvalue">{wirelessconnectioninterfacedescription}</Data>
+              </Item>
+            </Node>
+          </Insert>
+
+          <Insert select="/Report/Section[@name='SectionWireless']/Table[@name='TableWirelessConnectionAttempts']/Item[Data[@name='wirelessconnectionid'] = '{wirelessconnectionid}']/Item[Data[@name='timestamp'] = '{timestamp}']">
+            <Node axis="child">
+              <Item>
+                <Data name="wirelessconnectionstepproperty" translate="value">connectionmode</Data>
+                <Data name="wirelessconnectionstepvalue">{wirelessconnectionconnectionmode}</Data>
+              </Item>
+            </Node>
+          </Insert>
+
+          <Insert select="/Report/Section[@name='SectionWireless']/Table[@name='TableWirelessConnectionAttempts']/Item[Data[@name='wirelessconnectionid'] = '{wirelessconnectionid}']/Item[Data[@name='timestamp'] = '{timestamp}']">
+            <Node axis="child">
+              <Item>
+                <Data name="wirelessconnectionstepproperty" translate="value">profilename</Data>
+                <Data name="wirelessconnectionstepvalue">{wirelessconnectionprofilename}</Data>
+              </Item>
+            </Node>
+          </Insert>
+
+          <Insert select="/Report/Section[@name='SectionWireless']/Table[@name='TableWirelessConnectionAttempts']/Item[Data[@name='wirelessconnectionid'] = '{wirelessconnectionid}']/Item[Data[@name='timestamp'] = '{timestamp}']">
+            <Node axis="child">
+              <Item>
+                <Data name="wirelessconnectionstepproperty" translate="value">bsstype</Data>
+                <Data name="wirelessconnectionstepvalue">{wirelessconnectionbsstype}</Data>
+              </Item>
+            </Node>
+          </Insert>
+        </When>
+        <When expression="'{wirelessconnectionevent}' = 'msmassociationstart'" >
+          <Variable name="wirelessconnectionadapter" expression="Data[@name='adapter']" />
+          <Variable name="wirelessconnectiondeviceguid" expression="Data[@name='deviceguid']" />
+          <Variable name="wirelessconnectionlocalmac" expression="Data[@name='localmac']" />
+          <Variable name="wirelessconnectionbsstype" expression="Data[@name='bsstype']" />
+          <Variable name="wirelessconnectionauth" expression="Data[@name='auth']" />
+          <Variable name="wirelessconnectioncipher" expression="Data[@name='cipher']" />
+          <Variable name="wirelessconnectiononexenabled" expression="Data[@name='onexenabled']" />
+
+
+          <Insert select="/Report/Section[@name='SectionWireless']/Table[@name='TableWirelessConnectionAttempts']/Item[Data[@name='wirelessconnectionid'] = '{wirelessconnectionid}']">
+            <Node axis="child">
+              <Item>
+                <Data name="wirelessconnectionstep" translate="value">msmassociationstart</Data>
+                <Data name="timestamp">{timestamp}</Data>
+                <Data name="wirelessconnectionid" visible="false">{wirelessconnectionid}</Data>
+              </Item>
+            </Node>
+          </Insert>
+
+          <Insert select="/Report/Section[@name='SectionWireless']/Table[@name='TableWirelessConnectionAttempts']/Item[Data[@name='wirelessconnectionid'] = '{wirelessconnectionid}']/Item[Data[@name='timestamp'] = '{timestamp}']">
+            <Node axis="child">
+              <Item>
+                <Data name="wirelessconnectionstepproperty" translate="value">adapter</Data>
+                <Data name="wirelessconnectionstepvalue">{wirelessconnectionadapter}</Data>
+              </Item>
+            </Node>
+          </Insert>
+
+          <Insert select="/Report/Section[@name='SectionWireless']/Table[@name='TableWirelessConnectionAttempts']/Item[Data[@name='wirelessconnectionid'] = '{wirelessconnectionid}']/Item[Data[@name='timestamp'] = '{timestamp}']">
+            <Node axis="child">
+              <Item>
+                <Data name="wirelessconnectionstepproperty" translate="value">deviceguid</Data>
+                <Data name="wirelessconnectionstepvalue">{wirelessconnectiondeviceguid}</Data>
+              </Item>
+            </Node>
+          </Insert>
+
+          <Insert select="/Report/Section[@name='SectionWireless']/Table[@name='TableWirelessConnectionAttempts']/Item[Data[@name='wirelessconnectionid'] = '{wirelessconnectionid}']/Item[Data[@name='timestamp'] = '{timestamp}']">
+            <Node axis="child">
+              <Item>
+                <Data name="wirelessconnectionstepproperty" translate="value">localmac</Data>
+                <Data name="wirelessconnectionstepvalue">{wirelessconnectionlocalmac}</Data>
+              </Item>
+            </Node>
+          </Insert>
+
+          <Insert select="/Report/Section[@name='SectionWireless']/Table[@name='TableWirelessConnectionAttempts']/Item[Data[@name='wirelessconnectionid'] = '{wirelessconnectionid}']/Item[Data[@name='timestamp'] = '{timestamp}']">
+            <Node axis="child">
+              <Item>
+                <Data name="wirelessconnectionstepproperty" translate="value">bsstype</Data>
+                <Data name="wirelessconnectionstepvalue">{wirelessconnectionbsstype}</Data>
+              </Item>
+            </Node>
+          </Insert>
+
+          <Insert select="/Report/Section[@name='SectionWireless']/Table[@name='TableWirelessConnectionAttempts']/Item[Data[@name='wirelessconnectionid'] = '{wirelessconnectionid}']/Item[Data[@name='timestamp'] = '{timestamp}']">
+            <Node axis="child">
+              <Item>
+                <Data name="wirelessconnectionstepproperty" translate="value">auth</Data>
+                <Data name="wirelessconnectionstepvalue">{wirelessconnectionauth}</Data>
+              </Item>
+            </Node>
+          </Insert>
+
+          <Insert select="/Report/Section[@name='SectionWireless']/Table[@name='TableWirelessConnectionAttempts']/Item[Data[@name='wirelessconnectionid'] = '{wirelessconnectionid}']/Item[Data[@name='timestamp'] = '{timestamp}']">
+            <Node axis="child">
+              <Item>
+                <Data name="wirelessconnectionstepproperty" translate="value">cipher</Data>
+                <Data name="wirelessconnectionstepvalue">{wirelessconnectioncipher}</Data>
+              </Item>
+            </Node>
+          </Insert>
+
+          <Insert select="/Report/Section[@name='SectionWireless']/Table[@name='TableWirelessConnectionAttempts']/Item[Data[@name='wirelessconnectionid'] = '{wirelessconnectionid}']/Item[Data[@name='timestamp'] = '{timestamp}']">
+            <Node axis="child">
+              <Item>
+                <Data name="wirelessconnectionstepproperty" translate="value">onexenabled</Data>
+                <Data name="wirelessconnectionstepvalue">{wirelessconnectiononexenabled}</Data>
+              </Item>
+            </Node>
+          </Insert>
+        </When>
+        <When expression="'{wirelessconnectionevent}' = 'msmassociationsuccess'" >
+          <Variable name="wirelessconnectionadapter" expression="Data[@name='adapter']" />
+          <Variable name="wirelessconnectiondeviceguid" expression="Data[@name='deviceguid']" />
+          <Variable name="wirelessconnectionplocalmac" expression="Data[@name='localmac']" />
+          <Variable name="wirelessconnectionbsstype" expression="Data[@name='bsstype']" />
+          <Variable name="wirelessconnectionpeermac" expression="Data[@name='peermac']" />
+
+          <Insert select="/Report/Section[@name='SectionWireless']/Table[@name='TableWirelessConnectionAttempts']/Item[Data[@name='wirelessconnectionid'] = '{wirelessconnectionid}']">
+            <Node axis="child">
+              <Item>
+                <Data name="wirelessconnectionstep" translate="value">msmassociationsuccess</Data>
+                <Data name="timestamp">{timestamp}</Data>
+                <Data name="wirelessconnectionid" visible="false">{wirelessconnectionid}</Data>
+              </Item>
+            </Node>
+          </Insert>
+
+          <Insert select="/Report/Section[@name='SectionWireless']/Table[@name='TableWirelessConnectionAttempts']/Item[Data[@name='wirelessconnectionid'] = '{wirelessconnectionid}']/Item[Data[@name='timestamp'] = '{timestamp}']">
+            <Node axis="child">
+              <Item>
+                <Data name="wirelessconnectionstepproperty" translate="value">adapter</Data>
+                <Data name="wirelessconnectionstepvalue">{wirelessconnectionadapter}</Data>
+              </Item>
+            </Node>
+          </Insert>
+
+          <Insert select="/Report/Section[@name='SectionWireless']/Table[@name='TableWirelessConnectionAttempts']/Item[Data[@name='wirelessconnectionid'] = '{wirelessconnectionid}']/Item[Data[@name='timestamp'] = '{timestamp}']">
+            <Node axis="child">
+              <Item>
+                <Data name="wirelessconnectionstepproperty" translate="value">deviceguid</Data>
+                <Data name="wirelessconnectionstepvalue">{wirelessconnectiondeviceguid}</Data>
+              </Item>
+            </Node>
+          </Insert>
+
+          <Insert select="/Report/Section[@name='SectionWireless']/Table[@name='TableWirelessConnectionAttempts']/Item[Data[@name='wirelessconnectionid'] = '{wirelessconnectionid}']/Item[Data[@name='timestamp'] = '{timestamp}']">
+            <Node axis="child">
+              <Item>
+                <Data name="wirelessconnectionstepproperty" translate="value">localmac</Data>
+                <Data name="wirelessconnectionstepvalue">{wirelessconnectionlocalmac}</Data>
+              </Item>
+            </Node>
+          </Insert>
+
+          <Insert select="/Report/Section[@name='SectionWireless']/Table[@name='TableWirelessConnectionAttempts']/Item[Data[@name='wirelessconnectionid'] = '{wirelessconnectionid}']/Item[Data[@name='timestamp'] = '{timestamp}']">
+            <Node axis="child">
+              <Item>
+                <Data name="wirelessconnectionstepproperty" translate="value">bsstype</Data>
+                <Data name="wirelessconnectionstepvalue">{wirelessconnectionbsstype}</Data>
+              </Item>
+            </Node>
+          </Insert>
+
+          <Insert select="/Report/Section[@name='SectionWireless']/Table[@name='TableWirelessConnectionAttempts']/Item[Data[@name='wirelessconnectionid'] = '{wirelessconnectionid}']/Item[Data[@name='timestamp'] = '{timestamp}']">
+            <Node axis="child">
+              <Item>
+                <Data name="wirelessconnectionstepproperty" translate="value">peermac</Data>
+                <Data name="wirelessconnectionstepvalue">{wirelessconnectionpeermac}</Data>
+              </Item>
+            </Node>
+          </Insert>
+        </When>
+        <When expression="'{wirelessconnectionevent}' = 'msmassociationfailure'" >
+          <Variable name="wirelessconnectionadapter" expression="Data[@name='adapter']" />
+          <Variable name="wirelessconnectiondeviceguid" expression="Data[@name='deviceguid']" />
+          <Variable name="wirelessconnectionplocalmac" expression="Data[@name='localmac']" />
+          <Variable name="wirelessconnectionbsstype" expression="Data[@name='bsstype']" />
+          <Variable name="wirelessconnectionfailurereason" expression="Data[@name='failurereason']" />
+          <Variable name="wirelessconnectionreasoncode" expression="Data[@name='reasoncode']" />
+
+          <Insert select="/Report/Section[@name='SectionWireless']/Table[@name='TableWirelessConnectionAttempts']/Item[Data[@name='wirelessconnectionid'] = '{wirelessconnectionid}']">
+            <Node axis="child">
+              <Item>
+                <Data name="wirelessconnectionstep" translate="value">msmassociationfailure</Data>
+                <Data name="timestamp">{timestamp}</Data>
+                <Data name="wirelessconnectionid" visible="false">{wirelessconnectionid}</Data>
+              </Item>
+            </Node>
+          </Insert>
+
+          <Insert select="/Report/Section[@name='SectionWireless']/Table[@name='TableWirelessConnectionAttempts']/Item[Data[@name='wirelessconnectionid'] = '{wirelessconnectionid}']/Item[Data[@name='timestamp'] = '{timestamp}']">
+            <Node axis="child">
+              <Item>
+                <Data name="wirelessconnectionstepproperty" translate="value">adapter</Data>
+                <Data name="wirelessconnectionstepvalue">{wirelessconnectionadapter}</Data>
+              </Item>
+            </Node>
+          </Insert>
+
+          <Insert select="/Report/Section[@name='SectionWireless']/Table[@name='TableWirelessConnectionAttempts']/Item[Data[@name='wirelessconnectionid'] = '{wirelessconnectionid}']/Item[Data[@name='timestamp'] = '{timestamp}']">
+            <Node axis="child">
+              <Item>
+                <Data name="wirelessconnectionstepproperty" translate="value">deviceguid</Data>
+                <Data name="wirelessconnectionstepvalue">{wirelessconnectiondeviceguid}</Data>
+              </Item>
+            </Node>
+          </Insert>
+
+          <Insert select="/Report/Section[@name='SectionWireless']/Table[@name='TableWirelessConnectionAttempts']/Item[Data[@name='wirelessconnectionid'] = '{wirelessconnectionid}']/Item[Data[@name='timestamp'] = '{timestamp}']">
+            <Node axis="child">
+              <Item>
+                <Data name="wirelessconnectionstepproperty" translate="value">localmac</Data>
+                <Data name="wirelessconnectionstepvalue">{wirelessconnectionlocalmac}</Data>
+              </Item>
+            </Node>
+          </Insert>
+
+          <Insert select="/Report/Section[@name='SectionWireless']/Table[@name='TableWirelessConnectionAttempts']/Item[Data[@name='wirelessconnectionid'] = '{wirelessconnectionid}']/Item[Data[@name='timestamp'] = '{timestamp}']">
+            <Node axis="child">
+              <Item>
+                <Data name="wirelessconnectionstepproperty" translate="value">bsstype</Data>
+                <Data name="wirelessconnectionstepvalue">{wirelessconnectionbsstype}</Data>
+              </Item>
+            </Node>
+          </Insert>
+
+          <Insert select="/Report/Section[@name='SectionWireless']/Table[@name='TableWirelessConnectionAttempts']/Item[Data[@name='wirelessconnectionid'] = '{wirelessconnectionid}']/Item[Data[@name='timestamp'] = '{timestamp}']">
+            <Node axis="child">
+              <Item>
+                <Data name="wirelessconnectionstepproperty" translate="value">failurereason</Data>
+                <Data name="wirelessconnectionstepvalue">{wirelessconnectionfailurereason}</Data>
+              </Item>
+            </Node>
+          </Insert>
+
+          <Insert select="/Report/Section[@name='SectionWireless']/Table[@name='TableWirelessConnectionAttempts']/Item[Data[@name='wirelessconnectionid'] = '{wirelessconnectionid}']/Item[Data[@name='timestamp'] = '{timestamp}']">
+            <Node axis="child">
+              <Item>
+                <Data name="wirelessconnectionstepproperty" translate="value">reasoncode</Data>
+                <Data name="wirelessconnectionstepvalue">{wirelessconnectionreasoncode}</Data>
+              </Item>
+            </Node>
+          </Insert>
+        </When>
+        <When expression="'{wirelessconnectionevent}' = 'wlansecstart'">
+          <Variable name="wirelessconnectionadapter" expression="Data[@name='adapter']" />
+          <Variable name="wirelessconnectiondeviceguid" expression="Data[@name='deviceguid']" />
+          <Variable name="wirelessconnectionbsstype" expression="Data[@name='bsstype']" />
+          <Variable name="wirelessconnectionpeermac" expression="Data[@name='peermac']" />
+          <Variable name="wirelessconnectionauth" expression="Data[@name='auth']" />
+          <Variable name="wirelessconnectionauthval" expression="Data[@name='authval']" />
+          <Variable name="wirelessconnectioncipher" expression="Data[@name='cipher']" />
+          <Variable name="wirelessconnectioncipherval" expression="Data[@name='cipherval']" />
+          <Variable name="wirelessconnectiononexenabled" expression="Data[@name='onexenabled']" />
+
+          <Insert select="/Report/Section[@name='SectionWireless']/Table[@name='TableWirelessConnectionAttempts']/Item[Data[@name='wirelessconnectionid'] = '{wirelessconnectionid}']">
+            <Node axis="child">
+              <Item>
+                <Data name="wirelessconnectionstep" translate="value">wlansecstart</Data>
+                <Data name="timestamp">{timestamp}</Data>
+                <Data name="wirelessconnectionid" visible="false">{wirelessconnectionid}</Data>
+              </Item>
+            </Node>
+          </Insert>
+
+          <Insert select="/Report/Section[@name='SectionWireless']/Table[@name='TableWirelessConnectionAttempts']/Item[Data[@name='wirelessconnectionid'] = '{wirelessconnectionid}']/Item[Data[@name='timestamp'] = '{timestamp}']">
+            <Node axis="child">
+              <Item>
+                <Data name="wirelessconnectionstepproperty" translate="value">adapter</Data>
+                <Data name="wirelessconnectionstepvalue">{wirelessconnectionadapter}</Data>
+              </Item>
+            </Node>
+          </Insert>
+
+          <Insert select="/Report/Section[@name='SectionWireless']/Table[@name='TableWirelessConnectionAttempts']/Item[Data[@name='wirelessconnectionid'] = '{wirelessconnectionid}']/Item[Data[@name='timestamp'] = '{timestamp}']">
+            <Node axis="child">
+              <Item>
+                <Data name="wirelessconnectionstepproperty" translate="value">deviceguid</Data>
+                <Data name="wirelessconnectionstepvalue">{wirelessconnectiondeviceguid}</Data>
+              </Item>
+            </Node>
+          </Insert>
+
+          <Insert select="/Report/Section[@name='SectionWireless']/Table[@name='TableWirelessConnectionAttempts']/Item[Data[@name='wirelessconnectionid'] = '{wirelessconnectionid}']/Item[Data[@name='timestamp'] = '{timestamp}']">
+            <Node axis="child">
+              <Item>
+                <Data name="wirelessconnectionstepproperty" translate="value">bsstype</Data>
+                <Data name="wirelessconnectionstepvalue">{wirelessconnectionbsstype}</Data>
+              </Item>
+            </Node>
+          </Insert>
+
+          <Insert select="/Report/Section[@name='SectionWireless']/Table[@name='TableWirelessConnectionAttempts']/Item[Data[@name='wirelessconnectionid'] = '{wirelessconnectionid}']/Item[Data[@name='timestamp'] = '{timestamp}']">
+            <Node axis="child">
+              <Item>
+                <Data name="wirelessconnectionstepproperty" translate="value">peermac</Data>
+                <Data name="wirelessconnectionstepvalue">{wirelessconnectionpeermac}</Data>
+              </Item>
+            </Node>
+          </Insert>
+
+          <Insert select="/Report/Section[@name='SectionWireless']/Table[@name='TableWirelessConnectionAttempts']/Item[Data[@name='wirelessconnectionid'] = '{wirelessconnectionid}']/Item[Data[@name='timestamp'] = '{timestamp}']">
+            <Node axis="child">
+              <Item>
+                <Data name="wirelessconnectionstepproperty" translate="value">auth</Data>
+                <Data name="wirelessconnectionstepvalue">{wirelessconnectionauth}</Data>
+              </Item>
+            </Node>
+          </Insert>
+
+          <Insert select="/Report/Section[@name='SectionWireless']/Table[@name='TableWirelessConnectionAttempts']/Item[Data[@name='wirelessconnectionid'] = '{wirelessconnectionid}']/Item[Data[@name='timestamp'] = '{timestamp}']">
+            <Node axis="child">
+              <Item>
+                <Data name="wirelessconnectionstepproperty" translate="value">authval</Data>
+                <Data name="wirelessconnectionstepvalue">{wirelessconnectionauthval}</Data>
+              </Item>
+            </Node>
+          </Insert>
+
+          <Insert select="/Report/Section[@name='SectionWireless']/Table[@name='TableWirelessConnectionAttempts']/Item[Data[@name='wirelessconnectionid'] = '{wirelessconnectionid}']/Item[Data[@name='timestamp'] = '{timestamp}']">
+            <Node axis="child">
+              <Item>
+                <Data name="wirelessconnectionstepproperty" translate="value">cipher</Data>
+                <Data name="wirelessconnectionstepvalue">{wirelessconnectioncipher}</Data>
+              </Item>
+            </Node>
+          </Insert>
+
+          <Insert select="/Report/Section[@name='SectionWireless']/Table[@name='TableWirelessConnectionAttempts']/Item[Data[@name='wirelessconnectionid'] = '{wirelessconnectionid}']/Item[Data[@name='timestamp'] = '{timestamp}']">
+            <Node axis="child">
+              <Item>
+                <Data name="wirelessconnectionstepproperty" translate="value">cipherval</Data>
+                <Data name="wirelessconnectionstepvalue">{wirelessconnectioncipherval}</Data>
+              </Item>
+            </Node>
+          </Insert>
+
+          <Insert select="/Report/Section[@name='SectionWireless']/Table[@name='TableWirelessConnectionAttempts']/Item[Data[@name='wirelessconnectionid'] = '{wirelessconnectionid}']/Item[Data[@name='timestamp'] = '{timestamp}']">
+            <Node axis="child">
+              <Item>
+                <Data name="wirelessconnectionstepproperty" translate="value">onexenabled</Data>
+                <Data name="wirelessconnectionstepvalue">{wirelessconnectiononexenabled}</Data>
+              </Item>
+            </Node>
+          </Insert>
+        </When>
+        <When expression="'{wirelessconnectionevent}' = 'wlansecsuccess'">
+          <Variable name="wirelessconnectionadapter" expression="Data[@name='adapter']" />
+          <Variable name="wirelessconnectiondeviceguid" expression="Data[@name='deviceguid']" />
+          <Variable name="wirelessconnectionbsstype" expression="Data[@name='bsstype']" />
+          <Variable name="wirelessconnectionpeermac" expression="Data[@name='peermac']" />
+          <Variable name="wirelessconnectionlocalmac" expression="Data[@name='localmac']" />
+
+          <Insert select="/Report/Section[@name='SectionWireless']/Table[@name='TableWirelessConnectionAttempts']/Item[Data[@name='wirelessconnectionid'] = '{wirelessconnectionid}']">
+            <Node axis="child">
+              <Item>
+                <Data name="wirelessconnectionstep" translate="value">wlansecsuccess</Data>
+                <Data name="timestamp">{timestamp}</Data>
+                <Data name="wirelessconnectionid" visible="false">{wirelessconnectionid}</Data>
+              </Item>
+            </Node>
+          </Insert>
+
+          <Insert select="/Report/Section[@name='SectionWireless']/Table[@name='TableWirelessConnectionAttempts']/Item[Data[@name='wirelessconnectionid'] = '{wirelessconnectionid}']/Item[Data[@name='timestamp'] = '{timestamp}']">
+            <Node axis="child">
+              <Item>
+                <Data name="wirelessconnectionstepproperty" translate="value">adapter</Data>
+                <Data name="wirelessconnectionstepvalue">{wirelessconnectionadapter}</Data>
+              </Item>
+            </Node>
+          </Insert>
+
+          <Insert select="/Report/Section[@name='SectionWireless']/Table[@name='TableWirelessConnectionAttempts']/Item[Data[@name='wirelessconnectionid'] = '{wirelessconnectionid}']/Item[Data[@name='timestamp'] = '{timestamp}']">
+            <Node axis="child">
+              <Item>
+                <Data name="wirelessconnectionstepproperty" translate="value">deviceguid</Data>
+                <Data name="wirelessconnectionstepvalue">{wirelessconnectiondeviceguid}</Data>
+              </Item>
+            </Node>
+          </Insert>
+
+          <Insert select="/Report/Section[@name='SectionWireless']/Table[@name='TableWirelessConnectionAttempts']/Item[Data[@name='wirelessconnectionid'] = '{wirelessconnectionid}']/Item[Data[@name='timestamp'] = '{timestamp}']">
+            <Node axis="child">
+              <Item>
+                <Data name="wirelessconnectionstepproperty" translate="value">localmac</Data>
+                <Data name="wirelessconnectionstepvalue">{wirelessconnectionlocalmac}</Data>
+              </Item>
+            </Node>
+          </Insert>
+
+          <Insert select="/Report/Section[@name='SectionWireless']/Table[@name='TableWirelessConnectionAttempts']/Item[Data[@name='wirelessconnectionid'] = '{wirelessconnectionid}']/Item[Data[@name='timestamp'] = '{timestamp}']">
+            <Node axis="child">
+              <Item>
+                <Data name="wirelessconnectionstepproperty" translate="value">bsstype</Data>
+                <Data name="wirelessconnectionstepvalue">{wirelessconnectionbsstype}</Data>
+              </Item>
+            </Node>
+          </Insert>
+
+          <Insert select="/Report/Section[@name='SectionWireless']/Table[@name='TableWirelessConnectionAttempts']/Item[Data[@name='wirelessconnectionid'] = '{wirelessconnectionid}']/Item[Data[@name='timestamp'] = '{timestamp}']">
+            <Node axis="child">
+              <Item>
+                <Data name="wirelessconnectionstepproperty" translate="value">peermac</Data>
+                <Data name="wirelessconnectionstepvalue">{wirelessconnectionpeermac}</Data>
+              </Item>
+            </Node>
+          </Insert>
+        </When>
+        <When expression="'{wirelessconnectionevent}' = 'wlansecfailure'">
+          <Variable name="wirelessconnectionadapter" expression="Data[@name='adapter']" />
+          <Variable name="wirelessconnectiondeviceguid" expression="Data[@name='deviceguid']" />
+          <Variable name="wirelessconnectionbsstype" expression="Data[@name='bsstype']" />
+          <Variable name="wirelessconnectionpeermac" expression="Data[@name='peermac']" />
+          <Variable name="wirelessconnectionreasoncode" expression="Data[@name='reasoncode']" />
+          <Variable name="wirelessconnectionreasontext" expression="Data[@name='reasontext']" />
+          <Variable name="wirelessconnectionerrorcode" expression="Data[@name='errorcode']" />
+
+          <Insert select="/Report/Section[@name='SectionWireless']/Table[@name='TableWirelessConnectionAttempts']/Item[Data[@name='wirelessconnectionid'] = '{wirelessconnectionid}']">
+            <Node axis="child">
+              <Item>
+                <Data name="wirelessconnectionstep" translate="value">wlansecfailure</Data>
+                <Data name="timestamp">{timestamp}</Data>
+                <Data name="wirelessconnectionid" visible="false">{wirelessconnectionid}</Data>
+              </Item>
+            </Node>
+          </Insert>
+
+          <Insert select="/Report/Section[@name='SectionWireless']/Table[@name='TableWirelessConnectionAttempts']/Item[Data[@name='wirelessconnectionid'] = '{wirelessconnectionid}']/Item[Data[@name='timestamp'] = '{timestamp}']">
+            <Node axis="child">
+              <Item>
+                <Data name="wirelessconnectionstepproperty" translate="value">adapter</Data>
+                <Data name="wirelessconnectionstepvalue">{wirelessconnectionadapter}</Data>
+              </Item>
+            </Node>
+          </Insert>
+
+          <Insert select="/Report/Section[@name='SectionWireless']/Table[@name='TableWirelessConnectionAttempts']/Item[Data[@name='wirelessconnectionid'] = '{wirelessconnectionid}']/Item[Data[@name='timestamp'] = '{timestamp}']">
+            <Node axis="child">
+              <Item>
+                <Data name="wirelessconnectionstepproperty" translate="value">deviceguid</Data>
+                <Data name="wirelessconnectionstepvalue">{wirelessconnectiondeviceguid}</Data>
+              </Item>
+            </Node>
+          </Insert>
+
+          <Insert select="/Report/Section[@name='SectionWireless']/Table[@name='TableWirelessConnectionAttempts']/Item[Data[@name='wirelessconnectionid'] = '{wirelessconnectionid}']/Item[Data[@name='timestamp'] = '{timestamp}']">
+            <Node axis="child">
+              <Item>
+                <Data name="wirelessconnectionstepproperty" translate="value">bsstype</Data>
+                <Data name="wirelessconnectionstepvalue">{wirelessconnectionbsstype}</Data>
+              </Item>
+            </Node>
+          </Insert>
+
+          <Insert select="/Report/Section[@name='SectionWireless']/Table[@name='TableWirelessConnectionAttempts']/Item[Data[@name='wirelessconnectionid'] = '{wirelessconnectionid}']/Item[Data[@name='timestamp'] = '{timestamp}']">
+            <Node axis="child">
+              <Item>
+                <Data name="wirelessconnectionstepproperty" translate="value">peermac</Data>
+                <Data name="wirelessconnectionstepvalue">{wirelessconnectionpeermac}</Data>
+              </Item>
+            </Node>
+          </Insert>
+
+          <Insert select="/Report/Section[@name='SectionWireless']/Table[@name='TableWirelessConnectionAttempts']/Item[Data[@name='wirelessconnectionid'] = '{wirelessconnectionid}']/Item[Data[@name='timestamp'] = '{timestamp}']">
+            <Node axis="child">
+              <Item>
+                <Data name="wirelessconnectionstepproperty" translate="value">reasontext</Data>
+                <Data name="wirelessconnectionstepvalue">{wirelessconnectionreasontext}</Data>
+              </Item>
+            </Node>
+          </Insert>
+
+          <Insert select="/Report/Section[@name='SectionWireless']/Table[@name='TableWirelessConnectionAttempts']/Item[Data[@name='wirelessconnectionid'] = '{wirelessconnectionid}']/Item[Data[@name='timestamp'] = '{timestamp}']">
+            <Node axis="child">
+              <Item>
+                <Data name="wirelessconnectionstepproperty" translate="value">reasoncode</Data>
+                <Data name="wirelessconnectionstepvalue">{wirelessconnectionreasoncode}</Data>
+              </Item>
+            </Node>
+          </Insert>
+
+          <Insert select="/Report/Section[@name='SectionWireless']/Table[@name='TableWirelessConnectionAttempts']/Item[Data[@name='wirelessconnectionid'] = '{wirelessconnectionid}']/Item[Data[@name='timestamp'] = '{timestamp}']">
+            <Node axis="child">
+              <Item>
+                <Data name="wirelessconnectionstepproperty" translate="value">errorcode</Data>
+                <Data name="wirelessconnectionstepvalue">{wirelessconnectionerrorcode}</Data>
+              </Item>
+            </Node>
+          </Insert>
+        </When>
+        <When expression="'{wirelessconnectionevent}' = 'wlanseconexstart'">
+          <Variable name="wirelessconnectionadapter" expression="Data[@name='adapter']" />
+          <Variable name="wirelessconnectiondeviceguid" expression="Data[@name='deviceguid']" />
+          <Variable name="wirelessconnectionlocalmac" expression="Data[@name='localmac']" />
+          <Variable name="wirelessconnectionbsstype" expression="Data[@name='bsstype']" />
+          <Variable name="wirelessconnectionpeermac" expression="Data[@name='peermac']" />
+          <Variable name="wirelessconnectioneaptype" expression="Data[@name='eaptype']" />
+          <Variable name="wirelessconnectionvendorid" expression="Data[@name='vendorid']" />
+          <Variable name="wirelessconnectionvendortype" expression="Data[@name='vendortype']" />
+          <Variable name="wirelessconnectionauthorid" expression="Data[@name='authorid']" />
+
+          <Insert select="/Report/Section[@name='SectionWireless']/Table[@name='TableWirelessConnectionAttempts']/Item[Data[@name='wirelessconnectionid'] = '{wirelessconnectionid}']">
+            <Node axis="child">
+              <Item>
+                <Data name="wirelessconnectionstep" translate="value">wlanseconexstart</Data>
+                <Data name="timestamp">{timestamp}</Data>
+                <Data name="wirelessconnectionid" visible="false">{wirelessconnectionid}</Data>
+              </Item>
+            </Node>
+          </Insert>
+
+          <Insert select="/Report/Section[@name='SectionWireless']/Table[@name='TableWirelessConnectionAttempts']/Item[Data[@name='wirelessconnectionid'] = '{wirelessconnectionid}']/Item[Data[@name='timestamp'] = '{timestamp}']">
+            <Node axis="child">
+              <Item>
+                <Data name="wirelessconnectionstepproperty" translate="value">adapter</Data>
+                <Data name="wirelessconnectionstepvalue">{wirelessconnectionadapter}</Data>
+              </Item>
+            </Node>
+          </Insert>
+
+          <Insert select="/Report/Section[@name='SectionWireless']/Table[@name='TableWirelessConnectionAttempts']/Item[Data[@name='wirelessconnectionid'] = '{wirelessconnectionid}']/Item[Data[@name='timestamp'] = '{timestamp}']">
+            <Node axis="child">
+              <Item>
+                <Data name="wirelessconnectionstepproperty" translate="value">deviceguid</Data>
+                <Data name="wirelessconnectionstepvalue">{wirelessconnectiondeviceguid}</Data>
+              </Item>
+            </Node>
+          </Insert>
+
+          <Insert select="/Report/Section[@name='SectionWireless']/Table[@name='TableWirelessConnectionAttempts']/Item[Data[@name='wirelessconnectionid'] = '{wirelessconnectionid}']/Item[Data[@name='timestamp'] = '{timestamp}']">
+            <Node axis="child">
+              <Item>
+                <Data name="wirelessconnectionstepproperty" translate="value">bsstype</Data>
+                <Data name="wirelessconnectionstepvalue">{wirelessconnectionbsstype}</Data>
+              </Item>
+            </Node>
+          </Insert>
+
+          <Insert select="/Report/Section[@name='SectionWireless']/Table[@name='TableWirelessConnectionAttempts']/Item[Data[@name='wirelessconnectionid'] = '{wirelessconnectionid}']/Item[Data[@name='timestamp'] = '{timestamp}']">
+            <Node axis="child">
+              <Item>
+                <Data name="wirelessconnectionstepproperty" translate="value">peermac</Data>
+                <Data name="wirelessconnectionstepvalue">{wirelessconnectionpeermac}</Data>
+              </Item>
+            </Node>
+          </Insert>
+
+          <Insert select="/Report/Section[@name='SectionWireless']/Table[@name='TableWirelessConnectionAttempts']/Item[Data[@name='wirelessconnectionid'] = '{wirelessconnectionid}']/Item[Data[@name='timestamp'] = '{timestamp}']">
+            <Node axis="child">
+              <Item>
+                <Data name="wirelessconnectionstepproperty" translate="value">localmac</Data>
+                <Data name="wirelessconnectionstepvalue">{wirelessconnectionlocalmac}</Data>
+              </Item>
+            </Node>
+          </Insert>
+
+          <Insert select="/Report/Section[@name='SectionWireless']/Table[@name='TableWirelessConnectionAttempts']/Item[Data[@name='wirelessconnectionid'] = '{wirelessconnectionid}']/Item[Data[@name='timestamp'] = '{timestamp}']">
+            <Node axis="child">
+              <Item>
+                <Data name="wirelessconnectionstepproperty" translate="value">eaptype</Data>
+                <Data name="wirelessconnectionstepvalue">{wirelessconnectioneaptype}</Data>
+              </Item>
+            </Node>
+          </Insert>
+
+          <Insert select="/Report/Section[@name='SectionWireless']/Table[@name='TableWirelessConnectionAttempts']/Item[Data[@name='wirelessconnectionid'] = '{wirelessconnectionid}']/Item[Data[@name='timestamp'] = '{timestamp}']">
+            <Node axis="child">
+              <Item>
+                <Data name="wirelessconnectionstepproperty" translate="value">vendorid</Data>
+                <Data name="wirelessconnectionstepvalue">{wirelessconnectionvendorid}</Data>
+              </Item>
+            </Node>
+          </Insert>
+
+          <Insert select="/Report/Section[@name='SectionWireless']/Table[@name='TableWirelessConnectionAttempts']/Item[Data[@name='wirelessconnectionid'] = '{wirelessconnectionid}']/Item[Data[@name='timestamp'] = '{timestamp}']">
+            <Node axis="child">
+              <Item>
+                <Data name="wirelessconnectionstepproperty" translate="value">vendortype</Data>
+                <Data name="wirelessconnectionstepvalue">{wirelessconnectionvendortype}</Data>
+              </Item>
+            </Node>
+          </Insert>
+
+          <Insert select="/Report/Section[@name='SectionWireless']/Table[@name='TableWirelessConnectionAttempts']/Item[Data[@name='wirelessconnectionid'] = '{wirelessconnectionid}']/Item[Data[@name='timestamp'] = '{timestamp}']">
+            <Node axis="child">
+              <Item>
+                <Data name="wirelessconnectionstepproperty" translate="value">authorid</Data>
+                <Data name="wirelessconnectionstepvalue">{wirelessconnectionauthorid}</Data>
+              </Item>
+            </Node>
+          </Insert>
+        </When>
+        <When expression="'{wirelessconnectionevent}' = 'wlanseconexsuccess'">
+          <Variable name="wirelessconnectionadapter" expression="Data[@name='adapter']" />
+          <Variable name="wirelessconnectiondeviceguid" expression="Data[@name='deviceguid']" />
+          <Variable name="wirelessconnectionbsstype" expression="Data[@name='bsstype']" />
+          <Variable name="wirelessconnectionpeermac" expression="Data[@name='peermac']" />
+          <Variable name="wirelessconnectionlocalmac" expression="Data[@name='localmac']" />
+          <Variable name="wirelessconnectionidentity" expression="Data[@name='identity']" />
+          <Variable name="wirelessconnectionuser" expression="Data[@name='user']" />
+          <Variable name="wirelessconnectiondomain" expression="Data[@name='domain']" />
+
+          <Insert select="/Report/Section[@name='SectionWireless']/Table[@name='TableWirelessConnectionAttempts']/Item[Data[@name='wirelessconnectionid'] = '{wirelessconnectionid}']">
+            <Node axis="child">
+              <Item>
+                <Data name="wirelessconnectionstep" translate="value">wlanseconexsuccess</Data>
+                <Data name="timestamp">{timestamp}</Data>
+                <Data name="wirelessconnectionid" visible="false">{wirelessconnectionid}</Data>
+              </Item>
+            </Node>
+          </Insert>
+
+          <Insert select="/Report/Section[@name='SectionWireless']/Table[@name='TableWirelessConnectionAttempts']/Item[Data[@name='wirelessconnectionid'] = '{wirelessconnectionid}']/Item[Data[@name='timestamp'] = '{timestamp}']">
+            <Node axis="child">
+              <Item>
+                <Data name="wirelessconnectionstepproperty" translate="value">adapter</Data>
+                <Data name="wirelessconnectionstepvalue">{wirelessconnectionadapter}</Data>
+              </Item>
+            </Node>
+          </Insert>
+
+          <Insert select="/Report/Section[@name='SectionWireless']/Table[@name='TableWirelessConnectionAttempts']/Item[Data[@name='wirelessconnectionid'] = '{wirelessconnectionid}']/Item[Data[@name='timestamp'] = '{timestamp}']">
+            <Node axis="child">
+              <Item>
+                <Data name="wirelessconnectionstepproperty" translate="value">deviceguid</Data>
+                <Data name="wirelessconnectionstepvalue">{wirelessconnectiondeviceguid}</Data>
+              </Item>
+            </Node>
+          </Insert>
+
+          <Insert select="/Report/Section[@name='SectionWireless']/Table[@name='TableWirelessConnectionAttempts']/Item[Data[@name='wirelessconnectionid'] = '{wirelessconnectionid}']/Item[Data[@name='timestamp'] = '{timestamp}']">
+            <Node axis="child">
+              <Item>
+                <Data name="wirelessconnectionstepproperty" translate="value">bsstype</Data>
+                <Data name="wirelessconnectionstepvalue">{wirelessconnectionbsstype}</Data>
+              </Item>
+            </Node>
+          </Insert>
+
+          <Insert select="/Report/Section[@name='SectionWireless']/Table[@name='TableWirelessConnectionAttempts']/Item[Data[@name='wirelessconnectionid'] = '{wirelessconnectionid}']/Item[Data[@name='timestamp'] = '{timestamp}']">
+            <Node axis="child">
+              <Item>
+                <Data name="wirelessconnectionstepproperty" translate="value">peermac</Data>
+                <Data name="wirelessconnectionstepvalue">{wirelessconnectionpeermac}</Data>
+              </Item>
+            </Node>
+          </Insert>
+
+          <Insert select="/Report/Section[@name='SectionWireless']/Table[@name='TableWirelessConnectionAttempts']/Item[Data[@name='wirelessconnectionid'] = '{wirelessconnectionid}']/Item[Data[@name='timestamp'] = '{timestamp}']">
+            <Node axis="child">
+              <Item>
+                <Data name="wirelessconnectionstepproperty" translate="value">localmac</Data>
+                <Data name="wirelessconnectionstepvalue">{wirelessconnectionlocalmac}</Data>
+              </Item>
+            </Node>
+          </Insert>
+
+          <Insert select="/Report/Section[@name='SectionWireless']/Table[@name='TableWirelessConnectionAttempts']/Item[Data[@name='wirelessconnectionid'] = '{wirelessconnectionid}']/Item[Data[@name='timestamp'] = '{timestamp}']">
+            <Node axis="child">
+              <Item>
+                <Data name="wirelessconnectionstepproperty" translate="value">identity</Data>
+                <Data name="wirelessconnectionstepvalue">{wirelessconnectionidentity}</Data>
+              </Item>
+            </Node>
+          </Insert>
+
+          <Insert select="/Report/Section[@name='SectionWireless']/Table[@name='TableWirelessConnectionAttempts']/Item[Data[@name='wirelessconnectionid'] = '{wirelessconnectionid}']/Item[Data[@name='timestamp'] = '{timestamp}']">
+            <Node axis="child">
+              <Item>
+                <Data name="wirelessconnectionstepproperty" translate="value">user</Data>
+                <Data name="wirelessconnectionstepvalue">{wirelessconnectionuser}</Data>
+              </Item>
+            </Node>
+          </Insert>
+
+          <Insert select="/Report/Section[@name='SectionWireless']/Table[@name='TableWirelessConnectionAttempts']/Item[Data[@name='wirelessconnectionid'] = '{wirelessconnectionid}']/Item[Data[@name='timestamp'] = '{timestamp}']">
+            <Node axis="child">
+              <Item>
+                <Data name="wirelessconnectionstepproperty" translate="value">domain</Data>
+                <Data name="wirelessconnectionstepvalue">{wirelessconnectiondomain}</Data>
+              </Item>
+            </Node>
+          </Insert>
+
+        </When>
+        <When expression="'{wirelessconnectionevent}' = 'wlanseconexfailure'">
+          <Variable name="wirelessconnectionadapter" expression="Data[@name='adapter']" />
+          <Variable name="wirelessconnectiondeviceguid" expression="Data[@name='deviceguid']" />
+          <Variable name="wirelessconnectionbsstype" expression="Data[@name='bsstype']" />
+          <Variable name="wirelessconnectionpeermac" expression="Data[@name='peermac']" />
+          <Variable name="wirelessconnectionlocalmac" expression="Data[@name='localmac']" />
+          <Variable name="wirelessconnectionidentity" expression="Data[@name='identity']" />
+          <Variable name="wirelessconnectionuser" expression="Data[@name='user']" />
+          <Variable name="wirelessconnectiondomain" expression="Data[@name='domain']" />
+          <Variable name="wirelessconnectionreasoncode" expression="Data[@name='reasoncode']" />
+          <Variable name="wirelessconnectionreasontext" expression="Data[@name='reasontext']" />
+          <Variable name="wirelessconnectionerrorcode" expression="Data[@name='errorcode']" />
+
+          <Insert select="/Report/Section[@name='SectionWireless']/Table[@name='TableWirelessConnectionAttempts']/Item[Data[@name='wirelessconnectionid'] = '{wirelessconnectionid}']">
+            <Node axis="child">
+              <Item>
+                <Data name="wirelessconnectionstep" translate="value">wlanseconexfailure</Data>
+                <Data name="timestamp">{timestamp}</Data>
+                <Data name="wirelessconnectionid" visible="false">{wirelessconnectionid}</Data>
+              </Item>
+            </Node>
+          </Insert>
+
+          <Insert select="/Report/Section[@name='SectionWireless']/Table[@name='TableWirelessConnectionAttempts']/Item[Data[@name='wirelessconnectionid'] = '{wirelessconnectionid}']/Item[Data[@name='timestamp'] = '{timestamp}']">
+            <Node axis="child">
+              <Item>
+                <Data name="wirelessconnectionstepproperty" translate="value">adapter</Data>
+                <Data name="wirelessconnectionstepvalue">{wirelessconnectionadapter}</Data>
+              </Item>
+            </Node>
+          </Insert>
+
+          <Insert select="/Report/Section[@name='SectionWireless']/Table[@name='TableWirelessConnectionAttempts']/Item[Data[@name='wirelessconnectionid'] = '{wirelessconnectionid}']/Item[Data[@name='timestamp'] = '{timestamp}']">
+            <Node axis="child">
+              <Item>
+                <Data name="wirelessconnectionstepproperty" translate="value">deviceguid</Data>
+                <Data name="wirelessconnectionstepvalue">{wirelessconnectiondeviceguid}</Data>
+              </Item>
+            </Node>
+          </Insert>
+
+          <Insert select="/Report/Section[@name='SectionWireless']/Table[@name='TableWirelessConnectionAttempts']/Item[Data[@name='wirelessconnectionid'] = '{wirelessconnectionid}']/Item[Data[@name='timestamp'] = '{timestamp}']">
+            <Node axis="child">
+              <Item>
+                <Data name="wirelessconnectionstepproperty" translate="value">bsstype</Data>
+                <Data name="wirelessconnectionstepvalue">{wirelessconnectionbsstype}</Data>
+              </Item>
+            </Node>
+          </Insert>
+
+          <Insert select="/Report/Section[@name='SectionWireless']/Table[@name='TableWirelessConnectionAttempts']/Item[Data[@name='wirelessconnectionid'] = '{wirelessconnectionid}']/Item[Data[@name='timestamp'] = '{timestamp}']">
+            <Node axis="child">
+              <Item>
+                <Data name="wirelessconnectionstepproperty" translate="value">peermac</Data>
+                <Data name="wirelessconnectionstepvalue">{wirelessconnectionpeermac}</Data>
+              </Item>
+            </Node>
+          </Insert>
+
+          <Insert select="/Report/Section[@name='SectionWireless']/Table[@name='TableWirelessConnectionAttempts']/Item[Data[@name='wirelessconnectionid'] = '{wirelessconnectionid}']/Item[Data[@name='timestamp'] = '{timestamp}']">
+            <Node axis="child">
+              <Item>
+                <Data name="wirelessconnectionstepproperty" translate="value">localmac</Data>
+                <Data name="wirelessconnectionstepvalue">{wirelessconnectionlocalmac}</Data>
+              </Item>
+            </Node>
+          </Insert>
+
+          <Insert select="/Report/Section[@name='SectionWireless']/Table[@name='TableWirelessConnectionAttempts']/Item[Data[@name='wirelessconnectionid'] = '{wirelessconnectionid}']/Item[Data[@name='timestamp'] = '{timestamp}']">
+            <Node axis="child">
+              <Item>
+                <Data name="wirelessconnectionstepproperty" translate="value">identity</Data>
+                <Data name="wirelessconnectionstepvalue">{wirelessconnectionidentity}</Data>
+              </Item>
+            </Node>
+          </Insert>
+
+          <Insert select="/Report/Section[@name='SectionWireless']/Table[@name='TableWirelessConnectionAttempts']/Item[Data[@name='wirelessconnectionid'] = '{wirelessconnectionid}']/Item[Data[@name='timestamp'] = '{timestamp}']">
+            <Node axis="child">
+              <Item>
+                <Data name="wirelessconnectionstepproperty" translate="value">user</Data>
+                <Data name="wirelessconnectionstepvalue">{wirelessconnectionuser}</Data>
+              </Item>
+            </Node>
+          </Insert>
+
+          <Insert select="/Report/Section[@name='SectionWireless']/Table[@name='TableWirelessConnectionAttempts']/Item[Data[@name='wirelessconnectionid'] = '{wirelessconnectionid}']/Item[Data[@name='timestamp'] = '{timestamp}']">
+            <Node axis="child">
+              <Item>
+                <Data name="wirelessconnectionstepproperty" translate="value">domain</Data>
+                <Data name="wirelessconnectionstepvalue">{wirelessconnectiondomain}</Data>
+              </Item>
+            </Node>
+          </Insert>
+
+          <Insert select="/Report/Section[@name='SectionWireless']/Table[@name='TableWirelessConnectionAttempts']/Item[Data[@name='wirelessconnectionid'] = '{wirelessconnectionid}']/Item[Data[@name='timestamp'] = '{timestamp}']">
+            <Node axis="child">
+              <Item>
+                <Data name="wirelessconnectionstepproperty" translate="value">reasoncode</Data>
+                <Data name="wirelessconnectionstepvalue">{wirelessconnectionreasoncode}</Data>
+              </Item>
+            </Node>
+          </Insert>
+
+          <Insert select="/Report/Section[@name='SectionWireless']/Table[@name='TableWirelessConnectionAttempts']/Item[Data[@name='wirelessconnectionid'] = '{wirelessconnectionid}']/Item[Data[@name='timestamp'] = '{timestamp}']">
+            <Node axis="child">
+              <Item>
+                <Data name="wirelessconnectionstepproperty" translate="value">reasontext</Data>
+                <Data name="wirelessconnectionstepvalue">{wirelessconnectionreasontext}</Data>
+              </Item>
+            </Node>
+          </Insert>
+
+          <Insert select="/Report/Section[@name='SectionWireless']/Table[@name='TableWirelessConnectionAttempts']/Item[Data[@name='wirelessconnectionid'] = '{wirelessconnectionid}']/Item[Data[@name='timestamp'] = '{timestamp}']">
+            <Node axis="child">
+              <Item>
+                <Data name="wirelessconnectionstepproperty" translate="value">errorcode</Data>
+                <Data name="wirelessconnectionstepvalue">{wirelessconnectionerrorcode}</Data>
+              </Item>
+            </Node>
+          </Insert>
+        </When>
+        <When expression="'{wirelessconnectionevent}' = 'wlansvcconnectfailed'" >
+          <Variable name="wirelessconnectioninterfaceguid" expression="Data[@name='interfaceguid']" />
+          <Variable name="wirelessconnectioninterfacedescription" expression="Data[@name='interfacedescription']" />
+          <Variable name="wirelessconnectionconnectionmode" expression="Data[@name='connectionmode']" />
+          <Variable name="wirelessconnectionprofilename" expression="Data[@name='profilename']" />
+          <Variable name="wirelessconnectionbsstype" expression="Data[@name='bsstype']" />
+          <Variable name="wirelessconnectionfailurereason" expression="Data[@name='failurereason']" />
+
+          <Insert select="/Report/Section[@name='SectionWireless']/Table[@name='TableWirelessConnectionAttempts']/Item[Data[@name='wirelessconnectionid'] = '{wirelessconnectionid}']">
+            <Node axis="child">
+              <Item>
+                <Data name="wirelessconnectionstep" translate="value">wlansvcconnectfailed</Data>
+                <Data name="timestamp">{timestamp}</Data>
+                <Data name="wirelessconnectionid" visible="false">{wirelessconnectionid}</Data>
+              </Item>
+            </Node>
+          </Insert>
+
+          <Insert select="/Report/Section[@name='SectionWireless']/Table[@name='TableWirelessConnectionAttempts']/Item[Data[@name='wirelessconnectionid'] = '{wirelessconnectionid}']/Item[Data[@name='timestamp'] = '{timestamp}']">
+            <Node axis="child">
+              <Item>
+                <Data name="wirelessconnectionstepproperty" translate="value">interfaceguid</Data>
+                <Data name="wirelessconnectionstepvalue">{wirelessconnectioninterfaceguid}</Data>
+              </Item>
+            </Node>
+          </Insert>
+
+          <Insert select="/Report/Section[@name='SectionWireless']/Table[@name='TableWirelessConnectionAttempts']/Item[Data[@name='wirelessconnectionid'] = '{wirelessconnectionid}']/Item[Data[@name='timestamp'] = '{timestamp}']">
+            <Node axis="child">
+              <Item>
+                <Data name="wirelessconnectionstepproperty" translate="value">interfacedescription</Data>
+                <Data name="wirelessconnectionstepvalue">{wirelessconnectioninterfacedescription}</Data>
+              </Item>
+            </Node>
+          </Insert>
+
+          <Insert select="/Report/Section[@name='SectionWireless']/Table[@name='TableWirelessConnectionAttempts']/Item[Data[@name='wirelessconnectionid'] = '{wirelessconnectionid}']/Item[Data[@name='timestamp'] = '{timestamp}']">
+            <Node axis="child">
+              <Item>
+                <Data name="wirelessconnectionstepproperty" translate="value">connectionmode</Data>
+                <Data name="wirelessconnectionstepvalue">{wirelessconnectionconnectionmode}</Data>
+              </Item>
+            </Node>
+          </Insert>
+
+          <Insert select="/Report/Section[@name='SectionWireless']/Table[@name='TableWirelessConnectionAttempts']/Item[Data[@name='wirelessconnectionid'] = '{wirelessconnectionid}']/Item[Data[@name='timestamp'] = '{timestamp}']">
+            <Node axis="child">
+              <Item>
+                <Data name="wirelessconnectionstepproperty" translate="value">profilename</Data>
+                <Data name="wirelessconnectionstepvalue">{wirelessconnectionprofilename}</Data>
+              </Item>
+            </Node>
+          </Insert>
+
+          <Insert select="/Report/Section[@name='SectionWireless']/Table[@name='TableWirelessConnectionAttempts']/Item[Data[@name='wirelessconnectionid'] = '{wirelessconnectionid}']/Item[Data[@name='timestamp'] = '{timestamp}']">
+            <Node axis="child">
+              <Item>
+                <Data name="wirelessconnectionstepproperty" translate="value">bsstype</Data>
+                <Data name="wirelessconnectionstepvalue">{wirelessconnectionbsstype}</Data>
+              </Item>
+            </Node>
+          </Insert>
+
+          <Insert select="/Report/Section[@name='SectionWireless']/Table[@name='TableWirelessConnectionAttempts']/Item[Data[@name='wirelessconnectionid'] = '{wirelessconnectionid}']/Item[Data[@name='timestamp'] = '{timestamp}']">
+            <Node axis="child">
+              <Item>
+                <Data name="wirelessconnectionstepproperty" translate="value">failurereason</Data>
+                <Data name="wirelessconnectionstepvalue">{wirelessconnectionfailurereason}</Data>
+              </Item>
+            </Node>
+          </Insert>
+        </When>
+        <When expression="'{wirelessconnectionevent}' = 'wlansvcconnection'">
+          <Variable name="wirelessconnectioninterfaceguid" expression="Data[@name='interfaceguid']" />
+          <Variable name="wirelessconnectioninterfacedescription" expression="Data[@name='interfacedescription']" />
+          <Variable name="wirelessconnectionconnectionmode" expression="Data[@name='connectionmode']" />
+          <Variable name="wirelessconnectionprofilename" expression="Data[@name='profilename']" />
+          <Variable name="wirelessconnectionbsstype" expression="Data[@name='bsstype']" />
+          <Variable name="wirelessconnectionbssid" expression="Data[@name='bssid']" />
+          <Variable name="wirelessconnectionphytype" expression="Data[@name='phytype']" />
+          <Variable name="wirelessconnectionauthenticationalgorithm" expression="Data[@name='authenticationalgorithm']" />
+          <Variable name="wirelessconnectioncipheralgorithm" expression="Data[@name='cipheralgorithm']" />
+          <Variable name="wirelessconnectiononexenabled" expression="Data[@name='onexenabled']" />
+
+          <Insert select="/Report/Section[@name='SectionWireless']/Table[@name='TableWirelessConnectionAttempts']/Item[Data[@name='wirelessconnectionid'] = '{wirelessconnectionid}']">
+            <Node axis="child">
+              <Item>
+                <Data name="wirelessconnectionstep" translate="value">wlansvcconnection</Data>
+                <Data name="timestamp">{timestamp}</Data>
+                <Data name="wirelessconnectionid" visible="false">{wirelessconnectionid}</Data>
+              </Item>
+            </Node>
+          </Insert>
+
+          <Insert select="/Report/Section[@name='SectionWireless']/Table[@name='TableWirelessConnectionAttempts']/Item[Data[@name='wirelessconnectionid'] = '{wirelessconnectionid}']/Item[Data[@name='timestamp'] = '{timestamp}']">
+            <Node axis="child">
+              <Item>
+                <Data name="wirelessconnectionstepproperty" translate="value">interfaceguid</Data>
+                <Data name="wirelessconnectionstepvalue">{wirelessconnectioninterfaceguid}</Data>
+              </Item>
+            </Node>
+          </Insert>
+
+          <Insert select="/Report/Section[@name='SectionWireless']/Table[@name='TableWirelessConnectionAttempts']/Item[Data[@name='wirelessconnectionid'] = '{wirelessconnectionid}']/Item[Data[@name='timestamp'] = '{timestamp}']">
+            <Node axis="child">
+              <Item>
+                <Data name="wirelessconnectionstepproperty" translate="value">interfacedescription</Data>
+                <Data name="wirelessconnectionstepvalue">{wirelessconnectioninterfacedescription}</Data>
+              </Item>
+            </Node>
+          </Insert>
+
+          <Insert select="/Report/Section[@name='SectionWireless']/Table[@name='TableWirelessConnectionAttempts']/Item[Data[@name='wirelessconnectionid'] = '{wirelessconnectionid}']/Item[Data[@name='timestamp'] = '{timestamp}']">
+            <Node axis="child">
+              <Item>
+                <Data name="wirelessconnectionstepproperty" translate="value">connectionmode</Data>
+                <Data name="wirelessconnectionstepvalue">{wirelessconnectionconnectionmode}</Data>
+              </Item>
+            </Node>
+          </Insert>
+
+          <Insert select="/Report/Section[@name='SectionWireless']/Table[@name='TableWirelessConnectionAttempts']/Item[Data[@name='wirelessconnectionid'] = '{wirelessconnectionid}']/Item[Data[@name='timestamp'] = '{timestamp}']">
+            <Node axis="child">
+              <Item>
+                <Data name="wirelessconnectionstepproperty" translate="value">profilename</Data>
+                <Data name="wirelessconnectionstepvalue">{wirelessconnectionprofilename}</Data>
+              </Item>
+            </Node>
+          </Insert>
+
+          <Insert select="/Report/Section[@name='SectionWireless']/Table[@name='TableWirelessConnectionAttempts']/Item[Data[@name='wirelessconnectionid'] = '{wirelessconnectionid}']/Item[Data[@name='timestamp'] = '{timestamp}']">
+            <Node axis="child">
+              <Item>
+                <Data name="wirelessconnectionstepproperty" translate="value">bsstype</Data>
+                <Data name="wirelessconnectionstepvalue">{wirelessconnectionbsstype}</Data>
+              </Item>
+            </Node>
+          </Insert>
+
+          <Insert select="/Report/Section[@name='SectionWireless']/Table[@name='TableWirelessConnectionAttempts']/Item[Data[@name='wirelessconnectionid'] = '{wirelessconnectionid}']/Item[Data[@name='timestamp'] = '{timestamp}']">
+            <Node axis="child">
+              <Item>
+                <Data name="wirelessconnectionstepproperty" translate="value">bssid</Data>
+                <Data name="wirelessconnectionstepvalue">{wirelessconnectionbssid}</Data>
+              </Item>
+            </Node>
+          </Insert>
+
+          <Insert select="/Report/Section[@name='SectionWireless']/Table[@name='TableWirelessConnectionAttempts']/Item[Data[@name='wirelessconnectionid'] = '{wirelessconnectionid}']/Item[Data[@name='timestamp'] = '{timestamp}']">
+            <Node axis="child">
+              <Item>
+                <Data name="wirelessconnectionstepproperty" translate="value">phytype</Data>
+                <Data name="wirelessconnectionstepvalue">{wirelessconnectionphytype}</Data>
+              </Item>
+            </Node>
+          </Insert>
+
+          <Insert select="/Report/Section[@name='SectionWireless']/Table[@name='TableWirelessConnectionAttempts']/Item[Data[@name='wirelessconnectionid'] = '{wirelessconnectionid}']/Item[Data[@name='timestamp'] = '{timestamp}']">
+            <Node axis="child">
+              <Item>
+                <Data name="wirelessconnectionstepproperty" translate="value">authenticationalgorithm</Data>
+                <Data name="wirelessconnectionstepvalue">{wirelessconnectionauthenticationalgorithm}</Data>
+              </Item>
+            </Node>
+          </Insert>
+
+          <Insert select="/Report/Section[@name='SectionWireless']/Table[@name='TableWirelessConnectionAttempts']/Item[Data[@name='wirelessconnectionid'] = '{wirelessconnectionid}']/Item[Data[@name='timestamp'] = '{timestamp}']">
+            <Node axis="child">
+              <Item>
+                <Data name="wirelessconnectionstepproperty" translate="value">cipheralgorithm</Data>
+                <Data name="wirelessconnectionstepvalue">{wirelessconnectioncipheralgorithm}</Data>
+              </Item>
+            </Node>
+          </Insert>
+
+          <Insert select="/Report/Section[@name='SectionWireless']/Table[@name='TableWirelessConnectionAttempts']/Item[Data[@name='wirelessconnectionid'] = '{wirelessconnectionid}']/Item[Data[@name='timestamp'] = '{timestamp}']">
+            <Node axis="child">
+              <Item>
+                <Data name="wirelessconnectionstepproperty" translate="value">onexenabled</Data>
+                <Data name="wirelessconnectionstepvalue">{wirelessconnectiononexenabled}</Data>
+              </Item>
+            </Node>
+          </Insert>
+        </When>
+        <When expression="'{wirelessconnectionevent}' = 'wlansvcdisconnect'">
+          <Variable name="wirelessconnectioninterfaceguid" expression="Data[@name='interfaceguid']" />
+          <Variable name="wirelessconnectioninterfacedescription" expression="Data[@name='interfacedescription']" />
+          <Variable name="wirelessconnectionconnectionmode" expression="Data[@name='connectionmode']" />
+          <Variable name="wirelessconnectionprofilename" expression="Data[@name='profilename']" />
+          <Variable name="wirelessconnectionbsstype" expression="Data[@name='bsstype']" />
+          <Variable name="wirelessconnectionreason" expression="Data[@name='reason']" />
+
+          <Insert select="/Report/Section[@name='SectionWireless']/Table[@name='TableWirelessConnectionAttempts']/Item[Data[@name='wirelessconnectionid'] = '{wirelessconnectionid}']">
+            <Node axis="child">
+              <Item>
+                <Data name="wirelessconnectionstep" translate="value">wlansvcdisconnect</Data>
+                <Data name="timestamp">{timestamp}</Data>
+                <Data name="wirelessconnectionid" visible="false">{wirelessconnectionid}</Data>
+              </Item>
+            </Node>
+          </Insert>
+
+          <Insert select="/Report/Section[@name='SectionWireless']/Table[@name='TableWirelessConnectionAttempts']/Item[Data[@name='wirelessconnectionid'] = '{wirelessconnectionid}']/Item[Data[@name='timestamp'] = '{timestamp}']">
+            <Node axis="child">
+              <Item>
+                <Data name="wirelessconnectionstepproperty" translate="value">interfaceguid</Data>
+                <Data name="wirelessconnectionstepvalue">{wirelessconnectioninterfaceguid}</Data>
+              </Item>
+            </Node>
+          </Insert>
+
+          <Insert select="/Report/Section[@name='SectionWireless']/Table[@name='TableWirelessConnectionAttempts']/Item[Data[@name='wirelessconnectionid'] = '{wirelessconnectionid}']/Item[Data[@name='timestamp'] = '{timestamp}']">
+            <Node axis="child">
+              <Item>
+                <Data name="wirelessconnectionstepproperty" translate="value">interfacedescription</Data>
+                <Data name="wirelessconnectionstepvalue">{wirelessconnectioninterfacedescription}</Data>
+              </Item>
+            </Node>
+          </Insert>
+
+          <Insert select="/Report/Section[@name='SectionWireless']/Table[@name='TableWirelessConnectionAttempts']/Item[Data[@name='wirelessconnectionid'] = '{wirelessconnectionid}']/Item[Data[@name='timestamp'] = '{timestamp}']">
+            <Node axis="child">
+              <Item>
+                <Data name="wirelessconnectionstepproperty" translate="value">connectionmode</Data>
+                <Data name="wirelessconnectionstepvalue">{wirelessconnectionconnectionmode}</Data>
+              </Item>
+            </Node>
+          </Insert>
+
+          <Insert select="/Report/Section[@name='SectionWireless']/Table[@name='TableWirelessConnectionAttempts']/Item[Data[@name='wirelessconnectionid'] = '{wirelessconnectionid}']/Item[Data[@name='timestamp'] = '{timestamp}']">
+            <Node axis="child">
+              <Item>
+                <Data name="wirelessconnectionstepproperty" translate="value">profilename</Data>
+                <Data name="wirelessconnectionstepvalue">{wirelessconnectionprofilename}</Data>
+              </Item>
+            </Node>
+          </Insert>
+
+          <Insert select="/Report/Section[@name='SectionWireless']/Table[@name='TableWirelessConnectionAttempts']/Item[Data[@name='wirelessconnectionid'] = '{wirelessconnectionid}']/Item[Data[@name='timestamp'] = '{timestamp}']">
+            <Node axis="child">
+              <Item>
+                <Data name="wirelessconnectionstepproperty" translate="value">bsstype</Data>
+                <Data name="wirelessconnectionstepvalue">{wirelessconnectionbsstype}</Data>
+              </Item>
+            </Node>
+          </Insert>
+
+          <Insert select="/Report/Section[@name='SectionWireless']/Table[@name='TableWirelessConnectionAttempts']/Item[Data[@name='wirelessconnectionid'] = '{wirelessconnectionid}']/Item[Data[@name='timestamp'] = '{timestamp}']">
+            <Node axis="child">
+              <Item>
+                <Data name="wirelessconnectionstepproperty" translate="value">reason</Data>
+                <Data name="wirelessconnectionstepvalue">{wirelessconnectionreason}</Data>
+              </Item>
+            </Node>
+          </Insert>
+        </When>
+        <Otherwise />
+      </Exists>
+    </Step>
+
+    <Step select="/Report/Section[@name='SectionWireless']" fatal="true">
+      <Exists>
+        <Otherwise>
+          <Delete select="Table[@name='msmassociationstart' or @name='msmassociationsuccess' or @name='msmassociationfailure' or @name='wlanseconexstart' or @name='wlanseconexsuccess' or @name='wlanseconexfailure' or @name='wlansecstart' or @name='wlansecsuccess' or @name='wlansecfailure' or @name='wlansvcconnection' or @name='wlansvcconnectfailed' or @name='wlansvcconnectstart' or @name='wlansvcdisconnect']" />
+        </Otherwise>
+      </Exists>
+    </Step>
+  </Rule>
+
+  <Rule name="$(RuleNetworkWirelessSetup)" enabled="true">
+    <Step select="/Report/Section[@name='advice']/Table[@name='alltests']">
+      <Exists>
+       <When expression="1 = 1">
+        <Variable name="group">$(LOC_TableNetworkWirelessSummary)</Variable>
+        <Variable name="description">$(LOC_DescNetworkWirelessSummary)</Variable>
+        <Insert>
+          <Node axis="child">
+            <Item>
+              <Data name="alltestgroups" link="TableWirelessOSInformation">{group}</Data>
+              <Data name="alltestdesc">{description}</Data>
+            </Item>
+          </Node>
+        </Insert>
+       </When>
+       <Otherwise/>
+      </Exists>
+    </Step>
+  </Rule>
+
+  <Rule name="$(RuleDisabledWirelessAdaptersCheck)" enabled="true">
+    <Step select="/Report/Section[@name='SectionWireless']/Table[@name='TableWirelessRegAdapterInfo']/Item" fatal="true">
+      <Exists>
+        <Otherwise>
+          <Variable name="globaladapterexists" expression="number('0')" />
+          <Variable name="truestring">$(LOC_TrueString)</Variable>
+          <Variable name="falsestring">$(LOC_FalseString)</Variable>
+        </Otherwise>
+      </Exists>
+    </Step>
+
+    <Step select="/Report/Section[@name='SectionWireless']/Table[@name='TableWirelessAdapterInfo']/Item[contains(Data[@name='managementObjectsQuery'], 'MSNdis_EnumerateAdapter')]" fatal="true">
+      <Exists>
+        <Otherwise />
+      </Exists>
+    </Step>
+
+    <Step select="/Report/Section[@name='SectionWireless']/Table[@name='TableWirelessRegAdapterInfo']/Item" sortType="all">
+      <Variable name="instanceid" expression="Data[@name='wirelessnetcfginstanceid']" />
+      <Variable name="adapterdescription" expression="Data[@name='wirelessdriverdesc']" />
+      <Variable name="adapterexists" expression="count(/Report/Section[@name='SectionWireless']/Table[@name='TableWirelessAdapterInfo']/Item[contains(Data[@name='managementObjectsQuery'], 'MSNdis_EnumerateAdapter')]/Item[contains(Item[Data[@name='managementObjectsProperty'] = 'DeviceName']/Data[@name='managementObjectsValue'], '{instanceid}')])" />
+      <Variable name="adapterstate" expression="/Report/Section[@name='SectionWireless']/Table[@name='TableWirelessAdapterInfo']/Item[contains(Data[@name='managementObjectsQuery'], 'MSNdis_EnumerateAdapter')]/Item[contains(Item[Data[@name='managementObjectsProperty'] = 'DeviceName']/Data[@name='managementObjectsValue'], '{instanceid}')]/Item[Data[@name='managementObjectsProperty'] = 'Active']/Data[@name='managementObjectsValue']" />
+      <Variable name="adaptername" expression="/Report/Section[@name='SectionWireless']/Table[@name='TableWirelessAdapterInfo']/Item[contains(Data[@name='managementObjectsQuery'], 'MSNdis_EnumerateAdapter')]/Item[contains(Item[Data[@name='managementObjectsProperty'] = 'DeviceName']/Data[@name='managementObjectsValue'], '{instanceid}')]/Item[Data[@name='managementObjectsProperty'] = 'InstanceName']/Data[@name='managementObjectsValue']" />
+
+      <Exists>
+        <When expression="{adapterexists} >= 1 and not(contains('{adapterdescription}', 'Miniport')) and not(contains('{adapterdescription}', 'RAS')) and not(contains('{adapterdescription}', 'isatap')) and '{adapterstate}' = '{falsestring}'">
+
+        <Variable name="internalruleindex" expression="{internalruleindex} + 1"/>
+        <Variable name="ruleFailWirelessAdapterCheck_symptom">$(WarnFailWirelessAdapterCheck_symptom)</Variable>
+        <Variable name="ruleFailWirelessAdapterCheck_cause">$(WarnFailWirelessAdapterCheck_cause)</Variable>
+        <Variable name="ruleFailWirelessAdapterCheck_details">$(WarnFailWirelessAdapterCheck_details)</Variable>
+        <Variable name="ruleFailWirelessAdapterCheck_res1">$(WarnFailWirelessAdapterCheck_res1)</Variable>
+        <Variable name="ruleFailWirelessAdapterCheck_res2">$(WarnFailWirelessAdapterCheck_res2)</Variable>
+         <Warning tag="ruleFailWirelessAdapterCheck_WarnFailWirelessAdapterCheck_{internalruleindex}"  select="/Report/Section[@name='SectionWireless']/Table[@name='TableWirelessAdapterInfo']/Item/Item[contains(Item[Data[@name='managementObjectsProperty'] = 'DeviceName']/Data[@name='managementObjectsValue'], '{instanceid}')]/Item[Data[@name='managementObjectsProperty'] = 'InstanceName']/Data[@name='managementObjectsValue']" table="/Report/Section[@name='advice']/Table[@name='warning']">
+           <Item>
+
+              <Data name="symptom" img="warning" link="ruleFailWirelessAdapterCheck_WarnFailWirelessAdapterCheck_{internalruleindex}"  message="ruleFailWirelessAdapterCheck_WarnFailWirelessAdapterCheck_{internalruleindex}">{ruleFailWirelessAdapterCheck_symptom}</Data>
+              <Data name="cause" message="ruleFailWirelessAdapterCheck_WarnFailWirelessAdapterCheck_{internalruleindex}" >{ruleFailWirelessAdapterCheck_cause}</Data>
+              <Data name="details"  message="ruleFailWirelessAdapterCheck_WarnFailWirelessAdapterCheck_{internalruleindex}" >{ruleFailWirelessAdapterCheck_details}</Data>
+              <Data name="resolution"  message="ruleFailWirelessAdapterCheck_WarnFailWirelessAdapterCheck_{internalruleindex}" >{ruleFailWirelessAdapterCheck_res1}</Data>
+              <Data name="resolution"  message="ruleFailWirelessAdapterCheck_WarnFailWirelessAdapterCheck_{internalruleindex}" >{ruleFailWirelessAdapterCheck_res2}</Data>
+           </Item>
+         </Warning>
+
+        </When>
+        <When expression="{adapterexists} >= 1 and not(contains('{adapterdescription}', 'Miniport')) and not(contains('{adapterdescription}', 'RAS')) and not(contains('{adapterdescription}', 'isatap')) and '{adapterstate}' = '{truestring}'">
+          <Variable name="globaladapterexists" expression="number('1')" />
+        </When>
+        <Otherwise>
+        </Otherwise>
+      </Exists>
+    </Step>
+
+    <Step select="/Report/Section[@name='SectionWireless']/Table[@name='TableWirelessRegAdapterInfo']">
+      <Exists>
+        <When expression="{globaladapterexists} = 0">
+          <Variable name="adaptername" expression="Item/Data[@name='wirelessdriverdesc' and not(contains(., 'Miniport')) and not(contains(., 'RAS')) and not(contains(., 'isatap'))]" />
+        <Variable name="internalruleindex" expression="{internalruleindex} + 1"/>
+        <Variable name="ruleFailNoWirelessAdapterEnabled_symptom">$(WarnFailNoWirelessAdapterEnabled_symptom)</Variable>
+        <Variable name="ruleFailNoWirelessAdapterEnabled_cause">$(WarnFailNoWirelessAdapterEnabled_cause)</Variable>
+        <Variable name="ruleFailNoWirelessAdapterEnabled_details">$(WarnFailNoWirelessAdapterEnabled_details)</Variable>
+        <Variable name="ruleFailNoWirelessAdapterEnabled_res1">$(WarnFailNoWirelessAdapterEnabled_res1)</Variable>
+        <Variable name="ruleFailNoWirelessAdapterEnabled_res2">$(WarnFailNoWirelessAdapterEnabled_res2)</Variable>
+         <Warning tag="ruleFailNoWirelessAdapterEnabled_WarnFailNoWirelessAdapterEnabled_{internalruleindex}"  select="Item/Data[@name='wirelessdriverdesc' and not(contains(., 'Miniport')) and not(contains(., 'RAS')) and not(contains(., 'isatap'))]" table="/Report/Section[@name='advice']/Table[@name='warning']">
+           <Item>
+
+              <Data name="symptom" img="warning" link="ruleFailNoWirelessAdapterEnabled_WarnFailNoWirelessAdapterEnabled_{internalruleindex}"  message="ruleFailNoWirelessAdapterEnabled_WarnFailNoWirelessAdapterEnabled_{internalruleindex}">{ruleFailNoWirelessAdapterEnabled_symptom}</Data>
+              <Data name="cause" message="ruleFailNoWirelessAdapterEnabled_WarnFailNoWirelessAdapterEnabled_{internalruleindex}" >{ruleFailNoWirelessAdapterEnabled_cause}</Data>
+              <Data name="details"  message="ruleFailNoWirelessAdapterEnabled_WarnFailNoWirelessAdapterEnabled_{internalruleindex}" >{ruleFailNoWirelessAdapterEnabled_details}</Data>
+              <Data name="resolution"  message="ruleFailNoWirelessAdapterEnabled_WarnFailNoWirelessAdapterEnabled_{internalruleindex}" >{ruleFailNoWirelessAdapterEnabled_res1}</Data>
+              <Data name="resolution"  message="ruleFailNoWirelessAdapterEnabled_WarnFailNoWirelessAdapterEnabled_{internalruleindex}" >{ruleFailNoWirelessAdapterEnabled_res2}</Data>
+           </Item>
+         </Warning>
+
+        <Variable name="group">$(LOC_TableNetworkWirelessSummary)</Variable>
+        <Variable name="test">$(LOC_RuleDisabledWirelessAdaptersCheck)</Variable>
+        <Variable name="description">$(LOC_Failed)</Variable>
+<Insert select="/Report/Section[@name='advice']/Table[@name='alltests']/Item[Data[@name='alltestgroups'] = '{group}']">
+         <Node axis="child">
+           <Item>
+             <Data name="allchildtest">{test}</Data>
+             <Data name="allchildtotal">1</Data>
+             <Data name="allchildfail">1</Data>
+             <Data name="allchilddesc">{description}</Data>
+           </Item>
+         </Node>
+       </Insert>
+        </When>
+        <Otherwise>
+        <Variable name="group">$(LOC_TableNetworkWirelessSummary)</Variable>
+        <Variable name="test">$(LOC_RuleDisabledWirelessAdaptersCheck)</Variable>
+        <Variable name="description">$(LOC_Passed)</Variable>
+<Insert select="/Report/Section[@name='advice']/Table[@name='alltests']/Item[Data[@name='alltestgroups'] = '{group}']">
+         <Node axis="child">
+           <Item>
+             <Data name="allchildtest">{test}</Data>
+             <Data name="allchildtotal">1</Data>
+             <Data name="allchildfail">0</Data>
+             <Data name="allchilddesc">{description}</Data>
+           </Item>
+         </Node>
+       </Insert>
+        </Otherwise>
+      </Exists>
+    </Step>
+
+    <Step select="/Report/Section[@name='SectionWireless']">
+      <Exists>
+        <Otherwise>
+          <Delete select="Table[@name='TableWirelessAdapterInfo']" />
+        </Otherwise>
+      </Exists>
+    </Step>
+  </Rule>
+
+
+  <Rule name="$(RuleWirelessServiceCheck)" enabled="true">
+    <Step select="/Report/Section[@name='SectionWireless']/Table[@name='wlansvcstop' or @name='wlansvcstart' or @name='wlansvcfailure']/Item" sortType="max" sortNode="Data[@name='timestamp']" sortDataType="number">
+      <Variable name="wirelessserviceevent" expression="../@name" />
+      <Exists>
+        <When expression="'{wirelessserviceevent}' = 'wlansvcstop'">
+          <Variable name="state">$(LOC_WlanSvcStopped)</Variable>
+          <Variable name="wirelessserviceeventexists" expression="number('1')" />
+        <Variable name="group">$(LOC_TableNetworkWirelessSummary)</Variable>
+        <Variable name="test">$(LOC_RuleWirelessServiceCheck)</Variable>
+        <Variable name="description">$(LOC_Failed)</Variable>
+<Insert select="/Report/Section[@name='advice']/Table[@name='alltests']/Item[Data[@name='alltestgroups'] = '{group}']">
+         <Node axis="child">
+           <Item>
+             <Data name="allchildtest">{test}</Data>
+             <Data name="allchildtotal">1</Data>
+             <Data name="allchildfail">1</Data>
+             <Data name="allchilddesc">{description}</Data>
+           </Item>
+         </Node>
+       </Insert>
+
+        <Variable name="internalruleindex" expression="{internalruleindex} + 1"/>
+        <Variable name="ruleFailCheckWirelessService_symptom">$(WarnFailCheckWirelessServiceNotRunning_symptom)</Variable>
+        <Variable name="ruleFailCheckWirelessService_cause">$(WarnFailCheckWirelessServiceNotRunning_cause)</Variable>
+        <Variable name="ruleFailCheckWirelessService_res1">$(WarnFailCheckWirelessServiceNotRunning_res1)</Variable>
+         <Warning tag="ruleFailCheckWirelessService_WarnFailCheckWirelessServiceNotRunning_{internalruleindex}"  select="Data[@name='timestamp']" table="/Report/Section[@name='advice']/Table[@name='error']">
+           <Item>
+
+              <Data name="symptom" img="error" link="ruleFailCheckWirelessService_WarnFailCheckWirelessServiceNotRunning_{internalruleindex}"  message="ruleFailCheckWirelessService_WarnFailCheckWirelessServiceNotRunning_{internalruleindex}">{ruleFailCheckWirelessService_symptom}</Data>
+              <Data name="cause" message="ruleFailCheckWirelessService_WarnFailCheckWirelessServiceNotRunning_{internalruleindex}" >{ruleFailCheckWirelessService_cause}</Data>
+              <Data name="resolution"  message="ruleFailCheckWirelessService_WarnFailCheckWirelessServiceNotRunning_{internalruleindex}" >{ruleFailCheckWirelessService_res1}</Data>
+           </Item>
+         </Warning>
+        </When>
+        <When expression="'{wirelessserviceevent}' = 'wlansvcfailure'">
+          <Variable name="exitcode" expression="Data[@name='errorcode']" />
+          <Variable name="wirelessserviceeventexists" expression="number('1')" />
+
+        <Variable name="group">$(LOC_TableNetworkWirelessSummary)</Variable>
+        <Variable name="test">$(LOC_RuleWirelessServiceCheck)</Variable>
+        <Variable name="description">$(LOC_Failed)</Variable>
+<Insert select="/Report/Section[@name='advice']/Table[@name='alltests']/Item[Data[@name='alltestgroups'] = '{group}']">
+         <Node axis="child">
+           <Item>
+             <Data name="allchildtest">{test}</Data>
+             <Data name="allchildtotal">1</Data>
+             <Data name="allchildfail">1</Data>
+             <Data name="allchilddesc">{description}</Data>
+           </Item>
+         </Node>
+       </Insert>
+
+        <Variable name="internalruleindex" expression="{internalruleindex} + 1"/>
+        <Variable name="ruleFailCheckWirelessService_symptom">$(WarnFailCheckWirelessServiceAbnormallyStopped_symptom)</Variable>
+        <Variable name="ruleFailCheckWirelessService_cause">$(WarnFailCheckWirelessServiceAbnormallyStopped_cause)</Variable>
+        <Variable name="ruleFailCheckWirelessService_res1">$(WarnFailCheckWirelessServiceAbnormallyStopped_res1)</Variable>
+         <Warning tag="ruleFailCheckWirelessService_WarnFailCheckWirelessServiceAbnormallyStopped_{internalruleindex}"  select="Data[@name='timestamp']" table="/Report/Section[@name='advice']/Table[@name='error']">
+           <Item>
+
+              <Data name="symptom" img="error" link="ruleFailCheckWirelessService_WarnFailCheckWirelessServiceAbnormallyStopped_{internalruleindex}"  message="ruleFailCheckWirelessService_WarnFailCheckWirelessServiceAbnormallyStopped_{internalruleindex}">{ruleFailCheckWirelessService_symptom}</Data>
+              <Data name="cause" message="ruleFailCheckWirelessService_WarnFailCheckWirelessServiceAbnormallyStopped_{internalruleindex}" >{ruleFailCheckWirelessService_cause}</Data>
+              <Data name="resolution"  message="ruleFailCheckWirelessService_WarnFailCheckWirelessServiceAbnormallyStopped_{internalruleindex}" >{ruleFailCheckWirelessService_res1}</Data>
+           </Item>
+         </Warning>
+        </When>
+        <Otherwise>
+          <Variable name="wirelessserviceeventexists" expression="number('1')" />
+
+        <Variable name="group">$(LOC_TableNetworkWirelessSummary)</Variable>
+        <Variable name="test">$(LOC_RuleWirelessServiceCheck)</Variable>
+        <Variable name="description">$(LOC_Passed)</Variable>
+<Insert select="/Report/Section[@name='advice']/Table[@name='alltests']/Item[Data[@name='alltestgroups'] = '{group}']">
+         <Node axis="child">
+           <Item>
+             <Data name="allchildtest">{test}</Data>
+             <Data name="allchildtotal">1</Data>
+             <Data name="allchildfail">0</Data>
+             <Data name="allchilddesc">{description}</Data>
+           </Item>
+         </Node>
+       </Insert>
+        </Otherwise>
+      </Exists>
+      <Otherwise>
+        <Variable name="wirelessserviceeventexists" expression="number('0')" />
+      </Otherwise>
+    </Step>
+
+    <Step select="/Report/Section[@name='SectionWireless']/Table[@name='TableWirelessServicesInformation']" fatal="true">
+      <Exists>
+        <Otherwise>
+          <Variable name="wlanservicename">Wlansvc</Variable>
+        </Otherwise>
+      </Exists>
+    </Step>
+
+    <Step select="/Report/Section[@name='SectionWireless']/Table[@name='TableWirelessServicesInformation']/Item/Item[Item[Data[@name='managementObjectsProperty'] = 'Name']/Data[@name='managementObjectsValue'] = '{wlanservicename}']" fatal="true" >
+      <Exists>
+        <When expression="{wirelessserviceeventexists} = 0">
+
+        <Variable name="displayname" expression="/Report/Section/Table[@name='TableWirelessServicesInformation']/Item/Item[Item[Data[@name='managementObjectsProperty'] = 'Name']/Data[@name='managementObjectsValue'] = '{wlanservicename}']/Item[Data[@name='managementObjectsProperty'] = 'DisplayName']/Data[@name='managementObjectsValue']" />
+        <Variable name="description" expression="/Report/Section/Table[@name='TableWirelessServicesInformation']/Item/Item[Item[Data[@name='managementObjectsProperty'] = 'Name']/Data[@name='managementObjectsValue'] = '{wlanservicename}']/Item[Data[@name='managementObjectsProperty'] = 'Description']/Data[@name='managementObjectsValue']" />
+        <Variable name="exitcode" expression="/Report/Section/Table[@name='TableWirelessServicesInformation']/Item/Item[Item[Data[@name='managementObjectsProperty'] = 'Name']/Data[@name='managementObjectsValue'] = '{wlanservicename}']/Item[Data[@name='managementObjectsProperty'] = 'ExitCode']/Data[@name='managementObjectsValue']" />
+        <Variable name="scname" expression="/Report/Section/Table[@name='TableWirelessServicesInformation']/Item/Item[Item[Data[@name='managementObjectsProperty'] = 'Name']/Data[@name='managementObjectsValue'] = '{wlanservicename}']/Item[Data[@name='managementObjectsProperty'] = 'Name']/Data[@name='managementObjectsValue']" />
+        <Variable name="pathname" expression="/Report/Section/Table[@name='TableWirelessServicesInformation']/Item/Item[Item[Data[@name='managementObjectsProperty'] = 'Name']/Data[@name='managementObjectsValue'] = '{wlanservicename}']/Item[Data[@name='managementObjectsProperty'] = 'PathName']/Data[@name='managementObjectsValue']" />
+        <Variable name="servicespecificexitcode" expression="/Report/Section/Table[@name='TableWirelessServicesInformation']/Item/Item[Item[Data[@name='managementObjectsProperty'] = 'Name']/Data[@name='managementObjectsValue'] = '{wlanservicename}']/Item[Data[@name='managementObjectsProperty'] = 'ServiceSpecificExitCode']/Data[@name='managementObjectsValue']" />
+        <Variable name="started" expression="/Report/Section/Table[@name='TableWirelessServicesInformation']/Item/Item[Item[Data[@name='managementObjectsProperty'] = 'Name']/Data[@name='managementObjectsValue'] = '{wlanservicename}']/Item[Data[@name='managementObjectsProperty'] = 'Started']/Data[@name='managementObjectsValue']" />
+        <Variable name="state" expression="/Report/Section/Table[@name='TableWirelessServicesInformation']/Item/Item[Item[Data[@name='managementObjectsProperty'] = 'Name']/Data[@name='managementObjectsValue'] = '{wlanservicename}']/Item[Data[@name='managementObjectsProperty'] = 'State']/Data[@name='managementObjectsValue']" />
+        <Insert select="/Report/Section[@name='SectionWireless']/Table[@name='TableWirelessServices']">
+          <Node axis="child">
+            <Item>
+              <Data name="servicename">{wlanservicename}</Data>
+              <Item>
+                <Data name="displayname">{displayname}</Data>
+                <Data name="exitcode">{exitcode}</Data>
+                <Data name="scname">{scname}</Data>
+                <Data name="pathname">{pathname}</Data>
+                <Data name="servicespecificexitcode">{servicespecificexitcode}</Data>
+                <Data name="started">{started}</Data>
+                <Data name="state">{state}</Data>
+             </Item>
+            </Item>
+          </Node>
+        </Insert>
+        </When>
+      </Exists>
+    </Step>
+
+<Step select="/Report/Section[@name='SectionWireless']/Table[@name='TableWirelessServices']/Item[Data[@name='servicename'] = '{wlanservicename}']">
+  <Variable name="exitcode" expression="Item/Data[@name='exitcode']" />
+  <Variable name="state" expression="Item/Data[@name='state']" />
+  <Variable name="servicerunning">Running</Variable>
+  <Variable name="test">$(LOC_RuleWirelessServiceCheck)</Variable>
+  <Variable name="servicename">{wlanservicename}</Variable>
+  <Exists>
+    <When expression="{exitcode} != 0 and {exitcode} != 1077">
+        <Variable name="internalruleindex" expression="{internalruleindex} + 1"/>
+        <Variable name="ruleFailCheckWirelessService_symptom">$(WarnFailCheckWirelessServiceAbnormallyStopped_symptom)</Variable>
+        <Variable name="ruleFailCheckWirelessService_cause">$(WarnFailCheckWirelessServiceAbnormallyStopped_cause)</Variable>
+        <Variable name="ruleFailCheckWirelessService_res1">$(WarnFailCheckWirelessServiceAbnormallyStopped_res1)</Variable>
+         <Warning tag="ruleFailCheckWirelessService_WarnFailCheckWirelessServiceAbnormallyStopped_{internalruleindex}"  select="Item/Data[@name='exitcode']" table="/Report/Section[@name='advice']/Table[@name='error']">
+           <Item>
+
+              <Data name="symptom" img="error" link="ruleFailCheckWirelessService_WarnFailCheckWirelessServiceAbnormallyStopped_{internalruleindex}"  message="ruleFailCheckWirelessService_WarnFailCheckWirelessServiceAbnormallyStopped_{internalruleindex}">{ruleFailCheckWirelessService_symptom}</Data>
+              <Data name="cause" message="ruleFailCheckWirelessService_WarnFailCheckWirelessServiceAbnormallyStopped_{internalruleindex}" >{ruleFailCheckWirelessService_cause}</Data>
+              <Data name="resolution"  message="ruleFailCheckWirelessService_WarnFailCheckWirelessServiceAbnormallyStopped_{internalruleindex}" >{ruleFailCheckWirelessService_res1}</Data>
+           </Item>
+         </Warning>
+        <Variable name="group">$(LOC_TableNetworkWirelessSummary)</Variable>
+        <Variable name="test">$(LOC_RuleWirelessServiceCheck)</Variable>
+        <Variable name="description">$(LOC_Failed)</Variable>
+<Insert select="/Report/Section[@name='advice']/Table[@name='alltests']/Item[Data[@name='alltestgroups'] = '{group}']">
+         <Node axis="child">
+           <Item>
+             <Data name="allchildtest">{test}</Data>
+             <Data name="allchildtotal">1</Data>
+             <Data name="allchildfail">1</Data>
+             <Data name="allchilddesc">{description}</Data>
+           </Item>
+         </Node>
+       </Insert>
+    </When>
+    <When expression="'{state}' != '{servicerunning}'">
+        <Variable name="internalruleindex" expression="{internalruleindex} + 1"/>
+        <Variable name="ruleFailCheckWirelessService_symptom">$(WarnFailCheckWirelessServiceNotRunning_symptom)</Variable>
+        <Variable name="ruleFailCheckWirelessService_cause">$(WarnFailCheckWirelessServiceNotRunning_cause)</Variable>
+        <Variable name="ruleFailCheckWirelessService_res1">$(WarnFailCheckWirelessServiceNotRunning_res1)</Variable>
+         <Warning tag="ruleFailCheckWirelessService_WarnFailCheckWirelessServiceNotRunning_{internalruleindex}"  select="Item/Data[@name='state']" table="/Report/Section[@name='advice']/Table[@name='error']">
+           <Item>
+
+              <Data name="symptom" img="error" link="ruleFailCheckWirelessService_WarnFailCheckWirelessServiceNotRunning_{internalruleindex}"  message="ruleFailCheckWirelessService_WarnFailCheckWirelessServiceNotRunning_{internalruleindex}">{ruleFailCheckWirelessService_symptom}</Data>
+              <Data name="cause" message="ruleFailCheckWirelessService_WarnFailCheckWirelessServiceNotRunning_{internalruleindex}" >{ruleFailCheckWirelessService_cause}</Data>
+              <Data name="resolution"  message="ruleFailCheckWirelessService_WarnFailCheckWirelessServiceNotRunning_{internalruleindex}" >{ruleFailCheckWirelessService_res1}</Data>
+           </Item>
+         </Warning>
+        <Variable name="group">$(LOC_TableNetworkWirelessSummary)</Variable>
+        <Variable name="test">$(LOC_RuleWirelessServiceCheck)</Variable>
+        <Variable name="description">$(LOC_Failed)</Variable>
+<Insert select="/Report/Section[@name='advice']/Table[@name='alltests']/Item[Data[@name='alltestgroups'] = '{group}']">
+         <Node axis="child">
+           <Item>
+             <Data name="allchildtest">{test}</Data>
+             <Data name="allchildtotal">1</Data>
+             <Data name="allchildfail">1</Data>
+             <Data name="allchilddesc">{description}</Data>
+           </Item>
+         </Node>
+       </Insert>
+    </When>
+    <Otherwise>
+        <Variable name="group">$(LOC_TableNetworkWirelessSummary)</Variable>
+        <Variable name="test">$(LOC_RuleWirelessServiceCheck)</Variable>
+        <Variable name="description">$(LOC_Passed)</Variable>
+<Insert select="/Report/Section[@name='advice']/Table[@name='alltests']/Item[Data[@name='alltestgroups'] = '{group}']">
+         <Node axis="child">
+           <Item>
+             <Data name="allchildtest">{test}</Data>
+             <Data name="allchildtotal">1</Data>
+             <Data name="allchildfail">0</Data>
+             <Data name="allchilddesc">{description}</Data>
+           </Item>
+         </Node>
+       </Insert>
+    </Otherwise>
+  </Exists>
+  <Otherwise>
+        <Variable name="group">$(LOC_TableNetworkWirelessSummary)</Variable>
+        <Variable name="test">$(LOC_RuleWirelessServiceCheck)</Variable>
+        <Variable name="description">$(LOC_Failed)</Variable>
+<Insert select="/Report/Section[@name='advice']/Table[@name='alltests']/Item[Data[@name='alltestgroups'] = '{group}']">
+         <Node axis="child">
+           <Item>
+             <Data name="allchildtest">{test}</Data>
+             <Data name="allchildtotal">1</Data>
+             <Data name="allchildfail">1</Data>
+             <Data name="allchilddesc">{description}</Data>
+           </Item>
+         </Node>
+       </Insert>
+    <Variable name="group">$(LOC_TableNetworkWirelessSummary)</Variable>
+        <Variable name="internalruleindex" expression="{internalruleindex} + 1"/>
+        <Variable name="ruleFailCheckWirelessService_symptom">$(WarnFailServiceNotFound_symptom)</Variable>
+        <Variable name="ruleFailCheckWirelessService_cause">$(WarnFailServiceNotFound_cause)</Variable>
+        <Variable name="ruleFailCheckWirelessService_res1">$(WarnFailServiceNotFound_res1)</Variable>
+         <Warning tag="ruleFailCheckWirelessService_WarnFailServiceNotFound_{internalruleindex}"  select="/Report/Section[@name='advice']/Table[@name='alltests']/Item[Data[@name='alltestgroups'] = '{group}']/Item/Data[@name='allchildtest'][. = '{test}']" table="/Report/Section[@name='advice']/Table[@name='error']">
+           <Item>
+
+              <Data name="symptom" img="error" link="ruleFailCheckWirelessService_WarnFailServiceNotFound_{internalruleindex}"  message="ruleFailCheckWirelessService_WarnFailServiceNotFound_{internalruleindex}">{ruleFailCheckWirelessService_symptom}</Data>
+              <Data name="cause" message="ruleFailCheckWirelessService_WarnFailServiceNotFound_{internalruleindex}" >{ruleFailCheckWirelessService_cause}</Data>
+              <Data name="resolution"  message="ruleFailCheckWirelessService_WarnFailServiceNotFound_{internalruleindex}" >{ruleFailCheckWirelessService_res1}</Data>
+           </Item>
+         </Warning>
+  </Otherwise>
+</Step>
+
+  </Rule>
+
+  <Rule name="$(RuleConnectionAttemptsCheck)" enabled="true">
+    <Step select="/Report/Section[@name='SectionWireless']/Table[@name='TableWirelessConnectionAttempts']/Item/Item" sortType="max" sortNode="Data[@name='timestamp']" sortDataType="number">
+      <Variable name="wirelessconnectionstep" expression="Data[@name='wirelessconnectionstep']" />
+      <Variable name="wirelessconnectionid" expression="Data[@name='wirelessconnectionid']" />
+      <Variable name="ssid" expression="../../Item[Data[@name='wirelessconnectionid'] = '{wirelessconnectionid}']/Data[@name='wirelessconnectionssid']" />
+      <Exists>
+        <When expression="'{wirelessconnectionstep}' = 'wlansvcconnectfailed'">
+          <Variable name="failurereason" expression="Item[Data[@name='wirelessconnectionstepproperty'] = 'failurereason']/Data[@name='wirelessconnectionstepvalue']" />
+
+        <Variable name="group">$(LOC_TableNetworkWirelessSummary)</Variable>
+        <Variable name="test">$(LOC_RuleConnectionAttemptsCheck)</Variable>
+        <Variable name="description">$(LOC_Failed)</Variable>
+<Insert select="/Report/Section[@name='advice']/Table[@name='alltests']/Item[Data[@name='alltestgroups'] = '{group}']">
+         <Node axis="child">
+           <Item>
+             <Data name="allchildtest">{test}</Data>
+             <Data name="allchildtotal">1</Data>
+             <Data name="allchildfail">1</Data>
+             <Data name="allchilddesc">{description}</Data>
+           </Item>
+         </Node>
+       </Insert>
+
+        <Variable name="internalruleindex" expression="{internalruleindex} + 1"/>
+        <Variable name="ruleConnectionAttemptsCheck_symptom">$(WarnFailWirelessConnection_symptom)</Variable>
+        <Variable name="ruleConnectionAttemptsCheck_cause">$(WarnFailWirelessConnection_cause)</Variable>
+        <Variable name="ruleConnectionAttemptsCheck_details">$(WarnFailWirelessConnection_details)</Variable>
+        <Variable name="ruleConnectionAttemptsCheck_res1">$(WarnFailWirelessConnection_res1)</Variable>
+        <Variable name="ruleConnectionAttemptsCheck_res2">$(WarnFailWirelessConnection_res2)</Variable>
+         <Warning tag="ruleConnectionAttemptsCheck_WarnFailWirelessConnection_{internalruleindex}"  select="Data[@name='wirelessconnectionstep']" table="/Report/Section[@name='advice']/Table[@name='error']">
+           <Item>
+
+              <Data name="symptom" img="error" link="ruleConnectionAttemptsCheck_WarnFailWirelessConnection_{internalruleindex}"  message="ruleConnectionAttemptsCheck_WarnFailWirelessConnection_{internalruleindex}">{ruleConnectionAttemptsCheck_symptom}</Data>
+              <Data name="cause" message="ruleConnectionAttemptsCheck_WarnFailWirelessConnection_{internalruleindex}" >{ruleConnectionAttemptsCheck_cause}</Data>
+              <Data name="details"  message="ruleConnectionAttemptsCheck_WarnFailWirelessConnection_{internalruleindex}" >{ruleConnectionAttemptsCheck_details}</Data>
+              <Data name="resolution"  message="ruleConnectionAttemptsCheck_WarnFailWirelessConnection_{internalruleindex}" >{ruleConnectionAttemptsCheck_res1}</Data>
+              <Data name="resolution"  message="ruleConnectionAttemptsCheck_WarnFailWirelessConnection_{internalruleindex}" >{ruleConnectionAttemptsCheck_res2}</Data>
+           </Item>
+         </Warning>
+        </When>
+        <When expression="'{wirelessconnectionstep}' = 'wlansvcconnection'">
+        <Variable name="group">$(LOC_TableNetworkWirelessSummary)</Variable>
+        <Variable name="test">$(LOC_RuleConnectionAttemptsCheck)</Variable>
+        <Variable name="description">$(LOC_Passed)</Variable>
+<Insert select="/Report/Section[@name='advice']/Table[@name='alltests']/Item[Data[@name='alltestgroups'] = '{group}']">
+         <Node axis="child">
+           <Item>
+             <Data name="allchildtest">{test}</Data>
+             <Data name="allchildtotal">1</Data>
+             <Data name="allchildfail">0</Data>
+             <Data name="allchilddesc">{description}</Data>
+           </Item>
+         </Node>
+       </Insert>
+
+        <Variable name="internalruleindex" expression="{internalruleindex} + 1"/>
+        <Variable name="ruleConnectionAttemptsCheck_symptom">$(WarnWirelessConnectionSuccess_symptom)</Variable>
+        <Variable name="ruleConnectionAttemptsCheck_cause">$(WarnWirelessConnectionSuccess_cause)</Variable>
+        <Variable name="ruleConnectionAttemptsCheck_details">$(WarnWirelessConnectionSuccess_details)</Variable>
+        <Variable name="ruleConnectionAttemptsCheck_res1">$(WarnWirelessConnectionSuccess_res1)</Variable>
+         <Warning tag="ruleConnectionAttemptsCheck_WarnWirelessConnectionSuccess_{internalruleindex}"  select="Data[@name='wirelessconnectionstep']" table="/Report/Section[@name='advice']/Table[@name='info']">
+           <Item>
+
+              <Data name="symptom" img="info" link="ruleConnectionAttemptsCheck_WarnWirelessConnectionSuccess_{internalruleindex}"  message="ruleConnectionAttemptsCheck_WarnWirelessConnectionSuccess_{internalruleindex}">{ruleConnectionAttemptsCheck_symptom}</Data>
+              <Data name="cause" message="ruleConnectionAttemptsCheck_WarnWirelessConnectionSuccess_{internalruleindex}" >{ruleConnectionAttemptsCheck_cause}</Data>
+              <Data name="details"  message="ruleConnectionAttemptsCheck_WarnWirelessConnectionSuccess_{internalruleindex}" >{ruleConnectionAttemptsCheck_details}</Data>
+              <Data name="resolution"  message="ruleConnectionAttemptsCheck_WarnWirelessConnectionSuccess_{internalruleindex}" >{ruleConnectionAttemptsCheck_res1}</Data>
+           </Item>
+         </Warning>
+        </When>
+        <When expression="'{wirelessconnectionstep}' = 'wlansvcdisconnect'">
+        <Variable name="group">$(LOC_TableNetworkWirelessSummary)</Variable>
+        <Variable name="test">$(LOC_RuleConnectionAttemptsCheck)</Variable>
+        <Variable name="description">$(LOC_Failed)</Variable>
+<Insert select="/Report/Section[@name='advice']/Table[@name='alltests']/Item[Data[@name='alltestgroups'] = '{group}']">
+         <Node axis="child">
+           <Item>
+             <Data name="allchildtest">{test}</Data>
+             <Data name="allchildtotal">1</Data>
+             <Data name="allchildfail">1</Data>
+             <Data name="allchilddesc">{description}</Data>
+           </Item>
+         </Node>
+       </Insert>
+
+        <Variable name="internalruleindex" expression="{internalruleindex} + 1"/>
+        <Variable name="ruleConnectionAttemptsCheck_symptom">$(WarnWirelessConnectionDisconnect_symptom)</Variable>
+        <Variable name="ruleConnectionAttemptsCheck_cause">$(WarnWirelessConnectionDisconnect_cause)</Variable>
+        <Variable name="ruleConnectionAttemptsCheck_details">$(WarnWirelessConnectionDisconnect_details)</Variable>
+        <Variable name="ruleConnectionAttemptsCheck_res1">$(WarnWirelessConnectionDisconnect_res1)</Variable>
+         <Warning tag="ruleConnectionAttemptsCheck_WarnWirelessConnectionDisconnect_{internalruleindex}"  select="Data[@name='wirelessconnectionstep']" table="/Report/Section[@name='advice']/Table[@name='warning']">
+           <Item>
+
+              <Data name="symptom" img="warning" link="ruleConnectionAttemptsCheck_WarnWirelessConnectionDisconnect_{internalruleindex}"  message="ruleConnectionAttemptsCheck_WarnWirelessConnectionDisconnect_{internalruleindex}">{ruleConnectionAttemptsCheck_symptom}</Data>
+              <Data name="cause" message="ruleConnectionAttemptsCheck_WarnWirelessConnectionDisconnect_{internalruleindex}" >{ruleConnectionAttemptsCheck_cause}</Data>
+              <Data name="details"  message="ruleConnectionAttemptsCheck_WarnWirelessConnectionDisconnect_{internalruleindex}" >{ruleConnectionAttemptsCheck_details}</Data>
+              <Data name="resolution"  message="ruleConnectionAttemptsCheck_WarnWirelessConnectionDisconnect_{internalruleindex}" >{ruleConnectionAttemptsCheck_res1}</Data>
+           </Item>
+         </Warning>
+        </When>
+        <Otherwise>
+        <Variable name="group">$(LOC_TableNetworkWirelessSummary)</Variable>
+        <Variable name="test">$(LOC_RuleConnectionAttemptsCheck)</Variable>
+        <Variable name="description">$(LOC_Failed)</Variable>
+<Insert select="/Report/Section[@name='advice']/Table[@name='alltests']/Item[Data[@name='alltestgroups'] = '{group}']">
+         <Node axis="child">
+           <Item>
+             <Data name="allchildtest">{test}</Data>
+             <Data name="allchildtotal">1</Data>
+             <Data name="allchildfail">1</Data>
+             <Data name="allchilddesc">{description}</Data>
+           </Item>
+         </Node>
+       </Insert>
+
+        <Variable name="internalruleindex" expression="{internalruleindex} + 1"/>
+        <Variable name="ruleConnectionAttemptsCheck_symptom">$(WarnWirelessConnectionIncomplete_symptom)</Variable>
+        <Variable name="ruleConnectionAttemptsCheck_cause">$(WarnWirelessConnectionIncomplete_cause)</Variable>
+        <Variable name="ruleConnectionAttemptsCheck_details">$(WarnWirelessConnectionIncomplete_details)</Variable>
+        <Variable name="ruleConnectionAttemptsCheck_res1">$(WarnWirelessConnectionIncomplete_res1)</Variable>
+         <Warning tag="ruleConnectionAttemptsCheck_WarnWirelessConnectionIncomplete_{internalruleindex}"  select="Data[@name='wirelessconnectionstep']" table="/Report/Section[@name='advice']/Table[@name='warning']">
+           <Item>
+
+              <Data name="symptom" img="warning" link="ruleConnectionAttemptsCheck_WarnWirelessConnectionIncomplete_{internalruleindex}"  message="ruleConnectionAttemptsCheck_WarnWirelessConnectionIncomplete_{internalruleindex}">{ruleConnectionAttemptsCheck_symptom}</Data>
+              <Data name="cause" message="ruleConnectionAttemptsCheck_WarnWirelessConnectionIncomplete_{internalruleindex}" >{ruleConnectionAttemptsCheck_cause}</Data>
+              <Data name="details"  message="ruleConnectionAttemptsCheck_WarnWirelessConnectionIncomplete_{internalruleindex}" >{ruleConnectionAttemptsCheck_details}</Data>
+              <Data name="resolution"  message="ruleConnectionAttemptsCheck_WarnWirelessConnectionIncomplete_{internalruleindex}" >{ruleConnectionAttemptsCheck_res1}</Data>
+           </Item>
+         </Warning>
+        </Otherwise>
+      </Exists>
+    </Step>
+  </Rule>
+
+  <Rule name="$(RuleNetworkWirelessSummary)" enabled="true">
+     <Step select="/Report/Section[@name='advice']/Table[@name='alltests']" fatal="true">
+       <Variable name="group">$(LOC_TableNetworkWirelessSummary)</Variable>
+       <Variable name="groupfailedtestscount" expression="count(Item[Data[@name='alltestgroups'] = '{group}']/Item[Data[@name='allchildfail'] != '0'])" />
+       <Exists>
+         <When expression="1 = 1 and {groupfailedtestscount} &gt; 0">
+           <Variable name="failedmsg">$(LOC_Failed)</Variable>
+           <Insert select="Item[Data[@name='alltestgroups'] = '{group}']/Data">
+             <Node axis="following-sibling">
+               <Data name="allteststatus">{failedmsg}</Data>
+             </Node>
+           </Insert>
+         </When>
+         <When expression="1 = 1 and {groupfailedtestscount} = 0">
+           <Variable name="passedmsg">$(LOC_Passed)</Variable>
+           <Insert select="Item[Data[@name='alltestgroups'] = '{group}']/Data">
+             <Node axis="following-sibling">
+               <Data name="allteststatus">{passedmsg}</Data>
+             </Node>
+           </Insert>
+         </When>
+       </Exists>
+     </Step>
+
+    <Step select="/Report/Section[@name='advice']/Table[@name='alltests']" fatal="true">
+      <Exists>
+        <Otherwise>
+          <Variable name="group">$(LOC_TableNetworkWirelessSummary)</Variable>
+        </Otherwise>
+      </Exists>
+    </Step>
+
+    <Step select="/Report/Section[@name='advice']/Table[@name='alltests']/Item[Data[@name='alltestgroups'] = '{group}']" fatal="true">
+      <Variable name="summarycnt" expression="count(Item)" />
+      <When expression="{summarycnt} = 0">
+        <Delete select="." />
+      </When>
+    </Step>
+  </Rule>
+
+  <Rule name="$(RuleSlimServicesTable)" enabled="true">
+
+    <Step select="/Report/Section/Table[@name='TableWirelessServicesInformation']/Item/Item[Item[Data[@name='managementObjectsProperty']='State' and Data[@name='managementObjectsValue'] = 'Running']]" sortType="all">
+      <Exists>
+        <When expression="count(Data[@warning]) = 0">
+          <Variable name="summary" expression="Item[Data[@name='managementObjectsProperty']='Description']/Data[@name='managementObjectsValue']"/>
+          <Insert select="Data[@name='managementObjectsRelativePath']">
+            <Attribute name="note" value="$(NoteServiceRunning)"/>
+          </Insert>
+          <Delete select="Item"/>
+        </When>
+      </Exists>
+    </Step>
+
+    <Step select="/Report/Section/Table[@name='TableWirelessServicesInformation']/Item/Item[Item[Data[@name='managementObjectsProperty']='State' and Data[@name='managementObjectsValue'] = 'Stopped']][Item[Data[@name='managementObjectsProperty']='ExitCode' and Data[@name='managementObjectsValue'] = '1077']]" sortType="all">
+      <Exists>
+        <When expression="count(Data[@warning]) = 0">
+          <Variable name="summary" expression="Item/Item[Data[@name='managementObjectsProperty']='Description']/Data[@name='managementObjectsValue']"/>
+          <Insert select="Data[@name='managementObjectsRelativePath']">
+            <Attribute name="note" value="$(NoteServiceProperlyStopped1077)"/>
+          </Insert>
+          <Delete select="Item"/>
+        </When>
+      </Exists>
+    </Step>
+
+    <Step select="/Report/Section/Table[@name='TableWirelessServicesInformation']/Item/Item[Item[Data[@name='managementObjectsProperty']='State' and Data[@name='managementObjectsValue'] = 'Stopped']][Item[Data[@name='managementObjectsProperty']='ExitCode' and Data[@name='managementObjectsValue'] = '0']]" sortType="all">
+      <Exists>
+        <When expression="count(Data[@warning]) = 0">
+          <Variable name="summary" expression="Item/Item[Data[@name='managementObjectsProperty']='Description']/Data[@name='managementObjectsValue']"/>
+          <Insert select="Data[@name='managementObjectsRelativePath']">
+            <Attribute name="note" value="$(NoteServiceProperlyStopped0)"/>
+          </Insert>
+          <Delete select="Item"/>
+        </When>
+      </Exists>
+    </Step>
+  </Rule>
+
+  <Rule name="$(RuleNoteErrorCodes)" enabled="true">
+    <Step select="/Report/Section/Table/Item[Data[@name='configurationFilesOpenResult']]" sortType="all">
+      <Variable name="pathnotfoundmsg">$(LOC_PathNotFound)</Variable>
+      <Variable name="successmsg">$(LOC_Success)</Variable>
+      <Exists>
+       <When expression="Data[@name='configurationFilesOpenResult'] = '0x80070003'" >
+        <Delete select="Data[@name='configurationFilesOpenResult']"/>
+        <Insert select=".">
+          <Node axis="child">
+            <Data name="configurationFilesOpenResult">{pathnotfoundmsg}</Data>
+          </Node>
+        </Insert>
+        <Insert select="Data[@name='configurationFilesOpenResult']">
+          <Attribute name="note" value="$(NoteCode80070003)" />
+        </Insert>
+       </When>
+       <When expression="Data[@name='configurationFilesOpenResult'] = '0x0'">
+        <Delete select="Data[@name='configurationFilesOpenResult']"/>
+        <Insert select=".">
+          <Node axis="child">
+            <Data name="configurationFilesOpenResult">{successmsg}</Data>
+          </Node>
+        </Insert>
+        <Insert select="Data[@name='configurationFilesOpenResult']">
+          <Attribute name="note" value="$(NoteCode0)" />
+        </Insert>
+       </When>
+      </Exists>
+      <Otherwise/>
+    </Step>
+
+    <Step select="/Report/Section/Table/Item/Item[Data[@name='configurationFilesCopyResult']]" sortType="all">
+      <Variable name="successmsg">$(LOC_Success)</Variable>
+      <Exists>
+        <When expression="Data[@name='configurationFilesCopyResult'] = '0x0'">
+         <Delete select="Data[@name='configurationFilesCopyResult']" />
+         <Insert select=".">
+           <Node axis="child">
+             <Data name="configurationFilesCopyResult">{successmsg}</Data>
+           </Node>
+         </Insert>
+         <Insert select="Data[@name='configurationFilesCopyResult']">
+           <Attribute name="note" value="$(NoteCode0)" />
+         </Insert>
+        </When>
+        <Otherwise>
+        </Otherwise>
+      </Exists>
+    </Step>
+
+  </Rule>
+
+  <Rule name="$(RuleFileHyper)" enabled="true">
+    <Step select="/Report/Section/Table/Item/Item[Data[@name='configurationFilesTo']]" sortType="all">
+      <Variable name="fullpath" expression="Data[@name='configurationFilesTo']"/>
+      <Exists>
+        <When expression="contains('{fullpath}', 'CabFolder\\')">
+          <Variable name="basename" expression="substring-after('{fullpath}', 'CabFolder\\')"/>
+          <Delete select="Data[@name='configurationFilesTo']"/>
+          <Insert select="Data[@name='configurationFilesFrom']">
+            <Node axis="following-sibling">
+              <Data name="configurationFilesTo">{basename}</Data>
+            </Node>
+          </Insert>
+          <Insert select="Data[@name='configurationFilesTo']">
+            <Attribute name="url" value="{basename}"/>
+          </Insert>
+        </When>
+      </Exists>
+    </Step>
+  </Rule>
+</Group>
+
+</Rules>
+

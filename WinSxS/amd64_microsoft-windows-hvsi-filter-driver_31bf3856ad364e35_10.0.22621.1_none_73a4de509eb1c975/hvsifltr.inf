@@ -1,0 +1,101 @@
+;
+; Copyright (c) Microsoft Corporation. All rights reserved
+;
+; Abstract:
+;
+;   HvsiFltr vSwitch Extension
+;
+
+[Version]
+    Signature   = "$Windows NT$"
+    Class       = NetService
+    ClassGUID   = {4D36E974-E325-11CE-BFC1-08002BE10318}
+    Provider    = %Msft%
+
+
+[Manufacturer]
+    %Msft%=MSFT,NTx86,NTamd64,NTarm64
+
+[MSFT.NTx86]
+    %HvsiFltr_Desc%=Install, HvsiFltr
+
+[MSFT.NTamd64]
+    %HvsiFltr_Desc%=Install, HvsiFltr
+
+[MSFT.NTarm64]
+    %HvsiFltr_Desc%=Install, HvsiFltr
+
+;-------------------------------------------------------------------------
+; Installation Section
+;-------------------------------------------------------------------------
+
+[Install]
+    AddReg=Inst_Ndi
+    Characteristics=0x40000
+    NetCfgInstanceId="{EA509342-793C-4020-A3E7-9C0928454D89}"
+    Copyfiles = HvsiFltr.copyfiles.sys
+
+[SourceDisksNames]
+    1=%HvsiFltr_Desc%,"",,
+
+[SourceDisksFiles]
+    HvsiFltr.sys=1
+
+[DestinationDirs]
+    DefaultDestDir=12
+    HvsiFltr.copyfiles.sys=12
+
+[HvsiFltr.copyfiles.sys]
+    HvsiFltr.sys,,,2
+
+
+;-------------------------------------------------------------------------
+; Ndi installation support
+;-------------------------------------------------------------------------
+
+[Inst_Ndi]
+    HKR, Ndi,Service,,"HvsiFltr"                                ; name of filter
+    HKR, Ndi,FilterType,0x00010001,0x00000002                   ; 0x2 specifies modifying filter
+    HKR, Ndi,FilterRunType, 0x00010001, 0x00000002              ; 0x2 filter module is optional
+    HKR, Ndi,CoServices,0x00010000,"HvsiFltr"                   ; 
+    HKR, Ndi,FilterClass,,ms_switch_filter                      ; can filter packet traffic
+    HKR, Ndi\Interfaces,UpperRange,,"noupper"
+    HKR, Ndi\Interfaces,LowerRange,,"nolower"
+    HKR, Ndi\Interfaces, FilterMediaTypes,,"vmnetextension"     ; can bind only to vmswitch
+    HKR, Ndi,HelpText,,%HvsiFltr_HelpText%
+
+
+;-------------------------------------------------------------------------
+; Service installation support, common.EventLog here is to demonstrate how to
+; write an enent log 
+;-------------------------------------------------------------------------
+[Install.Services]
+    AddService=HvsiFltr,,HvsiFltr_Service_Inst;, common.EventLog
+
+[HvsiFltr_Service_Inst]
+    DisplayName     = %HvsiFltr_Desc%
+    ServiceType     = 1                                         ; SERVICE_KERNEL_DRIVER
+    StartType       = 1                                         ; SERVICE_SYSTEM_START
+    ErrorControl    = 1                                         ; SERVICE_ERROR_NORMAL
+    ServiceBinary   = %12%\HvsiFltr.sys
+    LoadOrderGroup  = NDIS
+    Description     = %HvsiFltr_Desc%
+    AddReg          = Common.Params.reg
+
+[Install.Remove.Services]
+    DelService=HvsiFltr,0x200
+
+[Strings]
+    Msft = "Microsoft"
+    HvsiFltr_Desc = "Microsoft Hvsi Filter Driver"
+    HvsiFltr_HelpText = "Microsoft Hvsi Filter Driver"
+
+
+[Common.Params.Reg]
+    HKR, FilterDriverParams\DriverParam,    ParamDesc,  , "Driverparam for HvsiFltr"
+    HKR, FilterDriverParams\DriverParam,    default,    , "1"
+    HKR, FilterDriverParams\DriverParam,    type,       , "int"
+    HKR, FilterAdapterParams\AdapterParam,  ParamDesc,  , "Adapterparam for HvsiFltr"
+    HKR, FilterAdapterParams\AdapterParam,  default,    , "1"
+    HKR, FilterAdapterParams\AdapterParam,  type,       , "int"
+

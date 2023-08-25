@@ -1,0 +1,91 @@
+﻿<?xml version='1.0' encoding='utf-8' standalone='yes'?>
+<assembly
+    xmlns="urn:schemas-microsoft-com:asm.v3"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    authors="preid"
+    buildFilter=""
+    company="MS"
+    copyright=""
+    creationTimeStamp="2003-11-11T22:56:35.2127782-08:00"
+    description="Accessibility Downlevel manifest"
+    displayName="AccessibilityCpl"
+    lastUpdateTimeStamp="2005-07-15T20:27:45.1603430-07:00"
+    manifestVersion="1.0"
+    owners="preid"
+    supportInformation=""
+    testers=""
+    >
+  <assemblyIdentity
+      buildFilter=""
+      buildType=""
+      language="neutral"
+      name="Microsoft-Windows-accessibilitycpl-DL"
+      processorArchitecture="*"
+      publicKeyToken="$(Build.WindowsPublicKeyToken)"
+      type=""
+      version="0.0.0.0"
+      versionScope="nonSxS"
+      />
+  <migration
+      xmlns=""
+      scope="Upgrade,MigWiz,USMT"
+      >
+    <migXml>
+      <rules context="User">
+        <detects>
+          <detect>
+            <condition>MigXmlHelper.IsOSEarlierThan("NT","6.0.0.0")</condition>
+          </detect>
+        </detects>
+        <!-- gather the registry keys from this registry path and have it migrated to new longhorn installation -->
+        <include>
+          <objectSet>
+            <!-- Accessibility settings -->
+            <pattern type="Registry">HKCU\Control Panel\Accessibility [Sound on Activation]</pattern>
+            <pattern type="Registry">HKCU\Control Panel\Accessibility [Warning Sounds]</pattern>
+            <pattern type="Registry">HKCU\Control Panel\Accessibility\StickyKeys\* [*]</pattern>
+            <pattern type="Registry">HKCU\Control Panel\Accessibility\ToggleKeys\* [*]</pattern>
+            <pattern type="Registry">HKCU\Control Panel\Accessibility\MouseKeys\* [*]</pattern>
+            <pattern type="Registry">HKCU\Control Panel\Accessibility\Keyboard Preference\* [*]</pattern>
+            <pattern type="Registry">HKCU\Control Panel\Accessibility\Keyboard Response\* [*]</pattern>
+            <pattern type="Registry">HKCU\Control Panel\Accessibility\HighContrast\* [*]</pattern>
+            <pattern type="Registry">HKCU\Control Panel\Accessibility\SoundSentry\* [*]</pattern>
+            <pattern type="Registry">HKCU\Control Panel\Accessibility\ShowSounds\* [*]</pattern>
+            <pattern type="Registry">HKCU\Control Panel\Accessibility\Blind Access\* [*]</pattern>
+            <pattern type="Registry">HKCU\Control Panel\Accessibility\TimeOut\* [*]</pattern>
+            <!-- Display settings -->
+            <pattern type="Registry">HKCU\Control Panel\Desktop [DragHeight]</pattern>
+            <pattern type="Registry">HKCU\Control Panel\Desktop [DragWidth]</pattern>
+            <pattern type="Registry">HKCU\Control Panel\Desktop [CaretWidth]</pattern>
+            <pattern type="Registry">HKCU\Control Panel\Desktop [CursorBlinkRate]</pattern>
+            <!-- Cursors settings -->
+            <pattern type="Registry">HKCU\Control Panel\Cursors\* [*]</pattern>
+            <!-- Mouse settings -->
+            <pattern type="Registry">HKCU\Control Panel\Mouse [DoubleClickHeight]</pattern>
+            <pattern type="Registry">HKCU\Control Panel\Mouse [DoubleClickWidth]</pattern>
+            <pattern type="Registry">HKCU\Control Panel\Mouse [MouseSensitivity]</pattern>
+            <pattern type="Registry">HKCU\Control Panel\Mouse [MouseSpeed]</pattern>
+            <pattern type="Registry">HKCU\Control Panel\Mouse [SnapToDefaultButton]</pattern>
+            <pattern type="Registry">HKCU\Control Panel\Mouse [SwapMouseButtons]</pattern>
+            <pattern type="Registry">HKCU\Control Panel\Mouse [MouseThreshold1]</pattern>
+            <pattern type="Registry">HKCU\Control Panel\Mouse [MouseThreshold2]</pattern>
+            <!-- Narrator settings -->
+            <pattern type="Registry">HKCU\Software\Microsoft\Narrator\* [*]</pattern>
+            <!-- Magnifier settings -->
+            <pattern type="Registry">HKCU\Software\Microsoft\Magnify\* [*]</pattern>
+            <!-- OSK settings -->
+            <pattern type="Registry">HKCU\Software\Microsoft\Osk\* [*]</pattern>
+          </objectSet>
+        </include>
+        <exclude>
+            <objectSet>
+                <!-- FollowInsertion is renamed to FollowInsertionPoint in 19H1 -->
+                <pattern type="Registry">HKCU\Software\Microsoft\Narrator [FollowInsertion]</pattern>
+            </objectSet>
+        </exclude>
+      </rules>
+    </migXml>
+    <migrationDisplayID>Accessibility\Accessibility_Settings</migrationDisplayID>
+  </migration>
+</assembly>

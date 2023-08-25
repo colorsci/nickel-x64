@@ -1,0 +1,85 @@
+;-------------------------------------------------------------------------
+; L2BRIDGE.INF -- Network driver for bridging and nat'ing ipv6 packets from a virtual network
+;
+; Copyright (c) Microsoft Corporation.  All rights reserved.
+;-------------------------------------------------------------------------
+[version]
+CatalogFile     = l2bridge.cat
+Signature  	= "$Windows NT$"
+Class      	= NetService
+ClassGUID  	= {4D36E974-E325-11CE-BFC1-08002BE10318}
+Provider   	= %Msft%
+DriverVer  	= 01/19/2016,1.0
+
+[Manufacturer]
+%Msft%=MSFT,NTx86,NTamd64,NTarm
+
+[MSFT.NTx86]
+%l2bridge_Desc%=Install, MS_l2bridge
+
+[MSFT.NTamd64]
+%l2bridge_Desc%=Install, MS_l2bridge
+
+[MSFT.NTarm]
+%l2bridge_Desc%=Install, MS_l2bridge
+
+;-------------------------------------------------------------------------
+; Installation Section
+;-------------------------------------------------------------------------
+[Install]
+AddReg=Inst_Ndi
+Characteristics=0x40000
+NetCfgInstanceId="{F15DC512-1E94-4CDB-9B42-27A953C64E67}"
+Copyfiles = l2bridge.copyfiles.sys
+
+[SourceDisksNames]
+1=%l2bridge_Desc%,"",,
+
+[SourceDisksFiles]
+l2bridge.sys=1
+
+[DestinationDirs]
+DefaultDestDir=12
+l2bridge.copyfiles.sys=12
+
+[l2bridge.copyfiles.sys]
+l2bridge.sys,,,2
+
+
+;-------------------------------------------------------------------------
+; Ndi installation support
+;-------------------------------------------------------------------------
+[Inst_Ndi]
+HKR, Ndi,Service,,"l2bridge"
+HKR, Ndi,CoServices,0x00010000,"l2bridge"
+HKR, Ndi,HelpText,,%l2bridge_HelpText%
+HKR, Ndi,FilterClass,, ms_implatform
+HKR, Ndi,FilterType,0x00010001,0x00000002
+HKR, Ndi,FilterRunType, 0x00010001, 0x00000002   ;OPTIONAL filter 
+HKR, Ndi\Interfaces,UpperRange,,"noupper"
+HKR, Ndi\Interfaces,LowerRange,,"nolower"
+HKR, Ndi\Interfaces, FilterMediaTypes,,"ethernet,ppip"
+
+;-------------------------------------------------------------------------
+; Service installation support
+;-------------------------------------------------------------------------
+[Install.Services]
+AddService=l2bridge,,l2bridge_Service_Inst
+
+[l2bridge_Service_Inst]
+DisplayName     = %l2bridge_Desc%
+ServiceType     = 1 ;SERVICE_KERNEL_DRIVER
+StartType       = 3 ;SERVICE_DEMAND_START
+ErrorControl    = 1 ;SERVICE_ERROR_NORMAL
+ServiceBinary   = %12%\l2bridge.sys
+LoadOrderGroup  = NDIS
+Description     = %l2bridge_Desc%
+
+[Install.Remove.Services]
+DelService=l2bridge,0x200
+
+
+[Strings]
+Msft = "Microsoft"
+l2bridge_Desc = "Network driver for bridging and translating IPv6 packets from a virtual network"
+l2bridge_HelpText = "Network driver for bridging and translating IPv6 packets from a virtual network"

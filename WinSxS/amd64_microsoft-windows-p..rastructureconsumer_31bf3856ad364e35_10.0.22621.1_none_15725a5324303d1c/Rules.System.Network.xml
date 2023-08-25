@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?Copyright (c) Microsoft Corporation. All rights reserved.?>
+<Rules>
+  <Group name="$(GroupNetwork)">
+    <Rule name="$(RuleDisplay)" enabled="true">
+      <Step select="/Report/Section/Table[@name='networkinterface']">
+        <Exists>
+          <Otherwise>
+            <Delete select="Item[Data[@name='instance']='RAS Async Adapter']"/>
+            <Delete select="Item[Data[@name='instance' and starts-with(.,'WAN Miniport')]]"/>
+            <Delete select="Item[Data[@name='instance' and starts-with(.,'isatap')]]"/>
+            <Delete select="Item[Data[@name='instance' and contains(.,'QoS Packet Scheduler')]]"/>
+          </Otherwise>
+        </Exists>
+      </Step>
+      <Step select="/Report/Section/Table[@name='configNic']">
+        <Exists>
+          <Otherwise>
+            <Delete select="Item[Data[@name='nicName']='RAS Async Adapter']"/>
+            <Delete select="Item[Data[@name='nicName' and starts-with(.,'WAN Miniport')]]"/>
+            <Delete select="Item[Data[@name='nicName' and starts-with(.,'isatap')]]"/>
+            <Delete select="Item[Data[@name='nicName' and contains(.,'QoS Packet Scheduler')]]"/>
+          </Otherwise>
+        </Exists>
+      </Step>
+    </Rule>
+    <Rule name="$(RuleHideCtrs)" enabled="true">
+      <Step select="/Report/Section/Table/Item[Data[@name='counter']='Connections Active']" sortType="all">
+        <Exists>
+          <Otherwise>
+            <Insert select="Data[@name='counter']">
+              <Attribute name="note" value="$(AccSinceBoot)"/>
+            </Insert>
+          </Otherwise>
+        </Exists>
+      </Step>
+      <Step select="/Report/Section/Table/Item[Data[@name='counter']='Connection Failures']" sortType="all">
+        <Exists>
+          <Otherwise>
+            <Insert select="Data[@name='counter']">
+              <Attribute name="note" value="$(AccSinceBoot)"/>
+            </Insert>
+          </Otherwise>
+        </Exists>
+      </Step>
+      <Step select="/Report/Section/Table/Item[Data[@name='counter']='Connections Established']" sortType="all">
+        <Exists>
+          <Otherwise>
+            <Insert select="Data[@name='counter']">
+              <Attribute name="note" value="$(PassiveConnection)"/>
+            </Insert>
+          </Otherwise>
+        </Exists>
+      </Step>
+      <Step select="/Report/Section/Table/Item[Data[@name='counter']='Connections Passive']" sortType="all">
+        <Exists>
+          <Otherwise>
+            <Insert select="Data[@name='counter']">
+              <Attribute name="note" value="$(AccSinceBoot)"/>
+            </Insert>
+          </Otherwise>
+        </Exists>
+      </Step>
+      <Step select="/Report/Section/Table/Item[Data[@name='counter']='Connections Reset']" sortType="all">
+        <Exists>
+          <Otherwise>
+            <Insert select="Data[@name='counter']">
+              <Attribute name="note" value="$(AccSinceBoot)"/>
+            </Insert>
+          </Otherwise>
+        </Exists>
+      </Step>
+    </Rule>
+  </Group>
+  <StringTable>
+    <String ID="PassiveConnection">Includes active and passive connections</String>
+    <String ID="AccSinceBoot">Accumulated Since Boot</String>
+    <String ID="GroupNetwork">Network</String>
+    <String ID="RuleDisplay">Network Display Level</String>
+    <String ID="RuleHideCtrs">Hide Comments Counters</String>
+  </StringTable>
+</Rules>

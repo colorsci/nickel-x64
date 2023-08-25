@@ -1,0 +1,32 @@
+﻿<?xml version='1.0' encoding='utf-8' standalone='yes'?>
+<assembly>
+  <assemblyIdentity
+      language="*"
+      name="Microsoft-Windows-Security-NTLM-DL"
+      processorArchitecture="*"
+      version="0.0.0.0"
+      />
+  <migration>
+    <migXml xmlns="">
+      <!-- Check as this is only valid for down-level OS < than Windows Vista ? -->
+      <detects>
+        <detect>
+          <condition>MigXmlHelper.IsOSEarlierThan("NT", "6.0.0.0")</condition>
+        </detect>
+      </detects>
+      <rules context="System">
+        <include>
+          <objectSet>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Control\Lsa\Msv1_0\* [*]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Control\Lsa [UseMachineId]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Control\Lsa [DisallowMsvChapv2]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Control\Lsa [LimitBlankPasswordUse]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Control\Lsa [DisableLoopbackCheck]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Control\Lsa [DebugBreakIfDebugged]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Control\Lsa [OldPasswordAllowedPeriod]</pattern>
+          </objectSet>
+        </include>
+      </rules>
+    </migXml>
+  </migration>
+</assembly>

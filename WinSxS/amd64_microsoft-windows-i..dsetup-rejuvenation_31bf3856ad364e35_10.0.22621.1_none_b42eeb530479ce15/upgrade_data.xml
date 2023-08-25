@@ -1,0 +1,747 @@
+<migration urlid="http://www.microsoft.com/migration/1.0/migxmlext/DataUpgrade">
+
+  <component type="Documents">
+    <displayName>Data Upgrade</displayName>
+    <role role="Data">
+
+      <environment context="User">
+        <variable name="FOLDERID_SkyDrive_Win8">
+          <script>MigXmlHelper.GetStringContent("Registry","HKCU\Software\Microsoft\SkyDrive[UserFolder]")</script>
+        </variable>
+      </environment>
+
+
+      <rules context="User">
+        <conditions>
+          <condition>MigXmlHelper.IsMigrationScope("Data")</condition>
+        </conditions>
+        <include>
+          <objectSet>
+            @*:         from dpapi_keys.man
+            <pattern type="File">%CSIDL_APPDATA%\Microsoft\Protect\*[*]</pattern>
+            @*:         from CAPI2_certs.man
+            <pattern type="File">%CSIDL_APPDATA%\Microsoft\SystemCertificates\My\Certificates[*]</pattern>
+            <pattern type="File">%CSIDL_APPDATA%\Microsoft\SystemCertificates\Request\Certificates[*]</pattern>
+            <pattern type="Registry">HKCU\SOFTWARE\Microsoft\SystemCertificates\Root\Certificates\*[*]</pattern>
+            <pattern type="Registry">HKCU\SOFTWARE\Microsoft\SystemCertificates\TrustedPublisher\Certificates\*[*]</pattern>
+            <pattern type="Registry">HKCU\SOFTWARE\Microsoft\SystemCertificates\TrustedPeople\Certificates\*[*]</pattern>
+            <pattern type="Registry">HKCU\SOFTWARE\Microsoft\SystemCertificates\Disallowed\Certificates\*[*]</pattern>
+            <pattern type="Registry">HKCU\SOFTWARE\Microsoft\SystemCertificates\CA\Certificates\*[*]</pattern>
+            @*:         from Crypto-keys.man
+            <pattern type="File">%CSIDL_APPDATA%\Microsoft\Crypto\RSA\*[*]</pattern>
+            <pattern type="File">%CSIDL_APPDATA%\Microsoft\Crypto\DSS\*[*]</pattern>
+            <pattern type="File">%CSIDL_APPDATA%\Microsoft\Crypto\Keys[*]</pattern>
+          </objectSet>
+          <objectSet>
+            <pattern type="Registry">HKCU\Keyboard Layout\*[*]</pattern>
+          </objectSet>
+        </include>
+        <merge script="MigXmlHelper.SourcePriority()">
+          <objectSet>
+            <pattern type="File">%CSIDL_APPDATA%\Microsoft\SystemCertificates\My\Certificates[*]</pattern>
+            <pattern type="File">%CSIDL_APPDATA%\Microsoft\SystemCertificates\Request\Certificates[*]</pattern>
+            <pattern type="Registry">HKCU\SOFTWARE\Microsoft\SystemCertificates\Root\Certificates\*[*]</pattern>
+            <pattern type="Registry">HKCU\SOFTWARE\Microsoft\SystemCertificates\TrustedPublisher\Certificates\*[*]</pattern>
+            <pattern type="Registry">HKCU\SOFTWARE\Microsoft\SystemCertificates\TrustedPeople\Certificates\*[*]</pattern>
+            <pattern type="Registry">HKCU\SOFTWARE\Microsoft\SystemCertificates\Disallowed\Certificates\*[*]</pattern>
+            <pattern type="Registry">HKCU\SOFTWARE\Microsoft\SystemCertificates\CA\Certificates\*[*]</pattern>
+            <pattern type="File">%CSIDL_APPDATA%\Microsoft\Crypto\RSA\*[*]</pattern>
+            <pattern type="File">%CSIDL_APPDATA%\Microsoft\Crypto\DSS\*[*]</pattern>
+            <pattern type="File">%CSIDL_APPDATA%\Microsoft\Crypto\Keys[*]</pattern>
+          </objectSet>
+        </merge>
+        <merge script="MigXmlHelper.DestinationPriority()">
+          <objectSet>
+            <pattern type="File">%CSIDL_APPDATA%\Microsoft\Protect\*[*]</pattern>
+          </objectSet>
+        </merge>
+      </rules>
+      <rules context="System">
+        <conditions operation="OR">
+          <condition>MigXmlHelper.IsMigrationScope("Data")</condition>
+          <condition>MigXmlHelper.IsMigrationScope("MigWiz")</condition>
+        </conditions>
+        <include>
+          <objectSet>
+            <pattern type="Registry">HKU\.DEFAULT\Keyboard Layout\*[*]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\i8042prt\Parameters\*[*]</pattern>
+          </objectSet>
+        </include>
+      </rules>
+      <rules context="System">
+        <conditions>
+          <condition>MigXmlHelper.IsMigrationScope("Data")</condition>
+        </conditions>
+        <include>
+          <objectSet>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\SystemCertificates\Request\Certificates\*[*]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\SystemCertificates\Root\Certificates\*[*]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\SystemCertificates\TrustedPublisher\Certificates\*[*]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\SystemCertificates\TrustedPeople\Certificates\*[*]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\SystemCertificates\Disallowed\Certificates\*[*]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\SystemCertificates\CA\Certificates\*[*]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\SystemCertificates\ACRS\CTLs\*[*]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\EnterpriseCertificates\*[*]</pattern>
+          </objectSet>
+        </include>
+        <exclude>
+          <objectSet>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\SystemCertificates\Root\Certificates\2BD63D28D7BCD0E251195AEB519243C13142EBC3\*[*]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\SystemCertificates\Root\Certificates\8A334AA8052DD244A647306A76B8178FA215F344\*[*]</pattern>
+          </objectSet>
+        </exclude>
+        <merge script="MigXmlHelper.SourcePriority()">
+          <objectSet>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\SystemCertificates\Root\Certificates\*[*]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\SystemCertificates\Request\Certificates\*[*]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\SystemCertificates\TrustedPublisher\Certificates\*[*]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\SystemCertificates\TrustedPeople\Certificates\*[*]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\SystemCertificates\Disallowed\Certificates\*[*]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\SystemCertificates\CA\Certificates\*[*]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\SystemCertificates\ACRS\CTLs\*[*]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\EnterpriseCertificates\*[*]</pattern>
+          </objectSet>
+        </merge>
+      </rules>
+
+      <rules context="System">
+        <conditions>
+          <condition negation="Yes">MigXmlHelper.IsMigrationScope("Upgrade")</condition>
+        </conditions>
+        <include>
+          <objectSet>
+            <pattern type="File">%windir%\system32\recovery [reagent.xml]</pattern>
+          </objectSet>
+        </include>
+        <merge script="MigXmlHelper.FindFilePlaceByPattern(&apos;&lt;F&gt;_Merged.&lt;E&gt;&apos;)">
+          <objectSet>
+            <pattern type="File">%windir%\system32\recovery [reagent.xml]</pattern>
+          </objectSet>
+        </merge>
+      </rules>
+
+      <rules context="System">
+        <conditions operation="AND">
+          <condition>MigXmlHelper.IsOSLaterThan("NT","6.3.0.0")</condition>
+        </conditions>
+        <include filter="MigXmlHelper.RestoreOnOSLaterThan('NT','6.3.0.0')">
+          <objectSet>
+            <pattern type="Registry">HKLM\Software\Policies\Microsoft\SkyDrive\*[*]</pattern>
+          </objectSet>
+        </include>
+        <merge script="MigXmlHelper.SourcePriority()">
+          <objectSet>
+            <pattern type="Registry">HKLM\Software\Policies\Microsoft\SkyDrive\*[*]</pattern>
+          </objectSet>
+        </merge>
+      </rules>
+      <rules context="User">
+        <rules>
+          <conditions operation="AND">
+            <condition>MigXmlHelper.IsOSLaterThan("NT","6.3.0.0")</condition>
+          </conditions>
+          <include>
+            <objectSet>
+              <condition>MigXmlHelper.IsInWindowsNamespace("%FOLDERID_SkyDrive%")</condition>
+              <pattern type="File">%FOLDERID_SkyDrive%\* [*]</pattern>
+            </objectSet>
+            <objectSet>
+              <condition>MigXmlHelper.IsInWindowsNamespace("%FOLDERID_SkyDriveDocuments%")</condition>
+              <pattern type="File">%FOLDERID_SkyDriveDocuments%\* [*]</pattern>
+            </objectSet>
+            <objectSet>
+              <condition>MigXmlHelper.IsInWindowsNamespace("%FOLDERID_SkyDrivePictures%")</condition>
+              <pattern type="File">%FOLDERID_SkyDrivePictures%\* [*]</pattern>
+            </objectSet>
+            <objectSet>
+              <condition>MigXmlHelper.IsInWindowsNamespace("%FOLDERID_SkyDriveCameraRoll%")</condition>
+              <pattern type="File">%FOLDERID_SkyDriveCameraRoll%\* [*]</pattern>
+            </objectSet>
+          </include>
+          <merge script="MigXmlHelper.SourcePriorityFolderSpecial()">
+            <objectSet>
+              <pattern type="File">%FOLDERID_SkyDrive%</pattern>
+              <pattern type="File">%FOLDERID_SkyDriveDocuments%</pattern>
+              <pattern type="File">%FOLDERID_SkyDrivePictures%</pattern>
+              <pattern type="File">%FOLDERID_SkyDriveCameraRoll%</pattern>
+            </objectSet>
+          </merge>
+          <merge script="MigXmlHelper.DestinationPriority()">
+            <objectSet>
+              <pattern type="File">%FOLDERID_SkyDrive%\*</pattern>
+              <pattern type="File">%FOLDERID_SkyDriveDocuments%\*</pattern>
+              <pattern type="File">%FOLDERID_SkyDrivePictures%\*</pattern>
+              <pattern type="File">%FOLDERID_SkyDriveCameraRoll%\*</pattern>
+            </objectSet>
+          </merge>
+          <include filter="MigXmlHelper.RestoreOnOSLaterThan('NT','6.3.0.0')">
+            <objectSet>
+              <pattern type="Registry">HKCU\Software\Microsoft\Windows\Currentversion\SkyDrive[LegacySkyDriveHandled]</pattern>
+              <pattern type="Registry">HKCU\Software\Microsoft\Windows\Currentversion\SkyDrive\FileSyncPartner\*[*]</pattern>
+              <pattern type="Registry">HKCU\Software\Microsoft\Windows\Currentversion\SkyDrive\CameraRoll\*[*]</pattern>
+              <pattern type="Registry">HKCU\Software\Microsoft\Windows\Currentversion\SkyDriveOptIn [OptInChoice]</pattern>
+            </objectSet>
+          </include>
+          <merge script="MigXmlHelper.SourcePriority()">
+            <objectSet>
+              <pattern type="Registry">HKCU\Software\Microsoft\Windows\Currentversion\SkyDrive[LegacySkyDriveHandled]</pattern>
+              <pattern type="Registry">HKCU\Software\Microsoft\Windows\Currentversion\SkyDrive\FileSyncPartner\*[*]</pattern>
+              <pattern type="Registry">HKCU\Software\Microsoft\Windows\Currentversion\SkyDrive\CameraRoll\*[*]</pattern>
+              <pattern type="Registry">HKCU\Software\Microsoft\Windows\Currentversion\SkyDriveOptIn [OptInChoice]</pattern>
+            </objectSet>
+          </merge>
+          <include filter="MigXmlHelper.RestoreOnOSLaterThan('NT','6.3.0.0')">
+            <objectSet>
+              <pattern type="File">%CSIDL_LOCAL_APPDATA%\Microsoft\Windows\SkyDrive\settings[*.ini]</pattern>
+              <pattern type="File">%CSIDL_LOCAL_APPDATA%\Microsoft\Windows\OneDrive\settings[*.ini]</pattern>
+              <pattern type="File">%CSIDL_LOCAL_APPDATA%\Microsoft\Windows\SkyDrive\settings[*.dat]</pattern>
+              <pattern type="File">%CSIDL_LOCAL_APPDATA%\Microsoft\Windows\OneDrive\settings[*.dat]</pattern>
+              <pattern type="File">%CSIDL_LOCAL_APPDATA%\Microsoft\Windows\SkyDrive\settings[*.log]</pattern>
+              <pattern type="File">%CSIDL_LOCAL_APPDATA%\Microsoft\Windows\OneDrive\settings[*.log]</pattern>
+            </objectSet>
+          </include>
+          <exclude>
+            <objectSet>
+              <pattern type="File">%CSIDL_LOCAL_APPDATA%\Microsoft\Windows\SkyDrive\settings[ClientPolicy.ini]</pattern>
+              <pattern type="File">%CSIDL_LOCAL_APPDATA%\Microsoft\Windows\OneDrive\settings[ClientPolicy.ini]</pattern>
+            </objectSet>
+          </exclude>
+          <merge script="MigXmlHelper.SourcePriority()">
+            <objectSet>
+              <pattern type="File">%CSIDL_LOCAL_APPDATA%\Microsoft\Windows\SkyDrive\settings[*.ini]</pattern>
+              <pattern type="File">%CSIDL_LOCAL_APPDATA%\Microsoft\Windows\OneDrive\settings[*.ini]</pattern>
+              <pattern type="File">%CSIDL_LOCAL_APPDATA%\Microsoft\Windows\SkyDrive\settings[*.dat]</pattern>
+              <pattern type="File">%CSIDL_LOCAL_APPDATA%\Microsoft\Windows\OneDrive\settings[*.dat]</pattern>
+              <pattern type="File">%CSIDL_LOCAL_APPDATA%\Microsoft\Windows\SkyDrive\settings[*.log]</pattern>
+              <pattern type="File">%CSIDL_LOCAL_APPDATA%\Microsoft\Windows\OneDrive\settings[*.log]</pattern>
+            </objectSet>
+          </merge>
+        </rules>
+        <rules>
+          <conditions operation="AND">
+            <condition negation="Yes">MigXmlHelper.IsOSLaterThan("NT","6.3.0.0")</condition>
+            <condition>MigXmlHelper.DoesObjectExist("Registry","HKCU\Software\Microsoft\SkyDrive[UserFolder]")</condition>
+          </conditions>
+          <include>
+            <objectSet>
+              <condition>MigXmlHelper.IsInWindowsNamespace("%FOLDERID_SkyDrive_Win8%")</condition>
+              <pattern type="File">%FOLDERID_SkyDrive_Win8%\* [*]</pattern>
+            </objectSet>
+          </include>
+          <merge script="MigXmlHelper.SourcePriorityFolderSpecial()">
+            <objectSet>
+              <pattern type="File">%FOLDERID_SkyDrive_Win8%</pattern>
+            </objectSet>
+          </merge>
+          <merge script="MigXmlHelper.DestinationPriority()">
+            <objectSet>
+              <pattern type="File">%FOLDERID_SkyDrive_Win8%\*</pattern>
+            </objectSet>
+          </merge>
+          <include>
+            <objectSet>
+              <pattern type="File">%CSIDL_LOCAL_APPDATA%\Microsoft\SkyDrive\settings[*.ini]</pattern>
+              <pattern type="File">%CSIDL_LOCAL_APPDATA%\Microsoft\OneDrive\settings[*.ini]</pattern>
+              <pattern type="File">%CSIDL_LOCAL_APPDATA%\Microsoft\SkyDrive\settings[*.dat]</pattern>
+              <pattern type="File">%CSIDL_LOCAL_APPDATA%\Microsoft\OneDrive\settings[*.dat]</pattern>
+              <pattern type="File">%CSIDL_LOCAL_APPDATA%\Microsoft\SkyDrive\settings[*.log]</pattern>
+              <pattern type="File">%CSIDL_LOCAL_APPDATA%\Microsoft\OneDrive\settings[*.log]</pattern>
+            </objectSet>
+          </include>
+          <exclude>
+            <objectSet>
+              <pattern type="File">%CSIDL_LOCAL_APPDATA%\Microsoft\SkyDrive\settings[ClientPolicy.ini]</pattern>
+              <pattern type="File">%CSIDL_LOCAL_APPDATA%\Microsoft\OneDrive\settings[ClientPolicy.ini]</pattern>
+            </objectSet>
+          </exclude>
+          <merge script="MigXmlHelper.SourcePriority()">
+            <objectSet>
+              <pattern type="File">%CSIDL_LOCAL_APPDATA%\Microsoft\SkyDrive\settings[*.ini]</pattern>
+              <pattern type="File">%CSIDL_LOCAL_APPDATA%\Microsoft\OneDrive\settings[*.ini]</pattern>
+              <pattern type="File">%CSIDL_LOCAL_APPDATA%\Microsoft\SkyDrive\settings[*.dat]</pattern>
+              <pattern type="File">%CSIDL_LOCAL_APPDATA%\Microsoft\OneDrive\settings[*.dat]</pattern>
+              <pattern type="File">%CSIDL_LOCAL_APPDATA%\Microsoft\SkyDrive\settings[*.log]</pattern>
+              <pattern type="File">%CSIDL_LOCAL_APPDATA%\Microsoft\OneDrive\settings[*.log]</pattern>
+            </objectSet>
+          </merge>
+        </rules>
+      </rules>
+
+      <rules context="User">
+        <include>
+
+          <objectSet>
+            <pattern type="File">%UserProfile%\* [*]</pattern>
+          </objectSet>
+        </include>
+
+        <include>
+          <objectSet>
+            <condition>MigXmlHelper.IsInWindowsNamespace("%CSIDL_PROGRAMS%")</condition>
+            <pattern type="File">%CSIDL_PROGRAMS%\* [*]</pattern>
+          </objectSet>
+          <objectSet>
+            <condition>MigXmlHelper.IsInWindowsNamespace("%CSIDL_QUICKLAUNCH%")</condition>
+            <pattern type="File">%CSIDL_QUICKLAUNCH%\* [*]</pattern>
+          </objectSet>
+          <objectSet>
+            <condition>MigXmlHelper.IsInWindowsNamespace("%CSIDL_RECENT%")</condition>
+            <pattern type="File">%CSIDL_RECENT%\* [*]</pattern>
+          </objectSet>
+          <objectSet>
+            <condition>MigXmlHelper.IsInWindowsNamespace("%CSIDL_SENDTO%")</condition>
+            <pattern type="File">%CSIDL_SENDTO%\* [*]</pattern>
+          </objectSet>
+          <objectSet>
+            <condition>MigXmlHelper.IsInWindowsNamespace("%CSIDL_STARTMENU%")</condition>
+            <pattern type="File">%CSIDL_STARTMENU%\* [*]</pattern>
+          </objectSet>
+          <objectSet>
+            <condition>MigXmlHelper.IsInWindowsNamespace("%CSIDL_STARTUP%")</condition>
+            <pattern type="File">%CSIDL_STARTUP%\* [*]</pattern>
+          </objectSet>
+          <objectSet>
+            <condition>MigXmlHelper.IsInWindowsNamespace("%FOLDERID_Links%")</condition>
+            <pattern type="File">%FOLDERID_Links%\* [*]</pattern>
+          </objectSet>
+        </include>
+
+        <exclude>
+          <objectSet>
+            <pattern type="File">%CSIDL_QUICKLAUNCH%\User Pinned\TaskBar\* [*.LNK]</pattern>
+          </objectSet>
+        </exclude>
+
+        <exclude filter="MigXmlHelper.IgnoreIrrelevantLinks()">
+          <objectSet>
+            <pattern type="File">%CSIDL_PROGRAMS%\* [*]</pattern>
+            <pattern type="File">%CSIDL_QUICKLAUNCH%\* [*]</pattern>
+            <pattern type="File">%CSIDL_RECENT%\* [*]</pattern>
+            <pattern type="File">%CSIDL_SENDTO%\* [*]</pattern>
+            <pattern type="File">%CSIDL_STARTMENU%\* [*]</pattern>
+            <pattern type="File">%CSIDL_STARTUP%\* [*]</pattern>
+            <pattern type="File">%FOLDERID_Links%\* [*]</pattern>
+          </objectSet>
+        </exclude>
+        <exclude filter="MigXmlHelper.ExcludeSystemShortcuts('*\accwiz.exe;*\audioconverter.exe;*\bckgzm.exe;*\calc.exe;*\cdlm.exe;*\charmap.exe;*\chkrzm.exe;*\cleanmgr.exe;*\explorer.exe;*\freecell.exe;*\fxsclnt.exe;*\fxscover.exe;*\fxssend.exe;*\hh.exe;*\hrtzzm.exe;*\hypertrm.exe;*\iexplore.exe;*\inetcfg.exe;*\magnify.exe;*\migwiz.exe;*\mmc.exe;*\mobsync.exe;*\moviemk.exe;*\mshearts.exe;*\msimn.exe;*\msnsusii.exe;*\msoobe.exe;*\mspaint.exe;*\mstsc.exe;*\narrator.exe;*\notepad.exe;*\ntbackup.exe;*\osk.exe;*\partymode.exe;*\pinball.exe;*\powershell.exe;*\rcimlby.exe;*\rstrui.exe;*\rvsezm.exe;*\shvlzm.exe;*\sndrec32.exe;*\sndvol32.exe;*\sol.exe;*\spider.exe;*\tourstart.exe;*\utilman.exe;*\winmine.exe;*\wmplayer.exe;*\wupdmgr.exe;*\dvdmaker.exe;*\netproj.exe;*\chess.exe;*\mahjong.exe;*\purbleplace.exe;*\hearts.exe;*\solitaire.exe;*\spidersolitaire.exe;*\minesweeper.exe;*\wordpad.exe;*\ehshell.exe;*\control.exe;*\OneDrive.exe;*\cmd.exe;*\MSASCui.exe')">
+          <objectSet>
+            <pattern type="File">%CSIDL_PROGRAMS%\* [*]</pattern>
+            <pattern type="File">%CSIDL_STARTMENU%\* [*]</pattern>
+          </objectSet>
+        </exclude>
+        <exclude filter="MigXmlHelper.ExcludeSystemShortcuts('*\SkyDrive.exe;*\SkyDriveSetup.exe','FALSE')">
+          <objectSet>
+            <pattern type="File">%CSIDL_PROGRAMS%\* [*]</pattern>
+            <pattern type="File">%CSIDL_QUICKLAUNCH%\* [*]</pattern>
+            <pattern type="File">%CSIDL_RECENT%\* [*]</pattern>
+            <pattern type="File">%CSIDL_SENDTO%\* [*]</pattern>
+            <pattern type="File">%CSIDL_STARTMENU%\* [*]</pattern>
+            <pattern type="File">%CSIDL_STARTUP%\* [*]</pattern>
+            <pattern type="File">%FOLDERID_Links%\* [*]</pattern>
+          </objectSet>
+        </exclude>
+        <merge script="MigXmlHelper.SourcePriorityFolderSpecial()">
+          <objectSet>
+            <pattern type="File">%CSIDL_PROGRAMS%</pattern>
+            <pattern type="File">%CSIDL_QUICKLAUNCH%</pattern>
+            <pattern type="File">%CSIDL_RECENT%</pattern>
+            <pattern type="File">%CSIDL_SENDTO%</pattern>
+            <pattern type="File">%CSIDL_STARTMENU%</pattern>
+            <pattern type="File">%CSIDL_STARTUP%</pattern>
+            <pattern type="File">%FOLDERID_Links%</pattern>
+          </objectSet>
+        </merge>
+        <merge script="MigXmlHelper.DestinationPriority()">
+          <objectSet>
+            <pattern type="File">%CSIDL_PROGRAMS%\*</pattern>
+            <pattern type="File">%CSIDL_QUICKLAUNCH%\*</pattern>
+            <pattern type="File">%CSIDL_RECENT%\*</pattern>
+            <pattern type="File">%CSIDL_SENDTO%\*</pattern>
+            <pattern type="File">%CSIDL_STARTMENU%\*</pattern>
+            <pattern type="File">%CSIDL_STARTUP%\*</pattern>
+            <pattern type="File">%FOLDERID_Links%\*</pattern>
+          </objectSet>
+        </merge>
+        <merge script="MigXmlHelper.DestinationPriority()">
+          <objectSet>
+            <pattern type="File">%CSIDL_PROGRAMS%\* [desktop.ini]</pattern>
+            <pattern type="File">%CSIDL_QUICKLAUNCH%\* [desktop.ini]</pattern>
+            <pattern type="File">%CSIDL_RECENT%\* [desktop.ini]</pattern>
+            <pattern type="File">%CSIDL_SENDTO%\* [desktop.ini]</pattern>
+            <pattern type="File">%CSIDL_STARTMENU%\* [desktop.ini]</pattern>
+            <pattern type="File">%CSIDL_STARTUP%\* [desktop.ini]</pattern>
+            <pattern type="File">%FOLDERID_Links%\* [desktop.ini]</pattern>
+          </objectSet>
+        </merge>
+
+        <include>
+          <objectSet>
+            <condition>MigXmlHelper.IsInWindowsNamespace("%CSIDL_MYMUSIC%")</condition>
+            <pattern type="File">%CSIDL_MYMUSIC%\* [*]</pattern>
+          </objectSet>
+          <objectSet>
+            <condition>MigXmlHelper.IsInWindowsNamespace("%CSIDL_MYPICTURES%")</condition>
+            <pattern type="File">%CSIDL_MYPICTURES%\* [*]</pattern>
+          </objectSet>
+          <objectSet>
+            <condition>MigXmlHelper.IsInWindowsNamespace("%CSIDL_MYVIDEO%")</condition>
+            <pattern type="File">%CSIDL_MYVIDEO%\* [*]</pattern>
+          </objectSet>
+          <objectSet>
+            <condition>MigXmlHelper.IsInWindowsNamespace("%CSIDL_PERSONAL%")</condition>
+            <pattern type="File">%CSIDL_PERSONAL%\* [*]</pattern>
+          </objectSet>
+          <objectSet>
+            <condition>MigXmlHelper.IsInWindowsNamespace("%CSIDL_DESKTOP%")</condition>
+            <pattern type="File">%CSIDL_DESKTOP%\* [*]</pattern>
+          </objectSet>
+          <objectSet>
+            <condition>MigXmlHelper.IsInWindowsNamespace("%CSIDL_FAVORITES%")</condition>
+            <pattern type="File">%CSIDL_FAVORITES%\* [*]</pattern>
+          </objectSet>
+          <objectSet>
+            <condition>MigXmlHelper.IsInWindowsNamespace("%CSIDL_TEMPLATES%")</condition>
+            <pattern type="File">%CSIDL_TEMPLATES%\* [*]</pattern>
+          </objectSet>
+          <objectSet>
+            <condition>MigXmlHelper.IsInWindowsNamespace("%FOLDERID_Playlists%")</condition>
+            <pattern type="File">%FOLDERID_Playlists%\* [*]</pattern>
+          </objectSet>
+          <objectSet>
+            <condition>MigXmlHelper.IsInWindowsNamespace("%FOLDERID_PhotoAlbums%")</condition>
+            <pattern type="File">%FOLDERID_PhotoAlbums%\* [*]</pattern>
+          </objectSet>
+          <objectSet>
+            <condition>MigXmlHelper.IsInWindowsNamespace("%FOLDERID_Downloads%")</condition>
+            <pattern type="File">%FOLDERID_Downloads%\* [*]</pattern>
+          </objectSet>
+          <objectSet>
+            <condition>MigXmlHelper.IsInWindowsNamespace("%FOLDERID_Contacts%")</condition>
+            <pattern type="File">%FOLDERID_Contacts%\* [*]</pattern>
+          </objectSet>
+          <objectSet>
+            <condition>MigXmlHelper.IsInWindowsNamespace("%FOLDERID_RecordedTV%")</condition>
+            <pattern type="File">%FOLDERID_RecordedTV%\* [*]</pattern>
+          </objectSet>
+          <objectSet>
+            <condition>MigXmlHelper.IsInWindowsNamespace("%FOLDERID_SavedGames%")</condition>
+            <pattern type="File">%FOLDERID_SavedGames%\* [*]</pattern>
+          </objectSet>
+          <objectSet>
+            <condition>MigXmlHelper.IsInWindowsNamespace("%FOLDERID_Libraries%")</condition>
+            <pattern type="File">%FOLDERID_Libraries% [*.library-ms]</pattern>
+          </objectSet>
+          <objectSet>
+            <condition>MigXmlHelper.IsInWindowsNamespace("%FOLDERID_OriginalImages%")</condition>
+            <pattern type="File">%FOLDERID_OriginalImages%\* [*]</pattern>
+          </objectSet>
+          <objectSet>
+            <condition>MigXmlHelper.IsInWindowsNamespace("%FOLDERID_AppCaptures%")</condition>
+            <pattern type="File">%FOLDERID_AppCaptures%\* [*]</pattern>
+          </objectSet>
+          <objectSet>
+            <condition>MigXmlHelper.IsInWindowsNamespace("%FOLDERID_CameraRoll%")</condition>
+            <pattern type="File">%FOLDERID_CameraRoll%\* [*]</pattern>
+          </objectSet>
+          <objectSet>
+            <condition>MigXmlHelper.IsInWindowsNamespace("%FOLDERID_SavedPictures%")</condition>
+            <pattern type="File">%FOLDERID_SavedPictures%\* [*]</pattern>
+          </objectSet>
+          <objectSet>
+            <condition>MigXmlHelper.IsInWindowsNamespace("%FOLDERID_Screenshots%")</condition>
+            <pattern type="File">%FOLDERID_Screenshots%\* [*]</pattern>
+          </objectSet>
+          <objectSet>
+            <condition>MigXmlHelper.IsInWindowsNamespace("%FOLDERID_Objects3D%")</condition>
+            <pattern type="File">%FOLDERID_Objects3D%\* [*]</pattern>
+          </objectSet>
+        </include>
+
+        <exclude filter="MigXmlHelper.IgnoreIrrelevantLinks()">
+          <objectSet>
+            <pattern type="File">%CSIDL_DESKTOP% [*]</pattern>
+            <pattern type="File">%CSIDL_FAVORITES%\* [*]</pattern>
+          </objectSet>
+        </exclude>
+
+        <exclude>
+
+          <objectSet>
+            <conditions><condition>MigXmlHelper.IsReparsePoint('%UserProfile%\Application Data')</condition></conditions>
+            <pattern type="File">%UserProfile%\Application Data\* [*]</pattern>
+          </objectSet>
+          <objectSet>
+            <pattern type="File">%UserProfile%\Cookies\* [*]</pattern>
+          </objectSet>
+          <objectSet>
+            <conditions><condition>MigXmlHelper.IsReparsePoint('%UserProfile%\Local Settings')</condition></conditions>
+            <pattern type="File">%UserProfile%\Local Settings\* [*]</pattern>
+          </objectSet>
+          <objectSet>
+            <conditions><condition>MigXmlHelper.IsReparsePoint('%UserProfile%\My Documents')</condition></conditions>
+            <pattern type="File">%UserProfile%\My Documents\* [*]</pattern>
+          </objectSet>
+          <objectSet>
+            <conditions><condition>MigXmlHelper.IsReparsePoint('%UserProfile%\NetHood')</condition></conditions>
+            <pattern type="File">%UserProfile%\NetHood\* [*]</pattern>
+          </objectSet>
+          <objectSet>
+            <conditions><condition>MigXmlHelper.IsReparsePoint('%UserProfile%\PrintHood')</condition></conditions>
+            <pattern type="File">%UserProfile%\PrintHood\* [*]</pattern>
+          </objectSet>
+          <objectSet>
+            <conditions><condition>MigXmlHelper.IsReparsePoint('%UserProfile%\Recent')</condition></conditions>
+            <pattern type="File">%UserProfile%\Recent\* [*]</pattern>
+          </objectSet>
+          <objectSet>
+            <conditions><condition>MigXmlHelper.IsReparsePoint('%UserProfile%\SendTo')</condition></conditions>
+            <pattern type="File">%UserProfile%\SendTo\* [*]</pattern>
+          </objectSet>
+          <objectSet>
+            <conditions><condition>MigXmlHelper.IsReparsePoint('%UserProfile%\Start Menu')</condition></conditions>
+            <pattern type="File">%UserProfile%\Start Menu\* [*]</pattern>
+          </objectSet>
+          <objectSet>
+            <conditions><condition>MigXmlHelper.IsReparsePoint('%UserProfile%\Templates')</condition></conditions>
+            <pattern type="File">%UserProfile%\Templates\* [*]</pattern>
+          </objectSet>
+
+          <objectSet>
+            <pattern type="File">%UserProfile% [ntuser.*]</pattern>
+            <pattern type="File">%UserProfile% [*.cer]</pattern>
+            <pattern type="File">%UserProfile% [*.pol]</pattern>
+
+            <pattern type="File">%Temp%\* [*]</pattern>
+
+            <pattern type="File">%CSIDL_APPDATA%\* [*]</pattern>
+            <pattern type="File">%CSIDL_COOKIES%\* [*]</pattern>
+            <pattern type="File">%CSIDL_HISTORY%\* [*]</pattern>
+            <pattern type="File">%CSIDL_INTERNET_CACHE%\* [*]</pattern>
+            <pattern type="File">%CSIDL_LOCAL_APPDATA%\* [*]</pattern>
+            <pattern type="File">%CSIDL_NETHOOD%\* [*]</pattern>
+            <pattern type="File">%CSIDL_PRINTHOOD%\* [*]</pattern>
+            <pattern type="File">%CSIDL_TEMPLATES%\* [*]</pattern>
+            <pattern type="File">%CSIDL_VIRTUALSTORE%\* [*]</pattern>
+            <pattern type="File">%FOLDERID_LocalAppDataLow%\* [*]</pattern>
+            <pattern type="File">%FOLDERID_SavedSearches%\* [*]</pattern>
+          </objectSet>
+        </exclude>
+
+        <merge script="MigXmlHelper.SourcePriorityFolderSpecial()">
+          <objectSet>
+            <pattern type="File">%CSIDL_MYMUSIC%</pattern>
+            <pattern type="File">%CSIDL_MYPICTURES%</pattern>
+            <pattern type="File">%CSIDL_MYVIDEO%</pattern>
+            <pattern type="File">%CSIDL_PERSONAL%</pattern>
+            <pattern type="File">%CSIDL_DESKTOP%</pattern>
+            <pattern type="File">%CSIDL_FAVORITES%</pattern>
+            <pattern type="File">%CSIDL_TEMPLATES%</pattern>
+            <pattern type="File">%FOLDERID_Playlists%</pattern>
+            <pattern type="File">%FOLDERID_PhotoAlbums%</pattern>
+            <pattern type="File">%FOLDERID_Downloads%</pattern>
+            <pattern type="File">%FOLDERID_Contacts%</pattern>
+            <pattern type="File">%FOLDERID_RecordedTV%</pattern>
+            <pattern type="File">%FOLDERID_SavedGames%</pattern>
+            <pattern type="File">%FOLDERID_OriginalImages%</pattern>
+            <pattern type="File">%FOLDERID_AppCaptures%</pattern>
+            <pattern type="File">%FOLDERID_CameraRoll%</pattern>
+            <pattern type="File">%FOLDERID_SavedPictures%</pattern>
+            <pattern type="File">%FOLDERID_Screenshots%</pattern>
+            <pattern type="File">%FOLDERID_Objects3D%</pattern>
+          </objectSet>
+        </merge>
+        <merge script="MigXmlHelper.DestinationPriority()">
+          <objectSet>
+            <pattern type="File">%UserProfile%\*</pattern>
+            <pattern type="File">%CSIDL_MYMUSIC%\*</pattern>
+            <pattern type="File">%CSIDL_MYPICTURES%\*</pattern>
+            <pattern type="File">%CSIDL_MYVIDEO%\*</pattern>
+            <pattern type="File">%CSIDL_PERSONAL%\*</pattern>
+            <pattern type="File">%CSIDL_DESKTOP%\*</pattern>
+            <pattern type="File">%CSIDL_FAVORITES%\*</pattern>
+            <pattern type="File">%CSIDL_TEMPLATES%\*</pattern>
+            <pattern type="File">%FOLDERID_Playlists%\*</pattern>
+            <pattern type="File">%FOLDERID_PhotoAlbums%\*</pattern>
+            <pattern type="File">%FOLDERID_Downloads%\*</pattern>
+            <pattern type="File">%FOLDERID_Contacts%\*</pattern>
+            <pattern type="File">%FOLDERID_RecordedTV%\*</pattern>
+            <pattern type="File">%FOLDERID_SavedGames%\*</pattern>
+            <pattern type="File">%FOLDERID_OriginalImages%\*</pattern>
+            <pattern type="File">%FOLDERID_AppCaptures%\*</pattern>
+            <pattern type="File">%FOLDERID_CameraRoll%\*</pattern>
+            <pattern type="File">%FOLDERID_SavedPictures%\*</pattern>
+            <pattern type="File">%FOLDERID_Screenshots%\*</pattern>
+            <pattern type="File">%FOLDERID_Objects3D%\*</pattern>
+          </objectSet>
+        </merge>
+
+        <merge script="MigXmlHelper.SourcePriority()">
+          <objectSet>
+            <pattern type="File">%FOLDERID_Libraries% [*.library-ms]</pattern>
+          </objectSet>
+        </merge>
+        <contentModify script="MigXmlHelper.MergeShellLibraries('TRUE','TRUE')">
+          <objectSet>
+            <pattern type="File">%FOLDERID_Libraries% [*.library-ms]</pattern>
+          </objectSet>
+        </contentModify>
+
+      </rules>
+
+      <rules context="System">
+
+        <include>
+          <objectSet>
+            <condition>MigXmlHelper.IsInWindowsNamespace("%FOLDERID_PublicDownloads%", "%MIG_DISABLE_USER_PROCESSING%")</condition>
+            <pattern type="File">%FOLDERID_PublicDownloads%\* [*]</pattern>
+          </objectSet>
+          <objectSet>
+            <condition>MigXmlHelper.IsInWindowsNamespace("%FOLDERID_PublicRecordedTV%", "%MIG_DISABLE_USER_PROCESSING%")</condition>
+            <pattern type="File">%FOLDERID_PublicRecordedTV%\* [*]</pattern>
+          </objectSet>
+          <objectSet>
+            <condition>MigXmlHelper.IsInWindowsNamespace("%FOLDERID_PublicLibraries%", "%MIG_DISABLE_USER_PROCESSING%")</condition>
+            <pattern type="File">%FOLDERID_PublicLibraries% [*.library-ms]</pattern>
+          </objectSet>
+          <objectSet>
+            <condition>MigXmlHelper.IsInWindowsNamespace("%CSIDL_COMMON_TEMPLATES%", "%MIG_DISABLE_USER_PROCESSING%")</condition>
+            <pattern type="File">%CSIDL_COMMON_TEMPLATES%\* [*]</pattern>
+          </objectSet>
+          <objectSet>
+            <condition>MigXmlHelper.IsInWindowsNamespace("%CSIDL_COMMON_MUSIC%", "%MIG_DISABLE_USER_PROCESSING%")</condition>
+            <pattern type="File">%CSIDL_COMMON_MUSIC%\* [*]</pattern>
+          </objectSet>
+          <objectSet>
+            <condition>MigXmlHelper.IsInWindowsNamespace("%CSIDL_COMMON_PICTURES%", "%MIG_DISABLE_USER_PROCESSING%")</condition>
+            <pattern type="File">%CSIDL_COMMON_PICTURES%\* [*]</pattern>
+          </objectSet>
+          <objectSet>
+            <condition>MigXmlHelper.IsInWindowsNamespace("%CSIDL_COMMON_VIDEO%", "%MIG_DISABLE_USER_PROCESSING%")</condition>
+            <pattern type="File">%CSIDL_COMMON_VIDEO%\* [*]</pattern>
+          </objectSet>
+          <objectSet>
+            <condition>MigXmlHelper.IsInWindowsNamespace("%CSIDL_COMMON_DOCUMENTS%", "%MIG_DISABLE_USER_PROCESSING%")</condition>
+            <pattern type="File">%CSIDL_COMMON_DOCUMENTS%\* [*]</pattern>
+          </objectSet>
+          <objectSet>
+            <condition>MigXmlHelper.IsInWindowsNamespace("%CSIDL_COMMON_DESKTOPDIRECTORY%", "%MIG_DISABLE_USER_PROCESSING%")</condition>
+            <pattern type="File">%CSIDL_COMMON_DESKTOPDIRECTORY%\* [*]</pattern>
+          </objectSet>
+          <objectSet>
+            <condition>MigXmlHelper.IsInWindowsNamespace("%CSIDL_COMMON_FAVORITES%", "%MIG_DISABLE_USER_PROCESSING%")</condition>
+            <pattern type="File">%CSIDL_COMMON_FAVORITES%\* [*]</pattern>
+          </objectSet>
+
+          <objectSet>
+            <condition>MigXmlHelper.IsInWindowsNamespace("%CSIDL_COMMON_PROGRAMS%", "%MIG_DISABLE_USER_PROCESSING%")</condition>
+            <pattern type="File">%CSIDL_COMMON_PROGRAMS%\* [*]</pattern>
+          </objectSet>
+          <objectSet>
+            <condition>MigXmlHelper.IsInWindowsNamespace("%CSIDL_COMMON_STARTMENU%", "%MIG_DISABLE_USER_PROCESSING%")</condition>
+            <pattern type="File">%CSIDL_COMMON_STARTMENU%\* [*]</pattern>
+          </objectSet>
+          <objectSet>
+            <condition>MigXmlHelper.IsInWindowsNamespace("%CSIDL_COMMON_STARTUP%", "%MIG_DISABLE_USER_PROCESSING%")</condition>
+            <pattern type="File">%CSIDL_COMMON_STARTUP%\* [*]</pattern>
+          </objectSet>
+        </include>
+
+        <exclude filter="MigXmlHelper.IgnoreIrrelevantLinks()">
+          <objectSet>
+            <pattern type="File">%CSIDL_COMMON_DESKTOPDIRECTORY% [*]</pattern>
+          </objectSet>
+          <objectSet>
+            <pattern type="File">%CSIDL_COMMON_STARTUP%\* [*]</pattern>
+            <pattern type="File">%CSIDL_COMMON_STARTMENU%\* [*]</pattern>
+            <pattern type="File">%CSIDL_COMMON_PROGRAMS%\* [*]</pattern>
+          </objectSet>
+        </exclude>
+
+        <exclude filter="MigXmlHelper.ExcludeSystemShortcuts('*\MSASCui.exe')">
+          <objectSet>
+            <pattern type="File">%CSIDL_COMMON_STARTMENU%\* [*]</pattern>
+            <pattern type="File">%CSIDL_COMMON_PROGRAMS%\* [*]</pattern>
+          </objectSet>
+        </exclude>
+
+        <exclude filter="MigXmlHelper.ExcludeSystemShortcuts('*\accwiz.exe;*\audioconverter.exe;*\bckgzm.exe;*\calc.exe;*\cdlm.exe;*\charmap.exe;*\chkrzm.exe;*\cleanmgr.exe;*\explorer.exe;*\freecell.exe;*\fxsclnt.exe;*\fxscover.exe;*\fxssend.exe;*\hh.exe;*\hrtzzm.exe;*\hypertrm.exe;*\iexplore.exe;*\inetcfg.exe;*\magnify.exe;*\migwiz.exe;*\mmc.exe;*\mobsync.exe;*\moviemk.exe;*\mshearts.exe;*\msimn.exe;*\msnsusii.exe;*\msoobe.exe;*\mspaint.exe;*\mstsc.exe;*\narrator.exe;*\notepad.exe;*\ntbackup.exe;*\osk.exe;*\partymode.exe;*\pinball.exe;*\powershell.exe;*\rcimlby.exe;*\rstrui.exe;*\rvsezm.exe;*\shvlzm.exe;*\sndrec32.exe;*\sndvol32.exe;*\sol.exe;*\spider.exe;*\tourstart.exe;*\utilman.exe;*\winmine.exe;*\wmplayer.exe;*\wupdmgr.exe;*\dvdmaker.exe;*\netproj.exe;*\chess.exe;*\mahjong.exe;*\purbleplace.exe;*\hearts.exe;*\solitaire.exe;*\spidersolitaire.exe;*\minesweeper.exe','*\wordpad.exe;*\ehshell.exe')">
+          <objectSet>
+            <pattern type="File">%CSIDL_COMMON_STARTMENU%\* [*]</pattern>
+            <pattern type="File">%CSIDL_COMMON_PROGRAMS%\* [*]</pattern>
+          </objectSet>
+        </exclude>
+
+        <exclude>
+          <objectSet>
+            <pattern type="File">%CSIDL_COMMON_STARTMENU%[Windows Update.lnk]</pattern>
+          </objectSet>
+        </exclude>
+
+        <exclude filter="MigXmlHelper.ExcludeSystemShortcuts('*\SkyDrive.exe;*\SkyDriveSetup.exe','FALSE')">
+          <objectSet>
+            <pattern type="File">%CSIDL_COMMON_STARTMENU%\* [*]</pattern>
+            <pattern type="File">%CSIDL_COMMON_PROGRAMS%\* [*]</pattern>
+            <pattern type="File">%CSIDL_COMMON_STARTUP%\* [*]</pattern>
+          </objectSet>
+        </exclude>
+
+        <exclude>
+          <objectSet>
+            <pattern type="File">%CSIDL_COMMON_PROGRAMS%\Accessories\System Tools\BitLocker\* [*]</pattern>
+          </objectSet>
+        </exclude>
+
+        <merge script="MigXmlHelper.SourcePriorityFolderSpecial()">
+          <objectSet>
+            <pattern type="File">%FOLDERID_PublicDownloads%</pattern>
+            <pattern type="File">%FOLDERID_PublicRecordedTV%</pattern>
+            <pattern type="File">%CSIDL_COMMON_TEMPLATES%</pattern>
+            <pattern type="File">%CSIDL_COMMON_MUSIC%</pattern>
+            <pattern type="File">%CSIDL_COMMON_PICTURES%</pattern>
+            <pattern type="File">%CSIDL_COMMON_VIDEO%</pattern>
+            <pattern type="File">%CSIDL_COMMON_DOCUMENTS%</pattern>
+            <pattern type="File">%CSIDL_COMMON_DESKTOPDIRECTORY%</pattern>
+            <pattern type="File">%CSIDL_COMMON_FAVORITES%</pattern>
+          </objectSet>
+        </merge>
+
+        <merge script="MigXmlHelper.DestinationPriority()">
+          <objectSet>
+            <pattern type="File">%FOLDERID_PublicDownloads%\*</pattern>
+            <pattern type="File">%FOLDERID_PublicRecordedTV%\*</pattern>
+            <pattern type="File">%CSIDL_COMMON_TEMPLATES%\*</pattern>
+            <pattern type="File">%CSIDL_COMMON_MUSIC%\*</pattern>
+            <pattern type="File">%CSIDL_COMMON_PICTURES%\*</pattern>
+            <pattern type="File">%CSIDL_COMMON_VIDEO%\*</pattern>
+            <pattern type="File">%CSIDL_COMMON_DOCUMENTS%\*</pattern>
+            <pattern type="File">%CSIDL_COMMON_DESKTOPDIRECTORY%\*</pattern>
+            <pattern type="File">%CSIDL_COMMON_FAVORITES%\*</pattern>
+            <pattern type="File">%CSIDL_COMMON_STARTUP%\*</pattern>
+            <pattern type="File">%CSIDL_COMMON_STARTMENU%\*</pattern>
+            <pattern type="File">%CSIDL_COMMON_PROGRAMS%\*</pattern>
+          </objectSet>
+        </merge>
+
+        <merge script="MigXmlHelper.DestinationPriority()">
+          <objectSet>
+            <pattern type="File">%CSIDL_COMMON_STARTMENU%\* [desktop.ini]</pattern>
+          </objectSet>
+        </merge>
+
+        <merge script="MigXmlHelper.SourcePriority()">
+          <objectSet>
+            <pattern type="File">%FOLDERID_PublicLibraries% [*.library-ms]</pattern>
+          </objectSet>
+        </merge>
+        <contentModify script="MigXmlHelper.MergeShellLibraries('TRUE','TRUE')">
+          <objectSet>
+            <pattern type="File">%FOLDERID_PublicLibraries% [*.library-ms]</pattern>
+          </objectSet>
+        </contentModify>
+
+      </rules>
+    </role>
+
+  </component>
+
+</migration>

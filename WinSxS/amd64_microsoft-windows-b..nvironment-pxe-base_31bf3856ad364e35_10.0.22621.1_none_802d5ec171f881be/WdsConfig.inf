@@ -1,0 +1,62 @@
+;
+; Windows Deployment Services Configuration Information
+;
+;
+; Copyright (c) Microsoft Corporation.  All rights reserved.
+;
+
+[version]
+signature   =   "$Windows NT$"
+
+
+[Product.Name]
+Windows 10
+
+[Product.Version]
+6,2,0,0
+
+
+[WdsMgmtFiles.NT]
+
+
+;
+; The following sections describe files that are installed during
+; the addition of a WDS boot image
+;
+; The syntax for these sections follows the following format:
+; <DestinationPath>,<SourcePath>,<Optional: AlternateSourcePath>
+; The expected path formats are described by each section, but
+; the first two paths must always be provided.
+; Currently, the AlternateSourcePath is only used by boot files.
+;
+
+;
+; Copied during boot image addition using the following paths:
+; Source: %TEMP%\<RandomlyGeneratedSubfolder>\<AlternateSourcePath>
+; Destination: \\server\REMINT\Boot\<DestinationPath>
+;
+; The .NT sections denote files that apply to all CPU
+; architectures while the other sections are CPU-specific.
+;
+
+[BootFiles.NTX86]
+x86\wdsmgfw.efi,,\%SystemRoot%\Boot\PXE\wdsmgfw.efi
+x86\*\wdsmgfw.efi.mui,,\%SystemRoot%\Boot\PXE\*\wdsmgfw.efi.mui
+x86\bootmgfw.efi,boot\x86\bootmgfw.efi,\%SystemRoot%\Boot\EFI\bootmgfw.efi
+x86\*\bootmgfw.efi.mui,,\%SystemRoot%\Boot\EFI\*\bootmgfw.efi.mui
+
+[BootFiles.NTAMD64]
+x64\wdsmgfw.efi,,\%SystemRoot%\Boot\PXE\wdsmgfw.efi
+x64\*\wdsmgfw.efi.mui,,\%SystemRoot%\Boot\PXE\*\wdsmgfw.efi.mui
+
+[BootFiles.NTARM]
+arm\wdsmgfw.efi,,\%SystemRoot%\Boot\PXE\wdsmgfw.efi
+arm\*\wdsmgfw.efi.mui,,\%SystemRoot%\Boot\PXE\*\wdsmgfw.efi.mui
+arm\bootmgfw.efi,boot\arm\bootmgfw.efi,\%SystemRoot%\Boot\EFI\bootmgfw.efi
+arm\*\bootmgfw.efi.mui,,\%SystemRoot%\Boot\EFI\*\bootmgfw.efi.mui
+
+[BootFiles.NTARM64]
+arm64\wdsmgfw.efi,,\%SystemRoot%\Boot\PXE\wdsmgfw.efi
+arm64\*\wdsmgfw.efi.mui,,\%SystemRoot%\Boot\PXE\*\wdsmgfw.efi.mui
+arm64\bootmgfw.efi,boot\arm64\bootmgfw.efi,\%SystemRoot%\Boot\EFI\bootmgfw.efi
+arm64\*\bootmgfw.efi.mui,,\%SystemRoot%\Boot\EFI\*\bootmgfw.efi.mui

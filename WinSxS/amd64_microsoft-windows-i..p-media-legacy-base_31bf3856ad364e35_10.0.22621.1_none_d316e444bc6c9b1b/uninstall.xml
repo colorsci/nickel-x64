@@ -1,0 +1,74 @@
+<migration urlid="http://www.microsoft.com/migration/1.0/migxmlext/Uninstall">
+
+  <component type="System" phase="Upgrade">
+    <displayName>Uninstall</displayName>
+    <role role="Settings">
+
+      <rules context="User">
+        <include>
+          <objectSet>
+            <pattern type="File">%CSIDL_LOCAL_APPDATA%\Microsoft\Windows\Application Shortcuts\* [*]</pattern>
+            <pattern type="File">%CSIDL_LOCAL_APPDATA%\Packages\Microsoft$\* [*]</pattern>
+            <pattern type="File">%CSIDL_LOCAL_APPDATA%\Packages\Windows$\* [*]</pattern>
+            <pattern type="File">%CSIDL_LOCAL_APPDATA%\Packages\Winstore$\* [*]</pattern>
+            <pattern type="File">%CSIDL_LOCAL_APPDATA%\TileDataLayer\* [*]</pattern>
+          </objectSet>
+        </include>
+        <exclude>
+          <objectSet>
+            <pattern type="File">%CSIDL_LOCAL_APPDATA%\Packages\microsoft.windowscommunicationsapps_$\LocalState\LiveComm\$\$\Att\* [*]</pattern>
+            <pattern type="File">%CSIDL_LOCAL_APPDATA%\Packages\microsoft.windowscommunicationsapps_$\LocalState\Indexed\LiveComm\$\$\Mail\* [*]</pattern>
+            <pattern type="File">%CSIDL_LOCAL_APPDATA%\Packages\microsoft.windowscommunicationsapps_$\TempState\Content.MSO\* [*]</pattern>
+            <pattern type="File">%CSIDL_LOCAL_APPDATA%\Packages\Microsoft.BingNews_$\LocalState\Cache\* [*]</pattern>
+            <pattern type="File">%CSIDL_LOCAL_APPDATA%\Packages\Microsoft.MicrosoftEdge_$\AC\#!$\Temp\*[*]</pattern>
+            <pattern type="File">%CSIDL_LOCAL_APPDATA%\Packages\Microsoft.MicrosoftEdge_$\AC\MicrosoftEdge\Cache\* [*]</pattern>
+            <pattern type="File">%CSIDL_LOCAL_APPDATA%\Packages\Microsoft.MicrosoftEdge_$\AC\$\MicrosoftEdge\Cache\* [*]</pattern>
+            <pattern type="File">%CSIDL_LOCAL_APPDATA%\Packages\Microsoft.MicrosoftEdge_$\AC\MicrosoftEdge\User\Default\Recovery\Active\* [*]</pattern>
+            <pattern type="File">%CSIDL_LOCAL_APPDATA%\Packages\Microsoft.Office$\* [*]</pattern>
+            <pattern type="File">%CSIDL_LOCAL_APPDATA%\Packages\windows_ie_ac_*\* [*]</pattern>
+            <pattern type="File">%CSIDL_LOCAL_APPDATA%\Packages\Microsoft.FlightSimulator_$\* [*]</pattern>
+          </objectSet>
+        </exclude>
+        <merge script="MigXmlHelper.SourcePriority()">
+          <objectSet>
+            <pattern type="File">%CSIDL_LOCAL_APPDATA%\Microsoft\Windows\Application Shortcuts\* [*]</pattern>
+            <pattern type="File">%CSIDL_LOCAL_APPDATA%\Packages\Microsoft$\* [*]</pattern>
+            <pattern type="File">%CSIDL_LOCAL_APPDATA%\Packages\Windows$\* [*]</pattern>
+            <pattern type="File">%CSIDL_LOCAL_APPDATA%\Packages\Winstore$\* [*]</pattern>
+            <pattern type="File">%CSIDL_LOCAL_APPDATA%\TileDataLayer\* [*]</pattern>
+          </objectSet>
+        </merge>
+        <destinationCleanup filter="MigXmlHelper.ExcludePatterns('File','%CSIDL_LOCAL_APPDATA%\Packages\Microsoft.FlightSimulator_$\* [*]')">
+          <objectSet>
+            <pattern type="File">%CSIDL_LOCAL_APPDATA%\Packages\Microsoft$\* [*]</pattern>
+            <pattern type="File">%CSIDL_LOCAL_APPDATA%\Packages\Windows$\* [*]</pattern>
+            <pattern type="File">%CSIDL_LOCAL_APPDATA%\Packages\Winstore$\* [*]</pattern>
+            <pattern type="File">%CSIDL_LOCAL_APPDATA%\TileDataLayer\* [*]</pattern>
+          </objectSet>
+        </destinationCleanup>
+      </rules>
+
+      <rules context="System">
+        <conditions>
+          <condition>MigXmlHelper.DoesEnvironmentVariableEqual("MIG_CONFIG_ENV_0", "1")</condition>
+        </conditions>
+
+        <include>
+          <objectSet>
+            <script>MigXmlHelper.GenerateUserPatterns("File","%USERPROFILE% [NTUSER.DAT*]","TRUE")</script>
+            <script>MigXmlHelper.GenerateUserPatterns("File","%CSIDL_LOCAL_APPDATA%\Microsoft\Windows [usrClass.DAT*]","TRUE")</script>
+          </objectSet>
+        </include>
+        <merge script="MigXmlHelper.SourcePriority()">
+          <objectSet>
+            <script>MigXmlHelper.GenerateUserPatterns("File","%USERPROFILE% [NTUSER.DAT*]","TRUE")</script>
+            <script>MigXmlHelper.GenerateUserPatterns("File","%CSIDL_LOCAL_APPDATA%\Microsoft\Windows [usrClass.DAT*]","TRUE")</script>
+          </objectSet>
+        </merge>
+
+      </rules>
+
+    </role>
+  </component>
+
+</migration>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/webapps/inclusiveOobe/css/inclusive-common.css" />
+    <link rel="stylesheet" href="/webapps/shubOobe/css/shub-common.css" />
+    <!-- WinJS references -->
+    <script src="/Microsoft.WinJS-reduced/js/base.js"></script>
+
+    <!-- requirejs references -->
+    <script src="/core/js/require-helpers.js"></script>
+    <script src="/core/js/requirePath-config-core.js"></script>
+    <script data-main="/webapps/shubOobe/js/teamdeviceaccountlist-page.js" src="/lib/require.js"></script>
+</head>
+<body class="webapp-inner">
+    <div class="body-container">
+        <div class="container-content">
+            <oobe-header params="title: $root.title, subtitle: $root.subtitle"></oobe-header>
+            <div class="content-box">
+                <oobe-listview params="items: deviceAccountList, selectedItem: selectedAccount, listAccessibleName: listAccessibleName">
+                    <div class="list-text">
+                        <div class="secondary-text" data-bind="text: friendlyName"></div>
+                        <div class="account-info" data-bind="text: deviceAccount"></div>
+                    </div>
+                </oobe-listview>
+            </div>
+            <div class="content-description input-errorDialog">
+                <div class="errorDialog-dialogRoot tooltipType_error template-tooltip" data-bind="if: ($root.deviceAccountErrorText && $root.deviceAccountErrorText() != ''" role="alert">
+                    <p data-bind="text: deviceAccountErrorText"></p>
+                </div>
+            </div>
+        </div>
+        <oobe-footer params="flexStartHyperLinks: $root.flexStartHyperLinks, flexEndButtons: $root.flexEndButtons"></oobe-footer>
+    </div>
+</body>
+</html>

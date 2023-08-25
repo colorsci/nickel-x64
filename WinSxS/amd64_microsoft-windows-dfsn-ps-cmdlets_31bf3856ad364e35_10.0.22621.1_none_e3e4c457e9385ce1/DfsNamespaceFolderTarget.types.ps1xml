@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8" ?>  
+<Types>  
+  <!--  
+  
+  //  
+  // Namespace folder target 
+  //  
+  
+  -->  
+  <Type>  
+    <Name>Microsoft.Management.Infrastructure.CimInstance#MSFT_DFSNamespaceFolderTarget</Name>
+    <Members>
+        <ScriptProperty>
+            <Name>State</Name>
+            <GetScriptBlock>  
+              switch ($this.psBase.CimInstanceProperties["State"].Value)  
+              {  
+                4 { "Online" }  
+                3 { "Offline" }  
+                Default { "Unknown" }  
+              }  
+            </GetScriptBlock>  
+        </ScriptProperty>  
+        <ScriptProperty>
+            <Name>ReferralPriorityClass</Name>
+            <GetScriptBlock>
+              switch ($this.psBase.CimInstanceProperties["ReferralPriorityClass"].Value)  
+              {  
+                -1 { "invalid" }  
+                0 { "sitecost-normal" }
+                1 { "global-high" }   
+                2 { "sitecost-high" }     
+                3 { "sitecost-low" }
+                4 { "global-low" }
+                Default { "Unknown" }  
+              }
+            </GetScriptBlock>  
+        </ScriptProperty>
+        <AliasProperty>
+            <Name>Path</Name>
+            <ReferencedMemberName>NamespacePath</ReferencedMemberName>
+        </AliasProperty>        
+    </Members>
+  </Type>
+</Types>
+

@@ -1,0 +1,982 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Configuration>
+  <ViewDefinitions>
+    <View>
+      <Name>InventoryConfig</Name>
+      <ViewSelectedBy>
+        <TypeName>Microsoft.StorageMigration.Commands.InventoryConfig</TypeName>
+      </ViewSelectedBy>
+      <ListControl>
+        <ListEntries>
+          <ListEntry>
+            <ListItems>
+              <ListItem>
+                <PropertyName>Name</PropertyName>
+              </ListItem>
+              <ListItem>
+                <PropertyName>Type</PropertyName>
+              </ListItem>
+              <ListItem>
+                <PropertyName>ComputerName</PropertyName>
+              </ListItem>
+              <ListItem>
+                <PropertyName>IncludeAdminShares</PropertyName>
+              </ListItem>
+                 <ListItem>
+                <PropertyName>IncludeDFSN</PropertyName>
+              </ListItem>
+              <ListItem>
+                <PropertyName>IncludeDFSR</PropertyName>
+              </ListItem>
+              <ListItem>
+                <Label>SourceCredential Username</Label>
+                <ScriptBlock>$_.SourceCredential.Username</ScriptBlock>
+              </ListItem>
+              <ListItem>
+                <Label>SourceCredential Domain</Label>
+                <ScriptBlock>$_.SourceCredential.Domain</ScriptBlock>
+              </ListItem>
+              <ListItem>
+                <Label>SourceCredential Timestamp</Label>
+                <ScriptBlock>$_.SourceCredential.Timestamp</ScriptBlock>
+              </ListItem>
+              <ListItem>
+                <PropertyName>SourceType</PropertyName>
+              </ListItem>
+              <ListItem>
+                <Label>SourceHost Username</Label>
+                <PropertyName>SourceHostUsername</PropertyName>
+              </ListItem>
+            </ListItems>
+          </ListEntry>
+        </ListEntries>
+      </ListControl>
+    </View>
+    
+    <View>
+      <Name>Proxy</Name>
+      <ViewSelectedBy>
+        <TypeName>Microsoft.StorageMigration.Commands.PSProxyDetail</TypeName>
+      </ViewSelectedBy>
+      <TableControl>
+        <TableRowEntries>
+          <TableRowEntry>
+            <TableColumnItems>
+              <TableColumnItem>
+                <PropertyName>ComputerName</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>Port</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>Type</PropertyName>
+              </TableColumnItem>
+            </TableColumnItems>
+          </TableRowEntry>
+        </TableRowEntries>
+      </TableControl>
+    </View>
+
+    <View>
+      <Name>JobSummary</Name>
+      <ViewSelectedBy>
+        <TypeName>Microsoft.StorageMigration.Commands.JobSummary</TypeName>
+      </ViewSelectedBy>
+      <TableControl>
+        <TableHeaders>
+          <TableColumnHeader>
+            <Label>Job Name</Label>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Modified Date</Label>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Modified By</Label>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Last Started Date</Label>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Last Operation</Label>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>State</Label>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Error</Label>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Source Type</Label>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Protocol</Label>
+          </TableColumnHeader>
+        </TableHeaders>
+        <TableRowEntries>
+          <TableRowEntry>
+            <TableColumnItems>
+              <TableColumnItem>
+                <PropertyName>Job</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>ModifiedDate</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>ModifiedBy</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <ScriptBlock>
+                  if ($_.LastStartedDate -eq $null)
+                  {
+                    "Never"
+                  }
+                  else
+                  {
+                    $_.LastStartedDate
+                  }
+                </ScriptBlock>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>LastOperation</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>State</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>ErrorCode</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>SourceType</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>Protocol</PropertyName>
+              </TableColumnItem>
+            </TableColumnItems>
+          </TableRowEntry>
+        </TableRowEntries>
+      </TableControl>
+    </View>
+
+    <View>
+      <Name>InventorySummary</Name>
+      <ViewSelectedBy>
+        <TypeName>Microsoft.StorageMigration.Commands.InventorySummary</TypeName>
+      </ViewSelectedBy>
+      <TableControl>
+        <TableHeaders>
+          <TableColumnHeader>
+            <Label>Job Name</Label>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Device Name</Label>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Configuration</Label>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Smb Share</Label>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>DFSN</Label>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Files Total</Label>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Size Total</Label>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Files Failed</Label>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Directories Succeeded</Label>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Directories Failed</Label>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Started</Label>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Completed</Label>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>State</Label>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Error</Label>
+          </TableColumnHeader>
+        </TableHeaders>
+        <TableRowEntries>
+          <TableRowEntry>
+            <TableColumnItems>
+              <TableColumnItem>
+                <PropertyName>Job</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>Device</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>Configuration</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>SMBShare</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>DFSN</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>FilesTotal</PropertyName>
+                <Alignment>Right</Alignment>
+              </TableColumnItem>
+              <TableColumnItem>
+                <Alignment>Right</Alignment>
+                <ScriptBlock>
+                  $size = $_.SizeTotal
+                  if ($size -ne $null) {
+                    $postfixes = @("KB", "MB", "GB", "TB", "PB")
+                    for ($i=0; $size -ge 1024 -and $i -lt $postfixes.Length - 1; $i++) { $size = $size / 1024; }
+                    "" + [System.Math]::Round($size,2) + " " + $postfixes[$i];
+                  }
+                </ScriptBlock>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>FilesFailed</PropertyName>
+                <Alignment>Right</Alignment>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>SucceededDirectoryCount</PropertyName>
+                <Alignment>Right</Alignment>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>FailedDirectoryCount</PropertyName>
+                <Alignment>Right</Alignment>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>Started</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>Completed</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>InventoryState</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <ScriptBlock>
+                  if ($_.ErrorCode -ne $null)
+                  {
+                      $_.ErrorCode
+                  }
+                </ScriptBlock>
+              </TableColumnItem>
+            </TableColumnItems>
+          </TableRowEntry>
+        </TableRowEntries>
+      </TableControl>
+    </View>
+
+    <View>
+      <Name>InventoryConfigDetail</Name>
+      <ViewSelectedBy>
+        <TypeName>Microsoft.StorageMigration.Commands.InventoryConfigDetail</TypeName>
+      </ViewSelectedBy>
+      <ListControl>
+        <ListEntries>
+          <ListEntry>
+            <ListItems>
+              <ListItem>
+                <PropertyName>Job</PropertyName>
+              </ListItem>
+              <ListItem>
+                <Label>Computer Name</Label>
+                <PropertyName>ComputerName</PropertyName>
+              </ListItem>
+              <ListItem>
+                <Label>Computer Domain Name</Label>
+                <PropertyName>ComputerDomainName</PropertyName>
+              </ListItem>
+              <ListItem>
+                <Label>Node Cluster State</Label>
+                <PropertyName>NodeClusterState</PropertyName>
+              </ListItem>
+              <ListItem>
+                <Label>Server Type</Label>
+                <PropertyName>ServerType</PropertyName>
+              </ListItem>
+              <ListItem>
+                <Label>Alternate Computer Names</Label>
+                <PropertyName>AlternateComputerNames</PropertyName>
+              </ListItem>
+              <ListItem>
+                <Label>Computer DNS Name</Label>
+                <PropertyName>ComputerDNSName</PropertyName>
+              </ListItem>
+              <ListItem>
+                <Label>Cluster Name</Label>
+                <PropertyName>ClusterName</PropertyName>
+              </ListItem>
+              <ListItem>
+                <Label>Workgroup Name</Label>
+                <PropertyName>WorkgroupName</PropertyName>
+              </ListItem>
+              <ListItem>
+                <Label>Operating System Manufacturer</Label>
+                <PropertyName>OperatingSystemManufacturer</PropertyName>
+              </ListItem>
+              <ListItem>
+                <Label>Operating System</Label>
+                <PropertyName>OperatingSystem</PropertyName>
+              </ListItem>
+              <ListItem>
+                <Label>Operating System Version</Label>
+                <PropertyName>OperatingSystemVersion</PropertyName>
+              </ListItem>
+              <ListItem>
+                <Label>System Volume</Label>
+                <PropertyName>SystemVolume</PropertyName>
+              </ListItem>
+              <ListItem>
+                <PropertyName>Volumes</PropertyName>
+              </ListItem>
+              <ListItem>
+                <Label>Network Adapters</Label>
+                <PropertyName>NetworkAdapters</PropertyName>
+              </ListItem>
+              <ListItem>
+                <Label>Network IP Addresses</Label>
+                <PropertyName>NetIPAddresses</PropertyName>
+              </ListItem>
+                <ListItem>
+                    <Label>Subnets</Label>
+                    <PropertyName>Subnets</PropertyName>
+                </ListItem>
+              <ListItem>
+                <Label>Files Total</Label>
+                <PropertyName>FilesTotal</PropertyName>
+              </ListItem>
+              <ListItem>
+                <Label>Size Total</Label>
+                <ScriptBlock>
+                  $size = $_.SizeTotal
+                  if ($size -ne $null) {
+                  $postfixes = @("KB", "MB", "GB", "TB", "PB")
+                  for ($i=0; $size -ge 1024 -and $i -lt $postfixes.Length - 1; $i++) { $size = $size / 1024; }
+                  "" + [System.Math]::Round($size,2) + " " + $postfixes[$i];
+                  }
+                </ScriptBlock>
+              </ListItem>
+              <ListItem>
+                <Label>Files Failed</Label>
+                <PropertyName>FilesFailed</PropertyName>
+              </ListItem>
+              <ListItem>
+                <Label>Directories Succeeded</Label>
+                <PropertyName>SucceededDirectoryCount</PropertyName>
+              </ListItem>
+              <ListItem>
+                <Label>Directories Failed</Label>
+                <PropertyName>FailedDirectoryCount</PropertyName>
+              </ListItem>
+            </ListItems>
+          </ListEntry>
+        </ListEntries>
+      </ListControl>
+    </View>
+
+    <View>
+      <Name>MigrationSMBDetail</Name>
+      <ViewSelectedBy>
+        <TypeName>Microsoft.StorageMigration.Commands.SmbEndpoint</TypeName>
+      </ViewSelectedBy>
+      <ListControl>
+        <ListEntries>
+          <ListEntry>
+            <ListItems>
+              <ListItem>
+                <PropertyName>Job</PropertyName>
+              </ListItem>
+              <ListItem>
+                <PropertyName>ComputerName</PropertyName>
+              </ListItem>
+              <ListItem>
+                <PropertyName>Name</PropertyName>
+              </ListItem>
+              <ListItem>
+                <PropertyName>Path</PropertyName>
+              </ListItem>
+              <ListItem>
+                <PropertyName>AvailabilityType</PropertyName>
+              </ListItem>
+              <ListItem>
+                <PropertyName>ShareType</PropertyName>
+              </ListItem>
+              <ListItem>
+                <PropertyName>FolderEnumerationMode</PropertyName>
+              </ListItem>
+              <ListItem>
+                <PropertyName>CachingMode</PropertyName>
+              </ListItem>
+              <ListItem>
+                <PropertyName>SmbInstance</PropertyName>
+              </ListItem>
+              <ListItem>
+                <PropertyName>CATimeout</PropertyName>
+              </ListItem>
+              <ListItem>
+                <PropertyName>ConcurrentUserLimit</PropertyName>
+              </ListItem>
+              <ListItem>
+                <PropertyName>ContinuouslyAvailable</PropertyName>
+              </ListItem>
+              <ListItem>
+                <PropertyName>Description</PropertyName>
+              </ListItem>
+              <ListItem>
+                <PropertyName>EncryptData</PropertyName>
+              </ListItem>
+              <ListItem>
+                <PropertyName>SecurityDescriptor</PropertyName>
+              </ListItem>
+              <ListItem>
+                <PropertyName>ShadowCopy</PropertyName>
+              </ListItem>
+              <ListItem>
+                <PropertyName>Special</PropertyName>
+              </ListItem>
+              <ListItem>
+                <PropertyName>Temporary</PropertyName>
+              </ListItem>
+              <ListItem>
+                <PropertyName>Volume</PropertyName>
+              </ListItem>
+              <ListItem>
+                <PropertyName>FilesTotal</PropertyName>
+              </ListItem>
+              <ListItem>
+                <Label>SizeTotal</Label>
+                <ScriptBlock>
+                  $size = $_.SizeTotal
+                  if ($size -ne $null) {
+                  $postfixes = @("KB", "MB", "GB", "TB", "PB")
+                  for ($i=0; $size -ge 1024 -and $i -lt $postfixes.Length - 1; $i++) { $size = $size / 1024; }
+                  "" + [System.Math]::Round($size,2) + " " + $postfixes[$i];
+                  }
+                </ScriptBlock>
+              </ListItem>
+              <ListItem>
+                <PropertyName>FilesFailed</PropertyName>
+              </ListItem>
+              <ListItem>
+                <PropertyName>SucceededDirectoryCount</PropertyName>
+              </ListItem>
+              <ListItem>
+                <PropertyName>FailedDirectoryCount</PropertyName>
+              </ListItem>
+              <ListItem>
+                <PropertyName>ErrorCode</PropertyName>
+              </ListItem>
+              <ListItem>
+                <PropertyName>ErrorMessage</PropertyName>
+              </ListItem>
+            </ListItems>
+          </ListEntry>
+        </ListEntries>
+      </ListControl>
+    </View>
+
+    <View>
+      <Name>TransferConfiguration</Name>
+      <ViewSelectedBy>
+        <TypeName>Microsoft.StorageMigration.Commands.TransferConfiguration</TypeName>
+      </ViewSelectedBy>
+      <ListControl>
+        <ListEntries>
+          <ListEntry>
+            <ListItems>
+              <ListItem>
+                <Label>Job</Label>
+                <PropertyName>Name</PropertyName>
+              </ListItem>
+              <ListItem>
+                <PropertyName>ChecksumType</PropertyName>
+              </ListItem>
+              <ListItem>
+                <PropertyName>SecurityMigrationOption</PropertyName>
+              </ListItem>
+              <ListItem>
+                <PropertyName>ExcludeLocalPrincipals</PropertyName>
+              </ListItem>
+              <ListItem>
+                <PropertyName>FileRetryCount</PropertyName>
+              </ListItem>
+              <ListItem>
+                <PropertyName>FileRetryIntervalInSec</PropertyName>
+              </ListItem>
+              <ListItem>
+                <PropertyName>MaxDuration</PropertyName>
+              </ListItem>
+              <ListItem>
+                <PropertyName>SkipMovePreExisting</PropertyName>
+              </ListItem>
+              <ListItem>
+                <PropertyName>TransferType</PropertyName>
+              </ListItem>
+              <ListItem>
+                <Label>SourceCredential Username</Label>
+                <ScriptBlock>$_.SourceCredential.Username</ScriptBlock>
+              </ListItem>
+              <ListItem>
+                <Label>SourceCredential Domain</Label>
+                <ScriptBlock>$_.SourceCredential.Domain</ScriptBlock>
+              </ListItem>
+              <ListItem>
+                <Label>SourceCredential Timestamp</Label>
+                <ScriptBlock>$_.SourceCredential.Timestamp</ScriptBlock>
+              </ListItem>
+              <ListItem>
+                <Label>DestinationCredential Username</Label>
+                <ScriptBlock>$_.DestinationCredential.Username</ScriptBlock>
+              </ListItem>
+              <ListItem>
+                <Label>DestinationCredential Domain</Label>
+                <ScriptBlock>$_.DestinationCredential.Domain</ScriptBlock>
+              </ListItem>
+              <ListItem>
+                <Label>DestinationCredential Timestamp</Label>
+                <ScriptBlock>$_.DestinationCredential.Timestamp</ScriptBlock>
+              </ListItem>
+              <ListItem>
+                <Label>SourceHost Username</Label>
+                <PropertyName>SourceHostUsername</PropertyName>
+              </ListItem>
+              <ListItem>
+                 <Label>Override TransferValidation</Label>
+                 <PropertyName>OverrideTransferValidation</PropertyName>
+              </ListItem>
+            </ListItems>
+          </ListEntry>
+        </ListEntries>
+      </ListControl>
+    </View>
+
+    <View>
+      <Name>TransferSummary</Name>
+      <ViewSelectedBy>
+        <TypeName>Microsoft.StorageMigration.Commands.TransferSummary</TypeName>
+      </ViewSelectedBy>
+      <TableControl>
+        <TableHeaders>
+          <TableColumnHeader>
+            <Label>Job Name</Label>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Source Device</Label>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Destination Device</Label>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>State</Label>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Size Total</Label>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Size Transferred</Label>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Files Total</Label>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Files Transferred</Label>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Started</Label>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Completed</Label>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Error</Label>
+          </TableColumnHeader>
+        </TableHeaders>
+        <TableRowEntries>
+          <TableRowEntry>
+            <TableColumnItems>
+              <TableColumnItem>
+                <PropertyName>Job</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>SourceDevice</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>DestinationDevice</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>TransferState</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <Alignment>Right</Alignment>
+                <ScriptBlock>
+                  $size = $_.SizeTotal
+                  if ($size -ne $null) {
+                  $postfixes = @("KB", "MB", "GB", "TB", "PB")
+                  for ($i=0; $size -ge 1024 -and $i -lt $postfixes.Length - 1; $i++) { $size = $size / 1024; }
+                  "" + [System.Math]::Round($size,2) + " " + $postfixes[$i];
+                  }
+                </ScriptBlock>
+              </TableColumnItem>
+              <TableColumnItem>
+                <Alignment>Right</Alignment>
+                <ScriptBlock>
+                  $size = $_.SizeTransferred
+                  if ($size -ne $null) {
+                  $postfixes = @("KB", "MB", "GB", "TB", "PB")
+                  for ($i=0; $size -ge 1024 -and $i -lt $postfixes.Length - 1; $i++) { $size = $size / 1024; }
+                  "" + [System.Math]::Round($size,2) + " " + $postfixes[$i];
+                  }
+                </ScriptBlock>
+              </TableColumnItem>
+              <TableColumnItem>
+                <Alignment>Right</Alignment>
+                <PropertyName>FilesTotal</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <Alignment>Right</Alignment>
+                <PropertyName>FilesTransferred</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>Started</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>Completed</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <ScriptBlock>
+                  if ($_.ErrorCode -ne $null)
+                  {
+                      $_.ErrorCode
+                  }
+                </ScriptBlock>
+              </TableColumnItem>
+            </TableColumnItems>
+          </TableRowEntry>
+        </TableRowEntries>
+      </TableControl>
+    </View>
+
+    <View>
+      <Name>TransferSMBDetail</Name>
+      <ViewSelectedBy>
+        <TypeName>Microsoft.StorageMigration.Commands.TransferSMBDetail</TypeName>
+      </ViewSelectedBy>
+      <TableControl>
+        <TableHeaders>
+          <TableColumnHeader>
+            <Label>Job Name</Label>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Source Device</Label>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Share</Label>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Path</Label>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>State</Label>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Started</Label>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Completed</Label>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Error</Label>
+          </TableColumnHeader>
+        </TableHeaders>
+        <TableRowEntries>
+          <TableRowEntry>
+            <TableColumnItems>
+              <TableColumnItem>
+                <PropertyName>Job</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>SourceDevice</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>EndpointName</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>Path</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>TransferState</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>Started</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>Completed</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <ScriptBlock>
+                  if ($_.ErrorCode -ne $null)
+                  {
+                      $_.ErrorCode
+                  }
+                </ScriptBlock>
+              </TableColumnItem>
+            </TableColumnItems>
+          </TableRowEntry>
+        </TableRowEntries>
+      </TableControl>
+    </View>
+
+    <View>
+        <Name>TransferDFSNDetail</Name>
+        <ViewSelectedBy>
+            <TypeName>Microsoft.StorageMigration.Commands.TransferDFSNDetail</TypeName>
+        </ViewSelectedBy>
+        <TableControl>
+            <TableHeaders>
+                <TableColumnHeader>
+                    <Label>Job Name</Label>
+                </TableColumnHeader>
+                <TableColumnHeader>
+                    <Label>Source Device</Label>
+                </TableColumnHeader>
+                <TableColumnHeader>
+                    <Label>Share</Label>
+                </TableColumnHeader>
+                <TableColumnHeader>
+                    <Label>Path</Label>
+                </TableColumnHeader>
+                <TableColumnHeader>
+                    <Label>State</Label>
+                </TableColumnHeader>
+                <TableColumnHeader>
+                    <Label>Started</Label>
+                </TableColumnHeader>
+                <TableColumnHeader>
+                    <Label>Completed</Label>
+                </TableColumnHeader>
+                <TableColumnHeader>
+                    <Label>Error</Label>
+                </TableColumnHeader>
+            </TableHeaders>
+            <TableRowEntries>
+                <TableRowEntry>
+                    <TableColumnItems>
+                        <TableColumnItem>
+                            <PropertyName>Job</PropertyName>
+                        </TableColumnItem>
+                        <TableColumnItem>
+                            <PropertyName>SourceDevice</PropertyName>
+                        </TableColumnItem>
+                        <TableColumnItem>
+                            <PropertyName>EndpointName</PropertyName>
+                        </TableColumnItem>
+                        <TableColumnItem>
+                            <PropertyName>Path</PropertyName>
+                        </TableColumnItem>
+                        <TableColumnItem>
+                            <PropertyName>TransferState</PropertyName>
+                        </TableColumnItem>
+                        <TableColumnItem>
+                            <PropertyName>Started</PropertyName>
+                        </TableColumnItem>
+                        <TableColumnItem>
+                            <PropertyName>Completed</PropertyName>
+                        </TableColumnItem>
+                        <TableColumnItem>
+                            <ScriptBlock>
+                                if ($_.ErrorCode -ne $null)
+                                {
+                                $_.ErrorCode
+                                }
+                            </ScriptBlock>
+                        </TableColumnItem>
+                    </TableColumnItems>
+                </TableRowEntry>
+            </TableRowEntries>
+        </TableControl>
+    </View>
+
+    <View>
+      <Name>TransferFileDetail</Name>
+      <ViewSelectedBy>
+        <TypeName>Microsoft.StorageMigration.Commands.TransferFileDetail</TypeName>
+      </ViewSelectedBy>
+      <ListControl>
+        <ListEntries>
+          <ListEntry>
+            <ListItems>
+              <ListItem>
+                <PropertyName>Job</PropertyName>
+              </ListItem>
+              <ListItem>
+                <PropertyName>ComputerName</PropertyName>
+              </ListItem>
+              <ListItem>
+                <PropertyName>Name</PropertyName>
+              </ListItem>
+              <ListItem>
+                <PropertyName>Path</PropertyName>
+              </ListItem>
+              <ListItem>
+                <PropertyName>Type</PropertyName>
+              </ListItem>
+              <ListItem>
+                <Label>Size</Label>
+                <ScriptBlock>
+                  $size = $_.Size
+                  if ($size -ne $null) {
+                  $postfixes = @("B", "KB", "MB", "GB", "TB", "PB")
+                  for ($i=0; $size -ge 1024 -and $i -lt $postfixes.Length - 1; $i++) { $size = $size / 1024; }
+                  "" + [System.Math]::Round($size,2) + " " + $postfixes[$i];
+                  }
+                </ScriptBlock>
+              </ListItem>
+              <ListItem>
+                <PropertyName>Attributes</PropertyName>
+              </ListItem>
+              <ListItem>
+                <PropertyName>Created</PropertyName>
+              </ListItem>
+              <ListItem>
+                <PropertyName>LastAccessed</PropertyName>
+              </ListItem>
+              <ListItem>
+                <PropertyName>LastModified</PropertyName>
+              </ListItem>
+              <ListItem>
+                <PropertyName>Owner</PropertyName>
+              </ListItem>
+              <ListItem>
+                <PropertyName>ACL</PropertyName>
+              </ListItem>
+              <ListItem>
+                <PropertyName>Error</PropertyName>
+              </ListItem>
+              <ListItem>
+                <PropertyName>Checksum</PropertyName>
+              </ListItem>
+              <ListItem>
+                <PropertyName>IsSourceReparsePoint</PropertyName>
+              </ListItem>
+            </ListItems>
+          </ListEntry>
+        </ListEntries>
+      </ListControl>
+    </View>
+
+    <View>
+      <Name>TransferVolumeDetail</Name>
+      <ViewSelectedBy>
+        <TypeName>Microsoft.StorageMigration.Commands.TransferVolumeDetail</TypeName>
+      </ViewSelectedBy>
+      <TableControl>
+        <TableRowEntries>
+          <TableRowEntry>
+            <TableColumnItems>
+              <TableColumnItem>
+                <PropertyName>Job</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>ComputerName</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>TransferDestination</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>Volume</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>SizeInBytes</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>AvailableBytes</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>HasTAFSEnabled</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>MinimumFreeSpace</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>HasIoPaused</PropertyName>
+              </TableColumnItem>
+            </TableColumnItems>
+          </TableRowEntry>
+        </TableRowEntries>
+      </TableControl>
+    </View>
+
+    <View>
+      <Name>CutoverConfiguration</Name>
+      <ViewSelectedBy>
+        <TypeName>Microsoft.StorageMigration.Commands.CutoverConfiguration</TypeName>
+      </ViewSelectedBy>
+      <ListControl>
+        <ListEntries>
+          <ListEntry>
+            <ListItems>
+              <ListItem>
+                <Label>Job</Label>
+                <PropertyName>Name</PropertyName>
+              </ListItem>
+              <ListItem>
+                <Label>SourceCredential Username</Label>
+                <ScriptBlock>$_.SourceCredential.Username</ScriptBlock>
+              </ListItem>
+              <ListItem>
+                <Label>SourceCredential Domain</Label>
+                <ScriptBlock>$_.SourceCredential.Domain</ScriptBlock>
+              </ListItem>
+              <ListItem>
+                <Label>SourceCredential Timestamp</Label>
+                <ScriptBlock>$_.SourceCredential.Timestamp</ScriptBlock>
+              </ListItem>
+              <ListItem>
+                <Label>DestinationCredential Username</Label>
+                <ScriptBlock>$_.DestinationCredential.Username</ScriptBlock>
+              </ListItem>
+              <ListItem>
+                <Label>DestinationCredential Domain</Label>
+                <ScriptBlock>$_.DestinationCredential.Domain</ScriptBlock>
+              </ListItem>
+              <ListItem>
+                <Label>DestinationCredential Timestamp</Label>
+                <ScriptBlock>$_.DestinationCredential.Timestamp</ScriptBlock>
+              </ListItem>
+              <ListItem>
+                <Label>ADCredential Username</Label>
+                <ScriptBlock>$_.ADCredential.Username</ScriptBlock>
+              </ListItem>
+              <ListItem>
+                <Label>ADCredential Domain</Label>
+                <ScriptBlock>$_.ADCredential.Domain</ScriptBlock>
+              </ListItem>
+              <ListItem>
+                <Label>ADCredential Timestamp</Label>
+                <ScriptBlock>$_.ADCredential.Timestamp</ScriptBlock>
+              </ListItem>
+              <ListItem>
+                <Label>SourceHost Username</Label>
+                <PropertyName>SourceHostUsername</PropertyName>
+              </ListItem>
+              <ListItem>
+                <Label>Override CutoverValidation</Label>
+                <PropertyName>OverrideCutoverValidation</PropertyName>
+              </ListItem>
+            </ListItems>
+          </ListEntry>
+        </ListEntries>
+      </ListControl>
+    </View>
+
+  </ViewDefinitions>
+</Configuration>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Types>
+  <Type>
+    <Name>Microsoft.Management.Infrastructure.CimInstance#ROOT/StandardCimv2/MSFT_NetQosTrafficClassSettingData</Name>
+    <Members>
+      <ScriptProperty>
+        <Name>Name</Name>
+        <GetScriptBlock>
+          [System.String]($this.PSBase.CimInstanceProperties['Name'].Value)
+        </GetScriptBlock>
+      </ScriptProperty>
+      <ScriptProperty>
+        <Name>Algorithm</Name>
+        <GetScriptBlock>
+          [Microsoft.PowerShell.Cmdletization.GeneratedTypes.NetQosTrafficClass.Algorithm]($this.PSBase.CimInstanceProperties['Algorithm'].Value)
+        </GetScriptBlock>
+        <SetScriptBlock>
+          param([Microsoft.PowerShell.Cmdletization.GeneratedTypes.NetQosTrafficClass.Algorithm]$value)
+          $this.PSBase.CimInstanceProperties['Algorithm'].Value = [System.Byte]$value
+        </SetScriptBlock>
+      </ScriptProperty>
+      <ScriptProperty>
+        <Name>BandwidthPercentage</Name>
+        <GetScriptBlock>
+          $this.PSBase.CimInstanceProperties['BandwidthPercentage'].Value
+        </GetScriptBlock>
+        <SetScriptBlock>
+          param($value)
+          $this.PSBase.CimInstanceProperties['BandwidthPercentage'].Value = $value
+        </SetScriptBlock>
+      </ScriptProperty>
+      <ScriptProperty>
+        <Name>Priority</Name>
+        <GetScriptBlock>
+          [System.Byte[]]($this.PSBase.CimInstanceProperties['Priority'].Value)
+        </GetScriptBlock>
+        <SetScriptBlock>
+          param([System.Byte[]]$value)
+          $this.PSBase.CimInstanceProperties['Priority'].Value = $value
+        </SetScriptBlock>
+      </ScriptProperty>
+      <ScriptProperty>
+        <Name>PriorityFriendly</Name>
+        <GetScriptBlock>
+          Import-Module NetAdapter\MSFT_NetAdapterQos.Format.Helper.psm1
+          $out = Format-NetAdapterQosIntegerArray $this.PSBase.CimInstanceProperties['Priority'].Value
+          [System.String]$out
+        </GetScriptBlock>
+      </ScriptProperty>
+      <ScriptProperty>
+        <Name>PolicySet</Name>
+        <GetScriptBlock>
+            [Microsoft.PowerShell.Cmdletization.GeneratedTypes.NetQosTrafficClass.PolicySet]($this.PSBase.CimInstanceProperties['PolicySet'].Value)
+        </GetScriptBlock>
+      </ScriptProperty>        
+      <ScriptProperty>
+        <Name>InterfaceIndex</Name>
+        <GetScriptBlock>
+          $this.PSBase.CimInstanceProperties['InterfaceIndex'].Value
+        </GetScriptBlock>
+      </ScriptProperty>
+      <ScriptProperty>
+        <Name>InterfaceAlias</Name>
+        <GetScriptBlock>
+            Import-Module NetAdapter\NetAdapter.Format.Helper.psm1
+            Format-AdapterInstanceID $this.PSBase.CimInstanceProperties['InterfaceAlias'].Value 25
+        </GetScriptBlock>
+      </ScriptProperty>        
+      <AliasProperty>
+        <Name>Bandwidth</Name>
+        <ReferencedMemberName>BandwidthPercentage</ReferencedMemberName>
+      </AliasProperty>
+    </Members>
+  </Type>
+</Types>

@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?Copyright (c) Microsoft Corporation. All rights reserved.?>
+<Rules>
+  <Group name="$(GroupMemory)">
+    <Rule name="$(RuleMemoryTable)">
+      <Step select="/Report/Section[@name='tracerptMemory']" fatal="true">
+        <Exists>
+          <Otherwise>
+            <Insert select=".">
+              <Node>
+                <Table name="TableWorkingSet" topic="process" key="500">
+                  <Summary key="500" find="top" field="private" topic="memory">
+                    <Data name="process" label="topMemoryInstance"/>
+                    <Data name="private" units="KB" label="topPrivate" format="#,##0"/>
+                  </Summary>
+                  <Header>
+                    <Threshold type="top" field="count" value="10"/>
+                    <Sort field="private" type="number" order="descending"/>
+                    <Data name="process" class="string"/>
+                    <Data name="pid" class="string"/>
+                    <Data name="memoryVirtual" units="KB" class="number" format="#,##0"/>
+                    <Data name="memoryWorkingSet" units="KB" class="number" format="#,##0"/>
+                    <Data name="shareable" units="KB" class="number" format="#,##0"/>
+                    <Data name="private" units="KB" class="number" format="#,##0"/>
+                  </Header>
+                </Table>
+              </Node>
+            </Insert>
+          </Otherwise>
+        </Exists>
+      </Step>
+      <Step select="/Report/Section/Table[@name='memoryPidMap']/Item[not(Data[@name='instance'] = '_Total')]" sortType="all">
+        <Exists>
+          <Otherwise>
+            <Variable name="instance" expression="Data[@name='instance']"/>
+            <Insert select="/Report/Section[@name='tracerptMemory']/Table[@name='TableWorkingSet']">
+              <Node document="{_document}" select="/Report/Section/Table[@name='memoryPidMap']/Item[Data[@name='instance'] = '{instance}']"/>
+            </Insert>
+          </Otherwise>
+        </Exists>
+      </Step>
+      <Step select="/Report/Section/Table[@name='memoryVirtual']/Item[not(Data[@name='instance'] = '_Total')]" sortType="all">
+        <Exists>
+          <Otherwise>
+            <Variable name="instance" expression="Data[@name='instance']"/>
+            <Insert select="/Report/Section[@name='tracerptMemory']/Table[@name='TableWorkingSet']/Item[Data[@name='instance'] = '{instance}']">
+              <Node document="{_document}" select="/Report/Section/Table[@name='memoryVirtual']/Item[Data[@name='instance'] = '{instance}']/Data[@name='max']"/>
+            </Insert>
+          </Otherwise>
+        </Exists>
+      </Step>
+      <Step select="/Report/Section/Table[@name='memoryWorkingSet']/Item[not(Data[@name='instance'] = '_Total')]" sortType="all">
+        <Exists>
+          <Otherwise>
+            <Variable name="instance" expression="Data[@name='instance']"/>
+            <Insert select="/Report/Section[@name='tracerptMemory']/Table[@name='TableWorkingSet']/Item[Data[@name='instance'] = '{instance}']">
+              <Node document="{_document}" select="/Report/Section/Table[@name='memoryWorkingSet']/Item[Data[@name='instance'] = '{instance}']/Data[@name='max']"/>
+            </Insert>
+          </Otherwise>
+        </Exists>
+      </Step>
+      <Step select="/Report/Section/Table[@name='memoryWorkingSetPrivate']/Item[not(Data[@name='instance'] = '_Total')]" sortType="all">
+        <Exists>
+          <Otherwise>
+            <Variable name="instance" expression="Data[@name='instance']"/>
+            <Insert select="/Report/Section[@name='tracerptMemory']/Table[@name='TableWorkingSet']/Item[Data[@name='instance'] = '{instance}']">
+              <Node document="{_document}" select="/Report/Section/Table[@name='memoryWorkingSetPrivate']/Item[Data[@name='instance'] = '{instance}']/Data[@name='max']"/>
+            </Insert>
+          </Otherwise>
+        </Exists>
+      </Step>
+      <Step select="/Report/Section/Table[@name='TableWorkingSet']/Item" sortType="all">
+        <Exists>
+          <Otherwise>
+            <Variable name="pid" expression="Data[2]"/>
+            <Variable name="commit" expression="Data[3] div 1024"/>
+            <Variable name="workingSet" expression="Data[4] div 1024"/>
+            <Variable name="private" expression="Data[5] div 1024"/>
+            <Variable name="shared" expression="{workingSet} - {private}"/>
+            <Delete select="Data[@name='max']"/>
+            <Insert select=".">
+              <Node>
+                <Data name="pid">{pid}</Data>
+                <Data name="memoryVirtual">{commit}</Data>
+                <Data name="memoryWorkingSet">{workingSet}</Data>
+                <Data name="shareable">{shared}</Data>
+                <Data name="private">{private}</Data>
+              </Node>
+            </Insert>
+            <Insert select="Data[@name='instance']">
+              <Attribute name="name" value="process"/>
+            </Insert>
+          </Otherwise>
+        </Exists>
+      </Step>
+      <Step select="/Report/Section/Table[@name='memoryWorkingSet']">
+        <Exists>
+          <Otherwise>
+            <Delete select="."/>
+          </Otherwise>
+        </Exists>
+      </Step>
+      <Step select="/Report/Section/Table[@name='memoryWorkingSetPrivate']">
+        <Exists>
+          <Otherwise>
+            <Delete select="."/>
+          </Otherwise>
+        </Exists>
+      </Step>
+      <Step select="/Report/Section/Table[@name='memoryVirtual']">
+        <Exists>
+          <Otherwise>
+            <Delete select="."/>
+          </Otherwise>
+        </Exists>
+      </Step>
+    </Rule>
+    <Rule name="$(RuleReduceHandleTable)" enabled="true">
+      <Step select="/Report/Section/Table[@name='handleCount']" fatal="true">
+        <Exists>
+          <Otherwise>
+            <Insert select="Header/Sort">
+              <Node axis="preceding-sibling">
+                <Threshold type="top" field="count" value="10"/>
+                <Sort field="mean" type="number" order="descending"/>
+              </Node>
+            </Insert>
+          </Otherwise>
+        </Exists>
+      </Step>
+    </Rule>
+    <Rule name="$(RuleFreeSystemPTE)" enabled="true">
+      <Step select="/Report/Section[@name='tracerptMemory']/Table[@name='memory']/Item[Data[@name='counter']='Free System Page Table Entries']" fatal="true">
+        <Variable name="freesyspte" expression="Data[@name='mean']"/>
+        <Exists>
+          <When expression="({freesyspte} &lt; 5000) or ({freesyspte} &lt; 10000 and {freesyspte} &gt;= 5000)">
+            <Variable name="internalruleindex" expression="{internalruleindex} + 1"/>
+            <Variable name="RuleFreeSystemPTE_symptom">$(WarnFreeSystemPTE_symptom)</Variable>
+            <Variable name="RuleFreeSystemPTE_cause">$(WarnFreeSystemPTE_cause)</Variable>
+            <Variable name="RuleFreeSystemPTE_details">$(WarnFreeSystemPTE_details)</Variable>
+            <Variable name="RuleFreeSystemPTE_res1">$(WarnFreeSystemPTE_res1)</Variable>
+            <Variable name="RuleFreeSystemPTE_res2">$(WarnFreeSystemPTE_res2)</Variable>
+            <Variable name="RuleFreeSystemPTE_related1">$(WarnFreeSystemPTE_related1)</Variable>
+            <Warning tag="RuleFreeSystemPTE_{internalruleindex}" select="Data[@name='mean']" table="/Report/Section[@name='advice']/Table[@name='warning']">
+              <Item>
+                <Data name="symptom" img="warning" link="RuleFreeSystemPTE_{internalruleindex}" message="RuleFreeSystemPTE_{internalruleindex}" translate="value">{RuleFreeSystemPTE_symptom}</Data>
+                <Data name="cause" message="RuleFreeSystemPTE_{internalruleindex}">{RuleFreeSystemPTE_cause}</Data>
+                <Data name="details" message="RuleFreeSystemPTE_{internalruleindex}">{RuleFreeSystemPTE_details}</Data>
+                <Data name="resolution" message="RuleFreeSystemPTE_{internalruleindex}">{RuleFreeSystemPTE_res1}</Data>
+                <Data name="resolution" message="RuleFreeSystemPTE_{internalruleindex}">{RuleFreeSystemPTE_res2}</Data>
+                <Data name="related" url="http://go.microsoft.com/fwlink/?LinkID=70119" message="RuleFreeSystemPTE_{internalruleindex}">{RuleFreeSystemPTE_related1}</Data>
+              </Item>
+            </Warning>
+          </When>
+        </Exists>
+      </Step>
+    </Rule>
+    <Rule name="$(RuleCheckAvailMemory)" enabled="true">
+      <Step select="/Report/Section/Table[@name='memory']/Item[Data[@name='counter']='Available Bytes']">
+        <Variable name="avamem" expression="Data[@name='mean']"/>
+        <Variable name="availablemem" expression="{avamem} div 1048576"/>
+        <Variable name="prettyavailablemem" expression="round('{availablemem}')"/>
+        <Variable name="ratiomem" expression="{availablemem} div {physicalmem}"/>
+        <Variable name="mem" expression="format-number({ratiomem} * 100,'0')"/>
+        <Exists>
+          <Otherwise/>
+        </Exists>
+      </Step>
+      <Step select="/Report/Section[@name='tracerptDisk']/Table[@name='hotFile']/Item" sortType="all">
+        <Variable name="hotfilename" expression="Data[@name='file']"/>
+        <Exists>
+          <When expression="{mem} &lt;= 20 and contains('{hotfilename}', 'pagefile')">
+            <Variable name="internalruleindex" expression="{internalruleindex} + 1"/>
+            <Variable name="rulePaging_symptom">$(WarnPaging_symptom)</Variable>
+            <Variable name="rulePaging_cause">$(WarnPaging_cause)</Variable>
+            <Variable name="rulePaging_details">$(WarnPaging_details)</Variable>
+            <Variable name="rulePaging_res1">$(WarnPaging_res1)</Variable>
+            <Variable name="rulePaging_related1">$(WarnPaging_related1)</Variable>
+            <Warning tag="rulePaging_{internalruleindex}" select="/Report/Section[@name='tracerptDisk']/Table[@name='hotFile']" table="/Report/Section[@name='advice']/Table[@name='warning']">
+              <Item>
+                <Data name="symptom" img="warning" link="rulePaging_{internalruleindex}" message="rulePaging_{internalruleindex}" translate="value">{rulePaging_symptom}</Data>
+                <Data name="cause" message="rulePaging_{internalruleindex}">{rulePaging_cause}</Data>
+                <Data name="details" message="rulePaging_{internalruleindex}">{rulePaging_details}</Data>
+                <Data name="resolution" message="rulePaging_{internalruleindex}">{rulePaging_res1}</Data>
+                <Data name="related" url="http://go.microsoft.com/fwlink/?LinkID=70118">{rulePaging_related1}</Data>
+              </Item>
+            </Warning>
+          </When>
+        </Exists>
+      </Step>
+    </Rule>
+  </Group>
+  <StringTable>
+    <String ID="GroupMemory">Memory</String>
+    <String ID="RuleCheckAvailMemory" loc.comment="Name of rule seen in WPDC">Check available memory</String>
+    <String ID="RuleMemoryTable">Memory Utilization Table</String>
+    <String ID="RuleReduceHandleTable">Adjust Handle Table</String>
+    <String ID="RuleFreeSystemPTE">Check on System Page Table Entries Free</String>
+    <String ID="WarnFreeSystemPTE_symptom" loc.comment="Symptom string for warning message: WarnFreeSystemPTE">Free System Page Table Entries (PTE) Performance counter average is low</String>
+    <String ID="WarnFreeSystemPTE_cause" loc.comment="Cause string for warning message: WarnFreeSystemPTE">Too many System PTE are in use.</String>
+    <String ID="WarnFreeSystemPTE_details" loc.comment="Details string for warning message: WarnFreeSystemPTE">There are {freesyspte} free entries.</String>
+    <String ID="WarnFreeSystemPTE_res1" loc.comment="Resolution string for warning message: WarnFreeSystemPTE">1. Verify the condition still exists.</String>
+    <String ID="WarnFreeSystemPTE_res2" loc.comment="Resolution string for warning message: WarnFreeSystemPTE">2. Close any unused applications.</String>
+    <String ID="WarnFreeSystemPTE_related1" loc.comment="First resolution detail string for warning message: WarnFreeSystemPTE">Virtual Memory</String>
+    <String ID="WarnPaging_symptom" loc.comment="Symptom string for warning message: WarnPaging">The system is experiencing excessive paging</String>
+    <String ID="WarnPaging_cause" loc.comment="Cause string for warning message: WarnPaging">Available memory on the system is low.</String>
+    <String ID="WarnPaging_details" loc.comment="Details string for warning message: WarnPaging">The total physical memory on the system is not capable of handling the load.</String>
+    <String ID="WarnPaging_res1" loc.comment="Resolution string for warning message: WarnPaging">Upgrade the physical memory or reduce system load</String>
+    <String ID="WarnPaging_related1">Memory Diagnosis</String>
+  </StringTable>
+</Rules>

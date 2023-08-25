@@ -1,0 +1,77 @@
+﻿<?xml version='1.0' encoding='utf-8' standalone='yes'?>
+<assembly
+    xmlns="urn:schemas-microsoft-com:asm.v3"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    manifestVersion="1.0"
+    >
+  <assemblyIdentity
+      language="neutral"
+      name="Microsoft-Windows-DHCPServerMigPlugin"
+      processorArchitecture="*"
+      publicKeyToken="$(Build.WindowsPublicKeyToken)"
+      version="0.0.0.0"
+      versionScope="nonSxS"
+      />
+  <migration
+      replacementSettingsVersion="2"
+      replacementVersionRange="6.2.*"
+      scope="Upgrade,SvrMig"
+      settingsVersion="2"
+      >
+    <migXml xmlns="">
+      <environment>
+        <variable name="DatabasePath">
+          <script>MigXmlHelper.GetStringContent("Registry", "HKLM\SYSTEM\CurrentControlSet\Services\DhcpServer\Parameters [DatabasePath]")</script>
+        </variable>
+      </environment>
+      <rules context="system">
+        <include>
+          <objectSet>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\DhcpServer\Parameters\ [ActivityLogFlag]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\DhcpServer\Parameters\ [APIProtocolSupport]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\DhcpServer\Parameters\ [BackupDatabasePath]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\DhcpServer\Parameters\ [BackupInterval]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\DhcpServer\Parameters\ [BootFileTable]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\DhcpServer\Parameters\ [DatabaseCleanupInterval]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\DhcpServer\Parameters\ [DatabaseName]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\DhcpServer\Parameters\ [DatabasePath]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\DhcpServer\Parameters\ [DbType]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\DhcpServer\Parameters\ [DebugFlag]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\DhcpServer\Parameters\ [DetectConflictRetries]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\DhcpServer\Parameters\ [DhcpLogDiskSpaceCheckInterval]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\DhcpServer\Parameters\ [DhcpLogFilePath]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\DhcpServer\Parameters\ [DhcpLogFilesMaxSize]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\DhcpServer\Parameters\ [DhcpLogMinSpaceOnDisk]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\DhcpServer\Parameters\ [IgnoreBroadcastFlag]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\DhcpServer\Parameters\ [MaxActiveThreads]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\DhcpServer\Parameters\AlternateDnsServer\* [*]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\DhcpServer\Parameters\ [MaxProcessingThreads]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\DhcpServer\Parameters\ [JetDatabaseMaxCacheSize]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\DhcpServer\Parameters\ [LLFEnableAllowList]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\DhcpServer\Parameters\ [LLFEnableDenyList]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\DhcpServer\Parameters\ [QuarantineGlobalOn]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\DhcpServer\Parameters\ [QuarantineDefaultFailure]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\DhcpServer\Parameters\ [DhcpFailoverConnectionRetryTime]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\DhcpServer\Parameters\ [DhcpFailoverLeaseDbQMaxSize]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\DhcpServer\Parameters\ [DhcpFailoverFreePacketPoolSize]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\DhcpServer\Parameters\ [DhcpFailoverMaxUnAckedLeaseUpds]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\DhcpServer\Parameters\ [DhcpFailoverMaxBndRecordPerPacket]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\DhcpServer\Parameters\ [DhcpFailoverReceiveTimer]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\DhcpServer\Parameters\ [DhcpFailoverAddrRebalacingTimeInt]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\DhcpServer\Parameters\ [DhcpFailoverPort]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\DhcpServer\Parameters\ [DhcpMsgSyncDeltaTime]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\DhcpServer\Parameters\ [DhcpFailoverTestHook]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\DhcpServer\ServicePrivateData\* [*]</pattern>
+            <pattern type="Registry">HKLM\System\CurrentControlSet\Services\DhcpServer\ [Start]</pattern>
+            <pattern type="File">%DatabasePath%\* [*]</pattern>
+          </objectSet>
+        </include>
+      </rules>
+      <plugin
+          classId="{f5e8de96-7f4d-4a29-be28-3943538d0340}"
+          file="$(runtime.system32)\DhcpSrvMigPlugin.dll"
+          />
+    </migXml>
+  </migration>
+</assembly>

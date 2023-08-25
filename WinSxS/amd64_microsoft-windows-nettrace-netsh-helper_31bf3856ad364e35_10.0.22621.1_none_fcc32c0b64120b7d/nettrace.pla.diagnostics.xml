@@ -1,0 +1,463 @@
+<?xml version="1.0"?>
+  <DataCollectorSet>
+    <Name>Network Diagnostics</Name>
+    <DisplayName>@%systemroot%\system32\nettrace.dll,#6908</DisplayName>
+    <Keyword>wireless</Keyword>
+    <Keyword>wired</Keyword>
+    <Keyword>nettrace</Keyword>
+    <Description>@%systemroot%\system32\nettrace.dll,#6909</Description>
+
+    <!-- RootPath and Subdirectory are overridden by netsh trace -->
+    <RootPath>%windir%\tracing</RootPath>
+    <Subdirectory></Subdirectory>
+    <SubdirectoryFormat>1</SubdirectoryFormat>
+
+    <Task>\Microsoft\Windows\NetTrace\GatherNetworkInfo</Task>
+    <TaskArguments>
+    </TaskArguments>
+    <TaskUserTextArguments>
+    </TaskUserTextArguments>
+    <TaskSetWorkingDirectory>-1</TaskSetWorkingDirectory>
+    <TaskRunAsSelf>-1</TaskRunAsSelf>
+    <UserAccount>System</UserAccount>
+    <Security>D:(A;;FA;;;SY)(A;;FA;;;BA)(A;;FA;;;S-1-5-21-1411029045-1427091228-2459915340-500)(A;;FR;;;LU)</Security>
+
+    <SegmentMaxSize>10</SegmentMaxSize>
+
+    <ConfigurationDataCollector>
+      <DataCollectorType>2</DataCollectorType>
+      <Name>SSOInfo</Name>
+      <FileName>config\SSOInfo</FileName>
+      <FileNameFormat>0</FileNameFormat>
+      <FileNameFormatPattern>
+      </FileNameFormatPattern>
+      <LogCircular>-1</LogCircular>
+      <LogOverwrite>-1</LogOverwrite>
+      <LatestOutputLocation>
+      </LatestOutputLocation>
+      <QueryNetworkAdapters>0</QueryNetworkAdapters>
+      <FileMaxCount>0</FileMaxCount>
+      <FileMaxTotalSize>0</FileMaxTotalSize>
+      <FileMaxRecursiveDepth>0</FileMaxRecursiveDepth>
+      <SystemStateFile>
+      </SystemStateFile>
+    </ConfigurationDataCollector>
+
+    <ConfigurationDataCollector>
+      <DataCollectorType>2</DataCollectorType>
+      <Name>UpgradeMigrationInfo</Name>
+      <FileName>config\upgMigInfo</FileName>
+      <FileNameFormat>0</FileNameFormat>
+      <FileNameFormatPattern/>
+      <LogOverwrite>-1</LogOverwrite>
+      <LogCircular>-1</LogCircular>
+      <LatestOutputLocation/>
+      <QueryNetworkAdapters>0</QueryNetworkAdapters>
+      <FileMaxCount>0</FileMaxCount>
+      <FileMaxTotalSize>0</FileMaxTotalSize>
+      <FileMaxRecursiveDepth>0</FileMaxRecursiveDepth>
+      <SystemStateFile/>
+    </ConfigurationDataCollector>
+
+    <ConfigurationDataCollector>
+      <DataCollectorType>2</DataCollectorType>
+      <Name>GPInfo</Name>
+      <FileName>config\GPInfo</FileName>
+      <FileNameFormat>0</FileNameFormat>
+      <FileNameFormatPattern>
+      </FileNameFormatPattern>
+      <LogCircular>-1</LogCircular>
+      <LogOverwrite>-1</LogOverwrite>
+      <LatestOutputLocation>
+      </LatestOutputLocation>
+      <QueryNetworkAdapters>0</QueryNetworkAdapters>
+      <File>%windir%\Wlansvc\policies\\</File>
+      <File>%windir%\Dot3svc\policies\\</File>
+      <FileMaxCount>0</FileMaxCount>
+      <FileMaxTotalSize>0</FileMaxTotalSize>
+      <FileMaxRecursiveDepth>0</FileMaxRecursiveDepth>
+      <SystemStateFile>
+      </SystemStateFile>
+    </ConfigurationDataCollector>
+
+    <ConfigurationDataCollector>
+      <DataCollectorType>2</DataCollectorType>
+      <Name>ConfigData</Name>
+      <FileName>config\ConfigData</FileName>
+      <FileNameFormat>0</FileNameFormat>
+      <FileNameFormatPattern>
+      </FileNameFormatPattern>
+      <LogCircular>-1</LogCircular>
+      <LogOverwrite>-1</LogOverwrite>
+      <LatestOutputLocation>
+      </LatestOutputLocation>
+      <QueryNetworkAdapters>0</QueryNetworkAdapters>
+      <File>%SystemDrive%\ProgramData\Microsoft\Wlansvc\\</File>
+      <File>%SystemDrive%\ProgramData\Microsoft\Dot3svc\\</File>
+      <FileMaxCount>0</FileMaxCount>
+      <FileMaxTotalSize>0</FileMaxTotalSize>
+      <FileMaxRecursiveDepth>0</FileMaxRecursiveDepth>
+      <SystemStateFile>
+      </SystemStateFile>
+    </ConfigurationDataCollector>
+
+    <ConfigurationDataCollector>
+        <Name>Operating System</Name>
+        <FileName>temp\Operating System</FileName>
+        <FileNameFormat>1</FileNameFormat>
+        <LogOverwrite>-1</LogOverwrite>
+        <LogCircular>-1</LogCircular>
+        <ManagementQuery>root\cimv2:SELECT Caption, Version, BuildNumber, BuildType FROM Win32_OperatingSystem</ManagementQuery>
+        <ManagementQuery>root\cimv2:SELECT Manufacturer, Model, UserName FROM Win32_ComputerSystem</ManagementQuery>
+        <ManagementQuery>root\wmi:SELECT PowerOnline FROM BatteryStatus</ManagementQuery>
+    </ConfigurationDataCollector>
+
+    <ConfigurationDataCollector>
+      <Name>System Services</Name>
+      <FileName>temp\System Services</FileName>
+      <FileNameFormat>1</FileNameFormat>
+      <LogOverwrite>-1</LogOverwrite>
+      <LogCircular>-1</LogCircular>
+      <ManagementQuery>root\cimv2:SELECT __Relpath, Name, Caption, Description, DisplayName, PathName, Started, ExitCode, State, ServiceSpecificExitCode FROM Win32_Service</ManagementQuery>
+    </ConfigurationDataCollector>
+
+    <PerformanceCounterDataCollector>
+      <Name>Performance Counter</Name>
+      <FileName>temp\Performance Counter</FileName>
+      <FileNameFormat>1</FileNameFormat>
+      <LogOverwrite>-1</LogOverwrite>
+      <LogCircular>-1</LogCircular>
+      <SampleInterval>1</SampleInterval>
+      <Counter>\Network Interface(*)\*</Counter>
+      <Counter>\UDPv4\*</Counter>
+      <Counter>\TCPv4\*</Counter>
+      <Counter>\IPv4\*</Counter>
+      <Counter>\UDPV6\*</Counter>
+      <Counter>\TCPv6\*</Counter>
+      <Counter>\IPv6\*</Counter>
+    </PerformanceCounterDataCollector>
+
+
+    <ConfigurationDataCollector>
+      <Name>NetworkAdapters</Name>
+      <FileName>temp\NetworkAdapters</FileName>
+      <FileNameFormat>1</FileNameFormat>
+      <LogOverwrite>-1</LogOverwrite>
+      <LogCircular>-1</LogCircular>
+      <QueryNetworkAdapters>-1</QueryNetworkAdapters>
+    </ConfigurationDataCollector>
+
+    <ConfigurationDataCollector>
+      <DataCollectorType>2</DataCollectorType>
+      <Name>WirelessFileVersions</Name>
+      <FileName>temp\fileversions.wireless</FileName>
+      <FileNameFormat>1</FileNameFormat>
+      <LogAppend>0</LogAppend>
+      <LogCircular>-1</LogCircular>
+      <LogOverwrite>-1</LogOverwrite>
+      <LatestOutputLocation>
+      </LatestOutputLocation>
+      <QueryNetworkAdapters>0</QueryNetworkAdapters>
+      <ManagementQuery>root\cimv2: SELECT Name, Version from CIM_Datafile Where Path = '\\windows\\system32\\' AND FileName = 'onex'</ManagementQuery>
+      <ManagementQuery>root\cimv2: SELECT Name, Version from CIM_Datafile Where Path = '\\windows\\system32\\' AND FileName = 'l2nacp'</ManagementQuery>
+      <ManagementQuery>root\cimv2: SELECT Name, Version from CIM_Datafile Where Path = '\\windows\\system32\\' AND FileName = 'wlanapi'</ManagementQuery>
+      <ManagementQuery>root\cimv2: SELECT Name, Version from CIM_Datafile Where Path = '\\windows\\system32\\' AND FileName = 'wlancfg'</ManagementQuery>
+      <ManagementQuery>root\cimv2: SELECT Name, Version from CIM_Datafile Where Path = '\\windows\\system32\\' AND FileName = 'wlanconn'</ManagementQuery>
+      <ManagementQuery>root\cimv2: SELECT Name, Version from CIM_Datafile Where Path = '\\windows\\system32\\' AND FileName = 'wlandlg'</ManagementQuery>
+      <ManagementQuery>root\cimv2: SELECT Name, Version from CIM_Datafile Where Path = '\\windows\\system32\\' AND FileName = 'wlanext'</ManagementQuery>
+      <ManagementQuery>root\cimv2: SELECT Name, Version from CIM_Datafile Where Path = '\\windows\\system32\\' AND FileName = 'wlangpui'</ManagementQuery>
+      <ManagementQuery>root\cimv2: SELECT Name, Version from CIM_Datafile Where Path = '\\windows\\system32\\' AND FileName = 'wlanhc'</ManagementQuery>
+      <ManagementQuery>root\cimv2: SELECT Name, Version from CIM_Datafile Where Path = '\\windows\\system32\\' AND FileName = 'wlanhlp'</ManagementQuery>
+      <ManagementQuery>root\cimv2: SELECT Name, Version from CIM_Datafile Where Path = '\\windows\\system32\\' AND FileName = 'wlanmm'</ManagementQuery>
+      <ManagementQuery>root\cimv2: SELECT Name, Version from CIM_Datafile Where Path = '\\windows\\system32\\' AND FileName = 'wlanmmhc'</ManagementQuery>
+      <ManagementQuery>root\cimv2: SELECT Name, Version from CIM_Datafile Where Path = '\\windows\\system32\\' AND FileName = 'wlanmsm'</ManagementQuery>
+      <ManagementQuery>root\cimv2: SELECT Name, Version from CIM_Datafile Where Path = '\\windows\\system32\\' AND FileName = 'wlanpref'</ManagementQuery>
+      <ManagementQuery>root\cimv2: SELECT Name, Version from CIM_Datafile Where Path = '\\windows\\system32\\' AND FileName = 'wlansec'</ManagementQuery>
+      <ManagementQuery>root\cimv2: SELECT Name, Version from CIM_Datafile Where Path = '\\windows\\system32\\' AND FileName = 'wlansvc'</ManagementQuery>
+      <ManagementQuery>root\cimv2: SELECT Name, Version from CIM_Datafile Where Path = '\\windows\\system32\\' AND FileName = 'wlanui'</ManagementQuery>
+      <ManagementQuery>root\cimv2: SELECT Name, Version from CIM_Datafile Where Path = '\\windows\\system32\\' AND FileName = 'wlgpclnt'</ManagementQuery>
+      <FileMaxCount>0</FileMaxCount>
+      <FileMaxTotalSize>0</FileMaxTotalSize>
+      <FileMaxRecursiveDepth>0</FileMaxRecursiveDepth>
+      <RegistryMaxRecursiveDepth>0</RegistryMaxRecursiveDepth>
+      <SystemStateFile>
+      </SystemStateFile>
+    </ConfigurationDataCollector>
+
+    <ConfigurationDataCollector>
+      <DataCollectorType>2</DataCollectorType>
+      <Name>WiredFileVersions</Name>
+      <FileName>temp\fileversions.wired</FileName>
+      <FileNameFormat>1</FileNameFormat>
+      <LogAppend>0</LogAppend>
+      <LogCircular>-1</LogCircular>
+      <LogOverwrite>-1</LogOverwrite>
+      <LatestOutputLocation>
+      </LatestOutputLocation>
+      <QueryNetworkAdapters>0</QueryNetworkAdapters>
+      <ManagementQuery>root\cimv2: SELECT Name, Version from CIM_Datafile Where Path = '\\windows\\system32\\' AND FileName = 'onex'</ManagementQuery>
+      <ManagementQuery>root\cimv2: SELECT Name, Version from CIM_Datafile Where Path = '\\windows\\system32\\' AND FileName = 'dot3api'</ManagementQuery>
+      <ManagementQuery>root\cimv2: SELECT Name, Version from CIM_Datafile Where Path = '\\windows\\system32\\' AND FileName = 'dot3cfg'</ManagementQuery>
+      <ManagementQuery>root\cimv2: SELECT Name, Version from CIM_Datafile Where Path = '\\windows\\system32\\' AND FileName = 'dot3dlg'</ManagementQuery>
+      <ManagementQuery>root\cimv2: SELECT Name, Version from CIM_Datafile Where Path = '\\windows\\system32\\' AND FileName = 'dot3gpclnt'</ManagementQuery>
+      <ManagementQuery>root\cimv2: SELECT Name, Version from CIM_Datafile Where Path = '\\windows\\system32\\' AND FileName = 'dot3gpui'</ManagementQuery>
+      <ManagementQuery>root\cimv2: SELECT Name, Version from CIM_Datafile Where Path = '\\windows\\system32\\' AND FileName = 'dot3msm'</ManagementQuery>
+      <ManagementQuery>root\cimv2: SELECT Name, Version from CIM_Datafile Where Path = '\\windows\\system32\\' AND FileName = 'dot3svc'</ManagementQuery>
+      <ManagementQuery>root\cimv2: SELECT Name, Version from CIM_Datafile Where Path = '\\windows\\system32\\' AND FileName = 'dot3ui'</ManagementQuery>
+      <FileMaxCount>0</FileMaxCount>
+      <FileMaxTotalSize>0</FileMaxTotalSize>
+      <FileMaxRecursiveDepth>0</FileMaxRecursiveDepth>
+      <RegistryMaxRecursiveDepth>0</RegistryMaxRecursiveDepth>
+      <SystemStateFile>
+      </SystemStateFile>
+    </ConfigurationDataCollector>
+
+    <ConfigurationDataCollector>
+      <DataCollectorType>2</DataCollectorType>
+      <Name>WirelessAdapterInfo</Name>
+      <FileName>temp\adapterInfo.wireless</FileName>
+      <FileNameFormat>1</FileNameFormat>
+      <FileNameFormatPattern>
+      </FileNameFormatPattern>
+      <LogAppend>0</LogAppend>
+      <LogCircular>-1</LogCircular>
+      <LogOverwrite>-1</LogOverwrite>
+      <LatestOutputLocation>
+      </LatestOutputLocation>
+      <QueryNetworkAdapters>0</QueryNetworkAdapters>
+      <ManagementQuery>root\wmi:SELECT * FROM MSNdis_EnumerateAdapter</ManagementQuery>
+      <FileMaxCount>0</FileMaxCount>
+      <FileMaxTotalSize>0</FileMaxTotalSize>
+      <FileMaxRecursiveDepth>0</FileMaxRecursiveDepth>
+      <RegistryMaxRecursiveDepth>0</RegistryMaxRecursiveDepth>
+      <SystemStateFile>
+      </SystemStateFile>
+    </ConfigurationDataCollector>
+
+    <ConfigurationDataCollector>
+      <DataCollectorType>2</DataCollectorType>
+      <Name>WiredAdapterInfo</Name>
+      <FileName>temp\adapterInfo.wired</FileName>
+      <FileNameFormat>1</FileNameFormat>
+      <FileNameFormatPattern>
+      </FileNameFormatPattern>
+      <LogAppend>0</LogAppend>
+      <LogCircular>-1</LogCircular>
+      <LogOverwrite>-1</LogOverwrite>
+      <LatestOutputLocation>
+      </LatestOutputLocation>
+      <QueryNetworkAdapters>0</QueryNetworkAdapters>
+      <ManagementQuery>root\wmi:SELECT * FROM MSNdis_EnumerateAdapter</ManagementQuery>
+      <FileMaxCount>0</FileMaxCount>
+      <FileMaxTotalSize>0</FileMaxTotalSize>
+      <FileMaxRecursiveDepth>0</FileMaxRecursiveDepth>
+      <RegistryMaxRecursiveDepth>0</RegistryMaxRecursiveDepth>
+      <SystemStateFile>
+      </SystemStateFile>
+    </ConfigurationDataCollector>
+
+    <ConfigurationDataCollector>
+      <DataCollectorType>2</DataCollectorType>
+      <Name>WLan Extension Processes</Name>
+      <FileName>temp\wlanextProcesses.wireless</FileName>
+      <FileNameFormat>1</FileNameFormat>
+      <FileNameFormatPattern>
+      </FileNameFormatPattern>
+      <LogAppend>0</LogAppend>
+      <LogCircular>-1</LogCircular>
+      <LogOverwrite>-1</LogOverwrite>
+      <LatestOutputLocation>
+      </LatestOutputLocation>
+      <QueryNetworkAdapters>0</QueryNetworkAdapters>
+      <ManagementQuery>root\cimv2:SELECT * FROM Win32_Process WHERE Name LIKE 'wlanext.exe%'</ManagementQuery>
+      <FileMaxCount>0</FileMaxCount>
+      <FileMaxTotalSize>0</FileMaxTotalSize>
+      <FileMaxRecursiveDepth>0</FileMaxRecursiveDepth>
+      <RegistryMaxRecursiveDepth>0</RegistryMaxRecursiveDepth>
+      <SystemStateFile>
+      </SystemStateFile>
+    </ConfigurationDataCollector>
+
+    <ConfigurationDataCollector>
+      <DataCollectorType>2</DataCollectorType>
+      <Name>WirelessGPInfo2</Name>
+      <FileName>temp\GPInfo.wireless</FileName>
+      <FileNameFormat>1</FileNameFormat>
+      <FileNameFormatPattern>
+      </FileNameFormatPattern>
+      <LogAppend>0</LogAppend>
+      <LogCircular>-1</LogCircular>
+      <LogOverwrite>-1</LogOverwrite>
+      <LatestOutputLocation>
+      </LatestOutputLocation>
+      <QueryNetworkAdapters>0</QueryNetworkAdapters>
+      <RegistryKey>HKLM\SOFTWARE\Policies\Microsoft\Windows\Wireless\GPTWirelessPolicy\\</RegistryKey>
+      <File>%windir%\Wlansvc\policies\\</File>
+      <FileMaxCount>0</FileMaxCount>
+      <FileMaxTotalSize>0</FileMaxTotalSize>
+      <FileMaxRecursiveDepth>0</FileMaxRecursiveDepth>
+      <RegistryMaxRecursiveDepth>0</RegistryMaxRecursiveDepth>
+      <SystemStateFile>
+      </SystemStateFile>
+    </ConfigurationDataCollector>
+
+    <ConfigurationDataCollector>
+      <DataCollectorType>2</DataCollectorType>
+      <Name>WiredGPInfo2</Name>
+      <FileName>temp\GPInfo.wired</FileName>
+      <FileNameFormat>1</FileNameFormat>
+      <FileNameFormatPattern>
+      </FileNameFormatPattern>
+      <LogAppend>0</LogAppend>
+      <LogCircular>-1</LogCircular>
+      <LogOverwrite>-1</LogOverwrite>
+      <LatestOutputLocation>
+      </LatestOutputLocation>
+      <QueryNetworkAdapters>0</QueryNetworkAdapters>
+      <RegistryKey>HKLM\SOFTWARE\Policies\Microsoft\Windows\WiredL2\GP_Policy\\</RegistryKey>
+      <File>%windir%\dot3svc\policies\\</File>
+      <FileMaxCount>0</FileMaxCount>
+      <FileMaxTotalSize>0</FileMaxTotalSize>
+      <FileMaxRecursiveDepth>0</FileMaxRecursiveDepth>
+      <RegistryMaxRecursiveDepth>0</RegistryMaxRecursiveDepth>
+      <SystemStateFile>
+      </SystemStateFile>
+    </ConfigurationDataCollector>
+
+    <ConfigurationDataCollector>
+      <DataCollectorType>2</DataCollectorType>
+      <Name>WirelessConfigData2</Name>
+      <FileName>temp\ConfigData.wireless</FileName>
+      <FileNameFormat>1</FileNameFormat>
+      <FileNameFormatPattern>
+      </FileNameFormatPattern>
+      <LogAppend>0</LogAppend>
+      <LogCircular>-1</LogCircular>
+      <LogOverwrite>-1</LogOverwrite>
+      <LatestOutputLocation>
+      </LatestOutputLocation>
+      <QueryNetworkAdapters>0</QueryNetworkAdapters>
+      <File>%SystemDrive%\ProgramData\Microsoft\Wlansvc\\</File>
+      <FileMaxCount>0</FileMaxCount>
+      <FileMaxTotalSize>0</FileMaxTotalSize>
+      <FileMaxRecursiveDepth>0</FileMaxRecursiveDepth>
+      <RegistryMaxRecursiveDepth>0</RegistryMaxRecursiveDepth>
+      <SystemStateFile>
+      </SystemStateFile>
+    </ConfigurationDataCollector>
+
+    <ConfigurationDataCollector>
+      <DataCollectorType>2</DataCollectorType>
+      <Name>WiredConfigData2</Name>
+      <FileName>temp\ConfigData.wired</FileName>
+      <FileNameFormat>1</FileNameFormat>
+      <FileNameFormatPattern>
+      </FileNameFormatPattern>
+      <LogAppend>0</LogAppend>
+      <LogCircular>-1</LogCircular>
+      <LogOverwrite>-1</LogOverwrite>
+      <LatestOutputLocation>
+      </LatestOutputLocation>
+      <QueryNetworkAdapters>0</QueryNetworkAdapters>
+      <File>%SystemDrive%\ProgramData\Microsoft\dot3svc\\</File>
+      <FileMaxCount>0</FileMaxCount>
+      <FileMaxTotalSize>0</FileMaxTotalSize>
+      <FileMaxRecursiveDepth>0</FileMaxRecursiveDepth>
+      <RegistryMaxRecursiveDepth>0</RegistryMaxRecursiveDepth>
+      <SystemStateFile>
+      </SystemStateFile>
+    </ConfigurationDataCollector>
+
+    <ConfigurationDataCollector>
+      <DataCollectorType>2</DataCollectorType>
+      <Name>WirelessRegAdapterInfo</Name>
+      <FileName>temp\regAdapterInfo.wireless</FileName>
+      <FileNameFormat>1</FileNameFormat>
+      <FileNameFormatPattern>
+      </FileNameFormatPattern>
+      <LogAppend>0</LogAppend>
+      <LogCircular>-1</LogCircular>
+      <LogOverwrite>-1</LogOverwrite>
+      <LatestOutputLocation>
+      </LatestOutputLocation>
+      <QueryNetworkAdapters>0</QueryNetworkAdapters>
+      <RegistryKey>HKLM\SYSTEM\CurrentControlSet\Control\Class\{4D36E972-E325-11CE-BFC1-08002BE10318}\\</RegistryKey>
+      <FileMaxCount>0</FileMaxCount>
+      <FileMaxTotalSize>0</FileMaxTotalSize>
+      <FileMaxRecursiveDepth>0</FileMaxRecursiveDepth>
+      <RegistryMaxRecursiveDepth>0</RegistryMaxRecursiveDepth>
+      <SystemStateFile>
+      </SystemStateFile>
+    </ConfigurationDataCollector>
+
+    <ConfigurationDataCollector>
+      <DataCollectorType>2</DataCollectorType>
+      <Name>WiredRegAdapterInfo</Name>
+      <FileName>temp\regAdapterInfo.wired</FileName>
+      <FileNameFormat>1</FileNameFormat>
+      <FileNameFormatPattern>
+      </FileNameFormatPattern>
+      <LogAppend>0</LogAppend>
+        <LogCircular>-1</LogCircular>
+      <LogOverwrite>-1</LogOverwrite>
+      <LatestOutputLocation>
+      </LatestOutputLocation>
+      <QueryNetworkAdapters>0</QueryNetworkAdapters>
+      <RegistryKey>HKLM\SYSTEM\CurrentControlSet\Control\Class\{4D36E972-E325-11CE-BFC1-08002BE10318}\\</RegistryKey>
+      <FileMaxCount>0</FileMaxCount>
+      <FileMaxTotalSize>0</FileMaxTotalSize>
+      <FileMaxRecursiveDepth>0</FileMaxRecursiveDepth>
+      <RegistryMaxRecursiveDepth>0</RegistryMaxRecursiveDepth>
+      <SystemStateFile>
+      </SystemStateFile>
+    </ConfigurationDataCollector>
+
+    <DataManager>
+      <Enabled>-1</Enabled>
+      <CheckBeforeRunning>-1</CheckBeforeRunning>
+      <MinFreeDisk>200</MinFreeDisk>
+      <MaxSize>1024</MaxSize>
+      <MaxFolderCount>100</MaxFolderCount>
+      <ResourcePolicy>0</ResourcePolicy>
+      <FolderAction>
+          <Size>0</Size>
+          <Age>0</Age>
+          <Actions>8</Actions>
+          <SendCabTo>
+          </SendCabTo>
+      </FolderAction>
+      <FolderAction>
+          <Size>0</Size>
+          <Age>0</Age>
+          <Actions>1</Actions>
+          <SendCabTo>
+          </SendCabTo>
+      </FolderAction>
+
+      <ReportFileName>report.html</ReportFileName>
+
+      <ReportSchema>
+        <Report name="Network Trace" version="1" threshold="9999">
+          <Import file="%systemroot%\pla\reports\Report.System.Common.xml"/>
+          <Import file="%systemroot%\pla\reports\Report.System.Configuration.xml"/>
+          <Import file="%systemroot%\pla\reports\Report.System.CPU.xml"/>
+          <Import file="%systemroot%\pla\reports\Report.System.Wired.xml"/>
+          <Import file="%systemroot%\pla\reports\Report.System.Wireless.xml"/>
+          <Import file="%systemroot%\pla\reports\Report.System.NetDiagFramework.xml"/>
+          <Import file="%systemroot%\pla\reports\Report.System.Summary.xml" />
+        </Report>
+      </ReportSchema>
+
+      <Rules>
+        <Import file="%systemroot%\pla\rules\Rules.System.Common.xml"/>
+        <Import file="%systemroot%\pla\rules\Rules.System.Configuration.xml"/>
+        <Import file="%systemroot%\pla\rules\Rules.System.CPU.xml"/>
+        <Import file="%systemroot%\pla\rules\Rules.System.Wired.xml"/>
+        <Import file="%systemroot%\pla\rules\Rules.System.Wireless.xml"/>
+        <Import file="%systemroot%\pla\rules\Rules.System.NetDiagFramework.xml"/>
+        <Import file="%systemroot%\pla\rules\Rules.System.Summary.xml" />
+        <Import file="%systemroot%\pla\rules\Rules.System.Finale.xml"/>
+      </Rules>
+    </DataManager>
+  </DataCollectorSet>
+

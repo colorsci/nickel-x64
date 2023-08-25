@@ -1,0 +1,69 @@
+﻿<?xml version='1.0' encoding='utf-8' standalone='yes'?>
+<assembly
+    xmlns="urn:schemas-microsoft-com:asm.v3"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    manifestVersion="1.0"
+    >
+  <assemblyIdentity
+      language="neutral"
+      name="Microsoft-Windows-SecureStartup-FilterDriver"
+      processorArchitecture="*"
+      version="0.0.0.0"
+      />
+  <!-- Up through Windows Blue late MP, the BitLocker manifest did not contain
+       migration rules for performance settings specified in the <configuration>
+       section. These settings are important to carry over from Windows 8, since
+       they are provided by the OEM and are tuned according to the particular
+       characteristics of the SoC. This downlevel manifest will ensure that
+       these settings are migrated.
+  -->
+  <migration
+      replacementVersionRange="6.2.9200-6.3.9400"
+      replacementSettingsVersionRange="0"
+      alwaysProcess="yes"
+      settingsVersion="0"
+      >
+    <!-- Migration rules inside the machineSpecific tag are only applied during in-place upgrades. -->
+    <machineSpecific>
+      <migXml xmlns="">
+        <!-- Copied from fveFilterDriver.man -->
+        <rules context="System">
+          <include>
+            <objectSet>
+              <!-- Driver-based auto-unlock keys. Moved to upgrade_frmwrk.xml (see BLUE: 161544) -->
+              <!-- <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Control\FVEAutoUnlock\* [*]</pattern> -->
+              <!-- Volume conversion statistics -->
+              <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Control\FVEStats\* [*]</pattern>
+              <!-- Performance settings from <configuration> section below. -->
+              <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\fvevol [WriteIoAggregateMinSize]</pattern>
+              <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\fvevol [WriteIoAggregateMaxSize]</pattern>
+              <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\fvevol [BytesDecryptedInDiskRequestOverhead]</pattern>
+              <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\fvevol [WriteSubrequestLength]</pattern>
+              <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\fvevol [MaxEncryptRequests]</pattern>
+              <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\fvevol [MaxDecryptRequests]</pattern>
+              <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\fvevol [MaxCryptoRequestsPerIo]</pattern>
+              <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\fvevol [DecryptionSplitSize]</pattern>
+              <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\fvevol [DecryptionSplitMinSize]</pattern>
+              <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\fvevol [WriteIoInline]</pattern>
+              <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Control\BitLocker [SlicedEncryptionMinSize]</pattern>
+              <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Control\BitLocker [SlicedEncryptionInPlace]</pattern>
+              <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Control\BitLocker [SlicedEncryptionRequestsMax]</pattern>
+              <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Control\BitLocker [PreventDeviceEncryption]</pattern>
+              <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management [ModifiedWriteMaximum]</pattern>
+              <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Control\BitLocker [NvcUserDataAllow]</pattern>
+            </objectSet>
+          </include>
+        </rules>
+        <rules context="User">
+          <include>
+            <objectSet>
+              <!-- DPAPI-based auto-unlock keys -->
+              <pattern type="Registry">HKCU\Software\Microsoft\Windows\CurrentVersion\FveAutoUnlock\* [*]</pattern>
+            </objectSet>
+          </include>
+        </rules>
+      </migXml>
+    </machineSpecific>
+  </migration>
+</assembly>

@@ -1,0 +1,77 @@
+﻿<?xml version='1.0' encoding='utf-8' standalone='yes'?>
+<assembly
+    xmlns="urn:schemas-microsoft-com:asm.v3"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    authors="cagatayk"
+    buildFilter=""
+    company="MS"
+    copyright=""
+    creationTimeStamp="2005-05-17T21:14:37.8714436Z"
+    description=""
+    displayName=""
+    lastUpdateTimeStamp="2005-05-27T01:56:13.2144305Z"
+    manifestVersion="1.0"
+    owners="cagatayk"
+    supportInformation=""
+    testers=""
+    >
+  <assemblyIdentity
+      language="neutral"
+      name="Microsoft-Windows-Rights-Management-Client-v1-API-DL"
+      processorArchitecture="*"
+      version="0.0.0.0"
+      />
+  <migration scope="Upgrade,MigWiz,USMT">
+    <migXml xmlns="">
+      <detects>
+        <detect>
+          <!--This manifest will apply to machines that has msdrm.dll-->
+          <condition>MigXmlHelper.DoesObjectExist("File", "%windir%\system32\[msdrm.dll]")</condition>
+          <condition>MigXmlHelper.DoesObjectExist("File", "%windir%\sysWOW64\[msdrm.dll]")</condition>
+        </detect>
+        <detect>
+          <!--This manifest will apply to machines that windows XP and windows 2000-->
+          <condition>MigXmlHelper.DoesOSMatch("NT","5.*.*")</condition>
+        </detect>
+      </detects>
+      <rules context="user">
+        <include>
+          <objectSet>
+            <pattern type="Registry">HKCU\Software\Microsoft\MSDRM\* [*]</pattern>
+            <pattern type="Registry">HKCU\Software\Policies\Microsoft\MSDRM\* [*]</pattern>
+            <pattern type="File">%CSIDL_LOCAL_APPDATA%\Microsoft\DRM\* [EUL*]</pattern>
+            <pattern type="File">%CSIDL_LOCAL_APPDATA%\Microsoft\DRM\* [RL*]</pattern>
+            <pattern type="File">%CSIDL_LOCAL_APPDATA%\Microsoft\DRM\* [TMP*]</pattern>
+          </objectSet>
+        </include>
+      </rules>
+      <rules context="system">
+        <include>
+          <objectSet>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\MSDRM\* [*]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\uDRM [Hierarchy]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Wow6432Node\Microsoft\MSDRM\* [*]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Wow6432Node\Microsoft\uDRM [Hierarchy]</pattern>
+            <pattern type="File">%CSIDL_COMMON_APPDATA%\Microsoft\DRM\Server\* [EUL*]</pattern>
+            <pattern type="File">%CSIDL_COMMON_APPDATA%\Microsoft\DRM\Server\* [RL*]</pattern>
+            <pattern type="File">%CSIDL_COMMON_APPDATA%\Microsoft\DRM\Server\* [TMP*]</pattern>
+          </objectSet>
+        </include>
+      </rules>
+      <rules context="System">
+        <detects>
+          <detect>
+            <condition>MigXmlHelper.DoesObjectExist("Registry", "HKLM\SOFTWARE\Wow6432Node\Microsoft\MSDRM\ServiceLocation")</condition>
+          </detect>
+        </detects>
+        <include>
+          <objectSet>
+            <pattern type="Registry">HKLM\SOFTWARE\Wow6432Node\Microsoft\MSDRM\ServiceLocation\* [*]</pattern>
+          </objectSet>
+        </include>
+      </rules>
+    </migXml>
+    <migrationDisplayID>Security</migrationDisplayID>
+  </migration>
+</assembly>

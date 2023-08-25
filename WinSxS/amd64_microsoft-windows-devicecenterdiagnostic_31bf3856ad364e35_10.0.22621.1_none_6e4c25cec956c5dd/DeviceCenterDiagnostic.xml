@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PackageConfiguration xmlns="http://www.microsoft.com/schemas/dcm/configuration/2008">
+  <Execution>
+    <Package Path="%windir%\diagnostics\system\DeviceCenter" />
+    <Package Path="%windir%\diagnostics\system\Device">
+        <Answers Version="1.0">
+            <Interaction ID="IT_SelectDevice">
+                <Value>%DEVICEID%</Value>
+            </Interaction>
+        </Answers>
+        <RequiredContext>
+            <Parameter>DEVICEID</Parameter>
+        </RequiredContext>
+    </Package>
+    <Package Path="%windir%\diagnostics\system\Printer">
+        <Answers Version="1.0">
+            <Interaction ID="IT_AutoSelectPrinter">
+                <Value>%PRINTERNAME%</Value>
+            </Interaction>
+        </Answers>
+        <RequiredContext>
+            <Parameter>PRINTERNAME</Parameter>
+        </RequiredContext>
+    </Package>
+    <Package Path="%windir%\diagnostics\system\Networking">
+      <Answers Version="1.0">
+        <Interaction ID="IT_EntryPoint">
+          <Value>%PRINTERTYPE%</Value>
+        </Interaction>
+        <Interaction ID="IT_RemoteAddress">
+          <Value>%TCP_PRINTERADDRESS%</Value>
+        </Interaction>
+        <Interaction ID="IT_Protocol">
+          <Value>6</Value>
+        </Interaction>
+        <Interaction ID="IT_ApplicationID">
+          <Value>%windir%\system32\spoolsv.exe</Value>
+        </Interaction>
+        <Interaction ID="IT_UNC">
+          <Value>%SMBSHARE%</Value>
+        </Interaction>
+      </Answers>
+      <RequiredContext>
+        <Parameter>PRINTERTYPE</Parameter>
+      </RequiredContext>
+    </Package>
+    <Name>@%windir%\diagnostics\system\DeviceCenter\DiagPackage.dll,-1</Name>
+    <Description>@%windir%\diagnostics\system\DeviceCenter\DiagPackage.dll,-2</Description>
+  </Execution>
+  <Index>
+    <Id>DeviceCenterDiagnostic</Id>
+    <RequiresAdminPrivileges>true</RequiresAdminPrivileges>
+    <PrivacyUrl>https://go.microsoft.com/fwlink/?LinkID=534597</PrivacyUrl>
+    <Version>3.0</Version>
+    <PublisherName>Microsoft Corporation</PublisherName>
+    <Category>@%windir%\system32\DiagCpl.dll,-402</Category>
+  </Index>
+</PackageConfiguration>

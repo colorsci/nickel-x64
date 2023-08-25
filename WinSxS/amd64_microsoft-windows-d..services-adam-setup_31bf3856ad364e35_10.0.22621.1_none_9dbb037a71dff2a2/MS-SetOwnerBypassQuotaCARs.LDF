@@ -1,0 +1,30 @@
+#==================================================================
+# @@UI-Description: AD LDS Set Owner and Bypass Quota Control Access Rights.
+#
+# This file contains extensions for ADAM and AD DS default schema.
+#
+# It should be imported with the following command:
+# ldifde.exe -i -f MS-SetOwnerBypassQuotaCARs.LDF -b username domain password -j . -s server:port -c "CN=Configuration,DC=X" #configurationNamingContext
+#==================================================================
+
+dn:
+changetype: modify
+add: schemaUpgradeInProgress
+schemaUpdateInProgress: 1
+-
+
+dn: CN=DS-Set-Owner,CN=Extended-Rights,CN=Configuration,DC=X
+changetype: ntdsSchemaAdd
+objectClass: controlAccessRight
+displayName: Set Owner of an object during creation.
+rightsGuid: 4125c71f-7fac-4ff0-bcb7-f09a41325286
+appliesTo: 26f11b08-a29d-4869-99bb-ef0b99fd883e
+validAccesses: 256
+
+dn: CN=DS-Bypass-Quota,CN=Extended-Rights,CN=Configuration,DC=X
+changetype: ntdsSchemaAdd
+objectClass: controlAccessRight
+displayName: Bypass the quota restrictions during creation.
+rightsGuid: 88a9933e-e5c8-4f2a-9dd7-2527416b8092
+appliesTo: 26f11b08-a29d-4869-99bb-ef0b99fd883e
+validAccesses: 256

@@ -1,0 +1,33 @@
+﻿<?xml version='1.0' encoding='utf-8' standalone='yes'?>
+<assembly>
+  <assemblyIdentity
+      language="*"
+      name="Printing-Server-Foundation-Features"
+      processorArchitecture="*"
+      version="0.0.0.0"
+      versionScope="nonSxS"
+      />
+  <migration
+      alwaysProcess="yes"
+      replacementSettingsVersionRange="0"
+      settingsVersion="0"
+      >
+    <registerSDF name="Printing-Server-Foundation-Features"/>
+    <migXml>
+      <detects>
+        <!-- Multiple <detect> are AND, multiple <condition> are OR: -->
+        <detect>
+          <!-- Install the Printing-Server-Foundation-Features component if either the Print Server or
+               the Scan Server roles are installed AND the OS is Windows Server 2008 R2 or below. -->
+          <condition>MigXmlHelper.DoesObjectExist("Registry", "HKLM\Software\Microsoft\ServerRoles [PrintServer]")</condition>
+          <condition>MigXmlHelper.DoesObjectExist("Registry", "HKLM\System\CurrentControlSet\Services\ScanServer\Parameters")</condition>
+        </detect>
+        <detect>
+          <!-- Here is the check that the OS version is Windows Server 2008 R2 or lower.
+               IsOSEarlierThan returns TRUE if the OS version matches: -->
+          <condition>MigXmlHelper.IsOSEarlierThan("NT", "6.2")</condition>
+        </detect>
+      </detects>
+    </migXml>
+  </migration>
+</assembly>

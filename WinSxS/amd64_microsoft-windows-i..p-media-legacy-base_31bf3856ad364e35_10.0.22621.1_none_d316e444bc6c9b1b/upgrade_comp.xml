@@ -1,0 +1,120 @@
+<migration urlid="http://www.microsoft.com/migration/1.0/migxmlext/upgrade">
+  <component type="Application" offlineGather="No" offlineApply="No">
+    <displayName>Upgrade Online Only</displayName>
+    <role role="Settings">
+
+      <rules context="User">
+
+        <include>
+          <objectSet>
+            <pattern type="Registry">HKCU\SOFTWARE\Microsoft\OneDrive\* [*]</pattern>
+          </objectSet>
+        </include>
+
+        <merge script="MigXmlHelper.SourcePriority()">
+          <objectSet>
+            <pattern type="Registry">HKCU\SOFTWARE\Microsoft\OneDrive\* [*]</pattern>
+          </objectSet>
+        </merge>
+
+      </rules>
+
+      <rules context="System">
+        <include>
+          <objectSet>
+            <pattern type="Registry">HKU\S-1-5-19\Software\* [*]</pattern>
+          </objectSet>
+        </include>
+        <exclude>
+          <objectSet>
+            <pattern type="Registry">HKU\S-1-5-19\Software\Classes\* [*]</pattern>
+            <pattern type="Registry">HKU\S-1-5-19\Software\Microsoft\* [*]</pattern>
+            <pattern type="Registry">HKU\S-1-5-19\Software\Policies\* [*]</pattern>
+          </objectSet>
+        </exclude>
+
+        <include>
+          <objectSet>
+            <pattern type="Registry">HKU\S-1-5-20\Software\* [*]</pattern>
+          </objectSet>
+        </include>
+        <exclude>
+          <objectSet>
+            <pattern type="Registry">HKU\S-1-5-20\Software\Classes\* [*]</pattern>
+            <pattern type="Registry">HKU\S-1-5-20\Software\Microsoft\* [*]</pattern>
+            <pattern type="Registry">HKU\S-1-5-20\Software\Policies\* [*]</pattern>
+          </objectSet>
+        </exclude>
+
+
+        <include>
+          <objectSet>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\MpsSvc\Parameters\ACService\* [*]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\MpsSvc\Parameters\AppCs\* [*]</pattern>
+          </objectSet>
+        </include>
+        <excludeAttributes attributes="Security">
+          <objectSet>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\MpsSvc\Parameters\* [*]</pattern>
+          </objectSet>
+        </excludeAttributes>
+
+        <include>
+          <objectSet>
+            <pattern type="Registry">HKLM\Software\Microsoft\WIMMount\* [*]</pattern>
+          </objectSet>
+        </include>
+
+        <include>
+          <objectSet>
+            <pattern type="GAC">[*]</pattern>
+          </objectSet>
+        </include>
+      </rules>
+
+      <rules context="System">
+        <processing when="apply-success">
+          <script>MigXmlHelper.RemoveEmptyDirectories("%windir%\Help\Tablet PC\*")</script>
+          <script>MigXmlHelper.RemoveEmptyDirectories("%CSIDL_PROGRAM_FILES_COMMON%\Microsoft Shared\ink\*")</script>
+
+          <script>MigXmlHelper.RemoveEmptyDirectories("%CSIDL_PROGRAM_FILES_COMMON%\Microsoft Shared\Speech\*")</script>
+          <script>MigXmlHelper.RemoveEmptyDirectories("%CSIDL_PROGRAM_FILES_COMMON%\SpeechEngines\Microsoft\*")</script>
+
+          <script>MigXmlHelper.RemoveEmptyDirectories("%CommonProgramFiles%\Microsoft Shared\TextConv\*")</script>
+          <script>MigXmlHelper.RemoveEmptyDirectories("%CommonProgramFiles%\Microsoft Shared\Stationery\*")</script>
+          <script>MigXmlHelper.RemoveEmptyDirectories("%CommonProgramFiles(x86)%\Microsoft Shared\TextConv\*")</script>
+          <script>MigXmlHelper.RemoveEmptyDirectories("%CommonProgramFiles(x86)%\Microsoft Shared\Stationery\*")</script>
+          <script>MigXmlHelper.RemoveEmptyDirectories("%CommonProgramFiles(ARM)%\Microsoft Shared\TextConv\*")</script>
+          <script>MigXmlHelper.RemoveEmptyDirectories("%CommonProgramFiles(ARM)%\Microsoft Shared\Stationery\*")</script>
+
+          <script>MigXmlHelper.RemoveEmptyDirectories("%ProgramData%\Microsoft\Windows\Start Menu\Programs\Windows Virtual PC\*")</script>
+          <script>MigXmlHelper.RemoveEmptyDirectories("%ProgramFiles%\Windows Virtual PC\Integration Components\*")</script>
+          <script>MigXmlHelper.RemoveEmptyDirectories("%ProgramFiles%\Windows Virtual PC\*")</script>
+          <script>MigXmlHelper.RemoveEmptyDirectories("%ProgramFiles(x86)%\Windows Virtual PC\Integration Components\*")</script>
+          <script>MigXmlHelper.RemoveEmptyDirectories("%ProgramFiles(x86)%\Windows Virtual PC\*")</script>
+          <script>MigXmlHelper.RemoveEmptyDirectories("%ProgramFiles(ARM)%\Windows Virtual PC\Integration Components\*")</script>
+          <script>MigXmlHelper.RemoveEmptyDirectories("%ProgramFiles(ARM)%\Windows Virtual PC\*")</script>
+
+          <script>MigXmlHelper.RemoveEmptyDirectories("%ProgramFiles%\Microsoft Games\Tinker\*")</script>
+          <script>MigXmlHelper.RemoveEmptyDirectories("%ProgramFiles(x86)%\Microsoft Games\Tinker\*")</script>
+          <script>MigXmlHelper.RemoveEmptyDirectories("%ProgramFiles(ARM)%\Microsoft Games\Tinker\*")</script>
+
+          <script>MigXmlHelper.RemoveEmptyDirectories("%ProgramData%\Microsoft\Windows\Start Menu\Programs\Administrative Tools\Terminal Services\*")</script>
+          <script>MigXmlHelper.RemoveEmptyDirectories("%ProgramData%\Microsoft\Windows\Start Menu\Programs\Administrative Tools\Remote Desktop Services\*")</script>
+
+          <script>MigXmlHelper.RemoveEmptyDirectories("%ProgramData%\Microsoft\Windows\Start Menu\Programs\Extras and Upgrades\*")</script>
+
+          <script>MigXmlHelper.RemoveEmptyDirectories("%ProgramData%\Microsoft\Windows\Start Menu\Programs\Windows PowerShell 1.0\*")</script>
+
+          <script>MigXmlHelper.RemoveEmptyDirectories("%windir%\System32\WindowsPowerShell\v1.0\Modules\FileTransfer\*")</script>
+
+          <script>MigXmlHelper.RemoveEmptyDirectories("%windir%\MSAgent\*")</script>
+          <script>MigXmlHelper.RemoveEmptyDirectories("%windir%\MSAgent64\*")</script>
+
+        </processing>
+      </rules>
+
+    </role>
+  </component>
+
+</migration>

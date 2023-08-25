@@ -1,0 +1,34 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/webapps/inclusiveOobe/css/inclusive-common.css" />
+    <link rel="stylesheet" href="/webapps/shubOobe/css/shub-common.css" />
+    <!-- WinJS references -->
+    <script src="/Microsoft.WinJS-reduced/js/base.js"></script>
+
+    <!-- requirejs references -->
+    <script src="/core/js/require-helpers.js"></script>
+    <script src="/core/js/requirePath-config-core.js"></script>
+    <script data-main="/webapps/shubOobe/js/teamadmindisambiguation-page.js" src="/lib/require.js"></script>
+</head>
+<body class="webapp-inner">
+    <div class="body-container">
+        <div class="container-content">
+            <div class="oobe-panel centered-items">
+                <oobe-header params="title: $root.title, subtitle: $root.subtitle"></oobe-header>
+                <script type="text/html" id="admin-template">
+                    <div style="display: flex; width: 100%; margin: 12px; align-items: center">
+                        <input data-bind="attr:{name:adminButtonsGroupName, type:radioButtonType, autofocus:autofocus, id:id}, disable: disableControl, visible: isVisible, click: buttonClickHandler, css: {'admin-radiobutton': true}" />
+                        <label data-bind="attr:{for:id, autofocus:autofocus}, text:buttonText, disable: disableControl, visible: isVisible, css: {select: isSelected, unselect: !isSelected, 'win-button': true, 'admin-button': true}"></label>
+                    </div>
+                </script>
+                <div data-bind="template: { name: 'admin-template', foreach: $root.adminButtons }"></div>
+            </div>
+        </div>
+        <oobe-footer params="flexStartHyperLinks: $root.flexStartHyperLinks, flexEndButtons: $root.flexEndButtons"></oobe-footer>
+    </div>
+</body>
+</html>

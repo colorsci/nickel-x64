@@ -1,0 +1,119 @@
+<?xml version= "1.0" encoding="utf-8"?>
+<grammar sapi:CarrierPhraseGr="{d9960d7a-d24e-5989-9cd1-654e304f79de}" mode="voice" root="DictationCommands_SpeechRoot" tag-format="semantics/1.0" version="1.0" xml:lang="en-us" xmlns="http://www.w3.org/2001/06/grammar" xmlns:sapi="http://schemas.microsoft.com/Speech/2002/06/SRGSExtensions">
+
+<rule id="l_">
+<item><item>select</item><ruleref uri="#b_"/></item><tag>out.l_domain_="DictationCommands";out.l_intent_="SelectUnit";if(rules.b_!=null){out.b_UnitSelection=rules.b_;}if(rules.i_!=null){out.i_Direction=rules.i_;}if(rules.f_!=null){out.f_Number=rules.f_;}if(rules.d_!=null){out.d_Unit=rules.d_;}if(rules.c_!=null){out.c_NumberUnit=rules.c_;}if(rules.g_!=null){out.g_StartEnd=rules.g_;}if(rules.h_!=null){out.h_TopBottom=rules.h_;}</tag>
+</rule>
+
+<rule id="b_">
+<one-of><item><item repeat="0-1"><item>the</item></item><ruleref uri="#i_"/><item repeat="0-1"><ruleref uri="#f_"/></item><ruleref uri="#d_"/><tag>out=rules.latest()</tag></item><item><item repeat="0-1"><item>the</item></item><ruleref uri="#i_"/><ruleref uri="#c_"/><tag>out=rules.latest()</tag></item><item><item repeat="0-1"><item>the</item></item><ruleref uri="#f_"/><ruleref uri="#i_"/><ruleref uri="#d_"/><tag>out=rules.latest()</tag></item><item><item repeat="0-1"><one-of><item>one</item><item>a</item><item><item repeat="0-1"><item>the</item></item><item>entire</item></item><item>current</item></one-of></item><ruleref uri="#d_"/><tag>out=rules.latest()</tag></item><item><ruleref uri="#g_"/><ruleref uri="#d_"/><tag>out=rules.latest()</tag></item><item><ruleref uri="#h_"/><ruleref uri="#d_"/><tag>out=rules.latest()</tag></item></one-of>
+</rule>
+
+<rule id="h_">
+<one-of><item><item>to</item><item repeat="0-1"><item>the</item></item><item>top</item><item repeat="0-1"><item>of</item><item repeat="0-1"><item>the</item></item></item><tag>out="3"</tag></item><item><item>to</item><item repeat="0-1"><item>the</item></item><item>bottom</item><item repeat="0-1"><item>of</item><item repeat="0-1"><item>the</item></item></item><tag>out="4"</tag></item></one-of>
+</rule>
+
+<rule id="g_">
+<one-of><item><item>to</item><item repeat="0-1"><item>the</item></item><item>start of</item><item repeat="0-1"><item>the</item></item><tag>out="3"</tag></item><item><item>to</item><item repeat="0-1"><item>the</item></item><item>end of</item><item repeat="0-1"><item>the</item></item><tag>out="4"</tag></item></one-of>
+</rule>
+
+<rule id="c_">
+<item>forwards<tag>out="1"</tag></item>
+</rule>
+
+<rule id="d_">
+<one-of><item><one-of><item>letter</item><item>letters</item></one-of><tag>out="3"</tag></item><item><one-of><item>character</item><item>characters</item></one-of><tag>out="3"</tag></item><item><one-of><item>word</item><item>words</item></one-of><tag>out="4"</tag></item><item><one-of><item>document</item><item>all</item><item><item repeat="0-1"><item>the</item><item repeat="0-1"><item>entire</item></item></item><item>text</item></item></one-of><tag>out="7"</tag></item><item><one-of><item>paragraph</item><item>paragraphs</item></one-of><tag>out="6"</tag></item></one-of>
+</rule>
+
+<rule id="f_">
+<one-of><item><one-of><item>one</item><item>1</item></one-of><tag>out="1"</tag></item><item><one-of><item>to</item><item>two</item><item>2</item></one-of><tag>out="2"</tag></item><item><one-of><item>three</item><item>3</item></one-of><tag>out="3"</tag></item><item><one-of><item>four</item><item>for</item><item>4</item></one-of><tag>out="4"</tag></item><item><one-of><item>five</item><item>5</item></one-of><tag>out="5"</tag></item><item><one-of><item>six</item><item>6</item></one-of><tag>out="6"</tag></item><item><one-of><item>seven</item><item>7</item></one-of><tag>out="7"</tag></item><item><one-of><item>eight</item><item>8</item></one-of><tag>out="8"</tag></item><item><one-of><item>nine</item><item>9</item></one-of><tag>out="9"</tag></item><item><one-of><item>ten</item><item>10</item></one-of><tag>out="10"</tag></item><item><one-of><item>eleven</item><item>11</item></one-of><tag>out="11"</tag></item><item><one-of><item>twelve</item><item>12</item></one-of><tag>out="12"</tag></item><item><one-of><item>thirteen</item><item>13</item></one-of><tag>out="13"</tag></item><item><one-of><item>fourteen</item><item>14</item></one-of><tag>out="14"</tag></item><item><one-of><item>fifteen</item><item>15</item></one-of><tag>out="15"</tag></item></one-of>
+</rule>
+
+<rule id="i_">
+<one-of><item><one-of><item>previous</item><item>last</item></one-of><tag>out="1"</tag></item><item>next<tag>out="2"</tag></item></one-of>
+</rule>
+
+<rule id="m_">
+<item><item>select</item><ruleref uri="#j_"/></item><tag>out.m_domain_="DictationCommands";out.m_intent_="SelectThat";if(rules.j_!=null){out.j_That=rules.j_;}</tag>
+</rule>
+
+<rule id="j_">
+<item>that<tag>out="1"</tag></item>
+</rule>
+
+<rule id="n_">
+<item><item>delete</item><item repeat="0-1"><item>the</item><item>entire</item></item><ruleref uri="#b_"/></item><tag>out.n_domain_="DictationCommands";out.n_intent_="DeleteUnit";if(rules.b_!=null){out.b_UnitSelection=rules.b_;}if(rules.i_!=null){out.i_Direction=rules.i_;}if(rules.f_!=null){out.f_Number=rules.f_;}if(rules.d_!=null){out.d_Unit=rules.d_;}if(rules.c_!=null){out.c_NumberUnit=rules.c_;}if(rules.g_!=null){out.g_StartEnd=rules.g_;}if(rules.h_!=null){out.h_TopBottom=rules.h_;}</tag>
+</rule>
+
+<rule id="o_">
+<item><one-of><item>delete</item><item>strike</item></one-of><ruleref uri="#j_"/></item><tag>out.o_domain_="DictationCommands";out.o_intent_="DeleteThat";if(rules.j_!=null){out.j_That=rules.j_;}</tag>
+</rule>
+
+<rule id="p_">
+<item><one-of><item>undo</item><item>scratch</item></one-of><ruleref uri="#j_"/></item><tag>out.p_domain_="DictationCommands";out.p_intent_="UndoThat";if(rules.j_!=null){out.j_That=rules.j_;}</tag>
+</rule>
+
+<rule id="q_">
+<one-of><item>clear selection</item><item>unselect that</item></one-of><tag>out.q_domain_="DictationCommands";out.q_intent_="ClearSelection";</tag>
+</rule>
+
+<rule id="r_">
+<item><one-of><item>go</item><item>move</item></one-of><item>to</item><item repeat="0-1"><item>the</item></item><one-of><item>start</item><item>beginning</item></one-of><item>of</item><item repeat="0-1"><item>the</item></item><ruleref uri="#d_"/></item><tag>out.r_domain_="DictationCommands";out.r_intent_="GoToStartOfUnit";if(rules.d_!=null){out.d_Unit=rules.d_;}</tag>
+</rule>
+
+<rule id="s_">
+<item><one-of><item>go</item><item>move</item></one-of><item>to</item><item repeat="0-1"><item>the</item></item><item>end of</item><item repeat="0-1"><item>the</item></item><ruleref uri="#d_"/></item><tag>out.s_domain_="DictationCommands";out.s_intent_="GoToEndOfUnit";if(rules.d_!=null){out.d_Unit=rules.d_;}</tag>
+</rule>
+
+<rule id="t_">
+<one-of><item><one-of><item>go</item><item>move</item></one-of><one-of><item><item>forward</item><item repeat="0-1"><item repeat="0-1"><item>to</item></item><item repeat="0-1"><item>the</item></item><item>next</item></item></item><item><item>down</item><item repeat="0-1"><item repeat="0-1"><item>to</item></item><item repeat="0-1"><item>the</item></item><item>next</item></item></item><item><item repeat="0-1"><item>to</item></item><item repeat="0-1"><item>the</item></item><item>next</item></item></one-of><item repeat="0-1"><ruleref uri="#f_"/></item><ruleref uri="#d_"/></item><item><one-of><item>go</item><item>move</item></one-of><one-of><item><item>forward</item><item repeat="0-1"><item repeat="0-1"><item>to</item></item><item repeat="0-1"><item>the</item></item><item>next</item></item></item><item><item>down</item><item repeat="0-1"><item repeat="0-1"><item>to</item></item><item repeat="0-1"><item>the</item></item><item>next</item></item></item><item><item repeat="0-1"><item>to</item></item><item repeat="0-1"><item>the</item></item><item>next</item></item></one-of><ruleref uri="#c_"/></item></one-of><tag>out.t_domain_="DictationCommands";out.t_intent_="GoForwardUnit";if(rules.f_!=null){out.f_Number=rules.f_;}if(rules.d_!=null){out.d_Unit=rules.d_;}if(rules.c_!=null){out.c_NumberUnit=rules.c_;}</tag>
+</rule>
+
+<rule id="u_">
+<one-of><item><one-of><item>go</item><item>move</item></one-of><one-of><item><item>back</item><item repeat="0-1"><item repeat="0-1"><item>to</item></item><item repeat="0-1"><item>the</item></item><item>previous</item></item></item><item><item>up</item><item repeat="0-1"><item repeat="0-1"><item>to</item></item><item repeat="0-1"><item>the</item></item><item>previous</item></item></item><item><item repeat="0-1"><item>to</item></item><item repeat="0-1"><item>the</item></item><item>previous</item></item></one-of><item repeat="0-1"><ruleref uri="#f_"/></item><ruleref uri="#d_"/></item><item><one-of><item>go</item><item>move</item></one-of><one-of><item><item>back</item><item repeat="0-1"><item repeat="0-1"><item>to</item></item><item repeat="0-1"><item>the</item></item><item>previous</item></item></item><item><item>up</item><item repeat="0-1"><item repeat="0-1"><item>to</item></item><item repeat="0-1"><item>the</item></item><item>previous</item></item></item><item><item repeat="0-1"><item>to</item></item><item repeat="0-1"><item>the</item></item><item>previous</item></item></one-of><ruleref uri="#c_"/></item></one-of><tag>out.u_domain_="DictationCommands";out.u_intent_="GoBackwardUnit";if(rules.f_!=null){out.f_Number=rules.f_;}if(rules.d_!=null){out.d_Unit=rules.d_;}if(rules.c_!=null){out.c_NumberUnit=rules.c_;}</tag>
+</rule>
+
+<rule id="v_">
+<item><one-of><item>go</item><item>move</item></one-of><one-of><item>before</item><item><item>to</item><item repeat="0-1"><item>the</item></item><item>start of</item></item></one-of><ruleref uri="#j_"/></item><tag>out.v_domain_="DictationCommands";out.v_intent_="GoBeforeThat";if(rules.j_!=null){out.j_That=rules.j_;}</tag>
+</rule>
+
+<rule id="w_">
+<item><one-of><item>go</item><item>move</item></one-of><one-of><item>after</item><item><item>to</item><item repeat="0-1"><item>the</item></item><item>end of</item></item></one-of><ruleref uri="#j_"/></item><tag>out.w_domain_="DictationCommands";out.w_intent_="GoAfterThat";if(rules.j_!=null){out.j_That=rules.j_;}</tag>
+</rule>
+
+<rule id="x_ZZZPreserve">
+<item><item>select</item><ruleref uri="#k_"/></item><tag>out.x_domain_="DictationCommands";out.x_intent_="SelectBuffer";if(rules.k_!=null){out.k_Buffer=rules.k_;out._dictation_k_="DICTATION";}</tag>
+</rule>
+
+<rule id="k_">
+<item><ruleref special="GARBAGE"/><tag>out=rules.latest();</tag></item>
+</rule>
+
+<rule id="y_ZZZPreserve">
+<item><one-of><item>go</item><item>move</item></one-of><one-of><item>after</item><item><item>to</item><item repeat="0-1"><item>the</item></item><item>end of</item></item></one-of><ruleref uri="#k_"/></item><tag>out.y_domain_="DictationCommands";out.y_intent_="GoAfterBuffer";if(rules.k_!=null){out.k_Buffer=rules.k_;out._dictation_k_="DICTATION";}</tag>
+</rule>
+
+<rule id="z_ZZZPreserve">
+<item><one-of><item>go</item><item>move</item></one-of><one-of><item>before</item><item><item>to</item><item repeat="0-1"><item>the</item></item><item>start of</item></item></one-of><ruleref uri="#k_"/></item><tag>out.z_domain_="DictationCommands";out.z_intent_="GoBeforeBuffer";if(rules.k_!=null){out.k_Buffer=rules.k_;out._dictation_k_="DICTATION";}</tag>
+</rule>
+
+<rule id="A_">
+<one-of><item><one-of><item>stop</item><item>end</item></one-of><one-of><item>dictating</item><item>dictation</item></one-of></item><item>done</item></one-of><tag>out.A_domain_="DictationCommands";out.A_intent_="EndDictation";</tag>
+</rule>
+
+<rule id="B_">
+<item><one-of><item>start</item><item>activate</item></one-of><item>spelling</item></item><tag>out.B_domain_="DictationCommands";out.B_intent_="StartSpelling";</tag>
+</rule>
+
+<rule id="C_">
+<item><item repeat="0-1"><one-of><item>tap</item><item>press</item></one-of></item><ruleref uri="#e_"/></item><tag>out.C_domain_="DictationCommands";out.C_intent_="Keystrokes";if(rules.e_!=null){out.e_Keys=rules.e_;}</tag>
+</rule>
+
+<rule id="e_">
+<one-of><item>tab<tag>out="1"</tag></item><item>enter<tag>out="2"</tag></item><item>end<tag>out="3"</tag></item><item>home<tag>out="4"</tag></item><item>page up<tag>out="5"</tag></item><item>page down<tag>out="6"</tag></item><item>backspace<tag>out="7"</tag></item><item>delete<tag>out="8"</tag></item></one-of>
+</rule>
+
+<rule id="DictationCommands_SpeechRoot" scope="public">
+<item><one-of><item><ruleref uri="#l_"/></item><item><ruleref uri="#m_"/></item><item><ruleref uri="#n_"/></item><item><ruleref uri="#o_"/></item><item><ruleref uri="#p_"/></item><item><ruleref uri="#q_"/></item><item><ruleref uri="#r_"/></item><item><ruleref uri="#s_"/></item><item><ruleref uri="#t_"/></item><item><ruleref uri="#u_"/></item><item><ruleref uri="#v_"/></item><item><ruleref uri="#w_"/></item><item><ruleref uri="#x_ZZZPreserve"/></item><item><ruleref uri="#y_ZZZPreserve"/></item><item><ruleref uri="#z_ZZZPreserve"/></item><item><ruleref uri="#A_"/></item><item><ruleref uri="#B_"/></item><item><ruleref uri="#C_"/></item></one-of><tag>out.rule=rules.latest();</tag></item><tag>out=out.rule;</tag>
+</rule>
+</grammar>

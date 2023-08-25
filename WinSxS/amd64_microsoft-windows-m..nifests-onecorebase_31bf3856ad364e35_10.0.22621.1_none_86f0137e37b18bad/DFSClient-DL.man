@@ -1,0 +1,48 @@
+﻿<?xml version='1.0' encoding='utf-8' standalone='yes'?>
+<assembly
+    xmlns="urn:schemas-microsoft-com:asm.v3"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    authors="dfsdev"
+    buildFilter=""
+    company="Microsoft Corp"
+    copyright="Microsoft"
+    creationTimeStamp="2003-07-25T13:52:42.1200687-07:00"
+    description="$(resourceString.description)"
+    displayName="$(resourceString.displayName)"
+    lastUpdateTimeStamp="2004-12-14T00:18:39.1687500-08:00"
+    manifestVersion="1.0"
+    owners="dfsdev"
+    supportInformation="dfsdev"
+    testers="dfsntest"
+    >
+  <assemblyIdentity
+      language="neutral"
+      name="Microsoft-Windows-DFSClient-DL"
+      processorArchitecture="*"
+      version="0.0.0.0"
+      />
+  <migration xmlns="">
+    <!-- Begin migration to Vista from non-Vista Client OS, including XP and Win2K3 -->
+    <machineSpecific>
+      <migXml xmlns="">
+        <detects>
+          <detect>
+            <condition>MigXmlHelper.DoesOSMatch("NT", "5.*")</condition>
+          </detect>
+        </detects>
+        <!-- Ruleset for migrating Windows XP -->
+        <rules context="System">
+          <rules>
+            <include>
+              <objectSet>
+                <pattern type="Registry">HKLM\System\CurrentControlSet\Services\Mup [DisableDfs]</pattern>
+                <pattern type="Registry">HKLM\System\CurrentControlSet\Services\Mup\Parameters [EnableDfsLoopbackTargets]</pattern>
+              </objectSet>
+            </include>
+          </rules>
+        </rules>
+      </migXml>
+    </machineSpecific>
+  </migration>
+</assembly>

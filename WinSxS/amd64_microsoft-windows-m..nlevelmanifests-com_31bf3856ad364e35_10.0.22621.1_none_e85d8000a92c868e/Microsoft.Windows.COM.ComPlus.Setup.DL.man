@@ -1,0 +1,65 @@
+﻿<?xml version='1.0' encoding='utf-8' standalone='yes'?>
+<assembly
+    xmlns="urn:schemas-microsoft-com:asm.v3"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    authors="johnfran"
+    buildFilter=""
+    company="Microsoft"
+    copyright=""
+    creationTimeStamp="2003-07-08T23:15:23.9993750-07:00"
+    description="Downlevel manifest for COM+ Services"
+    displayName="COM+ Downlevel Manifest"
+    estimatedSize=""
+    lastUpdateTimeStamp="2003-07-08T23:15:23.9993750-07:00"
+    manifestVersion="1.0"
+    owners="johnfran"
+    supportInformation=""
+    testers="stb"
+    >
+  <assemblyIdentity
+      language="*"
+      name="Microsoft-Windows-COM-ComPlus-Setup-DL"
+      processorArchitecture="*"
+      version="0.0.0.0"
+      />
+  <migration scope="Upgrade">
+    <migXml xmlns="">
+      <detects>
+        <detect>
+          <condition>MigXmlHelper.IsOSEarlierThan("NT", "6.0.*")</condition>
+        </detect>
+      </detects>
+      <plugin
+          classId="{AB1D4748-682E-40AE-8CFA-6E3F8A5ED6BC}"
+          file="Microsoft-Windows-COM-ComPlus-Setup-DL\commig.dll"
+          offlineApply="Yes"
+          />
+      <rules context="System">
+        <include>
+          <objectSet>
+            <pattern type="File">%systemroot%\Registration\* [*.crmlog]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\COM3 [*]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\COM3\Setup [*]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\EventSystem\Subscriptions\* [*]</pattern>
+          </objectSet>
+        </include>
+        <exclude>
+          <objectSet>
+            <pattern type="File">%systemroot%\Registration [*.clb]</pattern>
+            <pattern type="File">%systemroot% [comsetup.log]</pattern>
+            <pattern type="File">%systemroot%\system32 [clbcatex.dll]</pattern>
+          </objectSet>
+        </exclude>
+      </rules>
+      <rules context="User">
+        <include>
+          <objectSet>
+            <pattern type="Registry">HKCU\Software\Microsoft\EventSystem\Subscriptions\* [*]</pattern>
+          </objectSet>
+        </include>
+      </rules>
+    </migXml>
+    <migrationDisplayID>Additional_Options\Windows_Core_Settings</migrationDisplayID>
+  </migration>
+</assembly>

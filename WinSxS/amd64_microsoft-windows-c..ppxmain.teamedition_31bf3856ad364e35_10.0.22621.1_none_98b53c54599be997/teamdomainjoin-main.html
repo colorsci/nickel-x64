@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/webapps/inclusiveOobe/css/inclusive-common.css" />
+    <link rel="stylesheet" href="/webapps/shubOobe/css/shub-common.css" />
+    <!-- WinJS references -->
+    <script src="/Microsoft.WinJS-reduced/js/base.js"></script>
+
+    <!-- requirejs references -->
+    <script src="/core/js/require-helpers.js"></script>
+    <script src="/core/js/requirePath-config-core.js"></script>
+    <script data-main="/webapps/shubOobe/js/teamdomainjoin-page.js" src="/lib/require.js"></script>
+</head>
+<body class="webapp-inner">
+    <div class="body-container">
+        <div class="container-content">
+            <div class="oobe-panel centered-items">
+                <oobe-header params="title: $root.domainJoinTitle, subtitle: $root.domainJoinSubtitle"></oobe-header>
+
+                <div class="content-description label-text">
+                    <strong data-bind="text: domainNameLabel"></strong>
+                </div>
+                <br />
+                <oobe-textinput params="placeHolder: domainNamePlaceHolder,
+                                    inputText: domainName,
+                                    errorText: domainNameErrorText,
+                                    showError: $root.domainNameErrorText() !== '',
+                                    ariaLabel: domainNamePlaceHolder,
+                                    voiceOverText: domainNamePlaceHolder,
+                                    errorVoiceOver: domainNameErrorText,
+                                    maxLength: 16">
+                </oobe-textinput>
+
+                <div class="content-description label-text">
+                    <strong data-bind="text: userNameLabel"></strong>
+                </div>
+                <br />
+                <oobe-textinput params="placeHolder: userNamePlaceHolder,
+                                    inputText: userName,
+                                    errorText: userNameErrorText,
+                                    showError: $root.userNameErrorText() !== '',
+                                    ariaLabel: userNamePlaceHolder,
+                                    voiceOverText: userNamePlaceHolder,
+                                    errorVoiceOver: userNameErrorText,
+                                    maxLength: 128">
+                </oobe-textinput>
+
+                <div class="content-description label-text">
+                    <strong data-bind="text: passwordLabel"></strong>
+                </div>
+                <br />
+                <oobe-textinput params="placeHolder: passwordPlaceHolder,
+                                    inputText: password,
+                                    inputType: 'password',
+                                    errorText: passwordErrorText,
+                                    showError: $root.passwordErrorText() !== '',
+                                    ariaLabel: passwordPlaceHolder,
+                                    voiceOverText: passwordPlaceHolder,
+                                    errorVoiceOver: passwordErrorText,
+                                    maxLength: 128">
+                </oobe-textinput>
+                <div class="content-description input-errorDialog">
+                    <div class="errorDialog-dialogRoot tooltipType_error template-tooltip" data-bind="if: ($root.joinErrorText && $root.joinErrorText() != ''" role="alert">
+                        <p data-bind="text: joinErrorText"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <oobe-footer params="flexStartHyperLinks: $root.flexStartHyperLinks, flexEndButtons: $root.flexEndButtons"></oobe-footer>
+    </div>
+</body>
+</html>

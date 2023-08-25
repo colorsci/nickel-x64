@@ -1,0 +1,51 @@
+<?xml version='1.0' encoding='utf-8' standalone='yes'?>
+<assembly
+    xmlns="urn:schemas-microsoft-com:asm.v3"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    manifestVersion="1.0"
+    >
+  <assemblyIdentity
+      name="Microsoft-Windows-COM-ComPlus-Setup"
+      processorArchitecture="*"
+      version="0.0.0.0"
+      language="neutral"
+      />
+  <migration
+      scope="Upgrade"
+      replacementSettingsVersionRange="0"
+      settingsVersion="1"
+      >
+    <plugin
+        classId="{AB1D4748-682E-40AE-8CFA-6E3F8A5ED6BC}"
+        file="Microsoft-Windows-COM-ComPlus-Setup\commig.dll"
+        offlineApply="Yes"
+        />
+    <migXml xmlns="">
+      <rules context="System">
+        <include>
+          <objectSet>
+            <pattern type="File">%systemroot%\Registration\* [*.crmlog]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\COM3 [*]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\COM3\Setup [*]</pattern>
+          </objectSet>
+        </include>
+        <exclude>
+          <objectSet>
+            <pattern type="File">%systemroot%\Registration [*.clb]</pattern>
+            <pattern type="File">%systemroot% [comsetup.log]</pattern>
+            <pattern type="File">%systemroot%\system32 [clbcatex.dll]</pattern>
+          </objectSet>
+        </exclude>
+        <merge script="MigXmlHelper.SourcePriority()">
+          <objectSet>
+            <pattern type="File">%systemroot%\Registration\* [*.crmlog]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\COM3 [*]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\COM3\Setup [*]</pattern>
+          </objectSet>
+        </merge>
+      </rules>
+    </migXml>
+    <migrationDisplayID>Additional_Options\Windows_Core_Settings</migrationDisplayID>
+  </migration>
+</assembly>

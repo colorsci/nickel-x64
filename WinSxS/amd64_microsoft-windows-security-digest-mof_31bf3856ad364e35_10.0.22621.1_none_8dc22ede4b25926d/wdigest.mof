@@ -1,0 +1,32 @@
+//*********************************************
+// *** Active Directory Service Provider: Digest
+//*********************************************
+#pragma classflags("forceupdate")
+#pragma namespace ("\\\\.\\Root\\WMI")
+
+[Dynamic, 
+    Description("Security: WDigest") : amended,
+    Guid("{fb6a424f-b5d6-4329-b9d5-a975b3a93ead}"),
+    locale("MS\\0x409")]
+class DigestDebugTrace : EventTrace
+{      
+    [    
+        Description ("Enable Flags") : amended,
+        
+        ValueDescriptions{
+            "Error Flag", "Warning Flag", "Trace Flag", "ASC Flag", 
+            "ISC Flag", "LSA Flag", "User Flag", "Function Flag",
+            "Mem Flag", "Stuff Flag"},
+        
+        Values{"Error", "Warning", "Trace", "TraceASC", 
+               "TraceICS", "TraceLSA", "TraceUser", "TraceFunc",
+               "TraceMem", "TraceStuff"},
+        
+        ValueMap{"0x00000001", "0x00000002", "0x00000004", "0x00000008", 
+                 "0x00000010", "0x00000020", "0x00000040", "0x00000080",
+                 "0x00000100", "0x00000200"} 
+    ]
+
+    uint32 Flags;
+};
+

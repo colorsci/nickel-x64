@@ -1,0 +1,119 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:simpleType name='non-empty-string'>
+    <xs:restriction base='xs:string'>
+      <xs:minLength value='1'/>
+      <xs:pattern value='^\S.*'/> <!-- This means a string not starting with a space-->
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:group name="RuleDefinition">
+    <xs:sequence>
+      <xs:element name="Template" maxOccurs="1">
+        <xs:complexType>
+          <xs:attribute name="path" type="non-empty-string" use="required"/>
+          <xs:attribute name="parameters" type="non-empty-string" use="optional" />
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="ExitConditions" maxOccurs="1">
+        <xs:complexType>
+          <xs:all>
+            <xs:element name="Success" maxOccurs="1" minOccurs="1">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="ExitCode" maxOccurs="unbounded" minOccurs="1">
+                    <xs:complexType>
+                      <xs:attribute name="code" type="non-empty-string" use="required" />
+                    </xs:complexType>
+                  </xs:element>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="Success_RebootRequired" maxOccurs="1" minOccurs="0">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="ExitCode" maxOccurs="unbounded" minOccurs="1">
+                    <xs:complexType>
+                      <xs:attribute name="code" type="non-empty-string" use="required" />
+                    </xs:complexType>
+                  </xs:element>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="Fail_RebootRequired" maxOccurs="1" minOccurs="0">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="ExitCode" maxOccurs="unbounded" minOccurs="1">
+                    <xs:complexType>
+                      <xs:attribute name="code" type="non-empty-string" use="required" />
+                    </xs:complexType>
+                  </xs:element>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="NotApplicable"  maxOccurs="1" minOccurs="0">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="ExitCode" maxOccurs="unbounded" minOccurs="1">
+                    <xs:complexType>
+                      <xs:attribute name="code" type="non-empty-string" use="required" />
+                    </xs:complexType>
+                  </xs:element>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+            <xs:element name="AlreadyInstalled" maxOccurs="1" minOccurs="0">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="ExitCode" maxOccurs="unbounded" minOccurs="1">
+                    <xs:complexType>
+                      <xs:attribute name="code" type="non-empty-string" use="required" />
+                    </xs:complexType>
+                  </xs:element>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+          </xs:all>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:group>
+  
+  <xs:element name="root">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="DefaultRules" maxOccurs="1">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ExtensionRules" maxOccurs="1" minOccurs="1">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element maxOccurs="unbounded" name="Extension">
+                      <xs:complexType>
+                        <xs:group ref="RuleDefinition"/>                          
+                        <xs:attribute name="name" type="non-empty-string" use="required" />
+                        <xs:attribute name="alwaysReboot" type="xs:boolean" use="optional" />
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="FolderRules" maxOccurs="1" minOccurs="0">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element maxOccurs="unbounded" name="Folder">
+                <xs:complexType>
+                  <xs:group ref="RuleDefinition"/>
+                  <xs:attribute name="name" type="non-empty-string" use="required" />
+                  <xs:attribute name="alwaysReboot" type="xs:boolean" use="optional" />
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

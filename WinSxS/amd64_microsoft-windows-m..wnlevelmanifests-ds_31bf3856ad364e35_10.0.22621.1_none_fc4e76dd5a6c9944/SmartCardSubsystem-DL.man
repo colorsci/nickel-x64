@@ -1,0 +1,97 @@
+﻿<?xml version='1.0' encoding='utf-8' standalone='yes'?>
+<assembly
+    xmlns="urn:schemas-microsoft-com:asm.v3"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    authors="eirikh"
+    buildFilter=""
+    company="Microsoft"
+    copyright=""
+    creationTimeStamp="2003-07-18T10:54:12.1286250-07:00"
+    description="$(resourceString.description)"
+    displayName="$(resourceString.displayName)"
+    lastUpdateTimeStamp="2004-08-10T21:55:12.7031250+00:00"
+    manifestVersion="1.0"
+    owners="eirikh"
+    supportInformation=""
+    testers="rajesr"
+    >
+  <assemblyIdentity
+      buildFilter=""
+      buildType="release"
+      language="neutral"
+      name="Microsoft-Windows-SmartCardSubsystem-DL"
+      processorArchitecture="*"
+      publicKeyToken="$(Build.WindowsPublicKeyToken)"
+      version="0.0.0.0"
+      versionScope="nonSxS"
+      />
+  <migration>
+    <migXml xmlns="">
+      <detects>
+        <detect>
+          <condition>MigXmlHelper.IsOSEarlierThan("NT", "6.0.0.0")</condition>
+        </detect>
+      </detects>
+      <rules context="System">
+        <include>
+          <objectSet>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon [scremoveoption]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\SCardSvr [Start]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\CertPropSvc [Start]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\SCPolicySvc [Start]</pattern>
+          </objectSet>
+        </include>
+      </rules>
+      <rules context="System">
+        <detects>
+          <detect>
+            <condition>MigXmlHelper.DoesStringContentContain("Registry", "HKLM\SYSTEM\CurrentControlSet\Services\SCardSvr [Start]", "2")</condition>
+          </detect>
+        </detects>
+        <addObjects>
+          <object>
+            <location type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\CertPropSvc [Start]</location>
+            <attributes>Dword</attributes>
+            <bytes>02000000</bytes>
+          </object>
+        </addObjects>
+      </rules>
+      <rules context="System">
+        <detects>
+          <detect>
+            <condition>MigXmlHelper.DoesStringContentContain("Registry", "HKLM\SYSTEM\CurrentControlSet\Services\SCardSvr [Start]", "2")</condition>
+          </detect>
+          <detect>
+            <condition>MigXmlHelper.DoesStringContentContain("Registry", "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon [scremoveoption]", "1")</condition>
+            <condition>MigXmlHelper.DoesStringContentContain("Registry", "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon [scremoveoption]", "2")</condition>
+          </detect>
+        </detects>
+        <addObjects>
+          <object>
+            <location type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\SCPolicySvc [Start]</location>
+            <attributes>Dword</attributes>
+            <bytes>02000000</bytes>
+          </object>
+        </addObjects>
+      </rules>
+    </migXml>
+    <migrationDisplayID>Security\Security_Options</migrationDisplayID>
+  </migration>
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string
+            buildFilter=""
+            id="description"
+            value="Downlevel Manifest for the Smart Card Subsystem"
+            />
+        <string
+            buildFilter=""
+            id="displayName"
+            value="Downlevel Manifest for the Smart Card Subsystem"
+            />
+      </stringTable>
+    </resources>
+  </localization>
+</assembly>

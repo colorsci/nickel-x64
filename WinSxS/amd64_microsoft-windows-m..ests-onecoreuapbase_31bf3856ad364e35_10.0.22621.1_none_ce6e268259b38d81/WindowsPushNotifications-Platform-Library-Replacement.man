@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='utf-8' standalone='yes'?>
+<assembly
+    xmlns="urn:schemas-microsoft-com:asm.v3"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    manifestVersion="1.0"
+    >
+    <assemblyIdentity
+        language="neutral"
+        name="Microsoft-Windows-PushNotifications-Platform-Library"
+        processorArchitecture="*"
+        version="0.0.0.0"
+      />
+    <migration
+        xmlns:auto-ns1="urn:schemas-microsoft-com:asm.v3"
+        replacementSettingsVersionRange="0"
+        replacementVersionRange="6.2-6.3.*"
+        scope="Upgrade"
+        settingsVersion="0"
+      >
+        <migXml xmlns="">
+            <!-- Migrate the notifications data file and registration information -->
+            <rules context="User">
+                <include> 
+                    <objectSet>
+                        <pattern type="Registry">HKCU\Software\Microsoft\Windows\CurrentVersion\PushNotifications\* [*]</pattern>
+                        <pattern type="File">%CSIDL_LOCAL_APPDATA%\Microsoft\Windows\Notifications\* [*]</pattern>
+                        <pattern type="File">%CSIDL_LOCAL_APPDATA%\Microsoft\Windows\Notifications\wpnidm\* [*]</pattern>
+                    </objectSet>
+                </include>
+            </rules>
+        </migXml>
+    </migration>
+</assembly>

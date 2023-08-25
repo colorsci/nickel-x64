@@ -1,0 +1,81 @@
+<?xml version='1.0' encoding='utf-8' standalone='yes'?>
+<assembly
+    xmlns="urn:schemas-microsoft-com:asm.v3"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    manifestVersion="1.0"
+    >
+  <assemblyIdentity
+      language="neutral"
+      name="Microsoft-Windows-SpeechCommon"
+      processorArchitecture="*"
+      version="0.0.0.0"
+      />
+  <migration
+      replacementSettingsVersionRange="0"
+      settingsVersion="1"
+      >
+    <migXml xmlns="">
+      <rules context="System">
+        <include>
+          <objectSet>
+            <pattern type="Registry">HKLM\Software\Microsoft\Speech\Voices\TokenEnums\* [*]</pattern>
+            <pattern type="Registry">HKLM\Software\WOW6432Node\Microsoft\Speech\Voices\TokenEnums\* [*]</pattern>
+          </objectSet>
+        </include>
+      </rules>
+      <rules context="User">
+        <include>
+          <objectSet>
+            <pattern type="Registry">HKCU\Software\Microsoft\Speech\AppLexicons [*]</pattern>
+            <pattern type="Registry">HKCU\Software\Microsoft\Speech\CurrentUserLexicon\* [*]</pattern>
+            <pattern type="Registry">HKCU\Software\Microsoft\Speech\CurrentUserShortcut\* [*]</pattern>
+            <pattern type="Registry">HKCU\Software\Microsoft\Speech\PromptVoices [*]</pattern>
+            <pattern type="Registry">HKCU\Software\Microsoft\Speech\RecoProfiles\* [*]</pattern>
+            <pattern type="Registry">HKCU\Software\Microsoft\Speech\Recognizers\* [*]</pattern>
+            <pattern type="Registry">HKCU\Software\Microsoft\Speech\Voices [*]</pattern>
+            <pattern type="Registry">HKCU\Software\Microsoft\Speech\AudioInput\TokenEnums\MMAudioIn\* [*]</pattern>
+            <pattern type="Registry">HKCU\Software\Microsoft\Speech\AudioOutput\TokenEnums\MMAudioOut\* [*]</pattern>
+            <pattern type="Registry">HKCU\Software\Microsoft\Speech\AudioInput\[DefaultTokenId]</pattern>
+            <pattern type="Registry">HKCU\Software\Microsoft\Speech\AudioOutput\[DefaultTokenId]</pattern>
+            <pattern type="File">%CSIDL_APPDATA%\Microsoft\Speech\Files\* [*]</pattern>
+            <pattern type="File">%CSIDL_LOCAL_APPDATA%\Microsoft\Speech\Files\* [*]</pattern>
+          </objectSet>
+        </include>
+        <locationModify script="MigXmlHelper.ExactMove(&apos;HKCU\Software\Microsoft\Speech\RecoProfiles\Tokens\* [Model Characteristic 1]&apos;)">
+          <objectSet>
+            <pattern type="Registry">HKCU\Software\Microsoft\Speech\RecoProfiles\Tokens\* [Age]</pattern>
+          </objectSet>
+        </locationModify>
+        <locationModify script="MigXmlHelper.ExactMove(&apos;HKCU\Software\Microsoft\Speech\RecoProfiles\Tokens\* [Model Characteristic 2]&apos;)">
+          <objectSet>
+            <pattern type="Registry">HKCU\Software\Microsoft\Speech\RecoProfiles\Tokens\* [Gender]</pattern>
+          </objectSet>
+        </locationModify>
+        <merge script="MigXmlHelper.SourcePriority()">
+          <objectSet>
+            <pattern type="Registry">HKCU\Software\Microsoft\Speech\AppLexicons [*]</pattern>
+            <pattern type="Registry">HKCU\Software\Microsoft\Speech\CurrentUserLexicon\* [*]</pattern>
+            <pattern type="Registry">HKCU\Software\Microsoft\Speech\CurrentUserShortcut\* [*]</pattern>
+            <pattern type="Registry">HKCU\Software\Microsoft\Speech\PromptVoices [*]</pattern>
+            <pattern type="Registry">HKCU\Software\Microsoft\Speech\RecoProfiles\* [*]</pattern>
+            <pattern type="Registry">HKCU\Software\Microsoft\Speech\Recognizers\* [*]</pattern>
+            <pattern type="Registry">HKCU\Software\Microsoft\Speech\Voices [*]</pattern>
+            <pattern type="Registry">HKCU\Software\Microsoft\Speech\AudioInput\TokenEnums\MMAudioIn\* [*]</pattern>
+            <pattern type="Registry">HKCU\Software\Microsoft\Speech\AudioOutput\TokenEnums\MMAudioOut\* [*]</pattern>
+            <pattern type="Registry">HKCU\Software\Microsoft\Speech\AudioInput\[DefaultTokenId]</pattern>
+            <pattern type="Registry">HKCU\Software\Microsoft\Speech\AudioOutput\[DefaultTokenId]</pattern>
+            <pattern type="File">%CSIDL_APPDATA%\Microsoft\Speech\Files\* [*]</pattern>
+            <pattern type="File">%CSIDL_LOCAL_APPDATA%\Microsoft\Speech\Files\* [*]</pattern>
+          </objectSet>
+        </merge>
+        <exclude>
+          <objectSet>
+            <pattern type="Registry">HKCU\Software\Microsoft\Speech\RecoProfiles\Tokens\* [Age]</pattern>
+            <pattern type="Registry">HKCU\Software\Microsoft\Speech\RecoProfiles\Tokens\* [Gender]</pattern>
+          </objectSet>
+        </exclude>
+      </rules>
+    </migXml>
+  </migration>
+</assembly>

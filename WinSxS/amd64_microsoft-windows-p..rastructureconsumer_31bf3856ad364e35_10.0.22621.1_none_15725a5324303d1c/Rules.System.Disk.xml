@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?Copyright (c) Microsoft Corporation. All rights reserved.?>
+<Rules>
+  <Group name="$(GroupDisk)">
+    <Rule name="$(RuleSplit)" enabled="true">
+      <Step select="/Report/Section/Table[@name='physicalDiskCounters']/Item[Data[@name='counter']='Disk Reads/sec' and Data[@name='instance']='_Total']">
+        <Exists>
+          <Otherwise>
+            <Variable name="rate" expression="Data[@name='mean']"/>
+          </Otherwise>
+        </Exists>
+      </Step>
+      <Step select="/Report/Section/Table[@name='physicalDiskCounters']/Item[Data[@name='counter']='Disk Writes/sec' and Data[@name='instance']='_Total']" fatal="true">
+        <Variable name="rate" expression="Data[@name='mean']+{rate}"/>
+        <Exists>
+          <When expression="'{rate}' &gt;= 1" description="Minimum total I/O rate for this rule. This rule will evaluate the split I/O rate when the total I/O rate is above this value. The default value is &gt;= 100."/>
+        </Exists>
+      </Step>
+      <Step select="/Report/Section/Table[@name='physicalDiskCounters']/Item[Data[@name='counter']='Split IO/Sec' and Data[@name='instance']='_Total']">
+        <Variable name="split" expression="Data[@name='mean']"/>
+        <Variable name="splitpercent" expression="format-number(({split} div {rate})*100,'0')"/>
+        <Exists>
+          <When expression="{splitpercent} &gt;= 50" description="Maximum acceptable split I/O rate. This rule will issue a warning when the split I/O rate is above this value. The default value is &gt;= 50.">
+            <Variable name="internalruleindex" expression="{internalruleindex} + 1"/>
+            <Variable name="severitymsg">$(Warning)</Variable>
+            <Variable name="msgstring">$(LOC_SplitWarning)</Variable>
+            <Variable name="msglink">$(LinkDiskDiagnosis)</Variable>
+            <Warning tag="diskHighSplitIoCount_23_{internalruleindex}" select="Data[@name='mean']" table="/Report/Section[@name='advice']/Table[@name='warning']">
+              <Item>
+                <Data name="severity" img="warning" link="diskHighSplitIoCount_23_{internalruleindex}" message="diskHighSplitIoCount_23_{internalruleindex}" translate="value">{severitymsg}</Data>
+                <Data name="warning" message="diskHighSplitIoCount_23_{internalruleindex}">{msgstring}</Data>
+                <Data name="related" url="http://go.microsoft.com/fwlink/?LinkID=70114">{msglink}</Data>
+              </Item>
+            </Warning>
+          </When>
+        </Exists>
+      </Step>
+    </Rule>
+    <Rule name="$(RuleDiskAvgSec)" enabled="true">
+      <Step select="/Report/Section/Table[@name='physicalDiskAveDiskSec']/Item[Data[@name='instance']='_Total']" sortType="all">
+        <Exists>
+          <Otherwise>
+            <Delete select="."/>
+          </Otherwise>
+        </Exists>
+      </Step>
+    </Rule>
+    <Rule name="$(RuleNTFSInsert)" enabled="true" visible="false">
+      <Step select="/Report/Section[@name='tracerptDisk']">
+        <Exists>
+          <Otherwise>
+            <Insert select=".">
+              <Node axis="child" document="NTFS Performance.xml" select="/Report/Section/Table[@name='registryKeys']"/>
+            </Insert>
+            <Insert select="Table[@name='registryKeys']">
+              <Attribute name="name" value="TableNTFSPerformance"/>
+              <Attribute name="topic" value="TopicNTFSPerformance"/>
+            </Insert>
+          </Otherwise>
+        </Exists>
+      </Step>
+    </Rule>
+    <Rule name="$(RuleCheckQueueLength)" enabled="true">
+      <Step select="/Report/Section/Table[@name='physicalDiskCounters']/Item[Data[@name='counter']='Avg. Disk Queue Length' and Data[@name='instance']='_Total']">
+        <Variable name="queuelength" expression="Data[@name='mean']"/>
+        <Exists>
+          <When expression="{queuelength} &gt;= 1" description="Maximum acceptable Avg. Disk queue length. This rule will issue a warning when the Avg. Disk queue length is above this value. The default value is &gt;= 1.">
+            <Variable name="internalruleindex" expression="{internalruleindex} + 1"/>
+            <Variable name="severitymsg">$(Information)</Variable>
+            <Variable name="msgstring">$(LOC_AvgDiskQueueLength)</Variable>
+            <Variable name="msglink">$(LinkDiskDiagnosis)</Variable>
+            <Warning tag="diskQueueLength_26_{internalruleindex}" select="Data[@name='mean']" table="/Report/Section[@name='advice']/Table[@name='info']">
+              <Item>
+                <Data name="severity" img="info" link="diskQueueLength_26_{internalruleindex}" message="diskQueueLength_26_{internalruleindex}" translate="value">{severitymsg}</Data>
+                <Data name="warning" message="diskQueueLength_26_{internalruleindex}">{msgstring}</Data>
+                <Data name="related" url="http://go.microsoft.com/fwlink/?LinkID=70117">{msglink}</Data>
+              </Item>
+            </Warning>
+          </When>
+        </Exists>
+      </Step>
+    </Rule>
+  </Group>
+  <StringTable>
+    <String ID="Warning" loc.comment="Only used in WDC Console">Warning</String>
+    <String ID="Information" loc.comment="Only used in WDC Console">Information</String>
+    <String ID="GroupDisk">Disk</String>
+    <String ID="RuleDiskAvgSec">High Disk Average Per Second</String>
+    <String ID="RuleSplit">High Split I/O Rate</String>
+    <String ID="LOC_SplitWarning" loc.comment="Warning when high split I/O found using Performance counters">High rate of {split} split I/O per second was detected. This represents {splitpercent} percent of total I/O processes. Consider size of I/O processes compared to disk format size and defragment or reformat any disks with a high split I/O rate.</String>
+    <String ID="RuleNTFSInsert" loc.comment="Name of rule that inserts ntfs performance sections and tables seen in WPDC">Insert Configuration table into final report</String>
+    <String ID="RuleCheckQueueLength" loc.comment="Name of rule that checks the disk queue length seen in WPDC">Disk queue length</String>
+    <String ID="LOC_AvgDiskQueueLength" loc.comment="Warning seen in report">The average disk queue length is {queuelength}. The disk may be at its maximum transfer capacity due to throughput and disk seeks</String>
+    <String ID="LinkDiskDiagnosis">Disk Diagnosis</String>
+  </StringTable>
+</Rules>

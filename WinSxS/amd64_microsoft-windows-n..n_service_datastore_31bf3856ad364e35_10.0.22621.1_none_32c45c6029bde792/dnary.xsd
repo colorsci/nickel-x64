@@ -1,0 +1,124 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+<xs:element name="Dictionary">
+<xs:complexType>
+<xs:sequence>
+    <xs:element name="_locDefinition">
+	<xs:complexType>
+		<xs:sequence>
+			<xs:element name="_locDefault">
+				<xs:complexType>
+					<xs:attribute name="_loc" type="xs:string"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="_locDefaultAttr">
+				<xs:complexType>
+					<xs:attribute name="_loc" type="xs:string"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="_locTag">
+                        <xs:complexType>
+			    <xs:simpleContent>
+ 	                           <xs:extension base="xs:string">
+					    <xs:attribute name="_loc" type="xs:string"/>
+                	            </xs:extension>
+			    </xs:simpleContent>
+                        </xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+    </xs:element>
+    <xs:element name="Version" type="xs:integer"/>
+    <xs:element name="Attribute" minOccurs="0" maxOccurs="unbounded">
+        <xs:complexType>
+        <xs:sequence>
+            <xs:element name="ID" type="xs:integer"/>
+            <xs:element name="Name">
+            <xs:simpleType>
+                <xs:restriction base="xs:string">
+                <xs:maxLength value="100"/>
+                </xs:restriction>
+            </xs:simpleType>
+            </xs:element>
+            <xs:element name="Syntax">
+                <xs:simpleType>
+                <xs:restriction base="xs:string">
+                <xs:enumeration value="Boolean"/>
+                <xs:enumeration value="Integer"/>
+                <xs:enumeration value="Enumerator"/>
+                <xs:enumeration value="InetAddr"/>
+                <xs:enumeration value="String"/>
+                <xs:enumeration value="OctetString"/>
+                <xs:enumeration value="UTCTime"/>
+                <xs:enumeration value="ProviderSpecific"/>
+                <xs:enumeration value="UnsignedInteger"/>
+                <xs:enumeration value="InetAddr6"/>
+                </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="MultiValued" type="xs:boolean" minOccurs="0" default="0"/>
+            <xs:element name="VendorID" type="xs:integer" minOccurs="0"/>
+            <xs:element name="VendorTypeID" type="xs:integer" minOccurs="0"/>
+            <xs:element name="VendorTypeWidth" type="xs:integer" minOccurs="0" default="1"/>
+            <xs:element name="VendorLengthWidth" type="xs:integer" minOccurs="0" default="1"/>
+            <xs:element name="Is-Security-Sensitive" type="xs:boolean" minOccurs="0" default="0"/>
+            <xs:element name="ODBC-Log-Ordinal" type="xs:integer" minOccurs="0"/>
+            <xs:element name="DTS-Log-Ordinal" type="xs:integer" minOccurs="0"/>
+            <xs:element name="IsAllowedInProfile" type="xs:boolean" minOccurs="0" default="0"/>
+            <xs:element name="IsAllowedInCondition" type="xs:boolean" minOccurs="0" default="0"/>
+            <xs:element name="IsAllowedInProxyProfile" type="xs:boolean" minOccurs="0" default="0"/>
+            <xs:element name="IsAllowedInProxyCondition" type="xs:boolean" minOccurs="0" default="0"/>
+            <xs:element name="Description" minOccurs="0">
+            <xs:simpleType>
+                <xs:restriction base="xs:string">
+                <xs:maxLength value="2"/>
+                </xs:restriction>
+            </xs:simpleType>
+            </xs:element>            
+            <xs:element name="LDAPName" minOccurs="0">
+            <xs:simpleType>
+                <xs:restriction base="xs:string">
+                <xs:maxLength value="100"/>
+                </xs:restriction>
+            </xs:simpleType>
+            </xs:element>
+            <xs:element name="IsTunnelAttribute" type="xs:boolean" minOccurs="0" default="0"/>
+            <xs:element name="StandardValues" minOccurs="0">
+            <xs:complexType>     
+            <xs:sequence>
+                <xs:element name="StandardValue" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                <xs:sequence>
+                    <xs:element name="Name">
+                        <xs:complexType>
+			    <xs:simpleContent>
+ 	                           <xs:extension base="xs:string">
+					    <xs:attribute name="_loc" type="xs:string" use="optional"/>
+                	            </xs:extension>
+			    </xs:simpleContent>
+                        </xs:complexType>
+                    </xs:element>                                                    
+                    <xs:element name="Value" type="xs:integer"/>
+                    <xs:element name="Filter" type="xs:integer" minOccurs="0"/>
+                </xs:sequence>
+                </xs:complexType>
+                </xs:element>
+            </xs:sequence>        
+            </xs:complexType>
+            </xs:element>
+            <xs:element name="AttributeUse" minOccurs ="0">
+                <xs:simpleType>
+                    <xs:restriction base="xs:integer">
+                        <xs:minInclusive value="1"/>
+                        <xs:maxInclusive value="3"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+        </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+</xs:schema>

@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='utf-8' standalone='yes'?>
+<assembly
+    xmlns="urn:schemas-microsoft-com:asm.v3"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    manifestVersion="1.0"
+    >
+  <assemblyIdentity
+      buildType="$(build.buildType)"
+      language="neutral"
+      name="Microsoft-Windows-WMPNSS-Service"
+      processorArchitecture="*"
+      publicKeyToken=""
+      version="0.0.0.0"
+      versionScope="nonSxS"
+      />
+  <migration
+      alwaysProcess="yes"
+      replacementSettingsVersionRange="0"
+      replacementVersionRange="6.0-10.0.14400"
+      scope="Upgrade,MigWiz,USMT"
+      settingsVersion="1"
+      >
+    <migXml xmlns="">
+      <rules context="System">
+        <include>
+          <objectSet>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Windows Media Player NSS\3.0\Devices\* [*]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Windows Media Player NSS\3.0\MAC Access Control\* [*]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Windows Media Player NSS\3.0\Media Servers\* [*]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Windows Media Player NSS\3.0\Server Settings\* [*]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WMPNetworkSvc [Start]</pattern>
+          </objectSet>
+        </include>
+        <!-- Because we migrate service start settings, we need to make sure the SCM has the latest settings -->
+        <processing when="apply-success">
+          <script>MigXmlHelper.SyncSCM("WMPNetworkSvc")</script>
+        </processing>
+      </rules>
+    </migXml>
+  </migration>
+</assembly>

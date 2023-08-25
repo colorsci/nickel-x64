@@ -1,0 +1,843 @@
+#pragma autorecover
+#pragma classflags(64)
+#pragma namespace("\\\\.\\root\\cimv2\\mdm")
+
+[NamespaceSecuritySDDL("O:BAG:BAD:P(A;;0x6003F;;;BA)(A;;0x6003F;;;SY)")]
+instance of __NAMESPACE
+{
+    Name = "dmmap";
+};
+
+#pragma autorecover
+#pragma namespace("\\\\.\\root\\cimv2\\mdm\\dmmap")
+
+Instance of __Win32Provider as $prov
+{
+ Name = "DMWmiBridgeProv1";
+ ClsId = "{e17a999c-97f7-4213-bf6f-de08e9d7ecf5}";
+ ImpersonationLevel = 1;
+ HostingModel = "LocalSystemHost";
+ version=0x40000001;
+};
+
+Instance of __MethodProviderRegistration
+{
+ Provider = $prov;
+};
+
+Instance of __InstanceProviderRegistration
+{
+ Provider = $prov;
+
+ supportsGet = TRUE;
+ supportsPut = TRUE;
+ supportsDelete = TRUE;
+ supportsEnumeration = TRUE;
+ QuerySupportLevels = NULL;
+};
+
+[InPartition{"local-system"}: ToSubClass, dynamic: ToInstance, provider("DMWmiBridgeProv1"): ToInstance]
+class MDM_ApplicationControl
+{
+	[key] string InstanceID;
+	[key] string ParentID;
+	[read: ToSubClass, write(FALSE): ToSubClass] string TenantID;
+	[read: ToSubClass, write(FALSE): ToSubClass] string DeviceID;
+};
+[InPartition{"local-system"}: ToSubClass, dynamic: ToInstance, provider("DMWmiBridgeProv1"): ToInstance]
+class MDM_ApplicationControl_Policies01_01
+{
+	[key] string InstanceID;
+	[key] string ParentID;
+	[Octetstring: DisableOverride ToSubClass, read: ToSubClass, write: ToSubClass] string Policy;
+};
+[InPartition{"local-system"}: ToSubClass, dynamic: ToInstance, provider("DMWmiBridgeProv1"): ToInstance]
+class MDM_ApplicationControl_PolicyIDs03
+{
+	[key] string InstanceID;
+	[key] string ParentID;
+	[read: ToSubClass, write(FALSE): ToSubClass] string Value;
+	boolean IsVariableLeaf;
+};
+[InPartition{"local-system"}: ToSubClass, dynamic: ToInstance, provider("DMWmiBridgeProv1"): ToInstance]
+class MDM_ApplicationControl_PolicyInfo03
+{
+	[key] string InstanceID;
+	[key] string ParentID;
+	[read: ToSubClass, write(FALSE): ToSubClass] string Version;
+	[read: ToSubClass, write(FALSE): ToSubClass] boolean IsBasePolicy;
+	[read: ToSubClass, write(FALSE): ToSubClass] boolean IsSystemPolicy;
+	[read: ToSubClass, write(FALSE): ToSubClass] boolean IsEffective;
+	[read: ToSubClass, write(FALSE): ToSubClass] boolean IsDeployed;
+	[read: ToSubClass, write(FALSE): ToSubClass] boolean IsAuthorized;
+	[read: ToSubClass, write(FALSE): ToSubClass] sint32 Status;
+	[read: ToSubClass, write(FALSE): ToSubClass] string FriendlyName;
+};
+[InPartition{"local-system"}: ToSubClass, dynamic: ToInstance, provider("DMWmiBridgeProv1"): ToInstance]
+class MDM_ApplicationControl_Token03
+{
+	[key] string InstanceID;
+	[key] string ParentID;
+	[read: ToSubClass, write(FALSE): ToSubClass] string Value;
+	boolean IsVariableLeaf;
+};
+[InPartition{"local-system"}: ToSubClass, dynamic: ToInstance, provider("DMWmiBridgeProv1"): ToInstance]
+class MDM_ApplicationControl_TokenInfo03
+{
+	[key] string InstanceID;
+	[key] string ParentID;
+	[read: ToSubClass, write(FALSE): ToSubClass] sint32 Status;
+	[read: ToSubClass, write(FALSE): ToSubClass] sint32 Type;
+};
+[InPartition{"local-system"}: ToSubClass, dynamic: ToInstance, provider("DMWmiBridgeProv1"): ToInstance]
+class MDM_ApplicationControl_Tokens01_01
+{
+	[key] string InstanceID;
+	[key] string ParentID;
+	[Octetstring: DisableOverride ToSubClass, read: ToSubClass, write(FALSE): ToSubClass] string Token;
+};
+[InPartition{"local-system"}: ToSubClass, dynamic: ToInstance, provider("DMWmiBridgeProv1"): ToInstance]
+class MDM_BitLocker
+{
+	[key] string InstanceID;
+	[key] string ParentID;
+	[read: ToSubClass, write: ToSubClass] sint32 RequireStorageCardEncryption;
+	[read: ToSubClass, write: ToSubClass] sint32 RequireDeviceEncryption;
+	[read: ToSubClass, write: ToSubClass] string EncryptionMethodByDriveType;
+	[read: ToSubClass, write: ToSubClass] string SystemDrivesRequireStartupAuthentication;
+	[read: ToSubClass, write: ToSubClass] string SystemDrivesMinimumPINLength;
+	[read: ToSubClass, write: ToSubClass] string SystemDrivesRecoveryMessage;
+	[read: ToSubClass, write: ToSubClass] string SystemDrivesRecoveryOptions;
+	[read: ToSubClass, write: ToSubClass] string FixedDrivesRecoveryOptions;
+	[read: ToSubClass, write: ToSubClass] string FixedDrivesRequireEncryption;
+	[read: ToSubClass, write: ToSubClass] string RemovableDrivesRequireEncryption;
+	[read: ToSubClass, write: ToSubClass] string RemovableDrivesExcludedFromEncryption;
+	[read: ToSubClass, write: ToSubClass] sint32 AllowWarningForOtherDiskEncryption;
+	[read: ToSubClass, write: ToSubClass] sint32 AllowStandardUserEncryption;
+	[read: ToSubClass, write: ToSubClass] sint32 ConfigureRecoveryPasswordRotation;
+	[read: ToSubClass, write: ToSubClass] string IdentificationField;
+	[read: ToSubClass, write: ToSubClass] string FixedDrivesEncryptionType;
+	[read: ToSubClass, write: ToSubClass] string SystemDrivesEnhancedPIN;
+	[read: ToSubClass, write: ToSubClass] string SystemDrivesDisallowStandardUsersCanChangePIN;
+	[read: ToSubClass, write: ToSubClass] string SystemDrivesEnablePrebootInputProtectorsOnSlates;
+	[read: ToSubClass, write: ToSubClass] string SystemDrivesEncryptionType;
+	[read: ToSubClass, write: ToSubClass] string SystemDrivesEnablePreBootPinExceptionOnDECapableDevice;
+	[read: ToSubClass, write: ToSubClass] string RemovableDrivesConfigureBDE;
+	[read: ToSubClass, write: ToSubClass] string RemovableDrivesEncryptionType;
+	[implemented] uint32 RotateRecoveryPasswordsMethod([In] string param);
+};
+[InPartition{"local-system"}: ToSubClass, dynamic: ToInstance, provider("DMWmiBridgeProv1"): ToInstance]
+class MDM_BitLocker_Status01
+{
+	[key] string InstanceID;
+	[key] string ParentID;
+	[read: ToSubClass, write(FALSE): ToSubClass] sint32 DeviceEncryptionStatus;
+	[read: ToSubClass, write(FALSE): ToSubClass] sint32 RotateRecoveryPasswordsStatus;
+	[read: ToSubClass, write(FALSE): ToSubClass] string RotateRecoveryPasswordsRequestID;
+	[read: ToSubClass, write(FALSE): ToSubClass] sint32 RemovableDrivesEncryptionStatus;
+};
+[InPartition{"local-system"}: ToSubClass, dynamic: ToInstance, provider("DMWmiBridgeProv1"): ToInstance]
+class MDM_DeviceManageability_Provider01_01
+{
+	[key] string InstanceID;
+	[key] string ParentID;
+	[read: ToSubClass, write: ToSubClass] string ConfigInfo;
+	[read: ToSubClass, write: ToSubClass] string EnrollmentInfo;
+};
+[InPartition{"local-system"}: ToSubClass, dynamic: ToInstance, provider("DMWmiBridgeProv1"): ToInstance]
+class MDM_DeviceUpdateCenter_DesiredUpdates01
+{
+	[key] string InstanceID;
+	[key] string ParentID;
+	[read: ToSubClass, write: ToSubClass] string OsVersion;
+	[read: ToSubClass, write: ToSubClass] string SystemManifestVersion;
+	[read: ToSubClass, write: ToSubClass] string OcpVersion;
+};
+[InPartition{"local-system"}: ToSubClass, dynamic: ToInstance, provider("DMWmiBridgeProv1"): ToInstance]
+class MDM_DeviceUpdateCenter_Enrollment01
+{
+	[key] string InstanceID;
+	[key] string ParentID;
+	[read: ToSubClass, write: ToSubClass] string PublisherId;
+	[read: ToSubClass, write: ToSubClass] string DeviceModelId;
+	[read: ToSubClass, write: ToSubClass] string OemPartnerRing;
+	[read: ToSubClass, write: ToSubClass] string CustomPackageId;
+};
+[InPartition{"local-system"}: ToSubClass, dynamic: ToInstance, provider("DMWmiBridgeProv1"): ToInstance]
+class MDM_EnrollmentStatusTracking_PolicyProviders02_01
+{
+	[key] string InstanceID;
+	[key] string ParentID;
+	[read: ToSubClass, write: ToSubClass] sint32 InstallationState;
+	[read: ToSubClass, write: ToSubClass] sint32 LastError;
+	[read: ToSubClass, write: ToSubClass] sint32 Timeout;
+};
+[InPartition{"local-system", "local-user"}: ToSubClass, dynamic: ToInstance, provider("DMWmiBridgeProv1"): ToInstance]
+class MDM_EnrollmentStatusTracking_PolicyProviders03_01
+{
+	[key] string InstanceID;
+	[key] string ParentID;
+	[read: ToSubClass, write: ToSubClass] boolean TrackingPoliciesCreated;
+};
+[InPartition{"local-system", "local-user"}: ToSubClass, dynamic: ToInstance, provider("DMWmiBridgeProv1"): ToInstance]
+class MDM_EnrollmentStatusTracking_Setup01
+{
+	[key] string InstanceID;
+	[key] string ParentID;
+	[read: ToSubClass, write(FALSE): ToSubClass] boolean HasProvisioningCompleted;
+};
+[InPartition{"local-system"}: ToSubClass, dynamic: ToInstance, provider("DMWmiBridgeProv1"): ToInstance]
+class MDM_EnrollmentStatusTracking_TrackedResourceTypes04
+{
+	[key] string InstanceID;
+	[key] string ParentID;
+	[read: ToSubClass, write: ToSubClass] boolean Apps;
+};
+[InPartition{"local-system", "local-user"}: ToSubClass, dynamic: ToInstance, provider("DMWmiBridgeProv1"): ToInstance]
+class MDM_EnrollmentStatusTracking_Tracking03_02
+{
+	[key] string InstanceID;
+	[key] string ParentID;
+	[read: ToSubClass, write: ToSubClass] string TrackingUri;
+	[read: ToSubClass, write: ToSubClass] sint32 InstallationState;
+	[read: ToSubClass, write: ToSubClass] sint32 RebootRequired;
+	[read: ToSubClass, write: ToSubClass] sint32 ErrorHresult;
+	[read: ToSubClass, write: ToSubClass] string DisplayName;
+	[read: ToSubClass, write: ToSubClass] string AppId;
+};
+[InPartition{"local-system"}: ToSubClass, dynamic: ToInstance, provider("DMWmiBridgeProv1"): ToInstance]
+class MDM_EnterpriseDataProtection
+{
+	[key] string InstanceID;
+	[key] string ParentID;
+	[read: ToSubClass, write(FALSE): ToSubClass] sint32 Status;
+};
+[InPartition{"local-system"}: ToSubClass, dynamic: ToInstance, provider("DMWmiBridgeProv1"): ToInstance]
+class MDM_EnterpriseDataProtection_Settings01
+{
+	[key] string InstanceID;
+	[key] string ParentID;
+	[read: ToSubClass, write: ToSubClass] sint32 EDPEnforcementLevel;
+	[read: ToSubClass, write: ToSubClass] string EnterpriseProtectedDomainNames;
+	[read: ToSubClass, write: ToSubClass] sint32 AllowUserDecryption;
+	[Octetstring: DisableOverride ToSubClass, read: ToSubClass, write: ToSubClass] string DataRecoveryCertificate;
+	[read: ToSubClass, write: ToSubClass] sint32 RevokeOnUnenroll;
+	[read: ToSubClass, write: ToSubClass] string RMSTemplateIDForEDP;
+	[read: ToSubClass, write: ToSubClass] sint32 AllowAzureRMSForEDP;
+	[read: ToSubClass, write: ToSubClass] string SMBAutoEncryptedFileExtensions;
+	[read: ToSubClass, write: ToSubClass] sint32 EDPShowIcons;
+};
+[InPartition{"local-system"}: ToSubClass, dynamic: ToInstance, provider("DMWmiBridgeProv1"): ToInstance]
+class MDM_EnterpriseModernAppManagement_AppInstallation01_01
+{
+	[key] string InstanceID;
+	[key] string ParentID;
+	[read: ToSubClass, write(FALSE): ToSubClass] sint32 LastError;
+	[read: ToSubClass, write(FALSE): ToSubClass] string LastErrorDesc;
+	[read: ToSubClass, write(FALSE): ToSubClass] sint32 Status;
+	[read: ToSubClass, write(FALSE): ToSubClass] sint32 ProgressStatus;
+	[read: ToSubClass, write(FALSE): ToSubClass] string StoreInstall;
+	[implemented] uint32 StoreInstallMethod([In] string param);
+	[read: ToSubClass, write(FALSE): ToSubClass] string HostedInstall;
+	[implemented] uint32 HostedInstallMethod([In] string param);
+};
+[InPartition{"local-system"}: ToSubClass, dynamic: ToInstance, provider("DMWmiBridgeProv1"): ToInstance]
+class MDM_EnterpriseModernAppManagement_AppManagement01
+{
+	[key] string InstanceID;
+	[key] string ParentID;
+	[read: ToSubClass, write(FALSE): ToSubClass] sint32 LastScanError;
+	[read: ToSubClass, write(FALSE): ToSubClass] string AppInventoryResults;
+	[read: ToSubClass, write: ToSubClass] string AppInventoryQuery;
+	[implemented] uint32 UpdateScanMethod();
+	[read: ToSubClass, write(FALSE): ToSubClass] string RemovePackage;
+	[implemented] uint32 RemovePackageMethod([In] string param);
+};
+[InPartition{"local-system"}: ToSubClass, dynamic: ToInstance, provider("DMWmiBridgeProv1"): ToInstance]
+class MDM_EnterpriseModernAppManagement_AppManagement01_02
+{
+	[key] string InstanceID;
+	[key] string ParentID;
+	[read: ToSubClass, write: ToSubClass] sint32 DoNotUpdate;
+	[read: ToSubClass, write: ToSubClass] sint32 MaintainProcessorArchitectureOnUpdate;
+};
+[InPartition{"local-system"}: ToSubClass, dynamic: ToInstance, provider("DMWmiBridgeProv1"): ToInstance]
+class MDM_EnterpriseModernAppManagement_AppManagement01_03
+{
+	[key] string InstanceID;
+	[key] string ParentID;
+	[read: ToSubClass, write(FALSE): ToSubClass] string Name;
+	[read: ToSubClass, write(FALSE): ToSubClass] string Version;
+	[read: ToSubClass, write(FALSE): ToSubClass] string Publisher;
+	[read: ToSubClass, write(FALSE): ToSubClass] string Architecture;
+	[read: ToSubClass, write(FALSE): ToSubClass] string InstallLocation;
+	[read: ToSubClass, write(FALSE): ToSubClass] sint32 IsFramework;
+	[read: ToSubClass, write(FALSE): ToSubClass] sint32 IsBundle;
+	[read: ToSubClass, write(FALSE): ToSubClass] string InstallDate;
+	[read: ToSubClass, write(FALSE): ToSubClass] string ResourceID;
+	[read: ToSubClass, write(FALSE): ToSubClass] sint32 PackageStatus;
+	[read: ToSubClass, write(FALSE): ToSubClass] sint32 RequiresReinstall;
+	[read: ToSubClass, write(FALSE): ToSubClass] string Users;
+	[read: ToSubClass, write(FALSE): ToSubClass] sint32 IsProvisioned;
+	[read: ToSubClass, write(FALSE): ToSubClass] sint32 IsStub;
+};
+[InPartition{"local-system"}: ToSubClass, dynamic: ToInstance, provider("DMWmiBridgeProv1"): ToInstance]
+class MDM_EnterpriseModernAppManagement_AppSettingPolicy04
+{
+	[key] string InstanceID;
+	[key] string ParentID;
+	[read: ToSubClass, write: ToSubClass] string Value;
+	boolean IsVariableLeaf;
+};
+[InPartition{"local-system"}: ToSubClass, dynamic: ToInstance, provider("DMWmiBridgeProv1"): ToInstance]
+class MDM_EnterpriseModernAppManagement_EffectiveRelease05
+{
+	[key] string InstanceID;
+	[key] string ParentID;
+	[read: ToSubClass, write(FALSE): ToSubClass] string ChannelId;
+	[read: ToSubClass, write(FALSE): ToSubClass] string ReleaseManagementId;
+};
+[InPartition{"local-system"}: ToSubClass, dynamic: ToInstance, provider("DMWmiBridgeProv1"): ToInstance]
+class MDM_EnterpriseModernAppManagement_ReleaseManagement03_01
+{
+	[key] string InstanceID;
+	[key] string ParentID;
+	[read: ToSubClass, write: ToSubClass] string ChannelId;
+	[read: ToSubClass, write: ToSubClass] string ReleaseManagementId;
+};
+[InPartition{"local-system"}: ToSubClass, dynamic: ToInstance, provider("DMWmiBridgeProv1"): ToInstance]
+class MDM_EnterpriseModernAppManagement_StoreLicenses02_01
+{
+	[key] string InstanceID;
+	[key] string ParentID;
+	[read: ToSubClass, write(FALSE): ToSubClass] string LicenseCategory;
+	[read: ToSubClass, write(FALSE): ToSubClass] string LicenseUsage;
+	[read: ToSubClass, write(FALSE): ToSubClass] string RequesterID;
+	[implemented] uint32 AddLicenseMethod([In] string param);
+	[implemented] uint32 GetLicenseFromStoreMethod([In] string param);
+};
+[InPartition{"local-system"}: ToSubClass, dynamic: ToInstance, provider("DMWmiBridgeProv1"): ToInstance]
+class MDM_eUICCs_01
+{
+	[key] string InstanceID;
+	[key] string ParentID;
+	[read: ToSubClass, write(FALSE): ToSubClass] string Identifier;
+	[read: ToSubClass, write(FALSE): ToSubClass] boolean IsActive;
+	[read: ToSubClass, write(FALSE): ToSubClass] boolean PPR1Allowed;
+	[read: ToSubClass, write(FALSE): ToSubClass] boolean PPR1AlreadySet;
+};
+[InPartition{"local-system"}: ToSubClass, dynamic: ToInstance, provider("DMWmiBridgeProv1"): ToInstance]
+class MDM_eUICCs_Actions02
+{
+	[key] string InstanceID;
+	[key] string ParentID;
+	[read: ToSubClass, write(FALSE): ToSubClass] sint32 Status;
+	[implemented] uint32 ResetToFactoryStateMethod([In] string param);
+};
+[InPartition{"local-system"}: ToSubClass, dynamic: ToInstance, provider("DMWmiBridgeProv1"): ToInstance]
+class MDM_eUICCs_DownloadServers02_01
+{
+	[key] string InstanceID;
+	[key] string ParentID;
+	[read: ToSubClass, write(FALSE): ToSubClass] sint32 DiscoveryState;
+	[read: ToSubClass, write: ToSubClass] boolean AutoEnable;
+};
+[InPartition{"local-system"}: ToSubClass, dynamic: ToInstance, provider("DMWmiBridgeProv1"): ToInstance]
+class MDM_eUICCs_Policies02
+{
+	[key] string InstanceID;
+	[key] string ParentID;
+	[read: ToSubClass, write: ToSubClass] boolean LocalUIEnabled;
+};
+[InPartition{"local-system"}: ToSubClass, dynamic: ToInstance, provider("DMWmiBridgeProv1"): ToInstance]
+class MDM_eUICCs_Profiles02_01
+{
+	[key] string InstanceID;
+	[key] string ParentID;
+	[read: ToSubClass, write: ToSubClass] string ServerName;
+	[read: ToSubClass, write: ToSubClass] string MatchingID;
+	[read: ToSubClass, write(FALSE): ToSubClass] sint32 State;
+	[read: ToSubClass, write: ToSubClass] boolean IsEnabled;
+	[read: ToSubClass, write(FALSE): ToSubClass] boolean PPR1Set;
+	[read: ToSubClass, write(FALSE): ToSubClass] boolean PPR2Set;
+	[read: ToSubClass, write(FALSE): ToSubClass] sint32 ErrorDetail;
+};
+[InPartition{"local-system"}: ToSubClass, dynamic: ToInstance, provider("DMWmiBridgeProv1"): ToInstance]
+class MDM_Firewall_Action04
+{
+	[key] string InstanceID;
+	[key] string ParentID;
+	[read: ToSubClass, write: ToSubClass] sint32 Type;
+};
+[InPartition{"local-system"}: ToSubClass, dynamic: ToInstance, provider("DMWmiBridgeProv1"): ToInstance]
+class MDM_Firewall_Addresses03_01
+{
+	[key] string InstanceID;
+	[key] string ParentID;
+	[read: ToSubClass, write(FALSE): ToSubClass] string Keyword;
+	[read: ToSubClass, write: ToSubClass] string Addresses;
+	[read: ToSubClass, write(FALSE): ToSubClass] boolean AutoResolve;
+};
+[InPartition{"local-system"}: ToSubClass, dynamic: ToInstance, provider("DMWmiBridgeProv1"): ToInstance]
+class MDM_Firewall_App04
+{
+	[key] string InstanceID;
+	[key] string ParentID;
+	[read: ToSubClass, write: ToSubClass] string PackageFamilyName;
+	[read: ToSubClass, write: ToSubClass] string FilePath;
+	[read: ToSubClass, write: ToSubClass] string Fqbn;
+	[read: ToSubClass, write: ToSubClass] string ServiceName;
+};
+[InPartition{"local-system"}: ToSubClass, dynamic: ToInstance, provider("DMWmiBridgeProv1"): ToInstance]
+class MDM_Firewall_DomainProfile02
+{
+	[key] string InstanceID;
+	[key] string ParentID;
+	[read: ToSubClass, write: ToSubClass] boolean EnableFirewall;
+	[read: ToSubClass, write: ToSubClass] boolean DisableStealthMode;
+	[read: ToSubClass, write: ToSubClass] boolean Shielded;
+	[read: ToSubClass, write: ToSubClass] boolean DisableUnicastResponsesToMulticastBroadcast;
+	[read: ToSubClass, write: ToSubClass] boolean EnableLogDroppedPackets;
+	[read: ToSubClass, write: ToSubClass] boolean EnableLogSuccessConnections;
+	[read: ToSubClass, write: ToSubClass] boolean EnableLogIgnoredRules;
+	[read: ToSubClass, write: ToSubClass] sint32 LogMaxFileSize;
+	[read: ToSubClass, write: ToSubClass] string LogFilePath;
+	[read: ToSubClass, write: ToSubClass] boolean DisableInboundNotifications;
+	[read: ToSubClass, write: ToSubClass] boolean AuthAppsAllowUserPrefMerge;
+	[read: ToSubClass, write: ToSubClass] boolean GlobalPortsAllowUserPrefMerge;
+	[read: ToSubClass, write: ToSubClass] boolean AllowLocalPolicyMerge;
+	[read: ToSubClass, write: ToSubClass] boolean AllowLocalIpsecPolicyMerge;
+	[read: ToSubClass, write: ToSubClass] sint32 DefaultOutboundAction;
+	[read: ToSubClass, write: ToSubClass] sint32 DefaultInboundAction;
+	[read: ToSubClass, write: ToSubClass] boolean DisableStealthModeIpsecSecuredPacketExemption;
+};
+[InPartition{"local-system"}: ToSubClass, dynamic: ToInstance, provider("DMWmiBridgeProv1"): ToInstance]
+class MDM_Firewall_FirewallRules02_01
+{
+	[key] string InstanceID;
+	[key] string ParentID;
+	[read: ToSubClass, write: ToSubClass] sint32 Protocol;
+	[read: ToSubClass, write: ToSubClass] string LocalPortRanges;
+	[read: ToSubClass, write: ToSubClass] string RemotePortRanges;
+	[read: ToSubClass, write: ToSubClass] string LocalAddressRanges;
+	[read: ToSubClass, write: ToSubClass] string RemoteAddressRanges;
+	[read: ToSubClass, write: ToSubClass] string RemoteAddressDynamicKeywords;
+	[read: ToSubClass, write: ToSubClass] string Description;
+	[read: ToSubClass, write: ToSubClass] boolean Enabled;
+	[read: ToSubClass, write: ToSubClass] sint32 Profiles;
+	[read: ToSubClass, write: ToSubClass] string Direction;
+	[read: ToSubClass, write: ToSubClass] string InterfaceTypes;
+	[read: ToSubClass, write: ToSubClass] boolean EdgeTraversal;
+	[read: ToSubClass, write: ToSubClass] string LocalUserAuthorizationList;
+	[read: ToSubClass, write: ToSubClass] boolean FriendlyName;
+	[read: ToSubClass, write: ToSubClass] sint32 IcmpTypesAndCodes;
+	[read: ToSubClass, write(FALSE): ToSubClass] sint32 Status;
+	[read: ToSubClass, write: ToSubClass] string Name;
+};
+[InPartition{"local-system"}: ToSubClass, dynamic: ToInstance, provider("DMWmiBridgeProv1"): ToInstance]
+class MDM_Firewall_Global02
+{
+	[key] string InstanceID;
+	[key] string ParentID;
+	[read: ToSubClass, write(FALSE): ToSubClass] sint32 PolicyVersionSupported;
+	[read: ToSubClass, write(FALSE): ToSubClass] sint32 CurrentProfiles;
+	[read: ToSubClass, write: ToSubClass] boolean DisableStatefulFtp;
+	[read: ToSubClass, write: ToSubClass] sint32 SaIdleTime;
+	[read: ToSubClass, write: ToSubClass] sint32 PresharedKeyEncoding;
+	[read: ToSubClass, write: ToSubClass] sint32 IPsecExempt;
+	[read: ToSubClass, write: ToSubClass] sint32 CRLcheck;
+	[read: ToSubClass, write(FALSE): ToSubClass] string PolicyVersion;
+	[read: ToSubClass, write(FALSE): ToSubClass] string BinaryVersionSupported;
+	[read: ToSubClass, write: ToSubClass] boolean OpportunisticallyMatchAuthSetPerKM;
+	[read: ToSubClass, write: ToSubClass] sint32 EnablePacketQueue;
+};
+[InPartition{"local-system"}: ToSubClass, dynamic: ToInstance, provider("DMWmiBridgeProv1"): ToInstance]
+class MDM_Firewall_PrivateProfile02
+{
+	[key] string InstanceID;
+	[key] string ParentID;
+	[read: ToSubClass, write: ToSubClass] boolean EnableFirewall;
+	[read: ToSubClass, write: ToSubClass] boolean DisableStealthMode;
+	[read: ToSubClass, write: ToSubClass] boolean Shielded;
+	[read: ToSubClass, write: ToSubClass] boolean DisableUnicastResponsesToMulticastBroadcast;
+	[read: ToSubClass, write: ToSubClass] boolean EnableLogDroppedPackets;
+	[read: ToSubClass, write: ToSubClass] boolean EnableLogSuccessConnections;
+	[read: ToSubClass, write: ToSubClass] boolean EnableLogIgnoredRules;
+	[read: ToSubClass, write: ToSubClass] sint32 LogMaxFileSize;
+	[read: ToSubClass, write: ToSubClass] string LogFilePath;
+	[read: ToSubClass, write: ToSubClass] boolean DisableInboundNotifications;
+	[read: ToSubClass, write: ToSubClass] boolean AuthAppsAllowUserPrefMerge;
+	[read: ToSubClass, write: ToSubClass] boolean GlobalPortsAllowUserPrefMerge;
+	[read: ToSubClass, write: ToSubClass] boolean AllowLocalPolicyMerge;
+	[read: ToSubClass, write: ToSubClass] boolean AllowLocalIpsecPolicyMerge;
+	[read: ToSubClass, write: ToSubClass] sint32 DefaultOutboundAction;
+	[read: ToSubClass, write: ToSubClass] sint32 DefaultInboundAction;
+	[read: ToSubClass, write: ToSubClass] boolean DisableStealthModeIpsecSecuredPacketExemption;
+};
+[InPartition{"local-system"}: ToSubClass, dynamic: ToInstance, provider("DMWmiBridgeProv1"): ToInstance]
+class MDM_Firewall_PublicProfile02
+{
+	[key] string InstanceID;
+	[key] string ParentID;
+	[read: ToSubClass, write: ToSubClass] boolean EnableFirewall;
+	[read: ToSubClass, write: ToSubClass] boolean DisableStealthMode;
+	[read: ToSubClass, write: ToSubClass] boolean Shielded;
+	[read: ToSubClass, write: ToSubClass] boolean DisableUnicastResponsesToMulticastBroadcast;
+	[read: ToSubClass, write: ToSubClass] boolean EnableLogDroppedPackets;
+	[read: ToSubClass, write: ToSubClass] boolean EnableLogSuccessConnections;
+	[read: ToSubClass, write: ToSubClass] boolean EnableLogIgnoredRules;
+	[read: ToSubClass, write: ToSubClass] sint32 LogMaxFileSize;
+	[read: ToSubClass, write: ToSubClass] string LogFilePath;
+	[read: ToSubClass, write: ToSubClass] boolean DisableInboundNotifications;
+	[read: ToSubClass, write: ToSubClass] boolean AuthAppsAllowUserPrefMerge;
+	[read: ToSubClass, write: ToSubClass] boolean GlobalPortsAllowUserPrefMerge;
+	[read: ToSubClass, write: ToSubClass] boolean AllowLocalPolicyMerge;
+	[read: ToSubClass, write: ToSubClass] boolean AllowLocalIpsecPolicyMerge;
+	[read: ToSubClass, write: ToSubClass] sint32 DefaultOutboundAction;
+	[read: ToSubClass, write: ToSubClass] sint32 DefaultInboundAction;
+	[read: ToSubClass, write: ToSubClass] boolean DisableStealthModeIpsecSecuredPacketExemption;
+};
+[InPartition{"local-system"}: ToSubClass, dynamic: ToInstance, provider("DMWmiBridgeProv1"): ToInstance]
+class MDM_LanguagePackManagement_Install01_01
+{
+	[key] string InstanceID;
+	[key] string ParentID;
+	[read: ToSubClass, write(FALSE): ToSubClass] sint32 Status;
+	[read: ToSubClass, write(FALSE): ToSubClass] sint32 ErrorCode;
+	[read: ToSubClass, write: ToSubClass] boolean CopyToDeviceInternationalSettings;
+	[read: ToSubClass, write: ToSubClass] boolean EnableLanguageFeatureInstallations;
+	[implemented] uint32 StartInstallationMethod([In] string param);
+};
+[InPartition{"local-system"}: ToSubClass, dynamic: ToInstance, provider("DMWmiBridgeProv1"): ToInstance]
+class MDM_LanguagePackManagement_InstalledLanguages01_01
+{
+	[key] string InstanceID;
+	[key] string ParentID;
+	[read: ToSubClass, write(FALSE): ToSubClass] sint32 Providers;
+	[read: ToSubClass, write(FALSE): ToSubClass] sint32 LanguageFeatures;
+};
+[InPartition{"local-system"}: ToSubClass, dynamic: ToInstance, provider("DMWmiBridgeProv1"): ToInstance]
+class MDM_LanguagePackManagement_LanguageSettings01
+{
+	[key] string InstanceID;
+	[key] string ParentID;
+	[read: ToSubClass, write: ToSubClass] string SystemPreferredUILanguages;
+};
+[InPartition{"local-system"}: ToSubClass, dynamic: ToInstance, provider("DMWmiBridgeProv1"): ToInstance]
+class MDM_MultiSIM_01
+{
+	[key] string InstanceID;
+	[key] string ParentID;
+	[read: ToSubClass, write(FALSE): ToSubClass] string Identifier;
+	[read: ToSubClass, write(FALSE): ToSubClass] boolean IsEmbedded;
+};
+[InPartition{"local-system"}: ToSubClass, dynamic: ToInstance, provider("DMWmiBridgeProv1"): ToInstance]
+class MDM_MultiSIM_Policies02
+{
+	[key] string InstanceID;
+	[key] string ParentID;
+	[read: ToSubClass, write: ToSubClass] boolean SlotSelectionEnabled;
+};
+[InPartition{"local-system"}: ToSubClass, dynamic: ToInstance, provider("DMWmiBridgeProv1"): ToInstance]
+class MDM_MultiSIM_Slots02_01
+{
+	[key] string InstanceID;
+	[key] string ParentID;
+	[read: ToSubClass, write(FALSE): ToSubClass] sint32 Identifier;
+	[read: ToSubClass, write(FALSE): ToSubClass] boolean IsEmbedded;
+	[read: ToSubClass, write: ToSubClass] boolean IsSelected;
+	[read: ToSubClass, write(FALSE): ToSubClass] sint32 State;
+};
+[InPartition{"local-system"}: ToSubClass, dynamic: ToInstance, provider("DMWmiBridgeProv1"): ToInstance]
+class MDM_Personalization
+{
+	[key] string InstanceID;
+	[key] string ParentID;
+	[read: ToSubClass, write: ToSubClass] string DesktopImageUrl;
+	[read: ToSubClass, write(FALSE): ToSubClass] sint32 DesktopImageStatus;
+	[read: ToSubClass, write: ToSubClass] string LockScreenImageUrl;
+	[read: ToSubClass, write(FALSE): ToSubClass] sint32 LockScreenImageStatus;
+};
+[InPartition{"local-system"}: ToSubClass, dynamic: ToInstance, provider("DMWmiBridgeProv1"): ToInstance]
+class MDM_Reboot
+{
+	[key] string InstanceID;
+	[key] string ParentID;
+	[implemented] uint32 RebootNowMethod();
+};
+[InPartition{"local-system"}: ToSubClass, dynamic: ToInstance, provider("DMWmiBridgeProv1"): ToInstance]
+class MDM_Reboot_Schedule01
+{
+	[key] string InstanceID;
+	[key] string ParentID;
+	[read: ToSubClass, write: ToSubClass] string Single;
+	[read: ToSubClass, write: ToSubClass] string DailyRecurrent;
+};
+[InPartition{"local-system"}: ToSubClass, dynamic: ToInstance, provider("DMWmiBridgeProv1"): ToInstance]
+class MDM_RemoteFind
+{
+	[key] string InstanceID;
+	[key] string ParentID;
+	[read: ToSubClass, write: ToSubClass] sint32 DesiredAccuracy;
+	[read: ToSubClass, write: ToSubClass] sint32 MaximumAge;
+	[read: ToSubClass, write: ToSubClass] sint32 Timeout;
+};
+[InPartition{"local-system"}: ToSubClass, dynamic: ToInstance, provider("DMWmiBridgeProv1"): ToInstance]
+class MDM_RemoteFind_Location01
+{
+	[key] string InstanceID;
+	[key] string ParentID;
+	[read: ToSubClass, write(FALSE): ToSubClass] real32 Latitude;
+	[read: ToSubClass, write(FALSE): ToSubClass] real32 Longitude;
+	[read: ToSubClass, write(FALSE): ToSubClass] real32 Altitude;
+	[read: ToSubClass, write(FALSE): ToSubClass] sint32 Accuracy;
+	[read: ToSubClass, write(FALSE): ToSubClass] sint32 AltitudeAccuracy;
+	[read: ToSubClass, write(FALSE): ToSubClass] datetime Age;
+};
+[InPartition{"local-system"}: ToSubClass, dynamic: ToInstance, provider("DMWmiBridgeProv1"): ToInstance]
+class MDM_Reporting_EnterpriseDataProtection01_RetrieveByCount02
+{
+	[key] string InstanceID;
+	[key] string ParentID;
+	[read: ToSubClass, write(FALSE): ToSubClass] string Logs;
+	[read: ToSubClass, write: ToSubClass] sint32 LogCount;
+	[read: ToSubClass, write: ToSubClass] string StartTime;
+	[read: ToSubClass, write: ToSubClass] sint32 Type;
+};
+[InPartition{"local-system"}: ToSubClass, dynamic: ToInstance, provider("DMWmiBridgeProv1"): ToInstance]
+class MDM_Reporting_EnterpriseDataProtection01_RetrieveByTimeRange02
+{
+	[key] string InstanceID;
+	[key] string ParentID;
+	[read: ToSubClass, write(FALSE): ToSubClass] string Logs;
+	[read: ToSubClass, write: ToSubClass] string StartTime;
+	[read: ToSubClass, write: ToSubClass] string StopTime;
+	[read: ToSubClass, write: ToSubClass] sint32 Type;
+};
+[InPartition{"local-system"}: ToSubClass, dynamic: ToInstance, provider("DMWmiBridgeProv1"): ToInstance]
+class MDM_Reporting_SecurityAuditing01_RetrieveByCount02
+{
+	[key] string InstanceID;
+	[key] string ParentID;
+	[read: ToSubClass, write(FALSE): ToSubClass] string Logs;
+	[read: ToSubClass, write: ToSubClass] sint32 LogCount;
+	[read: ToSubClass, write: ToSubClass] string StartTime;
+};
+[InPartition{"local-system"}: ToSubClass, dynamic: ToInstance, provider("DMWmiBridgeProv1"): ToInstance]
+class MDM_Reporting_SecurityAuditing01_RetrieveByTimeRange02
+{
+	[key] string InstanceID;
+	[key] string ParentID;
+	[read: ToSubClass, write(FALSE): ToSubClass] string Logs;
+	[read: ToSubClass, write: ToSubClass] string StartTime;
+	[read: ToSubClass, write: ToSubClass] string StopTime;
+};
+[InPartition{"local-system"}: ToSubClass, dynamic: ToInstance, provider("DMWmiBridgeProv1"): ToInstance]
+class MDM_SecureAssessment
+{
+	[key] string InstanceID;
+	[key] string ParentID;
+	[read: ToSubClass, write: ToSubClass] string LaunchURI;
+	[read: ToSubClass, write: ToSubClass] string TesterAccount;
+	[read: ToSubClass, write: ToSubClass] boolean AllowScreenMonitoring;
+	[read: ToSubClass, write: ToSubClass] boolean RequirePrinting;
+	[read: ToSubClass, write: ToSubClass] boolean AllowTextSuggestions;
+};
+[InPartition{"local-system"}: ToSubClass, dynamic: ToInstance, provider("DMWmiBridgeProv1"): ToInstance]
+class MDM_SharedPC
+{
+	[key] string InstanceID;
+	[key] string ParentID;
+	[read: ToSubClass, write: ToSubClass] boolean EnableSharedPCMode;
+	[read: ToSubClass, write: ToSubClass] boolean SetEduPolicies;
+	[read: ToSubClass, write: ToSubClass] boolean SetPowerPolicies;
+	[read: ToSubClass, write: ToSubClass] sint32 MaintenanceStartTime;
+	[read: ToSubClass, write: ToSubClass] boolean SignInOnResume;
+	[read: ToSubClass, write: ToSubClass] sint32 SleepTimeout;
+	[read: ToSubClass, write: ToSubClass] boolean EnableAccountManager;
+	[read: ToSubClass, write: ToSubClass] sint32 AccountModel;
+	[read: ToSubClass, write: ToSubClass] sint32 DeletionPolicy;
+	[read: ToSubClass, write: ToSubClass] sint32 DiskLevelDeletion;
+	[read: ToSubClass, write: ToSubClass] sint32 DiskLevelCaching;
+	[read: ToSubClass, write: ToSubClass] boolean RestrictLocalStorage;
+	[read: ToSubClass, write: ToSubClass] string KioskModeAUMID;
+	[read: ToSubClass, write: ToSubClass] string KioskModeUserTileDisplayText;
+	[read: ToSubClass, write: ToSubClass] sint32 InactiveThreshold;
+	[read: ToSubClass, write: ToSubClass] sint32 MaxPageFileSizeMB;
+};
+[InPartition{"local-system"}: ToSubClass, dynamic: ToInstance, provider("DMWmiBridgeProv1"): ToInstance]
+class MDM_Update
+{
+	[key] string InstanceID;
+	[key] string ParentID;
+	[read: ToSubClass, write(FALSE): ToSubClass] datetime LastSuccessfulScanTime;
+	[read: ToSubClass, write(FALSE): ToSubClass] sint32 DeferUpgrade;
+};
+[InPartition{"local-system"}: ToSubClass, dynamic: ToInstance, provider("DMWmiBridgeProv1"): ToInstance]
+class MDM_Update_ApprovedUpdates01_01
+{
+	[key] string InstanceID;
+	[key] string ParentID;
+	[read: ToSubClass, write(FALSE): ToSubClass] datetime ApprovedTime;
+};
+[InPartition{"local-system"}: ToSubClass, dynamic: ToInstance, provider("DMWmiBridgeProv1"): ToInstance]
+class MDM_Update_FailedUpdates01_01
+{
+	[key] string InstanceID;
+	[key] string ParentID;
+	[read: ToSubClass, write(FALSE): ToSubClass] sint32 HResult;
+	[read: ToSubClass, write(FALSE): ToSubClass] sint32 State;
+};
+[InPartition{"local-system"}: ToSubClass, dynamic: ToInstance, provider("DMWmiBridgeProv1"): ToInstance]
+class MDM_Update_InstallableUpdates01_01
+{
+	[key] string InstanceID;
+	[key] string ParentID;
+	[read: ToSubClass, write(FALSE): ToSubClass] sint32 Type;
+	[read: ToSubClass, write(FALSE): ToSubClass] sint32 RevisionNumber;
+};
+[InPartition{"local-system"}: ToSubClass, dynamic: ToInstance, provider("DMWmiBridgeProv1"): ToInstance]
+class MDM_Update_PendingRebootUpdates01_01
+{
+	[key] string InstanceID;
+	[key] string ParentID;
+	[read: ToSubClass, write(FALSE): ToSubClass] datetime InstalledTime;
+};
+[InPartition{"local-system"}: ToSubClass, dynamic: ToInstance, provider("DMWmiBridgeProv1"): ToInstance]
+class MDM_Update_Rollback01
+{
+	[key] string InstanceID;
+	[key] string ParentID;
+	[read: ToSubClass, write(FALSE): ToSubClass] string QualityUpdateStatus;
+	[read: ToSubClass, write(FALSE): ToSubClass] string FeatureUpdateStatus;
+	[implemented] uint32 QualityUpdateMethod();
+	[implemented] uint32 FeatureUpdateMethod();
+};
+[InPartition{"local-system"}: ToSubClass, dynamic: ToInstance, provider("DMWmiBridgeProv1"): ToInstance]
+class MDM_Win32CompatibilityAppraiser_AppraiserConfigurationDiagnosis02
+{
+	[key] string InstanceID;
+	[key] string ParentID;
+	[read: ToSubClass, write(FALSE): ToSubClass] string CommercialId;
+	[read: ToSubClass, write(FALSE): ToSubClass] boolean CommercialIdSetAndValid;
+	[read: ToSubClass, write(FALSE): ToSubClass] boolean AllTargetOsVersionsRequested;
+	[read: ToSubClass, write(FALSE): ToSubClass] boolean OsSkuIsValidForAppraiser;
+	[read: ToSubClass, write(FALSE): ToSubClass] sint32 AppraiserCodeAndDataVersionsAboveMinimum;
+	[read: ToSubClass, write(FALSE): ToSubClass] boolean RebootPending;
+};
+[InPartition{"local-system"}: ToSubClass, dynamic: ToInstance, provider("DMWmiBridgeProv1"): ToInstance]
+class MDM_Win32CompatibilityAppraiser_CompatibilityAppraiser01
+{
+	[key] string InstanceID;
+	[key] string ParentID;
+	[read: ToSubClass, write(FALSE): ToSubClass] string AppraiserRunResultReport;
+};
+[InPartition{"local-system"}: ToSubClass, dynamic: ToInstance, provider("DMWmiBridgeProv1"): ToInstance]
+class MDM_Win32CompatibilityAppraiser_UniversalTelemetryClient01
+{
+	[key] string InstanceID;
+	[key] string ParentID;
+	[read: ToSubClass, write(FALSE): ToSubClass] string UtcConnectionReport;
+};
+[InPartition{"local-system"}: ToSubClass, dynamic: ToInstance, provider("DMWmiBridgeProv1"): ToInstance]
+class MDM_Win32CompatibilityAppraiser_UtcConfigurationDiagnosis02
+{
+	[key] string InstanceID;
+	[key] string ParentID;
+	[read: ToSubClass, write(FALSE): ToSubClass] sint32 TelemetryOptIn;
+	[read: ToSubClass, write(FALSE): ToSubClass] sint32 CommercialDataOptIn;
+	[read: ToSubClass, write(FALSE): ToSubClass] boolean DiagTrackServiceRunning;
+	[read: ToSubClass, write(FALSE): ToSubClass] boolean MsaServiceEnabled;
+	[read: ToSubClass, write(FALSE): ToSubClass] sint32 InternetExplorerTelemetryOptIn;
+};
+[InPartition{"local-system"}: ToSubClass, dynamic: ToInstance, provider("DMWmiBridgeProv1"): ToInstance]
+class MDM_Win32CompatibilityAppraiser_WerConfigurationDiagnosis02
+{
+	[key] string InstanceID;
+	[key] string ParentID;
+	[read: ToSubClass, write(FALSE): ToSubClass] sint32 WerTelemetryOptIn;
+	[read: ToSubClass, write(FALSE): ToSubClass] sint32 MostRestrictiveSetting;
+};
+[InPartition{"local-system"}: ToSubClass, dynamic: ToInstance, provider("DMWmiBridgeProv1"): ToInstance]
+class MDM_Win32CompatibilityAppraiser_WindowsErrorReporting01
+{
+	[key] string InstanceID;
+	[key] string ParentID;
+	[read: ToSubClass, write(FALSE): ToSubClass] string WerConnectionReport;
+};
+[InPartition{"local-system"}: ToSubClass, dynamic: ToInstance, provider("DMWmiBridgeProv1"): ToInstance]
+class MDM_WindowsAdvancedThreatProtection
+{
+	[key] string InstanceID;
+	[key] string ParentID;
+	[read: ToSubClass, write: ToSubClass] string Onboarding;
+	[read: ToSubClass, write: ToSubClass] string Offboarding;
+};
+[InPartition{"local-system"}: ToSubClass, dynamic: ToInstance, provider("DMWmiBridgeProv1"): ToInstance]
+class MDM_WindowsAdvancedThreatProtection_Configuration01
+{
+	[key] string InstanceID;
+	[key] string ParentID;
+	[read: ToSubClass, write: ToSubClass] sint32 SampleSharing;
+	[read: ToSubClass, write: ToSubClass] sint32 TelemetryReportingFrequency;
+	[read: ToSubClass, write: ToSubClass] string GroupIds;
+};
+[InPartition{"local-system"}: ToSubClass, dynamic: ToInstance, provider("DMWmiBridgeProv1"): ToInstance]
+class MDM_WindowsAdvancedThreatProtection_DeviceTagging01
+{
+	[key] string InstanceID;
+	[key] string ParentID;
+	[read: ToSubClass, write: ToSubClass] string Group;
+	[read: ToSubClass, write: ToSubClass] sint32 Criticality;
+	[read: ToSubClass, write: ToSubClass] sint32 IdMethod;
+};
+[InPartition{"local-system"}: ToSubClass, dynamic: ToInstance, provider("DMWmiBridgeProv1"): ToInstance]
+class MDM_WindowsAdvancedThreatProtection_HealthState01
+{
+	[key] string InstanceID;
+	[key] string ParentID;
+	[read: ToSubClass, write(FALSE): ToSubClass] datetime LastConnected;
+	[read: ToSubClass, write(FALSE): ToSubClass] boolean SenseIsRunning;
+	[read: ToSubClass, write(FALSE): ToSubClass] sint32 OnboardingState;
+	[read: ToSubClass, write(FALSE): ToSubClass] string OrgId;
+};
+[InPartition{"local-system"}: ToSubClass, dynamic: ToInstance, provider("DMWmiBridgeProv1"): ToInstance]
+class MDM_WindowsDefenderApplicationGuard
+{
+	[key] string InstanceID;
+	[key] string ParentID;
+	[read: ToSubClass, write(FALSE): ToSubClass] sint32 Status;
+	[read: ToSubClass, write(FALSE): ToSubClass] sint32 PlatformStatus;
+	[read: ToSubClass, write(FALSE): ToSubClass] string InstallWindowsDefenderApplicationGuard;
+	[implemented] uint32 InstallWindowsDefenderApplicationGuardMethod([In] string param);
+};
+[InPartition{"local-system"}: ToSubClass, dynamic: ToInstance, provider("DMWmiBridgeProv1"): ToInstance]
+class MDM_WindowsDefenderApplicationGuard_Audit01
+{
+	[key] string InstanceID;
+	[key] string ParentID;
+	[read: ToSubClass, write: ToSubClass] sint32 AuditApplicationGuard;
+};
+[InPartition{"local-system"}: ToSubClass, dynamic: ToInstance, provider("DMWmiBridgeProv1"): ToInstance]
+class MDM_WindowsDefenderApplicationGuard_Settings01
+{
+	[key] string InstanceID;
+	[key] string ParentID;
+	[read: ToSubClass, write: ToSubClass] sint32 AllowWindowsDefenderApplicationGuard;
+	[read: ToSubClass, write: ToSubClass] sint32 ClipboardFileType;
+	[read: ToSubClass, write: ToSubClass] sint32 ClipboardSettings;
+	[read: ToSubClass, write: ToSubClass] sint32 PrintingSettings;
+	[read: ToSubClass, write: ToSubClass] sint32 BlockNonEnterpriseContent;
+	[read: ToSubClass, write: ToSubClass] sint32 AllowPersistence;
+	[read: ToSubClass, write: ToSubClass] sint32 AllowVirtualGPU;
+	[read: ToSubClass, write: ToSubClass] sint32 SaveFilesToHost;
+	[read: ToSubClass, write: ToSubClass] string CertificateThumbprints;
+	[read: ToSubClass, write: ToSubClass] sint32 AllowCameraMicrophoneRedirection;
+};
+[InPartition{"local-system"}: ToSubClass, dynamic: ToInstance, provider("DMWmiBridgeProv1"): ToInstance]
+class MDM_WindowsIoT_SoftRealTimeProperties01
+{
+	[key] string InstanceID;
+	[key] string ParentID;
+	[read: ToSubClass, write: ToSubClass] sint32 SetRTCores;
+};

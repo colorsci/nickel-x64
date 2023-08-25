@@ -1,0 +1,351 @@
+// Win32_EncryptableVolume.mof : mof source for Win32_EncryptableVolume
+//
+//
+// This file will be processed by MOFCOMP utility to
+// register the provider with the WMI repository
+//
+
+
+#pragma autorecover
+#pragma namespace ("\\\\.\\root\\CIMV2")
+
+instance of __Namespace
+{
+    Name = "Security";
+};
+
+#pragma namespace ("\\\\.\\root\\CIMV2\\Security")
+[NamespaceSecuritySDDL("O:BAG:BAD:P(A;;CCDCLCSWRPWPRCWD;;;BA)(A;;CCDCRP;;;LS)(A;;CCDCRP;;;NS)S:(AU;SAFA;0x6001f;;;WD)")]
+instance of __Namespace
+{
+    Name = "MicrosoftVolumeEncryption";
+};
+
+
+#pragma namespace ("\\\\.\\root\\CIMV2\\Security\\MicrosoftVolumeEncryption")
+[RequiresEncryption(TRUE)]
+instance of __systemSecurity { };
+
+class Win32_ProviderEx : __Win32Provider
+{
+    [Description ( "Hosting Model, provides compatibility with Windows XP and Windows Server .NET. Do not override." ) , Override("HostingModel")]
+    string HostingModel = "NetworkServiceHost";
+    [Description("..."),Override("SecurityDescriptor")]
+    string SecurityDescriptor;
+    UInt32 version = 1;
+} ;
+
+instance of Win32_ProviderEx as $Win32_EncryptableVolumeProvider
+{
+    Name    = "Win32_EncryptableVolumeProvider" ;   //Name is the key property for __Provider objects.
+                                        //vendor|provider|version is the suggested format
+                                        //to prevent name collisions.
+
+    ClsId   = "{F198A89A-5042-4294-ADF1-CB163E549798}" ;     //provider GUID
+
+    DefaultMachineName = NULL;       //NULL for local machine
+
+    ClientLoadableCLSID = NULL;      //reserved
+
+    ImpersonationLevel = 1;          //reserved
+
+    InitializationReentrancy = 0;       //Set of flags that provide information about serialization:
+                                        //0 = all initialization of this provider must be serialized
+                                        //1 = all initializations of this provider in the same namespace must be serialized
+                                        //2 = no initialization serialization is necessary
+
+    InitializeAsAdminFirst = FALSE;     //Request to be fully initialized as "Admin" before
+                                        //initializations begin for users
+
+    PerLocaleInitialization = FALSE;    //Indicates whether the provider is initialized for each
+                                        //locale if a user connects to the same namespace more
+                                        //than once using different locales.
+
+    PerUserInitialization = TRUE;       //Indicates whether the provider is initialized once for each actual
+                                        //Windows NT/Windows 2000 NTLM user making requests of the provider.
+                                        //If set to FALSE, the provider is initialized once for all users
+
+    Pure = TRUE;                        //A pure provider exists only to service requests from
+                                        //applications and WMI. Most providers are pure providers.
+                                        //Non-pure providers transition to the role of client after they have
+                                        //finished servicing requests.
+
+
+    UnloadTimeout = NULL;               //Currently ignored
+                                        //Use __CacheControl class in the root namespace to control provider unloading.
+                                        //A string in the DMTF date/time format that specifies how long WMI
+                                        //allows the provider to remain idle before it is unloaded.
+
+
+} ;
+
+instance of __InstanceProviderRegistration
+{
+    Provider = $Win32_EncryptableVolumeProvider;
+
+    SupportsPut = "FALSE";
+    SupportsGet = "TRUE";
+    SupportsDelete = "FALSE";
+    SupportsEnumeration = "TRUE";
+
+
+};
+
+instance of __MethodProviderRegistration
+{
+    Provider = $Win32_EncryptableVolumeProvider;
+};
+
+
+//**************************************************************************
+//* Class: Win32_EncryptableVolume
+//* Derived from: Win32_Volume
+//**************************************************************************
+[provider("Win32_EncryptableVolumeProvider"): ToInstance ToSubClass, dynamic: DisableOverride ToInstance, Description(""): ToInstance ToSubClass]
+class Win32_EncryptableVolume
+{
+    [read: ToInstance ToSubClass, Description(""): ToInstance ToSubClass, key] string DeviceID;
+    [read: ToInstance ToSubClass, Description(""): ToInstance ToSubClass] string PersistentVolumeID;
+    [read: ToInstance ToSubClass, Description(""): ToInstance ToSubClass] string DriveLetter;
+    [read: ToInstance ToSubClass, Description(""): ToInstance ToSubClass] uint32 ProtectionStatus;
+    [read: ToInstance ToSubClass, Description(""): ToInstance ToSubClass] uint32 ConversionStatus;
+    [read: ToInstance ToSubClass, Description(""): ToInstance ToSubClass] uint32 EncryptionMethod;
+    [read: ToInstance ToSubClass, Description(""): ToInstance ToSubClass] boolean IsVolumeInitializedForProtection;
+    [read: ToInstance ToSubClass, Description(""): ToInstance ToSubClass, ValueMap{"0", "1", "2"}, Values{"OSVolume", "FixedDataVolume", "PortableDataVolume"}] uint32 VolumeType;
+
+    [Description(""): ToInstance ToSubClass, Implemented: ToInstance ToSubClass]
+    uint32 GetConversionStatus (
+            [OUT,
+             ValueMap{"0", "1", "2", "3", "4", "5"},
+             Values{"FullyDecrypted", "FullyEncrypted", "EncryptionInProgress", "DecryptionInProgress", "EncryptionPaused", "DecryptionPaused"}]
+             uint32 ConversionStatus,
+            [OUT] uint32 EncryptionPercentage,
+            [OUT] uint32 EncryptionFlags,
+            [OUT,
+             ValueMap{"0", "1", "2", "3"},
+             Values{"FreeSpaceNotWiped", "FreeSpaceWiped", "FreeSpaceWipingInProgress", "FreeSpaceWipingPaused"}]
+             uint32 WipingStatus,
+            [OUT] uint32 WipingPercentage,
+            [IN, ValueMap{"0", "1", "2", "3", "4"}, Values{"0", "1", "2", "3", "4"}] uint32 PrecisionFactor);
+
+    [Description(""): ToInstance ToSubClass, Implemented: ToInstance ToSubClass]
+    uint32 GetHardwareTestStatus ([OUT, ValueMap{"0", "1", "2"}, Values{"NotFailed_and_NonePending", "Failed", "Pending"}] uint32 TestStatus, [OUT] uint32 TestError);
+
+    [Description(""): ToInstance ToSubClass, Implemented: ToInstance ToSubClass]
+    uint32 GetLockStatus ([OUT, ValueMap{"0", "1"}, Values{"Unlocked", "Locked"}] uint32 LockStatus);
+
+    [Description(""): ToInstance ToSubClass, Implemented: ToInstance ToSubClass]
+    uint32 GetProtectionStatus([OUT, ValueMap{"0", "1", "2"}, Values{"Unprotected", "Protected", "Unknown"}] uint32 ProtectionStatus);
+
+    [Description(""): ToInstance ToSubClass, Implemented: ToInstance ToSubClass]
+    uint32 GetSuspendCount([OUT, ValueMap{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"}] uint32 SuspendCount);
+
+    [Description(""): ToInstance ToSubClass, Implemented: ToInstance ToSubClass]
+    uint32 GetHardwareEncryptionStatus([OUT, ValueMap{"0", "1", "2", "3"}, Values{"Not supported", "No protection", "Uses software", "Uses hardware"}] uint32 HardwareEncryptionStatus);
+
+    [Description(""): ToInstance ToSubClass, Implemented: ToInstance ToSubClass]
+    uint32 Encrypt([IN, ValueMap{"0", "3", "4", "6", "7"}, Values{"Unspecified", "AES_128", "AES_256", "XTS_AES_128", "XTS_AES_256"}] uint32 EncryptionMethod, [IN] uint32 EncryptionFlags);
+
+    [Description(""): ToInstance ToSubClass, Implemented: ToInstance ToSubClass]
+    uint32 EncryptAfterHardwareTest([IN, ValueMap{"0", "3", "4", "6", "7"}, Values{"Unspecified", "AES_128", "AES_256", "XTS_AES_128", "XTS_AES_256"}] uint32 EncryptionMethod, [IN] uint32 EncryptionFlags);
+
+    [Description(""): ToInstance ToSubClass, Implemented: ToInstance ToSubClass]
+    uint32 GetEncryptionMethod([OUT, ValueMap{"0", "1", "2", "3", "4", "5", "6", "7"}, Values{"None", "AES_128_WITH_DIFFUSER", "AES_256_WITH_DIFFUSER", "AES_128", "AES_256", "HARDWARE_ENCRYPTION", "XTS_AES_128", "XTS_AES_256"}] uint32 EncryptionMethod, [OUT] string SelfEncryptionDriveEncryptionMethod, [OUT] uint32 EncryptionMethodFlags);
+
+    [Description(""): ToInstance ToSubClass, Implemented: ToInstance ToSubClass]
+    uint32 Decrypt();
+
+    [Description(""): ToInstance ToSubClass, Implemented: ToInstance ToSubClass]
+    uint32 PauseConversion();
+
+    [Description(""): ToInstance ToSubClass, Implemented: ToInstance ToSubClass]
+    uint32 ResumeConversion();
+
+    [Description(""): ToInstance ToSubClass, Implemented: ToInstance ToSubClass]
+    uint32 ProtectKeyWithTPM([IN] string FriendlyName, [IN] uint8 PlatformValidationProfile[], [OUT] string VolumeKeyProtectorID);
+
+    [Description(""): ToInstance ToSubClass, Implemented: ToInstance ToSubClass]
+    uint32 ProtectKeyWithExternalKey([IN] string FriendlyName, [IN] uint8 ExternalKey[], [OUT] string VolumeKeyProtectorID);
+
+    [Description(""): ToInstance ToSubClass, Implemented: ToInstance ToSubClass]
+    uint32 ProtectKeyWithNumericalPassword([IN] string FriendlyName, [IN] string NumericalPassword, [OUT] string VolumeKeyProtectorID);
+
+    [Description(""): ToInstance ToSubClass, Implemented: ToInstance ToSubClass]
+    uint32 ProtectKeyWithTPMAndPIN([IN] string FriendlyName, [IN] uint8 PlatformValidationProfile[], [IN] string PIN, [OUT] string VolumeKeyProtectorID);
+
+    [Description(""): ToInstance ToSubClass, Implemented: ToInstance ToSubClass]
+    uint32 ProtectKeyWithTPMAndStartupKey([IN] string FriendlyName, [IN] uint8 PlatformValidationProfile[], [IN] uint8 ExternalKey[], [OUT] string VolumeKeyProtectorID);
+
+    [Description(""): ToInstance ToSubClass, Implemented: ToInstance ToSubClass]
+    uint32 ProtectKeyWithTPMAndPINAndStartupKey([IN] string FriendlyName, [IN] uint8 PlatformValidationProfile[], [IN] string PIN, [IN] uint8 ExternalKey[], [OUT] string VolumeKeyProtectorID);
+
+    [Description(""): ToInstance ToSubClass, Implemented: ToInstance ToSubClass]
+    uint32 ProtectKeyWithCertificateFile([IN] string FriendlyName, [IN] string PathWithFileName, [OUT] string VolumeKeyProtectorID);
+
+    [Description(""): ToInstance ToSubClass, Implemented: ToInstance ToSubClass]
+    uint32 ProtectKeyWithCertificateThumbprint([IN] string FriendlyName, [IN] string CertThumbprint, [OUT] string VolumeKeyProtectorID);
+
+    [Description(""): ToInstance ToSubClass, Implemented: ToInstance ToSubClass]
+    uint32 ProtectKeyWithPassPhrase([IN] string FriendlyName, [IN] string PassPhrase, [OUT] string VolumeKeyProtectorID);
+
+    [Description(""): ToInstance ToSubClass, Implemented: ToInstance ToSubClass]
+    uint32 ProtectKeyWithAdSid([IN] string FriendlyName, [IN] string SidString, [IN] uint32 Flags, [OUT] string VolumeKeyProtectorID);
+
+    [Description(""): ToInstance ToSubClass, Implemented: ToInstance ToSubClass]
+    uint32 EnableAutoUnlock([IN] string VolumeKeyProtectorID);
+
+    [Description(""): ToInstance ToSubClass, Implemented: ToInstance ToSubClass]
+    uint32 DisableAutoUnlock();
+
+    [Description(""): ToInstance ToSubClass, Implemented: ToInstance ToSubClass]
+    uint32 IsAutoUnlockEnabled([OUT] boolean IsAutoUnlockEnabled, [OUT] string VolumeKeyProtectorID);
+
+    [Description(""): ToInstance ToSubClass, Implemented: ToInstance ToSubClass]
+    uint32 ClearAllAutoUnlockKeys();
+
+    [Description(""): ToInstance ToSubClass, Implemented: ToInstance ToSubClass]
+    uint32 IsAutoUnlockKeyStored ([OUT] boolean IsAutoUnlockKeyStored);
+
+    [Description(""): ToInstance ToSubClass, Implemented: ToInstance ToSubClass]
+    uint32 SaveExternalKeyToFile([IN] string VolumeKeyProtectorID, [IN] string Path);
+
+    [Description(""): ToInstance ToSubClass, Implemented: ToInstance ToSubClass]
+    uint32 GetExternalKeyFileName([IN] string VolumeKeyProtectorID, [OUT] string FileName);
+
+    [Description(""): ToInstance ToSubClass, Implemented: ToInstance ToSubClass]
+    uint32 GetExternalKeyFromFile([IN] string PathWithFileName, [OUT] uint8 ExternalKey[]);
+
+    [Description(""): ToInstance ToSubClass, Implemented: ToInstance ToSubClass]
+    uint32 GetKeyProtectors([
+                             IN,
+                             ValueMap{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"},
+                             Values{"All", "TPM", "ExternalKey", "NumericPassword", "TPM_PIN", "TPM_StartupKey", "TPM_PIN_StartupKey", "Certificate", "PassPhrase", "TPM_Certificate", "Identity"}
+                            ] uint32 KeyProtectorType,
+                            [OUT] string VolumeKeyProtectorID[]);
+
+    [Description(""): ToInstance ToSubClass, Implemented: ToInstance ToSubClass]
+    uint32 DisableKeyProtectors([IN] uint32 DisableCount);
+
+    [Description(""): ToInstance ToSubClass, Implemented: ToInstance ToSubClass]
+    uint32 EnableKeyProtectors();
+
+    [Description(""): ToInstance ToSubClass, Implemented: ToInstance ToSubClass]
+    uint32 DeleteKeyProtector([in] string VolumeKeyProtectorID);
+
+    [Description(""): ToInstance ToSubClass, Implemented: ToInstance ToSubClass]
+    uint32 DeleteKeyProtectors();
+
+    [Description(""): ToInstance ToSubClass, Implemented: ToInstance ToSubClass]
+    uint32 UnlockWithNumericalPassword([IN] string NumericalPassword);
+
+    [Description(""): ToInstance ToSubClass, Implemented: ToInstance ToSubClass]
+    uint32 UnlockWithExternalKey([IN] uint8 ExternalKey[]);
+
+    [Description(""): ToInstance ToSubClass, Implemented: ToInstance ToSubClass]
+    uint32 UnlockWithCertificateFile([IN] string PathWithFileName, [IN] string Pin);
+
+    [Description(""): ToInstance ToSubClass, Implemented: ToInstance ToSubClass]
+    uint32 UnlockWithCertificateThumbprint([IN] string CertThumbprint, [IN] string Pin);
+
+    [Description(""): ToInstance ToSubClass, Implemented: ToInstance ToSubClass]
+    uint32 UnlockWithPassPhrase([IN] string PassPhrase);
+
+    [Description(""): ToInstance ToSubClass, Implemented: ToInstance ToSubClass]
+    uint32 UnlockWithAdSid([IN, optional] string SidString);
+
+    [Description(""): ToInstance ToSubClass, Implemented: ToInstance ToSubClass]
+    uint32 Lock([IN] boolean ForceDismount);
+
+    [Description(""): ToInstance ToSubClass, Implemented, Static: ToInstance ToSubClass]
+    uint32 IsNumericalPasswordValid([IN] string NumericalPassword, [OUT] boolean IsNumericalPasswordValid);
+
+    [Description(""): ToInstance ToSubClass, Implemented: ToInstance ToSubClass]
+    uint32 IsKeyProtectorAvailable([
+                                    IN,
+                                    ValueMap{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"},
+                                    Values{"All", "TPM", "ExternalKey", "NumericPassword", "TPM_PIN", "TPM_StartupKey", "TPM_PIN_StartupKey", "Certificate", "PassPhrase", "TPM_Certificate", "Identity"}
+                                   ] uint32 KeyProtectorType,
+                                   [OUT] boolean IsKeyProtectorAvailable);
+
+    [Description(""): ToInstance ToSubClass, Implemented: ToInstance ToSubClass]
+    uint32 GetKeyProtectorType( [IN] string VolumeKeyProtectorID,
+                                [
+                                 OUT,
+                                 ValueMap{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"},
+                                 Values{"Unknown", "TPM", "ExternalKey", "NumericPassword", "TPM_PIN", "TPM_StartupKey", "TPM_PIN_StartupKey", "Certificate", "PassPhrase", "TPM_Certificate", "CNG_Protect"}
+                                ] uint32 KeyProtectorType );
+
+    [Description(""): ToInstance ToSubClass, Implemented: ToInstance ToSubClass]
+    uint32 GetKeyProtectorFriendlyName( [IN] string VolumeKeyProtectorID, [OUT] string FriendlyName );
+
+    [Description(""): ToInstance ToSubClass, Implemented: ToInstance ToSubClass]
+    uint32 GetKeyProtectorExternalKey( [IN] string VolumeKeyProtectorID, [OUT] uint8 ExternalKey[] );
+
+    [Description(""): ToInstance ToSubClass, Implemented: ToInstance ToSubClass]
+    uint32 GetKeyProtectorNumericalPassword( [IN] string VolumeKeyProtectorID, [OUT] string NumericalPassword );
+
+    [Description(""): ToInstance ToSubClass, Implemented: ToInstance ToSubClass]
+    uint32 GetKeyProtectorPlatformValidationProfile( [IN] string VolumeKeyProtectorID, [OUT] uint8 PlatformValidationProfile[] );
+
+    [Description(""): ToInstance ToSubClass, Implemented: ToInstance ToSubClass]
+    uint32 GetKeyProtectorCertificate([IN] string VolumeKeyProtectorID, [OUT] uint8 PublicKey[], [OUT] string CertThumbprint, [OUT, BitMap{"1","2"}, BitValues{"DRA","NONDRA"}] uint32 CertType);
+
+    [Description(""): ToInstance ToSubClass, Implemented: ToInstance ToSubClass]
+    uint32 GetKeyProtectorAdSidInformation([IN] string VolumeKeyProtectorID, [OUT] string SidString, [OUT] uint32 Flags);
+
+    [Description(""): ToInstance ToSubClass, Implemented: ToInstance ToSubClass]
+    uint32 GetKeyPackage( [IN] string VolumeKeyProtectorID, [OUT] uint8 KeyPackage[] );
+
+    [Description(""): ToInstance ToSubClass, Implemented: ToInstance ToSubClass]
+    uint32 BackupRecoveryInformationToActiveDirectory( [IN] string VolumeKeyProtectorID );
+
+    [Description(""): ToInstance ToSubClass, Implemented: ToInstance ToSubClass]
+    uint32 ChangePassPhrase([IN] string VolumeKeyProtectorID, [IN] string NewPassPhrase, [OUT] string NewProtectorID);
+
+    [Description(""): ToInstance ToSubClass, Implemented: ToInstance ToSubClass]
+    uint32 ChangePIN([IN] string VolumeKeyProtectorID, [IN] string NewPIN);
+
+    [Description(""): ToInstance ToSubClass, Implemented: ToInstance ToSubClass]
+    uint32 ChangeExternalKey([IN] string VolumeKeyProtectorID,  [IN] uint8 ExternalKey[], [OUT] string NewVolumeKeyProtectorID);
+
+    [Description(""): ToInstance ToSubClass, Implemented: ToInstance ToSubClass]
+    uint32 PrepareVolume([IN] string DiscoveryVolumeType, [IN, ValueMap{"0", "1", "2"}, Values{"Unspecified", "Software", "Hardware"}] uint32 ForceEncryptionType);
+
+    [Description(""): ToInstance ToSubClass, Implemented: ToInstance ToSubClass]
+    uint32 PrepareVolumeEx([IN] string DiscoveryVolumeType, [IN, BitMap{"0", "1", "8"}, BitValues{"Software", "Hardware", "UsedSpaceOnly"}] uint32 InitializationFlags);
+
+    [Description(""): ToInstance ToSubClass, Implemented: ToInstance ToSubClass]
+    uint32 GetIdentificationField([OUT] string IdentificationField);
+
+    [Description(""): ToInstance ToSubClass, Implemented: ToInstance ToSubClass]
+    uint32 SetIdentificationField([IN] string IdentificationField);
+
+    [Description(""): ToInstance ToSubClass, Implemented: ToInstance ToSubClass]
+    uint32 GetVersion([OUT, ValueMap{"0", "1", "2"}, Values{"Unknown", "Vista", "Win7"}] uint32 Version );
+
+    [Description(""): ToInstance ToSubClass, Implemented: ToInstance ToSubClass]
+    uint32 UpgradeVolume();
+
+    [Description(""): ToInstance ToSubClass, Implemented: ToInstance ToSubClass]
+    uint32 FindValidCertificates([OUT] string CertThumbprint[]);
+
+    [Description(""): ToInstance ToSubClass, Implemented: ToInstance ToSubClass]
+    uint32 GetSecureBootBindingState([
+                                      OUT,
+                                      ValueMap{"0", "1", "2", "3"},
+                                      Values{"NotPossible",
+                                             "DisabledByPolicy",
+                                             "Possible",
+                                             "Bound"}
+                                     ] uint32 BindingState );
+
+    [Description(""): ToInstance ToSubClass, Implemented: ToInstance ToSubClass]
+    uint32 ProtectKeyWithNetworkCertificate([IN] string FriendlyName, [IN] string CertThumbprint, [OUT] string VolumeKeyProtectorID);
+
+    [Description(""): ToInstance ToSubClass, Implemented: ToInstance ToSubClass]
+    uint32 BackupRecoveryInformationToCloudDomain( [IN] string VolumeKeyProtectorID );
+    
+    [Description(""): ToInstance ToSubClass, Implemented: ToInstance ToSubClass]
+    uint32 UnlockWithNetworkServerKey([IN] string ServerIPAddresses[], [IN] string LocalIPAddress);
+};
+

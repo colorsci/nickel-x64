@@ -1,0 +1,69 @@
+﻿<?xml version='1.0' encoding='utf-8' standalone='yes'?>
+<assembly
+    xmlns="urn:schemas-microsoft-com:asm.v3"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    manifestVersion="1.0"
+    >
+  <assemblyIdentity
+      buildType="release"
+      language="neutral"
+      name="Microsoft-Windows-FSRM-StorageReportService"
+      processorArchitecture="*"
+      version="0.0.0.0"
+      versionScope="nonSxS"
+      />
+  <migration
+      xmlns:auto-ns1="urn:schemas-microsoft-com:asm.v3"
+      replacementSettingsVersionRange="0"
+      replacementVersionRange="6.0.*"
+      scope="Upgrade,SvrMig"
+      settingsVersion="0"
+      >
+    <supportedComponents>
+      <!-- Self-declare this component for migrating from Vista -->
+      <supportedComponent>
+        <supportedComponentIdentity
+            xmlns="urn:schemas-microsoft-com:asm.v3"
+            buildFilter=""
+            buildType="$(build.buildType)"
+            language="*"
+            name="Microsoft-Windows-FSRM-StorageReportService"
+            processorArchitecture="*"
+            publicKeyToken="$(Build.WindowsPublicKeyToken)"
+            settingsVersionRange="0"
+            type=""
+            versionScope="nonSxS"
+            />
+        <migXml xmlns="">
+          <rules context="System">
+            <merge script="MigXmlHelper.SourcePriority()">
+              <objectSet>
+                <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\SrmReports\Settings\* [*]</pattern>
+              </objectSet>
+            </merge>
+          </rules>
+        </migXml>
+      </supportedComponent>
+    </supportedComponents>
+    <migXml xmlns="">
+      <rules context="System">
+        <include>
+          <objectSet>
+            <!-- List values in same order as in the <configuration> section. -->
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\SrmReports\Settings [TimeoutForGC]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\SrmReports\Settings [ConsolidationTimeout]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\SrmReports\Settings [ExtendedLogging]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\SrmReports\Settings [TimeoutForShutdown]</pattern>
+          </objectSet>
+        </include>
+        <!-- Specify merge resolution handler. Source priority forces migrate from source. -->
+        <merge script="MigXmlHelper.SourcePriority()">
+          <objectSet>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\SrmReports\Settings\* [*]</pattern>
+          </objectSet>
+        </merge>
+      </rules>
+    </migXml>
+  </migration>
+</assembly>

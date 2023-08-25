@@ -1,0 +1,52 @@
+﻿<?xml version='1.0' encoding='utf-8' standalone='yes'?>
+<assembly
+    xmlns="urn:schemas-microsoft-com:asm.v3"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    manifestVersion="1.0"
+    >
+  <assemblyIdentity
+      language="neutral"
+      name="Microsoft-Windows-Mup"
+      processorArchitecture="*"
+      version="0.0.0.0"
+      />
+  <migration
+      settingsVersion="2"
+      replacementSettingsVersionRange="0-1"
+      replacementVersionRange="6.1-10.0"
+      alwaysProcess="yes"
+      >
+    <machineSpecific>
+      <migXml xmlns="">
+        <rules context="System">
+          <include>
+            <objectSet>
+              <pattern type="Registry">HKLM\Software\Policies\Microsoft\Windows\NetworkProvider\HardenedPaths [*]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Control\NetworkProvider\ProviderOrder [*]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Control\NetworkProvider\GlobalMappings\* [*]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Control\NetworkProvider\Notifyees [*]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\Mup [ProviderCacheTimeoutInMinutes]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\Mup [PrefixCacheSizeInKB]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\Mup\Parameters [IrpStackSize]</pattern>
+            </objectSet>
+          </include>
+          <exclude>
+            <objectSet>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Control\NetworkProvider\ProviderOrder [LanmanWorkstation]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Control\NetworkProvider\ProviderOrder [nfsnp]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Control\NetworkProvider\ProviderOrder [RDRNP]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Control\NetworkProvider\ProviderOrder [webclient]</pattern>
+            </objectSet>
+          </exclude>
+        </rules>
+        <plugin
+            classId="{B17742DB-956A-48FC-B9B2-E25E41496ECD}"
+            file="Microsoft-Windows-Mup\MupMigPlugin.dll"
+            offlineApply="Yes"
+            offlineGather="No"
+            />
+      </migXml>
+    </machineSpecific>
+  </migration>
+</assembly>

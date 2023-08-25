@@ -1,0 +1,719 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WindowsPerformanceRecorder   Version="1" Author="Windows Fundamentals Performance Telemetry and App Platforms Team" >
+  <Profiles>
+
+<!-- COLLECTORS -->
+
+    <SystemCollector Id="SystemCollector_General_Lean" Name="DiagTrack_AlternativeTrace_KernelLogger_Lean" HostGuestCorrelation="true">
+      <BufferSize Value="1024" />
+      <Buffers Value="100" />
+      <StackCaching BucketCount="256" CacheSize="2048" />
+    </SystemCollector>
+
+    <SystemCollector Id="SystemCollector_General_Min" Name="DiagTrack_AlternativeTrace_KernelLogger_Min" HostGuestCorrelation="true">
+      <BufferSize Value="1024" />
+      <Buffers Value="50" />
+      <StackCaching BucketCount="256" CacheSize="1024" />
+    </SystemCollector>
+
+    <EventCollector Id="EventCollector_EventTracing" Name="EventTracing Event Collector_0" HostGuestCorrelation="true">
+      <BufferSize Value="1024" />
+      <Buffers Value="50" />
+    </EventCollector>
+
+<!-- PROVIDERS -->
+
+    <SystemProvider Id="SystemProvider_General_Lean">
+      <Keywords Operation="Add">
+        <Keyword Value="ProcessThread" />
+        <Keyword Value="Loader" />
+        <Keyword Value="DiskIO" />
+        <Keyword Value="DiskIOInit" />
+        <Keyword Value="HardFaults" />
+        <Keyword Value="MemoryInfo" />
+        <Keyword Value="MemoryInfoWS" />
+        <Keyword Value="Power" />
+        <CustomKeyword Value="0x8" /><!--WMI_LOG_TYPE_RUNDOWN_COMPLETE (ntwmi.h)-->
+      </Keywords>
+      <Stacks Operation="Add">
+        <Stack Value="ImageLoad" />
+        <Stack Value="DiskReadInit" />
+        <Stack Value="DiskWriteInit" />
+        <Stack Value="DiskFlushInit" />
+      </Stacks>
+    </SystemProvider>
+
+    <SystemProvider Id="SystemProvider_General_Min">
+      <Keywords Operation="Add">
+        <Keyword Value="ProcessThread" />
+        <Keyword Value="Loader" />
+      </Keywords>
+      <Stacks Operation="Add">
+        <Stack Value="ImageLoad" />
+      </Stacks>
+    </SystemProvider>
+
+    <EventProvider Id="WPRCollector_AppHost" Name="8B475C95-5F0B-48AB-B4F7-DB10DC1A73DC" Strict="true" />
+
+    <EventProvider Id="EventProvider_Microsoft-Windows-Diagnostics-PerfTrack_1114112_4_2_0_0" Name="030f2f57-abd0-4427-bcf1-3a3587d7dc7d" NonPagedMemory="true" Level="4" EventKey="true">
+      <Keywords>
+        <Keyword Value="0x110000" />
+      </Keywords>
+    </EventProvider>
+
+    <EventProvider Id="EventProvider_Microsoft-Windows-Diagnostics-PerfTrack-Counters_0_0_2_0_R" Name="c06ed57a-a7bd-42d7-b5ff-77a9dec5732d" NonPagedMemory="true" Level="0" EventKey="true">
+      <Keywords>
+        <Keyword Value="0xFFFFFFFFFFFFFFFF" />
+      </Keywords>
+      <CaptureStateOnSave Timeout="0">
+        <Keyword Value="0xFFFFFFFFFFFFFFFF" />
+      </CaptureStateOnSave>
+    </EventProvider>
+    <EventProvider Id="EventProvider_Microsoft-Windows-Win32k_2531328_0_2_0_0" Name="8c416c79-d49b-4f01-a467-e56d3aa8234c" NonPagedMemory="true" Level="0" EventKey="true">
+      <Keywords>
+        <Keyword Value="0x26A000" />
+      </Keywords>
+    </EventProvider>
+    <EventProvider Id="EventProvider_Microsoft-Windows-COMRuntime_3_0_2_0_0" Name="bf406804-6afa-46e7-8a48-6c357e1d6d61" NonPagedMemory="true" Level="0" EventKey="true">
+      <Keywords>
+        <Keyword Value="0x3" />
+      </Keywords>
+    </EventProvider>
+    <EventProvider Id="EventProvider_Microsoft-Windows-Kernel-Memory_0_0_2_0_0" Name="d1d93ef7-e1f2-4f45-9943-03d245fe6c00" NonPagedMemory="true" Level="0" EventKey="true">
+      <Keywords>
+        <Keyword Value="0xFFFFFFFFFFFFFFFF" />
+      </Keywords>
+    </EventProvider>
+    <EventProvider Id="EventProvider_Microsoft-AntiMalware-Engine_0_0_2_0_0" Name="0a002690-3839-4e3a-b3b6-96d8df868d99" NonPagedMemory="true" Level="0" EventKey="true">
+      <Keywords>
+        <Keyword Value="0xFFFFFFFFFFFFFFFF" />
+      </Keywords>
+    </EventProvider>
+    <EventProvider Id="EventProvider_Microsoft-Windows-Kernel-Prefetch_32_0_2_0_0" Name="5322d61a-9efa-4bc3-a3f9-14be95c144f8" NonPagedMemory="true" Level="0" EventKey="true">
+      <Keywords>
+        <Keyword Value="0x20" />
+      </Keywords>
+    </EventProvider>
+    <EventProvider Id="EventProvider_Microsoft-Windows-Immersive-Shell_2_0_2_0_0" Name="315a8872-923e-4ea2-9889-33cd4754bf64" NonPagedMemory="true" Level="0" EventKey="true">
+      <Keywords>
+        <Keyword Value="0x2" />
+      </Keywords>
+    </EventProvider>
+    <EventProvider Id="EventProvider_Microsoft-Windows-Kernel-Power_0_0_2_0_R" Name="331c3b3a-2005-44c2-ac5e-77220c37d6b4" NonPagedMemory="true" Level="0" EventKey="true">
+      <Keywords>
+        <Keyword Value="0xBFFFFFFFFFFFFEFB" /> <!-- Expensive: 0x4000000000000104 -->
+      </Keywords>
+      <CaptureStateOnSave Timeout="0">
+        <Keyword Value="0xFFFFFFFFFFFFFFFF" />
+      </CaptureStateOnSave>
+    </EventProvider>
+    <EventProvider Id="EventProvider_Microsoft-Windows-UserModePowerService_0_0_2_0_R" Name="ce8dee0b-d539-4000-b0f8-77bed049c590" NonPagedMemory="true" Level="0" EventKey="true">
+      <Keywords>
+        <Keyword Value="0xFFFFFFFFFFFFFFFF" />
+      </Keywords>
+      <CaptureStateOnSave Timeout="0">
+        <Keyword Value="0xFFFFFFFFFFFFFFFF" />
+      </CaptureStateOnSave>
+    </EventProvider>
+    <EventProvider Id="EventProvider_Microsoft-Windows-Kernel-Pep_0_0_2_0_R" Name="5412704e-b2e1-4624-8ffd-55777b8f7373" NonPagedMemory="true" Level="0" EventKey="true">
+      <Keywords>
+        <Keyword Value="0xFFFFFFFFFFFFFFFF" />
+      </Keywords>
+      <CaptureStateOnSave Timeout="0">
+        <Keyword Value="0xFFFFFFFFFFFFFFFF" />
+      </CaptureStateOnSave>
+    </EventProvider>
+    <EventProvider Id="EventProvider_Microsoft-Windows-ProcessStateManager_0_0_2_0_0" Name="d49918cf-9489-4bf1-9d7b-014d864cf71f" NonPagedMemory="true" Level="0" EventKey="true">
+      <Keywords>
+        <Keyword Value="0xFFFFFFFFFFFFFFFF" />
+      </Keywords>
+    </EventProvider>
+    <EventProvider Id="EventProvider_Microsoft-Windows-CodeIntegrity_0_0_2_0_0" Name="4ee76bd8-3cf4-44a0-a0ac-3937643e37a3" NonPagedMemory="true" Level="0" EventKey="true">
+      <Keywords>
+        <Keyword Value="0xFFFFFFFFFFFFFFFF" />
+      </Keywords>
+    </EventProvider>
+    <EventProvider Id="EventProvider_Microsoft-Windows-Dwm-CoreWin8_131072_0_2_0_0" Name="9e9bba3c-2e38-40cb-99f4-9e8281425164" NonPagedMemory="true" Level="0" EventKey="true">
+      <Keywords>
+        <Keyword Value="0x20000" />
+      </Keywords>
+    </EventProvider>
+    <EventProvider Id="EventProvider_Microsoft-Windows-StorDiag_2_0_2_0_0" Name="f5d05b38-80a6-4653-825d-c414e4ab3c68" NonPagedMemory="true" Level="0" EventKey="true">
+      <Keywords>
+        <Keyword Value="0x2" />
+      </Keywords>
+    </EventProvider>
+    <EventProvider Id="EventProvider_Microsoft-Windows-Kernel-EventTracing_64_0_2_0_0" Name="b675ec37-bdb6-4648-bc92-f3fdc74d3ca2" NonPagedMemory="true" Level="0" EventKey="true">
+      <Keywords>
+        <Keyword Value="0x40" />
+      </Keywords>
+    </EventProvider>
+    <EventProvider Id="EventProvider_Microsoft.Windows.ResourceManager_5_4_2_0_0" Name="4180c4f7-e238-5519-338f-ec214f0b49aa" NonPagedMemory="true" Level="4" EventKey="true">
+      <Keywords>
+        <Keyword Value="0x5" />
+      </Keywords>
+    </EventProvider>
+    <EventProvider Id="EventProvider_Microsoft-Windows-Desktop-ApplicationFrame_0_0_2_0_0" Name="678e492b-5de1-50c5-7219-ae4aa7d6a141" NonPagedMemory="true" Level="0" EventKey="true">
+      <Keywords>
+        <Keyword Value="0xFFFFFFFFFFFFFFFF" />
+      </Keywords>
+    </EventProvider>
+    <EventProvider Id="EventProvider_Microsoft-Windows-Desktop-ApplicationManager_0_0_2_0_0" Name="35d4a1fa-4036-40dc-a907-e330f3104e24" NonPagedMemory="true" Level="0" EventKey="true">
+      <Keywords>
+        <Keyword Value="0xFFFFFFFFFFFFFFFF" />
+      </Keywords>
+    </EventProvider>
+    <EventProvider Id="EventProvider_Microsoft.Windows.Desktop.Shell.ViewManagerInterop_0_0_2_0_0" Name="15322370-3694-59f5-f979-0c7a918b81da" NonPagedMemory="true" Level="0" EventKey="true">
+      <Keywords>
+        <Keyword Value="0xFFFFFFFFFFFFFFFF" />
+      </Keywords>
+    </EventProvider>
+    <EventProvider Id="EventProvider_Microsoft.Windows.WindowsErrorReporting_0_0_2_0_0" Name="cc79cf77-70d9-4082-9b52-23f3a3e92fe4" NonPagedMemory="true" Level="0" EventKey="true">
+      <Keywords>
+        <Keyword Value="0xFFFFFFFFFFFFFFFF" />
+      </Keywords>
+    </EventProvider>
+    <EventProvider Id="EventProvider_Microsoft.Windows.BrokerInfrastructure_0_0_2_0_0" Name="63b6c2d2-0440-44de-a674-aa51a251b123" NonPagedMemory="true" Level="0" EventKey="true">
+      <Keywords>
+        <Keyword Value="0xFFFFFFFFFFFFFFFF" />
+      </Keywords>
+    </EventProvider>
+    <EventProvider Id="EventProvider_Microsoft-Antimalware-RTP_0_0_2_0_0" Name="8e92deef-5e17-413b-b927-59b2f06a3cfc" NonPagedMemory="true" Level="0" EventKey="true">
+      <Keywords>
+        <Keyword Value="0xFFFFFFFFFFFFFFFF" />
+      </Keywords>
+    </EventProvider>
+    <EventProvider Id="EventProvider_Microsoft-AntiMalware-Engine3_0_0" Level="0" Name="751ef305-6c6e-4fed-b847-02ef79d26aef" NonPagedMemory="true" EventKey="true">
+      <Keywords>
+        <Keyword Value="0x0"/>
+      </Keywords>
+    </EventProvider>
+    <EventProvider Id="EventProvider_Microsoft.Windows.HangReporting_0_0_2_0_0" Name="3e0d88de-ae5c-438a-bb1c-c2e627f8aecb" NonPagedMemory="true" Level="0" EventKey="true">
+      <Keywords>
+        <Keyword Value="0xFFFFFFFFFFFFFFFF" />
+      </Keywords>
+    </EventProvider>
+    <EventProvider Id="EventProvider_Microsoft.Windows.FaultReporting_0_0_2_0_0" Name="1377561d-9312-452c-ad13-c4a1c9c906e0" NonPagedMemory="true" Level="0" EventKey="true">
+      <Keywords>
+        <Keyword Value="0xFFFFFFFFFFFFFFFF" />
+      </Keywords>
+    </EventProvider>
+    <EventProvider Id="EventProvider_Microsoft.Windows.IoRate_0_4_2_0_0" Name="fa93663e-d1d9-5e9c-24a0-c2040a13062f" NonPagedMemory="true" Level="4" EventKey="true">
+      <Keywords>
+        <Keyword Value="0xFFFFFFFFFFFFFFFF" />
+      </Keywords>
+    </EventProvider>
+    <EventProvider Id="EventProvider_Microsoft-Windows-Kernel-Process_12304_0_2_0_0" Name="22fb2cd6-0e7b-422b-a0c7-2fad1fd0e716" NonPagedMemory="true" Level="0" EventKey="true">
+      <Keywords>
+        <Keyword Value="0x1010" /> <!-- Expensive: 0x2000 (ThreadWorkOnBehalfUpdate) -->
+      </Keywords>
+    </EventProvider>
+    <EventProvider Id="EventProvider_Microsoft-Windows-Kernel-Processor-Power_194_4_2_0_R" Name="0f67e49f-fe51-4e9f-b490-6f2948cc6027" NonPagedMemory="true" Level="4" EventKey="true">
+      <Keywords>
+        <Keyword Value="0xC2" />
+      </Keywords>
+      <CaptureStateOnSave Timeout="0">
+        <Keyword Value="0xC2" />
+      </CaptureStateOnSave>
+    </EventProvider>
+    <EventProvider Id="EventProvider_Microsoft-Windows-Kernel-PnP_16777216_4_2_0_0" Name="9c205a39-1250-487d-abd7-e831c6290539" NonPagedMemory="true" Level="4" EventKey="true">
+      <Keywords>
+        <Keyword Value="0x1000000" />
+      </Keywords>
+    </EventProvider>
+    <EventProvider Id="EventProvider_PerfTrack" Name="PerfTrack" NonPagedMemory="true" Level="4" />
+    <EventProvider Id="EventProvider_UTC" Name="UTC" NonPagedMemory="true" Level="4" />
+    <EventProvider Id="EventProvider_TelAssert" Name="6d1b249d-131b-468a-899b-fb0ad9551772" NonPagedMemory="true" Level="5" />
+    <EventProvider Id="EventProvider_Microsoft_Windows_AppXDeployment-Server" Name="fe762fb1-341a-4dd4-b399-be1868b3d918" NonPagedMemory="true" Level="5" EventKey="true">
+      <Keywords>
+        <Keyword Value="0x0000400000000000" />
+      </Keywords>
+    </EventProvider>
+
+    <EventProvider Id="EventProvider_Microsoft-Windows-Shell-Explorer" Name="5f1e1b94-a9fe-57d8-abe7-d29a6df9e967" EventKey="true" />
+
+    <EventProvider Id="EventProvider_Microsoft-Windows-Winlogon" Name="dbe9b383-7cf3-4331-91cc-a3cb16a3b538" Level="0" NonPagedMemory="true" EventKey="true">
+      <Keywords>
+        <Keyword Value="0xFFFFFFFFFFFFFFFF" />
+      </Keywords>
+    </EventProvider>
+    <EventProvider Id="EventProvider_Microsoft-Windows-Shell-Core" Name="30336ed4-e327-447c-9de0-51b652c86108" NonPagedMemory="true" Level="0" EventKey="true">
+      <Keywords>
+        <Keyword Value="0xFFFFFFFFFFFFFFFF" />
+      </Keywords>
+    </EventProvider>
+    <EventProvider Id="EventProvider_Microsoft-Windows-Shell-Desktop-LogonFramework" Name="04d28e21-00aa-5228-cfd0-d70863aa5ce9" NonPagedMemory="true" Level="0" EventKey="true">
+      <Keywords>
+        <Keyword Value="0xFFFFFFFFFFFFFFFF" />
+      </Keywords>
+    </EventProvider>
+    <EventProvider Id="EventProvider_Microsoft-Windows-Shell-SingleViewExperience" Name="2ca51213-29c5-564f-fd60-355148e8b47f" Level="0" NonPagedMemory="true" EventKey="true">
+      <Keywords>
+        <Keyword Value="0xFFFFFFFFFFFFFFFF" />
+      </Keywords>
+    </EventProvider>
+    <EventProvider Id="EventProvider_Microsoft_Windows_ContentDeliveryManager" Name="8cba0f81-8ad7-5395-2125-5703822c822a" Level="0" NonPagedMemory="true" EventKey="true">
+      <Keywords>
+        <Keyword Value="0xFFFFFFFFFFFFFFFF" />
+      </Keywords>
+    </EventProvider>
+    <EventProvider Id="EventProvider_Microsoft-Windows-AppReadiness" Name="f0be35f8-237b-4814-86b5-ade51192e503" Level="0" NonPagedMemory="true" EventKey="true">
+      <Keywords>
+        <Keyword Value="0x18A" />
+      </Keywords>
+    </EventProvider>
+    <EventProvider Id="EventProvider_SIHost" Name="3b3877a1-ae3b-54f1-0101-1e2424f6fcbb" NonPagedMemory="true" Level="0" EventKey="true">
+      <Keywords>
+        <Keyword Value="0xFFFFFFFFFFFFFFFF" />
+      </Keywords>
+    </EventProvider>
+    <EventProvider Id="EventProvider_Microsoft_Windows_Security_Winlogon" Name="b39b8cea-eaaa-5a74-5794-4948e222c663" NonPagedMemory="true" Level="255">
+        <Keywords>
+            <Keyword Value="0xffffffffffffffff" />
+        </Keywords>
+    </EventProvider>
+    <EventProvider Id="EventProvider_Microsoft_Windows_Security_WinlogonNotify" Name="E5D3F7AD-54A2-404D-B50B-BF41C40D6CAB" NonPagedMemory="true" Level="255">
+        <Keywords>
+            <Keyword Value="0xffffffffffffffff" />
+        </Keywords>
+    </EventProvider>
+
+    <EventProvider Id="EventProvider_Microsoft-Windows-Kernel-EventTracing_48_5_139_0_0" Name="b675ec37-bdb6-4648-bc92-f3fdc74d3ca2" NonPagedMemory="true" Level="5" EventKey="true">
+      <Keywords>
+        <Keyword Value="0x30" />
+      </Keywords>
+    </EventProvider>
+
+    <EventProvider Id="EventProvider_Microsoft-Windows-ESE" Name="478ea8a8-00be-4ba6-8e75-8b9dc7db9f78" NonPagedMemory="true" Level="5" EventKey="true">
+      <Keywords>
+        <Keyword Value="0xFFFFFFFFFFFF1BC5" /> <!-- Expensive: 0x000000000000E43A -->
+      </Keywords>
+    </EventProvider>
+    <EventProvider Id="EventProvider_Microsoft-Windows-CAPI2" Name="5bbca4a8-b209-48dc-a8c7-b23d3e5216fb" NonPagedMemory="true" Level="5" EventKey="true">
+      <Keywords>
+        <Keyword Value="0xFFFFFFFFFFFFFFFF" />
+      </Keywords>
+    </EventProvider>
+
+    <!-- Image/Module Load Metadata-->
+    <EventProvider Id="EventProvider_Microsoft-Windows-ImageLoad" Name="2cb15d1d-5fc1-11d2-abe1-00a0c911f518">
+      <Keywords Operation="Add">
+        <Keyword Value="0x10" />
+      </Keywords>
+    </EventProvider>
+
+    <!-- GDI and User Handles: Requires Windows 10.0.18315+ -->
+    <EventProvider Id="EventProvider_Microsoft-Windows-Win32k_Handles" Name="Microsoft-Windows-Win32k" Level="4" Stack="true" NonPagedMemory="true">
+      <Keywords Operation="Add">
+        <Keyword Value="0x30000000000" />
+      </Keywords>
+    </EventProvider>
+
+    <EventProvider Id="EventProvider_Microsoft-Windows-HVSI-Settings" Name="106e9835-2e81-5341-fd84-ab263098e7d3" NonPagedMemory="true" Level="5" EventKey="true">
+      <Keywords>
+        <Keyword Value="0xFFFFFFFFFFFFFFFF" />
+      </Keywords>
+    </EventProvider>
+
+    <EventProvider Id="EventProvider_Microsoft-Windows-HVSI-ProxyApp" Name="AE60B6DE-7B66-49C4-8B58-898D254192C6" NonPagedMemory="true" EventKey="true" Level="255">
+        <Keywords>
+            <Keyword Value="0xffffffff" />
+        </Keywords>
+    </EventProvider>
+
+    <!-- RDP Login providers -->
+    <EventProvider Id="EventProvider_Termsrv" Name="5283d5f6-65b5-425f-a30b-f16c057d6b57" NonPagedMemory="true" Level="5" EventKey="true">
+      <Keywords>
+        <Keyword Value="0xFFFFFFFFFFFFFFFF" />
+      </Keywords>
+    </EventProvider>
+     <EventProvider Id="EventProvider_Lsm" Name="557d257b-180e-4aae-8f06-86c4e46e9d00" NonPagedMemory="true" Level="5" EventKey="true">
+      <Keywords>
+        <Keyword Value="0xFFFFFFFFFFFFFFFF" />
+      </Keywords>
+    </EventProvider>
+     <EventProvider Id="EventProvider_RAILRdpInit" Name="4a49afe3-776e-467a-aca0-71f9c6c8499f" NonPagedMemory="true" Level="5" EventKey="true">
+      <Keywords>
+        <Keyword Value="0xFFFFFFFFFFFFFFFF" />
+      </Keywords>
+    </EventProvider>
+     <EventProvider Id="EventProvider_RAILRdpShell" Name="39825ffa-f1b4-41b7-8221-20d4b8dbe57e" NonPagedMemory="true" Level="5" EventKey="true">
+      <Keywords>
+        <Keyword Value="0xFFFFFFFFFFFFFFFF" />
+      </Keywords>
+    </EventProvider>
+
+    <EventProvider Id="EventProvider_Microsoft-Windows-TerminalServices-LocalSessionManager" Name="5D896912-022D-40AA-A3A8-4FA5515C76D7" EventKey="true" />
+
+    <!-- Remote Desktop Services (RDS) -->
+    <EventProvider Id="EP_Microsoft-Windows-Rdms-UI" Name="FB750AD9-8544-427F-B284-8ED9C6C221AE" EventKey="true" />
+    <EventProvider Id="EP_Microsoft-Windows-Remote-Desktop-Management-Service" Name="05da6b40-219e-4f17-92e6-d663fd87cba8" EventKey="true" />
+    <EventProvider Id="EP_Microsoft-Windows-RemoteDesktop-RAIL-Server-Diagnostics" Name="DC1A94A6-0A1A-433E-B470-3C72353B7309" EventKey="true" />
+    <EventProvider Id="EP_Microsoft-Windows-RemoteDesktopServices-RdpCoreCDV" Name="c8e6dc53-660c-44ee-8d00-e47f189db87f" EventKey="true" />
+    <EventProvider Id="EP_Microsoft-Windows-RemoteDesktopServices-RdpCoreTS" Name="1139C61B-B549-4251-8ED3-27250A1EDEC8" EventKey="true" />
+    <EventProvider Id="EP_Microsoft-Windows-RemoteDesktopServices-RdpDr" Name="0621b9df-3249-4559-9889-21f76b5c80f3" EventKey="true" />
+    <EventProvider Id="EP_Microsoft-Windows-RemoteDesktopServices-RemoteAppInit" Name="5239cdda-01f7-479b-a707-1324d4349259" EventKey="true" />
+    <EventProvider Id="EP_Microsoft-Windows-RemoteDesktopServices-RemoteAppInitCDV" Name="5239cdda-01f7-479b-a707-1324d4349260" EventKey="true" />
+    <EventProvider Id="EP_Microsoft-Windows-RemoteDesktopServices-RemoteAppShell" Name="5b5481ab-3667-40db-a745-f6d74c9bd500" EventKey="true" />
+    <EventProvider Id="EP_Microsoft-Windows-RemoteDesktopServices-RemoteAppShellCDV" Name="5b5481ab-3667-40db-a745-f6d74c9bd501" EventKey="true" />
+    <EventProvider Id="EP_Microsoft-Windows-RemoteDesktopServices-RemoteDesktopSessionManager" Name="7bfcf102-7378-431c-9284-0b968258991a" EventKey="true" />
+    <EventProvider Id="EP_Microsoft-Windows-RemoteDesktopServices-RemoteFX-Manager" Name="10d520e2-205c-4c22-b25c-ac7a779c55b2" EventKey="true" />
+    <EventProvider Id="EP_Microsoft-Windows-RemoteDesktopServices-RemoteFX-SessionLicensing" Name="10AB3154-C36A-4F24-9D91-FFB5BCD331EF" EventKey="true" />
+    <EventProvider Id="EP_Microsoft-Windows-RemoteDesktopServices-RemoteFX-SessionManager" Name="8bddcf41-9630-47e8-914a-d4952112ea19" EventKey="true" />
+    <EventProvider Id="EP_Microsoft-Windows-RemoteDesktopServices-RemoteFX-Synth3dvsc" Name="3903D5B9-988D-4C31-9CCD-4022F96703F0" EventKey="true" />
+    <EventProvider Id="EP_Microsoft-Windows-RemoteDesktopServices-RemoteFX-Synth3dvsp" Name="289db023-6864-4cbf-bd25-4809e8213cd5" EventKey="true" />
+    <EventProvider Id="EP_Microsoft-Windows-RemoteDesktopServices-SessionServices" Name="f1394de0-32c7-4a76-a6de-b245e48f4615" EventKey="true" />
+    <EventProvider Id="EP_Microsoft-Windows-RemoteDesktopServices-SessionServicesCDV" Name="e1d278cc-d106-446E-ba72-df75bbaa9387" EventKey="true" />
+    <EventProvider Id="EP_Microsoft-Windows-RemoteDesktopServices-vGPU-KModeDriver" Name="1B4F0E96-6876-49c8-BFBA-072DAE6543B3" EventKey="true" />
+    <EventProvider Id="EP_Microsoft-Windows-RemoteDesktopServices-vGPU-UModeDriver" Name="5AE63087-6A35-40b0-AE15-CEA95A71A8C0" EventKey="true" />
+    <EventProvider Id="EP_Microsoft-Windows-RemoteDesktopServices-vGPU-UModeDriver64" Name="1deb930f-e136-4b08-9761-d7e3a5d14faa" EventKey="true" />
+    <EventProvider Id="EP_RDPIDD" Name="7b7a87d4-6d7c-4c87-8e3d-29f31bff02b8" EventKey="true" />
+    <EventProvider Id="EP_RDP-ServerStack-Diagnostics" Name="CA341B3C-B9D2-4D0F-9BD3-D88183596DB9" EventKey="true" />
+
+    <!-- Additional Providers from TraceRds -->
+    <EventProvider Id="EP_RDP_1" Name="D4199645-41be-4fd5-9d73-A612C508FDC6" EventKey="true" />
+    <EventProvider Id="EP_RDP_2" Name="140C2428-F60D-43F9-9B07-3E5F622438A0" EventKey="true" />
+    <EventProvider Id="EP_RDP_3" Name="6CBE573A-121B-4E02-A09D-6C0B6B96D676" EventKey="true" />
+    <EventProvider Id="EP_RDP_4" Name="C1BB27C2-F176-499C-A932-D453051E8B0B" EventKey="true" />
+    <EventProvider Id="EP_RDP_5" Name="D4199645-41be-4fd5-9d71-A612C508FDC6" EventKey="true" />
+    <EventProvider Id="EP_RDP_6" Name="5795AAB9-B0E3-419E-B0EF-7AEF943CFFA8" EventKey="true" />
+    <EventProvider Id="EP_RDP_7" Name="8375996D-5801-4FE9-B0AE-F5C428758960" EventKey="true" />
+    <EventProvider Id="EP_RDP_8" Name="9ed727c4-4ab6-4b66-92d7-2072e87c9124" EventKey="true" />
+    <EventProvider Id="EP_RDP_9" Name="9EA2030F-DB66-47EF-BF2C-619CC76F3E1B" EventKey="true" />
+    <EventProvider Id="EP_RDP_10" Name="449e4e69-329e-4eb1-9ddf-809d17a2e0c1" EventKey="true" />
+    <EventProvider Id="EP_RDP_11" Name="796f204a-44fc-47df-8ae4-77c210bd5af4" EventKey="true" />
+    <EventProvider Id="EP_RDP_12" Name="C5615DDA-2DAC-479B-83AB-F18C95601774" EventKey="true" />
+    <EventProvider Id="EP_RDP_13" Name="73c5ec49-c807-489d-9e45-d36d72235f84" EventKey="true" />
+    <EventProvider Id="EP_RDP_14" Name="BFA655DC-6C51-11DA-8BDE-F66BAD1E3F3A" EventKey="true" />
+    <EventProvider Id="EP_RDP_15" Name="BFA655DC-6C51-11DA-8BDE-F66BAD1E3F30" EventKey="true" />
+    <EventProvider Id="EP_RDP_16" Name="C127C1A8-6CEB-11DA-8BDE-F66BAD1E3F3A" EventKey="true" />
+    <EventProvider Id="EP_RDP_17" Name="4A49AFE3-776E-467A-ACA0-71F9C6C8499F" EventKey="true" />
+    <EventProvider Id="EP_RDP_18" Name="97e97a1e-c0a9-4b8d-87c4-42105a957d7b" EventKey="true" />
+    <EventProvider Id="EP_RDP_19" Name="d33e545f-59c3-423f-9051-6dc4983393a8" EventKey="true" />
+    <EventProvider Id="EP_RDP_20" Name="d451642c-63a6-11d7-9720-00b0d03e0347" EventKey="true" />
+    <EventProvider Id="EP_RDP_21" Name="a789efeb-fc8a-4c55-8301-c2d443b933c0" EventKey="true" />
+    <EventProvider Id="EP_RDP_22" Name="301779e2-227d-4faf-ad44-664501302d03" EventKey="true" />
+    <EventProvider Id="EP_RDP_23" Name="5B4F9E61-4334-409F-B8F8-73C94A2DBA41" EventKey="true" />
+    <EventProvider Id="EP_RDP_24" Name="2A0A7EC8-5E2B-47AB-B553-32E1C7AEF0EF" EventKey="true" />
+    <EventProvider Id="EP_RDP_25" Name="e27950eb-1768-451f-96ac-cc4e14f6d3d0" EventKey="true" />
+    <EventProvider Id="EP_RDP_26" Name="5A966D1C-6B48-11DA-8BDE-F66BAD1E3F3A" EventKey="true" />
+    <EventProvider Id="EP_RDP_27" Name="3C734565-80DB-4168-8B16-B15393154F69" EventKey="true" />
+    <EventProvider Id="EP_RDP_28" Name="eb7428f5-ab1f-4322-a4cc-1f1a9b2c5e98" EventKey="true" />
+    <EventProvider Id="EP_RDP_29" Name="6b6c257f-5643-43e8-8e5a-c66343dbc650" EventKey="true" />
+    <EventProvider Id="EP_RDP_30" Name="2955e23c-4e0b-45ca-a181-6ee442ca1fc0" EventKey="true" />
+    <EventProvider Id="EP_RDP_31" Name="7b7a87d4-6d7c-4c87-8e3d-29f31bff02b8" EventKey="true" />
+    <EventProvider Id="EP_RDP_32" Name="D92BCB52-FA78-406F-A9A5-2037509FADEA" EventKey="true" />
+    <EventProvider Id="EP_RDP_33" Name="6035d7f9-6e24-44bf-b540-3ade030d001a" EventKey="true" />
+    <EventProvider Id="EP_RDP_34" Name="9b6a7fe4-d8bc-503d-c1db-142892d7da9b" EventKey="true" />
+    <EventProvider Id="EP_RDP_35" Name="b3854706-6d90-58a4-415d-d86cd54f35f5" EventKey="true" />
+    <EventProvider Id="EP_RDP_36" Name="2b1bbe78-bf8d-57c1-007a-e8628f64e8b3" EventKey="true" />
+    <EventProvider Id="EP_RDP_37" Name="b3016d2d-9449-427f-b3b1-0ee7eee67436" EventKey="true" />
+    <EventProvider Id="EP_RDP_38" Name="7b919abb-998b-46a9-b8f3-d4a49e8074da" EventKey="true" />
+    <EventProvider Id="EP_RDP_39" Name="AFC8A033-E28A-415C-ACFF-030E4B113A35" EventKey="true" />
+    <EventProvider Id="EP_RDP_40" Name="59de359d-ec83-445c-9323-b75e2056d5a5" EventKey="true" />
+    <EventProvider Id="EP_RDP_41" Name="6ba29edf-a2f4-4212-b06b-6d5712210652" EventKey="true" />
+    <EventProvider Id="EP_RDP_42" Name="ae4c5843-a9a3-4eb9-81f3-65d57d250180" EventKey="true" />
+    <EventProvider Id="EP_RDP_43" Name="bd5c97d6-3d8f-5779-7872-09ad6dcad49b" EventKey="true" />
+    <EventProvider Id="EP_RDP_44" Name="6F539394-F34F-45fd-B4CA-BD5C547B0BCB" EventKey="true" />
+    <EventProvider Id="EP_RDP_45" Name="909ED641-D5EF-4299-B898-F13451A59F50" EventKey="true" />
+    <EventProvider Id="EP_RDP_46" Name="3C3E7089-99CF-4446-8D81-4AC5A8560E6A" EventKey="true" />
+    <EventProvider Id="EP_RDP_47" Name="986CC918-7434-4FAB-B37F-C4BA7AD1E293" EventKey="true" />
+    <EventProvider Id="EP_RDP_48" Name="7ADA0B31-F4C2-43f4-9566-2EBDD3A6B604" EventKey="true" />
+    <EventProvider Id="EP_RDP_49" Name="81B84BCE-06B4-40ae-9840-8F04DD7A8DF7" EventKey="true" />
+    <EventProvider Id="EP_RDP_50" Name="1FD4C5A9-27B7-418b-8DFC-216E7FA7B990" EventKey="true" />
+    <EventProvider Id="EP_RDP_51" Name="BF936B9C-DA45-4494-A236-101FE5A2A51D" EventKey="true" />
+    <EventProvider Id="EP_RDP_52" Name="05875a0b-efdf-4c4a-8d3c-098a15dc483d" EventKey="true" />
+    <EventProvider Id="EP_RDP_53" Name="D4199645-41be-4fd5-9d71-A612C508FDC7" EventKey="true" />
+    <EventProvider Id="EP_RDP_54" Name="DAA6CAF5-6678-43f8-A6FE-B40EE096E00E" EventKey="true" />
+    <EventProvider Id="EP_RDP_55" Name="DAA6CAF5-6678-43f8-A6FE-B40EE096E06E" EventKey="true" />
+    <EventProvider Id="EP_RDP_56" Name="ea605ac7-d9de-434a-8271-682fee6d59ca" EventKey="true" />
+    <EventProvider Id="EP_RDP_57" Name="C3B02229-FF93-4D28-ACFC-4FB28AC6CDB5" EventKey="true" />
+    <EventProvider Id="EP_RDP_58" Name="e76c0d10-97b8-477d-a0ae-e8fa5870a695" EventKey="true" />
+    <EventProvider Id="EP_RDP_59" Name="1148F9BD-F5FF-482D-B08A-F289F3E928E0" EventKey="true" />
+    <EventProvider Id="EP_RDP_60" Name="0c79e960-6bd5-4206-bf5d-578cedb8df2a" EventKey="true" />
+    <EventProvider Id="EP_RDP_61" Name="6cdd992d-b35c-40a6-af1e-d727c11decfd" EventKey="true" />
+    <EventProvider Id="EP_RDP_62" Name="6aabaea6-df19-4528-97d8-3a420cee69a0" EventKey="true" />
+    <EventProvider Id="EP_RDP_63" Name="80342309-054f-4e2e-9d3d-fccfbdcaa92f" EventKey="true" />
+    <EventProvider Id="EP_RDP_64" Name="8CDC2BE7-58CD-4760-B344-422B893BFF08" EventKey="true" />
+    <EventProvider Id="EP_RDP_65" Name="2a11472b-451f-4fca-8590-9724d41c604e" EventKey="true" />
+
+    <!-- Desktop Window Manager (DWM) -->
+    <EventProvider Id="EP_Microsoft-Windows-DesktopWindowManager-Diag" Name="31f60101-3703-48ea-8143-451f8de779d2" EventKey="true" />
+    <EventProvider Id="EP_Microsoft-Windows-Dwm-Api" Name="292a52c4-fa27-4461-b526-54a46430bd54" EventKey="true" />
+    <EventProvider Id="EP_Microsoft-Windows-Dwm-Core" Name="9e9bba3c-2e38-40cb-99f4-9e8281425164" EventKey="true" />
+    <EventProvider Id="EP_Microsoft-Windows-Dwm-Dwm" Name="d29d56ea-4867-4221-b02e-cfd998834075" EventKey="true" />
+    <EventProvider Id="EP_Microsoft-Windows-Dwm-Redir" Name="7d99f6a4-1bec-4c09-9703-3aaa8148347f" EventKey="true" />
+    <EventProvider Id="EP_Microsoft-Windows-Dwm-Udwm" Name="a2d1c713-093b-43a7-b445-d09370ec9f47" EventKey="true" />
+    <EventProvider Id="EP_DwmSchedulerWin7" Name="8c9dd1ad-e6e5-4b07-b455-684a9d879900" NonPagedMemory="true" Level="6" EventKey="true" />
+
+    <!-- Graphics -->
+    <EventProvider Id="EP_D2DGDI" Name="D4E9D8C6-A2E4-4334-8469-B78BA483EEB3" NonPagedMemory="true" EventKey="true" />
+    <EventProvider Id="EP_DX" Name="65cd4c8a-0848-4583-92a0-31c0fbaf00c0" NonPagedMemory="true" EventKey="true">
+      <Keywords>
+        <Keyword Value="0x2F"/>
+      </Keywords>
+    </EventProvider>
+    <EventProvider Id="EP_Microsoft-Windows-DxgKrnl" Name="802ec45a-1e99-4b83-9920-87c98277ba9d" Level="5" Stack="true" NonPagedMemory="true" EventKey="true">
+      <Keywords>
+        <Keyword Value="0xffffffff"/>
+      </Keywords>
+      <CaptureStateOnStart>
+        <Keyword Value="0xffffffff"/>
+      </CaptureStateOnStart>
+    </EventProvider>
+    <EventProvider Id="EP_D2D" Name="712909c0-6e57-4121-b639-87c8bf9004e0" NonPagedMemory="true" EventKey="true" />
+    <EventProvider Id="EP_Microsoft-Windows-D2D1" Name="dcb453db-c652-48be-a0f8-a64459d5162e" Level="1" NonPagedMemory="true" EventKey="true">
+      <Keywords>
+        <Keyword Value="0"/>
+      </Keywords>
+    </EventProvider>
+    <EventProvider Id="EP_D3D10CORE" Name="0EDA4043-1359-4ed0-9A71-148CBA79EBB0" NonPagedMemory="true" EventKey="true" />
+    <EventProvider Id="EP_AvalonAll" Name="a42c77db-874f-422e-9b44-6d89fe2bd3e5" Level="5" NonPagedMemory="true" EventKey="true">
+      <Keywords>
+        <Keyword Value="0x7fffffff"/>
+      </Keywords>
+      <CaptureStateOnStart>
+        <Keyword Value="0x7fffffff"/>
+      </CaptureStateOnStart>
+    </EventProvider>
+    <EventProvider Id="EventProvider_DxgDiagnostics_0_0_2_0_0" Name="221d444c-d07e-4fde-b425-15b746cf535b" NonPagedMemory="true" Level="0" EventKey="true">
+      <Keywords>
+        <Keyword Value="0xFFFFFFFFFFFFFFFF" />
+      </Keywords>
+    </EventProvider>
+    <EventProvider Id="EventProvider_DxgKrnl_71_0_2_0_0" Name="c6998471-62cd-424d-a9a3-fe4c1fa378a4" NonPagedMemory="true" Level="0" EventKey="true">
+      <Keywords>
+        <Keyword Value="0x47" />
+      </Keywords>
+    </EventProvider>
+    <EventProvider Id="EventProvider_Display_1_0_2_0_0" Name="deb96c0a-d2d9-5868-a5d5-50ee13513c8b" NonPagedMemory="true" Level="0" EventKey="true">
+      <Keywords>
+        <Keyword Value="0x1" />
+      </Keywords>
+    </EventProvider>
+
+    <EventProvider Id="EP_OLog_AirSpace_Lean" Name="f562bb8e-422d-4b5c-b20e-90d710f7d11c" Level="4" />
+
+    <EventProvider Id="EventProvider_Microsoft-Windows-Win32k_0" Name="Microsoft-Windows-Win32k" NonPagedMemory="true" Stack="true" Level="4" />
+
+<!-- PROFILES -->
+
+    <Profile Id="ContainerCreateTrace.Verbose.Memory" Name="ContainerCreateTrace" Description="WDAG Platform Environment Create" LoggingMode="Memory" DetailLevel="Verbose">
+      <Collectors Operation="Add">
+        <SystemCollectorId Value="SystemCollector_General_Lean">
+          <SystemProviderId Value="SystemProvider_General_Lean" />
+        </SystemCollectorId>
+        <EventCollectorId Value="EventCollector_EventTracing">
+          <EventProviders>
+            <EventProviderId Value="EventProvider_Microsoft-Windows-HVSI-Settings" />
+            <EventProviderId Value="EventProvider_Microsoft-Windows-HVSI-ProxyApp" />
+            <EventProviderId Value="EventProvider_Microsoft-Windows-Diagnostics-PerfTrack_1114112_4_2_0_0" />
+            <EventProviderId Value="EventProvider_Microsoft-Windows-Diagnostics-PerfTrack-Counters_0_0_2_0_R" />
+            <EventProviderId Value="EventProvider_Microsoft-Windows-Win32k_2531328_0_2_0_0" />
+            <EventProviderId Value="EventProvider_Microsoft-Windows-COMRuntime_3_0_2_0_0" />
+            <EventProviderId Value="EventProvider_Microsoft-Windows-Kernel-Memory_0_0_2_0_0" />
+            <EventProviderId Value="EventProvider_Microsoft-AntiMalware-Engine_0_0_2_0_0" />
+            <EventProviderId Value="EventProvider_Microsoft-AntiMalware-Engine3_0_0" />
+            <EventProviderId Value="EventProvider_Microsoft-Windows-Kernel-Prefetch_32_0_2_0_0" />
+            <EventProviderId Value="EventProvider_Microsoft-Windows-Immersive-Shell_2_0_2_0_0" />
+            <EventProviderId Value="EventProvider_Microsoft-Windows-Kernel-Power_0_0_2_0_R" />
+            <EventProviderId Value="EventProvider_Microsoft-Windows-UserModePowerService_0_0_2_0_R" />
+            <EventProviderId Value="EventProvider_Microsoft-Windows-Kernel-Pep_0_0_2_0_R" />
+            <EventProviderId Value="EventProvider_Microsoft-Windows-ProcessStateManager_0_0_2_0_0" />
+            <EventProviderId Value="EventProvider_Microsoft-Windows-CodeIntegrity_0_0_2_0_0" />
+            <EventProviderId Value="EventProvider_Microsoft-Windows-Dwm-CoreWin8_131072_0_2_0_0" />
+            <EventProviderId Value="EventProvider_Microsoft-Windows-StorDiag_2_0_2_0_0" />
+            <EventProviderId Value="EventProvider_Microsoft-Windows-Kernel-EventTracing_64_0_2_0_0" />
+            <EventProviderId Value="EventProvider_Microsoft.Windows.ResourceManager_5_4_2_0_0" />
+            <EventProviderId Value="EventProvider_Microsoft-Windows-Desktop-ApplicationFrame_0_0_2_0_0" />
+            <EventProviderId Value="EventProvider_Microsoft-Windows-Desktop-ApplicationManager_0_0_2_0_0" />
+            <EventProviderId Value="EventProvider_Microsoft.Windows.Desktop.Shell.ViewManagerInterop_0_0_2_0_0" />
+            <EventProviderId Value="EventProvider_Microsoft.Windows.WindowsErrorReporting_0_0_2_0_0" />
+            <EventProviderId Value="EventProvider_Microsoft.Windows.BrokerInfrastructure_0_0_2_0_0" />
+            <EventProviderId Value="EventProvider_Microsoft-Antimalware-RTP_0_0_2_0_0" />
+            <EventProviderId Value="EventProvider_Microsoft.Windows.HangReporting_0_0_2_0_0" />
+            <EventProviderId Value="EventProvider_Microsoft.Windows.FaultReporting_0_0_2_0_0" />
+            <EventProviderId Value="EventProvider_Microsoft.Windows.IoRate_0_4_2_0_0" />
+            <EventProviderId Value="EventProvider_Microsoft-Windows-Kernel-Process_12304_0_2_0_0" />
+            <EventProviderId Value="EventProvider_Microsoft-Windows-Kernel-Processor-Power_194_4_2_0_R" />
+            <EventProviderId Value="EventProvider_Microsoft-Windows-Kernel-PnP_16777216_4_2_0_0" />
+            <EventProviderId Value="EventProvider_DxgDiagnostics_0_0_2_0_0" />
+            <EventProviderId Value="EventProvider_Display_1_0_2_0_0" />
+            <EventProviderId Value="EventProvider_DxgKrnl_71_0_2_0_0" />
+            <EventProviderId Value="EventProvider_PerfTrack" />
+            <EventProviderId Value="EventProvider_UTC" />
+            <EventProviderId Value="EventProvider_TelAssert" />
+            <EventProviderId Value="EventProvider_Microsoft-Windows-ESE" />
+            <EventProviderId Value="EventProvider_Microsoft-Windows-CAPI2" />
+            <EventProviderId Value="EventProvider_Microsoft-Windows-ImageLoad" />
+            <EventProviderId Value="EventProvider_Microsoft_Windows_AppXDeployment-Server" />
+            <EventProviderId Value="EventProvider_Microsoft-Windows-Winlogon" />
+            <EventProviderId Value="EventProvider_Microsoft_Windows_Security_Winlogon" />
+            <EventProviderId Value="EventProvider_Microsoft_Windows_Security_WinlogonNotify" />
+            <EventProviderId Value="EventProvider_Microsoft-Windows-Shell-Core" />
+            <EventProviderId Value="EventProvider_Microsoft-Windows-Shell-Desktop-LogonFramework" />
+            <EventProviderId Value="EventProvider_Microsoft-Windows-Shell-SingleViewExperience" />
+            <EventProviderId Value="EventProvider_Microsoft_Windows_ContentDeliveryManager" />
+            <EventProviderId Value="EventProvider_Microsoft-Windows-AppReadiness" />
+            <EventProviderId Value="EventProvider_SIHost" />
+            <EventProviderId Value="EventProvider_Microsoft-Windows-Win32k_0" />
+            <EventProviderId Value="EventProvider_Microsoft-Windows-Kernel-EventTracing_48_5_139_0_0" />
+          </EventProviders>
+        </EventCollectorId>
+      </Collectors>
+    </Profile>
+ 
+    <Profile Id="ContainerRdpTrace.Verbose.Memory" Name="ContainerRdpTrace" Description="WDAG Platform Environment RDP" LoggingMode="Memory" DetailLevel="Verbose">
+      <Collectors Operation="Add">
+        <SystemCollectorId Value="SystemCollector_General_Min">
+          <SystemProviderId Value="SystemProvider_General_Min" />
+        </SystemCollectorId>
+        <EventCollectorId Value="EventCollector_EventTracing">
+          <EventProviders>
+            <EventProviderId Value="EventProvider_Microsoft-Windows-HVSI-Settings" />
+            <EventProviderId Value="EventProvider_Microsoft-Windows-HVSI-ProxyApp" />
+            <EventProviderId Value="EP_OLog_AirSpace_Lean" />
+            <EventProviderId Value="EP_DwmSchedulerWin7" />
+            <EventProviderId Value="EP_Microsoft-Windows-DesktopWindowManager-Diag" />
+            <EventProviderId Value="EP_Microsoft-Windows-Dwm-Api" />
+            <EventProviderId Value="EP_Microsoft-Windows-Dwm-Core" />
+            <EventProviderId Value="EP_Microsoft-Windows-Dwm-Dwm" />
+            <EventProviderId Value="EP_Microsoft-Windows-Dwm-Redir" />
+            <EventProviderId Value="EP_Microsoft-Windows-Dwm-Udwm" />
+            <EventProviderId Value="EP_Microsoft-Windows-Rdms-UI" />  
+            <EventProviderId Value="EP_Microsoft-Windows-Remote-Desktop-Management-Service" /> 
+            <EventProviderId Value="EP_Microsoft-Windows-RemoteDesktop-RAIL-Server-Diagnostics" /> 
+            <EventProviderId Value="EP_Microsoft-Windows-RemoteDesktopServices-RdpCoreCDV" /> 
+            <EventProviderId Value="EP_Microsoft-Windows-RemoteDesktopServices-RdpCoreTS" /> 
+            <EventProviderId Value="EP_Microsoft-Windows-RemoteDesktopServices-RdpDr" /> 
+            <EventProviderId Value="EP_Microsoft-Windows-RemoteDesktopServices-RemoteAppInit" />
+            <EventProviderId Value="EP_Microsoft-Windows-RemoteDesktopServices-RemoteAppInitCDV" />
+            <EventProviderId Value="EP_Microsoft-Windows-RemoteDesktopServices-RemoteAppShell" />
+            <EventProviderId Value="EP_Microsoft-Windows-RemoteDesktopServices-RemoteAppShellCDV" /> 
+            <EventProviderId Value="EP_Microsoft-Windows-RemoteDesktopServices-RemoteDesktopSessionManager" />
+            <EventProviderId Value="EP_Microsoft-Windows-RemoteDesktopServices-RemoteFX-Manager" />
+            <EventProviderId Value="EP_Microsoft-Windows-RemoteDesktopServices-RemoteFX-SessionLicensing" />
+            <EventProviderId Value="EP_Microsoft-Windows-RemoteDesktopServices-RemoteFX-SessionManager" />
+            <EventProviderId Value="EP_Microsoft-Windows-RemoteDesktopServices-RemoteFX-Synth3dvsc" />
+            <EventProviderId Value="EP_Microsoft-Windows-RemoteDesktopServices-RemoteFX-Synth3dvsp" />
+            <EventProviderId Value="EP_Microsoft-Windows-RemoteDesktopServices-SessionServices" />
+            <EventProviderId Value="EP_Microsoft-Windows-RemoteDesktopServices-SessionServicesCDV" />
+            <EventProviderId Value="EP_Microsoft-Windows-RemoteDesktopServices-vGPU-KModeDriver" />
+            <EventProviderId Value="EP_Microsoft-Windows-RemoteDesktopServices-vGPU-UModeDriver" />
+            <EventProviderId Value="EP_Microsoft-Windows-RemoteDesktopServices-vGPU-UModeDriver64" />
+            <EventProviderId Value="EP_RDPIDD" /> 
+            <EventProviderId Value="EP_RDP-ServerStack-Diagnostics" />
+            <EventProviderId Value="EventProvider_Termsrv" />
+            <EventProviderId Value="EventProvider_Lsm" />
+            <EventProviderId Value="EventProvider_Microsoft-Windows-TerminalServices-LocalSessionManager" />
+            <EventProviderId Value="EventProvider_RAILRdpInit" />
+            <EventProviderId Value="EventProvider_RAILRdpShell" />
+            <EventProviderId Value="EventProvider_Display_1_0_2_0_0" /> 
+            <EventProviderId Value="EventProvider_DxgDiagnostics_0_0_2_0_0" /> 
+            <EventProviderId Value="EventProvider_DxgKrnl_71_0_2_0_0" /> 
+            <EventProviderId Value="EP_Microsoft-Windows-DxgKrnl" /> 
+            <EventProviderId Value="EP_DX" /> 
+            <EventProviderId Value="EP_D2D" /> 
+            <EventProviderId Value="EP_D2DGDI" />  
+            <EventProviderId Value="EP_Microsoft-Windows-D2D1" /> 
+            <EventProviderId Value="EP_D3D10CORE" /> 
+            <EventProviderId Value="EP_AvalonAll" /> 
+            <EventProviderId Value="EventProvider_Microsoft_Windows_AppXDeployment-Server" />
+            <EventProviderId Value="EventProvider_Microsoft-Windows-Winlogon" />
+            <EventProviderId Value="EventProvider_Microsoft-Windows-Shell-Core" /> 
+            <EventProviderId Value="EventProvider_Microsoft-Windows-Shell-Explorer" />
+            <EventProviderId Value="EventProvider_Microsoft-Windows-Shell-Desktop-LogonFramework" /> 
+            <EventProviderId Value="EventProvider_Microsoft-Windows-Shell-SingleViewExperience" />
+            <EventProviderId Value="EventProvider_Microsoft_Windows_ContentDeliveryManager" />
+            <EventProviderId Value="EventProvider_Microsoft-Windows-AppReadiness" />
+            <EventProviderId Value="EventProvider_SIHost" /> 
+            <EventProviderId Value="EP_RDP_1" />
+            <EventProviderId Value="EP_RDP_2" />
+            <EventProviderId Value="EP_RDP_3" />
+            <EventProviderId Value="EP_RDP_4" />
+            <EventProviderId Value="EP_RDP_5" />
+            <EventProviderId Value="EP_RDP_6" />
+            <EventProviderId Value="EP_RDP_7" />
+            <EventProviderId Value="EP_RDP_8" />
+            <EventProviderId Value="EP_RDP_9" />
+            <EventProviderId Value="EP_RDP_10" />
+            <EventProviderId Value="EP_RDP_11" />
+            <EventProviderId Value="EP_RDP_12" />
+            <EventProviderId Value="EP_RDP_13" />
+            <EventProviderId Value="EP_RDP_14" />
+            <EventProviderId Value="EP_RDP_15" />
+            <EventProviderId Value="EP_RDP_16" />
+            <EventProviderId Value="EP_RDP_17" />
+            <EventProviderId Value="EP_RDP_18" />
+            <EventProviderId Value="EP_RDP_19" />
+            <EventProviderId Value="EP_RDP_20" />
+            <EventProviderId Value="EP_RDP_21" />
+            <EventProviderId Value="EP_RDP_22" />
+            <EventProviderId Value="EP_RDP_23" />
+            <EventProviderId Value="EP_RDP_24" />
+            <EventProviderId Value="EP_RDP_25" />
+            <EventProviderId Value="EP_RDP_26" />
+            <EventProviderId Value="EP_RDP_27" />
+            <EventProviderId Value="EP_RDP_28" />
+            <EventProviderId Value="EP_RDP_29" />
+            <EventProviderId Value="EP_RDP_30" />
+            <EventProviderId Value="EP_RDP_31" />
+            <EventProviderId Value="EP_RDP_32" />
+            <EventProviderId Value="EP_RDP_33" />
+            <EventProviderId Value="EP_RDP_34" />
+            <EventProviderId Value="EP_RDP_35" />
+            <EventProviderId Value="EP_RDP_36" />
+            <EventProviderId Value="EP_RDP_37" />
+            <EventProviderId Value="EP_RDP_38" />
+            <EventProviderId Value="EP_RDP_39" />
+            <EventProviderId Value="EP_RDP_40" />
+            <EventProviderId Value="EP_RDP_41" />
+            <EventProviderId Value="EP_RDP_42" />
+            <EventProviderId Value="EP_RDP_43" />
+            <EventProviderId Value="EP_RDP_44" />
+            <EventProviderId Value="EP_RDP_45" />
+            <EventProviderId Value="EP_RDP_46" />
+            <EventProviderId Value="EP_RDP_47" />
+            <EventProviderId Value="EP_RDP_48" />
+            <EventProviderId Value="EP_RDP_49" />
+            <EventProviderId Value="EP_RDP_50" />
+            <EventProviderId Value="EP_RDP_51" />
+            <EventProviderId Value="EP_RDP_52" />
+            <EventProviderId Value="EP_RDP_53" />
+            <EventProviderId Value="EP_RDP_54" />
+            <EventProviderId Value="EP_RDP_55" />
+            <EventProviderId Value="EP_RDP_56" />
+            <EventProviderId Value="EP_RDP_57" />
+            <EventProviderId Value="EP_RDP_58" />
+            <EventProviderId Value="EP_RDP_59" />
+            <EventProviderId Value="EP_RDP_60" /> 
+            <EventProviderId Value="EP_RDP_61" />
+            <EventProviderId Value="EP_RDP_62" />
+            <EventProviderId Value="EP_RDP_63" />
+            <EventProviderId Value="EP_RDP_64" /> 
+            <EventProviderId Value="EP_RDP_65" />
+          </EventProviders>
+        </EventCollectorId>
+      </Collectors>
+    </Profile>
+  </Profiles>
+
+<!-- Trace Properties: https://docs.microsoft.com/en-us/windows-hardware/test/wpt/customevent -->
+
+  <TraceMergeProperties>
+    <TraceMergeProperty Id="TraceMerge_Default" Name="TraceMerge_Default">
+      <DeletePreMergedTraceFiles Value="true" />
+      <FileCompression Value="true" />
+      <CustomEvents Operation="Add">
+        <CustomEvent Value="ImageId" />
+        <CustomEvent Value="BuildInfo" />
+        <CustomEvent Value="VolumeMapping" />
+        <CustomEvent Value="EventMetadata" />
+        <CustomEvent Value="PerfTrackMetadata"/>
+        <CustomEvent Value="WinSAT"/>
+        <CustomEvent Value="NetworkInterface" />
+      </CustomEvents>
+    </TraceMergeProperty>
+  </TraceMergeProperties>
+
+</WindowsPerformanceRecorder>

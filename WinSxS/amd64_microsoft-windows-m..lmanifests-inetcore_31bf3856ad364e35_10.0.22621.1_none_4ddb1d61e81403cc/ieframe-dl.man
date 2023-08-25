@@ -1,0 +1,32 @@
+﻿<?xml version='1.0' encoding='utf-8' standalone='yes'?>
+<assembly
+    xmlns="urn:schemas-microsoft-com:asm.v3"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    manifestVersion="1.0"
+    >
+  <assemblyIdentity
+      language="*"
+      name="Microsoft-Windows-IEFrame-DL"
+      processorArchitecture="*"
+      version="0.0.0.0"
+      versionScope="nonSxS"
+      />
+  <migration scope="Upgrade,MigWiz,USMT">
+    <detects>
+      <detect>
+        <condition>MigXmlHelper.IsOSEarlierThan("NT", "6.0.0.0")</condition>
+      </detect>
+    </detects>
+    <migrationDisplayID>IEFrame_migration_plugin</migrationDisplayID>
+    <rules context="System">
+      <include>
+        <!-- migrate something simple so plugin is assured to run -->
+        <objectSet>
+          <pattern type="Registry">HKLM\SOFTWARE\Classes\HTTP\* [*]</pattern>
+        </objectSet>
+      </include>
+    </rules>
+    <!-- No plugin here since we only need the plugin to run on the target Vista. -->
+  </migration>
+</assembly>

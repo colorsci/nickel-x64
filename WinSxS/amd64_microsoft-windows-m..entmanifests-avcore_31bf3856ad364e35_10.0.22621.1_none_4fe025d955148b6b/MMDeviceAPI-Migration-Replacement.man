@@ -1,0 +1,64 @@
+﻿<?xml version='1.0' encoding='utf-8' standalone='yes'?>
+<assembly
+    xmlns="urn:schemas-microsoft-com:asm.v3"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    manifestVersion="1.0"
+    >
+  <assemblyIdentity
+      buildType="$(build.buildType)"
+      language="neutral"
+      name="Microsoft-Windows-MMDeviceAPI"
+      processorArchitecture="*"
+      publicKeyToken=""
+      version="0.0.0.0"
+      versionScope="nonSxS"
+      />
+  <migration
+      alwaysProcess="yes"
+      replacementSettingsVersionRange="0"
+      replacementVersionRange="6.0-10.0.65535"
+      scope="Upgrade"
+      settingsVersion="0"
+      >
+    <migXml xmlns="">
+      <rules context="System">
+        <include>
+          <objectSet>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\MMDevices\DefaultDeviceHeuristics\OEM\* [*]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\MMDevices\Audio\Capture\* [*]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\MMDevices\Audio\Render\* [*]</pattern>
+          </objectSet>
+        </include>
+        <contentModify script="MigXmlHelper.SetValueByTable(&apos;1,2,4,8,536870913,536870914,536870916,536870920,268435457,268435458,268435460,268435464,805306369,805306370,805306372,805306376,553648129,553648130,553648132,553648136,822083585,822083586,822083588,822083592,570425345,570425346,570425348,570425352,838860801,838860802,838860804,838860808&apos;,&apos;553648129,553648130,553648132,553648136,553648129,553648130,553648132,553648136,822083585,822083586,822083588,822083592,822083585,822083586,822083588,822083592,570425345,570425346,570425348,570425352,838860801,838860802,838860804,838860808,587202561,587202562,587202564,587202568,855638017,855638018,855638020,855638024&apos;)">
+          <objectSet>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\MMDevices\Audio\Capture\* [DeviceState]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\MMDevices\Audio\Render\* [DeviceState]</pattern>
+          </objectSet>
+        </contentModify>
+      </rules>
+    </migXml>
+    <machineSpecific>
+     <migXml xmlns="">
+       <rules context="System">
+         <include>
+           <objectSet>
+             <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\MMDevices\Audio\Capture\* [*]</pattern>
+             <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\MMDevices\Audio\Render\* [*]</pattern>
+           </objectSet>
+         </include>
+         <locationModify script="MigXmlHelper.RelativeMove(&apos;HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\MMDevices\Audio\Capture&apos;,&apos;HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\MMDevices\Audio\PreviousOs\Capture&apos;)">
+           <objectSet>
+             <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\MMDevices\Audio\Capture\* [*]</pattern>
+           </objectSet>
+         </locationModify>
+         <locationModify script="MigXmlHelper.RelativeMove(&apos;HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\MMDevices\Audio\Render&apos;,&apos;HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\MMDevices\Audio\PreviousOs\Render&apos;)">
+           <objectSet>
+             <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\MMDevices\Audio\Render\* [*]</pattern>
+           </objectSet>
+         </locationModify>
+       </rules>
+     </migXml>
+    </machineSpecific>
+  </migration>
+</assembly>

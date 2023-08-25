@@ -1,0 +1,129 @@
+﻿<?xml version='1.0' encoding='utf-8' standalone='yes'?>
+<assembly
+    xmlns="urn:schemas-microsoft-com:asm.v3"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    manifestVersion="1.0"
+    >
+  <assemblyIdentity
+      language="neutral"
+      name="Microsoft-Windows-GroupPolicy-Base"
+      processorArchitecture="*"
+      version="0.0.0.0"
+      versionScope="nonSxS"
+      />
+  <migration
+      scope="Upgrade"
+      replacementSettingsVersionRange="0-1"
+      settingsVersion="2"
+      >
+    <migrationDisplayID>Performance_and_Maintenance\System_Settings</migrationDisplayID>
+    <machineSpecific>
+      <migXml xmlns="">
+        <rules context="System">
+          <include>
+            <objectSet>
+              <pattern type="File">%windir%\system32\GroupPolicy\*[*]</pattern>
+              <pattern type="File">%windir%\system32\GroupPolicyUsers\*[*]</pattern>
+              <pattern type="File">%ALLUSERSPROFILE% [ntuser.pol]</pattern>
+              <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [HideStartupScripts]</pattern>
+              <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [HideShutdownScripts]</pattern>
+              <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [RunStartupScriptSync]</pattern>
+              <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [GpNetworkStartTimeoutPolicyValue]</pattern>
+              <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [DenyUsersFromMachGP]</pattern>
+              <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [DisableBkGndGroupPolicy]</pattern>
+              <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [SyncForegroundPolicy]</pattern>
+              <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [DisableLGPOProcessing]</pattern>
+              <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [DenyRsopToInteractiveUser]</pattern>
+              <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [RSoPGarbageCollectionInterval]</pattern>
+              <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [GroupPolicyMinTransferRate]</pattern>
+              <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [WaitForNetwork]</pattern>
+              <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [UserenvDebugLevel]</pattern>
+              <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [RsopDebugLevel]</pattern>
+              <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Diagnostics [gpsvcDebugLevel]</pattern>
+              <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Diagnostics [RunDiagnosticLoggingGlobal]</pattern>
+              <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Diagnostics [RunDiagnosticLoggingGroupPolicy]</pattern>
+              <pattern type="Registry">HKLM\Software\Policies\* [*]</pattern>
+              <pattern type="Registry">HKLM\Software\Microsoft\Windows\CurrentVersion\Policies\* [*]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Policies\* [*]</pattern>
+            </objectSet>
+          </include>
+          <exclude>
+            <objectSet>
+              <pattern type="Registry">HKLM\Software\Microsoft\Windows\CurrentVersion\Policies\NonEnum\* [*]</pattern>
+              <!-- The following setting are OS version specific -->
+              <pattern type="Registry">HKLM\Software\Microsoft\Windows\CurrentVersion\Policies\Servicing\* [*]</pattern>
+            </objectSet>
+            <objectSet>
+              <conditions>
+                <condition>MigXmlHelper.IsOSEarlierThan('NT','6.1.9999')</condition>
+              </conditions>
+              <pattern type="Registry">HKLM\Software\Microsoft\Windows\CurrentVersion\Policies\System [EnableLUA]</pattern>
+              <pattern type="Registry">HKLM\Software\Microsoft\Windows\CurrentVersion\Policies\System [ConsentPromptBehaviorAdmin]</pattern>
+              <pattern type="Registry">HKLM\Software\Microsoft\Windows\CurrentVersion\Policies\System [ConsentPromptBehaviorUser]</pattern>
+              <pattern type="Registry">HKLM\Software\Microsoft\Windows\CurrentVersion\Policies\System [PromptOnSecureDesktop]</pattern>
+            </objectSet>
+            <objectSet>
+              <conditions>
+                <condition>MigXmlHelper.IsOSEarlierThan('NT','6.3.9999')</condition>
+              </conditions>
+              <!-- The following setting prevents issues on the Core Connected SKU -->
+              <pattern type="Registry">HKLM\Software\Policies\Microsoft\Windows Defender [DisableAntiSpyware]</pattern>
+            </objectSet>
+          </exclude>
+          <merge script="MigXmlHelper.SourcePriority()">
+            <objectSet>
+              <pattern type="File">%windir%\system32\GroupPolicy\*[*]</pattern>
+              <pattern type="File">%windir%\system32\GroupPolicyUsers\*[*]</pattern>
+              <pattern type="File">%ALLUSERSPROFILE% [ntuser.pol]</pattern>
+              <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [HideStartupScripts]</pattern>
+              <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [HideShutdownScripts]</pattern>
+              <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [RunStartupScriptSync]</pattern>
+              <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [GpNetworkStartTimeoutPolicyValue]</pattern>
+              <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [DenyUsersFromMachGP]</pattern>
+              <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [DisableBkGndGroupPolicy]</pattern>
+              <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [SyncForegroundPolicy]</pattern>
+              <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [DisableLGPOProcessing]</pattern>
+              <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [DenyRsopToInteractiveUser]</pattern>
+              <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [RSoPGarbageCollectionInterval]</pattern>
+              <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [GroupPolicyMinTransferRate]</pattern>
+              <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [WaitForNetwork]</pattern>
+              <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [UserenvDebugLevel]</pattern>
+              <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [RsopDebugLevel]</pattern>
+              <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Diagnostics [gpsvcDebugLevel]</pattern>
+              <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Diagnostics [RunDiagnosticLoggingGlobal]</pattern>
+              <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Diagnostics [RunDiagnosticLoggingGroupPolicy]</pattern>
+              <pattern type="Registry">HKLM\Software\Policies\* [*]</pattern>
+              <pattern type="Registry">HKLM\Software\Microsoft\Windows\CurrentVersion\Policies\* [*]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Policies\* [*]</pattern>
+            </objectSet>
+          </merge>
+        </rules>
+        <rules context="User">
+          <include>
+            <objectSet>
+              <pattern type="Registry">HKCU\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [HideLogonScripts]</pattern>
+              <pattern type="Registry">HKCU\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [HideLogoffScripts]</pattern>
+              <pattern type="Registry">HKCU\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [RunLogonScriptSync]</pattern>
+              <pattern type="Registry">HKCU\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [GroupPolicyMinTransferRate]</pattern>
+              <pattern type="Registry">HKCU\Software\Policies\* [*]</pattern>
+              <pattern type="Registry">HKCU\Software\Microsoft\Windows\CurrentVersion\Policies\* [*]</pattern>
+              <pattern type="Registry">HKCU\System\CurrentControlSet\Policies\* [*]</pattern>
+            </objectSet>
+          </include>
+          <merge script="MigXmlHelper.SourcePriority()">
+            <objectSet>
+              <pattern type="Registry">HKCU\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [HideLogonScripts]</pattern>
+              <pattern type="Registry">HKCU\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [HideLogoffScripts]</pattern>
+              <pattern type="Registry">HKCU\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [RunLogonScriptSync]</pattern>
+              <pattern type="Registry">HKCU\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [GroupPolicyMinTransferRate]</pattern>
+              <pattern type="Registry">HKCU\Software\Policies\* [*]</pattern>
+              <pattern type="Registry">HKCU\Software\Microsoft\Windows\CurrentVersion\Policies\* [*]</pattern>
+              <pattern type="Registry">HKCU\System\CurrentControlSet\Policies\* [*]</pattern>
+            </objectSet>
+          </merge>
+        </rules>
+      </migXml>
+    </machineSpecific>
+  </migration>
+</assembly>
