@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-SruMon-Energy" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <file name="energyprov.dll" destinationPath="$(runtime.system32)\" sourceName="energyprov.dll" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>HHtVeRgGbYYPKQyNvZNVmvSxMnQcl+spVGxzwtP+C10=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <registryKeys>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion\SRUM\Extensions\{fee4e14f-02a9-4550-b5ce-5fa2da202e37}">
+      <registryValue name="" valueType="REG_SZ" value="Energy Usage Provider" />
+      <registryValue name="DllName" valueType="REG_EXPAND_SZ" value="%SystemRoot%\System32\energyprov.dll" />
+      <registryValue name="CapabilityFlags" valueType="REG_DWORD" value="0x00000019" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\WMI\Security">
+      <registryValue name="89f5e6db-4a3f-4425-ae6c-8bc92e705512" valueType="REG_BINARY" value="01000480140000002400000000000000340000000102000000000005200000002002000001020000000000052000000020020000020088000500000000001400000200000101000000000001000000000000180000020000010200000000000f020000000100000000001400ff0f120001010000000000051200000000001800ff0f12000102000000000005200000002002000000002800f70f10000106000000000005500000005ef30fb18164ae04b14ca22914b14c21a6568656" />
+    </registryKey>
+  </registryKeys>
+  <instrumentation xmlns:win="http://manifests.microsoft.com/win/2004/08/windows/events" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <events xmlns="http://schemas.microsoft.com/win/2004/08/events">
+      <provider guid="{48D445A8-2F64-4D49-B093-A5774D8DC531}" message="$(string.SrumTelemetryProviderName)" messageFileName="%windir%\system32\energyprov.dll" name="Microsoft-Windows-SrumTelemetry" resourceFileName="%windir%\system32\energyprov.dll" symbol="SrumTelemetryTraceProvider">
+        <channels>
+          <channel chid="SrumTelemetryTraceChannel" enabled="false" name="Microsoft-Windows-SrumTelemetry" type="Analytic" />
+        </channels>
+      </provider>
+      <cmi />
+    </events>
+  </instrumentation>
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string id="SrumTelemetryProviderName" value="Microsoft-Windows-SrumTelemetry" />
+        <string id="SrumTelemetry.ModernAppBatteryDrain" value="PowerInMilliwatts (%1), CpuStatsBitpack (%2), DiskAndNetStatsBitPack (%3), DurationBitPack(%4), ModernAppPackageName (%5)." />
+        <string id="SrumTelemetry.ResourceUsage" value="BatteryDrainRate (%1), PowerBitpack (%2), Duration (%3), AppCpuCyclesBitpack (%4), TimeStamp (%5)." />
+        <string id="SrumTelemetryScreenBrightness" value="PreviousBrightnessLevel (%1), PreviousBrightnessDurationInSeconds (%2), NewBrightnessLevel (%3)" />
+        <string id="SrumTelemetryScreenBrightnessRundown" value="CurrentBrightnessLevel (%1)" />
+        <string id="SrumTelemetryEnergySaver" value="PreviousStateDurationInSections (%1), NewEnergySaverState (%2)" />
+        <string id="SrumTelemetryE3Rundown" value="E3 History Rundown" />
+        <string id="E3Rundown.TaskMessage" value="E3 History Task" />
+      </stringTable>
+    </resources>
+  </localization>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" description="Default SDDL for Windows Resource Protected file" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+</assembly>

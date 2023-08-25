@@ -1,0 +1,655 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-VirtualDiskService" version="10.0.22621.1" processorArchitecture="wow64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <file name="vds_ps.dll" destinationPath="$(runtime.system32)\" sourceName="vds_ps.dll" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>fAM1kTD5hpQyNeCy3mO1cSLQ3i30kRhvbaEb+5ur+9E=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <memberships>
+    <categoryMembership>
+      <id name="Microsoft-Windows-Storage-Volume Management" version="10.0.22621.1" publicKeyToken="31bf3856ad364e35" buildType="release" language="neutral" processorArchitecture="x86" />
+    </categoryMembership>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories" version="1.0.0.0" publicKeyToken="365143bb27e7ac8b" typeName="BootRecovery" />
+    </categoryMembership>
+  </memberships>
+  <migration ignoreConfigurationSection="Yes" settingsVersion="0">
+    <machineSpecific>
+      <migXml xmlns="">
+        <rules context="System">
+          <include>
+            <objectSet>
+              <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\vds\HardwareProviders\* [*]</pattern>
+              <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\vds\Alignment\* [*]</pattern>
+            </objectSet>
+          </include>
+          <merge script="MigXmlHelper.SourcePriority()">
+            <objectSet>
+              <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\vds\HardwareProviders\* [*]</pattern>
+              <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\vds\Alignment\* [*]</pattern>
+            </objectSet>
+          </merge>
+        </rules>
+      </migXml>
+    </machineSpecific>
+    <supportedComponents>
+      <supportedComponent>
+        <assemblyIdentity name="_" version="1.0.0.0" />
+        <supportedComponentIdentity language="neutral" name="Microsoft-Windows-VirtualDiskService" processorArchitecture="x86" settingsVersionRange="0" xmlns="urn:schemas-microsoft-com:asm.v3" />
+        <machineSpecific>
+          <migXml xmlns="">
+            <rules context="System">
+              <merge script="MigXmlHelper.SourcePriority()">
+                <objectSet>
+                  <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\vds\HardwareProviders\* [*]</pattern>
+                  <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\vds\Alignment\* [*]</pattern>
+                </objectSet>
+              </merge>
+            </rules>
+          </migXml>
+        </machineSpecific>
+      </supportedComponent>
+    </supportedComponents>
+  </migration>
+  <registryKeys>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{7D1933CB-86F6-4A98-8628-01BE94C9A575}">
+      <registryValue name="" valueType="REG_SZ" value="Virtual Disk Service" />
+      <registryValue name="AppID" valueType="REG_SZ" value="{F290BFB2-1864-45B1-8804-2654194A87E7}" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{9C38ED61-D565-4728-AEEE-C80952F0ECDE}">
+      <registryValue name="" valueType="REG_SZ" value="Virtual Disk Service Loader" />
+      <registryValue name="AppID" valueType="REG_SZ" value="{5364ED0E-493F-4B16-9DBF-AE486CF22660}" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{9C38ED61-D565-4728-AEEE-C80952F0ECDE}\LocalServer32">
+      <registryValue name="" valueType="REG_EXPAND_SZ" value="%SystemRoot%\System32\vdsldr.exe" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{E0393303-90D4-4A97-AB71-E9B671EE2729}">
+      <registryValue name="" valueType="REG_SZ" value="VDS ProxyStub" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{E0393303-90D4-4A97-AB71-E9B671EE2729}\InprocServer32">
+      <registryValue name="" valueType="REG_EXPAND_SZ" value="%SystemRoot%\System32\vds_ps.dll" />
+      <registryValue name="ThreadingModel" valueType="REG_SZ" value="Both" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{E0393303-90D4-4A97-AB71-E9B671EE2729}">
+      <registryValue name="" valueType="REG_SZ" value="IVdsServiceLoader" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{E0393303-90D4-4A97-AB71-E9B671EE2729}\ProxyStubClsid32">
+      <registryValue name="" valueType="REG_SZ" value="{E0393303-90D4-4A97-AB71-E9B671EE2729}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{0818A8EF-9BA9-40D8-A6F9-E22833CC771E}">
+      <registryValue name="" valueType="REG_SZ" value="IVdsService" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{0818A8EF-9BA9-40D8-A6F9-E22833CC771E}\ProxyStubClsid32">
+      <registryValue name="" valueType="REG_SZ" value="{E0393303-90D4-4A97-AB71-E9B671EE2729}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{0AC13689-3134-47C6-A17C-4669216801BE}">
+      <registryValue name="" valueType="REG_SZ" value="IVdsServiceHba" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{0AC13689-3134-47C6-A17C-4669216801BE}\ProxyStubClsid32">
+      <registryValue name="" valueType="REG_SZ" value="{E0393303-90D4-4A97-AB71-E9B671EE2729}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{14FBE036-3ED7-4E10-90E9-A5FF991AFF01}">
+      <registryValue name="" valueType="REG_SZ" value="IVdsServiceIscsi" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{14FBE036-3ED7-4E10-90E9-A5FF991AFF01}\ProxyStubClsid32">
+      <registryValue name="" valueType="REG_SZ" value="{E0393303-90D4-4A97-AB71-E9B671EE2729}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{4AFC3636-DB01-4052-80C3-03BBCB8D3C69}">
+      <registryValue name="" valueType="REG_SZ" value="IVdsServiceInitialization" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{4AFC3636-DB01-4052-80C3-03BBCB8D3C69}\ProxyStubClsid32">
+      <registryValue name="" valueType="REG_SZ" value="{E0393303-90D4-4A97-AB71-E9B671EE2729}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{B6B22DA8-F903-4be7-B492-C09D875AC9DA}">
+      <registryValue name="" valueType="REG_SZ" value="IVdsServiceUninstallDisk" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{B6B22DA8-F903-4be7-B492-C09D875AC9DA}\ProxyStubClsid32">
+      <registryValue name="" valueType="REG_SZ" value="{E0393303-90D4-4A97-AB71-E9B671EE2729}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{2ABD757F-2851-4997-9A13-47d2A885D6CA}">
+      <registryValue name="" valueType="REG_SZ" value="IVdsHbaPort" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{2ABD757F-2851-4997-9A13-47d2A885D6CA}\ProxyStubClsid32">
+      <registryValue name="" valueType="REG_SZ" value="{E0393303-90D4-4A97-AB71-E9B671EE2729}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{B07FEDD4-1682-4440-9189-A39B55194DC5}">
+      <registryValue name="" valueType="REG_SZ" value="IVdsIscsiInitiatorAdapter" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{B07FEDD4-1682-4440-9189-A39B55194DC5}\ProxyStubClsid32">
+      <registryValue name="" valueType="REG_SZ" value="{E0393303-90D4-4A97-AB71-E9B671EE2729}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{38A0A9AB-7CC8-4693-AC07-1F28BD03C3DA}">
+      <registryValue name="" valueType="REG_SZ" value="IVdsIscsiInitiatorPortal" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{38A0A9AB-7CC8-4693-AC07-1F28BD03C3DA}\ProxyStubClsid32">
+      <registryValue name="" valueType="REG_SZ" value="{E0393303-90D4-4A97-AB71-E9B671EE2729}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{D188E97D-85AA-4D33-ABC6-26299A10FFC1}">
+      <registryValue name="" valueType="REG_SZ" value="IVdsAdmin" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{D188E97D-85AA-4D33-ABC6-26299A10FFC1}\ProxyStubClsid32">
+      <registryValue name="" valueType="REG_SZ" value="{E0393303-90D4-4A97-AB71-E9B671EE2729}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{118610B7-8D94-4030-B5B8-500889788E4E}">
+      <registryValue name="" valueType="REG_SZ" value="IEnumVdsObject" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{118610B7-8D94-4030-B5B8-500889788E4E}\ProxyStubClsid32">
+      <registryValue name="" valueType="REG_SZ" value="{E0393303-90D4-4A97-AB71-E9B671EE2729}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{8326CD1D-CF59-4936-B786-5EFC08798E25}">
+      <registryValue name="" valueType="REG_SZ" value="IVdsAdviseSink" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{8326CD1D-CF59-4936-B786-5EFC08798E25}\ProxyStubClsid32">
+      <registryValue name="" valueType="REG_SZ" value="{E0393303-90D4-4A97-AB71-E9B671EE2729}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{D5D23B6D-5A55-4492-9889-397A3C2D2DBC}">
+      <registryValue name="" valueType="REG_SZ" value="IVdsAsync" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{D5D23B6D-5A55-4492-9889-397A3C2D2DBC}\ProxyStubClsid32">
+      <registryValue name="" valueType="REG_SZ" value="{E0393303-90D4-4A97-AB71-E9B671EE2729}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{10C5E575-7984-4E81-A56B-431F5F92AE42}">
+      <registryValue name="" valueType="REG_SZ" value="IVdsProvider" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{10C5E575-7984-4E81-A56B-431F5F92AE42}\ProxyStubClsid32">
+      <registryValue name="" valueType="REG_SZ" value="{E0393303-90D4-4A97-AB71-E9B671EE2729}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{1732BE13-E8F9-4A03-BFBC-5F616AA66CE1}">
+      <registryValue name="" valueType="REG_SZ" value="IVdsProviderSupport" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{1732BE13-E8F9-4A03-BFBC-5F616AA66CE1}\ProxyStubClsid32">
+      <registryValue name="" valueType="REG_SZ" value="{E0393303-90D4-4A97-AB71-E9B671EE2729}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{9AA58360-CE33-4F92-B658-ED24B14425B8}">
+      <registryValue name="" valueType="REG_SZ" value="IVdsSwProvider" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{9AA58360-CE33-4F92-B658-ED24B14425B8}\ProxyStubClsid32">
+      <registryValue name="" valueType="REG_SZ" value="{E0393303-90D4-4A97-AB71-E9B671EE2729}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{3B69D7F5-9D94-4648-91CA-79939BA263BF}">
+      <registryValue name="" valueType="REG_SZ" value="IVdsPack" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{3B69D7F5-9D94-4648-91CA-79939BA263BF}\ProxyStubClsid32">
+      <registryValue name="" valueType="REG_SZ" value="{E0393303-90D4-4A97-AB71-E9B671EE2729}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{13B50BFF-290A-47DD-8558-B7C58DB1A71A}">
+      <registryValue name="" valueType="REG_SZ" value="IVdsPack2" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{13B50BFF-290A-47DD-8558-B7C58DB1A71A}\ProxyStubClsid32">
+      <registryValue name="" valueType="REG_SZ" value="{E0393303-90D4-4A97-AB71-E9B671EE2729}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{07E5C822-F00C-47A1-8FCE-B244DA56FD06}">
+      <registryValue name="" valueType="REG_SZ" value="IVdsDisk" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{07E5C822-F00C-47A1-8FCE-B244DA56FD06}\ProxyStubClsid32">
+      <registryValue name="" valueType="REG_SZ" value="{E0393303-90D4-4A97-AB71-E9B671EE2729}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{40F73C8B-687D-4a13-8D96-3D7F2E683936}">
+      <registryValue name="" valueType="REG_SZ" value="IVdsDisk2" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{40F73C8B-687D-4a13-8D96-3D7F2E683936}\ProxyStubClsid32">
+      <registryValue name="" valueType="REG_SZ" value="{E0393303-90D4-4A97-AB71-E9B671EE2729}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{8F4B2F5D-EC15-4357-992F-473EF10975B9}">
+      <registryValue name="" valueType="REG_SZ" value="IVdsDisk3" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{8F4B2F5D-EC15-4357-992F-473EF10975B9}\ProxyStubClsid32">
+      <registryValue name="" valueType="REG_SZ" value="{E0393303-90D4-4A97-AB71-E9B671EE2729}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{6E6F6B40-977C-4069-BDDD-AC710059F8C0}">
+      <registryValue name="" valueType="REG_SZ" value="IVdsAdvancedDisk" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{6E6F6B40-977C-4069-BDDD-AC710059F8C0}\ProxyStubClsid32">
+      <registryValue name="" valueType="REG_SZ" value="{E0393303-90D4-4A97-AB71-E9B671EE2729}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{9882F547-CFC3-420B-9750-00DFBEC50662}">
+      <registryValue name="" valueType="REG_SZ" value="IVdsCreatePartitionEx" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{9882F547-CFC3-420B-9750-00DFBEC50662}\ProxyStubClsid32">
+      <registryValue name="" valueType="REG_SZ" value="{E0393303-90D4-4A97-AB71-E9B671EE2729}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{0316560B-5DB4-4ED9-BBB5-213436DDC0D9}">
+      <registryValue name="" valueType="REG_SZ" value="IVdsRemovable" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{0316560B-5DB4-4ED9-BBB5-213436DDC0D9}\ProxyStubClsid32">
+      <registryValue name="" valueType="REG_SZ" value="{E0393303-90D4-4A97-AB71-E9B671EE2729}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{88306BB2-E71F-478C-86A2-79DA200A0F11}">
+      <registryValue name="" valueType="REG_SZ" value="IVdsVolume" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{88306BB2-E71F-478C-86A2-79DA200A0F11}\ProxyStubClsid32">
+      <registryValue name="" valueType="REG_SZ" value="{E0393303-90D4-4A97-AB71-E9B671EE2729}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{EE2D5DED-6236-4169-931D-B9778CE03DC6}">
+      <registryValue name="" valueType="REG_SZ" value="IVdsVolumeMF" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{EE2D5DED-6236-4169-931D-B9778CE03DC6}\ProxyStubClsid32">
+      <registryValue name="" valueType="REG_SZ" value="{E0393303-90D4-4A97-AB71-E9B671EE2729}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{4DBCEE9A-6343-4651-B85F-5E75D74D983C}">
+      <registryValue name="" valueType="REG_SZ" value="IVdsVolumeMF2" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{4DBCEE9A-6343-4651-B85F-5E75D74D983C}\ProxyStubClsid32">
+      <registryValue name="" valueType="REG_SZ" value="{E0393303-90D4-4A97-AB71-E9B671EE2729}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{1BE2275A-B315-4F70-9E44-879B3A2A53F2}">
+      <registryValue name="" valueType="REG_SZ" value="IVdsVolumeOnline" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{1BE2275A-B315-4F70-9E44-879B3A2A53F2}\ProxyStubClsid32">
+      <registryValue name="" valueType="REG_SZ" value="{E0393303-90D4-4A97-AB71-E9B671EE2729}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{4DAA0135-E1D1-40F1-AAA5-3CC1E53221C3}">
+      <registryValue name="" valueType="REG_SZ" value="IVdsVolumePlex" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{4DAA0135-E1D1-40F1-AAA5-3CC1E53221C3}\ProxyStubClsid32">
+      <registryValue name="" valueType="REG_SZ" value="{E0393303-90D4-4A97-AB71-E9B671EE2729}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{E882C452-CF37-482A-BBFF-E6EE614E8023}">
+      <registryValue name="" valueType="REG_SZ" value="IVdsSwProviderPrivate" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{E882C452-CF37-482A-BBFF-E6EE614E8023}\ProxyStubClsid32">
+      <registryValue name="" valueType="REG_SZ" value="{E0393303-90D4-4A97-AB71-E9B671EE2729}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{C276BA54-F480-455b-BD51-8AB05331FFBA}">
+      <registryValue name="" valueType="REG_SZ" value="IVdsSwProviderPrivateUninstall" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{C276BA54-F480-455b-BD51-8AB05331FFBA}\ProxyStubClsid32">
+      <registryValue name="" valueType="REG_SZ" value="{E0393303-90D4-4A97-AB71-E9B671EE2729}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{33B87426-5C06-49F4-84BD-F486B1B4A21D}">
+      <registryValue name="" valueType="REG_SZ" value="IVdsMigrateDisks" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{33B87426-5C06-49F4-84BD-F486B1B4A21D}\ProxyStubClsid32">
+      <registryValue name="" valueType="REG_SZ" value="{E0393303-90D4-4A97-AB71-E9B671EE2729}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{54D1F9E3-7FD3-421A-AF9C-53C2D8EE5BCF}">
+      <registryValue name="" valueType="REG_SZ" value="IVdsOwnershipChangeQuery" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{54D1F9E3-7FD3-421A-AF9C-53C2D8EE5BCF}\ProxyStubClsid32">
+      <registryValue name="" valueType="REG_SZ" value="{E0393303-90D4-4A97-AB71-E9B671EE2729}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{11F3CD41-B7E8-48FF-9472-9DFF018AA292}">
+      <registryValue name="" valueType="REG_SZ" value="IVdsProviderPrivate" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{11F3CD41-B7E8-48FF-9472-9DFF018AA292}\ProxyStubClsid32">
+      <registryValue name="" valueType="REG_SZ" value="{E0393303-90D4-4A97-AB71-E9B671EE2729}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{98F17BF3-9F33-4F12-8714-8B4075092C2E}">
+      <registryValue name="" valueType="REG_SZ" value="IVdsHwProviderPrivate" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{98F17BF3-9F33-4F12-8714-8B4075092C2E}\ProxyStubClsid32">
+      <registryValue name="" valueType="REG_SZ" value="{E0393303-90D4-4A97-AB71-E9B671EE2729}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{D99BDAAE-B13A-4178-9FDB-E27F16B4603E}">
+      <registryValue name="" valueType="REG_SZ" value="IVdsHwProvider" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{D99BDAAE-B13A-4178-9FDB-E27F16B4603E}\ProxyStubClsid32">
+      <registryValue name="" valueType="REG_SZ" value="{E0393303-90D4-4A97-AB71-E9B671EE2729}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{310A7715-AC2B-4C6F-9827-3D742F351676}">
+      <registryValue name="" valueType="REG_SZ" value="IVdsHwProviderPrivateMpio" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{310A7715-AC2B-4C6F-9827-3D742F351676}\ProxyStubClsid32">
+      <registryValue name="" valueType="REG_SZ" value="{E0393303-90D4-4A97-AB71-E9B671EE2729}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{3E0F5166-542D-4FC6-947A-012174240B7E}">
+      <registryValue name="" valueType="REG_SZ" value="IVdsHwProviderType" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{3E0F5166-542D-4FC6-947A-012174240B7E}\ProxyStubClsid32">
+      <registryValue name="" valueType="REG_SZ" value="{E0393303-90D4-4A97-AB71-E9B671EE2729}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{8190236F-C4D0-4E81-8011-D69512FCC984}">
+      <registryValue name="" valueType="REG_SZ" value="IVdsHwProviderType2" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{8190236F-C4D0-4E81-8011-D69512FCC984}\ProxyStubClsid32">
+      <registryValue name="" valueType="REG_SZ" value="{E0393303-90D4-4A97-AB71-E9B671EE2729}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{D5B5937A-F188-4C79-B86C-11C920AD11B8}">
+      <registryValue name="" valueType="REG_SZ" value="IVdsHwProviderStoragePools" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{D5B5937A-F188-4C79-B86C-11C920AD11B8}\ProxyStubClsid32">
+      <registryValue name="" valueType="REG_SZ" value="{E0393303-90D4-4A97-AB71-E9B671EE2729}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{932CA8CF-0EB3-4BA8-9620-22665D7F8450}">
+      <registryValue name="" valueType="REG_SZ" value="IVdsStoragePool" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{932CA8CF-0EB3-4BA8-9620-22665D7F8450}\ProxyStubClsid32">
+      <registryValue name="" valueType="REG_SZ" value="{E0393303-90D4-4A97-AB71-E9B671EE2729}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{3540A9C7-E60F-4111-A840-8BBA6C2C83D8}">
+      <registryValue name="" valueType="REG_SZ" value="IVdsLun" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{3540A9C7-E60F-4111-A840-8BBA6C2C83D8}\ProxyStubClsid32">
+      <registryValue name="" valueType="REG_SZ" value="{E0393303-90D4-4A97-AB71-E9B671EE2729}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{E5B3A735-9EFB-499A-8071-4394D9EE6FCB}">
+      <registryValue name="" valueType="REG_SZ" value="IVdsLun2" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{E5B3A735-9EFB-499A-8071-4394D9EE6FCB}\ProxyStubClsid32">
+      <registryValue name="" valueType="REG_SZ" value="{E0393303-90D4-4A97-AB71-E9B671EE2729}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{451FE266-DA6D-406A-BB60-82E534F85AEB}">
+      <registryValue name="" valueType="REG_SZ" value="IVdsLunControllerPorts" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{451FE266-DA6D-406A-BB60-82E534F85AEB}\ProxyStubClsid32">
+      <registryValue name="" valueType="REG_SZ" value="{E0393303-90D4-4A97-AB71-E9B671EE2729}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{7C5FBAE3-333A-48A1-A982-33C15788CDE3}">
+      <registryValue name="" valueType="REG_SZ" value="IVdsLunMpio" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{7C5FBAE3-333A-48A1-A982-33C15788CDE3}\ProxyStubClsid32">
+      <registryValue name="" valueType="REG_SZ" value="{E0393303-90D4-4A97-AB71-E9B671EE2729}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{0D7C1E64-B59B-45AE-B86A-2C2CC6A42067}">
+      <registryValue name="" valueType="REG_SZ" value="IVdsLunIscsi" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{0D7C1E64-B59B-45AE-B86A-2C2CC6A42067}\ProxyStubClsid32">
+      <registryValue name="" valueType="REG_SZ" value="{E0393303-90D4-4A97-AB71-E9B671EE2729}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{907504CB-6B4E-4D88-A34D-17BA661FBB06}">
+      <registryValue name="" valueType="REG_SZ" value="IVdsLunNaming" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{907504CB-6B4E-4D88-A34D-17BA661FBB06}\ProxyStubClsid32">
+      <registryValue name="" valueType="REG_SZ" value="{E0393303-90D4-4A97-AB71-E9B671EE2729}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{D3F95E46-54B3-41f9-B678-0F1871443A08}">
+      <registryValue name="" valueType="REG_SZ" value="IVdsLunNumber" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{D3F95E46-54B3-41f9-B678-0F1871443A08}\ProxyStubClsid32">
+      <registryValue name="" valueType="REG_SZ" value="{E0393303-90D4-4A97-AB71-E9B671EE2729}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{0EE1A790-5D2E-4ABB-8C99-C481E8BE2138}">
+      <registryValue name="" valueType="REG_SZ" value="IVdsLunPlex" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{0EE1A790-5D2E-4ABB-8C99-C481E8BE2138}\ProxyStubClsid32">
+      <registryValue name="" valueType="REG_SZ" value="{E0393303-90D4-4A97-AB71-E9B671EE2729}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{6FCEE2D3-6D90-4F91-80E2-A5C7CAACA9D8}">
+      <registryValue name="" valueType="REG_SZ" value="IVdsSubSystem" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{6FCEE2D3-6D90-4F91-80E2-A5C7CAACA9D8}\ProxyStubClsid32">
+      <registryValue name="" valueType="REG_SZ" value="{E0393303-90D4-4A97-AB71-E9B671EE2729}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{BE666735-7800-4A77-9D9C-40F85B87E292}">
+      <registryValue name="" valueType="REG_SZ" value="IVdsSubSystem2" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{BE666735-7800-4A77-9D9C-40F85B87E292}\ProxyStubClsid32">
+      <registryValue name="" valueType="REG_SZ" value="{E0393303-90D4-4A97-AB71-E9B671EE2729}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{9E6FA560-C141-477B-83BA-0B6C38F7FEBF}">
+      <registryValue name="" valueType="REG_SZ" value="IVdsSubSystemInterconnect" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{9E6FA560-C141-477B-83BA-0B6C38F7FEBF}\ProxyStubClsid32">
+      <registryValue name="" valueType="REG_SZ" value="{E0393303-90D4-4A97-AB71-E9B671EE2729}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{0D70FAA3-9CD4-4900-AA20-6981B6AAFC75}">
+      <registryValue name="" valueType="REG_SZ" value="IVdsSubSystemNaming" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{0D70FAA3-9CD4-4900-AA20-6981B6AAFC75}\ProxyStubClsid32">
+      <registryValue name="" valueType="REG_SZ" value="{E0393303-90D4-4A97-AB71-E9B671EE2729}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{0027346F-40D0-4B45-8CEC-5906DC0380C8}">
+      <registryValue name="" valueType="REG_SZ" value="IVdsSubSystemIscsi" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{0027346F-40D0-4B45-8CEC-5906DC0380C8}\ProxyStubClsid32">
+      <registryValue name="" valueType="REG_SZ" value="{E0393303-90D4-4A97-AB71-E9B671EE2729}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{83BFB87F-43FB-4903-BAA6-127F01029EEC}">
+      <registryValue name="" valueType="REG_SZ" value="IVdsSubSystemImportTarget" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{83BFB87F-43FB-4903-BAA6-127F01029EEC}\ProxyStubClsid32">
+      <registryValue name="" valueType="REG_SZ" value="{E0393303-90D4-4A97-AB71-E9B671EE2729}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{CB53D96E-DFFB-474A-A078-790D1E2BC082}">
+      <registryValue name="" valueType="REG_SZ" value="IVdsController" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{CB53D96E-DFFB-474A-A078-790D1E2BC082}\ProxyStubClsid32">
+      <registryValue name="" valueType="REG_SZ" value="{E0393303-90D4-4A97-AB71-E9B671EE2729}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{CA5D735F-6BAE-42C0-B30E-F2666045CE71}">
+      <registryValue name="" valueType="REG_SZ" value="IVdsControllerControllerPort" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{CA5D735F-6BAE-42C0-B30E-F2666045CE71}\ProxyStubClsid32">
+      <registryValue name="" valueType="REG_SZ" value="{E0393303-90D4-4A97-AB71-E9B671EE2729}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{18691D0D-4E7F-43E8-92E4-CF44BEEED11C}">
+      <registryValue name="" valueType="REG_SZ" value="IVdsControllerPort" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{18691D0D-4E7F-43E8-92E4-CF44BEEED11C}\ProxyStubClsid32">
+      <registryValue name="" valueType="REG_SZ" value="{E0393303-90D4-4A97-AB71-E9B671EE2729}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{FF24EFA4-AADE-4B6B-898B-EAA6A20887C7}">
+      <registryValue name="" valueType="REG_SZ" value="IVdsDrive" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{FF24EFA4-AADE-4B6B-898B-EAA6A20887C7}\ProxyStubClsid32">
+      <registryValue name="" valueType="REG_SZ" value="{E0393303-90D4-4A97-AB71-E9B671EE2729}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{60B5A730-ADDF-4436-8CA7-5769E2D1FFA4}">
+      <registryValue name="" valueType="REG_SZ" value="IVdsDrive2" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{60B5A730-ADDF-4436-8CA7-5769E2D1FFA4}\ProxyStubClsid32">
+      <registryValue name="" valueType="REG_SZ" value="{E0393303-90D4-4A97-AB71-E9B671EE2729}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{7FA1499D-EC85-4A8A-A47B-FF69201FCD34}">
+      <registryValue name="" valueType="REG_SZ" value="IVdsIscsiPortal" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{7FA1499D-EC85-4A8A-A47B-FF69201FCD34}\ProxyStubClsid32">
+      <registryValue name="" valueType="REG_SZ" value="{E0393303-90D4-4A97-AB71-E9B671EE2729}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{AD837C28-52C1-421D-BF04-FAE7DA665396}">
+      <registryValue name="" valueType="REG_SZ" value="IVdsIscsiPortalLocal" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{AD837C28-52C1-421D-BF04-FAE7DA665396}\ProxyStubClsid32">
+      <registryValue name="" valueType="REG_SZ" value="{E0393303-90D4-4A97-AB71-E9B671EE2729}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{AA8F5055-83E5-4BCC-AA73-19851A36A849}">
+      <registryValue name="" valueType="REG_SZ" value="IVdsIscsiTarget" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{AA8F5055-83E5-4BCC-AA73-19851A36A849}\ProxyStubClsid32">
+      <registryValue name="" valueType="REG_SZ" value="{E0393303-90D4-4A97-AB71-E9B671EE2729}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{FEF5F89D-A3DD-4B36-BF28-E7DDE045C593}">
+      <registryValue name="" valueType="REG_SZ" value="IVdsIscsiPortalGroup" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{FEF5F89D-A3DD-4B36-BF28-E7DDE045C593}\ProxyStubClsid32">
+      <registryValue name="" valueType="REG_SZ" value="{E0393303-90D4-4A97-AB71-E9B671EE2729}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{DAEBEEF3-8523-47ED-A2B9-05CECCE2A1AE}">
+      <registryValue name="" valueType="REG_SZ" value="IVdsMaintenance" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{DAEBEEF3-8523-47ED-A2B9-05CECCE2A1AE}\ProxyStubClsid32">
+      <registryValue name="" valueType="REG_SZ" value="{E0393303-90D4-4A97-AB71-E9B671EE2729}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{9723f420-9355-42de-ab66-e31bb15beeac}">
+      <registryValue name="" valueType="REG_SZ" value="IVdsAdvancedDisk2" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{9723f420-9355-42de-ab66-e31bb15beeac}\ProxyStubClsid32">
+      <registryValue name="" valueType="REG_SZ" value="{E0393303-90D4-4A97-AB71-E9B671EE2729}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{3858C0D5-0F35-4BF5-9714-69874963BC36}">
+      <registryValue name="" valueType="REG_SZ" value="IVdsAdvancedDisk3" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{3858C0D5-0F35-4BF5-9714-69874963BC36}\ProxyStubClsid32">
+      <registryValue name="" valueType="REG_SZ" value="{E0393303-90D4-4A97-AB71-E9B671EE2729}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{538684E0-BA3D-4BC0-ACA9-164AFF85C2A9}">
+      <registryValue name="" valueType="REG_SZ" value="IVdsDiskPartitionMF" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{538684E0-BA3D-4BC0-ACA9-164AFF85C2A9}\ProxyStubClsid32">
+      <registryValue name="" valueType="REG_SZ" value="{E0393303-90D4-4A97-AB71-E9B671EE2729}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{9CBE50CA-F2D2-4bf4-ACE1-96896B729625}">
+      <registryValue name="" valueType="REG_SZ" value="IVdsDiskPartitionMF2" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{9CBE50CA-F2D2-4bf4-ACE1-96896B729625}\ProxyStubClsid32">
+      <registryValue name="" valueType="REG_SZ" value="{E0393303-90D4-4A97-AB71-E9B671EE2729}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{d68168c9-82a2-4f85-b6e9-74707c49a58f}">
+      <registryValue name="" valueType="REG_SZ" value="IVdsVolumeShrink" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{d68168c9-82a2-4f85-b6e9-74707c49a58f}\ProxyStubClsid32">
+      <registryValue name="" valueType="REG_SZ" value="{E0393303-90D4-4A97-AB71-E9B671EE2729}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{FC5D23E8-A88B-41a5-8DE0-2D2F73C5A630}">
+      <registryValue name="" valueType="REG_SZ" value="IVdsServiceSAN" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{FC5D23E8-A88B-41a5-8DE0-2D2F73C5A630}\ProxyStubClsid32">
+      <registryValue name="" valueType="REG_SZ" value="{E0393303-90D4-4A97-AB71-E9B671EE2729}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{15fc031c-0652-4306-b2c3-f558b8f837e2}">
+      <registryValue name="" valueType="REG_SZ" value="IVdsServiceSw" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{15fc031c-0652-4306-b2c3-f558b8f837e2}\ProxyStubClsid32">
+      <registryValue name="" valueType="REG_SZ" value="{E0393303-90D4-4A97-AB71-E9B671EE2729}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{90681B1D-6A7F-48e8-9061-31B7AA125322}">
+      <registryValue name="" valueType="REG_SZ" value="IVdsDiskOnline" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{90681B1D-6A7F-48e8-9061-31B7AA125322}\ProxyStubClsid32">
+      <registryValue name="" valueType="REG_SZ" value="{E0393303-90D4-4A97-AB71-E9B671EE2729}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{B481498C-8354-45F9-84A0-0BDD2832A91F}">
+      <registryValue name="" valueType="REG_SZ" value="IVdsVdProvider" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{B481498C-8354-45F9-84A0-0BDD2832A91F}\ProxyStubClsid32">
+      <registryValue name="" valueType="REG_SZ" value="{E0393303-90D4-4A97-AB71-E9B671EE2729}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{1E062B84-E5E6-4B4B-8A25-67B81E8F13E8}">
+      <registryValue name="" valueType="REG_SZ" value="IVdsVDisk" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{1E062B84-E5E6-4B4B-8A25-67B81E8F13E8}\ProxyStubClsid32">
+      <registryValue name="" valueType="REG_SZ" value="{E0393303-90D4-4A97-AB71-E9B671EE2729}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{75C8F324-F715-4FE3-A28E-F9011B61A4A1}">
+      <registryValue name="" valueType="REG_SZ" value="IVdsOpenVDisk" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{75C8F324-F715-4FE3-A28E-F9011B61A4A1}\ProxyStubClsid32">
+      <registryValue name="" valueType="REG_SZ" value="{E0393303-90D4-4A97-AB71-E9B671EE2729}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{F18BBC5D-58D7-4D87-B46A-4F4869279C97}">
+      <registryValue name="" valueType="REG_SZ" value="IVdsVdProviderPrivate" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{F18BBC5D-58D7-4D87-B46A-4F4869279C97}\ProxyStubClsid32">
+      <registryValue name="" valueType="REG_SZ" value="{E0393303-90D4-4A97-AB71-E9B671EE2729}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{72AE6713-DCBB-4a03-B36B-371F6AC6B53D}">
+      <registryValue name="" valueType="REG_SZ" value="IVdsVolume2" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{72AE6713-DCBB-4a03-B36B-371F6AC6B53D}\ProxyStubClsid32">
+      <registryValue name="" valueType="REG_SZ" value="{E0393303-90D4-4A97-AB71-E9B671EE2729}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{6788FAF9-214E-4b85-BA59-266953616E09}">
+      <registryValue name="" valueType="REG_SZ" value="IVdsVolumeMF3" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{6788FAF9-214E-4b85-BA59-266953616E09}\ProxyStubClsid32">
+      <registryValue name="" valueType="REG_SZ" value="{E0393303-90D4-4A97-AB71-E9B671EE2729}" />
+    </registryKey>
+  </registryKeys>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="VDS Service Security Descriptor" sddl="D:(A;;CCLCSWRPWPDTLOCRRC;;;SY)(A;;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;BA)(A;;CCLCSWLOCRRC;;;AU)(A;;RPWPDT;;;BO)S:(AU;FA;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;WD)" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_REGKEY_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;CI;GA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;CI;GR;;;SY)(A;CI;GR;;;BA)(A;CI;GR;;;BU)(A;CI;GR;;;S-1-15-2-1)(A;CI;GR;;;S-1-15-3-1024-1065365936-1281604716-3511738428-1654721687-432734479-3232135806-4053264122-3456934681)" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" description="Default SDDL for Windows Resource Protected file" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string id="description" value="Service implementing a virtualized API for disk, volume and hardware RAID management" />
+        <string id="displayName" value="Virtual Disk Service" />
+      </stringTable>
+    </resources>
+  </localization>
+</assembly>

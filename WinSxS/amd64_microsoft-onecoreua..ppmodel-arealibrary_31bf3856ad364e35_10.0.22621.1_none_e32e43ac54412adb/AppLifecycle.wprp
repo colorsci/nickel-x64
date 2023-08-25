@@ -1,0 +1,821 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WindowsPerformanceRecorder Version="1.0">
+  <Profiles>
+
+    <!--
+        The following collectors define the memory characteristics of running
+        trace profiles. Required traces and optional traces share the same
+        collectors.
+    -->
+
+    <SystemCollector Id="KernelCollectorBase" Name="NT Kernel Logger">
+      <BufferSize Value="1024"/>
+      <Buffers Value="16"/>
+    </SystemCollector>
+
+    <EventCollector Id="UserCollectorBase" Name="AppLifecycle User Logger">
+      <BufferSize Value="1024"/>
+      <Buffers Value="8"/>
+    </EventCollector>
+
+    <!--
+        This collection defines the basic set of kernel providers to use when
+        collecting traces.
+    -->
+
+    <SystemProvider Id="SystemProviderBase">
+      <Keywords>
+        <Keyword Value="CSwitch"/>
+        <Keyword Value="ReadyThread"/>
+        <Keyword Value="ProcessThread"/>
+        <Keyword Value="Loader"/>
+        <Keyword Value="MemoryInfo"/>
+        <Keyword Value="MemoryInfoWS"/>
+        <Keyword Value="SampledProfile"/>
+        <Keyword Value="Power"/>
+        <Keyword Value="WakeCounter"/>
+        <CustomKeyword Value="0x030B"/>     <!-- Provides process terminate stacks -->
+      </Keywords>
+      <Stacks>
+        <Stack Value="ProcessCreate"/>
+        <Stack Value="ProcessDelete"/>
+        <Stack Value="ProcessFreeze"/>
+        <Stack Value="ProcessResume"/>
+        <Stack Value="WakeChargeKernel"/>
+        <Stack Value="WakeReleaseKernel"/>
+        <CustomStack Value="0x030B"/>
+      </Stacks>
+    </SystemProvider>
+
+    <!--
+        This collection defines the set of additional kernel providers useful
+        for understanding CPU activity and scheduling decisions
+    -->
+
+    <SystemProvider Id="SystemProviderScheduling">
+      <Keywords>
+        <Keyword Value="DPC"/>
+        <Keyword Value="Interrupt"/>
+        <Keyword Value="Power"/>
+        <Keyword Value="ThreadPriority"/>
+      </Keywords>
+      <Stacks>
+        <Stack Value="ThreadSetBasePriority"/>
+        <Stack Value="ThreadSetPriority"/>
+        <CustomStack Value="0x0542"/>       <!-- Provides autoboost floor stacks -->
+      </Stacks>
+    </SystemProvider>
+
+
+    <!--
+        This collection defines the set of kernel providers to use when using a
+        single profile to arm traces for testing.
+    -->
+
+    <SystemProvider Id="SystemProviderTestForEtwLogger">
+      <Keywords>
+        <Keyword Value="CSwitch"/>
+        <Keyword Value="ReadyThread"/>
+        <Keyword Value="ProcessThread"/>
+        <Keyword Value="Loader"/>
+        <Keyword Value="MemoryInfo"/>
+        <Keyword Value="MemoryInfoWS"/>
+        <Keyword Value="SampledProfile"/>
+        <Keyword Value="Power"/>
+        <Keyword Value="WakeCounter"/>
+        <Keyword Value="DPC"/>
+        <Keyword Value="Interrupt"/>
+        <Keyword Value="ThreadPriority"/>
+        <CustomKeyword Value="0x030B"/>     <!-- Provides process terminate stacks -->
+      </Keywords>
+      <Stacks>
+        <Stack Value="ProcessCreate"/>
+        <Stack Value="ProcessDelete"/>
+        <Stack Value="ProcessFreeze"/>
+        <Stack Value="ProcessResume"/>
+        <Stack Value="WakeChargeKernel"/>
+        <Stack Value="WakeReleaseKernel"/>
+        <Stack Value="ThreadSetBasePriority"/>
+        <Stack Value="ThreadSetPriority"/>
+        <CustomStack Value="0x030B"/>
+        <CustomStack Value="0x0542"/>       <!-- Provides autoboost floor stacks -->
+      </Stacks>
+    </SystemProvider>
+
+    <!--
+        This collection defines the set of kernel providers useful for
+        diagnosing long wait times in components where disk usage may be
+        involved.
+    -->
+
+    <SystemProvider Id="SystemProviderDiskIOStacksSampleProfile">
+      <Keywords>
+        <Keyword Value="DiskIO"/>
+      </Keywords>
+      <Stacks>
+        <Stack Value="SampledProfile"/>
+      </Stacks>
+    </SystemProvider>
+
+    <!--
+        This collection defines the set of kernel providers necessary for wait
+        analysis.
+    -->
+
+    <SystemProvider Id="SystemProviderStacksCSwitchReadyThread">
+      <Keywords>
+        <Keyword Value="CSwitch"/>
+        <Keyword Value="ReadyThread"/>
+        <Keyword Value="ThreadPriority"/>
+      </Keywords>
+      <Stacks>
+        <Stack Value="CSwitch"/>
+        <Stack Value="ReadyThread"/>
+      </Stacks>
+    </SystemProvider>
+
+    <SystemProvider Id="SystemProviderFileRegOperations">
+      <Keywords>
+        <Keyword Value="Filename"/>
+        <Keyword Value="FileIO"/>
+        <Keyword Value="FileIOInit"/>
+        <Keyword Value="Registry"/>
+      </Keywords>
+    </SystemProvider>
+    
+    <SystemProvider Id="SystemProviderClockTimer">
+      <Keywords>
+        <Keyword Value="KeClock"/>
+        <Keyword Value="ClockInterrupt"/>
+        <Keyword Value="Timer"/>
+      </Keywords>
+    </SystemProvider>
+
+    <!--
+        This collection defines the base set of usermode trace logging providers
+        required for all AppLifecycle traces.
+    -->
+
+    <EventProvider Name="4180C4F7-E238-5519-338F-EC214F0B49AA" Id="Microsoft.Windows.ResourceManager">
+      <CaptureStateOnSave>
+        <Keyword Value="0xFFFFFFFFFFFFFFFF"/>
+      </CaptureStateOnSave>
+    </EventProvider>
+    <EventProvider Name="3c302a2a-f195-4fed-bd7b-c91ba3f33879" Id="Microsoft.Windows.ResourceManager.Client">
+      <CaptureStateOnSave>
+        <Keyword Value="0xFFFFFFFFFFFFFFFF"/>
+      </CaptureStateOnSave>
+    </EventProvider>
+    <EventProvider Name="F6A774E5-2FC7-5151-6220-E514F1F387B6" Id="Microsoft.Windows.HostActivityManager">
+      <CaptureStateOnSave>
+        <Keyword Value="0xFFFFFFFFFFFFFFFF"/>
+      </CaptureStateOnSave>
+    </EventProvider>
+    <EventProvider Name="c973cad7-01c4-51bd-faad-50cac8ebafe4" Id="Microsoft.Windows.HostActivityManager.Client">
+      <CaptureStateOnSave>
+        <Keyword Value="0xFFFFFFFFFFFFFFFF"/>
+      </CaptureStateOnSave>
+    </EventProvider>
+    <EventProvider Name="63B6C2D2-0440-44DE-A674-AA51A251B123" Id="Microsoft.Windows.BrokerInfrastructure">
+      <CaptureStateOnSave>
+        <Keyword Value="0xFFFFFFFFFFFFFFFF"/>
+      </CaptureStateOnSave>
+    </EventProvider>
+    <EventProvider Name="8215E965-D26E-548E-AF0E-940C1F06F250" Id="Microsoft.Windows.CentralResourceManager">
+      <CaptureStateOnSave>
+        <Keyword Value="0xFFFFFFFFFFFFFFFF"/>
+      </CaptureStateOnSave>
+    </EventProvider>
+    <EventProvider Name="0001376B-930D-50CD-2B29-491CA938CD54" Id="Microsoft.Windows.ProcessStateManager"/>
+    <EventProvider Name="BC71577F-76E9-583A-ECD6-62D0250D900F" Id="Microsoft.Windows.ProcessStateManager.AppLibrary"/>
+    <EventProvider Name="1941F2B9-0939-5D15-D529-CD333C8FED83" Id="Microsoft.Windows.BackgroundManager"/>
+    <EventProvider Name="969E8D6B-DF02-56E3-A058-EC3BEF103534" Id="Microsoft.Windows.ResourcePolicy"/>
+    <EventProvider Name="072665FB-8953-5A85-931D-D06AEAB3D109" Id="Microsoft.Windows.ProcessLifetimeManager"/>
+    <EventProvider Name="A6A9CE06-035F-40CB-829B-EBB822697591" Id="Microsoft.Windows.HostIdStore"/>
+
+    <!-- Brokers -->
+    <EventProvider Name="6966FE51-E224-4BAA-99BC-897B3ED3B823" Id="Microsoft.Windows.BrokerBase"/>
+    <EventProvider Name="E8109B99-3A2C-4961-AA83-D1A7A148ADA8" Id="Microsoft-Windows-BrokerCommonWPP"/>
+    <EventProvider Name="0A9A90C8-9417-482D-B517-DF1774C8F404" Id="Microsoft.Windows.TimeBroker"/>
+    <EventProvider Name="B6BFCC79-A3AF-4089-8D4D-0EECB1B80779" Id="Microsoft-Windows-SystemEventsBroker"/>
+
+    <!-- Kernel and Power Providers -->
+    <EventProvider Name="63BCA7A1-77EC-4EA7-95D0-98D3F0C0EBF7" Id="Microsoft.Windows.Kernel.Power">
+      <CaptureStateOnSave>
+        <Keyword Value="0xFFFFFFFFFFFFFF"/>
+      </CaptureStateOnSave>
+    </EventProvider>
+    <EventProvider Name="66BA1A86-43C6-41AC-955B-28B520DB532A" Id="Microsoft.Windows.Kernel.Pdc"/>
+    <EventProvider Name="D1D93EF7-E1F2-4F45-9943-03D245FE6C00" Id="Microsoft-Windows-Kernel-Memory"/>
+    <EventProvider Name="7e9e8b9c-406c-5d73-e566-0f50ea3ade3e" Id="Microsoft-Windows-Kernel-Mm" NonPagedMemory="true"/>
+    <EventProvider Name="7e9e8b9c-406c-5d73-e566-0f50ea3ade3e" Id="Microsoft-Windows-Kernel-Mm-CommitSave" NonPagedMemory="true" Stack="true">
+      <Keywords>
+        <Keyword Value="0x0000000000000008"/> <!-- Enable only app commit save -->
+      </Keywords>
+    </EventProvider>
+    <EventProvider Name="2839FF94-8F12-4E1B-82E3-AF7AF77A450F" Id="KernelProcess" NonPagedMemory="true" Stack="true">
+      <Keywords>
+        <Keyword Value="0x0000200000000000"/> <!-- Enable only app state changes -->
+      </Keywords>
+      <CaptureStateOnSave>
+        <Keyword Value="0xFFFFFFFFFFFFFFFF"/>
+      </CaptureStateOnSave>
+    </EventProvider>
+    <EventProvider Name="c59673d8-b796-58df-fbf8-a70bad656dca" Id="Microsoft.Windows.Kernel.ProcessSubsystem"/>
+
+
+    <EventProvider Name="382B5E24-181E-417F-A8D6-2155F749E724" Id="Microsoft.Windows.ShellExecute"/>
+    <EventProvider Name="5526AED1-F6E5-5896-CBF0-27D9F59B6BE7" Id="Microsoft.Windows.ApplicationModel.DesktopAppx"/>
+    <EventProvider Name="1AFF6089-E863-4D36-BDFD-3581F07440BE" Id="CombaseTraceLoggingProvider"/>
+
+    <!-- UWP infrastructure providers -->
+    <EventProvider Name="369F0950-BF83-53A7-B3F0-771A8926329D" Id="SIHost-ServiceHostBuilder"/>
+    <EventProvider Name="EF00584A-2655-462C-BC24-E7DE630E7FBF" Id="Microsoft.Windows.AppLifeCycle"/>
+    <EventProvider Name="CF7F94B3-08DC-5257-422F-497D7DC86AB3" Id="ActivationManager"/>
+    <EventProvider Name="AC01ECE8-0B79-5CDB-9615-1B6A4C5FC871" Id="Microsoft.Windows.Application.Service"/>
+    <EventProvider Name="A66A8706-AE1E-4A26-A15B-27D924C43063" Id="Microsoft.Windows.BackgroundAccessManager"/>
+    <EventProvider Name="AA6F6A10-8A13-417D-8799-52361684BD76" Id="Microsoft.Windows.ForegroundManager"/>
+    <EventProvider Name="AF9F58EC-0C04-4BE9-9EB5-55FF6DBE72D7" Id="Microsoft.Windows.LicenseManager.Telemetry"/>
+    <EventProvider Name="3720DDA7-CAEA-4AF3-A138-375AAFC3F1D6" Id="Microsoft.Windows.CoreUIComponents"/>
+    <EventProvider Name="CF5838D7-9FDC-5907-A62C-ABD41DE9D862" Id="Microsoft.OneCore.WindowManagement"/>
+    <EventProvider Name="A9DA4DCC-E78E-5CE7-4078-411A9928F082" Id="Microsoft.Windows.CoreApplication"/>
+    <EventProvider Name="AA878788-4721-571B-ED72-C33E53B76057" Id="XboxUIChrome"/>
+    <EventProvider Name="5F0E257F-C224-43E5-9555-2ADCB8540A58" Id="Microsoft-Windows-Immersive-Shell-API"/>
+    <EventProvider Name="315A8872-923E-4EA2-9889-33CD4754BF64" Id="Microsoft-Windows-Immersive-Shell">
+      <Keywords>
+        <Keyword Value="0x2"/>
+      </Keywords>
+    </EventProvider>
+    <EventProvider Name="a27b9863-9b2c-4f89-84fc-7d98bf921da1" Id="Microsoft.Windows.Shell.UwpWindowLifecycleManagement"/>
+    <EventProvider Name="48DCC4B8-1A33-4625-B042-95CE02602863" Id="Microsoft-Windows-ComposableShell-CoreShell"/>
+    <EventProvider Name="329cc1e5-3d02-4c6f-b411-0299be591cd7" Id="Microsoft.OneCore.WindowManagementApi"/>
+    <EventProvider Name="029769ee-ed48-4166-894e-357918a77e68" Id="Microsoft.Windows.WCOS.Adapter"/>
+    <EventProvider Name="9956c4cc-7b21-4d55-b22d-3a0ea2bddeb9" Id="Microsoft.Windows.OneCore.MinUserExt"/>
+    <EventProvider Name="D75DF9F1-5F3D-49D0-9D15-2A55BD1C012E" Id="ViewManagerInterop"/>
+    <EventProvider Name="15322370-3694-59f5-f979-0c7a918b81da" Id="Microsoft.Windows.Desktop.Shell.ViewManagerInterop"/>
+
+    <!-- N.B. The high-order 4 bytes are explicitly omitted because they cause chatty and low value events. -->
+    <EventProvider Name="A0B7550F-4E9A-4F03-AD41-B8042D06A2F7" Id="Microsoft-WindowsPhone-CoreUIComponents">
+      <Keywords>
+        <Keyword Value="0xffffffff"/>
+      </Keywords>
+    </EventProvider>
+
+    <!-- Error reporting providers -->
+    <EventProvider Name="CC79CF77-70D9-4082-9B52-23F3A3E92FE4" Id="Microsoft.Windows.WindowsErrorReporting"/>
+    <EventProvider Name="2E4201B6-4891-4912-A139-23268D5EB46E" Id="WerFaultSecureTracingGuid"/>
+    <EventProvider Name="31EC0DFD-E734-4181-9C80-C9974C40BCEB" Id="TpClientWppGuid"/>
+    <EventProvider Name="36082273-7635-44A5-8D35-D2A266538B00" Id="WerMgrTracingGuid"/>
+    <EventProvider Name="3E19A300-75D9-4027-86BA-948B70416220" Id="WerConsoleTracingGuid"/>
+    <EventProvider Name="5EF9EC44-FB87-4F51-AF4E-CED084013281" Id="FaultRepTracingGuid"/>
+    <EventProvider Name="6851ADEB-79DA-4250-A440-F1F52D28711D" Id="WerSvcTracingGuid"/>
+    <EventProvider Name="75638A28-E9ED-42B2-9F8F-C2B1F89CF5EE" Id="InfraTracingGuid"/>
+    <EventProvider Name="7930F74B-E328-4350-89C6-11FD93771488" Id="WerFaultTracingGuid"/>
+    <EventProvider Name="9760D9C2-2FBF-4CDA-889F-8DAB2BDD98B0" Id="DWTracingGuid"/>
+    <EventProvider Name="A0EF609D-0A14-424C-9270-3B2691A0A394" Id="ErcLuaSupportTracingGuid"/>
+    <EventProvider Name="DC02AB24-0AA6-4499-8D86-A8E5F83741F5" Id="HangRepTracingGuid"/>
+    <EventProvider Name="F904D5CC-2CCA-47B0-A3CE-A05944692545" Id="WerFaultSilentProcessExitLibTracingGuid"/>
+    <EventProvider Name="1377561D-9312-452C-AD13-C4A1C9C906E0" Id="Microsoft.Windows.FaultReportingTracingGuid"/>
+    <EventProvider Name="97945555-B04C-47C0-B399-E453D509A5F0" Id="Microsoft.Windows.WERSecureVerticalTracingGuid"/>
+    <EventProvider Name="2B87E57E-7BD0-43A3-A278-02E62D59B2B1" Id="Microsoft.Windows.WERVerticalTracingGuid"/>
+    <EventProvider Name="3E0D88DE-AE5C-438A-BB1C-C2E627F8AECB" Id="Microsoft.Windows.HangReportingTracingGuid"/>
+
+    <!-- Legacy trace providers that still log useful events -->
+    <EventProvider Name="D2440861-BF3E-4F20-9FDC-E94E88DBE1F6" Id="Microsoft-Windows-BrokerInfrastructureWPP"/>
+    <EventProvider Name="82C8AD90-5F3C-11BE-BD9A-85BB5F50DFA4" Id="Microsoft-WindowsPhone-ExecManLogPublisher"/>
+    <EventProvider Name="D49918CF-9489-4BF1-9D7B-014D864CF71F" Id="Microsoft-Windows-ProcessStateManager"/>
+    <EventProvider Name="EB65A492-86C0-406A-BACE-9912D595BD69" Id="Microsoft-Windows-AppModel-Exec"/>
+
+    <!-- SCM providers -->
+    <EventProvider Name="0063715b-eeda-4007-9429-ad526f62696e" Id="Microsoft-Windows-Services"/>
+    <EventProvider Name="06184c97-5201-480e-92af-3a3626c5b140" Id="Microsoft.Windows.SvchostTelemetryProvider"/>
+
+    <!--
+        This collection defines the set of optional trace providers used for
+        special scenarios
+    -->
+
+    <!-- PSM refcount stacks provider -->
+    <EventProvider Name="23218C03-D099-425A-8778-337A4DDC7BA9" Id="Microsoft.Windows.ProcessStateManager.Refcount" Stack="true"/>
+
+    <!-- Event Aggregation provider -->
+    <EventProvider Name="10A875D8-AB5C-5BC3-7A8B-79293816F2C2" Id="Microsoft.Windows.EventAggregation">
+      <CaptureStateOnSave>
+        <Keyword Value="0xFFFFFFFFFFFFFFFF"/>
+      </CaptureStateOnSave>
+    </EventProvider>
+
+    <!-- Test providers -->
+    <EventProvider Name="D10714F0-0ABC-5764-50A2-73E0313B08FC" Id="Microsoft.Windows.ResourceManagerTest"/>
+    <EventProvider Name="7B51A694-95B5-5233-05B6-8E922F6303EE" Id="Microsoft.Windows.HostActivityManagerTest"/>
+    <EventProvider Name="2EA1BC33-55C6-41E4-96D9-D275E6444871" Id="Microsoft.Windows.BrokerInfrastructureTest"/>
+    <EventProvider Name="C58C5B45-07BA-5C34-D369-EA0A89A5BADE" Id="Microsoft.Windows.ProcessStateManagerTest"/>
+    <EventProvider Name="B4FB1976-54C2-53CD-231A-82339B5BB23D" Id="Microsoft.Windows.ProcessStateManager.RefcountTest" Stack="true"/>
+
+    <!-- TAEF providers -->
+    <EventProvider Name="70D27130-F2F3-4365-B790-D31223254EF4" Id="Microsoft.OSGENG.Testing.TaefEngine"/>
+    <EventProvider Name="40C4DF8B-00A9-5159-62BC-9BBC5EE78A29" Id="Microsoft.Windows.TestExecution.WexLogger" Level="4"/>
+
+    <!-- Deployment providers -->
+    <EventProvider Name="BA723D81-0D0C-4F1E-80C8-54740F508DDF" Id="Microsoft-Windows-AppxPackagingOM"/>
+    <EventProvider Name="8127F6D4-59F9-4ABF-8952-3E3A02073D5F" Id="Microsoft-Windows-AppXDeployment"/>
+    <EventProvider Name="FE762FB1-341A-4DD4-B399-BE1868B3D918" Id="Microsoft.Windows.AppXDeploymentServer"/>
+
+    <!-- Verbose power providers -->
+    <EventProvider Name="D37687E7-8BF0-4D11-B589-A7ABE080756A" Id="Microsoft-Windows-SleepStudy"/>
+    <EventProvider Name="D29624CA-200F-44BB-9471-13B01EA15B9E" Id="Microsoft.Windows.Pdc"/>
+    <EventProvider Name="A6BF0DEB-3659-40AD-9F81-E25AF62CE3C7" Id="Microsoft-Windows-Kernel-Pdc"/>
+    <EventProvider Name="331C3B3A-2005-44C2-AC5E-77220C37D6B4" Id="Microsoft-Windows-Kernel-Power">
+      <CaptureStateOnSave>
+        <Keyword Value="0xFFFFFFFFFFFFFF"/>
+      </CaptureStateOnSave>
+    </EventProvider>
+    
+    <!-- Timer Providers -->
+    <EventProvider Id="Microsoft-Windows-Kernel-Trace" Name="9e814aad-3204-11d2-9a82-006008a86939" NonPagedMemory="true"/>
+    <EventProvider Id="Microsoft.Windows.Kernel.Kernel" Name="061c37c3-1363-5c1b-b8ed-f3d8f74633ce" NonPagedMemory="true"/>
+    <EventProvider Id="Microsoft-Windows-Kernel-PerfInfo" Name="ce1dbfb4-137e-4da6-87b0-3f59aa102cbc" NonPagedMemory="true"/>
+    <EventProvider Id="Microsoft.Windows.Kernel.Timer" Name="f2d06f08-592d-508c-c3aa-76f396fe18bd" NonPagedMemory="true"/> 
+
+    <!-- WNS & VOIP providers -->
+    <EventProvider Name="DD7A21E6-A651-46D4-B7C2-66543067B869" Id="Microsoft.Windows.NDIS"/>
+    <EventProvider Name="ee845016-ebe1-41eb-be52-5e3ae58339f2" Id="Microsoft.Windows.WNSCP"/>
+    <EventProvider Name="b92d1ff0-92ec-444d-b7ec-c016f971c000" Id="Microsoft.Windows.WPNCore"/>
+    <EventProvider Name="88cd9180-4491-4640-b571-e3bee2527943" Id="Microsoft.Windows.WPNCore2"/>
+    <EventProvider Name="2FDB1F25-8DE1-4BC1-BAC2-E445E5B38743" Id="Microsoft.Windows.WpnApps"/>
+    <EventProvider Name="B2A66945-89CE-43C6-BEFD-BF80C54434FB" Id="Microsoft.Windows.WNSWPP"/>
+    <EventProvider Name="e08c85f4-c224-499d-b5b3-c1bce960f096" Id="Microsoft-Windows-Telephony-PhoneOm"/>
+    <EventProvider Name="1db8dad0-7ca6-4f18-b357-43bfdd8c9806" Id="Microsoft-Windows-Telephony-PhoneProviders"/>
+    <EventProvider Name="04a490d4-84c6-4920-9c22-51c80825ff2c" Id="Microsoft-Windows-Telephony-PhoneUtil"/>
+    <EventProvider Name="cbbbc22d-2efe-4eae-9af5-f9c6cf113670" Id="Microsoft-Windows-Telephony-PhoneService"/>
+
+
+    <!--
+        This base trace profile should be used in all app lifecycle traces.
+    -->
+
+    <Profile Id="AppLifecycle.Light.File"
+             Name="AppLifecycle"
+             Description="App lifecycle base tracing profile"
+             DetailLevel="Light"
+             LoggingMode="File">
+
+      <Collectors>
+        <SystemCollectorId Value="KernelCollectorBase">
+          <SystemProviderId Value="SystemProviderBase"/>
+        </SystemCollectorId>
+
+        <EventCollectorId Value="UserCollectorBase">
+          <EventProviders>
+            <EventProviderId Value="Microsoft.Windows.ResourceManager"/>
+            <EventProviderId Value="Microsoft.Windows.ResourceManager.Client"/>
+            <EventProviderId Value="Microsoft.Windows.HostActivityManager"/>
+            <EventProviderId Value="Microsoft.Windows.HostActivityManager.Client"/>
+            <EventProviderId Value="Microsoft.Windows.BrokerInfrastructure"/>
+            <EventProviderId Value="Microsoft.Windows.CentralResourceManager"/>
+            <EventProviderId Value="Microsoft.Windows.ProcessStateManager"/>
+            <EventProviderId Value="Microsoft.Windows.ProcessStateManager.AppLibrary"/>
+            <EventProviderId Value="Microsoft.Windows.BackgroundManager"/>
+            <EventProviderId Value="Microsoft.Windows.ResourcePolicy"/>
+            <EventProviderId Value="Microsoft.Windows.ProcessLifetimeManager"/>
+            <EventProviderId Value="Microsoft.Windows.HostIdStore"/>
+
+            <!-- Brokers -->
+            <EventProviderId Value="Microsoft.Windows.BrokerBase"/>
+            <EventProviderId Value="Microsoft-Windows-BrokerCommonWPP"/>
+            <EventProviderId Value="Microsoft.Windows.TimeBroker"/>
+            <EventProviderId Value="Microsoft-Windows-SystemEventsBroker"/>
+
+            <EventProviderId Value="Microsoft.Windows.Kernel.Power"/>
+            <EventProviderId Value="Microsoft.Windows.Kernel.Pdc"/>
+            <EventProviderId Value="KernelProcess"/>
+            <EventProviderId Value="Microsoft.Windows.Kernel.ProcessSubsystem"/>
+            <EventProviderId Value="Microsoft.Windows.ShellExecute"/>
+            <EventProviderId Value="Microsoft.Windows.ApplicationModel.DesktopAppx"/>
+            <EventProviderId Value="Microsoft-Windows-Kernel-Memory"/>
+            <EventProviderId Value="SIHost-ServiceHostBuilder"/>
+            <EventProviderId Value="CombaseTraceLoggingProvider"/>
+
+            <EventProviderId Value="Microsoft.Windows.Shell.UwpWindowLifecycleManagement"/>
+            <EventProviderId Value="Microsoft-Windows-ComposableShell-CoreShell"/>
+            <EventProviderId Value="Microsoft.OneCore.WindowManagementApi"/>
+            <EventProviderId Value="Microsoft.Windows.WCOS.Adapter"/>
+            <EventProviderId Value="Microsoft.Windows.OneCore.MinUserExt"/>
+            <EventProviderId Value="Microsoft.Windows.AppLifeCycle"/>
+            <EventProviderId Value="ActivationManager"/>
+            <EventProviderId Value="Microsoft.Windows.Application.Service"/>
+            <EventProviderId Value="Microsoft.Windows.BackgroundAccessManager"/>
+            <EventProviderId Value="Microsoft.Windows.ForegroundManager"/>
+            <EventProviderId Value="Microsoft.Windows.LicenseManager.Telemetry"/>
+            <EventProviderId Value="Microsoft.Windows.CoreUIComponents"/>
+            <EventProviderId Value="Microsoft.OneCore.WindowManagement"/>
+            <EventProviderId Value="Microsoft.Windows.CoreApplication"/>
+            <EventProviderId Value="XboxUIChrome"/>
+            <EventProviderId Value="Microsoft-Windows-Immersive-Shell-API"/>
+            <EventProviderId Value="Microsoft-Windows-Immersive-Shell"/>
+            <EventProviderId Value="Microsoft-WindowsPhone-CoreUIComponents"/>
+            <EventProviderId Value="ViewManagerInterop"/>
+            <EventProviderId Value="Microsoft.Windows.Desktop.Shell.ViewManagerInterop"/>
+
+            <!-- Error reporting providers -->
+            <EventProviderId Value="Microsoft.Windows.WindowsErrorReporting"/>
+            <EventProviderId Value="WerFaultSecureTracingGuid"/>
+            <EventProviderId Value="TpClientWppGuid"/>
+            <EventProviderId Value="WerMgrTracingGuid"/>
+            <EventProviderId Value="WerConsoleTracingGuid"/>
+            <EventProviderId Value="FaultRepTracingGuid"/>
+            <EventProviderId Value="WerSvcTracingGuid"/>
+            <EventProviderId Value="InfraTracingGuid"/>
+            <EventProviderId Value="WerFaultTracingGuid"/>
+            <EventProviderId Value="DWTracingGuid"/>
+            <EventProviderId Value="ErcLuaSupportTracingGuid"/>
+            <EventProviderId Value="HangRepTracingGuid"/>
+            <EventProviderId Value="WerFaultSilentProcessExitLibTracingGuid"/>
+            <EventProviderId Value="Microsoft.Windows.FaultReportingTracingGuid"/>
+            <EventProviderId Value="Microsoft.Windows.WERSecureVerticalTracingGuid"/>
+            <EventProviderId Value="Microsoft.Windows.WERVerticalTracingGuid"/>
+            <EventProviderId Value="Microsoft.Windows.HangReportingTracingGuid"/>
+
+            <!-- Legacy trace providers that still log useful events -->
+            <EventProviderId Value="Microsoft-Windows-BrokerInfrastructureWPP"/>
+            <EventProviderId Value="Microsoft-WindowsPhone-ExecManLogPublisher"/>
+            <EventProviderId Value="Microsoft-Windows-ProcessStateManager"/>
+            <EventProviderId Value="Microsoft-Windows-AppModel-Exec"/>
+
+            <!-- SCM providers -->
+            <EventProviderId Value="Microsoft.Windows.SvchostTelemetryProvider"/>
+            <EventProviderId Value="Microsoft-Windows-Services"/>
+
+          </EventProviders>
+        </EventCollectorId>
+
+      </Collectors>
+    </Profile>
+
+    <!--
+        This optional trace profile collects a stackwalk for when PSM acquires
+        and releases application references.
+    -->
+
+    <Profile Id="AppLifecyclePsmRefCountStacks.Light.File"
+             Name="AppLifecyclePsmRefCountStacks"
+             Description="App lifecycle with stacks on PSM ref count changes"
+             DetailLevel="Light"
+             LoggingMode="File">
+
+      <Collectors>
+        <EventCollectorId Value="UserCollectorBase">
+          <EventProviders>
+            <EventProviderId Value="Microsoft.Windows.ProcessStateManager.Refcount"/>
+          </EventProviders>
+        </EventCollectorId>
+      </Collectors>
+    </Profile>
+
+    <!--
+        This optional trace profile collects event aggregation events.
+    -->
+
+    <Profile Id="AppLifecycleEventAggregation.Light.File"
+             Name="AppLifecycleEventAggregation"
+             Description="App lifecycle with event aggregation"
+             DetailLevel="Light"
+             LoggingMode="File">
+
+      <Collectors>
+        <EventCollectorId Value="UserCollectorBase">
+          <EventProviders>
+            <EventProviderId Value="Microsoft.Windows.EventAggregation"/>
+          </EventProviders>
+        </EventCollectorId>
+      </Collectors>
+    </Profile>
+
+    <!--
+        This optional trace profile collects useful providers when running the
+        CEM test suite.
+    -->
+
+    <Profile Id="AppLifecycleTest.Light.File"
+             Name="AppLifecycleTest"
+             Description="App lifecycle for test suite"
+             DetailLevel="Light"
+             LoggingMode="File">
+
+      <Collectors>
+        <SystemCollectorId Value="KernelCollectorBase">
+          <SystemProviderId Value="SystemProviderScheduling"/>
+        </SystemCollectorId>
+
+        <EventCollectorId Value="UserCollectorBase">
+          <EventProviders>
+            <!-- Test providers -->
+            <EventProviderId Value="Microsoft.Windows.ResourceManagerTest"/>
+            <EventProviderId Value="Microsoft.Windows.HostActivityManagerTest"/>
+            <EventProviderId Value="Microsoft.Windows.BrokerInfrastructureTest"/>
+            <EventProviderId Value="Microsoft.Windows.ProcessStateManagerTest"/>
+            <EventProviderId Value="Microsoft.Windows.ProcessStateManager.RefcountTest"/>
+
+            <!-- TAEF providers -->
+            <EventProviderId Value="Microsoft.OSGENG.Testing.TaefEngine"/>
+            <EventProviderId Value="Microsoft.Windows.TestExecution.WexLogger"/>
+          </EventProviders>
+        </EventCollectorId>
+      </Collectors>
+    </Profile>
+
+
+    <!--
+        This trace profile collects the base trace providers and the test
+        providers when ETW logger is used to collect traces for the CEM test
+        suite. The ETW logger can arm a single profile, but can collect traces
+        per test case.
+    -->
+
+    <Profile Id="AppLifecycleTestForEtwLogger.Light.File"
+             Name="AppLifecycleTestForEtwLogger"
+             Description="App lifecycle for test suite"
+             DetailLevel="Light"
+             LoggingMode="File">
+
+      <Collectors>
+        <SystemCollectorId Value="KernelCollectorBase">
+          <SystemProviderId Value="SystemProviderTestForEtwLogger"/>
+        </SystemCollectorId>
+
+        <EventCollectorId Value="UserCollectorBase">
+          <EventProviders>
+            <EventProviderId Value="Microsoft.Windows.ResourceManager"/>
+            <EventProviderId Value="Microsoft.Windows.ResourceManager.Client"/>
+            <EventProviderId Value="Microsoft.Windows.HostActivityManager"/>
+            <EventProviderId Value="Microsoft.Windows.BrokerInfrastructure"/>
+            <EventProviderId Value="Microsoft.Windows.CentralResourceManager"/>
+            <EventProviderId Value="Microsoft.Windows.ProcessStateManager"/>
+            <EventProviderId Value="Microsoft.Windows.ProcessStateManager.AppLibrary"/>
+            <EventProviderId Value="Microsoft.Windows.BackgroundManager"/>
+            <EventProviderId Value="Microsoft.Windows.ResourcePolicy"/>
+            <EventProviderId Value="Microsoft.Windows.ProcessLifetimeManager"/>
+            <EventProviderId Value="Microsoft.Windows.HostIdStore"/>
+
+            <!-- Brokers -->
+            <EventProviderId Value="Microsoft.Windows.BrokerBase"/>
+            <EventProviderId Value="Microsoft-Windows-BrokerCommonWPP"/>
+            <EventProviderId Value="Microsoft.Windows.TimeBroker"/>
+            <EventProviderId Value="Microsoft-Windows-SystemEventsBroker"/>
+
+            <EventProviderId Value="Microsoft.Windows.Kernel.Power"/>
+            <EventProviderId Value="Microsoft.Windows.Kernel.Pdc"/>
+            <EventProviderId Value="KernelProcess"/>
+            <EventProviderId Value="Microsoft.Windows.Kernel.ProcessSubsystem"/>
+            <EventProviderId Value="Microsoft.Windows.ShellExecute"/>
+            <EventProviderId Value="Microsoft.Windows.ApplicationModel.DesktopAppx"/>
+            <EventProviderId Value="Microsoft-Windows-Kernel-Memory"/>
+            <EventProviderId Value="SIHost-ServiceHostBuilder"/>
+            <EventProviderId Value="CombaseTraceLoggingProvider"/>
+
+            <EventProviderId Value="Microsoft.Windows.Shell.UwpWindowLifecycleManagement"/>
+            <EventProviderId Value="Microsoft-Windows-ComposableShell-CoreShell"/>
+            <EventProviderId Value="Microsoft.OneCore.WindowManagementApi"/>
+            <EventProviderId Value="Microsoft.Windows.WCOS.Adapter"/>
+            <EventProviderId Value="Microsoft.Windows.OneCore.MinUserExt"/>
+            <EventProviderId Value="Microsoft.Windows.AppLifeCycle"/>
+            <EventProviderId Value="ActivationManager"/>
+            <EventProviderId Value="Microsoft.Windows.Application.Service"/>
+            <EventProviderId Value="Microsoft.Windows.BackgroundAccessManager"/>
+            <EventProviderId Value="Microsoft.Windows.ForegroundManager"/>
+            <EventProviderId Value="Microsoft.Windows.LicenseManager.Telemetry"/>
+            <EventProviderId Value="Microsoft.Windows.CoreUIComponents"/>
+            <EventProviderId Value="Microsoft.OneCore.WindowManagement"/>
+            <EventProviderId Value="Microsoft.Windows.CoreApplication"/>
+            <EventProviderId Value="XboxUIChrome"/>
+            <EventProviderId Value="Microsoft-Windows-Immersive-Shell-API"/>
+            <EventProviderId Value="Microsoft-Windows-Immersive-Shell"/>
+            <EventProviderId Value="Microsoft-WindowsPhone-CoreUIComponents"/>
+            <EventProviderId Value="ViewManagerInterop"/>
+            <EventProviderId Value="Microsoft.Windows.Desktop.Shell.ViewManagerInterop"/>
+
+            <!-- Error reporting providers -->
+            <EventProviderId Value="Microsoft.Windows.WindowsErrorReporting"/>
+            <EventProviderId Value="WerFaultSecureTracingGuid"/>
+            <EventProviderId Value="TpClientWppGuid"/>
+            <EventProviderId Value="WerMgrTracingGuid"/>
+            <EventProviderId Value="WerConsoleTracingGuid"/>
+            <EventProviderId Value="FaultRepTracingGuid"/>
+            <EventProviderId Value="WerSvcTracingGuid"/>
+            <EventProviderId Value="InfraTracingGuid"/>
+            <EventProviderId Value="WerFaultTracingGuid"/>
+            <EventProviderId Value="DWTracingGuid"/>
+            <EventProviderId Value="ErcLuaSupportTracingGuid"/>
+            <EventProviderId Value="HangRepTracingGuid"/>
+            <EventProviderId Value="WerFaultSilentProcessExitLibTracingGuid"/>
+            <EventProviderId Value="Microsoft.Windows.FaultReportingTracingGuid"/>
+            <EventProviderId Value="Microsoft.Windows.WERSecureVerticalTracingGuid"/>
+            <EventProviderId Value="Microsoft.Windows.WERVerticalTracingGuid"/>
+            <EventProviderId Value="Microsoft.Windows.HangReportingTracingGuid"/>
+
+            <!-- Legacy trace providers that still log useful events -->
+            <EventProviderId Value="Microsoft-Windows-BrokerInfrastructureWPP"/>
+            <EventProviderId Value="Microsoft-WindowsPhone-ExecManLogPublisher"/>
+            <EventProviderId Value="Microsoft-Windows-ProcessStateManager"/>
+            <EventProviderId Value="Microsoft-Windows-AppModel-Exec"/>
+
+            <!-- SCM providers -->
+            <EventProviderId Value="Microsoft.Windows.SvchostTelemetryProvider"/>
+            <EventProviderId Value="Microsoft-Windows-Services"/>
+
+            <!-- Test providers -->
+            <EventProviderId Value="Microsoft.Windows.ResourceManagerTest"/>
+            <EventProviderId Value="Microsoft.Windows.HostActivityManagerTest"/>
+            <EventProviderId Value="Microsoft.Windows.BrokerInfrastructureTest"/>
+            <EventProviderId Value="Microsoft.Windows.ProcessStateManagerTest"/>
+            <EventProviderId Value="Microsoft.Windows.ProcessStateManager.RefcountTest"/>
+
+            <!-- TAEF providers -->
+            <EventProviderId Value="Microsoft.OSGENG.Testing.TaefEngine"/>
+            <EventProviderId Value="Microsoft.Windows.TestExecution.WexLogger"/>
+          </EventProviders>
+        </EventCollectorId>
+      </Collectors>
+    </Profile>
+
+    <!--
+        This optional trace profile collects useful providers for package
+        deployment and servicing operations.
+    -->
+
+    <Profile Id="AppLifecycleDeployment.Light.File"
+             Name="AppLifecycleDeployment"
+             Description="App lifecycle with package deployment"
+             DetailLevel="Light"
+             LoggingMode="File">
+
+      <Collectors>
+        <EventCollectorId Value="UserCollectorBase">
+          <EventProviders>
+            <!-- Deployment providers -->
+            <EventProviderId Value="Microsoft-Windows-AppxPackagingOM"/>
+            <EventProviderId Value="Microsoft-Windows-AppXDeployment"/>
+            <EventProviderId Value="Microsoft.Windows.AppXDeploymentServer"/>
+          </EventProviders>
+        </EventCollectorId>
+      </Collectors>
+    </Profile>
+
+    <!--
+        This optional trace profile collects (verbose) useful providers for
+        power references and system power state changes.
+    -->
+
+    <Profile Id="AppLifecyclePower.Light.File"
+             Name="AppLifecyclePower"
+             Description="App lifecycle with power"
+             DetailLevel="Light"
+             LoggingMode="File">
+
+      <Collectors>
+        <EventCollectorId Value="UserCollectorBase">
+          <EventProviders>
+            <!-- Verbose power providers -->
+            <EventProviderId Value="Microsoft-Windows-SleepStudy"/>
+            <EventProviderId Value="Microsoft.Windows.Pdc"/>
+            <EventProviderId Value="Microsoft-Windows-Kernel-Pdc"/>
+            <EventProviderId Value="Microsoft-Windows-Kernel-Power"/>
+          </EventProviders>
+        </EventCollectorId>
+      </Collectors>
+    </Profile>
+
+    <!--
+        This optional trace profile collects useful providers for WNS and VOIP
+        background task scenarios.
+    -->
+
+    <Profile Id="AppLifecycleWnsVoip.Light.File"
+             Name="AppLifecycleWnsVoip"
+             Description="App lifecycle, WNS, and VOIP"
+             DetailLevel="Light"
+             LoggingMode="File">
+
+      <Collectors>
+        <EventCollectorId Value="UserCollectorBase">
+          <EventProviders>
+            <!-- WNS & VOIP providers -->
+            <EventProviderId Value="Microsoft.Windows.NDIS"/>
+            <EventProviderId Value="Microsoft.Windows.WNSCP"/>
+            <EventProviderId Value="Microsoft.Windows.WPNCore"/>
+            <EventProviderId Value="Microsoft.Windows.WPNCore2"/>
+            <EventProviderId Value="Microsoft.Windows.WpnApps"/>
+            <EventProviderId Value="Microsoft.Windows.WNSWPP"/>
+            <EventProviderId Value="Microsoft-Windows-Telephony-PhoneOm"/>
+            <EventProviderId Value="Microsoft-Windows-Telephony-PhoneProviders"/>
+            <EventProviderId Value="Microsoft-Windows-Telephony-PhoneUtil"/>
+            <EventProviderId Value="Microsoft-Windows-Telephony-PhoneService"/>
+          </EventProviders>
+        </EventCollectorId>
+      </Collectors>
+    </Profile>
+
+    <!--
+        This optional kernel profile specifies the providers useful for
+        diagnosing long wait times in components where disk usage may be
+        involved.
+    -->
+
+    <Profile Id="AppLifecycleStacksSampled.Light.File"
+             Name="AppLifecycleStacksSampled"
+             Description="App lifecycle with disk IO and stacks on sampled profile"
+             DetailLevel="Light"
+             LoggingMode="File">
+
+      <Collectors>
+        <SystemCollectorId Value="KernelCollectorBase">
+          <SystemProviderId Value="SystemProviderDiskIOStacksSampleProfile"/>
+        </SystemCollectorId>
+      </Collectors>
+    </Profile>
+
+    <!--
+        This optional kernel profile specifies the providers useful for wait
+        analysis.
+    -->
+
+    <Profile Id="AppLifecycleStacksCSwitch.Light.File"
+             Name="AppLifecycleStacksCSwitch"
+             Description="App lifecycle with stacks on context switch and ready thread"
+             DetailLevel="Light"
+             LoggingMode="File">
+
+      <Collectors>
+        <SystemCollectorId Value="KernelCollectorBase">
+          <SystemProviderId Value="SystemProviderStacksCSwitchReadyThread"/>
+        </SystemCollectorId>
+      </Collectors>
+    </Profile>
+
+    <!--
+        This optional kernel profile specifies the providers useful for
+        diagnosing registry and file accesses.
+    -->
+
+    <Profile Id="AppLifecycleFileRegOperations.Light.File"
+             Name="AppLifecycleFileRegOperations"
+             Description="App lifecycle with file IO and registry operations"
+             DetailLevel="Light"
+             LoggingMode="File">
+
+      <Collectors>
+        <SystemCollectorId Value="KernelCollectorBase">
+          <SystemProviderId Value="SystemProviderFileRegOperations"/>
+        </SystemCollectorId>
+      </Collectors>
+    </Profile>
+
+    <!--
+        This optional kernel profile specifies the providers useful for
+        diagnosing registry and file accesses.
+    -->
+
+    <Profile Id="AppLifecycleCommitSave.Light.File"
+             Name="AppLifecycleCommitSave"
+             Description="App lifecycle with commit save stack attach"
+             DetailLevel="Light"
+             LoggingMode="File">
+
+      <Collectors>
+        <EventCollectorId Value="UserCollectorBase">
+          <EventProviders>
+            <EventProviderId Value="Microsoft-Windows-Kernel-Mm-CommitSave"/>
+          </EventProviders>
+        </EventCollectorId>
+      </Collectors>
+    </Profile>
+
+    <!--
+        This optional kernel profile specifies the providers useful for
+        diagnosing clock/timer behavior.
+    -->
+
+    <Profile Id="AppLifecycleClockTimer.Light.File"
+             Name="AppLifecycleClockTimer"
+             Description="App lifecycle with clock/timer operations"
+             DetailLevel="Light"
+             LoggingMode="File">
+
+      <Collectors>
+        <SystemCollectorId Value="KernelCollectorBase">
+          <SystemProviderId Value="SystemProviderClockTimer"/>
+        </SystemCollectorId>
+        <EventCollectorId Value="UserCollectorBase">
+          <EventProviders>
+            <EventProviderId Value="Microsoft-Windows-Kernel-Trace"/>
+            <EventProviderId Value="Microsoft.Windows.Kernel.Kernel"/>
+            <EventProviderId Value="Microsoft-Windows-Kernel-PerfInfo"/>
+            <EventProviderId Value="Microsoft.Windows.Kernel.Timer"/>
+            <EventProviderId Value="Microsoft-Windows-Kernel-Power"/>
+          </EventProviders>
+        </EventCollectorId>
+      </Collectors>
+    </Profile>
+  </Profiles>
+</WindowsPerformanceRecorder>
+

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
+         xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
+         xmlns:build="http://schemas.microsoft.com/developer/appx/2015/build"
+         xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities"
+         xmlns:uap4="http://schemas.microsoft.com/appx/manifest/uap/windows10/4"
+         IgnorableNamespaces= "build uap rescap uap4">
+  <Identity Name="Microsoft.PPIProjection" Publisher="CN=Microsoft Windows, O=Microsoft Corporation, L=Redmond, S=Washington, C=US" Version="10.0.22621.1" ResourceId="neutral" />
+  <Properties>
+    <DisplayName>ms-resource:ProductNameWindowsStore</DisplayName>
+    <PublisherDisplayName>Microsoft Corporation</PublisherDisplayName>
+    <Logo>Assets\StoreLogo.png</Logo>
+    <uap:SupportedUsers>multiple</uap:SupportedUsers>
+  </Properties>
+  <Dependencies>
+    <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.0.0" MaxVersionTested="10.0.16299.0"/>
+  </Dependencies>
+  <Resources>
+    <Resource Language="en-US" />
+  </Resources>
+  <Applications>
+    <Application Id="Microsoft.PPIProjection" Executable="Receiver.exe" EntryPoint="Microsoft.PPI.Projection.Receiver.App">
+      <uap:VisualElements DisplayName="ms-resource:ProductNameWindowsStore" Square150x150Logo="Assets/MedTile.png" Square44x44Logo="Assets/AppList.png" Description="ms-resource:ProductDescriptionWindowsStore" BackgroundColor="#077db4">
+        <uap:DefaultTile Square71x71Logo="Assets/SmallTile.png" Wide310x150Logo="Assets/WideTile.png" ShortName="ms-resource:ProductNameWindowsStore" Square310x310Logo="Assets/LargeTile.png">
+          <uap:ShowNameOnTiles>
+            <uap:ShowOn Tile="square150x150Logo" />
+            <uap:ShowOn Tile="wide310x150Logo" />
+            <uap:ShowOn Tile="square310x310Logo" />
+          </uap:ShowNameOnTiles>
+        </uap:DefaultTile>
+        <uap:SplashScreen Image="Assets\SplashScreen.png" BackgroundColor="#077db4" />
+      </uap:VisualElements>
+      <Extensions>
+        <uap:Extension Category="windows.protocol">
+          <uap:Protocol Name="ms-projection" />
+        </uap:Extension>
+        <uap:Extension Category="windows.protocol">
+          <uap:Protocol Name="ms-playto-miracast" />
+        </uap:Extension>
+        <uap:Extension Category="windows.aboveLockScreen"/>
+        <Extension Category="windows.backgroundTasks" EntryPoint="MediaTransportControls.App">
+          <BackgroundTasks>
+            <Task Type="audio" />
+          </BackgroundTasks>
+        </Extension>
+      </Extensions>
+    </Application>
+  </Applications>
+  <Capabilities>
+    <Capability Name="internetClientServer" />
+    <Capability Name="privateNetworkClientServer" />
+    <rescap:Capability Name="teamEditionExperience" />
+    <rescap:Capability Name="inputForegroundObservation"/>
+    <DeviceCapability Name="8c501030-f8c2-40b2-8b3b-e6605788ff39" />
+    <DeviceCapability Name="humaninterfacedevice">
+      <!--Touchback Device-->
+      <Device Id="vidpid:2465 6300">
+        <!-- Mouse -->
+        <Function Type="usage:FF00 0001" />
+        <!-- Keyboard -->
+        <Function Type="usage:FF01 0001" />
+        <!-- Connection Status -->
+        <Function Type="usage:FF02 0001" />
+        <!-- Touch -->
+        <Function Type="usage:FF03 0001" />
+        <!-- Stylus1 -->
+        <Function Type="usage:FF04 0001" />
+        <!-- Stylus2 -->
+        <Function Type="usage:FF04 0002" />
+        <!-- Stylus3 -->
+        <Function Type="usage:FF04 0003" />
+      </Device>
+    </DeviceCapability>
+    <DeviceCapability Name="proximity" />
+  </Capabilities>
+</Package>

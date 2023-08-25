@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-Clipboard-UserService" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSXS" />
+  <file name="CBDHSvc.dll" destinationPath="$(runtime.system32)\" sourceName="CBDHSvc.dll" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>XvpEo4JS32ZUDGYUAVAJjSdkvWZEw1d8cJXrz2BAgrk=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <dependency discoverable="no" resourceType="Resources">
+    <dependentAssembly dependencyType="prerequisite">
+      <assemblyIdentity name="Microsoft-Windows-Clipboard-UserService.Resources" version="10.0.22621.1" processorArchitecture="amd64" language="*" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </dependentAssembly>
+  </dependency>
+  <memberships>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories.Services" version="10.0.22621.1" publicKeyToken="31bf3856ad364e35" typeName="Service" />
+      <categoryInstance subcategory="CBDHSvc">
+        <serviceData name="cbdhsvc" displayName="@%SystemRoot%\system32\cbdhsvc.dll,-100" errorControl="normal" start="delayedAuto" type="win32UserShareProcess" description="@%SystemRoot%\system32\cbdhsvc.dll,-101" imagePath="%SystemRoot%\system32\svchost.exe -k ClipboardSvcGroup -p" objectName="LocalSystem" requiredPrivileges="SeImpersonatePrivilege" sidType="unrestricted">
+          <failureActions resetPeriod="86400">
+            <actions>
+              <action delay="3000" type="restartService" />
+              <action delay="3000" type="restartService" />
+              <action delay="0" type="none" />
+            </actions>
+          </failureActions>
+          <securityDescriptor name="ClipboardUserServiceSecurity" />
+        </serviceData>
+      </categoryInstance>
+    </categoryMembership>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories" version="1.0.0.0" publicKeyToken="365143bb27e7ac8b" typeName="SvcHost" />
+      <categoryInstance subcategory="ClipboardSvcGroup">
+        <serviceGroup position="last" serviceName="cbdhsvc" />
+      </categoryInstance>
+    </categoryMembership>
+  </memberships>
+  <registryKeys>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\System\CurrentControlset\Services\cbdhsvc">
+      <registryValue name="UserServiceFlags" valueType="REG_DWORD" value="0x00000002" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\System\CurrentControlset\Services\cbdhsvc\Parameters">
+      <registryValue name="ServiceDll" valueType="REG_EXPAND_SZ" value="%SystemRoot%\System32\cbdhsvc.dll" />
+      <registryValue name="ServiceDllUnloadOnStop" valueType="REG_DWORD" value="0x00000001" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion\Svchost\ClipboardSvcGroup">
+      <registryValue name="CoInitializeSecurityParam" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="COMAccessPermissionsSD" valueType="REG_BINARY" value="010014809C000000A8000000140000003000000002001C0001000000110014000400000001010000000000100010000002006C0003000000000014000B00000001010000000000050B000000000018000B000000010200000000000F0200000001000000000038000B000000010A00000000000F0300000000040000D0F2E8F30326221C6FA597634AAF750F0A3D39E69A038DCBCB03656F6FAA71CA01010000000000050A00000001020000000000052000000021020000" />
+      <registryValue name="RpcExceptionFilterMode" valueType="REG_DWORD" value="0x00000000" />
+      <registryValue name="COM_UnmarshalingPolicy" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="AuthenticationCapabilities" valueType="REG_DWORD" value="0x00000000" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\SafeBoot\Minimal\CBDHSvc">
+      <registryValue name="" valueType="REG_SZ" value="Service" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\SafeBoot\Network\CBDHSvc">
+      <registryValue name="" valueType="REG_SZ" value="Service" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\Software\Microsoft\WindowsRuntime\Server\CBDHSvc">
+      <registryValue name="ServerType" valueType="REG_DWORD" value="0x00000002" />
+      <registryValue name="Permissions" valueType="REG_BINARY" value="010014806400000070000000140000003000000002001c000100000011001400040000000101000000000010001000000200340002000000000014000b00000001010000000000050b000000000018000b000000010200000000000f020000000100000001010000000000050a00000001020000000000052000000021020000" />
+      <registryValue name="ServiceName" valueType="REG_SZ" value="CBDHSvc" />
+      <registryValue name="IdentityType" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="Identity" valueType="REG_SZ" value="nt authority\localservice" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\Software\Microsoft\WindowsRuntime\ActivatableClassId\Windows.ApplicationModel.Internal.DataTransfer.ClipboardHistoryServer">
+      <registryValue name="TrustLevel" valueType="REG_DWORD" value="0x00000000" />
+      <registryValue name="ActivationType" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="Server" valueType="REG_SZ" value="CBDHSvc" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\Software\Microsoft\WindowsRuntime\ActivatableClassId\Windows.ApplicationModel.Internal.DataTransfer.ClipboardSettings">
+      <registryValue name="TrustLevel" valueType="REG_DWORD" value="0x00000000" />
+      <registryValue name="ActivationType" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="Server" valueType="REG_SZ" value="CBDHSvc" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\Software\Microsoft\WindowsRuntime\ActivatableClassId\Windows.ApplicationModel.Internal.DataTransfer.ClipboardSettingsProvider">
+      <registryValue name="TrustLevel" valueType="REG_DWORD" value="0x00000000" />
+      <registryValue name="ActivationType" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="Server" valueType="REG_SZ" value="CBDHSvc" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\Software\Microsoft\WindowsRuntime\ActivatableClassId\Windows.ApplicationModel.Internal.DataTransfer.ClipboardHistoryItemInternal">
+      <registryValue name="TrustLevel" valueType="REG_DWORD" value="0x00000000" />
+      <registryValue name="ActivationType" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="Server" valueType="REG_SZ" value="CBDHSvc" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\Software\Microsoft\WindowsRuntime\ActivatableClassId\Windows.ApplicationModel.Internal.DataTransfer.ClipboardOperationAppInfo">
+      <registryValue name="TrustLevel" valueType="REG_DWORD" value="0x00000000" />
+      <registryValue name="ActivationType" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="Server" valueType="REG_SZ" value="CBDHSvc" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\Software\Microsoft\WindowsRuntime\ActivatableClassId\Windows.ApplicationModel.Internal.DataTransfer.ClipboardSignalProducer">
+      <registryValue name="TrustLevel" valueType="REG_DWORD" value="0x00000000" />
+      <registryValue name="ActivationType" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="Server" valueType="REG_SZ" value="CBDHSvc" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\Software\Microsoft\WindowsRuntime\ActivatableClassId\Windows.ApplicationModel.Internal.DataTransfer.ClipboardViewManager">
+      <registryValue name="TrustLevel" valueType="REG_DWORD" value="0x00000000" />
+      <registryValue name="ActivationType" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="Server" valueType="REG_SZ" value="CBDHSvc" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\Software\Microsoft\WindowsRuntime\ActivatableClassId\WindowsInternal.SmartActionPlatform.SmartClipboardProxy">
+      <registryValue name="TrustLevel" valueType="REG_DWORD" value="0x00000000" />
+      <registryValue name="ActivationType" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="Server" valueType="REG_SZ" value="CBDHSvc" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\Software\Microsoft\WindowsRuntime\ActivatableClassId\Windows.ApplicationModel.Internal.DataTransfer.ClipboardBrokerProvider">
+      <registryValue name="TrustLevel" valueType="REG_DWORD" value="0x00000000" />
+      <registryValue name="ActivationType" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="Server" valueType="REG_SZ" value="CBDHSvc" />
+      <registryValue name="Permissions" valueType="REG_BINARY" value="010014809c000000a8000000140000003000000002001c0001000000110014000400000001010000000000100010000002006c0003000000000014000b00000001010000000000050b000000000018000b000000010200000000000f0200000001000000000038000b000000010a00000000000f0300000000040000d0f2e8f30326221c6fa597634aaf750f0a3d39e69a038dcbcb03656f6faa71ca01010000000000050a00000001020000000000052000000021020000" />
+    </registryKey>
+  </registryKeys>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="ClipboardUserServiceSecurity" sddl="D:(A;;CCLCSWRPWPDTLOCRRC;;;SY)(A;;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;BA)(A;;CCLCSWLOCRRC;;;IU)(A;;CCLCSWLOCRRC;;;SU)(A;;CR;;;AU)S:(AU;FA;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;WD)" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_REGKEY_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;CI;GA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;CI;GR;;;SY)(A;CI;GR;;;BA)(A;CI;GR;;;BU)(A;CI;GR;;;S-1-15-2-1)(A;CI;GR;;;S-1-15-3-1024-1065365936-1281604716-3511738428-1654721687-432734479-3232135806-4053264122-3456934681)" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" description="Default SDDL for Windows Resource Protected file" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+  <migration scope="Upgrade" settingsVersion="1">
+    <migXml xmlns="">
+      <rules context="User">
+        <include>
+          <objectSet>
+            <pattern type="File">%CSIDL_LOCAL_APPDATA%\Microsoft\Windows\Clipboard\Pinned\* [*]</pattern>
+            <pattern type="Registry">HKCU\SOFTWARE\Microsoft\Clipboard\* [*]</pattern>
+          </objectSet>
+        </include>
+      </rules>
+    </migXml>
+    <supportedComponents>
+      <supportedComponent>
+        <assemblyIdentity name="_" version="1.0.0.0" />
+        <supportedComponentIdentity language="neutral" name="Microsoft-Windows-Clipboard-UserService" processorArchitecture="*" settingsVersionRange="1" xmlns="urn:schemas-microsoft-com:asm.v3" />
+      </supportedComponent>
+    </supportedComponents>
+  </migration>
+</assembly>

@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved." xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <assemblyIdentity name="Product-onecore__Microsoft-Windows-SecureStartup-FilterDriver" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <dependency discoverable="no" resourceType="Resources">
+    <dependentAssembly dependencyType="prerequisite">
+      <assemblyIdentity name="Microsoft-Windows-SecureStartup-FilterDriver.Resources" version="10.0.22621.1" processorArchitecture="amd64" language="*" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+    </dependentAssembly>
+  </dependency>
+  <file name="fvevol.sys" destinationPath="$(runtime.drivers)\" sourceName="" importPath="$(build.nttree)\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>aM3bEJACxSL+1cvsVoiDoEjG6AvRlCta6UfTpfEjFvU=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <file name="dumpfve.sys" destinationPath="$(runtime.drivers)\" sourceName="" importPath="$(build.nttree)\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>RKw+/QJTFo8bMdpIiNZuAgdofP9QwUSxjmHNMkpoPk8=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <memberships>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories" version="1.0.0.0" publicKeyToken="365143bb27e7ac8b" typeName="BootCritical" />
+    </categoryMembership>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories.Services" version="10.0.22621.1" publicKeyToken="31bf3856ad364e35" typeName="Service" />
+      <categoryInstance>
+        <serviceData name="fvevol" displayName="@%SystemRoot%\system32\drivers\fvevol.sys,-100" errorControl="critical" start="boot" type="kernelDriver" description="@%SystemRoot%\system32\drivers\fvevol.sys,-100" group="PnP Filter" imagePath="System32\DRIVERS\fvevol.sys" tag="5" />
+      </categoryInstance>
+    </categoryMembership>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories" version="1.0.0.0" publicKeyToken="365143bb27e7ac8b" typeName="Storage Volume" />
+      <categoryInstance subcategory="LowerFilters">
+        <filter name="fvevol" position="first" />
+      </categoryInstance>
+    </categoryMembership>
+  </memberships>
+  <migration settingsVersion="0">
+    <machineSpecific>
+      <migXml xmlns="">
+        <rules context="System">
+          <include>
+            <objectSet>
+              <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Control\FVEStats\* [*]</pattern>
+              <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\fvevol [WriteIoAggregateMinSize]</pattern>
+              <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\fvevol [WriteIoAggregateMaxSize]</pattern>
+              <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\fvevol [BytesDecryptedInDiskRequestOverhead]</pattern>
+              <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\fvevol [WriteSubrequestLength]</pattern>
+              <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\fvevol [MaxEncryptRequests]</pattern>
+              <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\fvevol [MaxDecryptRequests]</pattern>
+              <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\fvevol [MaxCryptoRequestsPerIo]</pattern>
+              <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Control\BitLocker [SlicedEncryptionMinSize]</pattern>
+              <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Control\BitLocker [SlicedEncryptionInPlace]</pattern>
+              <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Control\BitLocker [SlicedEncryptionRequestsMax]</pattern>
+              <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Control\BitLocker [PreventDeviceEncryption]</pattern>
+              <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management [ModifiedWriteMaximum]</pattern>
+              <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Control\BitLocker [NvcUserDataAllow]</pattern>
+            </objectSet>
+          </include>
+        </rules>
+        <rules context="User">
+          <include>
+            <objectSet>
+              <pattern type="Registry">HKCU\Software\Microsoft\Windows\CurrentVersion\FveAutoUnlock\* [*]</pattern>
+            </objectSet>
+          </include>
+        </rules>
+      </migXml>
+    </machineSpecific>
+    <supportedComponents>
+      <supportedComponent>
+        <assemblyIdentity name="_" version="1.0.0.0" />
+        <supportedComponentIdentity language="neutral" name="Microsoft-Windows-SecureStartup-FilterDriver" processorArchitecture="*" settingsVersionRange="0" xmlns="urn:schemas-microsoft-com:asm.v3" />
+      </supportedComponent>
+    </supportedComponents>
+  </migration>
+  <asmv3:configuration xmlns:app="Microsoft-Windows-DeviceEncryption-DriverParams" xmlns:asmv3="urn:schemas-microsoft-com:asm.v3" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State">
+    <asmv3:configurationSchema>
+      <xsd:schema xmlns="Microsoft-Windows-DeviceEncryption-DriverParams" targetNamespace="Microsoft-Windows-DeviceEncryption-DriverParams">
+        <xsd:element name="PreventDeviceEncryption" type="xsd:boolean" wcm:description="When set to true, automatic Device Encryption will be disabled for the target machine." wcm:handler="regkey('HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\BitLocker')" wcm:legacyName="PreventDeviceEncryption" wcm:legacyType="REG_DWORD" wcm:passes="offlineServicing specialize oobeSystem auditSystem" wcm:scope="allUsers" wcm:visible="true" />
+        <xsd:element name="NvcUserDataAllow" type="xsd:boolean" wcm:description="On systems that use non-volitale cache (such as Intel RST) support policy to allow user data to stay in the cache during conversion to improve responsiveness of the system as compromise with security of user data in the backing store." wcm:handler="regkey('HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\BitLocker')" wcm:legacyName="NvcUserDataAllow" wcm:legacyType="REG_DWORD" wcm:passes="offlineServicing specialize oobeSystem auditSystem" wcm:scope="allUsers" wcm:visible="true" />
+      </xsd:schema>
+    </asmv3:configurationSchema>
+  </asmv3:configuration>
+  <instrumentation xmlns:fve="http://manifests.microsoft.com/win/2004/08/windows/fve" xmlns:win="http://manifests.microsoft.com/win/2004/08/windows/events">
+    <events xmlns="http://schemas.microsoft.com/win/2004/08/events">
+      <provider guid="{651DF93B-5053-4D1E-94C5-F6E6D25908D0}" message="$(string.BitLockerDriverProviderName)" messageFileName="%SystemRoot%\system32\drivers\fvevol.sys" name="Microsoft-Windows-BitLocker-Driver" resourceFileName="%SystemRoot%\system32\drivers\fvevol.sys" symbol="S_WindowsDriveEncryption">
+        <channels>
+          <importChannel chid="System" name="System" />
+        </channels>
+      </provider>
+      <provider guid="{1DE130E1-C026-4CBF-BA0F-AB608E40AEEA}" message="$(string.BitLockerDriverPerformanceProviderName)" messageFileName="%SystemRoot%\system32\drivers\fvevol.sys" name="Microsoft-Windows-BitLocker-Driver-Performance" resourceFileName="%SystemRoot%\system32\drivers\fvevol.sys" symbol="FVE_PERF_TRACE_PROVIDER">
+        <channels>
+          <channel chid="defch" name="Microsoft-Windows-BitLocker-Driver-Performance/Operational" type="Analytic" />
+        </channels>
+      </provider>
+      <cmi />
+    </events>
+    <counters xmlns="http://schemas.microsoft.com/win/2005/12/counters" schemaVersion="2.0">
+      <provider applicationIdentity="%systemroot%\system32\drivers\fvevol.sys" callback="custom" providerGuid="{CC549940-0EDF-41B1-8298-74C2627B6AF9}" providerName="Microsoft-Windows-BitLockerDriverCountersProvider" providerType="kernelMode">
+        <counterSet description="BitLocker Drive Encryption performance counters" descriptionID="50003" guid="{35A002B8-38A7-41EB-BEDD-6610BB93F046}" instances="multiple" name="BitLocker" nameID="50001" symbol="BdeFilterCounters" uri="Microsoft.Windows.BitLocker.BdeFilterCounters">
+          <structs>
+            <struct name="BdeFilterCounterValues" type="FVE_PERF_COUNTER_VALUES" />
+          </structs>
+          <counter defaultScale="-4" description="Minimum read buffer split size in bytes during last interval" descriptionID="50007" detailLevel="standard" field="ReadSplitSizeMin" id="1" name="Min Read Split Size" nameID="50005" struct="BdeFilterCounterValues" type="perf_counter_rawcount" uri="Microsoft.Windows.BitLocker.BdeFilterCounters.ReadSplitSizeMin">
+            <counterAttributes>
+              <counterAttribute name="reference" />
+            </counterAttributes>
+          </counter>
+          <counter defaultScale="-4" description="Maximum read buffer split size in bytes during last interval" descriptionID="50011" detailLevel="standard" field="ReadSplitSizeMax" id="2" name="Max Read Split Size" nameID="50009" struct="BdeFilterCounterValues" type="perf_counter_rawcount" uri="Microsoft.Windows.BitLocker.BdeFilterCounters.ReadSplitSizeMax">
+            <counterAttributes>
+              <counterAttribute name="reference" />
+            </counterAttributes>
+          </counter>
+          <counter defaultScale="-4" description="Minimum write buffer split size in bytes during last interval" descriptionID="50015" detailLevel="standard" field="WriteSplitSizeMin" id="3" name="Min Write Split Size" nameID="50013" struct="BdeFilterCounterValues" type="perf_counter_rawcount" uri="Microsoft.Windows.BitLocker.BdeFilterCounters.WriteSplitSizeMin">
+            <counterAttributes>
+              <counterAttribute name="reference" />
+            </counterAttributes>
+          </counter>
+          <counter defaultScale="-4" description="Maximum write buffer split size in bytes during last interval" descriptionID="50019" detailLevel="standard" field="WriteSplitSizeMax" id="4" name="Max Write Split Size" nameID="50017" struct="BdeFilterCounterValues" type="perf_counter_rawcount" uri="Microsoft.Windows.BitLocker.BdeFilterCounters.WriteSplitSizeMax">
+            <counterAttributes>
+              <counterAttribute name="reference" />
+            </counterAttributes>
+          </counter>
+          <counter description="Number of read requests received over the last second" descriptionID="50023" detailLevel="standard" field="ReadRequestCount" id="5" name="Read Requests/sec" nameID="50021" struct="BdeFilterCounterValues" type="perf_counter_bulk_count" uri="Microsoft.Windows.BitLocker.BdeFilterCounters.ReadRequestCount">
+            <counterAttributes>
+              <counterAttribute name="reference" />
+            </counterAttributes>
+          </counter>
+          <counter description="Number of read subrequests issued over the last second" descriptionID="50027" detailLevel="standard" field="ReadSubRequestCount" id="6" name="Read Subrequests/sec" nameID="50025" struct="BdeFilterCounterValues" type="perf_counter_bulk_count" uri="Microsoft.Windows.BitLocker.BdeFilterCounters.ReadSubRequestCount">
+            <counterAttributes>
+              <counterAttribute name="reference" />
+            </counterAttributes>
+          </counter>
+          <counter description="Number of write requests received over the last second" descriptionID="50031" detailLevel="standard" field="WriteRequestCount" id="7" name="Write Requests/sec" nameID="50029" struct="BdeFilterCounterValues" type="perf_counter_bulk_count" uri="Microsoft.Windows.BitLocker.BdeFilterCounters.WriteRequestCount">
+            <counterAttributes>
+              <counterAttribute name="reference" />
+            </counterAttributes>
+          </counter>
+          <counter description="Number of write subrequests issued over the last second" descriptionID="50035" detailLevel="standard" field="WriteSubRequestCount" id="8" name="Write Subrequests/sec" nameID="50033" struct="BdeFilterCounterValues" type="perf_counter_bulk_count" uri="Microsoft.Windows.BitLocker.BdeFilterCounters.WriteSubRequestCount">
+            <counterAttributes>
+              <counterAttribute name="reference" />
+            </counterAttributes>
+          </counter>
+        </counterSet>
+      </provider>
+    </counters>
+  </instrumentation>
+  <registryKeys>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\CrashControl">
+      <registryValue name="DumpFilters" valueType="REG_MULTI_SZ" value="&quot;dumpfve.sys&quot;" operationHint="replace" />
+      <overridable name="DumpFilters" scope="Microsoft" type="REG_MULTI_SZ" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Eventlog\System\fvevol">
+      <registryValue name="ProviderGuid" valueType="REG_EXPAND_SZ" value="{651DF93B-5053-4D1E-94C5-F6E6D25908D0}" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\fvevol\Parameters">
+      <registryValue name="StorageSupportedFeatures" valueType="REG_DWORD" value="0x00000001" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\BackupRestore\FilesNotToBackup">
+      <registryValue name="FVE_Control" valueType="REG_MULTI_SZ" value="&quot;\System Volume Information\FVE.{e40ad34d-dae9-4bc7-95bd-b16218c10f72}.*&quot;" />
+      <registryValue name="FVE2_Control" valueType="REG_MULTI_SZ" value="&quot;\System Volume Information\FVE2.{e40ad34d-dae9-4bc7-95bd-b16218c10f72}.*&quot;" />
+      <registryValue name="FVE_Log" valueType="REG_MULTI_SZ" value="&quot;\System Volume Information\FVE.{c9ca54a3-6983-46b7-8684-a7e5e23499e3}&quot;" />
+      <registryValue name="FVE2_Log" valueType="REG_MULTI_SZ" value="&quot;\System Volume Information\FVE2.{c9ca54a3-6983-46b7-8684-a7e5e23499e3}&quot;" />
+      <registryValue name="FVE_Wipe" valueType="REG_MULTI_SZ" value="&quot;\System Volume Information\FVE.{9ef82dfa-1239-4a30-83e6-3b3e9b8fed08}&quot;" />
+      <registryValue name="FVE2_Wipe" valueType="REG_MULTI_SZ" value="&quot;\System Volume Information\FVE2.{9ef82dfa-1239-4a30-83e6-3b3e9b8fed08}&quot;" />
+      <registryValue name="FVE2_WipeX" valueType="REG_MULTI_SZ" value="&quot;\System Volume Information\FVE2.{9ef82dfa-1239-4a30-83e6-3b3e9b8fed08}.*&quot;" />
+      <registryValue name="FVE2_VBB" valueType="REG_MULTI_SZ" value="&quot;\System Volume Information\FVE2.{24e6f0ae-6a00-4f73-984b-75ce9942852d}&quot;" />
+      <registryValue name="FVE2_WipeInfo" valueType="REG_MULTI_SZ" value="&quot;\System Volume Information\FVE2.{aff97bac-a69b-45da-aba1-2cfbce434750}.*&quot;" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\BackupRestore\FilesNotToSnapshot">
+      <registryValue name="FVE" valueType="REG_MULTI_SZ" value="&quot;$AllVolumes$\System Volume Information\FVE.{9ef82dfa-1239-4a30-83e6-3b3e9b8fed08}&quot;" />
+      <registryValue name="FVE2_Wipe" valueType="REG_MULTI_SZ" value="&quot;$AllVolumes$\System Volume Information\FVE2.{9ef82dfa-1239-4a30-83e6-3b3e9b8fed08}&quot;" />
+      <registryValue name="FVE2_WipeX" valueType="REG_MULTI_SZ" value="&quot;$AllVolumes$\System Volume Information\FVE2.{9ef82dfa-1239-4a30-83e6-3b3e9b8fed08}.*&quot;" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\BitLocker">
+      <registryValue name="IsBdeDriverPresent" valueType="REG_DWORD" value="0x00000001" />
+    </registryKey>
+  </registryKeys>
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string id="displayName0" value="BitLocker Drive Encryption Filter Driver" />
+        <string id="description1" value="BitLocker Drive Encryption Filter Driver ensures that the encrypted volume can be accessed by the current OS" />
+        <string id="displayName2" value="WRP_FILE_DEFAULT_SDDL" />
+        <string id="description3" value="Default SDDL for Windows Resource Protected file" />
+        <string id="BitLockerDriverProviderName" value="Microsoft-Windows-BitLocker-Driver" />
+        <string id="BitLockerDriverPerformanceProviderName" value="Microsoft-Windows-BitLocker-Driver-Performance" />
+        <string id="event_FVE_ENCRYPT_START" value="Encryption of volume %2 started." />
+        <string id="event_FVE_ENCRYPT_DATAONLY_START" value="Encryption of the used space on volume %2 started." />
+        <string id="event_FVE_ENCRYPT_STOP" value="Encryption of volume %2 stopped." />
+        <string id="event_FVE_ENCRYPT_DATAONLY_STOP" value="Encryption of the used space on volume %2 stopped." />
+        <string id="event_FVE_ENCRYPT_COMPLETE" value="Encryption of volume %2 completed." />
+        <string id="event_FVE_ENCRYPT_DATAONLY_COMPLETE" value="Encryption of the used space on volume %2 completed." />
+        <string id="event_FVE_WIPE_START" value="Wiping of free space on volume %2 started." />
+        <string id="event_FVE_WIPE_STOP" value="Wiping of free space on volume %2 stopped." />
+        <string id="event_FVE_WIPE_COMPLETE" value="Wiping of free space on volume %2 completed." />
+        <string id="event_FVE_DECRYPT_START" value="Decryption of volume %2 started." />
+        <string id="event_FVE_DECRYPT_STOP" value="Decryption of volume %2 stopped." />
+        <string id="event_FVE_DECRYPT_COMPLETE" value="Decryption of volume %2 completed." />
+        <string id="event_FVE_CONV_RESUME" value="Conversion worker thread for volume %2 was started." />
+        <string id="event_FVE_CONV_PAUSE" value="Conversion worker thread for volume %2 was temporarily stopped." />
+        <string id="event_FVE_AUTOUNLOCK_ENABLE_OK" value="Auto-unlock enabled for volume %2." />
+        <string id="event_FVE_CONV_ERROR" value="An error was encountered converting volume %2." />
+        <string id="event_FVE_AUTOUNLOCK_DISABLE_OK" value="Auto-unlock disabled for volume %2." />
+        <string id="event_FVE_CONV_SECTOR_ERROR" value="The conversion operation on volume %2 encountered a bad sector error. Please validate the data on this volume." />
+        <string id="event_FVE_AUTOUNLOCK_ENABLE_ERROR" value="Failed to enable auto-unlock for volume %2." />
+        <string id="event_FVE_AUTOUNLOCK_DISABLE_ERROR" value="Failed to disable auto-unlock for volume %2." />
+        <string id="event_FVE_AUTOUNLOCK_ERROR" value="Auto-unlocking failed for volume %2." />
+        <string id="event_FVE_CONV_AUTO_START_FAILURE" value="An attempt to automatically restart conversion on volume %2 failed." />
+        <string id="event_FVE_METADATA_DISK_FAILED_WRITE_ERROR" value="Metadata write: Volume %2 returning errors while trying to modify metadata. If failures continue, decrypt volume." />
+        <string id="event_FVE_METADATA_REBUILD_DATA_LOSS_ERROR" value="Metadata rebuild: An attempt to write a copy of metadata on volume %2 failed and may appear as disk corruption. If failures continue, decrypt volume." />
+        <string id="event_FVE_CONV_BAD_CLUSTERS_SKIPPED" value="Volume %2 contains bad clusters. These clusters will be skipped during conversion." />
+        <string id="event_FVE_KEYRING_KEYFILE_NOT_FOUND" value="Bootmgr failed to find a BitLocker key file for Volume %2." />
+        <string id="event_FVE_KEYRING_KEYFILE_CORRUPT" value="Bootmgr detected corruption in the BitLocker key file for Volume %2." />
+        <string id="event_FVE_KEYRING_KEYFILE_NO_VMK" value="Bootmgr failed to obtain the BitLocker volume master key from the key file contents." />
+        <string id="event_FVE_KEYRING_TPM_DISABLED" value="Bootmgr determined that the TPM is disabled." />
+        <string id="event_FVE_KEYRING_TPM_INVALID_SRK" value="Bootmgr determined that the authorization data for the SRK of the TPM is incompatible with BitLocker." />
+        <string id="event_FVE_KEYRING_TPM_INVALID_PCR" value="Bootmgr failed to obtain the BitLocker volume master key from the TPM because the PCRs did not match." />
+        <string id="event_FVE_KEYRING_SECUREBOOT_DISABLED" value="Bootmgr failed to obtain the BitLocker volume master key from the TPM because Secure Boot was disabled." />
+        <string id="event_FVE_KEYRING_SECUREBOOT_CONFIG_CHANGE" value="Bootmgr failed to obtain the BitLocker volume master key from the TPM because Secure Boot configuration changed unexpectedly." />
+        <string id="event_FVE_KEYRING_TPM_NO_VMK" value="Bootmgr failed to obtain the BitLocker volume master key from the TPM." />
+        <string id="event_FVE_KEYRING_PIN_INVALID" value="Bootmgr failed to obtain the BitLocker volume master key from the TPM + PIN." />
+        <string id="event_FVE_KEYRING_ENH_PIN_INVALID" value="Bootmgr failed to obtain the BitLocker volume master key from the TPM + enhanced PIN." />
+        <string id="event_FVE_KEYRING_INVALID_APPLICATION" value="A boot application hash did not match the expected value during restart." />
+        <string id="event_FVE_KEYRING_INVALID_CONFIG" value="The boot configuration options did not match expected values during restart." />
+        <string id="event_FVE_KEYRING_KEY_OBTAINED" value="A valid BitLocker key was found during the last restart." />
+        <string id="event_FVE_KEYRING_GOT_KEY" value="A valid BitLocker key was found during the last restart." />
+        <string id="event_FVE_KEYRING_PASSWORD_INVALID" value="Bootmgr failed to obtain the BitLocker volume master key from the recovery password." />
+        <string id="event_FVE_KEYRING_UNEXPECTED" value="An unexpected error was encountered attempting to retrieve the BitLocker volume master key during restart." />
+        <string id="event_FVE_KEYRING_KEY_UNAVAILABLE" value="A key was not available from required sources during restart." />
+        <string id="event_FVE_KEYRING_NETWORK_ERROR" value="Bootmgr failed to obtain the BitLocker volume master key due to network error." />
+        <string id="event_FVE_METADATA_PARTIAL_COMMIT" value="Metadata commit: Not all copies of metadata on volume %2 could be written. If failures continue, decrypt volume." />
+        <string id="event_FVE_METADATA_FAILED_COMMIT" value="Metadata commit: No copies of metadata on volume %2 could be written. If failures continue, decrypt volume." />
+        <string id="event_FVE_METADATA_DISK_FAILED_FLUSH_ERROR" value="Metadata commit: Metadata update could not be flushed." />
+        <string id="event_FVE_METADATA_DISK_FAILED_READBACK_ERROR" value="Metadata commit: An attempt to verify metadata update on volume %2 failed at read. If failures continue, decrypt volume." />
+        <string id="event_FVE_METADATA_DISK_FAILED_VERIFY_ERROR" value="Metadata commit: Update verification of metadata on volume %2 failed. If failures continue, decrypt volume." />
+        <string id="event_FVE_METADATA_CORRUPT_ERROR" value="Metadata initial read: Primary metadata record on volume %2 could not be found. Volume needs recovery." />
+        <string id="event_FVE_METADATA_FAILOVER_FAILED" value="Metadata initial read: Failover metadata record on volume %2 could not be found. Volume needs recovery." />
+        <string id="event_FVE_METADATA_FAILOVER" value="Metadata initial read: Failover metadata record on volume %2 used. If failures continue, decrypt volume." />
+        <string id="event_FVE_METADATA_SUBSET" value="Metadata check: Metadata record on volume %2 could not be read and has been marked for rebuild. If failures continue, decrypt volume." />
+        <string id="event_FVE_METADATA_REBUILD_DROP" value="Metadata rebuild: An attempt build a new set of metadata on %2 failed at commit and may appear as disk corruption. If failures continue, decrypt volume." />
+        <string id="event_FVE_INIT_FAILED_ERROR" value="Encrypted volume check: Volume information on %2 cannot be read." />
+        <string id="event_FVE_CONV_RECOVERING" value="Initial state check: Rolling volume conversion transaction on %2." />
+        <string id="event_FVE_MOR_BIT_WAIT_INIT_ERROR" value="BIOS/TCG Memory Overwrite Control: Error finding TPM driver." />
+        <string id="event_FVE_MOR_BIT_RUN_INIT_ERROR" value="BIOS/TCG Memory Overwrite Control: Error registering TPM device interface." />
+        <string id="event_FVE_MOR_BIT_SET_ERROR" value="BIOS/TCG Memory Overwrite Control: Error changing value." />
+        <string id="event_FVE_AUTOUNLOCK_NO_MASTER_KEY" value="The auto-unlock master key was not available from the operating system volume.  Retry the operation via the BitLocker WMI interface." />
+        <string id="event_FVE_KEYRING_DEBUGGER_ENABLED" value="Boot debugging is enabled on Bootmgr so TPM based keys cannot be obtained." />
+        <string id="event_FVE_KEYRING_BAD_PARTITION_SIZE" value="The partition size specified in the partition table is smaller than the size of the file system contained by that partition.  BitLocker TPM based keys cannot be used until the size of the partition calculated from the partition table is consistent with the size of the file system calculated from the bytes per sector and number of sectors fields in the boot sector." />
+        <string id="event_FVE_KEYRING_MOR_FAILED" value="The system firmware failed to enable overwriting of system memory on restart. The firmware should be upgraded." />
+        <string id="event_FVE_KEYRING_KEYFILE_NOT_FOUND_LEGACY" value="No key file was found for Volume %2 during restart." />
+        <string id="event_FVE_KEYRING_KEYFILE_CORRUPT_LEGACY" value="A corrupt key file was encountered for Volume %2 during restart." />
+        <string id="event_FVE_KEYRING_KEYFILE_NO_VMK_LEGACY" value="No volume master key was retrieved in a key file during restart." />
+        <string id="event_FVE_KEYRING_TPM_DISABLED_LEGACY" value="The TPM was not enabled during restart." />
+        <string id="event_FVE_KEYRING_TPM_INVALID_SRK_LEGACY" value="The SRK was found to be invalid during restart." />
+        <string id="event_FVE_KEYRING_TPM_INVALID_PCR_LEGACY" value="The PCRs did not match during restart." />
+        <string id="event_FVE_KEYRING_TPM_NO_VMK_LEGACY" value="No volume master key was retrieved from a key file during restart." />
+        <string id="event_FVE_KEYRING_PIN_INVALID_LEGACY" value="No volume master key was retrieved from a PIN during restart." />
+        <string id="event_FVE_KEYRING_INVALID_APPLICATION_LEGACY" value="A boot application hash did not match expected value during restart." />
+        <string id="event_FVE_KEYRING_GOT_KEY_LEGACY" value="A valid key was found during the last restart." />
+        <string id="event_FVE_KEYRING_PASSWORD_INVALID_LEGACY" value="No volume master key was retrieved from a recovery password during restart." />
+        <string id="event_FVE_KEYRING_UNEXPECTED_LEGACY" value="An unexpected error was encountered attempting to retrieve the volume master key during restart." />
+        <string id="event_FVE_FIPS_TEST_ERROR" value="An internal BitLocker self-test failed for drive %2. BitLocker cannot continue encrypting data. Contact your system administrator." />
+        <string id="event_FVE_SWITCH_TO_FILTERING_ERROR" value="An internal BitLocker self-test failed for drive %2 when switching from raw mode to filtering mode. BitLocker cannot continue encrypting data on this drive. Contact your system administrator." />
+        <string id="event_FVE_KEYRING_NKP_INVALID" value="Bootmgr failed to obtain the BitLocker volume master key from the network key protector." />
+        <string id="event_FVE_KEYRING_PASSWORD_USED" value="A recovery password was used to start Windows.%nProtector ID: %5." />
+        <string id="event_FVE_KEYRING_PASSPHRASE_INVALID" value="Bootmgr failed to obtain the BitLocker volume master key from the password." />
+        <string id="event_FVE_KEYRING_RECOVERY_PASSWORD_USED" value="A recovery key was used to start Windows.%nProtector ID: %5." />
+        <string id="event_FVE_SELFHEALING_START" value="The BitLocker driver has started a self-healing operation on the metadata of volume %2." />
+        <string id="event_FVE_SELFHEALING_COMPLETE" value="The BitLocker driver has successfully completed a self-healing operation on the metadata of volume %2." />
+        <string id="event_FVE_KEYRING_DEVICE_LOCKEDOUT" value="Device Lock was triggered due to too many incorrect password attempts." />
+        <string id="event_FVE_EOW_START" value="BitLocker encryption on write started for volume %2." />
+        <string id="event_FVE_EOW_FS_SWEEP_START" value="BitLocker free space sweep started for volume %2." />
+        <string id="event_FVE_EOW_FS_SWEEP_STOP" value="BitLocker free space sweep stopped for volume %2." />
+        <string id="event_FVE_EOW_FS_SWEEP_COMPLETE" value="BitLocker free space sweep completed for volume %2." />
+        <string id="event_FVE_EOW_SWEEP_START" value="BitLocker finalization sweep started for volume %2." />
+        <string id="event_FVE_EOW_SWEEP_PAUSED" value="BitLocker finalization sweep paused for volume %2." />
+        <string id="event_FVE_EOW_SWEEP_RESUMED" value="BitLocker finalization sweep resumed for volume %2." />
+        <string id="event_FVE_EOW_SWEEP_COMPLETE" value="BitLocker finalization sweep completed for volume %2." />
+        <string id="event_FVE_EOW_START_IO_ERROR" value="BitLocker encryption on write failed for volume %2 due to disk I/O error. Check the disk for bad sectors." />
+        <string id="event_FVE_EOW_SWEEP_FAILED" value="BitLocker finalization sweep failed for volume %2 due to disk I/O error. Check the disk for bad sectors." />
+        <string id="event_FVE_NVC_CANNOT_CONTROL_WRITE_BACK_CACHING" value="Disk containing volume %2 is employing non-volatile caching software which does not support control over its caching policies. This may temporarily impact BitLocker's ability to fully secure your data." />
+        <string id="event_FVE_NVC_UNEXPECTED_WRITE_BACK_CACHING" value="Disk containing volume %2 is employing non-volatile caching software which is experiencing problems. This may temporarily impact BitLocker's ability to fully secure your data. Contact disk manufacturer for an updated software." />
+        <string id="event_FVE_KEYRING_DEVICE_LOCKOUT_MISMATCH" value="Device Lock was triggered due to Device Lockout state validation failure." />
+        <string id="event_FVE_VOLUME_MANAGEMENT_CHANGED_BITLOCKER" value="Drive %2 is no longer automatically managed by device encryption." />
+        <string id="event_FVE_VOLUME_MANAGEMENT_CHANGED_DE" value="Drive %2 is now automatically managed by device encryption." />
+        <string id="event_FVE_WIM_HASHING_PAUSED" value="WIM hash generation paused for volume %2." />
+        <string id="event_FVE_WIM_HASHING_RESUMED" value="WIM hash generation resumed for volume %2." />
+        <string id="event_FVE_WIM_HASHING_COMPLETE" value="WIM hash generation completed for volume %2." />
+        <string id="event_FVE_WIM_HASHING_FAILED" value="WIM hash generation failed for volume %2." />
+        <string id="event_FVE_WIM_HASHES_DELETE" value="WIM hashes will be deleted for volume %2." />
+        <string id="event_FVE_KEYRING_UNSEAL_BY_TPM" value="Bootmgr failed to unseal VMK using the TPM" />
+        <string id="event_FVE_KEYRING_NKP_GET_PROTOCOL_HANDLE" value="Bootmgr failed to obtain the BitLocker volume master key from the network key protector: failed to acquire protocol handle." />
+        <string id="event_FVE_KEYRING_NKP_REQUEST_IP_ADDRESS" value="Bootmgr failed to obtain the BitLocker volume master key from the network key protector: failed to get IP address." />
+        <string id="event_FVE_KEYRING_NKP_CREATE_REQUEST" value="Bootmgr failed to obtain the BitLocker volume master key from the network key protector: failed to create request." />
+        <string id="event_FVE_KEYRING_NKP_SEND_REQUEST" value="Bootmgr failed to obtain the BitLocker volume master key from the network key protector: failed to send request." />
+        <string id="event_FVE_KEYRING_NKP_PARSE_RESPONSE" value="Bootmgr failed to obtain the BitLocker volume master key from the network key protector: invalid response." />
+        <string id="event_FVE_KEYRING_NO_VMK_FROM_NBP" value="Bootmgr failed to obtain the BitLocker volume master key from the network boot protector." />
+        <string id="event_FVE_EDRIVE_SUPPORT_STACK_TIMEDOUT" value="BitLocker timed out attempting to enumerate bands during volume discovery on this hardware encrypting drive." />
+        <string id="event_FVE_METADATA_LOGICAL_COPY_READ_FAIL" value="Failed to read metadata from logical copy. Volume: %2, Start Offset: %3, Read Length: %4, Copy: %5, Number of Copies:%6" />
+        <string id="event_FVE_METADATA_LOGICAL_COPY_READ" value="Attempted to read metadata from logical copy. Volume: %2, Start Offset: %3, Read Length: %4, Copy: %5, Number of Copies:%6" />
+        <string id="event_FVE_METADATA_LOGICAL_COPY_MATCH_FAIL" value="Failed to verify metadata logical copy against Primary. Volume: %2, Start Offset: %3, Read Length: %4, Copy: %5, Number of Copies:%6" />
+        <string id="event_FVE_METADATA_REPAIR_NEEDED" value="Failed to verify metadata file against Primary copy. Volume: %2, Start Offset: %3, Read Length: %4, Copy: %5, Number of Copies:%6" />
+        <string id="event_FVE_METADATA_WORKER_REGISTER_FAIL" value="Failed to register metadata check worker. Volume: %2" />
+        <string id="event_FVE_METADATA_CHECK_WORKER_START" value="Metadata check worker started. Volume: %2" />
+        <string id="event_FVE_METADATA_CHECK_WORKER_END" value="Metadata check worker completed. Volume: %2" />
+        <string id="event_FVE_METADATA_ALLOCATED" value="Successfully created metadata file. Volume: %2, Offset: %3, Read Length: %4, Copy: %5, Number of Copies: %6, TpAllocationSize: %7" />
+        <string id="event_FVE_METADATA_READ_FAIL" value="Failed to read a valid metadata copy. Volume: %2, Start Offset: %3, Index: %5" />
+        <string id="event_FVE_METADATA_LOGICAL_COPY_FIX_FAIL" value="Failed to fix metadata logical copy. Volume: %2, Start Offset: %3,  Read Length: %4, Source Index: %5, Number of Copies: %6, TpAllocationSize: %7" />
+        <string id="event_FVE_CHECK_METADATA_LOGICAL_COPIES" value="Attempted to check metadata logical copies. Volume: %2, ManageFlags: %3" />
+        <string id="event_FVE_FIX_METADATA_LOGICAL_COPIES" value="Attempted to fix metadata logical copies. Volume: %2, ManageFlags: %3" />
+        <string id="event_FVE_METADATA_LOGICAL_COPY_FIX_SUCCESS" value="Successfully fixed metadata logical copy. Volume: %2, Start Offset: %3,  Read Length: %4, Source Index: %5, Number of Copies: %6, TpAllocationSize: %7" />
+        <string id="event_FVE_RDV_DEVICE_EXCLUDED_FROM_BDE" value="Volume %2 has been excluded from device encryption by BitLocker Drive Encryption policy. Excluded Hardware ID: '%3'" />
+        <string id="event_FVE_READ_ONLY_POLICY_ENFORCED" value="Read-only BitLocker Drive Encryption policy has been applied to volume %2." />
+        <string id="event_FVE_CHECK_RDV_EXCLUSION_LIST_ERROR" value="Failed to determine whether volume %2 should be excluded from enforcement by BitLocker Drive Encryption policy." />
+      </stringTable>
+    </resources>
+  </localization>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" description="Default SDDL for Windows Resource Protected file" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+</assembly>

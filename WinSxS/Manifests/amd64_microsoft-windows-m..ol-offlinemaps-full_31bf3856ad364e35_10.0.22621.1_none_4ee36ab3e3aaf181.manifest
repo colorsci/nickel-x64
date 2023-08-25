@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-MapControl-OfflineMaps-Full" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="MOSHOST_SERVICE_SDDL" sddl="D:(A;;GRCR;;;IU)(A;;GRCR;;;SU)(A;;0x111FFFFF;;;SY)(A;;0x111FFFFF;;;BA)(A;;RPLC;;;AU)(A;;RPLC;;;AC)" operationHint="replace" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+  <memberships>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories.Services" version="10.0.22621.1" publicKeyToken="31bf3856ad364e35" typeName="Service" />
+      <categoryInstance>
+        <serviceData name="MapsBroker" displayName="@%SystemRoot%\System32\moshost.dll,-100" errorControl="normal" start="delayedAuto" type="win32OwnProcess" description="@%SystemRoot%\System32\moshost.dll,-101" dependOnService="rpcss" group="NetworkService" imagePath="%SystemRoot%\System32\svchost.exe -k NetworkService -p" objectName="NT AUTHORITY\NetworkService" requiredPrivileges="SeImpersonatePrivilege" sidType="unrestricted">
+          <securityDescriptor name="MOSHOST_SERVICE_SDDL" />
+        </serviceData>
+      </categoryInstance>
+    </categoryMembership>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories" version="1.0.0.0" publicKeyToken="365143bb27e7ac8b" typeName="SvcHost" />
+      <categoryInstance subcategory="NetworkService">
+        <serviceGroup position="last" serviceName="MapsBroker" />
+      </categoryInstance>
+    </categoryMembership>
+  </memberships>
+  <taskScheduler>
+    <Task xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task">
+      <RegistrationInfo>
+        <Date>2014-11-05T00:00:00</Date>
+        <Author>$(@%SystemRoot%\system32\mapsupdatetask.dll,-600)</Author>
+        <Description>$(@%SystemRoot%\system32\mapsupdatetask.dll,-602)</Description>
+        <URI>\Microsoft\Windows\Maps\MapsUpdateTask</URI>
+        <SecurityDescriptor>D:(A;;0x111FFFFF;;;SY)(A;;0x111FFFFF;;;BA)(A;;0x111FFFFF;;;S-1-5-80-3028837079-3186095147-955107200-3701964851-1150726376)(A;;FRFX;;;NS)(A;;FRFX;;;AU)</SecurityDescriptor>
+      </RegistrationInfo>
+      <Triggers>
+        <TimeTrigger>
+          <StartBoundary>2014-10-21T00:00:00</StartBoundary>
+          <Enabled>true</Enabled>
+          <Repetition>
+            <Interval>PT24H</Interval>
+          </Repetition>
+          <RandomDelay>PT2H</RandomDelay>
+        </TimeTrigger>
+      </Triggers>
+      <Principals>
+        <Principal id="NetworkService">
+          <GroupId>S-1-5-20</GroupId>
+          <RunLevel>LeastPrivilege</RunLevel>
+        </Principal>
+      </Principals>
+      <Settings>
+        <UseUnifiedSchedulingEngine>true</UseUnifiedSchedulingEngine>
+        <MultipleInstancesPolicy>IgnoreNew</MultipleInstancesPolicy>
+        <DisallowStartIfOnBatteries>true</DisallowStartIfOnBatteries>
+        <StopIfGoingOnBatteries>true</StopIfGoingOnBatteries>
+        <AllowHardTerminate>true</AllowHardTerminate>
+        <StartWhenAvailable>true</StartWhenAvailable>
+        <RunOnlyIfNetworkAvailable>true</RunOnlyIfNetworkAvailable>
+        <IdleSettings>
+          <StopOnIdleEnd>true</StopOnIdleEnd>
+          <RestartOnIdle>false</RestartOnIdle>
+        </IdleSettings>
+        <AllowStartOnDemand>true</AllowStartOnDemand>
+        <Enabled>false</Enabled>
+        <Hidden>false</Hidden>
+        <RunOnlyIfIdle>false</RunOnlyIfIdle>
+        <WakeToRun>false</WakeToRun>
+        <ExecutionTimeLimit>PT40S</ExecutionTimeLimit>
+        <Priority>7</Priority>
+      </Settings>
+      <Actions Context="NetworkService">
+        <ComHandler>
+          <ClassId>{B9033E87-33CF-4D77-BC9B-895AFBBA72E4}</ClassId>
+        </ComHandler>
+      </Actions>
+    </Task>
+    <Task xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task">
+      <RegistrationInfo>
+        <Date>2014-11-05T00:00:00</Date>
+        <Author>$(@%SystemRoot%\system32\mapstoasttask.dll,-600)</Author>
+        <Description>$(@%SystemRoot%\system32\mapstoasttask.dll,-602)</Description>
+        <URI>\Microsoft\Windows\Maps\MapsToastTask</URI>
+        <SecurityDescriptor>D:(A;;0x111FFFFF;;;SY)(A;;0x111FFFFF;;;BA)(A;;0x111FFFFF;;;S-1-5-80-3028837079-3186095147-955107200-3701964851-1150726376)(A;;FRFX;;;AU)</SecurityDescriptor>
+      </RegistrationInfo>
+      <Principals>
+        <Principal id="Users">
+          <GroupId>S-1-5-4</GroupId>
+          <RunLevel>LeastPrivilege</RunLevel>
+        </Principal>
+      </Principals>
+      <Settings>
+        <MultipleInstancesPolicy>Queue</MultipleInstancesPolicy>
+        <DisallowStartIfOnBatteries>false</DisallowStartIfOnBatteries>
+        <StopIfGoingOnBatteries>false</StopIfGoingOnBatteries>
+        <AllowHardTerminate>true</AllowHardTerminate>
+        <StartWhenAvailable>true</StartWhenAvailable>
+        <RunOnlyIfNetworkAvailable>false</RunOnlyIfNetworkAvailable>
+        <IdleSettings>
+          <StopOnIdleEnd>false</StopOnIdleEnd>
+          <RestartOnIdle>false</RestartOnIdle>
+        </IdleSettings>
+        <AllowStartOnDemand>true</AllowStartOnDemand>
+        <Enabled>true</Enabled>
+        <Hidden>true</Hidden>
+        <RunOnlyIfIdle>false</RunOnlyIfIdle>
+        <DisallowStartOnRemoteAppSession>false</DisallowStartOnRemoteAppSession>
+        <UseUnifiedSchedulingEngine>true</UseUnifiedSchedulingEngine>
+        <WakeToRun>false</WakeToRun>
+        <ExecutionTimeLimit>PT5S</ExecutionTimeLimit>
+        <Priority>7</Priority>
+      </Settings>
+      <Actions Context="Users">
+        <ComHandler>
+          <ClassId>{9885AEF2-BD9F-41E0-B15E-B3141395E803}</ClassId>
+          <Data>$(Arg0);$(Arg1);$(Arg2);$(Arg3);$(Arg4);$(Arg5);$(Arg6);$(Arg7)</Data>
+        </ComHandler>
+      </Actions>
+    </Task>
+  </taskScheduler>
+</assembly>

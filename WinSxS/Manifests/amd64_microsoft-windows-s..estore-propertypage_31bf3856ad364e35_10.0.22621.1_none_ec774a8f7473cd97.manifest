@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-SystemRestore-PropertyPage" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <dependency discoverable="no" resourceType="Resources">
+    <dependentAssembly dependencyType="prerequisite">
+      <assemblyIdentity name="Microsoft-Windows-SystemRestore-PropertyPage.Resources" version="10.0.22621.1" processorArchitecture="amd64" language="*" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+    </dependentAssembly>
+  </dependency>
+  <file name="srrstr.dll" destinationPath="$(runtime.system32)\" sourceName="srrstr.dll" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>kl1ZFzn/y2oMOPq50/7HsuInuzJCFqGbRxKi5mGxWUA=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <taskScheduler>
+    <Task xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task">
+      <RegistrationInfo>
+        <Source>$(@%systemroot%\system32\srrstr.dll,-320)</Source>
+        <Author>$(@%systemroot%\system32\srrstr.dll,-321)</Author>
+        <Description>$(@%systemroot%\system32\srrstr.dll,-322)</Description>
+        <URI>Microsoft\Windows\SystemRestore\SR</URI>
+        <SecurityDescriptor>D:(A;;GA;;;SY)(A;;GA;;;BA)(A;;FRFX;;;LS)</SecurityDescriptor>
+      </RegistrationInfo>
+      <Triggers />
+      <Settings>
+        <MaintenanceSettings>
+          <Period>P3D</Period>
+          <Deadline>P3DT1M</Deadline>
+          <Exclusive>true</Exclusive>
+        </MaintenanceSettings>
+        <Enabled>true</Enabled>
+        <AllowStartOnDemand>true</AllowStartOnDemand>
+        <MultipleInstancesPolicy>IgnoreNew</MultipleInstancesPolicy>
+        <DisallowStartIfOnBatteries>true</DisallowStartIfOnBatteries>
+        <StopIfGoingOnBatteries>false</StopIfGoingOnBatteries>
+        <StartWhenAvailable>true</StartWhenAvailable>
+        <RunOnlyIfIdle>true</RunOnlyIfIdle>
+        <UseUnifiedSchedulingEngine>true</UseUnifiedSchedulingEngine>
+      </Settings>
+      <Principals>
+        <Principal id="LocalSystem">
+          <UserId>S-1-5-18</UserId>
+        </Principal>
+      </Principals>
+      <Actions Context="LocalSystem">
+        <Exec>
+          <Command>%windir%\system32\srtasks.exe</Command>
+          <Arguments>ExecuteScheduledSPPCreation</Arguments>
+        </Exec>
+      </Actions>
+    </Task>
+  </taskScheduler>
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string id="displayName0" value="System Restore (Property Page)" />
+        <string id="description1" value="The System Restore property page." />
+        <string id="displayName4" value="WRP_FILE_DEFAULT_SDDL" />
+        <string id="description5" value="Default SDDL for Windows Resource Protected file" />
+      </stringTable>
+    </resources>
+  </localization>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" description="Default SDDL for Windows Resource Protected file" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+</assembly>

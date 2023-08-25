@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-SNMP-Agent-Service" version="10.0.22621.1" processorArchitecture="wow64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <dependency discoverable="no" resourceType="Resources">
+    <dependentAssembly dependencyType="prerequisite">
+      <assemblyIdentity name="Microsoft-Windows-SNMP-Agent-Service.Resources" version="10.0.22621.1" processorArchitecture="wow64" language="*" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </dependentAssembly>
+  </dependency>
+  <file name="snmp.exe" destinationPath="$(runtime.system32)\" sourceName="snmp.exe" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>w/7U6Da/KcGO0T5Oy/3Og/EV8M3i1scz471gwkSFFFw=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <registryKeys>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\SharedAccess\Parameters\FirewallPolicy\RestrictedServices\Static\System">
+      <registryValue name="SNMP-5" valueType="REG_SZ" value="V2.0|Action=Allow|Dir=In|Protocol=17|App=%SystemRoot%\syswow64\snmp.exe|Svc=SNMP|Name=Allow inbound UDP traffic to SNMP service|" />
+      <registryValue name="SNMP-6" valueType="REG_SZ" value="V2.0|Action=Allow|Dir=Out|Protocol=17|App=%SystemRoot%\syswow64\snmp.exe|Svc=SNMP|Name=Allow outbound UDP traffic from SNMP service|" />
+      <registryValue name="SNMP-7" valueType="REG_SZ" value="V2.0|Action=Block|Dir=In|App=%SystemRoot%\syswow64\snmp.exe|Svc=SNMP|Name=Outbound rule for the SNMP Service to allow SNMP traffic|" />
+      <registryValue name="SNMP-8" valueType="REG_SZ" value="V2.0|Action=Block|Dir=Out|App=%SystemRoot%\syswow64\snmp.exe|Svc=SNMP|Name=Block any other inbound traffic to SNMP service|" />
+    </registryKey>
+  </registryKeys>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="Full Control for Local Administrators users only" sddl="D:(A;;GA;;;BA)" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" description="Default SDDL for Windows Resource Protected file" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+  <instrumentation xmlns:win="http://manifests.microsoft.com/win/2004/08/windows/events">
+    <events xmlns="http://schemas.microsoft.com/win/2004/08/events">
+      <provider guid="{76661966-7798-48C4-AFC5-67BAA2E9A3FD}" messageFileName="%systemroot%\system32\snmp.exe" name="Microsoft-Windows-SNMP-Agent-Service" resourceFileName="%systemroot%\system32\snmp.exe" symbol="S_Microsoft_Windows_SNMP_Agent_Service" />
+      <cmi />
+    </events>
+  </instrumentation>
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string id="description1" value="Enables Simple Network Management Protocol (SNMP) requests to be processed by this computer. If this service is stopped, the computer will be unable to process SNMP requests. If this service is disabled, any services that explicitly depend on it will fail to start." />
+        <string id="displayName2" value="Full Control for Local Administrators users only" />
+        <string id="description" value="The SNMP Agent service receives the SNMP requests from the network, decodes them, and then dispatches them to the appropriate SNMP Extension agent. The service is also responsible for sending traps on behalf of SNMP Extension agents, it forwards trap messages to the appropriate configured management systems." />
+        <string id="description2" value="Full Control for Local Administrators users only" />
+        <string id="displayName" value="SNMP AGENT SERVICE" />
+        <string id="displayName1" value="SNMP Service" />
+        <string id="event_0x40FF03E9" value="The SNMP Service has started successfully." />
+        <string id="event_0x40FF03EB" value="The SNMP Service has stopped successfully." />
+        <string id="event_0x40FF03EC" value="The SNMP Service configuration has been updated successfully." />
+        <string id="event_0x80FF044C" value="The SNMP Service is ignoring the manager %1 because its name could not be resolved." />
+        <string id="event_0x80FF044D" value="The SNMP Service is ignoring extension agent key %1 because it is missing or misconfigured." />
+        <string id="event_0x80FF044E" value="The SNMP Service is ignoring extension agent dll %1 because it is missing or misconfigured." />
+        <string id="event_0x80FF044F" value="The SNMP Service has reset the registry parameter sysObjectID to a default value. This is caused either by an invalid type or by an invalid string format of the registry value." />
+        <string id="event_0x80FF0450" value="The SNMP Service is unable to adjust privileges in the process's access token. This error has been ignored." />
+        <string id="event_0xC0FF05DC" value="The SNMP Service encountered an error while accessing the registry key %1." />
+        <string id="event_0xC0FF05DD" value="The SNMP Service encountered an error while setting up the incoming transports.\n The %1 transport has been dropped out." />
+        <string id="event_0xC0FF05DE" value="The SNMP Service encountered an error while registering for registry notifications.\n Changes in the service's configuration will not be considered." />
+        <string id="event_0x40FF07CF" value="%1" />
+      </stringTable>
+    </resources>
+  </localization>
+</assembly>

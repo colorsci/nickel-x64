@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-TapiService" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <dependency discoverable="no" resourceType="Resources">
+    <dependentAssembly>
+      <assemblyIdentity name="Microsoft-Windows-TapiService.Resources" version="10.0.22621.1" processorArchitecture="amd64" language="*" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </dependentAssembly>
+  </dependency>
+  <file name="tapisrv.dll" destinationPath="$(runtime.system32)\" sourceName="tapisrv.dll" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>JTI7x0MOJUj6sxLNIC08v6KTzycng7OIclPD172P37I=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <directories>
+    <directory destinationPath="$(runtime.windows)\TAPI">
+      <securityDescriptor name="TapiSrvPublicSddl" />
+    </directory>
+  </directories>
+  <registryKeys>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Telephony\Providers">
+      <registryValue name="ProviderID0" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="ProviderID1" valueType="REG_DWORD" value="0x00000002" />
+      <registryValue name="ProviderID2" valueType="REG_DWORD" value="0x00000003" />
+      <registryValue name="NextProviderID" valueType="REG_DWORD" value="0x00000004" />
+      <registryValue name="ProviderFileName0" valueType="REG_SZ" value="unimdm.tsp" />
+      <registryValue name="ProviderFileName1" valueType="REG_SZ" value="kmddsp.tsp" />
+      <registryValue name="ProviderFileName2" valueType="REG_SZ" value="hidphone.tsp" />
+      <registryValue name="NumProviders" valueType="REG_DWORD" value="0x00000003" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Telephony\Locations">
+      <registryValue name="DisableCallWaiting0" valueType="REG_SZ" value="*70," />
+      <registryValue name="DisableCallWaiting1" valueType="REG_SZ" value="70#," />
+      <registryValue name="DisableCallWaiting2" valueType="REG_SZ" value="1170," />
+      <registryValue name="KeyRenameHistory" valueType="REG_BINARY" value="" />
+      <registryValue name="LocationListVersion" valueType="REG_DWORD" value="0x00000002" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Telephony">
+      <securityDescriptor name="TapiSrvPublicSddl" />
+    </registryKey>
+    <registryKey keyName="HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Telephony\HandoffPriorities">
+      <registryValue name="RequestMakeCall" valueType="REG_SZ" value="DIALER.EXE" />
+    </registryKey>
+    <registryKey keyName="HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Telephony\HandoffPriorities\MediaModes" />
+    <registryKey keyName="HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Telephony" />
+    <registryKey keyName="HKEY_USERS\.Default\Software\Microsoft\Windows\CurrentVersion\Telephony\HandoffPriorities">
+      <registryValue name="RequestMakeCall" valueType="REG_SZ" value="DIALER.EXE" />
+    </registryKey>
+    <registryKey keyName="HKEY_USERS\.Default\Software\Microsoft\Windows\CurrentVersion\Telephony\HandoffPriorities\MediaModes" />
+    <registryKey keyName="HKEY_USERS\.Default\Software\Microsoft\Windows\CurrentVersion\Telephony" />
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\TapiSrv" />
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\TapiSrv\Parameters">
+      <registryValue name="ServiceDll" valueType="REG_EXPAND_SZ" value="%SystemRoot%\System32\tapisrv.dll" />
+      <registryValue name="ServiceDllUnloadOnStop" valueType="REG_DWORD" value="0x00000001" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\TapiSrv\Performance">
+      <registryValue name="Close" valueType="REG_SZ" value="CloseTapiPerformanceData" />
+      <registryValue name="Collect" valueType="REG_SZ" value="CollectTapiPerformanceData" />
+      <registryValue name="Library" valueType="REG_EXPAND_SZ" value="%SystemRoot%\System32\tapiperf.dll" />
+      <registryValue name="Object List" valueType="REG_SZ" value="1150" />
+      <registryValue name="Open" valueType="REG_SZ" value="OpenTapiPerformanceData" />
+    </registryKey>
+  </registryKeys>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="TapiSrvPublicSddl" sddl="D:PAR(A;OICI;GA;;;S-1-5-80-4230913304-2206818457-801678004-120036174-1892434133)(A;OICI;GA;;;SY)(A;OICI;GA;;;BA)(A;OICI;GR;;;BU)" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" description="Default SDDL for Windows Resource Protected file" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string id="displayName" value="TAPI Service" />
+        <string id="description" value="This component provides the telephony service required for using TAPI" />
+        <string id="TapiSrvPublicSddlDescription" value="ACL for tapi service and admin writable stuff, with read permissions to users" />
+      </stringTable>
+    </resources>
+  </localization>
+</assembly>

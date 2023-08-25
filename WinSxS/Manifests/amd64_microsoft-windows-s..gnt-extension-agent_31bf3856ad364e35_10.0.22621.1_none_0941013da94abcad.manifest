@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved." xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <assemblyIdentity name="Microsoft-Windows-SNMP-Evntagnt-Extension-Agent" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <dependency discoverable="no" resourceType="Resources">
+    <dependentAssembly dependencyType="prerequisite">
+      <assemblyIdentity name="Microsoft-Windows-SNMP-Evntagnt-Extension-Agent.Resources" version="10.0.22621.1" processorArchitecture="amd64" language="*" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </dependentAssembly>
+  </dependency>
+  <file name="evntagnt.dll" destinationPath="$(runtime.system32)\" sourceName="evntagnt.dll" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>jB4CgmtKk3bhhELcDUnj4Zj9s/8oidzYHnduHt54JDY=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <registryKeys>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\SNMP\Parameters\ExtensionAgents">
+      <registryValue name="evntagnt" valueType="REG_SZ" value="SOFTWARE\Microsoft\SNMP_EVENTS\CurrentVersion" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\SNMP_EVENTS\CurrentVersion">
+      <registryValue name="Pathname" valueType="REG_EXPAND_SZ" value="%SystemRoot%\System32\evntagnt.dll" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Eventlog\Application\EvntAgnt">
+      <registryValue name="EventMessageFile" valueType="REG_EXPAND_SZ" value="%SystemRoot%\System32\evntagnt.dll" />
+      <registryValue name="TypesSupported" valueType="REG_DWORD" value="0x00000007" />
+    </registryKey>
+  </registryKeys>
+  <asmv3:configuration xmlns:asmv3="urn:schemas-microsoft-com:asm.v3" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State">
+    <asmv3:configurationSchema>
+      <xsd:schema xmlns="Microsoft-Windows-SNMP-Evntagnt-Extension-Agent" targetNamespace="Microsoft-Windows-SNMP-Evntagnt-Extension-Agent">
+        <xsd:complexType name="ParametersType">
+          <xsd:sequence>
+            <xsd:element default="1.3.6.1.4.1.311.1.13.1" name="BaseEnterpriseOID" type="xsd:string" wcm:legacyType="REG_SZ" />
+            <xsd:element default="2.0" name="SupportedView" type="xsd:string" wcm:legacyType="REG_SZ" />
+          </xsd:sequence>
+        </xsd:complexType>
+        <xsd:element default="0" name="ConfigurationType" type="xsd:unsignedInt" wcm:description="ConfigurationType" wcm:displayName="ConfigurationType" wcm:handler="regkey('HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\SNMP_EVENTS\EventLog')" wcm:legacyType="REG_DWORD" wcm:migrate="yes" wcm:scope="allUsers" />
+        <xsd:element default="No" name="TranslatorEnabled" type="xsd:string" wcm:description="TranslatorEnabled" wcm:displayName="TranslatorEnabled" wcm:handler="regkey('HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\SNMP_EVENTS\EventLog')" wcm:legacyType="REG_SZ" wcm:migrate="yes" wcm:scope="allUsers" />
+        <xsd:element name="Parameters" type="ParametersType" wcm:description="Parameters" wcm:displayName="Parameters" wcm:handler="regkey('HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\SNMP_EVENTS\EventLog')" wcm:migrate="yes" wcm:scope="allUsers" />
+        <xsd:element name="EventLogSources" type="xsd:string" wcm:handler="regtree('HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\SNMP_EVENTS\EventLog\Sources')" wcm:migrate="yes" wcm:scope="allUsers" />
+      </xsd:schema>
+    </asmv3:configurationSchema>
+  </asmv3:configuration>
+  <migration settingsVersion="0">
+    <supportedComponents>
+      <supportedComponent>
+        <assemblyIdentity name="_" version="1.0.0.0" />
+        <supportedComponentIdentity buildType="release" language="neutral" name="Microsoft-Windows-SNMP-Evntagnt-Extension-Agent" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" settingsVersionRange="0" versionScope="nonSxS" xmlns="urn:schemas-microsoft-com:asm.v3" />
+      </supportedComponent>
+    </supportedComponents>
+  </migration>
+  <instrumentation xmlns:win="http://manifests.microsoft.com/win/2004/08/windows/events">
+    <events xmlns="http://schemas.microsoft.com/win/2004/08/events">
+      <provider guid="{F36F2AF0-F7F1-4457-87A4-AC15800CB512}" messageFileName="%systemroot%\system32\evntagnt.exe" name="Microsoft-Windows-SNMP-Evntagnt-Extension-Agent" resourceFileName="%systemroot%\system32\evntagnt.exe" symbol="S_Microsoft_Windows_SNMP_Evntagnt_Extension_Agent" />
+      <cmi />
+    </events>
+  </instrumentation>
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string id="description" value="Event To Trap Translator component consists of evntagnt SNMP Extension Agent that translates Windows Events to SNMP Traps." />
+        <string id="displayName" value="Event To Trap SNMP Extension Agent" />
+        <string id="description2" value="ParametersType" />
+        <string id="description3" value="SourcesType" />
+        <string id="displayName4" value="A1" />
+        <string id="displayName5" value="A2" />
+        <string id="displayName6" value="A3" />
+        <string id="displayName7" value="A4" />
+        <string id="displayName8" value="A5" />
+        <string id="displayName9" value="A6" />
+        <string id="displayName10" value="A7" />
+        <string id="displayName11" value="A8" />
+        <string id="displayName12" value="ConfigurationType" />
+        <string id="displayName13" value="Parameters" />
+        <string id="displayName14" value="Pathname" />
+        <string id="displayName15" value="Sources" />
+        <string id="displayName16" value="TranslatorEnabled" />
+        <string id="description17" value="A1" />
+        <string id="description18" value="A2" />
+        <string id="description19" value="A3" />
+        <string id="description20" value="A4" />
+        <string id="description21" value="A5" />
+        <string id="description22" value="A6" />
+        <string id="description23" value="A7" />
+        <string id="description24" value="A8" />
+        <string id="description25" value="ConfigurationType" />
+        <string id="description26" value="Parameters" />
+        <string id="description27" value="Pathname" />
+        <string id="description28" value="Sources" />
+        <string id="description29" value="TranslatorEnabled" />
+        <string id="description30" value="ParametersType" />
+        <string id="displayName33" value="ConfigurationType" />
+        <string id="displayName34" value="Parameters" />
+        <string id="displayName36" value="TranslatorEnabled" />
+        <string id="description38" value="ConfigurationType" />
+        <string id="description39" value="Parameters" />
+        <string id="description41" value="TranslatorEnabled" />
+        <string id="displayName37" value="WRP_FILE_DEFAULT_SDDL" />
+        <string id="description40" value="Default SDDL for Windows Resource Protected file" />
+        <string id="event_0x800003E8" value="Error opening registry for Parameter information; defaults used for all parameters. Return code from RegOpenKeyEx is %1." />
+        <string id="event_0xC00003E9" value="Error opening registry for EventLogFiles information. Extension agent cannot run. Return code from RegOpenKeyEx is %1." />
+        <string id="event_0xC00003EA" value="No Event Logs were specified for event scanning. Extension agent is terminating." />
+        <string id="event_0x800003EB" value="TraceFileName parameter not located in registry; Default trace file used is %1." />
+        <string id="event_0x800003EC" value="TrimFlag parameter not located in registry; Default value used is %1." />
+        <string id="event_0x800003ED" value="TrimMessage parameter not located in registry; Default value used is %1." />
+        <string id="event_0x800003EE" value="MaxTrapSize parameter not located in registry; Default value used is %1." />
+        <string id="event_0x800003EF" value="ThresholdEnabled parameter not located in registry; Default value used is %1." />
+        <string id="event_0x800003F0" value="Threshold parameter not located in registry; Default value used is %1." />
+        <string id="event_0x800003F1" value="ThresholdCount parameter not located in registry; Default value used is %1." />
+        <string id="event_0x800003F2" value="ThresholdCount parameter is an invalid value in the registry; Default value used is %1." />
+        <string id="event_0x800003F3" value="ThresholdTime parameter not located in registry; Default value used is %1." />
+        <string id="event_0x800003F4" value="ThresholdTime parameter is an invalid value in the registry; Default value used is %1." />
+        <string id="event_0x800003F5" value="TraceFileName parameter is of the wrong type in the registry; Default trace file used is %1." />
+        <string id="event_0x800003F6" value="TraceLevel parameter is of the wrong type in the registry; Default trace level used is %1." />
+        <string id="event_0x800003F7" value="TraceLevel parameter not located in registry; Default trace level used is %1." />
+        <string id="event_0xC00003F8" value="Error reading Parameter key information from the registry. Return code from RegEnumValue is %1. Index value is %2. Extension agent terminating." />
+        <string id="event_0xC00003F9" value="Error reading EventLogFiles key information from the registry. Return code from RegEnumValue is %1. Index value is %2. Extension agent terminating." />
+        <string id="event_0xC00003FA" value="No BaseEnterpriseOID parameter found in registry. Extension agent terminating." />
+        <string id="event_0xC00003FB" value="No SupportedView parameter found in registry. Extension agent terminating." />
+        <string id="event_0xC00003FC" value="Error processing registry parameters. Extension agent terminating." />
+        <string id="event_0xC00003FD" value="Unable to convert BaseEnterpriseOID from string to ASN.1 OID. Extension agent terminating." />
+        <string id="event_0xC00003FE" value="Unable to convert EnterpriseOID from string to ASN.1 OID. Trap cannot be sent." />
+        <string id="event_0xC00003FF" value="Unable to convert SupportedView from string to ASN.1 OID. Extension agent terminating." />
+        <string id="event_0x40000400" value="Unable to locate ParameterMessageFile for %1. RegOpenKeyEx returned %2." />
+        <string id="event_0xC0000401" value="Unable to load PrimaryModule %1. LoadLibraryEx returned %2." />
+        <string id="event_0x80000402" value="Unable to set Threshold key in registry. Processing will continue. Return code from RegSetValueEx is %1." />
+        <string id="event_0xC00007D0" value="Error creating the stop extension agent event. Return code from CreateEvent is %1." />
+        <string id="event_0xC00007D1" value="Error creating the stop log processing routine termination event. Return code from CreateEvent is %1." />
+        <string id="event_0xC00007D2" value="Error creating the log event notification event. Return code from CreateEvent is %1." />
+        <string id="event_0x800007D3" value="Error creating the registry key change notify event. Return code from CreateEvent is %1. Initialization will continue, but registry changes will not be updated until SNMP is stopped and restarted." />
+        <string id="event_0x400007D4" value="RegNotifyChangeKeyValue failed with a return code of %1. Initialization will continue, but registry changes will not be updated until SNMP is stopped and restarted." />
+        <string id="event_0xC00007D5" value="Error creating the log processing routine service thread. Return code from CreateThread is %1." />
+        <string id="event_0x800007D6" value="Error closing the stop agent event handle %1. Return code from CloseHandle is %2." />
+        <string id="event_0x800007D7" value="Error closing the stop log processing routine event handle %1. Return code from CloseHandle is %2." />
+        <string id="event_0x800007D8" value="Error closing the registry key changed event handle %1. Return code from CloseHandle is %2." />
+        <string id="event_0x800007D9" value="Error closing the registry Parameter key handle %1. Return code from RegCloseKey is %2." />
+        <string id="event_0x800007DA" value="Error closing the stop log processing routine thread handle %1. Return code from CloseHandle is %2." />
+        <string id="event_0xC00007DB" value="Error waiting for extension agent shutdown request event %1. Return code from WaitForSingleObject is %2. Extension agent did not initialize." />
+        <string id="event_0xC00007DC" value="Error setting the extension agent shutdown event %1. Return code from SetEvent is %2." />
+        <string id="event_0xC00007DD" value="Error setting the log processing routine shutdown event %1. Return code from SetEvent is %2." />
+        <string id="event_0xC00007DE" value="Error terminating the log processing routine %1. Return code from TerminateThread is %2." />
+        <string id="event_0x800007DF" value="Error waiting for the log processing routine thread %1 to terminate. Return code from WaitForSingleObject is %2." />
+        <string id="event_0x800007E0" value="The log processing routine thread %1 failed to terminate within 30 seconds. Thread will be terminated." />
+        <string id="event_0x800007E1" value="An unknown value %2 was returned while waiting for log processing routine thread %1 termination. Thread state is unknown." />
+        <string id="event_0x400007E2" value="SNMP Event Log Extension Agent is starting." />
+        <string id="event_0xC00007E3" value="SNMP Event Log Extension Agent did not initialize correctly." />
+        <string id="event_0x400007E4" value="SNMP Event Log Extension Agent has terminated." />
+        <string id="event_0xC0000BB8" value="Error positioning to end of log file -- handle is invalid. Handle specified is %1." />
+        <string id="event_0x80000BB9" value="Log file not positioned at end." />
+        <string id="event_0xC0000BBA" value="Error positioning to end of log file -- log buffer allocation failed. Handle specified is %1." />
+        <string id="event_0xC0000BBB" value="Error positioning to end of log file -- can't get oldest log record. Handle specified is %1. Return code from GetOldestEventLogRecord is %2." />
+        <string id="event_0xC0000BBC" value="Error positioning to end of log file -- can't get number of log records. Handle specified is %1. Return code from GetNumberOfEventLogRecords is %2." />
+        <string id="event_0xC0000BBD" value="Error positioning to end of log file -- seek to end of log failed. Handle specified is %1. Return code from ReadEventLog is %2." />
+        <string id="event_0x80000BBE" value="Error reading log event record. Handle specified is %1. Return code from ReadEventLog is %2." />
+        <string id="event_0x80000BBF" value="Error opening event log file %1. Log will not be processed. Return code from OpenEventLog is %2." />
+        <string id="event_0x80000BC0" value="Error pulsing event for log processing routine shutdown event %1. Return code from PulseEvent is %2." />
+        <string id="event_0xC0000BC1" value="Insufficient memory available to allocate the wait event array." />
+        <string id="event_0xC0000BC2" value="Insufficient memory available to reallocate the log event array." />
+        <string id="event_0xC0000BC3" value="Insufficient memory available to allocate dynamic variable." />
+        <string id="event_0xC0000BC4" value="Insufficient memory available to reallocate the log name array." />
+        <string id="event_0xC0000BC5" value="Insufficient memory available to reallocate the PrimaryModule handle array." />
+        <string id="event_0xC0000BC6" value="Insufficient memory available to reallocate the insertion strings for secondary parameters. Further secondary substitution has been terminated. Message will be formatted with strings as is." />
+        <string id="event_0x40000BC7" value="Performance threshold values have been reached. Trap processing is being quiesed. Further traps will not be sent without operator intervention." />
+        <string id="event_0x40000BC8" value="Performance threshold values have been restored by operator intervention. Trap processing has been resumed." />
+        <string id="event_0x40000BC9" value="Performance threshold values have been set by operator intervention. Current settings indicate performance thresholds have been reached. Trap processing is being quiesed. Further traps will not be sent without operator intervention." />
+        <string id="event_0x80000FA0" value="The trap size of the requested event log exceeds the maximum length of an SNMP trap." />
+        <string id="event_0xC0000FA1" value="Error creating event for log event notification. Return code from CreateEvent is %1." />
+        <string id="event_0xC0000FA2" value="Error requesting notification of change in log event %1. Return code from ElfChangeNotify is %2." />
+        <string id="event_0xC0000FA3" value="Error waiting on event array in log processing event routine. Return code from WaitForMultipleObjects is %1. Extension agent is terminating." />
+        <string id="event_0xC0000FA4" value="Error closing an event log wait event handle. Event handle is %1. Return code from CloseHandle is %2." />
+        <string id="event_0x80000FA5" value="Error allocating memory for event log buffer. Trap will not be sent." />
+        <string id="event_0x80001388" value="No memory was available to allocate the buffer for the trap to be processed. Trap will not be sent." />
+        <string id="event_0x80001389" value="No memory was available to allocate the storage for the event type string. Trap will not be sent." />
+        <string id="event_0x8000138A" value="No memory was available to allocate the storage for the event category string. Trap will not be sent." />
+        <string id="event_0x8000138B" value="No memory was available to allocate the storage for the computer name string. Trap will not be sent." />
+        <string id="event_0x8000138C" value="No memory was available to allocate the buffer for the varbind queue entry structure. Trap will not be sent." />
+        <string id="event_0x8000138D" value="No memory was available to allocate the buffer for the varbind list. Trap will not be sent." />
+        <string id="event_0x8000138E" value="No memory was available to allocate the buffer for the enterprise OID. Trap will not be sent." />
+        <string id="event_0x8000138F" value="No memory was available to allocate the integer array for the enterprise OID. Trap will not be sent." />
+        <string id="event_0x80001390" value="An attempt was made to convert a string to an OID, but the string contained non-numeric values. The OID cannot be created. Trap will not be sent." />
+        <string id="event_0x40001391" value="The event log time could not be converted from UCT to local time. GetTimeZoneInformation returned a value of %1. UCT time will be used in this trap." />
+        <string id="event_0x80001392" value="Unable to open the registry key for event source for %1. RegOpenKeyEx returned %2. Trap will not be sent." />
+        <string id="event_0x80001393" value="Unable to open the registry key for event source for %1. RegOpenKeyEx returned %2. Trap will not be sent." />
+        <string id="event_0x80001394" value="Unable to locate EventMessageFile for event source for %1. RegOpenKeyEx returned %2. Trap will not be sent." />
+        <string id="event_0x40001395" value="Unable to locate ParameterMessageFile for event source for %1. RegOpenKeyEx returned %2." />
+        <string id="event_0x80001396" value="Unable to expand file name in EventMessageFile for %1. Size needed is %2. Trap will not be sent." />
+        <string id="event_0x40001397" value="Unable to expand file name in ParameterMessageFile for %1. Size needed is %2." />
+        <string id="event_0x80001398" value="Unable to load file name in EventMessageFile for %1. LoadLibraryEx returned %2. Trap will not be sent." />
+        <string id="event_0x40001399" value="Unable to load file name in ParameterMessageFile for %1. LoadLibraryEx returned %2." />
+        <string id="event_0x8000139A" value="Unable to format message %1. FormatMessage returned %2. Trap will not be sent." />
+        <string id="event_0x4000139B" value="An error occurred freeing message DLL. FreeLibrary returned %1." />
+        <string id="event_0x4000139C" value="Account name could not be located for this event. Unknown will be used. LookupAccountSid returned %1." />
+        <string id="event_0x4000139D" value="Local storage for buffer could not be freed. LocalFree returned %1. Potential memory leak." />
+        <string id="event_0x8000139E" value="Unable to post event completion to handle %1. SetEvent returned %2. Trap may not be sent." />
+        <string id="event_0x4000139F" value="ParameterMessageFile did not contain a substitution string for %1. Error code was %2." />
+        <string id="event_0x400013A0" value="PrimaryModule did not contain a substitution string for %1. Error code was %2. This secondary parameter will be removed." />
+        <string id="event_0x80001770" value="OpenMutex failed for object, reason code %1. Trap will not be sent." />
+        <string id="event_0x80001771" value="Mutex object has been abandoned. Trap will not be sent." />
+        <string id="event_0x80001772" value="Mutex object could not be released. Reason code is %1. Trap may not be sent." />
+        <string id="event_0x80001773" value="WaitForMultipleObjects returned an unknown error condition. Trap will not be sent." />
+        <string id="event_0x80001774" value="GetExitCodeThread returned FALSE, reason code is %1." />
+        <string id="event_0x80001775" value="Error allocating storage for Count/Time table entry. Trap will not be sent." />
+        <string id="event_0x80001776" value="Error allocating storage for variable bindings. Trap will not be sent." />
+        <string id="event_0x80001777" value="Error allocating storage for message DLL insertion string array. Trap will not be sent." />
+        <string id="event_0x80001778" value="Error allocating storage for message DLL insertion string length array. Trap will not be sent." />
+        <string id="event_0x80001779" value="Error allocating storage for message DLL insertion strings. Trap will not be sent." />
+        <string id="event_0x4000177A" value="Too many insertion strings. First %1 used." />
+        <string id="event_0x8000177B" value="Cannot specify SNMP Event Log Extension Agent DLL events as trap generators. This trap is ignored." />
+        <string id="event_0x8000177C" value="Unable to copy varbind entry during trap buffer trimming. Trap will not be sent." />
+        <string id="event_0x8000177D" value="Attempt to reduce trap buffer size failed. Trap will not be sent." />
+        <string id="event_0x8000177E" value="The amount of data required to be trimmed is larger than the entire trap. Trap will not be sent." />
+      </stringTable>
+    </resources>
+  </localization>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" description="Default SDDL for Windows Resource Protected file" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+</assembly>

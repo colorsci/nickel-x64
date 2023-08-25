@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="WindowsDevicePortal-Desktop-Server" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <memberships>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories.Services" version="10.0.22621.1" publicKeyToken="31bf3856ad364e35" typeName="Service" />
+      <categoryInstance>
+        <serviceData name="WebManagement" displayName="@%systemroot%\system32\WebManagement.exe,-101" errorControl="normal" start="disabled" type="win32OwnProcess" description="@%systemroot%\system32\WebManagement.exe,-102" dependOnService="rpcss,http" imagePath="%systemroot%\system32\WebManagement.exe" objectName="LocalSystem" sidType="unrestricted">
+          <failureActions resetPeriod="86400">
+            <actions>
+              <action delay="60000" type="restartService" />
+              <action delay="60000" type="restartService" />
+              <action delay="0" type="none" />
+            </actions>
+          </failureActions>
+        </serviceData>
+      </categoryInstance>
+    </categoryMembership>
+  </memberships>
+  <firewallRule LPort="50080" Protocol="TCP" RA4="LocalSubnet" RA6="LocalSubnet" action="allow" active="false" binary="System" desc="@%SystemRoot%\system32\firewallapi.dll,-60048" dir="in" group="@%SystemRoot%\system32\firewallapi.dll,-60047" internalName="WebManagement-In-Http-Private" name="@%SystemRoot%\system32\firewallapi.dll,-60052" profile="Private" />
+  <firewallRule LPort="50443" Protocol="TCP" RA4="LocalSubnet" RA6="LocalSubnet" action="allow" active="false" binary="System" desc="@%SystemRoot%\system32\firewallapi.dll,-60049" dir="in" group="@%SystemRoot%\system32\firewallapi.dll,-60047" internalName="WebManagement-In-Https-Private" name="@%SystemRoot%\system32\firewallapi.dll,-60053" profile="Private" />
+  <firewallRule LPort="50080" Protocol="TCP" action="allow" active="false" binary="System" desc="@%SystemRoot%\system32\firewallapi.dll,-60048" dir="in" group="@%SystemRoot%\system32\firewallapi.dll,-60047" internalName="WebManagement-In-Http-Domain" name="@%SystemRoot%\system32\firewallapi.dll,-60050" profile="Domain" />
+  <firewallRule LPort="50443" Protocol="TCP" action="allow" active="false" binary="System" desc="@%SystemRoot%\system32\firewallapi.dll,-60049" dir="in" group="@%SystemRoot%\system32\firewallapi.dll,-60047" internalName="WebManagement-In-Https-Domain" name="@%SystemRoot%\system32\firewallapi.dll,-60051" profile="Domain" />
+  <registryKeys>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\WebManagement\Service">
+      <registryValue name="HttpPort" valueType="REG_DWORD" value="0x0000C3A0" />
+      <registryValue name="HttpsPort" valueType="REG_DWORD" value="0x0000C50B" />
+      <registryValue name="UseDefaultAuthorizer" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="AllowLoopbackOnly" valueType="REG_DWORD" value="0x00000000" />
+      <registryValue name="UseDynamicPorts" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="RequireDevUnlock" valueType="REG_DWORD" value="0x00000001" />
+      <securityDescriptor name="ADMIN_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\WebManagement\Core">
+      <registryValue name="uninstallPolicies" valueType="REG_DWORD" value="0x00000007" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+  </registryKeys>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="WRP_REGKEY_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;CI;GA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;CI;GR;;;SY)(A;CI;GR;;;BA)(A;CI;GR;;;BU)(A;CI;GR;;;S-1-15-2-1)(A;CI;GR;;;S-1-15-3-1024-1065365936-1281604716-3511738428-1654721687-432734479-3232135806-4053264122-3456934681)" operationHint="replace" />
+          <securityDescriptorDefinition name="ADMIN_SDDL" sddl="O:BAG:SYD:(A;;GA;;;BA)(A;;GA;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)" operationHint="replace" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+  <migration scope="Upgrade" settingsVersion="1">
+    <migXml xmlns="">
+      <rules context="System">
+        <include>
+          <objectSet>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WebManagement [Start]</pattern>
+          </objectSet>
+        </include>
+      </rules>
+    </migXml>
+    <supportedComponents>
+      <supportedComponent>
+        <assemblyIdentity name="_" version="1.0.0.0" />
+        <supportedComponentIdentity language="neutral" name="WindowsDevicePortal-Desktop-Server" processorArchitecture="*" settingsVersionRange="1" xmlns="urn:schemas-microsoft-com:asm.v3" />
+      </supportedComponent>
+    </supportedComponents>
+  </migration>
+</assembly>

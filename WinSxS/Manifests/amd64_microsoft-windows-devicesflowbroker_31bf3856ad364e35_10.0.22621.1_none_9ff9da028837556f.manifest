@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-DevicesFlowBroker" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <dependency discoverable="no" resourceType="Resources">
+    <dependentAssembly dependencyType="prerequisite">
+      <assemblyIdentity name="Microsoft-Windows-DevicesFlowBroker.Resources" version="10.0.22621.1" processorArchitecture="amd64" language="*" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </dependentAssembly>
+  </dependency>
+  <file name="DevicesFlowBroker.dll" destinationPath="$(runtime.system32)\" sourceName="DevicesFlowBroker.dll" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>UNBN9LX6ccDgvEQbu3dORymAnjoPXVBb87Xmum0looE=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <memberships>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories.Services" version="10.0.22621.1" publicKeyToken="31bf3856ad364e35" typeName="Service" />
+      <categoryInstance subcategory="DevicesFlow">
+        <serviceData name="DevicesFlowUserSvc" displayName="@%SystemRoot%\system32\DevicesFlowBroker.dll,-103" errorControl="normal" start="demand" type="win32UserShareProcess" description="@%SystemRoot%\system32\DevicesFlowBroker.dll,-104" dependOnService="RpcSs" imagePath="%SystemRoot%\system32\svchost.exe -k DevicesFlow" objectName="LocalSystem" sidType="unrestricted">
+          <failureActions resetPeriod="86400">
+            <actions>
+              <action delay="10000" type="restartService" />
+              <action delay="0" type="none" />
+            </actions>
+          </failureActions>
+          <securityDescriptor name="DEVICESFLOW_SERVICE_SDDL" />
+        </serviceData>
+      </categoryInstance>
+    </categoryMembership>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories" version="1.0.0.0" publicKeyToken="365143bb27e7ac8b" typeName="SvcHost" />
+      <categoryInstance subcategory="DevicesFlow">
+        <serviceGroup position="last" serviceName="DevicesFlowUserSvc" />
+      </categoryInstance>
+    </categoryMembership>
+  </memberships>
+  <registryKeys>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{95B01D73-A5FA-4DA1-91C4-935F1AB7763E}">
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+      <registryValue name="" valueType="REG_SZ" value="DevicesflowNotification" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{95B01D73-A5FA-4DA1-91C4-935F1AB7763E}\InProcServer32">
+      <registryValue name="" valueType="REG_SZ" value="$(runtime.system32)\DevicesFlowBroker.dll" />
+      <registryValue name="ThreadingModel" valueType="REG_SZ" value="Both" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{894132FE-635E-4F2F-B7AC-BB081636B1DB}">
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+      <registryValue name="" valueType="REG_SZ" value="DevicesFlowBroker" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{894132FE-635E-4F2F-B7AC-BB081636B1DB}\InProcServer32">
+      <registryValue name="" valueType="REG_SZ" value="$(runtime.system32)\DevicesFlowBroker.dll" />
+      <registryValue name="ThreadingModel" valueType="REG_SZ" value="Both" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\Software\Microsoft\WindowsRuntime\Server\DevicesFlowUserSvc">
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+      <registryValue name="ServerType" valueType="REG_DWORD" value="0x00000002" />
+      <registryValue name="Permissions" valueType="REG_BINARY" value="01001480b0000000bc000000140000003000000002001c000100000011001400040000000101000000000010001000000200800005000000000014000b000000010100000000000512000000000014000b000000010100000000000513000000000014000b000000010100000000000504000000000018000b000000010200000000000f0200000001000000000024000b000000010500000000000515000000d1a71aa1539e652f4b7f771add0a000001010000000000050a00000001020000000000052000000021020000" />
+      <registryValue name="ServiceName" valueType="REG_SZ" value="DevicesFlowUserSvc" />
+      <registryValue name="IdentityType" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="Identity" valueType="REG_SZ" value="nt authority\system" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\Software\Microsoft\WindowsRuntime\ActivatableClassId\DevicesFlowInteraction.Connection.DeviceConnectionManager">
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+      <registryValue name="TrustLevel" valueType="REG_DWORD" value="0x00000000" />
+      <registryValue name="ActivationType" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="Server" valueType="REG_SZ" value="DevicesFlowUserSvc" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\Software\Microsoft\WindowsRuntime\ActivatableClassId\DevicesFlowInteraction.Connection.DeviceInteractionManager">
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+      <registryValue name="TrustLevel" valueType="REG_DWORD" value="0x00000000" />
+      <registryValue name="ActivationType" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="Server" valueType="REG_SZ" value="DevicesFlowUserSvc" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\Software\Microsoft\WindowsRuntime\ActivatableClassId\DevicesFlow.DeviceDiscoveryAndPairingBroker">
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+      <registryValue name="TrustLevel" valueType="REG_DWORD" value="0x00000000" />
+      <registryValue name="ActivationType" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="Server" valueType="REG_SZ" value="DevicesFlowUserSvc" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\Software\Microsoft\WindowsRuntime\ActivatableClassId\ProximityConnect.Broker.ProximityConnectBroker">
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+      <registryValue name="TrustLevel" valueType="REG_DWORD" value="0x00000000" />
+      <registryValue name="ActivationType" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="Server" valueType="REG_SZ" value="DevicesFlowUserSvc" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\System\CurrentControlset\Services\DevicesFlowUserSvc\Parameters">
+      <registryValue name="ServiceDll" valueType="REG_EXPAND_SZ" value="%SystemRoot%\System32\DevicesFlowBroker.dll" />
+      <registryValue name="ServiceDllUnloadOnStop" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="LegacyCOMBehavior" valueType="REG_DWORD" value="0x00000001" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\System\CurrentControlset\Services\DevicesFlowUserSvc">
+      <registryValue name="UserServiceFlags" valueType="REG_DWORD" value="0x00000003" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\AppUserModelId\Windows.SystemToast.DevicesFlow">
+      <registryValue name="CustomActivator" valueType="REG_SZ" value="{5C556AA6-E3ED-4C06-AE7B-280BAA438B49}" />
+      <registryValue name="DisplayName" valueType="REG_EXPAND_SZ" value="@%SystemRoot%\system32\DevicesFlowBroker.dll,-121" />
+      <registryValue name="IconUri" valueType="REG_EXPAND_SZ" value="%SystemRoot%\system32\BluetoothSystemToastIcon.png" />
+      <registryValue name="IconBackgroundColor" valueType="REG_SZ" value="0" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\PushNotifications\Applications\Windows.SystemToast.DevicesFlow">
+      <registryValue name="Capabilities" valueType="REG_DWORD" value="0x000024FF" />
+      <registryValue name="ApplicationType" valueType="REG_DWORD" value="0x40000000" />
+      <registryValue name="PackageMoniker" valueType="REG_SZ" value="System" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+  </registryKeys>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="WRP_REGKEY_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;CI;GA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;CI;GR;;;SY)(A;CI;GR;;;BA)(A;CI;GR;;;BU)(A;CI;GR;;;S-1-15-2-1)(A;CI;GR;;;S-1-15-3-1024-1065365936-1281604716-3511738428-1654721687-432734479-3232135806-4053264122-3456934681)" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" />
+          <securityDescriptorDefinition name="DEVICESFLOW_SERVICE_SDDL" sddl="O:SYG:SYD:(A;;CCLCSWRPWPDTLOCRRC;;;SU)(A;;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;BA)(A;;CCLCSWRPWPDTLOCRRC;;;IU)(A;;CCLCSWRPWPDTLOCRRC;;;AU)(A;;CCLCSWRPWPDTLOCRRC;;;AC)(A;;CCLCSWRPWPDTLOCRRC;;;S-1-5-21-2702878673-795188819-444038987-2781)" operationHint="replace" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+</assembly>

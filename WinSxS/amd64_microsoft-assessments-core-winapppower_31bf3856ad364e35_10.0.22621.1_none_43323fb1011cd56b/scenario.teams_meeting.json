@@ -1,0 +1,591 @@
+[
+    {
+        "ScenarioName": "Teams meeting",
+        "KillProcesses": [ "Teams.exe", "msteams.exe" ],
+        "Duration": "##JSON_INT:ScenarioDurationSec##",
+        "Interactions": [
+            {
+                "Type": "WinAppDriverHelper",
+                "Method": "Wait",
+                "Args": [ 5 ]
+            },
+            {
+                "Type": "ScenarioRunner",
+                "Method": "CreateSession",
+                "Args": [ "Root", "", "." ]
+            },
+            {
+                "Type": "ScenarioRunner",
+                "Method": "SwitchSession",
+                "Args": [ "." ]
+            },
+            {
+                "Type": "ScenarioRunner",
+                "Method": "StartProcess",
+                "Args": [ "cmd.exe", "/c start ##NORMAL_STRING:MeetingInvitationUrl##", 1 ]
+            },
+            {
+                "Type": "WinAppDriverHelper",
+                "Method": "Wait",
+                "Args": [ 60 ]
+            },
+            {
+                "Type": "ScenarioRunner",
+                "Method": "SwitchToXPath",
+                "Args": [ "//*[@ClassName='TeamsWebView' and contains(@Name, 'Microsoft Teams')]" ]
+            },
+            {
+                "Type": "WinAppDriverHelper",
+                "Method": "Wait",
+                "Args": [ 30 ]
+            },
+            {
+                "Type": "WinAppDriverHelper",
+                "Method": "FindElementXPathNoThrow",
+                "Args": [ "//*[contains(@ClassName, 'ui-button') and contains(@Name, 'Join now With')]", 1 ]
+            },
+            {
+                "Type": "WinAppDriverHelper",
+                "Method": "FindElementXPath",
+                "Args": [ "//*[contains(@ClassName, 'ui-button') and contains(@Name, 'Join now With')]" ]
+            },
+            {
+                "Type": "WinAppDriverHelper",
+                "Method": "ClickElement",
+                "UseLastReturnObject": true,
+                "Args": [ 10 ]
+            },
+            {
+                "Type": "WinAppDriverHelper",
+                "Method": "Wait",
+                "Args": [ 50 ]
+            },
+            {
+                "Type": "ScenarioRunner",
+                "Method": "SwitchToXPath",
+                "Args": [ "//*[@ClassName='TeamsWebView' and contains(@Name, 'Microsoft Teams')]" ]
+            },
+            {
+                "Type": "WinAppDriverHelper",
+                "Method": "Wait",
+                "Args": [ 10 ]
+            },
+            {
+                "Type": "WinAppDriverHelper",
+                "Method": "FindElementXPathNoThrow",
+                "Args": [ "//*[contains(@Name, 'Invite people to join you')]//*[@Name='Copy meeting link']", 1 ]
+            },
+            {
+                "Type": "ScenarioRunner",
+                "Method": "AddScenarioObj",
+                "UseLastReturnObject": true,
+                "Args": [ "InviteCopyLinkElement" ]
+            },
+            {
+                "Type": "ScenarioRunner",
+                "Method": "GetScenarioObj",
+                "Args": [ "InviteCopyLinkElement" ]
+            },
+            {
+                "Type": "WinAppDriverHelper",
+                "Method": "WindowsElementRelationalOperationWithNull",
+                "UseLastReturnObject": true,
+                "Args": [ "!=" ]
+            },
+            {
+                "Type": "ScenarioRunner",
+                "Method": "CreateCondition",
+                "UseLastReturnObject": true,
+                "Args": [ "InviteCopyLinkExist" ]
+            },
+            {
+                "Type": "ScenarioRunner",
+                "Method": "GetScenarioObj",
+                "Args": [ "InviteCopyLinkElement" ],
+                "CheckCondition": "InviteCopyLinkExist"
+            },
+            {
+                "Type": "WinAppDriverHelper",
+                "Method": "ClickElement",
+                "UseLastReturnObject": true,
+                "Args": [ 10 ],
+                "CheckCondition": "InviteCopyLinkExist"
+            },
+            {
+                "Type": "WinAppDriverHelper",
+                "Method": "Wait",
+                "Args": [ 5 ],
+                "CheckCondition": "InviteCopyLinkExist"
+            },
+            {
+                "Type": "WinAppDriverHelper",
+                "Method": "FindElementXPathNoThrow",
+                "Args": [ "//*[contains(@Name, 'Invite people to join you')]//*[@Name='Close']", 1 ]
+            },
+            {
+                "Type": "ScenarioRunner",
+                "Method": "AddScenarioObj",
+                "UseLastReturnObject": true,
+                "Args": [ "InviteCloseElement" ]
+            },
+            {
+                "Type": "ScenarioRunner",
+                "Method": "GetScenarioObj",
+                "Args": [ "InviteCloseElement" ]
+            },
+            {
+                "Type": "WinAppDriverHelper",
+                "Method": "WindowsElementRelationalOperationWithNull",
+                "UseLastReturnObject": true,
+                "Args": [ "!=" ]
+            },
+            {
+                "Type": "ScenarioRunner",
+                "Method": "CreateCondition",
+                "UseLastReturnObject": true,
+                "Args": [ "InviteCloseExist" ]
+            },
+            {
+                "Type": "ScenarioRunner",
+                "Method": "GetScenarioObj",
+                "Args": [ "InviteCloseElement" ],
+                "CheckCondition": "InviteCloseExist"
+            },
+            {
+                "Type": "WinAppDriverHelper",
+                "Method": "ClickElement",
+                "UseLastReturnObject": true,
+                "Args": [ 10 ],
+                "CheckCondition": "InviteCloseExist"
+            },
+            {
+                "Type": "WinAppDriverHelper",
+                "Method": "Wait",
+                "Args": [ 5 ],
+                "CheckCondition": "InviteCloseExist"
+            },
+            {
+                "Type": "ScenarioRunner",
+                "Method": "CreateCondition",
+                "Args": [ false, "CurrShowConversation" ]
+            },
+            {
+                "Type": "ScenarioRunner",
+                "Method": "AddScenarioObj",
+                "Args": [ null, "ShowConversationElement" ]
+            },
+            {
+                "Type": "WinAppDriverHelper",
+                "Method": "FindElementXPathNoThrow",
+                "Args": [ "//*[@Name='Meeting controls']//*[@Name='Show conversation']", 1 ]
+            },
+            {
+                "Type": "ScenarioRunner",
+                "Method": "UpdateScenarioObj",
+                "UseLastReturnObject": true,
+                "Args": [ "ShowConversationElement" ]
+            },
+            {
+                "Type": "ScenarioRunner",
+                "Method": "GetScenarioObj",
+                "Args": [ "ShowConversationElement" ]
+            },
+            {
+                "Type": "WinAppDriverHelper",
+                "Method": "WindowsElementRelationalOperationWithNull",
+                "UseLastReturnObject": true,
+                "Args": [ "!=" ]
+            },
+            {
+                "Type": "ScenarioRunner",
+                "Method": "UpdateCondition",
+                "UseLastReturnObject": true,
+                "Args": [ "CurrShowConversation" ]
+            },
+            {
+                "Type": "ScenarioRunner",
+                "Method": "GetScenarioObj",
+                "Args": [ "ShowConversationElement" ],
+                "CheckCondition": "CurrShowConversation"
+            },
+            {
+                "Type": "WinAppDriverHelper",
+                "Method": "ClickElement",
+                "UseLastReturnObject": true,
+                "Args": [ 10 ],
+                "CheckCondition": "CurrShowConversation"
+            },
+            {
+                "Type": "WinAppDriverHelper",
+                "Method": "Wait",
+                "Args": [ 5 ],
+                "CheckCondition": "CurrShowConversation"
+            },
+            {
+                "Type": "ScenarioRunner",
+                "Method": "CreateCondition",
+                "Args": [ false, "CurrTurnCameraOn" ]
+            },
+            {
+                "Type": "ScenarioRunner",
+                "Method": "AddScenarioObj",
+                "Args": [ null, "TurnCameraOnElement" ]
+            },
+            {
+                "Type": "WinAppDriverHelper",
+                "Method": "FindElementXPathNoThrow",
+                "Args": [ "//*[@Name='Meeting controls']//*[contains(@Name, 'Turn camera on')]", 1 ]
+            },
+            {
+                "Type": "ScenarioRunner",
+                "Method": "UpdateScenarioObj",
+                "UseLastReturnObject": true,
+                "Args": [ "TurnCameraOnElement" ]
+            },
+            {
+                "Type": "ScenarioRunner",
+                "Method": "GetScenarioObj",
+                "Args": [ "TurnCameraOnElement" ]
+            },
+            {
+                "Type": "WinAppDriverHelper",
+                "Method": "WindowsElementRelationalOperationWithNull",
+                "UseLastReturnObject": true,
+                "Args": [ "!=" ]
+            },
+            {
+                "Type": "ScenarioRunner",
+                "Method": "UpdateCondition",
+                "UseLastReturnObject": true,
+                "Args": [ "CurrTurnCameraOn" ]
+            },
+            {
+                "Type": "ScenarioRunner",
+                "Method": "CreateCondition",
+                "Args": [ "##JSON_BOOLEAN:TurnCameraOn##", "UserWantTurnCameraOn" ]
+            },
+            {
+                "Type": "ScenarioRunner",
+                "Method": "CheckCondition",
+                "Args": [ "UserWantTurnCameraOn" ]
+            },
+            {
+                "Type": "StackHelper",
+                "Method": "Push",
+                "UseLastReturnObject": true,
+                "Args": []
+            },
+            {
+                "Type": "StackHelper",
+                "Method": "Push",
+                "Args": [ "&&" ]
+            },
+            {
+                "Type": "ScenarioRunner",
+                "Method": "CheckCondition",
+                "Args": [ "CurrTurnCameraOn" ]
+            },
+            {
+                "Type": "StackHelper",
+                "Method": "Push",
+                "UseLastReturnObject": true,
+                "Args": []
+            },
+            {
+                "Type": "Expression",
+                "Method": "LogicBinaryOperation",
+                "Args": [],
+                "PopToArguments": 3
+            },
+            {
+                "Type": "ScenarioRunner",
+                "Method": "CreateCondition",
+                "UseLastReturnObject": true,
+                "Args": [ "FinalTurnCameraOn" ]
+            },
+            {
+                "Type": "ScenarioRunner",
+                "Method": "GetScenarioObj",
+                "Args": [ "TurnCameraOnElement" ],
+                "CheckCondition": "FinalTurnCameraOn"
+            },
+            {
+                "Type": "WinAppDriverHelper",
+                "Method": "ClickElement",
+                "UseLastReturnObject": true,
+                "Args": [ 10 ],
+                "CheckCondition": "FinalTurnCameraOn"
+            },
+            {
+                "Type": "WinAppDriverHelper",
+                "Method": "Wait",
+                "Args": [ 5 ],
+                "CheckCondition": "FinalTurnCameraOn"
+            },
+            {
+                "Type": "ScenarioRunner",
+                "Method": "CreateCondition",
+                "Args": [ false, "CurrUnmute" ]
+            },
+            {
+                "Type": "ScenarioRunner",
+                "Method": "AddScenarioObj",
+                "Args": [ null, "UnmuteElement" ]
+            },
+            {
+                "Type": "WinAppDriverHelper",
+                "Method": "FindElementXPathNoThrow",
+                "Args": [ "//*[@Name='Meeting controls']//*[contains(@Name, 'Unmute')]", 1 ]
+            },
+            {
+                "Type": "ScenarioRunner",
+                "Method": "UpdateScenarioObj",
+                "UseLastReturnObject": true,
+                "Args": [ "UnmuteElement" ]
+            },
+            {
+                "Type": "ScenarioRunner",
+                "Method": "GetScenarioObj",
+                "Args": [ "UnmuteElement" ]
+            },
+            {
+                "Type": "WinAppDriverHelper",
+                "Method": "WindowsElementRelationalOperationWithNull",
+                "UseLastReturnObject": true,
+                "Args": [ "!=" ]
+            },
+            {
+                "Type": "ScenarioRunner",
+                "Method": "UpdateCondition",
+                "UseLastReturnObject": true,
+                "Args": [ "CurrUnmute" ]
+            },
+            {
+                "Type": "ScenarioRunner",
+                "Method": "CreateCondition",
+                "Args": [ "##JSON_BOOLEAN:Unmute##", "UserWantUnmute" ]
+            },
+            {
+                "Type": "ScenarioRunner",
+                "Method": "CheckCondition",
+                "Args": [ "UserWantUnmute" ]
+            },
+            {
+                "Type": "StackHelper",
+                "Method": "Push",
+                "UseLastReturnObject": true,
+                "Args": []
+            },
+            {
+                "Type": "StackHelper",
+                "Method": "Push",
+                "Args": [ "&&" ]
+            },
+            {
+                "Type": "ScenarioRunner",
+                "Method": "CheckCondition",
+                "Args": [ "CurrUnmute" ]
+            },
+            {
+                "Type": "StackHelper",
+                "Method": "Push",
+                "UseLastReturnObject": true,
+                "Args": []
+            },
+            {
+                "Type": "Expression",
+                "Method": "LogicBinaryOperation",
+                "Args": [],
+                "PopToArguments": 3
+            },
+            {
+                "Type": "ScenarioRunner",
+                "Method": "CreateCondition",
+                "UseLastReturnObject": true,
+                "Args": [ "FinalUnmute" ]
+            },
+            {
+                "Type": "ScenarioRunner",
+                "Method": "GetScenarioObj",
+                "Args": [ "UnmuteElement" ],
+                "CheckCondition": "FinalUnmute"
+            },
+            {
+                "Type": "WinAppDriverHelper",
+                "Method": "ClickElement",
+                "UseLastReturnObject": true,
+                "Args": [ 10 ],
+                "CheckCondition": "FinalUnmute"
+            },
+            {
+                "Type": "WinAppDriverHelper",
+                "Method": "Wait",
+                "Args": [ 5 ],
+                "CheckCondition": "FinalUnmute"
+            },
+            {
+                "Type": "ScenarioRunner",
+                "Method": "CreateCondition",
+                "Args": [ false, "CurrShareContent" ]
+            },
+            {
+                "Type": "ScenarioRunner",
+                "Method": "AddScenarioObj",
+                "Args": [ null, "ShareContentElement" ]
+            },
+            {
+                "Type": "WinAppDriverHelper",
+                "Method": "FindElementXPathNoThrow",
+                "Args": [ "//*[@Name='Meeting controls']//*[contains(@Name, 'Share content')]", 1 ]
+            },
+            {
+                "Type": "ScenarioRunner",
+                "Method": "UpdateScenarioObj",
+                "UseLastReturnObject": true,
+                "Args": [ "ShareContentElement" ]
+            },
+            {
+                "Type": "ScenarioRunner",
+                "Method": "GetScenarioObj",
+                "Args": [ "ShareContentElement" ]
+            },
+            {
+                "Type": "WinAppDriverHelper",
+                "Method": "WindowsElementRelationalOperationWithNull",
+                "UseLastReturnObject": true,
+                "Args": [ "!=" ]
+            },
+            {
+                "Type": "ScenarioRunner",
+                "Method": "UpdateCondition",
+                "UseLastReturnObject": true,
+                "Args": [ "CurrShareContent" ]
+            },
+            {
+                "Type": "ScenarioRunner",
+                "Method": "CreateCondition",
+                "Args": [ "##JSON_BOOLEAN:ShareContent##", "UserWantShareContent" ]
+            },
+            {
+                "Type": "ScenarioRunner",
+                "Method": "CheckCondition",
+                "Args": [ "UserWantShareContent" ]
+            },
+            {
+                "Type": "StackHelper",
+                "Method": "Push",
+                "UseLastReturnObject": true,
+                "Args": []
+            },
+            {
+                "Type": "StackHelper",
+                "Method": "Push",
+                "Args": [ "&&" ]
+            },
+            {
+                "Type": "ScenarioRunner",
+                "Method": "CheckCondition",
+                "Args": [ "CurrShareContent" ]
+            },
+            {
+                "Type": "StackHelper",
+                "Method": "Push",
+                "UseLastReturnObject": true,
+                "Args": []
+            },
+            {
+                "Type": "Expression",
+                "Method": "LogicBinaryOperation",
+                "Args": [],
+                "PopToArguments": 3
+            },
+            {
+                "Type": "ScenarioRunner",
+                "Method": "CreateCondition",
+                "UseLastReturnObject": true,
+                "Args": [ "FinalShareContent" ]
+            },
+            {
+                "Type": "ScenarioRunner",
+                "Method": "GetScenarioObj",
+                "Args": [ "ShareContentElement" ],
+                "CheckCondition": "FinalShareContent"
+            },
+            {
+                "Type": "WinAppDriverHelper",
+                "Method": "ClickElement",
+                "UseLastReturnObject": true,
+                "Args": [ 10 ],
+                "CheckCondition": "FinalShareContent"
+            },
+            {
+                "Type": "WinAppDriverHelper",
+                "Method": "Wait",
+                "Args": [ 5 ],
+                "CheckCondition": "FinalShareContent"
+            },
+            {
+                "Type": "ScenarioRunner",
+                "Method": "CreateCondition",
+                "Args": [ false, "CurrShareDesktopScreen" ]
+            },
+            {
+                "Type": "ScenarioRunner",
+                "Method": "AddScenarioObj",
+                "Args": [ null, "ShareDesktopScreenElement" ]
+            },
+            {
+                "Type": "WinAppDriverHelper",
+                "Method": "FindElementXPathNoThrow",
+                "Args": [ "//*[contains(@Name, 'Microsoft Teams')]//*[@Name='Screen']/following-sibling::*/*/*", 1 ]
+            },
+            {
+                "Type": "ScenarioRunner",
+                "Method": "UpdateScenarioObj",
+                "UseLastReturnObject": true,
+                "Args": [ "ShareDesktopScreenElement" ]
+            },
+            {
+                "Type": "ScenarioRunner",
+                "Method": "GetScenarioObj",
+                "Args": [ "ShareDesktopScreenElement" ]
+            },
+            {
+                "Type": "WinAppDriverHelper",
+                "Method": "WindowsElementRelationalOperationWithNull",
+                "UseLastReturnObject": true,
+                "Args": [ "!=" ]
+            },
+            {
+                "Type": "ScenarioRunner",
+                "Method": "UpdateCondition",
+                "UseLastReturnObject": true,
+                "Args": [ "CurrShareDesktopScreen" ]
+            },
+            {
+                "Type": "ScenarioRunner",
+                "Method": "GetScenarioObj",
+                "Args": [ "ShareDesktopScreenElement" ],
+                "CheckCondition": "CurrShareDesktopScreen"
+            },
+            {
+                "Type": "WinAppDriverHelper",
+                "Method": "ClickElement",
+                "UseLastReturnObject": true,
+                "Args": [ 10 ],
+                "CheckCondition": "CurrShareDesktopScreen"
+            },
+            {
+                "Type": "WinAppDriverHelper",
+                "Method": "Wait",
+                "Args": [ 5 ],
+                "CheckCondition": "CurrShareDesktopScreen"
+            },
+            {
+                "Type": "WinAppDriverHelper",
+                "Method": "Wait",
+                "Args": [ 5 ]
+            }
+        ]
+    }
+]

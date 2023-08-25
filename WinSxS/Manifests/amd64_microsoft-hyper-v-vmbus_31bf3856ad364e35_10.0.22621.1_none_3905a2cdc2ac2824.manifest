@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved." xmlns:win="http://manifests.microsoft.com/win/2004/08/windows/events">
+  <assemblyIdentity name="Microsoft-Hyper-V-Vmbus" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <instrumentation>
+    <events xmlns="http://schemas.microsoft.com/win/2004/08/events">
+      <provider guid="{f2e2ce31-0e8a-4e46-a03b-2e0fe97e93c2}" message="$(string.Hyper-V-VmBus-Provider)" messageFileName="%systemroot%\system32\drivers\vmbus.sys" name="Microsoft-Windows-Hyper-V-Guest-Drivers-Vmbus" parameterFileName="%systemroot%\system32\drivers\vmbus.sys" resourceFileName="%systemroot%\system32\drivers\vmbus.sys" symbol="VMBUS_PROVIDER">
+        <channels>
+          <importChannel chid="Hyper-VGuestDriversAdminEvents" name="Microsoft-Windows-Hyper-V-Guest-Drivers/Admin" />
+        </channels>
+      </provider>
+      <cmi />
+    </events>
+    <counters xmlns="http://schemas.microsoft.com/win/2005/12/counters" schemaVersion="2.0">
+      <provider applicationIdentity="%systemroot%\system32\drivers\vmbusr.sys" providerGuid="{898a4828-e6e6-4ddd-abb2-5751e3949aa4}" providerType="kernelMode">
+        <counterSet description="This counter set represents the statistics for the virtual machine bus." descriptionID="46002" guid="{115b92b4-7191-491a-a9b5-93c8e9fb641b}" instances="single" name="Hyper-V Virtual Machine Bus" nameID="46000" symbol="PublicCounterSet" uri="Microsoft.Windows.System.PerfCounters.Hyper-V:Vmbus">
+          <structs>
+            <struct name="VmBusPublicStats" type="VMBUS_PUBLIC_STATISTICS" />
+          </structs>
+          <counter description="This counter represents the rate of interrupts received." descriptionID="46006" detailLevel="standard" field="InterruptsReceived" id="1" name="Interrupts Received/sec" nameID="46004" struct="VmBusPublicStats" type="perf_counter_bulk_count" uri="Microsoft.Windows.System.PerfCounters.Hyper-V:Vmbus.InterruptsReceived" />
+          <counter description="This counter represents the rate of interrupts sent." descriptionID="46010" detailLevel="standard" field="InterruptsSent" id="2" name="Interrupts Sent/sec" nameID="46008" struct="VmBusPublicStats" type="perf_counter_bulk_count" uri="Microsoft.Windows.System.PerfCounters.Hyper-V:Vmbus.InterruptsSent" />
+          <counter description="This counter represents the total number of times that any partition has been throttled, which is to say that its interrupts were disabled." descriptionID="46014" detailLevel="standard" field="ThrottledPartitionCount" id="3" name="Throttle Events" nameID="46012" struct="VmBusPublicStats" type="perf_counter_large_rawcount" uri="Microsoft.Windows.System.PerfCounters.Hyper-V:Vmbus.PartitionThrottleEvents" />
+        </counterSet>
+      </provider>
+    </counters>
+  </instrumentation>
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string id="Hyper-V-VmBus-Provider" value="Microsoft-Windows-Hyper-V-VmBus" />
+        <string id="event.VMBUSCLASS_WRONG_VERSION_CLIENT" value="Hyper-V is running a different version of VMBus. Update the guest operating system to fix this problem." />
+      </stringTable>
+    </resources>
+  </localization>
+</assembly>

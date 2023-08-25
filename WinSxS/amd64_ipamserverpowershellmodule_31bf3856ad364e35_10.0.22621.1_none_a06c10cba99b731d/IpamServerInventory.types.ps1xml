@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Types>
+  <Type>
+    <Name>Microsoft.Management.Infrastructure.CimInstance#MSFT_IPAM_ServerInventory</Name>
+    <Members>
+      <ScriptProperty>
+        <Name>ManageabilityStatus</Name>
+        <GetScriptBlock>
+          [Microsoft.PowerShell.Cmdletization.GeneratedTypes.Ipam.ManageabilityStatus]($this.PSBase.CimInstanceProperties['ManageabilityStatus'].Value)
+        </GetScriptBlock>
+        <SetScriptBlock>
+          param($newValue)
+          $this.PSBase.CimInstanceProperties['ManageabilityStatus'].Value = [System.String] [Microsoft.PowerShell.Cmdletization.GeneratedTypes.Ipam.ManageabilityStatus] $newValue
+        </SetScriptBlock>
+      </ScriptProperty>
+
+      <ScriptProperty>
+        <Name>IPAMAccessStatus</Name>
+        <GetScriptBlock>
+          [Microsoft.PowerShell.Cmdletization.GeneratedTypes.Ipam.AccessStatus]($this.PSBase.CimInstanceProperties['IPAMAccessStatus'].Value)
+        </GetScriptBlock>
+        <SetScriptBlock>
+          param($newValue)
+          $this.PSBase.CimInstanceProperties['IPAMAccessStatus'].Value = [System.String] [Microsoft.PowerShell.Cmdletization.GeneratedTypes.Ipam.AccessStatus] $newValue
+        </SetScriptBlock>
+      </ScriptProperty>
+
+      <ScriptProperty>
+        <Name>ServerType</Name>
+        <GetScriptBlock>
+          $integerArray = $this.PSBase.CimInstanceProperties['ServerType'].Value
+          $enumArray = New-Object Microsoft.PowerShell.Cmdletization.GeneratedTypes.Ipam.ServerRole[] ($integerArray.Length)
+          for ($i = 0; $i -lt $integerArray.Length; $i++)
+          {
+          $enumArray[$i] = [Microsoft.PowerShell.Cmdletization.GeneratedTypes.Ipam.ServerRole]($integerArray[$i])
+          }
+          return $enumArray
+        </GetScriptBlock>
+
+      </ScriptProperty>
+
+      <ScriptProperty>
+        <Name>ServerStatus</Name>
+        <GetScriptBlock>
+          [Microsoft.PowerShell.Cmdletization.GeneratedTypes.Ipam.ServerStatus]($this.PSBase.CimInstanceProperties['ServerStatus'].Value)
+        </GetScriptBlock>
+        <SetScriptBlock>
+          param($newValue)
+          $this.PSBase.CimInstanceProperties['ServerStatus'].Value = [System.String] [Microsoft.PowerShell.Cmdletization.GeneratedTypes.Ipam.ServerStatus] $newValue
+        </SetScriptBlock>
+      </ScriptProperty>
+
+      <ScriptProperty>
+        <Name>DataRetrievalStatus</Name>
+        <GetScriptBlock>
+          [Microsoft.PowerShell.Cmdletization.GeneratedTypes.Ipam.RetrievalStatus]($this.PSBase.CimInstanceProperties['DataRetrievalStatus'].Value)
+        </GetScriptBlock>
+        <SetScriptBlock>
+          param($newValue)
+          $this.PSBase.CimInstanceProperties['DataRetrievalStatus'].Value = [System.String] [Microsoft.PowerShell.Cmdletization.GeneratedTypes.Ipam.RetrievalStatus] $newValue
+        </SetScriptBlock>
+      </ScriptProperty>
+
+      <ScriptProperty>
+        <Name>DhcpRpcAccessStatus</Name>
+        <GetScriptBlock>
+          [Microsoft.PowerShell.Cmdletization.GeneratedTypes.Ipam.RpcAccessStatus]($this.PSBase.CimInstanceProperties['DhcpRpcAccessStatus'].Value)
+        </GetScriptBlock>
+        <SetScriptBlock>
+          param($newValue)
+          $this.PSBase.CimInstanceProperties['DhcpRpcAccessStatus'].Value = [System.String] [Microsoft.PowerShell.Cmdletization.GeneratedTypes.Ipam.RpcAccessStatus] $newValue
+        </SetScriptBlock>
+      </ScriptProperty>
+
+      <ScriptProperty>
+        <Name>DnsRpcAccessStatus</Name>
+        <GetScriptBlock>
+          [Microsoft.PowerShell.Cmdletization.GeneratedTypes.Ipam.RpcAccessStatus]($this.PSBase.CimInstanceProperties['DnsRpcAccessStatus'].Value)
+        </GetScriptBlock>
+        <SetScriptBlock>
+          param($newValue)
+          $this.PSBase.CimInstanceProperties['DnsRpcAccessStatus'].Value = [System.String] [Microsoft.PowerShell.Cmdletization.GeneratedTypes.Ipam.RpcAccessStatus] $newValue
+        </SetScriptBlock>
+      </ScriptProperty>
+
+      <ScriptProperty>
+        <Name>DhcpAuditShareAccessStatus</Name>
+        <GetScriptBlock>
+          [Microsoft.PowerShell.Cmdletization.GeneratedTypes.Ipam.AccessStatus]($this.PSBase.CimInstanceProperties['DhcpAuditShareAccessStatus'].Value)
+        </GetScriptBlock>
+        <SetScriptBlock>
+          param($newValue)
+          $this.PSBase.CimInstanceProperties['DhcpAuditShareAccessStatus'].Value = [System.String] [Microsoft.PowerShell.Cmdletization.GeneratedTypes.Ipam.AccessStatus] $newValue
+        </SetScriptBlock>
+      </ScriptProperty>
+
+      <ScriptProperty>
+        <Name>EventLogAccessStatus</Name>
+        <GetScriptBlock>
+          # For the display purpose, we add which all roles are blocked/unblocked.
+          ([System.String][Microsoft.PowerShell.Cmdletization.GeneratedTypes.Ipam.AccessStatus]($this.PSBase.CimInstanceProperties['EventLogAccessStatus'].Value) ) + $this.PSBase.CimInstanceProperties['Status'].Value
+        </GetScriptBlock>
+        <SetScriptBlock>
+          param($newValue)
+          $this.PSBase.CimInstanceProperties['EventLogAccessStatus'].Value = ([System.String] [Microsoft.PowerShell.Cmdletization.GeneratedTypes.Ipam.AccessStatus] $newValue) 
+        </SetScriptBlock>
+      </ScriptProperty>
+
+      <ScriptProperty>
+        <Name>CustomFields</Name>
+        <GetScriptBlock>
+          param()
+
+          $output = @{};
+          $isPrevCharSeperator = $false;
+          $tempString = "";
+          $nameValueFormat = $this.PSBase.CimInstanceProperties['CustomConfiguration'].Value;
+
+          # Walk through the string, break the string at the Seperator character if it is not escaped.
+          # And add to the string collection.
+          for ( $i = 0; $i -lt $nameValueFormat.Length; $i++)
+          {
+          $currentChar = $nameValueFormat[$i];
+          switch ($currentChar)
+          {
+
+          '\' {
+
+          if ($isPrevCharSeperator)
+          {
+          $tempString += $currentChar;
+          # As this character was not considered as a seperator.
+          $isPrevCharSeperator = $false;
+          }
+          else
+          {
+          $isPrevCharSeperator = $true;
+          }
+
+          }
+
+          ';' {
+
+          # It is a escaped special character, we just treat it as a part of the name.
+          if ($isPrevCharSeperator)
+          {
+          $tempString += $currentChar;
+          }
+          else
+          {
+          # If this is not a escaped seperator, we take the word till this point
+          # as the end of a valid value.
+
+          $value = $tempString;
+          $output.Add($name, $value);
+          $tempString = "";
+
+          }
+          $isPrevCharSeperator = $false;
+          }
+
+          '=' {
+
+          # It is a escaped special character, we just treat it as a part of the name.
+          if ($isPrevCharSeperator)
+          {
+          $tempString += $currentChar;
+          }
+          else
+          {
+
+          # This is the boundary of name=value.
+          # Get the name and store it in the first item of the current tuple.
+
+          $name = $tempString
+          $tempString = "";
+          }
+
+          $isPrevCharSeperator = $false;
+          }
+
+          default {
+
+          # The previous character was Escape Character and when combined with the
+          # current character does not form a escape sequence, hence the previous
+          # escape character is traeted as part of the string.
+          if ($isPrevCharSeperator)
+          {
+          $tempString += '\';
+          }
+
+          # Any other character, just append it to the current word.
+          $tempString += $currentChar;
+          $isPrevCharSeperator = $false;
+          }
+          }
+          }
+          $output;
+        </GetScriptBlock>
+      </ScriptProperty>
+      
+    </Members>
+  </Type>
+</Types>

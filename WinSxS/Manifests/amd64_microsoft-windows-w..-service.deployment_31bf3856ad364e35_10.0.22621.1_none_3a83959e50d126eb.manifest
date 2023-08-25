@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-Wallet-Service.Deployment" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <file name="WalletService.dll" destinationPath="$(runtime.system32)\" sourceName="WalletService.dll" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>E98RrhKZWvEBF4PPabciAicSU7GASCiQhtgLOUW+Rco=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <registryKeys>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\System\CurrentControlSet\Services\WalletService\Parameters">
+      <registryValue name="ServiceDLL" valueType="REG_EXPAND_SZ" value="%SystemRoot%\system32\WalletService.dll" />
+      <registryValue name="ServiceDllUnloadOnStop" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="ServiceMain" valueType="REG_SZ" value="ServiceMain" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\EventLog\System\WalletService">
+      <registryValue name="EventMessageFile" valueType="REG_EXPAND_SZ" value="%SystemRoot%\system32\WalletService.dll" />
+      <registryValue name="TypesSupported" valueType="REG_DWORD" value="0x00000007" />
+      <registryValue name="ProviderGuid" valueType="REG_SZ" value="{6ED11B00-C1B5-48CB-AECC-FF72EBEFBAE8}" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\WalletService">
+      <registryValue name="DllName" valueType="REG_EXPAND_SZ" value="%SystemRoot%\system32\walletservice.dll" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\Software\Microsoft\Wallet">
+      <securityDescriptor name="WRP_REGKEY_WALLET_ALLACCESS_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\Software\Partner\Wallet">
+      <securityDescriptor name="WRP_REGKEY_WALLET_ALLACCESS_SDDL" />
+    </registryKey>
+  </registryKeys>
+  <memberships>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories.Services" version="10.0.22621.1" publicKeyToken="31bf3856ad364e35" typeName="Service" />
+      <categoryInstance>
+        <serviceData name="WalletService" displayName="@%SystemRoot%\System32\WalletService.dll,-1000" errorControl="ignore" start="demand" type="win32ShareProcess" description="@%SystemRoot%\System32\WalletService.dll,-1001" imagePath="%SystemRoot%\System32\svchost.exe -k appmodel -p" objectName="LocalSystem" requiredPrivileges="SeChangeNotifyPrivilege,SeIncreaseWorkingSetPrivilege,SeCreateGlobalPrivilege,SeImpersonatePrivilege" sidType="unrestricted">
+          <failureActions resetPeriod="86400">
+            <actions>
+              <action delay="10000" type="restartService" />
+              <action delay="10000" type="restartService" />
+              <action delay="0" type="none" />
+            </actions>
+          </failureActions>
+        </serviceData>
+      </categoryInstance>
+    </categoryMembership>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories" version="1.0.0.0" publicKeyToken="365143bb27e7ac8b" typeName="SvcHost" />
+      <categoryInstance subcategory="appmodel">
+        <serviceGroup position="last" serviceName="WalletService" />
+      </categoryInstance>
+    </categoryMembership>
+  </memberships>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="WRP_REGKEY_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;CI;GA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;CI;GR;;;SY)(A;CI;GR;;;BA)(A;CI;GR;;;BU)(A;CI;GR;;;S-1-15-2-1)(A;CI;GR;;;S-1-15-3-1024-1065365936-1281604716-3511738428-1654721687-432734479-3232135806-4053264122-3456934681)" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_REGKEY_WALLET_ALLACCESS_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;CI;GA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;CI;GA;;;SY)(A;CI;GA;;;BA)(A;CI;GR;;;BU)(A;CI;GR;;;S-1-15-2-1)(A;CI;GA;;;NS)(A;CI;GA;;;LS)" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" description="Default SDDL for Windows Resource Protected file" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+</assembly>

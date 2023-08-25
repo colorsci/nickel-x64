@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-Mitigation-Client" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <dependency discoverable="no" resourceType="Resources">
+    <dependentAssembly dependencyType="prerequisite">
+      <assemblyIdentity name="Microsoft-Windows-Mitigation-Client.Resources" version="10.0.22621.1" processorArchitecture="amd64" language="*" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+    </dependentAssembly>
+  </dependency>
+  <file name="MitigationClient.dll" destinationPath="$(runtime.system32)\" sourceName="MitigationClient.dll" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>VlF15GeJ7Hb3pc/E2OUwxCTWemEMbfuViY1Fb7Ulwg0=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <firewallRule Action="Allow" Active="TRUE" Binary="%SystemRoot%\system32\svchost.exe" Desc="@%SystemRoot%\system32\firewallapi.dll,-53502" Dir="Out" InternalName="Microsoft-Windows-Troubleshooting-HTTP-HTTPS-Out" Name="@%SystemRoot%\system32\firewallapi.dll,-53501" Protocol="TCP" Rport="80,443" group="@%SystemRoot%\system32\firewallapi.dll,-53500" svc="TroubleshootingSvc" />
+  <registryKeys>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{2b6dca65-5287-4213-b19d-70fa9807d1a8}">
+      <registryValue name="" valueType="REG_SZ" value="Mitigation API Broker" />
+      <registryValue name="AppID" valueType="REG_SZ" value="{6de5dc63-3c0c-4dda-9220-1028a37298ba}" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{89dc1cf7-97b5-4389-a6af-c08fb4d5a408}">
+      <registryValue name="" valueType="REG_SZ" value="Mitigation State" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{89dc1cf7-97b5-4389-a6af-c08fb4d5a408}\InprocServer32">
+      <registryValue name="" valueType="REG_EXPAND_SZ" value="%SystemRoot%\System32\MitigationClient.dll" />
+      <registryValue name="ThreadingModel" valueType="REG_SZ" value="Both" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{a1b4dd9f-c1d9-4e24-9b7f-c0ef7cffdb71}">
+      <registryValue name="" valueType="REG_SZ" value="Mitigation Notification Task Handler" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{a1b4dd9f-c1d9-4e24-9b7f-c0ef7cffdb71}\InprocServer32">
+      <registryValue name="" valueType="REG_EXPAND_SZ" value="%SystemRoot%\System32\MitigationClient.dll" />
+      <registryValue name="ThreadingModel" valueType="REG_SZ" value="Both" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{ad08dcc2-4e35-4486-9d49-547cbd30942d}">
+      <registryValue name="" valueType="REG_SZ" value="Mitigation Scanner Task Handler" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{ad08dcc2-4e35-4486-9d49-547cbd30942d}\InprocServer32">
+      <registryValue name="" valueType="REG_EXPAND_SZ" value="%SystemRoot%\System32\MitigationClient.dll" />
+      <registryValue name="ThreadingModel" valueType="REG_SZ" value="Both" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\AppId\{6de5dc63-3c0c-4dda-9220-1028a37298ba}">
+      <registryValue name="" valueType="REG_SZ" value="Recommended Troubleshooting Service" />
+      <registryValue name="LaunchPermission" valueType="REG_BINARY" value="010014806400000074000000140000003000000002001C000100000011001400040000000101000000000010001000000200340002000000000018000B00000001020000000000052000000020020000000014000B0000000101000000000005120000000102000000000005200000002002000001020000000000052000000020020000" />
+      <registryValue name="LocalService" valueType="REG_SZ" value="TroubleshootingSvc" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\System\CurrentControlset\Services\TroubleshootingSvc\Parameters">
+      <registryValue name="ServiceDll" valueType="REG_EXPAND_SZ" value="%systemroot%\system32\MitigationClient.dll" />
+      <registryValue name="ServiceMain" valueType="REG_SZ" value="ServiceMain" />
+      <registryValue name="ServiceDllUnloadOnStop" valueType="REG_DWORD" value="0x00000001" />
+    </registryKey>
+  </registryKeys>
+  <memberships>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories.Services" version="10.0.22621.1" publicKeyToken="31bf3856ad364e35" typeName="Service" />
+      <categoryInstance subcategory="TroubleshootingSvc">
+        <serviceData name="TroubleshootingSvc" displayName="@%SystemRoot%\system32\MitigationClient.dll,-103" errorControl="normal" start="demand" type="win32ShareProcess" description="@%SystemRoot%\system32\MitigationClient.dll,-104" dependOnService="rpcss" imagePath="%systemroot%\system32\svchost.exe -k netsvcs -p" objectName="LocalSystem" requiredPrivileges="SeImpersonatePrivilege,SeTcbPrivilege,SeCreateGlobalPrivilege,SeSystemEnvironmentPrivilege,SeShutdownPrivilege,SeDebugPrivilege,SeLoadDriverPrivilege,SeRestorePrivilege,SeBackupPrivilege,SeManageVolumePrivilege,SeTakeOwnershipPrivilege,SeSecurityPrivilege,SeAssignPrimaryTokenPrivilege,SeAuditPrivilege,SeCreatePagefilePrivilege,SeCreatePermanentPrivilege,SeCreateSymbolicLinkPrivilege,SeDelegateSessionUserImpersonatePrivilege,SeIncreaseBasePriorityPrivilege,SeIncreaseQuotaPrivilege,SeIncreaseWorkingSetPrivilege,SeProfileSingleProcessPrivilege,SeSystemProfilePrivilege,SeSystemtimePrivilege,SeTimeZonePrivilege,SeUndockPrivilege" sidType="unrestricted" />
+      </categoryInstance>
+    </categoryMembership>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories" version="1.0.0.0" publicKeyToken="365143bb27e7ac8b" typeName="SvcHost" />
+      <categoryInstance subcategory="netsvcs">
+        <serviceGroup position="last" serviceName="TroubleshootingSvc" />
+      </categoryInstance>
+    </categoryMembership>
+  </memberships>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="WRP_REGKEY_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;CI;GA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;CI;GR;;;SY)(A;CI;GR;;;BA)(A;CI;GR;;;BU)(A;CI;GR;;;S-1-15-2-1)(A;CI;GR;;;S-1-15-3-1024-1065365936-1281604716-3511738428-1654721687-432734479-3232135806-4053264122-3456934681)" operationHint="replace" />
+          <securityDescriptorDefinition name="ADMIN_FULL_ACCESS_SDDL" sddl="O:BAG:SYD:(A;;GA;;;BA)(A;;GA;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" description="Default SDDL for Windows Resource Protected file" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+  <migration settingsVersion="1">
+    <migXml xmlns="">
+      <rules context="System">
+        <include>
+          <objectSet>
+            <pattern type="Registry">HKLM\System\CurrentControlSet\Services\TroubleshootingSvc [Start]</pattern>
+          </objectSet>
+        </include>
+      </rules>
+    </migXml>
+    <supportedComponents>
+      <supportedComponent>
+        <assemblyIdentity name="_" version="1.0.0.0" />
+        <supportedComponentIdentity language="neutral" name="Microsoft-Windows-Mitigation-Client" processorArchitecture="*" settingsVersionRange="0-1" xmlns="urn:schemas-microsoft-com:asm.v3" />
+      </supportedComponent>
+    </supportedComponents>
+  </migration>
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string id="description" value="Manifest for MitigationClient.dll" />
+        <string id="displayName" value="MitigationClient.dll" />
+      </stringTable>
+    </resources>
+  </localization>
+</assembly>

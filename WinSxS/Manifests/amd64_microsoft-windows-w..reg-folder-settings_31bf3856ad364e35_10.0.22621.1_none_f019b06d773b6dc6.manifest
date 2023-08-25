@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved." xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <assemblyIdentity name="Microsoft-Windows-WMI-Core-reg-folder-settings" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <configuration xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State">
+    <configurationSchema>
+      <xsd:schema targetNamespace="Microsoft-Windows-WMI-Core-reg-folder-settings">
+        <xsd:element default="0" name="DefaultSecuredHost" type="xsd:integer" wcm:accessControl="wbem-reg" wcm:description="Enable Securing Hosting Model for all providers" wcm:displayName="DefaultSecuredHost" wcm:handler="regkey('HKEY_LOCAL_MACHINE\Software\Microsoft\WBEM\CIMOM')" wcm:legacyName="DefaultSecuredHost" wcm:scope="allUsers" />
+        <xsd:element default="0" name="AllowAnonymousCallback" type="xsd:integer" wcm:accessControl="wbem-reg" wcm:description="Enable Securing Hosting Model for all providers" wcm:displayName="AllowAnonymousCallback" wcm:handler="regkey('HKEY_LOCAL_MACHINE\Software\Microsoft\WBEM\CIMOM')" wcm:legacyName="AllowAnonymousCallback" wcm:scope="allUsers" />
+        <xsd:element default="1" name="Performance_Refresh" type="xsd:integer" wcm:accessControl="wbem-reg" wcm:description="Performance Refresh" wcm:displayName="Performance Refresh" wcm:handler="regkey('HKEY_LOCAL_MACHINE\Software\Microsoft\WBEM\PROVIDERS\Performance')" wcm:legacyName="Performance Refresh" wcm:scope="allUsers" />
+        <xsd:element default="0" name="Performance_Refreshed" type="xsd:integer" wcm:accessControl="wbem-reg" wcm:description="Performance Refreshed" wcm:displayName="Performance Refreshed" wcm:handler="regkey('HKEY_LOCAL_MACHINE\Software\Microsoft\WBEM\PROVIDERS\Performance')" wcm:legacyName="Performance Refreshed" wcm:scope="allUsers" />
+        <xsd:element default="2" name="MinimumBuffers" type="xsd:integer" wcm:description="MinimumBuffers" wcm:displayName="MinimumBuffers" wcm:handler="regkey('HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\WBEM\Tracing\WMI')" wcm:scope="allUsers" />
+        <xsd:element default="%systemroot%\system32\wbem\Logs\WMITracing.log" name="LogFile" type="xsd:string" wcm:description="LogFile" wcm:displayName="LogFile" wcm:handler="regkey('HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\WBEM\Tracing\WMI')" wcm:legacyType="REG_EXPAND_SZ" wcm:scope="allUsers" />
+        <xsd:element default="1" name="ConfigValueEssToBeInitialized" type="xsd:integer" wcm:accessControl="wbem-reg" wcm:description="ConfigValueEssToBeInitialized" wcm:displayName="ConfigValueEssToBeInitialized" wcm:handler="regkey('HKEY_LOCAL_MACHINE\Software\Microsoft\WBEM\CIMOM')" wcm:scope="allUsers" />
+        <xsd:element default="0" name="Logging" type="xsd:string" wcm:accessControl="wbem-reg" wcm:description="Logging" wcm:displayName="Logging" wcm:handler="regkey('HKEY_LOCAL_MACHINE\Software\Microsoft\WBEM\CIMOM')" wcm:legacyType="REG_SZ" wcm:scope="allUsers" />
+        <xsd:element default="0" name="Autorecover_MOFs_timestamp" type="xsd:string" wcm:accessControl="wbem-reg" wcm:description="Autorecover MOFs timestamp" wcm:displayName="Autorecover MOFs timestamp" wcm:handler="regkey('HKEY_LOCAL_MACHINE\Software\Microsoft\WBEM\CIMOM')" wcm:legacyName="Autorecover MOFs timestamp" wcm:scope="allUsers" />
+      </xsd:schema>
+    </configurationSchema>
+  </configuration>
+  <directories>
+    <directory destinationPath="$(runtime.system32)\wbem">
+      <securityDescriptor name="WRP_PARENT_DIR_DEFAULT_SDDL" />
+    </directory>
+    <directory destinationPath="$(runtime.system32)\wbem\xml">
+      <securityDescriptor name="WRP_PARENT_DIR_DEFAULT_SDDL" />
+    </directory>
+    <directory destinationPath="$(runtime.system32)\wbem\Logs">
+      <securityDescriptor name="wbemDir-log" />
+    </directory>
+    <directory destinationPath="$(runtime.system32)\wbem\AutoRecover">
+      <securityDescriptor name="wbemDir-rep" />
+    </directory>
+    <directory destinationPath="$(runtime.system32)\wbem\Repository">
+      <securityDescriptor name="wbemDir-rep" />
+    </directory>
+  </directories>
+  <registryKeys>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\WBEM">
+      <registryValue name="Installation Directory" valueType="REG_EXPAND_SZ" value="%SystemRoot%\system32\WBEM" />
+      <registryValue name="BUILD" valueType="REG_SZ" value="22621.1" />
+      <registryValue name="MOF Self-Install Directory" valueType="REG_EXPAND_SZ" value="%SystemRoot%\system32\WBEM\MOF" />
+      <overridable name="MOF Self-Install Directory" scope="Microsoft" type="REG_EXPAND_SZ" />
+      <securityDescriptor name="wbem-reg" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\Software\Microsoft\WBEM\CIMOM\">
+      <registryValue name="Logging Directory" valueType="REG_EXPAND_SZ" value="%systemroot%\system32\wbem\Logs\" />
+      <overridable name="Logging Directory" scope="Microsoft" type="REG_EXPAND_SZ" />
+      <registryValue name="Repository Directory" valueType="REG_EXPAND_SZ" value="%systemroot%\system32\wbem\repository" />
+      <overridable name="Repository Directory" scope="Microsoft" type="REG_EXPAND_SZ" />
+      <registryValue name="Working Directory" valueType="REG_EXPAND_SZ" value="%systemroot%\system32\wbem" />
+      <overridable name="Working Directory" scope="Microsoft" type="REG_EXPAND_SZ" />
+      <registryValue name="SetupDate" valueType="REG_SZ" value="" />
+      <registryValue name="SetupTime" valueType="REG_SZ" value="" />
+      <registryValue name="Unchecked Task Count" valueType="REG_DWORD" value="0x000000FA" />
+      <registryValue name="Autorecover MOFs" valueType="REG_MULTI_SZ" value="" />
+      <registryValue name="ADAPDelay" valueType="REG_DWORD" value="0x000000F0" />
+      <registryValue name="NumWriteIdCheck" valueType="REG_DWORD" value="0x0000000A" />
+      <registryValue name="Default Repository Driver" valueType="REG_SZ" value="{7998dc37-d3fe-487c-a60a-7701fcc70cc6}" />
+      <registryValue name="EnableEvents" valueType="REG_SZ" value="1" />
+      <registryValue name="TimeOutMs" valueType="REG_SZ" value="20000" />
+      <registryValue name="UnsecappAccessControlDefault" valueType="REG_SZ" value="0" />
+      <registryValue name="MOF Self-Install Directory" valueType="REG_EXPAND_SZ" value="%SystemRoot%\system32\WBEM\MOF" />
+      <overridable name="MOF Self-Install Directory" scope="Microsoft" type="REG_EXPAND_SZ" />
+      <registryValue name="ConfigValueCoreDatabaseDirty" valueType="REG_DWORD" value="0x00000000" />
+      <registryValue name="ConfigValueEssNeedsLoading" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="ConfigValueCoreNeedBackupCheck" valueType="REG_DWORD" value="0x00000000" />
+      <registryValue name="ConfigValueCoreFsrepVersion" valueType="REG_DWORD" value="0x00000006" />
+      <securityDescriptor name="wbem-reg" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\Software\Microsoft\WBEM\CIMOM\SecuredHostProviders\">
+      <registryValue name="WMIRefresher" valueType="REG_SZ" value="0" />
+      <registryValue name="root\MicrosoftNLB:__Win32Provider.Name=&quot;Microsoft|NLB_Provider|V1.0&quot;" valueType="REG_SZ" value="0" />
+      <registryValue name="root\wmi:__Win32Provider.Name=&quot;MSiSNSServerProvider&quot;" valueType="REG_SZ" value="0" />
+      <registryValue name="root\wmi:__Win32Provider.Name=&quot;BcdProv&quot;" valueType="REG_SZ" value="0" />
+      <registryValue name="Root\CIMV2:__Win32Provider.Name=&quot;CIMWin32&quot;" valueType="REG_SZ" value="0" />
+      <registryValue name="Root\CIMV2:__Win32Provider.Name=&quot;Cimwin32A&quot;" valueType="REG_SZ" value="0" />
+      <registryValue name="Root\MSCluster:__Win32Provider.Name=&quot;MS_CLUSTER_PROVIDER&quot;" valueType="REG_SZ" value="0" />
+      <registryValue name="Root\MSCluster:__Win32Provider.Name=&quot;Cluster Event Provider&quot;" valueType="REG_SZ" value="0" />
+      <registryValue name="Root\MSCluster:__Win32Provider.Name=&quot;MS_CLUSTER_CLASS_PROVIDER&quot;" valueType="REG_SZ" value="0" />
+      <registryValue name="Root\MicrosoftDNS:__Win32Provider.Name=&quot;MS_NT_DNS_PROVIDER&quot;" valueType="REG_SZ" value="0" />
+      <registryValue name="root\directory\LDAP:__Win32Provider.Name=&quot;Microsoft|DSLDAPClassProvider|V1.0&quot;" valueType="REG_SZ" value="0" />
+      <registryValue name="root\directory\LDAP:__Win32Provider.Name=&quot;Microsoft|DSLDAPClassAssociationsProvider|V1.0&quot;" valueType="REG_SZ" value="0" />
+      <registryValue name="root\directory\LDAP:__Win32Provider.Name=&quot;Microsoft|DSLDAPInstanceProvider|V1.0&quot;" valueType="REG_SZ" value="0" />
+      <registryValue name="ROOT\MicrosoftIISv2:__Win32Provider.Name=&quot;MS_VIEW_INSTANCE_PROVIDER&quot;" valueType="REG_SZ" value="0" />
+      <registryValue name="ROOT\MicrosoftIISv2:__Win32Provider.Name=&quot;IIS__PROVIDER&quot;" valueType="REG_SZ" value="0" />
+      <registryValue name="root\Hardware:__Win32Provider.Name=&quot;IPMIPrv&quot;" valueType="REG_SZ" value="0" />
+      <registryValue name="root\nap:__Win32Provider.Name=&quot;Nap_ClientProvider&quot;" valueType="REG_SZ" value="0" />
+      <registryValue name="ROOT\MSNFS:__Win32Provider.Name=&quot;MSNFS_PROVIDER&quot;" valueType="REG_SZ" value="0" />
+      <registryValue name="Root\microsoftnlb:__Win32Provider.Name=&quot;NlbsNicProv&quot;" valueType="REG_SZ" value="0" />
+      <registryValue name="Root\CIMV2:__Win32Provider.Name=&quot;MS_NT_EVENTLOG_PROVIDER&quot;" valueType="REG_SZ" value="0" />
+      <registryValue name="ROOT\CIMV2:__Win32Provider.Name=&quot;Win32_OfflineFilesProvider&quot;" valueType="REG_SZ" value="0" />
+      <registryValue name="Root\Psync_admin:__Win32Provider.Name=&quot;RegProv&quot;" valueType="REG_SZ" value="0" />
+      <registryValue name="root\MicrosoftActiveDirectory:ReplicationProvider1.Name=&quot;ReplProv1&quot;" valueType="REG_SZ" value="0" />
+      <registryValue name="root\RSOP:__Win32Provider.Name=&quot;Rsop Logging Mode Provider&quot;" valueType="REG_SZ" value="0" />
+      <registryValue name="root\cimv2:__Win32Provider.Name=&quot;SECRCW32&quot;" valueType="REG_SZ" value="0" />
+      <registryValue name="root\cimv2:__Win32Provider.Name=&quot;ServerFeatureProvider&quot;" valueType="REG_SZ" value="0" />
+      <registryValue name="root\cimv2:__Win32Provider.Name=&quot;SMTPEventConsumer&quot;" valueType="REG_SZ" value="0" />
+      <registryValue name="Root\Snis_admin:__Win32Provider.Name=&quot;RegProv&quot;" valueType="REG_SZ" value="0" />
+      <registryValue name="root\ms_snmp_root\localhost:__Win32Provider.Name=&quot;MS_SNMP_CLASS_PROVIDER&quot;" valueType="REG_SZ" value="0" />
+      <registryValue name="root\ms_snmp_root\localhost:__Win32Provider.Name=&quot;MS_SNMP_REFERENT_EVENT_PROVIDER&quot;" valueType="REG_SZ" value="0" />
+      <registryValue name="root\ms_snmp_root\localhost:__Win32Provider.Name=&quot;MS_SNMP_ENCAPSULATED_EVENT_PROVIDER&quot;" valueType="REG_SZ" value="0" />
+      <registryValue name="root\ms_snmp_root\localhost:__Win32Provider.Name=&quot;MS_SNMP_INSTANCE_PROVIDER&quot;" valueType="REG_SZ" value="0" />
+      <registryValue name="root\snmp\localhost:__Win32Provider.Name=&quot;MS_SNMP_CLASS_PROVIDER&quot;" valueType="REG_SZ" value="0" />
+      <registryValue name="root\snmp\localhost:__Win32Provider.Name=&quot;MS_SNMP_INSTANCE_PROVIDER&quot;" valueType="REG_SZ" value="0" />
+      <registryValue name="root\snmp\localhost:__Win32Provider.Name=&quot;MS_SNMP_REFERENT_EVENT_PROVIDER&quot;" valueType="REG_SZ" value="0" />
+      <registryValue name="root\snmp\localhost:__Win32Provider.Name=&quot;MS_SNMP_ENCAPSULATED_EVENT_PROVIDER&quot;" valueType="REG_SZ" value="0" />
+      <registryValue name="Root\CIMV2:__Win32Provider.Name=&quot;SppProvider&quot;" valueType="REG_SZ" value="0" />
+      <registryValue name="Root\Default:__Win32Provider.Name=&quot;SystemRestoreProv&quot;" valueType="REG_SZ" value="0" />
+      <registryValue name="root\subscription:__Win32Provider.Name=&quot;SMTPEventConsumer&quot;" valueType="REG_SZ" value="0" />
+      <registryValue name="root\cimv2:__Win32Provider.Name=&quot;Win32_WIN32_TERMSERVLICENSING_Prov&quot;" valueType="REG_SZ" value="0" />
+      <registryValue name="root\CIMv2:__Win32Provider.Name=&quot;Microsoft|TransactionProv|v1.0&quot;" valueType="REG_SZ" value="0" />
+      <registryValue name="root\CIMv2:__Win32Provider.Name=&quot;Microsoft|TransactionManagerProv|v1.0&quot;" valueType="REG_SZ" value="0" />
+      <registryValue name="root\CIMv2:__Win32Provider.Name=&quot;Microsoft|PerfTransactionManagerProv|v1.0&quot;" valueType="REG_SZ" value="0" />
+      <registryValue name="root\MicrosoftActiveDirectory:__Win32Provider.Name=&quot;TrustPrv&quot;" valueType="REG_SZ" value="0" />
+      <registryValue name="ROOT\cimv2\TerminalServices:__Win32Provider.Name=&quot;Win32_TSPublishedApplication_Prov&quot;" valueType="REG_SZ" value="0" />
+      <registryValue name="ROOT\cimv2:__Win32Provider.Name=&quot;Win32_WIN32_TERMINALSERVICE_Prov&quot;" valueType="REG_SZ" value="0" />
+      <registryValue name="Root\cimv2\TerminalServices:__Win32Provider.Name=&quot;Win32_WIN32_TERMINALSERVICESETTING_Prov&quot;" valueType="REG_SZ" value="0" />
+      <registryValue name="Root\cimv2\TerminalServices:__Win32Provider.Name=&quot;Win32_WIN32_TERMINALSERVICETOSETTING_Prov&quot;" valueType="REG_SZ" value="0" />
+      <registryValue name="Root\cimv2\TerminalServices:__Win32Provider.Name=&quot;Win32_WIN32_TERMINALTERMINALSETTING_Prov&quot;" valueType="REG_SZ" value="0" />
+      <registryValue name="Root\cimv2\TerminalServices:__Win32Provider.Name=&quot;Win32_WIN32_TERMINAL_Prov&quot;" valueType="REG_SZ" value="0" />
+      <registryValue name="Root\cimv2\TerminalServices:__Win32Provider.Name=&quot;Win32_WIN32_TSGENERALSETTING_Prov&quot;" valueType="REG_SZ" value="0" />
+      <registryValue name="Root\cimv2\TerminalServices:__Win32Provider.Name=&quot;Win32_WIN32_TSLOGONSETTING_Prov&quot;" valueType="REG_SZ" value="0" />
+      <registryValue name="Root\cimv2\TerminalServices:__Win32Provider.Name=&quot;Win32_WIN32_TSSESSIONSETTING_Prov&quot;" valueType="REG_SZ" value="0" />
+      <registryValue name="Root\cimv2\TerminalServices:__Win32Provider.Name=&quot;Win32_WIN32_TSENVIRONMENTSETTING_Prov&quot;" valueType="REG_SZ" value="0" />
+      <registryValue name="Root\cimv2\TerminalServices:__Win32Provider.Name=&quot;Win32_WIN32_TSREMOTECONTROLSETTING_Prov&quot;" valueType="REG_SZ" value="0" />
+      <registryValue name="Root\cimv2\TerminalServices:__Win32Provider.Name=&quot;Win32_WIN32_TSCLIENTSETTING_Prov&quot;" valueType="REG_SZ" value="0" />
+      <registryValue name="Root\cimv2\TerminalServices:__Win32Provider.Name=&quot;Win32_WIN32_TSNETWORKADAPTERSETTING_Prov&quot;" valueType="REG_SZ" value="0" />
+      <registryValue name="Root\cimv2\TerminalServices:__Win32Provider.Name=&quot;Win32_WIN32_TSPERMISSIONSSETTING_Prov&quot;" valueType="REG_SZ" value="0" />
+      <registryValue name="Root\cimv2\TerminalServices:__Win32Provider.Name=&quot;Win32_WIN32_TSNETWORKADAPTERLISTSETTING_Prov&quot;" valueType="REG_SZ" value="0" />
+      <registryValue name="Root\cimv2\TerminalServices:__Win32Provider.Name=&quot;Win32_WIN32_TSACCOUNT_Prov&quot;" valueType="REG_SZ" value="0" />
+      <registryValue name="Root\cimv2\TerminalServices:__Win32Provider.Name=&quot;Win32_WIN32_TSSESSIONDIRECTORY_Prov&quot;" valueType="REG_SZ" value="0" />
+      <registryValue name="Root\cimv2\TerminalServices:__Win32Provider.Name=&quot;Win32_WIN32_TSSESSIONDIRECTORYSETTING_Prov&quot;" valueType="REG_SZ" value="0" />
+      <registryValue name="ROOT\cimv2\TerminalServices:__Win32Provider.Name=&quot;Win32_TSCentralPublisher_Prov&quot;" valueType="REG_SZ" value="0" />
+      <registryValue name="ROOT\cimv2\TerminalServices:__Win32Provider.Name=&quot;AAGProvider&quot;" valueType="REG_SZ" value="0" />
+      <registryValue name="ROOT\cimv2\TerminalServices:__Win32Provider.Name=&quot;Win32_WIN32_TSVIRTUALIP_Prov&quot;" valueType="REG_SZ" value="0" />
+      <registryValue name="ROOT\cimv2\TerminalServices:__Win32Provider.Name=&quot;Win32_WIN32_TSVIRTUALIPSETTING_Prov&quot;" valueType="REG_SZ" value="0" />
+      <registryValue name="ROOT\cimv2:__Win32Provider.Name=&quot;Win32_WIN32_SESSIONBROKERFARMACCOUNT_Prov&quot;" valueType="REG_SZ" value="0" />
+      <registryValue name="ROOT\cimv2:__Win32Provider.Name=&quot;Win32_WIN32_SESSIONDIRECTORYVMMPLUGIN_Prov&quot;" valueType="REG_SZ" value="0" />
+      <registryValue name="Root\cimv2:__Win32Provider.Name=&quot;Win32_WIN32_SESSIONDIRECTORYCLUSTER_Prov&quot;" valueType="REG_SZ" value="0" />
+      <registryValue name="Root\cimv2:__Win32Provider.Name=&quot;Win32_WIN32_SESSIONDIRECTORYSERVER_Prov&quot;" valueType="REG_SZ" value="0" />
+      <registryValue name="Root\cimv2:__Win32Provider.Name=&quot;Win32_WIN32_SESSIONDIRECTORYSESSION_Prov&quot;" valueType="REG_SZ" value="0" />
+      <registryValue name="Root\cimv2:__Win32Provider.Name=&quot;Win32_SDVirtualDesktopServer_Prov&quot;" valueType="REG_SZ" value="0" />
+      <registryValue name="Root\cimv2:__Win32Provider.Name=&quot;Win32_WIN32_SESSIONBROKERFARM_Prov&quot;" valueType="REG_SZ" value="0" />
+      <registryValue name="Root\cimv2:__Win32Provider.Name=&quot;Win32_WIN32_SESSIONBROKERTARGET_Prov&quot;" valueType="REG_SZ" value="0" />
+      <registryValue name="Root\cimv2:__Win32Provider.Name=&quot;SessionBrokerTargetEventProvider&quot;" valueType="REG_SZ" value="0" />
+      <registryValue name="Root\cimv2:__Win32Provider.Name=&quot;Win32_WIN32_SESSIONBROKERSERVICEPROPERTIES_Prov&quot;" valueType="REG_SZ" value="0" />
+      <registryValue name="ROOT\cimv2\TerminalServices:__Win32Provider.Name=&quot;Win32_TSVmHost_Prov&quot;" valueType="REG_SZ" value="0" />
+      <registryValue name="ROOT\CIMV2:__Win32Provider.Name=&quot;UserProfileProvider&quot;" valueType="REG_SZ" value="0" />
+      <registryValue name="root\CIMV2\Applications\Games:Win32_ProviderEx.Name=&quot;MS_InstalledGameProv&quot;" valueType="REG_SZ" value="0" />
+      <registryValue name="ROOT\CIMV2:__Win32Provider.Name=&quot;WhqlProvider&quot;" valueType="REG_SZ" value="0" />
+      <registryValue name="root\CIMV2\Security\MicrosoftVolumeEncryption:Win32_ProviderEx.Name=&quot;Win32_EncryptableVolumeProvider&quot;" valueType="REG_SZ" value="0" />
+      <registryValue name="root\CIMV2:Win32_OsBaselineProvider.Name=&quot;Win32_OsBaseline&quot;" valueType="REG_SZ" value="0" />
+      <registryValue name="ROOT\CIMV2:__Win32Provider.Name=&quot;Win32_WinSAT&quot;" valueType="REG_SZ" value="0" />
+      <registryValue name="Root\CIMV2:__Win32Provider.Name=&quot;MS_Shutdown_Event_Provider&quot;" valueType="REG_SZ" value="0" />
+      <registryValue name="Root\CIMV2:__Win32Provider.Name=&quot;DFSProvider&quot;" valueType="REG_SZ" value="0" />
+      <registryValue name="Root\CIMV2:__Win32Provider.Name=&quot;DskQuotaProvider&quot;" valueType="REG_SZ" value="0" />
+      <registryValue name="root\cimv2:__Win32Provider.Name=&quot;WmiPerfInst&quot;" valueType="REG_SZ" value="0" />
+      <registryValue name="Root\CIMV2:__Win32Provider.Name=&quot;WMIPingProvider&quot;" valueType="REG_SZ" value="0" />
+      <registryValue name="Root\CIMV2:__Win32Provider.Name=&quot;RouteProvider&quot;" valueType="REG_SZ" value="0" />
+      <registryValue name="Root\CIMV2:__Win32Provider.Name=&quot;RouteEventProvider&quot;" valueType="REG_SZ" value="0" />
+      <registryValue name="Root\CIMV2:__Win32Provider.Name=&quot;NamedJobObjectProv&quot;" valueType="REG_SZ" value="0" />
+      <registryValue name="Root\CIMV2:__Win32Provider.Name=&quot;NamedJobObjectActgInfoProv&quot;" valueType="REG_SZ" value="0" />
+      <registryValue name="Root\CIMV2:__Win32Provider.Name=&quot;NamedJobObjectLimitSettingProv&quot;" valueType="REG_SZ" value="0" />
+      <registryValue name="Root\CIMV2:__Win32Provider.Name=&quot;NamedJobObjectSecLimitSettingProv&quot;" valueType="REG_SZ" value="0" />
+      <registryValue name="Root\CIMV2:__Win32Provider.Name=&quot;SessionProvider&quot;" valueType="REG_SZ" value="0" />
+      <registryValue name="root\CIMV2\Applications\WindowsParentalControls:Win32_ProviderEx.Name=&quot;WpcSProv&quot;" valueType="REG_SZ" value="0" />
+      <registryValue name="root\cimv2:__Win32Provider.Name=&quot;ReliabilityMetricsProvider&quot;" valueType="REG_SZ" value="0" />
+      <registryValue name="root\cimv2:__win32provider.name=&quot;msvds__provider&quot;" valueType="REG_SZ" value="0" />
+      <registryValue name="root\cimv2:__win32provider.name=&quot;msvss__provider&quot;" valueType="REG_SZ" value="0" />
+      <registryValue name="root\cimv2:__win32provider.name=&quot;regpropprov&quot;" valueType="REG_SZ" value="0" />
+      <registryValue name="root\cimv2:__win32provider.name=&quot;regprov&quot;" valueType="REG_SZ" value="0" />
+      <registryValue name="root\cimv2:__win32provider.name=&quot;win32clockprovider&quot;" valueType="REG_SZ" value="0" />
+      <registryValue name="root\cimv2\security\microsofttpm:win32_providerex.name=&quot;win32_tpmprovider&quot;" valueType="REG_SZ" value="0" />
+      <registryValue name="root\default:__win32provider.name=&quot;regpropprov&quot;" valueType="REG_SZ" value="0" />
+      <registryValue name="root\default:__win32provider.name=&quot;regprov&quot;" valueType="REG_SZ" value="0" />
+      <registryValue name="root\default:__win32provider.name=&quot;smtpeventconsumer&quot;" valueType="REG_SZ" value="0" />
+      <registryValue name="root\policy:__win32provider.name=&quot;policsom&quot;" valueType="REG_SZ" value="0" />
+      <registryValue name="root\policy:__win32provider.name=&quot;policstatus&quot;" valueType="REG_SZ" value="0" />
+      <registryValue name="root\wmi:__win32provider.name=&quot;msiscsiinitiatorprovider&quot;" valueType="REG_SZ" value="0" />
+      <registryValue name="root\Microsoft\Bits:Win32_ProviderEx.Name=&quot;BitsLightweightServerProv&quot;" valueType="REG_SZ" value="0" />
+      <securityDescriptor name="wbem-reg" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\Software\Microsoft\WBEM\CIMOM\CompatibleHostProviders\">
+      <securityDescriptor name="wbem-reg" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\WBEM\Tracing" />
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\WBEM\Tracing\WMI">
+      <overridable name="LogFile" scope="Microsoft" type="REG_EXPAND_SZ" />
+      <registryValue name="SessionEnabled" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="Level" valueType="REG_DWORD" value="0x00000000" />
+      <registryValue name="AreaFlags" valueType="REG_DWORD" value="0xFFFFFFFF" />
+      <registryValue name="Session" valueType="REG_SZ" value="WMI_Trace_Session" />
+      <registryValue name="BufferSize" valueType="REG_DWORD" value="0x00000004" />
+      <registryValue name="MaximumBuffers" valueType="REG_DWORD" value="0x00000018" />
+      <registryValue name="MaximumFileSize" valueType="REG_DWORD" value="0x00000004" />
+      <registryValue name="LogFileMode" valueType="REG_DWORD" value="0x10000022" />
+      <registryValue name="FlushTimer" valueType="REG_DWORD" value="0x00000000" />
+      <registryValue name="AgeLimit" valueType="REG_DWORD" value="0x00000000" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\WBEM\ESS">
+      <securityDescriptor name="wbem-reg" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\WBEM\Transports">
+      <securityDescriptor name="wbem-reg-ns" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\WBEM\Scripting">
+      <securityDescriptor name="wbem-reg" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\WBEM\xml\">
+      <securityDescriptor name="wbem-reg" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\WBEM\TextSource\">
+      <securityDescriptor name="wbem-reg" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\Software\Microsoft\WBEM\PROVIDERS\">
+      <securityDescriptor name="wbem-reg" />
+    </registryKey>
+  </registryKeys>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="WRP_PARENT_DIR_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;CI;GA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;0x1301bf;;;SY)(A;IOCIOI;GA;;;SY)(A;;0x1301bf;;;BA)(A;IOCIOI;GA;;;BA)(A;CIOI;GRGX;;;BU)(A;OICIIO;GA;;;CO)(A;CIOI;GRGX;;;S-1-15-2-1)(A;CIOI;GRGX;;;S-1-15-2-2)" operationHint="replace" />
+          <securityDescriptorDefinition name="wbem-reg" sddl="D:P(A;CIOI;GRGX;;;BU)(A;CIOI;GA;;;BA)(A;CIOI;GA;;;SY)(A;CIOI;GA;;;CO)" operationHint="replace" />
+          <securityDescriptorDefinition name="wbem-reg-ns" sddl="D:P(A;CIOI;GRGX;;;BU)(A;CIOI;CCDCLCSWRPSDRC;;;NS)(A;CIOI;GA;;;BA)(A;CIOI;GA;;;SY)(A;CIOI;GA;;;CO)" operationHint="replace" />
+          <securityDescriptorDefinition name="wbemDir-rep" sddl="D:P(A;CIOI;GRGX;;;BU)(A;CIOI;GR;;;NS)(A;CIOI;GRGW;;;BO)(A;CIOI;GA;;;BA)(A;CIOI;GA;;;SY)(A;CIOIIO;RC;;;S-1-3-4)" operationHint="replace" />
+          <securityDescriptorDefinition name="wbemDir-log" sddl="D:P(A;CIOI;GRGX;;;BU)(A;CIOI;GRGWDCSD;;;NS)(A;CIOI;GRGW;;;BO)(A;CIOI;GA;;;BA)(A;CIOI;GA;;;SY)(A;CIOIIO;RC;;;S-1-3-4)" operationHint="replace" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string id="description1" value="security descriptor for the contents of %systemroot%\system32\wbem" />
+        <string id="description" value="Directory and registry settings for WMI" />
+        <string id="displayName" value="WMI Directory and Registries" />
+        <string id="displayName1" value="wbemDirectory" />
+        <string id="displayName2" value="wbem registry runtime" />
+        <string id="description2" value="security descriptor for the WMI registry" />
+        <string id="displayName5" value="wbem Registry Key" />
+        <string id="description5" value="wbem Registry Key Security" />
+        <string id="displayName3" value="wbemlogDirectory" />
+        <string id="description3" value="security descriptor for the contents of %systemroot%\system32\wbem\logs" />
+        <string id="displayName4" value="wbemRepDirectory" />
+        <string id="description4" value="security descriptor for the contents of %systemroot%\system32\wbem\Repository" />
+      </stringTable>
+    </resources>
+  </localization>
+</assembly>

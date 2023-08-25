@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved." xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <assemblyIdentity name="Microsoft-Windows-DiagnosticInfrastructure-Server" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <dependency discoverable="no" resourceType="Resources">
+    <dependentAssembly dependencyType="prerequisite">
+      <assemblyIdentity name="Microsoft-Windows-DiagnosticInfrastructure-Server.Resources" version="10.0.22621.1" processorArchitecture="amd64" language="*" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </dependentAssembly>
+  </dependency>
+  <file name="dps.dll" destinationPath="$(runtime.system32)\" sourceName="dps.dll" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>j4OIV2jrQPuHuhPHwSZh0AtT3B8fzUtRcDMK4Y80p7w=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <memberships>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories.Services" version="10.0.22621.1" publicKeyToken="31bf3856ad364e35" typeName="Service" />
+      <categoryInstance subcategory="DPS">
+        <serviceData name="DPS" displayName="@%systemroot%\system32\dps.dll,-500" errorControl="normal" start="auto" type="win32ShareProcess" description="@%systemroot%\system32\dps.dll,-501" imagePath="%SystemRoot%\System32\svchost.exe -k LocalServiceNoNetwork -p" objectName="NT AUTHORITY\LocalService" requiredPrivileges="SeChangeNotifyPrivilege,SeCreateGlobalPrivilege,SeAssignPrimaryTokenPrivilege,SeImpersonatePrivilege" sidType="restricted">
+          <failureActions resetPeriod="86400">
+            <actions>
+              <action delay="120000" type="restartService" />
+              <action delay="300000" type="restartService" />
+              <action delay="0" type="none" />
+            </actions>
+          </failureActions>
+          <securityDescriptor name="DPS_SERVICE_CONTROL_SDDL" />
+        </serviceData>
+      </categoryInstance>
+      <categoryInstance subcategory="WdiSystemHost">
+        <serviceData name="WdiSystemHost" displayName="@%systemroot%\system32\wdi.dll,-500" errorControl="normal" start="demand" type="win32ShareProcess" description="@%systemroot%\system32\wdi.dll,-501" imagePath="%SystemRoot%\System32\svchost.exe -k LocalSystemNetworkRestricted -p" objectName="LocalSystem" requiredPrivileges="SeChangeNotifyPrivilege,SeImpersonatePrivilege,SeTcbPrivilege,SeDebugPrivilege,SeAssignPrimaryTokenPrivilege,SeIncreaseQuotaPrivilege,SeProfileSingleProcessPrivilege,SeSystemEnvironmentPrivilege" sidType="unrestricted">
+          <failureActions resetPeriod="4294967295">
+            <actions>
+              <action delay="0" type="none" />
+              <action delay="0" type="none" />
+              <action delay="0" type="none" />
+            </actions>
+          </failureActions>
+          <securityDescriptor name="WDI_SERVICE_CONTROL_SDDL" />
+        </serviceData>
+      </categoryInstance>
+      <categoryInstance subcategory="WdiServiceHost">
+        <serviceData name="WdiServiceHost" displayName="@%systemroot%\system32\wdi.dll,-502" errorControl="normal" start="demand" type="win32ShareProcess" description="@%systemroot%\system32\wdi.dll,-503" imagePath="%SystemRoot%\System32\svchost.exe -k LocalService -p" objectName="NT AUTHORITY\LocalService" requiredPrivileges="SeChangeNotifyPrivilege,SeImpersonatePrivilege,SeSystemProfilePrivilege" sidType="unrestricted">
+          <failureActions resetPeriod="4294967295">
+            <actions>
+              <action delay="0" type="none" />
+              <action delay="0" type="none" />
+              <action delay="0" type="none" />
+            </actions>
+          </failureActions>
+          <securityDescriptor name="WDI_SERVICE_CONTROL_SDDL" />
+        </serviceData>
+      </categoryInstance>
+    </categoryMembership>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories" version="1.0.0.0" publicKeyToken="365143bb27e7ac8b" typeName="SvcHost" />
+      <categoryInstance subcategory="LocalServiceNoNetwork">
+        <serviceGroup position="last" serviceName="DPS" />
+      </categoryInstance>
+      <categoryInstance subcategory="LocalSystemNetworkRestricted">
+        <serviceGroup position="last" serviceName="WdiSystemHost" />
+      </categoryInstance>
+      <categoryInstance subcategory="LocalService">
+        <serviceGroup position="last" serviceName="WdiServiceHost" />
+      </categoryInstance>
+    </categoryMembership>
+  </memberships>
+  <registryKeys>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\SharedAccess\Parameters\FirewallPolicy\RestrictedServices\Static\System">
+      <registryValue name="DPS-1" valueType="REG_SZ" value="V2.0|Action=Block|Dir=In|App=%SystemRoot%\system32\svchost.exe|Svc=DPS|Name=Block any other traffic to and from DPS|" />
+      <registryValue name="DPS-2" valueType="REG_SZ" value="V2.0|Action=Block|Dir=Out|App=%SystemRoot%\system32\svchost.exe|Svc=DPS|Name=Block any other traffic to and from DPS|" />
+      <registryValue name="WdiSystemHost-1" valueType="REG_SZ" value="V2.0|Action=Block|Dir=In|App=%SystemRoot%\system32\svchost.exe|Svc=WdiSystemHost|Name=Block any other traffic to and from WdiSystemHost|" />
+      <registryValue name="WdiSystemHost-2" valueType="REG_SZ" value="V2.0|Action=Block|Dir=Out|App=%SystemRoot%\system32\svchost.exe|Svc=WdiSystemHost|Name=Block any other traffic to and from WdiSystemHost|" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\System\CurrentControlSet\Services\DPS">
+      <securityDescriptor name="WDI_SERVICE_REGKEY_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\System\CurrentControlSet\Services\DPS\Parameters">
+      <registryValue name="ServiceDll" valueType="REG_EXPAND_SZ" value="%SystemRoot%\system32\dps.dll" />
+      <registryValue name="ServiceMain" valueType="REG_SZ" value="ServiceMain" />
+      <registryValue name="ServiceDllUnloadOnStop" valueType="REG_DWORD" value="0x00000001" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\System\CurrentControlSet\Services\WdiSystemHost">
+      <securityDescriptor name="WDI_SERVICE_REGKEY_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\System\CurrentControlSet\Services\WdiSystemHost\Parameters">
+      <registryValue name="ServiceDll" valueType="REG_EXPAND_SZ" value="%SystemRoot%\system32\wdi.dll" />
+      <registryValue name="ServiceMain" valueType="REG_SZ" value="ServiceMain" />
+      <registryValue name="ServiceDllUnloadOnStop" valueType="REG_DWORD" value="0x00000001" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\System\CurrentControlSet\Services\WdiServiceHost">
+      <securityDescriptor name="WDI_SERVICE_REGKEY_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\System\CurrentControlSet\Services\WdiServiceHost\Parameters">
+      <registryValue name="ServiceDll" valueType="REG_EXPAND_SZ" value="%SystemRoot%\system32\wdi.dll" />
+      <registryValue name="ServiceMain" valueType="REG_SZ" value="ServiceMain" />
+      <registryValue name="ServiceDllUnloadOnStop" valueType="REG_DWORD" value="0x00000001" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+  </registryKeys>
+  <taskScheduler>
+    <Task xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task">
+      <RegistrationInfo>
+        <Author>$(@%systemroot%\system32\dps.dll,-600)</Author>
+        <Version>1.0</Version>
+        <Source>$(@%systemroot%\system32\dps.dll,-601)</Source>
+        <URI>Microsoft\Windows\WDI\ResolutionHost</URI>
+        <Description>$(@%systemroot%\system32\dps.dll,-602)</Description>
+        <SecurityDescriptor>O:BAG:BAD:P(A;;FA;;;BA)(A;;FA;;;SY)(A;;FR;;;IU)(A;;FRFX;;;S-1-5-80-2970612574-78537857-698502321-558674196-1451644582)</SecurityDescriptor>
+      </RegistrationInfo>
+      <Settings>
+        <Enabled>true</Enabled>
+        <MultipleInstancesPolicy>Parallel</MultipleInstancesPolicy>
+        <AllowStartOnDemand>true</AllowStartOnDemand>
+        <DisallowStartIfOnBatteries>false</DisallowStartIfOnBatteries>
+        <StopIfGoingOnBatteries>false</StopIfGoingOnBatteries>
+        <ExecutionTimeLimit>PT0S</ExecutionTimeLimit>
+        <Hidden>true</Hidden>
+        <Priority>10</Priority>
+        <UseUnifiedSchedulingEngine>true</UseUnifiedSchedulingEngine>
+      </Settings>
+      <Principals>
+        <Principal id="Users">
+          <GroupId>S-1-5-4</GroupId>
+          <RunLevel>HighestAvailable</RunLevel>
+        </Principal>
+      </Principals>
+      <Actions Context="Users">
+        <ComHandler>
+          <ClassId>{900be39d-6be8-461a-bc4d-b0fa71f5ecb1}</ClassId>
+        </ComHandler>
+      </Actions>
+    </Task>
+  </taskScheduler>
+  <directories>
+    <directory destinationPath="$(runtime.system32)\WDI\">
+      <securityDescriptor name="WDI_DIRECTORY_SDDL" />
+    </directory>
+    <directory destinationPath="$(runtime.system32)\WDI\LogFiles\">
+      <securityDescriptor name="WDI_DIRECTORY_SDDL" />
+    </directory>
+  </directories>
+  <asmv3:configuration xmlns:asmv3="urn:schemas-microsoft-com:asm.v3" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State">
+    <asmv3:configurationSchema>
+      <xsd:schema xmlns="Microsoft-Windows-DiagnosticInfrastructure-Server" targetNamespace="Microsoft-Windows-DiagnosticInfrastructure-Server">
+        <xsd:element default="0" name="DelayedAutoStart" type="xsd:unsignedInt" wcm:handler="regkey('HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\DPS')" wcm:legacyName="DelayedAutoStart" wcm:legacyType="REG_DWORD" wcm:scope="allUsers" />
+      </xsd:schema>
+    </asmv3:configurationSchema>
+  </asmv3:configuration>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="WRP_REGKEY_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;CI;GA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;CI;GR;;;SY)(A;CI;GR;;;BA)(A;CI;GR;;;BU)(A;CI;GR;;;S-1-15-2-1)(A;CI;GR;;;S-1-15-3-1024-1065365936-1281604716-3511738428-1654721687-432734479-3232135806-4053264122-3456934681)" operationHint="replace" />
+          <securityDescriptorDefinition name="WDI_DIRECTORY_SDDL" sddl="D:P(D;OICI;GA;;;BG)(D;OICI;GA;;;AN)(D;OIIO;WP;;;BA)(A;OICI;GA;;;BA)(A;OICI;GA;;;SY)(A;OICI;GRGWSD;;;S-1-5-80-2970612574-78537857-698502321-558674196-1451644582)(A;OICI;GRGWSD;;;S-1-5-80-3139157870-2983391045-3678747466-658725712-1809340420)" operationHint="replace" />
+          <securityDescriptorDefinition name="WDI_SERVICE_REGKEY_SDDL" sddl="O:BAG:BAD:P(A;CI;GA;;;SY)(A;CI;GRGX;;;BA)(A;CI;GRGX;;;BU)" operationHint="replace" />
+          <securityDescriptorDefinition name="WDI_SERVICE_CONTROL_SDDL" sddl="D:(A;;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;SY)(A;;CCDCLCSWWPDTLOCRRC;;;BA)(A;;CCLCSWLOCRRC;;;IU)(A;;CCLCSWLOCRRC;;;SU)(A;;CCLCSWRPWPDTLOCRRC;;;S-1-5-80-2970612574-78537857-698502321-558674196-1451644582)S:(AU;FA;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;WD)" operationHint="replace" />
+          <securityDescriptorDefinition name="DPS_SERVICE_CONTROL_SDDL" sddl="D:(A;;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;SY)(A;;CCDCLCSWRPWPDTLOCRRC;;;BA)(A;;CCLCSWLOCRRC;;;IU)(A;;CCLCSWLOCRRC;;;SU)S:(AU;FA;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;WD)" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" description="Default SDDL for Windows Resource Protected file" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string id="description" value="The Diagnostic Policy Service provides diagnostic support for Windows components. If the service is stopped, system diagnostics may not function properly.  If the service is disabled, any services that explicitly depend on it will fail to start." />
+        <string id="displayName" value="Diagnostic Policy Service" />
+        <string id="displayName2" value="Diagnostic Policy Service" />
+        <string id="description3" value="The Diagnostic Policy Service provides diagnostic support for Windows components. If the service is stopped, system diagnostics may not function properly.  If the service is disabled, any services that explicitly depend on it will fail to start." />
+        <string id="displayName4" value="WRP_FILE_DEFAULT_SDDL" />
+        <string id="description5" value="Default SDDL for Windows Resource Protected file" />
+        <string id="displayName6" value="Windows Diagnostic Module Host (Local System)" />
+        <string id="description7" value="This service hosts windows diagnostic modules that perform diagnosis in the context of local system. This service is controled by the Diagnostic Policy Service and should not be manually started or stopped." />
+        <string id="displayName8" value="Windows Diagnostic Module Host (Local Service)" />
+        <string id="description9" value="This service hosts windows diagnostic modules that perform diagnosis in the context of local service. This service is controled by the Diagnostic Policy Service and should not be manually started or stopped." />
+      </stringTable>
+    </resources>
+  </localization>
+</assembly>

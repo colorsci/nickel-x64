@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="WinINet.ETW" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <registryKeys>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\WMI\Security">
+      <registryValue name="A70FF94F-570B-4979-BA5C-E59C9FEAB61B" valueType="REG_BINARY" value="01000480ac000000bc00000000000000140000000200980005000000000014000018000001010000000000010000000000001400ff0f120001010000000000051200000000001800ff0f1200010200000000000520000000200200000000180000180000010200000000000f02000000010000000000380000180000010a00000000000f0300000000040000edbcf6bb8f9c42393f0e01deb04f76a20d37b90053696b202bf740740bc1c2f90102000000000005200000002002000001020000000000052000000020020000" />
+    </registryKey>
+  </registryKeys>
+  <instrumentation xmlns:win="http://manifests.microsoft.com/win/2004/08/windows/events" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <events xmlns="http://schemas.microsoft.com/win/2004/08/events">
+      <provider guid="{43D1A55C-76D6-4f7e-995C-64C711E5CAFE}" message="$(string.EventProviderName)" messageFileName="%windir%\system32\wininet.dll" name="Microsoft-Windows-WinINet" resourceFileName="%windir%\system32\wininet.dll" symbol="WININET">
+        <channels>
+          <channel chid="WinInetChannel" enabled="false" isolation="Application" name="Microsoft-Windows-WinINet/Analytic" symbol="CHAN_WININET" type="Analytic" />
+          <channel chid="WinInetUsageLogChannel" enabled="false" isolation="Application" name="Microsoft-Windows-WinINet/UsageLog" symbol="CHAN_WININET_USAGE_LOG" type="Analytic" />
+          <channel chid="WinInetWebSocketDebuggingChannel" enabled="false" isolation="Application" name="Microsoft-Windows-WinINet/WebSocket" symbol="CHAN_WININET_WEBSOCKET_DEBUG" type="Analytic" />
+        </channels>
+      </provider>
+      <provider guid="{A70FF94F-570B-4979-BA5C-E59C9FEAB61B}" message="$(string.EventProviderName)" messageFileName="%windir%\system32\wininet.dll" name="Microsoft-Windows-WinINet-Capture" resourceFileName="%windir%\system32\wininet.dll" symbol="WININET_CAPTURE">
+        <channels>
+          <channel chid="WinInetCaptureChannel" enabled="false" isolation="Application" name="Microsoft-Windows-WinINet-Capture/Analytic" symbol="CHAN_WININET_CAPTURE" type="Operational" />
+          <channel chid="WinInetOperational" enabled="true" isolation="Application" name="Microsoft-Windows-WinINet/Operational" symbol="CHAN_WININET_OPERATIONAL" type="Operational" />
+        </channels>
+      </provider>
+      <provider guid="{4860ea43-3f05-5fb8-20ce-7ba346a44747}" message="$(string.EventProviderName)" messageFileName="%windir%\system32\wininet.dll" name="Microsoft-Windows-WinINet-Pca" resourceFileName="%windir%\system32\wininet.dll" symbol="WININET_PCA">
+        <channels>
+          <channel chid="WinInetChannelPca" enabled="false" isolation="Application" name="Microsoft-Windows-WinINet/Pca" symbol="CHAN_WININET_PCA" type="Analytic" />
+        </channels>
+      </provider>
+      <cmi />
+    </events>
+  </instrumentation>
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string id="Opcode.Fail" value="Fail" />
+        <string id="RootHandleCreatedString" value="Session handle %1 created: UserAgent=%3, AccessType=%5, ProxyList=%7, ProxyBypassList=%9, Flags=%10" />
+        <string id="OpenUrlHandleCreatedString" value="Handle %1 created by InternetOpenURL: SessionHandle=%2,URL=%4, Headers=%6, Flags=%7" />
+        <string id="ConnectHandleCreatedString" value="Handle %1 created by InternetConnect: SessionHandle=%2, Server=%4:%5, %7, Flags=%8" />
+        <string id="HttpRequestHandleCreatedString" value="Request handle %1 created by HttpOpenRequest: ConnectionHandle=%2, %4, Target=%6, Ver=%8, Referrer=%10, Media types=%12, Flags=%13" />
+        <string id="HandleClosedString" value="Handle %1 closed successfully" />
+        <string id="HandleCreateFailedString" value="Failed to create handle: ParentHandle=%1, Error=%2" />
+        <string id="HandleCloseFailedString" value="Handle %1 failed to close: Error=%2" />
+        <string id="HttpRequestHandleCreatedServerDetailsString" value="Request handle %1 Server Details: Server=%3 Port=%4 Service=%6" />
+        <string id="_v0_HttpRequestApiCallString" value="HTTP request was received from API: RequestHandle=%1" />
+        <string id="HttpRequestApiCallString" value="HTTP request was received from API: RequestHandle=%1, RequestContext=%2" />
+        <string id="HttpRequestSentString" value="HTTP request was sent successfully: RequestHandle=%1, SocketHandle=%2, %4, CookieSent= %5" />
+        <string id="HttpRequestFailedString" value="HTTP request send failed: Handle=%1, Error=%2" />
+        <string id="HttpResponseReceivedString" value="HTTP response (%1) received: RequestHandle=%2, SocketHandle=%3, %5, ContentLength=%7" />
+        <string id="HttpResponseFailedString" value="HTTP response failed: Handle=%1, Error=%2" />
+        <string id="HttpConnectionClosedString" value="HTTP connection (Handle=%1, SocketHandle=%2) closed due to the following reason: %4" />
+        <string id="HttpKeepAliveConnectionReusedString" value="Keep-alive connection is re-used: ConnectionHandle=%1, SocketHandle=%2" />
+        <string id="HttpKeepAliveConnectionPooledString" value="Connection is returned to keep-alive pool: RequestHandle=%1, SocketHandle=%2" />
+        <string id="HttpKeepAliveConnectionClosedString" value="Keep-alive connection is closed: ConnectionHandle=%1, SocketHandle=%2" />
+        <string id="HttpResponseBodyReceivedString" value="HTTP response entity body received: RequestHandle=%1" />
+        <string id="HttpResponseBodyReadError" value="WinInet::Http response entity body receive failed: Request Handle=%1, Error=%2" />
+        <string id="RequestHeadersTrace" value="HTTP Request Headers RequestHandle=%1 %3" />
+        <string id="ResponseHeadersTrace" value="HTTP Response Headers RequestHandle=%1 %3" />
+        <string id="RequestHeadersTraceOptional" value="HTTP Request Headers OptionalData RequestHandle=%1 %3" />
+        <string id="TcpConnectionEstablishedString" value="TCP connection to server %2 established: ConnectionHandle=%3, SocketHandle=%4, LocalPort=%5" />
+        <string id="TcpConnectionFailedString" value="TCP connection to %2 for connection handle %3 failed: Error=%4" />
+        <string id="TcpConnectionClosedString" value="TCP connection closed successfully: SocketHandle=%1" />
+        <string id="DnsQuerySentString" value="DNS query for %2 hostname is sent: Handle=%3" />
+        <string id="DnsQueryCompleteString" value="DNS query for %2 hostname is complete: Handle=%3, Addresses=%5" />
+        <string id="DnsQueryFailedString" value="DNS query for %2 hostname failed: Handle=%3 Error=%4" />
+        <string id="DnsCacheQueryCompleteString" value="Re-used DNS cache, query for %2 hostname is complete: Handle=%3, Addresses=%5" />
+        <string id="NetworkChangeDetectedString" value="A network change was detected: Handle=%1" />
+        <string id="CookieHeaderReceivedString" value="Received response including a cookie header: URL=%2" />
+        <string id="CookieStoredString" value="Client has stored a cookie in the cookie jar: Domain=%2, Path=%4, Name=%6, Value=%8" />
+        <string id="CookieDeletedString" value="Client has deleted a cookie in the cookie jar: Domain=%2, Path=%4, Name=%6, Value=%8" />
+        <string id="CookieBlockedString" value="Client has rejected a cookie sent by the server: Domain=%2, Path=%4, Name=%6, Value=%8" />
+        <string id="CookieP3PRejectedString" value="Server cookie was rejected by the client's P3P policy: Domain=%2, Path=%4, Name=%6, Value=%8" />
+        <string id="CookieRequestHeaderCreatedString" value="A cookie header was created for the request: URL=%2" />
+        <string id="CookieAddedToHeaderString" value="Cookie added to the request header: Domain=%2, Path=%4, Name=%6, Value=%8" />
+        <string id="AuthResponseReceivedString" value="Auth response received: RequestHandle=%1, Scheme=%3, IsProxy=%4" />
+        <string id="AuthClientSetsUsernameString" value="Client sets username: RequestHandle=%1, IsProxy=%2" />
+        <string id="AuthClientSetsPasswordString" value="Client sets password: RequestHandle=%1, IsProxy=%2" />
+        <string id="AuthUsingCachedCredsString" value="Using cached credentials: RequestHandle=%1, IsProxy=%2" />
+        <string id="AuthUsingDefaultCredsString" value="Using default credentials: RequestHandle=%1, IsProxy=%2" />
+        <string id="AuthClientAddHeadersString" value="Client adds authorization headers to an HTTP request: RequestHandle=%1, Scheme=%3, IsProxy=%4" />
+        <string id="HttpsNegotiationStartedString" value="Client begins SSL negotiation: RequestHandle=%1" />
+        <string id="HttpsNegotiationCompletedString" value="SSL negotiation between client and server has completed successfully: RequestHandle=%1" />
+        <string id="HttpsNegotiationFailedString" value="SSL negotiation failed: RequestHandle=%1, Error=%2" />
+        <string id="HttpsServerCertErrorString" value="Error validating server certificate (SCHANNEL error): RequestHandle=%1, Error=%2" />
+        <string id="HttpsServerCertValidatedString" value="Server certificate validated: RequestHandle=%1, CertHash=%3, WarningFlags=%4" />
+        <string id="HttpsClientCertRequiredString" value="Server requires a client certificate for client authorization: RequestHandle=%1" />
+        <string id="HttpsClientCertUnavailableString" value="There is no client certificate available: RequestHandle=%1" />
+        <string id="HttpsClientCertSelectedString" value="The selected client certificate will be used for the SSL transaction: RequestHandle=%1, CertHash=%3" />
+        <string id="HttpsReNegotiationStartedString" value="Client begins SSL renegotiation: RequestHandle=%1" />
+        <string id="HttpsReNegotiationCompletedString" value="SSL renegotiation between client and server has completed successfully: RequestHandle=%1" />
+        <string id="HttpsReNegotiationFailedString" value="SSL renegotiation failed: RequestHandle=%1, Error=%2" />
+        <string id="AutoproxySearchStartString" value="Client begins attempts to locate the WPAD configuration file: ConnectionName=%2, DetectFlags=%3" />
+        <string id="AutoproxyDHCPSearchStartString" value="Begin search for configuration file using DHCP: Interface=%2" />
+        <string id="AutoproxyDHCPSearchCompleteString" value="WPAD configuration file found using DHCP: Interface=%2, ConfigurationURL=%4" />
+        <string id="AutoproxyDHCPSearchFailedString" value="Search for WPAD configuration file using DHCP failed: Interface=%2, ConfigurationURL=%4, Error=%5" />
+        <string id="AutoproxyDNSSearchStartString" value="Begin search for configuration file using DNS: DetectFlags=%1" />
+        <string id="AutoproxyDNSSearchCompleteString" value="WPAD configuration file found using DNS: ConfigurationURL=%2, DetectFlags=%3" />
+        <string id="AutoproxyDNSSearchFailedString" value="Search for WPAD configuration file using DNS failed: DetectFlags=%1, Error=%2" />
+        <string id="AutoproxySearchFailedString" value="Search for WPAD configruation file failed: Error=%1" />
+        <string id="AutoproxyDownloadStartString" value="Begin downloading the configuration file from the configuration URL: ConfigurationURL=%2" />
+        <string id="AutoproxyDownloadCompleteString" value="Client successfully downloaded the configuration file from the configuration URL: ConfigurationURL=%2" />
+        <string id="AutoproxyDownloadFailedString" value="Downloading the configuration file from the configuration URL failed: ConfigurationURL=%2, Error=%3" />
+        <string id="AutoproxyDownloadUnacceptableString" value="The downloaded configuration file could not be used: ConfigurationURL=%2, MIMEType=%4, Error=%5" />
+        <string id="AutoproxyFindInfoForUrlString" value="Searching for Proxy Information for the URL: URL=%2" />
+        <string id="AutoproxyFindInfoForUrlCompleteString" value="Client has successfully retrieved proxy data for accessing a specified resource: URL=%2, ProxyString=%4" />
+        <string id="AutoproxyFindInfoForUrlFailedString" value="Error locating proxy information for the URL: URL=%2, Error=%3" />
+        <string id="BlockingAutoproxyDeterminationStarted" value="Blocking autoproxy determination started" />
+        <string id="BlockingAutoproxyDeterminationStopped" value="Blocking autoproxy determination stopped" />
+        <string id="AutoproxyHostIpLookupStarted" value="Autoproxy host IP lookup started" />
+        <string id="AutoproxyHostIpLookupStopped" value="Autoproxy host IP lookup stopped" />
+        <string id="AutoproxySwpadLookupStarted" value="Autoproxy SWPAD lookup started" />
+        <string id="AutoproxySwpadLookupStopped" value="Autoproxy SWPAD lookup stopped" />
+        <string id="AutoproxyKnownDetectionStarted" value="Autoproxy Detection with SWPAD ON started" />
+        <string id="AutoproxyKnownDetectionStopped" value="Autoproxy Detection with SWPAD ON stopped" />
+        <string id="AutoproxyUnknownDetectionStarted" value="Autoproxy Detection with SWPAD UNKNOWN started" />
+        <string id="AutoproxyUnknownDetectionStopped" value="Autoproxy Detection with SWPAD UNKNOWN stopped" />
+        <string id="AutoproxyScriptDownloadStarted" value="Autoproxy Script Download Started" />
+        <string id="AutoproxyScriptDownloadStopped" value="Autoproxy Script Download Stopped" />
+        <string id="AutoproxyAllStarted" value="Autoproxy full scenario started" />
+        <string id="AutoproxyAllStopped" value="Autoproxy full scenario stopped" />
+        <string id="AutoproxySWPAD" value="AutoProxy SWPAD Decision (%1) NumConnections (%2)" />
+        <string id="Transfer" value="WinInet Activity Transfer Event" />
+        <string id="ApplicationOfflineCheck" value="Application offline check started" />
+        <string id="ApplicationOfflineCheckComplete" value="Application offline check complete" />
+        <string id="WININET_KEYWORD_HANDLES.KeywordMessage" value="Flagged on all WinINet events dealing with creation or destruction of INTERNET handles" />
+        <string id="WININET_KEYWORD_HTTP.KeywordMessage" value="Flagged on all WinINet events dealing with processing of HTTP requests and responses" />
+        <string id="WININET_KEYWORD_CONNECTION.KeywordMessage" value="Flagged on all WinINet events dealing with network operations (TCP, DNS)" />
+        <string id="WININET_KEYWORD_AUTH.KeywordMessage" value="Flagged on all WinINet events dealing with authentication" />
+        <string id="WININET_KEYWORD_HTTPS.KeywordMessage" value="Flagged on all WinINet events dealing with HTTPS" />
+        <string id="WININET_KEYWORD_AUTOPROXY.KeywordMessage" value="Flagged on all WinINet events dealing with AUTOPROXY" />
+        <string id="WININET_KEYWORD_COOKIES.KeywordMessage" value="Flagged on all WinINet events dealing with Cookies" />
+        <string id="WININET_KEYWORD_IE.KeywordMessage" value="Flagged on all WinINet IE events" />
+        <string id="WININET_KEYWORD_PII_PRESENT.KeywordMessage" value="Flagged on all WinINet events dealing with potential personally identifiable information" />
+        <string id="WININET_KEYWORD_SEND.KeywordMessage" value="Flagged on all WinINet events dealing with sending packet capture " />
+        <string id="WININET_KEYWORD_RECEIVE.KeywordMessage" value="Flagged on all WinINet events dealing with receiving packet capture" />
+        <string id="WININET_KEYWORD_PACKET.KeywordMessage" value="Flagged on all WinINet events dealing with packet capture" />
+        <string id="WININET_KEYWORD_MOBILE.KeywordMessage" value="Flagged on all WinINet events relevant only to Mobile SKUs" />
+        <string id="WininetCapturedFragementKind.Start" value="Start fragment of captured header or payload" />
+        <string id="WininetCapturedFragementKind.End" value="End fragment of captured header or payload" />
+        <string id="WinInet.Map.mapWPADNetworkDecision.Unknown" value="WPAD_NETWORK_DECISION_UNKNOWN" />
+        <string id="WinInet.Map.mapWPADNetworkDecision.On" value="WPAD_NETWORK_DECISION_ON" />
+        <string id="WinInet.Map.mapWPADNetworkDecision.Off" value="WPAD_NETWORK_DECISION_OFF" />
+        <string id="EventProviderName" value="Microsoft-Windows-WinINet" />
+        <string id="ConfigEventProviderName" value="Microsoft-Windows-WinINet" />
+        <string id="Task.WININET_ROOT_HANDLE_CREATED" value="WININET_ROOT_HANDLE_CREATED" />
+        <string id="Task.WININET_OPEN_URL_HANDLE_CREATED" value="WININET_OPEN_URL_HANDLE_CREATED" />
+        <string id="Task.WININET_CONNECT_HANDLE_CREATED" value="WININET_CONNECT_HANDLE_CREATED" />
+        <string id="Task.WININET_HTTP_REQUEST_HANDLE_CREATED" value="WININET_HTTP_REQUEST_HANDLE_CREATED" />
+        <string id="Task.WININET_HANDLE_CLOSED" value="WININET_HANDLE_CLOSED" />
+        <string id="Task.WININET_HANDLE_CREATE_FAILED" value="WININET_HANDLE_CREATE_FAILED" />
+        <string id="Task.WININET_HANDLE_CLOSE_FAILED" value="WININET_HANDLE_CLOSE_FAILED" />
+        <string id="Task.WININET_HTTP_REQUEST" value="WININET_HTTP_REQUEST" />
+        <string id="Task.WININET_HTTP_RESPONSE" value="WININET_HTTP_RESPONSE" />
+        <string id="Task.WININET_HTTP_CONNECTION_CLOSED" value="WININET_HTTP_CONNECTION_CLOSED" />
+        <string id="Task.WININET_KEEP_ALIVE_CONNECTION_REUSED" value="WININET_KEEP_ALIVE_CONNECTION_REUSED" />
+        <string id="Task.WININET_KEEP_ALIVE_CONNECTION_POOLED" value="WININET_KEEP_ALIVE_CONNECTION_POOLED" />
+        <string id="Task.WININET_KEEP_ALIVE_CONNECTION_CLOSED" value="WININET_KEEP_ALIVE_CONNECTION_CLOSED" />
+        <string id="Task.WININET_HTTP_RESPONSE_BODY_RECEIVED" value="WININET_HTTP_RESPONSE_BODY_RECEIVED" />
+        <string id="Task.WININET_HTTP_RESPONSE_BODY_READ_ERROR" value="WININET_HTTP_RESPONSE_BODY_READ_ERROR" />
+        <string id="Task.WININET_STREAM_DATA_INDICATED" value="WININET_STREAM_DATA_INDICATED" />
+        <string id="Task.WININET_TCP_CONNECTION" value="WININET_TCP_CONNECTION" />
+        <string id="Task.WININET_DNS_QUERY" value="WININET_DNS_QUERY" />
+        <string id="Task.WININET_NETWORK_CHANGE_DETECTED" value="WININET_NETWORK_CHANGE_DETECTED" />
+        <string id="Task.WININET_COOKIE_HEADER_RECEIVED" value="WININET_COOKIE_HEADER_RECEIVED" />
+        <string id="Task.WININET_COOKIE_STORED" value="WININET_COOKIE_STORED" />
+        <string id="Task.WININET_COOKIE_DELETED" value="WININET_COOKIE_DELETED" />
+        <string id="Task.WININET_COOKIE_BLOCKED" value="WININET_COOKIE_BLOCKED" />
+        <string id="Task.WININET_COOKIE_P3P_REJECTED" value="WININET_COOKIE_P3P_REJECTED" />
+        <string id="Task.WININET_COOKIE_REQUEST_HEADER_CREATED" value="WININET_COOKIE_REQUEST_HEADER_CREATED" />
+        <string id="Task.WININET_COOKIE_ADDED_TO_HEADER" value="WININET_COOKIE_ADDED_TO_HEADER" />
+        <string id="Task.WININET_AUTH_RESPONSE_RECEIVED" value="WININET_AUTH_RESPONSE_RECEIVED" />
+        <string id="Task.WININET_AUTH_CLIENT_SETS_USERNAME" value="WININET_AUTH_CLIENT_SETS_USERNAME" />
+        <string id="Task.WININET_AUTH_CLIENT_SETS_PASSWORD" value="WININET_AUTH_CLIENT_SETS_PASSWORD" />
+        <string id="Task.WININET_AUTH_USING_CACHED_CREDS" value="WININET_AUTH_USING_CACHED_CREDS" />
+        <string id="Task.WININET_AUTH_USING_DEFAULT_CREDS" value="WININET_AUTH_USING_DEFAULT_CREDS" />
+        <string id="Task.WININET_AUTH_CLIENT_ADD_HEADERS" value="WININET_AUTH_CLIENT_ADD_HEADERS" />
+        <string id="Task.WININET_HTTPS_NEGOTIATION" value="WININET_HTTPS_NEGOTIATION" />
+        <string id="Task.WININET_HTTPS_SERVER_CERT_ERROR" value="WININET_HTTPS_SERVER_CERT_ERROR" />
+        <string id="Task.WININET_HTTPS_SERVER_CERT_VALIDATED" value="WININET_HTTPS_SERVER_CERT_VALIDATED" />
+        <string id="Task.WININET_HTTPS_CLIENT_CERT_REQUIRED" value="WININET_HTTPS_CLIENT_CERT_REQUIRED" />
+        <string id="Task.WININET_HTTPS_CLIENT_CERT_UNAVAILABLE" value="WININET_HTTPS_CLIENT_CERT_UNAVAILABLE" />
+        <string id="Task.WININET_HTTPS_CLIENT_CERT_SELECTED" value="WININET_HTTPS_CLIENT_CERT_SELECTED" />
+        <string id="Task.WININET_HTTPS_RENEGOTIATION" value="WININET_HTTPS_RENEGOTIATION" />
+        <string id="Task.WININET_AUTOPROXY_SEARCH" value="WININET_AUTOPROXY_SEARCH" />
+        <string id="Task.WININET_AUTOPROXY_DHCP" value="WININET_AUTOPROXY_DHCP" />
+        <string id="Task.WININET_AUTOPROXY_DNS" value="WININET_AUTOPROXY_DNS" />
+        <string id="Task.WININET_AUTOPROXY_DOWNLOAD" value="WININET_AUTOPROXY_DOWNLOAD" />
+        <string id="Task.WININET_AUTOPROXY_FIND_INFO_FOR_URL" value="WININET_AUTOPROXY_FIND_INFO_FOR_URL" />
+        <string id="Task.WININET_TEST_EVENT" value="WININET_TEST_EVENT" />
+        <string id="Task.WININET_BLOCKING_AUTOPROXY_DETERMINATION" value="WININET_BLOCKING_AUTOPROXY_DETERMINATION" />
+        <string id="Task.WININET_TRANSFER" value="WININET_TRANSFER" />
+        <string id="Task.WININET_AUTOPROXY_SWPAD" value="WININET_AUTOPROXY_SWPAD" />
+        <string id="Task.WININET_REQUEST_HEADER" value="WININET_REQUEST_HEADER" />
+        <string id="Task.WININET_RESPONSE_HEADER" value="WININET_RESPONSE_HEADER" />
+        <string id="Task.WININET_REQUEST_HEADER_OPTIONAL" value="WININET_REQUEST_HEADER_OPTIONAL" />
+        <string id="Task.WININET_AUTOPROXY_PERFTRACK_HOST_IP_LOOKUP" value="WININET_AUTOPROXY_PERFTRACK_HOST_IP_LOOKUP" />
+        <string id="Task.WININET_AUTOPROXY_PERFTRACK_SWPAD_LOOKUP" value="WININET_AUTOPROXY_PERFTRACK_SWPAD_LOOKUP" />
+        <string id="Task.WININET_AUTOPROXY_PERFTRACK_KNOWN_DETECTION" value="WININET_AUTOPROXY_PERFTRACK_KNOWN_DETECTION" />
+        <string id="Task.WININET_AUTOPROXY_PERFTRACK_UNKNOWN_DETECTION" value="WININET_AUTOPROXY_PERFTRACK_UNKNOWN_DETECTION" />
+        <string id="Task.WININET_AUTOPROXY_PERFTRACK_SCRIPT_DOWNLOAD" value="WININET_AUTOPROXY_PERFTRACK_SCRIPT_DOWNLOAD" />
+        <string id="Task.WININET_AUTOPROXY_PERFTRACK_ALL" value="WININET_AUTOPROXY_PERFTRACK_ALL" />
+        <string id="Task.WININET_APPLICATION_OFFLINE_CHECK" value="WININET_APPLICATION_OFFLINE_CHECK" />
+        <string id="UsageLogRequestString" value="Requested URL=%1 Verb=%2 RequestHeaders=%3 ResponseHeaders=%4 Status=%5 Cache=%6" />
+        <string id="Map.mapUsageLogRequestCache.Missed" value="Missed" />
+        <string id="Map.mapUsageLogRequestCache.Hit" value="Hit" />
+        <string id="Map.mapUsageLogRequestCache.StaleModified" value="Stale-Modified" />
+        <string id="Map.mapUsageLogRequestCache.StaleNotModified" value="Stale-NotModified" />
+        <string id="UsageLogScavengeString" value="Scavenged URL=%1" />
+        <string id="WebSocketEventProviderName" value="Microsoft-Windows-WininetWebSocketProtocol" />
+        <string id="Map.maphttpProtocolType.HTTP" value="HTTP" />
+        <string id="Map.maphttpProtocolType.SPDY3" value="SPDY3" />
+        <string id="WininetCapturedRequestHeader" value="The WinINet request header buffer captured" />
+        <string id="WininetCapturedResponseHeader" value="The WinINet response header buffer captured" />
+        <string id="WininetCapturedRequestBody" value="The WinINet request payload buffer captured" />
+        <string id="WininetCapturedResponseBody" value="The WinINet response payload buffer captured" />
+        <string id="WininetTlsAlgorithmMismatch" value="The WinINet TLS handshake failed with version mismatch error" />
+      </stringTable>
+    </resources>
+  </localization>
+</assembly>

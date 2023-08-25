@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved." xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <assemblyIdentity name="Microsoft-Windows-PeerToPeerBase" version="10.0.22621.1" processorArchitecture="wow64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <dependency discoverable="no" resourceType="Resources">
+    <dependentAssembly dependencyType="prerequisite">
+      <assemblyIdentity name="Microsoft-Windows-PeerToPeerBase.Resources" version="10.0.22621.1" processorArchitecture="wow64" language="*" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </dependentAssembly>
+  </dependency>
+  <file name="P2P.dll" destinationPath="$(runtime.system32)\" sourceName="P2P.dll" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>Hm/ySUpA0fIU40/DxIJdgo+yYEGJOkyIMUoUFXsOObU=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <registryKeys>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\PeerNet" />
+    <registryKey keyName="HKEY_LOCAL_MACHINE\System\CurrentControlSet\services\EventLog\System\PNRPSvc">
+      <registryValue name="ProviderGuid" valueType="REG_EXPAND_SZ" value="{BBE94F36-F8DC-4C33-8227-81602B7A3D53}" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\System\CurrentControlSet\services\EventLog\System\P2PIMSvc">
+      <registryValue name="ProviderGuid" valueType="REG_EXPAND_SZ" value="{2992E9CF-4F99-48f5-A0B6-B99B11CD387D}" />
+    </registryKey>
+  </registryKeys>
+  <memberships>
+    <categoryMembership>
+      <id name="Microsoft-Windows-Networking-Protocols" version="10.0.22621.1" publicKeyToken="31bf3856ad364e35" buildType="release" language="neutral" processorArchitecture="x86" />
+    </categoryMembership>
+  </memberships>
+  <migration settingsVersion="0">
+    <supportedComponents>
+      <supportedComponent>
+        <assemblyIdentity name="_" version="1.0.0.0" />
+        <supportedComponentIdentity buildType="release" language="neutral" name="Microsoft-Windows-PeerToPeerBase" processorArchitecture="x86" publicKeyToken="31bf3856ad364e35" settingsVersionRange="0" versionScope="nonSxS" xmlns="urn:schemas-microsoft-com:asm.v3" />
+        <migXml xmlns="">
+          <rules context="User">
+            <merge script="MigXmlHelper.DestinationPriority()">
+              <objectSet>
+                <pattern type="File">%CSIDL_APPDATA%\PeerNetworking\* [*]</pattern>
+              </objectSet>
+            </merge>
+          </rules>
+        </migXml>
+      </supportedComponent>
+    </supportedComponents>
+    <migXml xmlns="">
+      <rules context="User">
+        <include>
+          <objectSet>
+            <pattern type="File">%CSIDL_APPDATA%\PeerNetworking\* [*]</pattern>
+          </objectSet>
+        </include>
+        <merge script="MigXmlHelper.DestinationPriority()">
+          <objectSet>
+            <pattern type="File">%CSIDL_APPDATA%\PeerNetworking\* [*]</pattern>
+          </objectSet>
+        </merge>
+      </rules>
+    </migXml>
+  </migration>
+  <asmv3:configuration xmlns:asmv3="urn:schemas-microsoft-com:asm.v3" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State">
+    <asmv3:configurationSchema>
+      <xsd:schema xmlns="Microsoft-Windows-PeerToPeerBase" targetNamespace="Microsoft-Windows-PeerToPeerBase">
+        <xsd:element default="false" name="Disabled" type="xsd:boolean" wcm:description="Turn Off Microsoft Peer-to-Peer Networking Services" wcm:displayName="Turn Off Microsoft Peer-to-Peer Networking Services" wcm:handler="regkey('HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Peernet')" wcm:scope="allUsers" wcm:subScope="machineIndependent" />
+      </xsd:schema>
+    </asmv3:configurationSchema>
+  </asmv3:configuration>
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string id="description1" value="Turn Off Microsoft Peer-to-Peer Networking Services" />
+        <string id="displayName2" value="Peer Networking store location" />
+        <string id="description" value="Base component for the P2P infrastructure. Contains common DLL’s that implement multiple services and client side api stubs. Not a useful component by itself, exists so that other P2P components can list it as a dependency." />
+        <string id="description2" value="Peer Networking store location" />
+        <string id="displayName" value="Peer networking Base Component" />
+        <string id="displayName1" value="Turn Off Microsoft Peer-to-Peer Networking Services" />
+        <string id="displayName6" value="WRP_FILE_DEFAULT_SDDL" />
+        <string id="description7" value="Default SDDL for Windows Resource Protected file" />
+        <string id="event_0xC0000064" value="The Peer Name Resolution Protocol Service did not start because IPv6 is not enabled on the system." />
+        <string id="event_0xC0000065" value="The Peer Name Resolution Protocol Service service did not start because the receive message entry point (WSARecvMsg) is not defined." />
+        <string id="event_0xC0000066" value="The Peer Name Resolution Protocol cloud did not start because the creation of the default identity failed with error code: %1." />
+        <string id="event_0xC0000100" value="The certificate for the default identity is either missing or corrupt." />
+        <string id="event_0xC0000101" value="Failed to revert the security context back to the logged on user.  Terminating process..." />
+        <string id="eventProviderName" value="Microsoft-Windows-PNRPSvc" />
+      </stringTable>
+    </resources>
+  </localization>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" description="Default SDDL for Windows Resource Protected file" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+</assembly>

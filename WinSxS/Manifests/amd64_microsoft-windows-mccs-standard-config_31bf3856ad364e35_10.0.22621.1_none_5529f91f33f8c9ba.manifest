@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-MCCS-Standard-Config" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <memberships>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories.Services" version="10.0.22621.1" publicKeyToken="31bf3856ad364e35" typeName="Service" />
+      <categoryInstance subcategory="UnistackSvcGroup">
+        <serviceData name="OneSyncSvc" displayName="@%SystemRoot%\system32\APHostRes.dll,-10002" errorControl="ignore" start="delayedAuto" type="win32UserShareProcess" description="@%SystemRoot%\system32\APHostRes.dll,-10001" imagePath="%SystemRoot%\system32\svchost.exe -k UnistackSvcGroup">
+          <failureActions resetPeriod="86400">
+            <actions>
+              <action delay="10000" type="restartService" />
+              <action delay="10000" type="restartService" />
+              <action delay="10000" type="restartService" />
+              <action delay="0" type="none" />
+            </actions>
+          </failureActions>
+          <securityDescriptor name="03EBBB6AC2736345F3098FE93A80D8A6CAFF61DE2B5A94C8422FA641A926753A" />
+        </serviceData>
+      </categoryInstance>
+    </categoryMembership>
+  </memberships>
+  <registryKeys>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\Software\Microsoft\ActiveSync">
+      <registryValue name="CalendarAgeFilter" valueType="REG_DWORD" value="0x00000007" />
+      <registryValue name="EmailAgeFilter" valueType="REG_DWORD" value="0x00000005" />
+      <registryValue name="AllowMailTruncation" valueType="REG_DWORD" value="0x00000000" />
+      <registryValue name="KeepMax" valueType="REG_DWORD" value="0x000000FA" />
+      <registryValue name="SyncFolderBatchSize" valueType="REG_DWORD" value="0x00000064" />
+      <registryValue name="SyncRequestBatchSize" valueType="REG_DWORD" value="0x000000C8" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\Software\Microsoft\SecurityManager\TransientObjects\%5C%5C.%5CTemplate%5CActiveSyncUnistoreLockTemplate">
+      <registryValue name="SecurityDescriptor" valueType="REG_SZ" value="D:P(A;;0x111FFFFF;;;CO)(A;;0x111FFFFF;;;SY)(A;;0x111FFFFF;;;BA)(A;;0x111FFFFF;;;%s)" />
+    </registryKey>
+  </registryKeys>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="03EBBB6AC2736345F3098FE93A80D8A6CAFF61DE2B5A94C8422FA641A926753A" sddl="O:SYG:SYD:(A;;GRCR;;;IU)(A;;GRCR;;;SU)(A;;0x111FFFFF;;;SY)(A;;0x111FFFFF;;;BA)(A;;RPLC;;;S-1-15-2-1)(A;;RPLC;;;IU)(A;;RPLC;;;AU)" operationHint="replace" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+</assembly>

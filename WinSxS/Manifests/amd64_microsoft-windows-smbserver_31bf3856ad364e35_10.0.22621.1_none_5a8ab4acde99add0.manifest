@@ -1,0 +1,387 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved." xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <assemblyIdentity name="Microsoft-Windows-SMBServer" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <dependency discoverable="no" resourceType="Resources">
+    <dependentAssembly>
+      <assemblyIdentity name="Microsoft-Windows-SMBServer.Resources" version="10.0.22621.1" processorArchitecture="amd64" language="*" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </dependentAssembly>
+  </dependency>
+  <file name="srvsvc.dll" destinationPath="$(runtime.system32)\" sourceName="srvsvc.dll" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>8GbEbQyoBn/el7KV6ihUfNlSIr6ArU21ym8rByAefD4=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <file name="sscore.dll" destinationPath="$(runtime.system32)\" sourceName="sscore.dll" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>O3+Z/+w34Lx6zYNhSohi4IkG/iQNZ3mzwCcXjCaJVdc=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <memberships>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories.Services" version="10.0.22621.1" publicKeyToken="31bf3856ad364e35" typeName="Service" />
+      <categoryInstance subcategory="lanmanserver">
+        <serviceData name="lanmanserver" displayName="@%systemroot%\system32\srvsvc.dll,-100" errorControl="normal" start="auto" type="win32ShareProcess" description="@%systemroot%\system32\srvsvc.dll,-101" dependOnService="SamSS,Srv2" imagePath="%SystemRoot%\system32\svchost.exe -k netsvcs -p" objectName="LocalSystem" requiredPrivileges="SeChangeNotifyPrivilege,SeImpersonatePrivilege,SeAuditPrivilege" sidType="unrestricted">
+          <serviceTrigger action="start" subtype="RPC_INTERFACE_EVENT" type="NetworkEndpointEvent">
+            <triggerData type="string" value="4B324FC8-1670-01D3-1278-5A47BF6EE188" />
+          </serviceTrigger>
+          <serviceTrigger action="start" subtype="NAMED_PIPE_EVENT" type="NetworkEndpointEvent">
+            <triggerData type="string" value="srvsvc" />
+          </serviceTrigger>
+          <failureActions resetPeriod="86400">
+            <actions>
+              <action delay="60000" type="restartService" />
+              <action delay="120000" type="restartService" />
+              <action delay="0" type="none" />
+            </actions>
+          </failureActions>
+        </serviceData>
+      </categoryInstance>
+    </categoryMembership>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories" version="1.0.0.0" publicKeyToken="365143bb27e7ac8b" typeName="SvcHost" />
+      <categoryInstance subcategory="netsvcs">
+        <serviceGroup position="last" serviceName="lanmanserver" />
+      </categoryInstance>
+      <categoryInstance subcategory="smbsvcs">
+        <serviceGroup position="last" serviceName="lanmanserver" />
+      </categoryInstance>
+    </categoryMembership>
+  </memberships>
+  <networkComponents>
+    <serviceDriver bindName="LanmanServer" displayDescription="@%systemroot%\system32\srvsvc.dll,-110" displayName="@%systemroot%\system32\srvsvc.dll,-109" identifier="ms_server">
+      <bind keyword="winnet5" ruleType="upper" />
+      <bind keyword="tdi" ruleType="lower" />
+      <bind keyword="netbios" ruleType="lower" />
+      <bind keyword="ipx" ruleType="lower" />
+      <bind keyword="netbios_smb" ruleType="lower" />
+      <property name="NETSETUPPKEY_INF_Name" type="string" value="Netserv.inf" />
+      <property name="NETSETUPPKEY_INF_Section" type="string" value="Install.ndi" />
+    </serviceDriver>
+  </networkComponents>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="WRP_REGKEY_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;CI;GA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;CI;GR;;;SY)(A;CI;GR;;;BA)(A;CI;GR;;;BU)(A;CI;GR;;;S-1-15-2-1)(A;CI;GR;;;S-1-15-3-1024-1065365936-1281604716-3511738428-1654721687-432734479-3232135806-4053264122-3456934681)" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" description="Default SDDL for Windows Resource Protected file" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+  <asmv2:configuration xmlns:asmv2="urn:schemas-microsoft-com:asm.v3" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State">
+    <asmv2:configurationSchema>
+      <xsd:schema xmlns="Microsoft-Windows-SMBServer" targetNamespace="Microsoft-Windows-SMBServer">
+        <xsd:element default="%SystemRoot%\System32\svchost.exe -k netsvcs -p" name="ImagePath" type="xsd:string" wcm:changeImpact="noImpact" wcm:description="Override the SVCHOST image for this service" wcm:displayName="ImagePath" wcm:handler="regkey('HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\LanmanServer')" wcm:legacyType="REG_EXPAND_SZ" wcm:scope="allUsers" wcm:subScope="machineIndependent" />
+        <xsd:element name="Size" type="xsd:unsignedInt" wcm:dataOnly="true" wcm:description="Size specifies the size of the extension. If Size and Extend are present in the same configuration pass, an error is logged, and installation terminates." wcm:displayName="Size" wcm:handler="regkey('HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters')" wcm:legacyType="REG_DWORD" wcm:passes="generalize" wcm:scope="allUsers" wcm:visible="true" />
+        <xsd:element name="LmAnnounce" type="xsd:boolean" wcm:dataOnly="true" wcm:description="LmAnnounce specifies whether a server announces its presence through LanMan (LM) or Net BIOS announcements." wcm:displayName="LmAnnounce" wcm:handler="regkey('HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters')" wcm:legacyType="REG_DWORD" wcm:passes="generalize" wcm:scope="allUsers" wcm:visible="true" />
+        <xsd:element name="Users" type="xsd:unsignedInt" wcm:displayName="Users" wcm:handler="regkey('HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters')" wcm:legacyType="REG_DWORD" wcm:scope="allUsers" />
+        <xsd:element name="Disc" type="xsd:unsignedInt" wcm:displayName="Disc" wcm:handler="regkey('HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters')" wcm:legacyType="REG_DWORD" wcm:scope="allUsers" />
+        <xsd:element name="ConnectionNoSessionTimeout" type="xsd:unsignedInt" wcm:displayName="ConnectionNoSessionTimeout" wcm:handler="regkey('HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters')" wcm:legacyType="REG_DWORD" wcm:scope="allUsers" />
+        <xsd:element name="Announce" type="xsd:unsignedInt" wcm:displayName="Announce" wcm:handler="regkey('HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters')" wcm:legacyType="REG_DWORD" wcm:scope="allUsers" />
+        <xsd:element name="AnnDelta" type="xsd:unsignedInt" wcm:displayName="AnnDelta" wcm:handler="regkey('HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters')" wcm:legacyType="REG_DWORD" wcm:scope="allUsers" />
+        <xsd:element name="AcceptDownlevelApis" type="xsd:unsignedInt" wcm:displayName="AcceptDownlevelApis" wcm:handler="regkey('HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters')" wcm:legacyType="REG_DWORD" wcm:scope="allUsers" />
+        <xsd:element name="EnableOplocks" type="xsd:unsignedInt" wcm:displayName="EnableOplocks" wcm:handler="regkey('HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters')" wcm:legacyType="REG_DWORD" wcm:scope="allUsers" />
+        <xsd:element name="EnableFcbOpens" type="xsd:unsignedInt" wcm:displayName="EnableFcbOpens" wcm:handler="regkey('HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters')" wcm:legacyType="REG_DWORD" wcm:scope="allUsers" />
+        <xsd:element name="EnableSoftCompat" type="xsd:unsignedInt" wcm:displayName="EnableSoftCompat" wcm:handler="regkey('HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters')" wcm:legacyType="REG_DWORD" wcm:scope="allUsers" />
+        <xsd:element name="EnableSharedNetDrives" type="xsd:unsignedInt" wcm:displayName="EnableSharedNetDrives" wcm:handler="regkey('HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters')" wcm:legacyType="REG_DWORD" wcm:scope="allUsers" />
+        <xsd:element name="EnableForcedLogoff" type="xsd:unsignedInt" wcm:displayName="EnableForcedLogoff" wcm:handler="regkey('HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters')" wcm:legacyType="REG_DWORD" wcm:scope="allUsers" />
+        <xsd:element name="RemoveDuplicateSearches" type="xsd:unsignedInt" wcm:displayName="RemoveDuplicateSearches" wcm:handler="regkey('HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters')" wcm:legacyType="REG_DWORD" wcm:scope="allUsers" />
+        <xsd:element name="RestrictNullSessAccess" type="xsd:unsignedInt" wcm:displayName="RestrictNullSessAccess" wcm:handler="regkey('HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters')" wcm:legacyType="REG_DWORD" wcm:scope="allUsers" />
+        <xsd:element name="SizReqBuf" type="xsd:unsignedInt" wcm:displayName="SizReqBuf" wcm:handler="regkey('HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters')" wcm:legacyType="REG_DWORD" wcm:scope="allUsers" />
+        <xsd:element name="MaxWorkItems" type="xsd:unsignedInt" wcm:displayName="MaxWorkItems" wcm:handler="regkey('HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters')" wcm:legacyType="REG_DWORD" wcm:scope="allUsers" />
+        <xsd:element name="InitWorkItems" type="xsd:unsignedInt" wcm:displayName="InitWorkItems" wcm:handler="regkey('HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters')" wcm:legacyType="REG_DWORD" wcm:scope="allUsers" />
+        <xsd:element name="IrpStackSize" type="xsd:unsignedInt" wcm:displayName="IrpStackSize" wcm:handler="regkey('HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters')" wcm:legacyType="REG_DWORD" wcm:scope="allUsers" />
+        <xsd:element name="MinFreeConnections" type="xsd:unsignedInt" wcm:displayName="MinFreeConnections" wcm:handler="regkey('HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters')" wcm:legacyType="REG_DWORD" wcm:scope="allUsers" />
+        <xsd:element name="MaxFreeConnections" type="xsd:unsignedInt" wcm:displayName="MaxFreeConnections" wcm:handler="regkey('HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters')" wcm:legacyType="REG_DWORD" wcm:scope="allUsers" />
+        <xsd:element name="MaxKeepSearch" type="xsd:unsignedInt" wcm:displayName="MaxKeepSearch" wcm:handler="regkey('HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters')" wcm:legacyType="REG_DWORD" wcm:scope="allUsers" />
+        <xsd:element name="MaxThreadsPerQueue" type="xsd:unsignedInt" wcm:displayName="MaxThreadsPerQueue" wcm:handler="regkey('HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters')" wcm:legacyType="REG_DWORD" wcm:scope="allUsers" />
+        <xsd:element name="IdleThreadTimeout" type="xsd:unsignedInt" wcm:displayName="IdleThreadTimeout" wcm:handler="regkey('HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters')" wcm:legacyType="REG_DWORD" wcm:scope="allUsers" />
+        <xsd:element name="ScavTimeout" type="xsd:unsignedInt" wcm:displayName="ScavTimeout" wcm:handler="regkey('HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters')" wcm:legacyType="REG_DWORD" wcm:scope="allUsers" />
+        <xsd:element name="QueueSampleSecs" type="xsd:unsignedInt" wcm:displayName="QueueSampleSecs" wcm:handler="regkey('HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters')" wcm:legacyType="REG_DWORD" wcm:scope="allUsers" />
+        <xsd:element name="OtherQueueAffinity" type="xsd:unsignedInt" wcm:displayName="OtherQueueAffinity" wcm:handler="regkey('HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters')" wcm:legacyType="REG_DWORD" wcm:scope="allUsers" />
+        <xsd:element name="PreferredAffinity" type="xsd:unsignedInt" wcm:displayName="PreferredAffinity" wcm:handler="regkey('HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters')" wcm:legacyType="REG_DWORD" wcm:scope="allUsers" />
+        <xsd:element name="BalanceCount" type="xsd:unsignedInt" wcm:displayName="BalanceCount" wcm:handler="regkey('HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters')" wcm:legacyType="REG_DWORD" wcm:scope="allUsers" />
+        <xsd:element name="AutoShareServer" type="xsd:unsignedInt" wcm:displayName="AutoShareServer" wcm:handler="regkey('HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters')" wcm:legacyType="REG_DWORD" wcm:scope="allUsers" />
+        <xsd:element name="AutoShareWks" type="xsd:unsignedInt" wcm:displayName="AutoShareWks" wcm:handler="regkey('HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters')" wcm:legacyType="REG_DWORD" wcm:scope="allUsers" />
+        <xsd:element name="EnableSecuritySignature" type="xsd:unsignedInt" wcm:displayName="EnableSecuritySignature" wcm:handler="regkey('HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters')" wcm:legacyType="REG_DWORD" wcm:scope="allUsers" />
+        <xsd:element name="RequireSecuritySignature" type="xsd:unsignedInt" wcm:displayName="RequireSecuritySignature" wcm:handler="regkey('HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters')" wcm:legacyType="REG_DWORD" wcm:scope="allUsers" />
+        <xsd:element name="EnableW9xSecuritySignature" type="xsd:unsignedInt" wcm:displayName="EnableW9xSecuritySignature" wcm:handler="regkey('HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters')" wcm:legacyType="REG_DWORD" wcm:scope="allUsers" />
+        <xsd:element name="DisableDos" type="xsd:unsignedInt" wcm:displayName="DisableDos" wcm:handler="regkey('HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters')" wcm:legacyType="REG_DWORD" wcm:scope="allUsers" />
+        <xsd:element name="LowDiskSpaceMinimum" type="xsd:unsignedInt" wcm:displayName="LowDiskSpaceMinimum" wcm:handler="regkey('HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters')" wcm:legacyType="REG_DWORD" wcm:scope="allUsers" />
+        <xsd:element name="DisableStrictNameChecking" type="xsd:unsignedInt" wcm:displayName="DisableStrictNameChecking" wcm:handler="regkey('HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters')" wcm:legacyType="REG_DWORD" wcm:scope="allUsers" />
+        <xsd:element name="MaxMpxCt" type="xsd:unsignedInt" wcm:displayName="MaxMpxCt" wcm:handler="regkey('HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters')" wcm:legacyType="REG_DWORD" wcm:scope="allUsers" />
+        <xsd:element name="OplockBreakWait" type="xsd:unsignedInt" wcm:displayName="OplockBreakWait" wcm:handler="regkey('HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters')" wcm:legacyType="REG_DWORD" wcm:scope="allUsers" />
+        <xsd:element name="OplockBreakRequestWait" type="xsd:unsignedInt" wcm:displayName="OplockBreakRequestWait" wcm:handler="regkey('HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters')" wcm:legacyType="REG_DWORD" wcm:scope="allUsers" />
+        <xsd:element name="MinRcvQueue" type="xsd:unsignedInt" wcm:displayName="MinRcvQueue" wcm:handler="regkey('HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters')" wcm:legacyType="REG_DWORD" wcm:scope="allUsers" />
+        <xsd:element name="MinFreeWorkItems" type="xsd:unsignedInt" wcm:displayName="MinFreeWorkItems" wcm:handler="regkey('HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters')" wcm:legacyType="REG_DWORD" wcm:scope="allUsers" />
+        <xsd:element name="ThreadPriority" type="xsd:unsignedInt" wcm:displayName="ThreadPriority" wcm:handler="regkey('HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters')" wcm:legacyType="REG_DWORD" wcm:scope="allUsers" />
+        <xsd:element name="MaxPagedMemoryUsage" type="xsd:unsignedInt" wcm:displayName="MaxPagedMemoryUsage" wcm:handler="regkey('HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters')" wcm:legacyType="REG_DWORD" wcm:scope="allUsers" />
+        <xsd:element name="MaxNonPagedMemoryUsage" type="xsd:unsignedInt" wcm:displayName="MaxNonPagedMemoryUsage" wcm:handler="regkey('HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters')" wcm:legacyType="REG_DWORD" wcm:scope="allUsers" />
+        <xsd:element name="DiskSpaceThreshold" type="xsd:unsignedInt" wcm:displayName="DiskSpaceThreshold" wcm:handler="regkey('HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters')" wcm:legacyType="REG_DWORD" wcm:scope="allUsers" />
+        <xsd:element name="MaxLinkDelay" type="xsd:unsignedInt" wcm:displayName="MaxLinkDelay" wcm:handler="regkey('HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters')" wcm:legacyType="REG_DWORD" wcm:scope="allUsers" />
+        <xsd:element name="MinLinkThroughput" type="xsd:unsignedInt" wcm:displayName="MinLinkThroughput" wcm:handler="regkey('HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters')" wcm:legacyType="REG_DWORD" wcm:scope="allUsers" />
+        <xsd:element name="LinkInfoValidTime" type="xsd:unsignedInt" wcm:displayName="LinkInfoValidTime" wcm:handler="regkey('HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters')" wcm:legacyType="REG_DWORD" wcm:scope="allUsers" />
+        <xsd:element name="ScavQosInfoUpdateTime" type="xsd:unsignedInt" wcm:displayName="ScavQosInfoUpdateTime" wcm:handler="regkey('HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters')" wcm:legacyType="REG_DWORD" wcm:scope="allUsers" />
+        <xsd:element name="SharingViolationRetries" type="xsd:unsignedInt" wcm:displayName="SharingViolationRetries" wcm:handler="regkey('HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters')" wcm:legacyType="REG_DWORD" wcm:scope="allUsers" />
+        <xsd:element name="SharingViolationDelay" type="xsd:unsignedInt" wcm:displayName="SharingViolationDelay" wcm:handler="regkey('HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters')" wcm:legacyType="REG_DWORD" wcm:scope="allUsers" />
+        <xsd:element name="LockViolationDelay" type="xsd:unsignedInt" wcm:displayName="LockViolationDelay" wcm:handler="regkey('HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters')" wcm:legacyType="REG_DWORD" wcm:scope="allUsers" />
+        <xsd:element name="LockViolationOffset" type="xsd:unsignedInt" wcm:displayName="LockViolationOffset" wcm:handler="regkey('HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters')" wcm:legacyType="REG_DWORD" wcm:scope="allUsers" />
+        <xsd:element name="CachedOpenLimit" type="xsd:unsignedInt" wcm:displayName="CachedOpenLimit" wcm:handler="regkey('HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters')" wcm:legacyType="REG_DWORD" wcm:scope="allUsers" />
+        <xsd:element name="CachedDirectoryLimit" type="xsd:unsignedInt" wcm:displayName="CachedDirectoryLimit" wcm:handler="regkey('HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters')" wcm:legacyType="REG_DWORD" wcm:scope="allUsers" />
+        <xsd:element name="PipeFirewallActive" type="xsd:unsignedInt" wcm:displayName="PipeFirewallActive" wcm:handler="regkey('HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters')" wcm:legacyType="REG_DWORD" wcm:scope="allUsers" />
+        <xsd:element name="EnableExtendedSignature" type="xsd:unsignedInt" wcm:displayName="EnableExtendedSignature" wcm:handler="regkey('HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters')" wcm:legacyType="REG_DWORD" wcm:scope="allUsers" />
+        <xsd:element name="RequireExtendedSignature" type="xsd:unsignedInt" wcm:displayName="RequireExtendedSignature" wcm:handler="regkey('HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters')" wcm:legacyType="REG_DWORD" wcm:scope="allUsers" />
+        <xsd:element name="TreatHostAsStableStorage" type="xsd:unsignedInt" wcm:displayName="TreatHostAsStableStorage" wcm:handler="regkey('HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters')" wcm:legacyType="REG_DWORD" wcm:scope="allUsers" />
+        <xsd:element name="DisableLargeRead" type="xsd:unsignedInt" wcm:displayName="DisableLargeRead" wcm:handler="regkey('HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters')" wcm:legacyType="REG_DWORD" wcm:scope="allUsers" />
+        <xsd:element name="DisableLargeWrite" type="xsd:unsignedInt" wcm:displayName="DisableLargeWrite" wcm:handler="regkey('HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters')" wcm:legacyType="REG_DWORD" wcm:scope="allUsers" />
+        <xsd:element name="MapNoIntermediateBuffering" type="xsd:unsignedInt" wcm:displayName="MapNoIntermediateBuffering" wcm:handler="regkey('HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters')" wcm:legacyType="REG_DWORD" wcm:scope="allUsers" />
+        <xsd:element name="NoAliasingOnFilesystem" type="xsd:unsignedInt" wcm:displayName="NoAliasingOnFilesystem" wcm:handler="regkey('HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters')" wcm:legacyType="REG_DWORD" wcm:scope="allUsers" />
+        <xsd:element name="DisableDownlevelTimewarp" type="xsd:unsignedInt" wcm:displayName="DisableDownlevelTimewarp" wcm:handler="regkey('HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters')" wcm:legacyType="REG_DWORD" wcm:scope="allUsers" />
+        <xsd:element name="ChunkMax" type="xsd:unsignedInt" wcm:displayName="ChunkMax" wcm:handler="regkey('HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters')" wcm:legacyType="REG_DWORD" wcm:scope="allUsers" />
+        <xsd:element name="ChunkWriteLimit" type="xsd:unsignedInt" wcm:displayName="ChunkWriteLimit" wcm:handler="regkey('HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters')" wcm:legacyType="REG_DWORD" wcm:scope="allUsers" />
+        <xsd:element name="ChunkTotalWriteLimit" type="xsd:unsignedInt" wcm:displayName="ChunkTotalWriteLimit" wcm:handler="regkey('HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters')" wcm:legacyType="REG_DWORD" wcm:scope="allUsers" />
+        <xsd:element name="ChunkTimeout" type="xsd:unsignedInt" wcm:displayName="ChunkTimeout" wcm:handler="regkey('HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters')" wcm:legacyType="REG_DWORD" wcm:scope="allUsers" />
+        <xsd:element name="SMB1" type="xsd:unsignedInt" wcm:displayName="SMB1" wcm:handler="regkey('HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters')" wcm:legacyType="REG_DWORD" wcm:scope="allUsers" />
+        <xsd:element name="SMB2" type="xsd:unsignedInt" wcm:displayName="SMB2" wcm:handler="regkey('HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters')" wcm:legacyType="REG_DWORD" wcm:scope="allUsers" />
+        <xsd:element name="EnableInvalidSmbLogging" type="xsd:unsignedInt" wcm:displayName="EnableInvalidSmbLogging" wcm:handler="regkey('HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters')" wcm:legacyType="REG_DWORD" wcm:scope="allUsers" />
+        <xsd:element name="KeepAliveTime" type="xsd:unsignedInt" wcm:displayName="KeepAliveTime" wcm:handler="regkey('HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters')" wcm:legacyType="REG_DWORD" wcm:scope="allUsers" />
+        <xsd:element name="DisableClientSideEncryption" type="xsd:unsignedInt" wcm:displayName="DisableClientSideEncryption" wcm:handler="regkey('HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters')" wcm:legacyType="REG_DWORD" wcm:scope="allUsers" />
+        <xsd:element name="Wsk" type="xsd:unsignedInt" wcm:displayName="Wsk" wcm:handler="regkey('HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters')" wcm:legacyType="REG_DWORD" wcm:scope="allUsers" />
+        <xsd:element name="StripDnsOnAliasCheck" type="xsd:unsignedInt" wcm:displayName="StripDnsOnAliasCheck" wcm:handler="regkey('HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters')" wcm:legacyType="REG_DWORD" wcm:scope="allUsers" />
+        <xsd:element name="ValidateTargetName" type="xsd:unsignedInt" wcm:displayName="ValidateTargetName" wcm:handler="regkey('HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters')" wcm:legacyType="REG_DWORD" wcm:scope="allUsers" />
+        <xsd:element name="ValidateAliasNotCircular" type="xsd:unsignedInt" wcm:displayName="ValidateAliasNotCircular" wcm:handler="regkey('HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters')" wcm:legacyType="REG_DWORD" wcm:scope="allUsers" />
+        <xsd:element name="ValidateShareScope" type="xsd:unsignedInt" wcm:displayName="ValidateShareScope" wcm:handler="regkey('HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters')" wcm:legacyType="REG_DWORD" wcm:scope="allUsers" />
+        <xsd:element name="ValidateShareScopeNotAliased" type="xsd:unsignedInt" wcm:displayName="ValidateShareScopeNotAliased" wcm:handler="regkey('HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters')" wcm:legacyType="REG_DWORD" wcm:scope="allUsers" />
+        <xsd:element name="SrvComment" type="xsd:string" wcm:displayName="SrvComment" wcm:handler="regkey('HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters')" wcm:legacyType="REG_SZ" wcm:scope="allUsers" />
+        <xsd:element name="UserPath" type="xsd:string" wcm:displayName="UserPath" wcm:handler="regkey('HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters')" wcm:legacyType="REG_SZ" wcm:scope="allUsers" />
+        <xsd:element name="Domain" type="xsd:string" wcm:displayName="Domain" wcm:handler="regkey('HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters')" wcm:legacyType="REG_SZ" wcm:scope="allUsers" />
+        <xsd:element name="NullSessionShares" type="wcm:multiString" wcm:displayName="NullSessionShares" wcm:handler="regkey('HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters')" wcm:legacyType="REG_MULTI_SZ" wcm:scope="allUsers" />
+        <xsd:element name="NoRemapPipeNames" type="wcm:multiString" wcm:displayName="NoRemapPipeNames" wcm:handler="regkey('HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters')" wcm:legacyType="REG_MULTI_SZ" wcm:scope="allUsers" />
+        <xsd:element name="AllowedPipesWithFirewall" type="wcm:multiString" wcm:displayName="AllowedPipesWithFirewall" wcm:handler="regkey('HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters')" wcm:legacyType="REG_MULTI_SZ" wcm:scope="allUsers" />
+        <xsd:element name="PipesNeedLicense" type="wcm:multiString" wcm:displayName="PipesNeedLicense" wcm:handler="regkey('HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters')" wcm:legacyType="REG_MULTI_SZ" wcm:scope="allUsers" />
+        <xsd:element name="CheckFile" type="wcm:multiString" wcm:displayName="CheckFile" wcm:handler="regkey('HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters')" wcm:legacyType="REG_MULTI_SZ" wcm:scope="allUsers" />
+        <xsd:element name="CheckExtension" type="wcm:multiString" wcm:displayName="CheckExtension" wcm:handler="regkey('HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters')" wcm:legacyType="REG_MULTI_SZ" wcm:scope="allUsers" />
+        <xsd:element name="CheckShares" type="wcm:multiString" wcm:displayName="CheckShares" wcm:handler="regkey('HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters')" wcm:legacyType="REG_MULTI_SZ" wcm:scope="allUsers" />
+        <xsd:element name="ErrorLogIgnore" type="wcm:multiString" wcm:displayName="ErrorLogIgnore" wcm:handler="regkey('HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters')" wcm:legacyType="REG_MULTI_SZ" wcm:scope="allUsers" />
+      </xsd:schema>
+    </asmv2:configurationSchema>
+    <asmv2:metadata />
+  </asmv2:configuration>
+  <migration ignoreConfigurationSection="Yes" settingsVersion="0">
+    <machineSpecific>
+      <migXml xmlns="">
+        <rules context="System">
+          <destinationCleanup>
+            <objectSet>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\LanmanServer\DefaultSecurity [AnonymousDescriptorsUpgraded]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\LanmanServer\DefaultSecurity [InteractiveDescriptorsRegenerated]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\LanmanServer\DefaultSecurity [PreviousAnonymousRestriction]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\LanmanServer\DefaultSecurity [SessionSecurityDescriptorRegenerated]</pattern>
+            </objectSet>
+          </destinationCleanup>
+          <include>
+            <objectSet>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters [Size]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters [LmAnnounce]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters [Users]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters [Disc]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters [ConnectionNoSessionTimeout]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters [Announce]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters [AnnDelta]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters [AcceptDownlevelApis]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters [EnableOplocks]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters [EnableFcbOpens]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters [EnableSoftCompat]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters [EnableSharedNetDrives]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters [EnableForcedLogoff]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters [RemoveDuplicateSearches]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters [RestrictNullSessAccess]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters [SizReqBuf]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters [MaxWorkItems]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters [InitWorkItems]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters [IrpStackSize]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters [MinFreeConnections]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters [MaxFreeConnections]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters [MaxKeepSearch]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters [MaxThreadsPerQueue]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters [IdleThreadTimeout]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters [ScavTimeout]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters [QueueSampleSecs]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters [OtherQueueAffinity]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters [PreferredAffinity]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters [BalanceCount]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters [AutoShareServer]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters [AutoShareWks]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters [EnableSecuritySignature]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters [RequireSecuritySignature]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters [EnableW9xSecuritySignature]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters [DisableDos]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters [EnableAuthenticateUserSharing]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters [LowDiskSpaceMinimum]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters [DisableStrictNameChecking]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters [MaxMpxCt]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters [OplockBreakWait]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters [OplockBreakRequestWait]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters [MinRcvQueue]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters [MinFreeWorkItems]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters [ThreadPriority]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters [MaxPagedMemoryUsage]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters [MaxNonPagedMemoryUsage]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters [DiskSpaceThreshold]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters [MaxLinkDelay]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters [MinLinkThroughput]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters [LinkInfoValidTime]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters [ScavQosInfoUpdateTime]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters [SharingViolationRetries]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters [SharingViolationDelay]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters [LockViolationDelay]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters [LockViolationOffset]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters [CachedOpenLimit]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters [CachedDirectoryLimit]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters [PipeFirewallActive]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters [EnableExtendedSignature]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters [RequireExtendedSignature]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters [TreatHostAsStableStorage]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters [DisableLargeRead]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters [DisableLargeWrite]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters [MapNoIntermediateBuffering]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters [NoAliasingOnFilesystem]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters [DisableDownlevelTimewarp]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters [ChunkMax]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters [ChunkWriteLimit]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters [ChunkTotalWriteLimit]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters [ChunkTimeout]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters [SMB1]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters [SMB2]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters [EnableInvalidSmbLogging]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters [KeepAliveTime]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters [DisableClientSideEncryption]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters [Wsk]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters [StripDnsOnAliasCheck]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters [ValidateTargetName]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters [ValidateAliasNotCircular]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters [ValidateShareScope]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters [ValidateShareScopeNotAliased]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters [SrvComment]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters [UserPath]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters [Domain]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters [NullSessionPipes]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters [NullSessionShares]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters [NoRemapPipeNames]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters [AllowedPipesWithFirewall]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters [PipesNeedLicense]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters [CheckFile]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters [CheckExtension]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters [CheckShares]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters [ErrorLogIgnore]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\LanmanServer\Shares\* [*]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\LanmanServer\Aliases\* [*]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\LanmanServer\DefaultSecurity\* [*]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\LanmanServer\Certs\* [*]</pattern>
+            </objectSet>
+          </include>
+          <merge script="MigXmlHelper.SourcePriority()">
+            <objectSet>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\LanmanServer\* [*]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Control\Session Manager\Memory Management\* [*]</pattern>
+            </objectSet>
+          </merge>
+        </rules>
+      </migXml>
+    </machineSpecific>
+    <supportedComponents>
+      <supportedComponent>
+        <assemblyIdentity name="_" version="1.0.0.0" />
+        <supportedComponentIdentity buildType="release" language="*" name="Microsoft-Windows-SMBServer" processorArchitecture="*" publicKeyToken="31bf3856ad364e35" settingsVersionRange="0" versionScope="nonSxS" xmlns="urn:schemas-microsoft-com:asm.v3" />
+        <machineSpecific>
+          <migXml xmlns="">
+            <rules context="System">
+              <merge script="MigXmlHelper.SourcePriority()">
+                <objectSet>
+                  <pattern type="Registry">HKLM\System\CurrentControlSet\Services\LanmanServer\* [*]</pattern>
+                  <pattern type="Registry">HKLM\System\CurrentControlSet\Control\Session Manager\Memory Management\* [*]</pattern>
+                </objectSet>
+              </merge>
+              <destinationCleanup>
+                <objectSet>
+                  <pattern type="Registry">HKLM\System\CurrentControlSet\Services\LanmanServer\DefaultSecurity [AnonymousDescriptorsUpgraded]</pattern>
+                  <pattern type="Registry">HKLM\System\CurrentControlSet\Services\LanmanServer\DefaultSecurity [InteractiveDescriptorsRegenerated]</pattern>
+                  <pattern type="Registry">HKLM\System\CurrentControlSet\Services\LanmanServer\DefaultSecurity [PreviousAnonymousRestriction]</pattern>
+                  <pattern type="Registry">HKLM\System\CurrentControlSet\Services\LanmanServer\DefaultSecurity [SessionSecurityDescriptorRegenerated]</pattern>
+                </objectSet>
+              </destinationCleanup>
+            </rules>
+          </migXml>
+        </machineSpecific>
+      </supportedComponent>
+      <supportedComponent>
+        <assemblyIdentity name="_" version="1.0.0.0" />
+        <supportedComponentIdentity buildType="release" language="*" name="Microsoft-Windows-SMBServer-DL" processorArchitecture="*" publicKeyToken="31bf3856ad364e35" settingsVersionRange="0" versionScope="nonSxS" xmlns="urn:schemas-microsoft-com:asm.v3" />
+        <machineSpecific>
+          <migXml xmlns="">
+            <rules context="System">
+              <destinationCleanup>
+                <objectSet>
+                  <pattern type="Registry">HKLM\System\CurrentControlSet\Services\LanmanServer\DefaultSecurity [AnonymousDescriptorsUpgraded]</pattern>
+                  <pattern type="Registry">HKLM\System\CurrentControlSet\Services\LanmanServer\DefaultSecurity [InteractiveDescriptorsRegenerated]</pattern>
+                  <pattern type="Registry">HKLM\System\CurrentControlSet\Services\LanmanServer\DefaultSecurity [PreviousAnonymousRestriction]</pattern>
+                  <pattern type="Registry">HKLM\System\CurrentControlSet\Services\LanmanServer\DefaultSecurity [SessionSecurityDescriptorRegenerated]</pattern>
+                </objectSet>
+              </destinationCleanup>
+            </rules>
+          </migXml>
+        </machineSpecific>
+      </supportedComponent>
+    </supportedComponents>
+  </migration>
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string id="description" value="Supports file, print, and named-pipe sharing over the network for this computer. (SrvCore) (All Pieces)" />
+        <string id="displayName" value="SMB Server" />
+        <string id="displayName1" value="Server" />
+        <string id="displayName2" value="Downlevel SMB Server Driver" />
+        <string id="displayName3" value="SMB 2.0 Server Driver" />
+        <string id="displayName4" value="Common Server Network Driver" />
+        <string id="description1" value="Supports file, print, and named-pipe sharing over the network for this computer. If this service is stopped, these functions will be unavailable. If this service is disabled, any services that explicitly depend on it will fail to start." />
+        <string id="description2" value="Downlevel SMB Server Driver" />
+        <string id="description3" value="SMB 2.0 Server Driver" />
+        <string id="description4" value="Common Server Network Driver" />
+        <string id="displayName10" value="WRP_FILE_DEFAULT_SDDL" />
+        <string id="displayName11" value="WRP_REGKEY_DEFAULT_SDDL" />
+        <string id="description12" value="Default SDDL for Windows Resource Protected file" />
+        <string id="description13" value="Default SDDL for Windows Resource Protected registry key" />
+      </stringTable>
+    </resources>
+  </localization>
+  <registryKeys>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\System\CurrentControlSet\Services\LanmanServer\AutotunedParameters" />
+    <registryKey keyName="HKEY_LOCAL_MACHINE\System\CurrentControlSet\Services\LanmanServer\Shares" />
+    <registryKey keyName="HKEY_LOCAL_MACHINE\System\CurrentControlSet\Services\LanmanServer\Linkage" />
+    <registryKey keyName="HKEY_LOCAL_MACHINE\System\CurrentControlSet\Services\LanmanServer\Parameters">
+      <registryValue name="ServiceDll" valueType="REG_EXPAND_SZ" value="%SystemRoot%\system32\srvsvc.dll" />
+      <registryValue name="ServiceDllUnloadOnStop" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="EnableAuthenticateUserSharing" valueType="REG_DWORD" value="0x00000000" />
+      <registryValue name="NullSessionPipes" valueType="REG_MULTI_SZ" value="" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\System\CurrentControlSet\Services\LanmanServer\Parameters\FsctlAllowlist" />
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\EventLog\System\Srv">
+      <registryValue name="TypesSupported" valueType="REG_DWORD" value="0x00000007" />
+      <registryValue name="EventMessageFile" valueType="REG_EXPAND_SZ" value="%SystemRoot%\System32\netevent.dll" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\EventLog\System\Server">
+      <registryValue name="TypesSupported" valueType="REG_DWORD" value="0x00000007" />
+      <registryValue name="EventMessageFile" valueType="REG_EXPAND_SZ" value="%SystemRoot%\System32\netevent.dll" />
+    </registryKey>
+  </registryKeys>
+</assembly>

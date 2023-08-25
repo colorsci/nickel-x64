@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved." xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <assemblyIdentity name="Microsoft-Windows-TPM-Tasks" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <dependency discoverable="no" resourceType="Resources">
+    <dependentAssembly dependencyType="prerequisite">
+      <assemblyIdentity name="Microsoft-Windows-TPM-Tasks.Resources" version="10.0.22621.1" processorArchitecture="amd64" language="*" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+    </dependentAssembly>
+  </dependency>
+  <configuration xmlns:app="TpmTaskSchema" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State">
+    <configurationSchema>
+      <xsd:schema xmlns="Microsoft-Windows-TPM-Tasks" targetNamespace="Microsoft-Windows-TPM-Tasks">
+        <xsd:simpleType name="ClearTpmModeType">
+          <xsd:restriction base="xsd:integer">
+            <xsd:enumeration value="0" />
+            <xsd:enumeration value="1" />
+            <xsd:enumeration value="2" />
+          </xsd:restriction>
+        </xsd:simpleType>
+        <xsd:element default="0" name="ClearTpm" type="ClearTpmModeType" wcm:description="Set to 0 to retain Trusted Platform Module (TPM) during the specialize stage of Windows setup. Set to 1 to clear TPM only when Windows has taken ownership of TPM. Set to 2 to always clear TPM." wcm:handler="regkey('HKLM\Software\Microsoft\Windows NT\CurrentVersion\UnattendSettings\TPM')" wcm:legacyType="REG_DWORD" wcm:passes="specialize" wcm:visible="true" />
+      </xsd:schema>
+    </configurationSchema>
+  </configuration>
+  <unattendActions>
+    <unattendAction arguments="TpmCoreProvisioning.dll,TpmUnattendedSetup" executableName="$(runtime.system32)\rundll32.exe" passes="specialize" />
+  </unattendActions>
+  <file name="TpmTasks.dll" destinationPath="$(runtime.system32)\" sourceName="TpmTasks.dll" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>akJcLSN33RefTgzKRDjtbJuPwINO7s0wK4A5AWKw4Zk=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <registryKeys>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{5014B7C8-934E-4262-9816-887FA745A6C4}">
+      <registryValue name="" valueType="REG_SZ" value="TPM Maintenance Task Handler" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{5014B7C8-934E-4262-9816-887FA745A6C4}\InprocServer32">
+      <registryValue name="" valueType="REG_EXPAND_SZ" value="%systemroot%\system32\TpmTasks.dll" />
+      <registryValue name="ThreadingModel" valueType="REG_SZ" value="Both" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\TPM">
+      <registryValue name="OSManagedAuthLevel" valueType="REG_DWORD" value="0x00000005" />
+    </registryKey>
+  </registryKeys>
+  <taskScheduler>
+    <Task xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task">
+      <RegistrationInfo>
+        <URI>Microsoft\Windows\TPM\Tpm-Maintenance</URI>
+        <Date>2010-06-10T17:49:20.8844064</Date>
+        <Author>$(@%SystemRoot%\system32\TpmTasks.dll,-600)</Author>
+        <Source>$(@%SystemRoot%\system32\TpmTasks.dll,-601)</Source>
+        <Description>$(@%SystemRoot%\system32\TpmTasks.dll,-602)</Description>
+        <SecurityDescriptor>D:P(A;;FA;;;BA)(A;;FA;;;SY)(A;;FA;;;S-1-5-87-1469317444-2401623638-2778953283-1691679301-3481717153)</SecurityDescriptor>
+      </RegistrationInfo>
+      <Triggers>
+        <WnfStateChangeTrigger>
+          <StateName>7518bca3391e8b41</StateName>
+        </WnfStateChangeTrigger>
+        <WnfStateChangeTrigger>
+          <StateName>7560bca322028f02</StateName>
+        </WnfStateChangeTrigger>
+        <WnfStateChangeTrigger>
+          <StateName>7510bca3391e8b41</StateName>
+        </WnfStateChangeTrigger>
+        <WnfStateChangeTrigger>
+          <StateName>3528bca32e1d8e0d</StateName>
+        </WnfStateChangeTrigger>
+      </Triggers>
+      <Principals>
+        <Principal id="LocalSystem">
+          <UserId>S-1-5-18</UserId>
+          <RunLevel>LeastPrivilege</RunLevel>
+        </Principal>
+      </Principals>
+      <Settings>
+        <MultipleInstancesPolicy>Queue</MultipleInstancesPolicy>
+        <DisallowStartIfOnBatteries>false</DisallowStartIfOnBatteries>
+        <StopIfGoingOnBatteries>false</StopIfGoingOnBatteries>
+        <AllowStartOnDemand>true</AllowStartOnDemand>
+        <Enabled>true</Enabled>
+        <Hidden>false</Hidden>
+        <UseUnifiedSchedulingEngine>true</UseUnifiedSchedulingEngine>
+      </Settings>
+      <Actions Context="LocalSystem">
+        <ComHandler>
+          <ClassId>{5014B7C8-934E-4262-9816-887FA745A6C4}</ClassId>
+          <Data>TpmTasks</Data>
+        </ComHandler>
+      </Actions>
+    </Task>
+  </taskScheduler>
+  <taskScheduler>
+    <Task xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task">
+      <RegistrationInfo>
+        <URI>Microsoft\Windows\PI\Sqm-Tasks</URI>
+        <Date>2011-07-22T00:00:00.8844064</Date>
+        <Author>$(@%SystemRoot%\system32\TpmTasks.dll,-600)</Author>
+        <Source>$(@%SystemRoot%\system32\TpmTasks.dll,-601)</Source>
+        <Description>$(@%SystemRoot%\system32\TpmTasks.dll,-603)</Description>
+        <SecurityDescriptor>O:BAG:BAD:P(A;;FA;;;BA)(A;;FA;;;SY)(A;;FRFX;;;LS)</SecurityDescriptor>
+      </RegistrationInfo>
+      <Principals>
+        <Principal id="LocalSystem">
+          <UserId>S-1-5-18</UserId>
+          <RunLevel>LeastPrivilege</RunLevel>
+        </Principal>
+      </Principals>
+      <Settings>
+        <UseUnifiedSchedulingEngine>true</UseUnifiedSchedulingEngine>
+        <MultipleInstancesPolicy>IgnoreNew</MultipleInstancesPolicy>
+        <DisallowStartIfOnBatteries>true</DisallowStartIfOnBatteries>
+        <StopIfGoingOnBatteries>false</StopIfGoingOnBatteries>
+        <AllowStartOnDemand>true</AllowStartOnDemand>
+        <StartWhenAvailable>true</StartWhenAvailable>
+        <Enabled>true</Enabled>
+        <Hidden>false</Hidden>
+        <RunOnlyIfIdle>false</RunOnlyIfIdle>
+        <MaintenanceSettings>
+          <Period>P1M</Period>
+        </MaintenanceSettings>
+      </Settings>
+      <Actions Context="LocalSystem">
+        <ComHandler>
+          <ClassId>{5014B7C8-934E-4262-9816-887FA745A6C4}</ClassId>
+          <Data>PiSqmTasks</Data>
+        </ComHandler>
+      </Actions>
+    </Task>
+  </taskScheduler>
+  <taskScheduler>
+    <Task xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task">
+      <RegistrationInfo>
+        <URI>Microsoft\Windows\PI\Secure-Boot-Update</URI>
+        <Date>2012-02-07T16:39:20</Date>
+        <Author>$(@%SystemRoot%\system32\TpmTasks.dll,-600)</Author>
+        <Source>$(@%SystemRoot%\system32\TpmTasks.dll,-601)</Source>
+        <Description>$(@%SystemRoot%\system32\TpmTasks.dll,-604)</Description>
+        <SecurityDescriptor>O:BAG:BAD:P(A;;FA;;;BA)(A;;FA;;;SY)(A;;FRFX;;;LS)</SecurityDescriptor>
+      </RegistrationInfo>
+      <Triggers>
+        <WnfStateChangeTrigger>
+          <StateName>7508bca33e0c9541</StateName>
+        </WnfStateChangeTrigger>
+      </Triggers>
+      <Principals>
+        <Principal id="LocalSystem">
+          <UserId>S-1-5-18</UserId>
+          <RunLevel>LeastPrivilege</RunLevel>
+        </Principal>
+      </Principals>
+      <Settings>
+        <UseUnifiedSchedulingEngine>true</UseUnifiedSchedulingEngine>
+        <MultipleInstancesPolicy>IgnoreNew</MultipleInstancesPolicy>
+        <DisallowStartIfOnBatteries>false</DisallowStartIfOnBatteries>
+        <ExecutionTimeLimit>PT1H</ExecutionTimeLimit>
+        <StopIfGoingOnBatteries>false</StopIfGoingOnBatteries>
+        <AllowStartOnDemand>true</AllowStartOnDemand>
+        <StartWhenAvailable>true</StartWhenAvailable>
+        <Enabled>true</Enabled>
+        <Hidden>false</Hidden>
+        <RunOnlyIfIdle>false</RunOnlyIfIdle>
+      </Settings>
+      <Actions Context="LocalSystem">
+        <ComHandler>
+          <ClassId>{5014B7C8-934E-4262-9816-887FA745A6C4}</ClassId>
+          <Data>SBServicing</Data>
+        </ComHandler>
+      </Actions>
+    </Task>
+  </taskScheduler>
+  <taskScheduler>
+    <Task xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task">
+      <RegistrationInfo>
+        <URI>Microsoft\Windows\TPM\Tpm-HASCertRetr</URI>
+        <Date>2015-02-16T17:49:20.8844064</Date>
+        <Author>$(@%SystemRoot%\system32\TpmTasks.dll,-600)</Author>
+        <Source>$(@%SystemRoot%\system32\TpmTasks.dll,-601)</Source>
+        <Description>$(@%SystemRoot%\system32\TpmTasks.dll,-605)</Description>
+        <SecurityDescriptor>D:P(A;;FA;;;BA)(A;;FA;;;SY)</SecurityDescriptor>
+      </RegistrationInfo>
+      <Triggers>
+        <WnfStateChangeTrigger>
+          <StateName>7508bca3250f9541</StateName>
+        </WnfStateChangeTrigger>
+      </Triggers>
+      <Principals>
+        <Principal id="LocalSystem">
+          <UserId>S-1-5-18</UserId>
+          <RunLevel>LeastPrivilege</RunLevel>
+        </Principal>
+      </Principals>
+      <Settings>
+        <MultipleInstancesPolicy>Queue</MultipleInstancesPolicy>
+        <DisallowStartIfOnBatteries>false</DisallowStartIfOnBatteries>
+        <StopIfGoingOnBatteries>false</StopIfGoingOnBatteries>
+        <AllowStartOnDemand>true</AllowStartOnDemand>
+        <Enabled>true</Enabled>
+        <Hidden>false</Hidden>
+        <UseUnifiedSchedulingEngine>true</UseUnifiedSchedulingEngine>
+      </Settings>
+      <Actions Context="LocalSystem">
+        <ComHandler>
+          <ClassId>{5014B7C8-934E-4262-9816-887FA745A6C4}</ClassId>
+          <Data>HASCertRetr</Data>
+        </ComHandler>
+      </Actions>
+    </Task>
+  </taskScheduler>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="WRP_REGKEY_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;CI;GA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;CI;GR;;;SY)(A;CI;GR;;;BA)(A;CI;GR;;;BU)(A;CI;GR;;;S-1-15-2-1)(A;CI;GR;;;S-1-15-3-1024-1065365936-1281604716-3511738428-1654721687-432734479-3232135806-4053264122-3456934681)" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" description="Default SDDL for Windows Resource Protected file" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+</assembly>

@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-Printing-Workflow" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <dependency discoverable="no" resourceType="Resources">
+    <dependentAssembly dependencyType="prerequisite">
+      <assemblyIdentity name="Microsoft-Windows-Printing-Workflow.Resources" version="10.0.22621.1" processorArchitecture="amd64" language="*" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </dependentAssembly>
+  </dependency>
+  <file name="Print.Workflow.Source.dll" destinationPath="$(runtime.system32)\" sourceName="Print.Workflow.Source.dll" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>DqJ4H+M4znvoHP4+el0qQrWK7vxlqEN2RaHUD+3JaBA=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <file name="PrintWorkflowService.dll" destinationPath="$(runtime.system32)\" sourceName="PrintWorkflowService.dll" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>PkvaFqnXu/ovK+aPQn8jsva4Rz6knbzlDWc2EbefRb4=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <file name="Windows.Graphics.Printing.Workflow.dll" destinationPath="$(runtime.system32)\" sourceName="Windows.Graphics.Printing.Workflow.dll" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>xtjwJklqkkhZI/ZMrkS9nlKmBjer3/4hcPE9kOP/6B8=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <file name="Windows.Graphics.Printing.Workflow.Native.dll" destinationPath="$(runtime.system32)\" sourceName="Windows.Graphics.Printing.Workflow.Native.dll" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>mwOFr8cj9A+KXfQLT0EMPmb3FDY4dN2mC7HM7QAsgSM=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <file name="Print.PrintSupport.Source.dll" destinationPath="$(runtime.system32)\" sourceName="Print.PrintSupport.Source.dll" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>NzUQQQ+qdpH/QX0qYh6C1AwwhT6FTlIX67eRWeQ2hs8=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <memberships>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories.Services" version="10.0.22621.1" publicKeyToken="31bf3856ad364e35" typeName="Service" />
+      <categoryInstance subcategory="PrintWorkflow">
+        <serviceData name="PrintWorkflowUserSvc" displayName="@%SystemRoot%\system32\PrintWorkflowService.dll,-100" errorControl="normal" start="demand" type="win32UserShareProcess" description="@%SystemRoot%\system32\PrintWorkflowService.dll,-101" dependOnService="RpcSs" imagePath="%SystemRoot%\system32\svchost.exe -k PrintWorkflow" objectName="LocalSystem" sidType="unrestricted">
+          <failureActions resetPeriod="86400">
+            <actions>
+              <action delay="10000" type="restartService" />
+              <action delay="0" type="none" />
+            </actions>
+          </failureActions>
+          <serviceTrigger action="start" subtype="WNF_STATE_CHANGE" type="WnfStateEvent">
+            <triggerData type="binary" value="7510bca33d0a8b41" />
+          </serviceTrigger>
+          <securityDescriptor name="PRINTWORKFLOW_SERVICE_SDDL" />
+        </serviceData>
+      </categoryInstance>
+    </categoryMembership>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories" version="1.0.0.0" publicKeyToken="365143bb27e7ac8b" typeName="SvcHost" />
+      <categoryInstance subcategory="PrintWorkflow">
+        <serviceGroup position="last" serviceName="PrintWorkflowUserSvc" />
+      </categoryInstance>
+    </categoryMembership>
+  </memberships>
+  <registryKeys>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{C056BE0A-9EE2-450A-9823-964F0006F2BB}">
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+      <registryValue name="" valueType="REG_SZ" value="IID_IPrintWorkflowConfigurationNative" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{C056BE0A-9EE2-450A-9823-964F0006F2BB}\ProxyStubClsid32">
+      <registryValue name="" valueType="REG_SZ" value="{52807600-EA97-4647-A9EE-5EE386A2B524}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{68C9E477-993E-4052-8AC6-454EFF58DB9D}">
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+      <registryValue name="" valueType="REG_SZ" value="IID_IPrintWorkflowObjectModelSourceFileContentNative" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{68C9E477-993E-4052-8AC6-454EFF58DB9D}\ProxyStubClsid32">
+      <registryValue name="" valueType="REG_SZ" value="{52807600-EA97-4647-A9EE-5EE386A2B524}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{04097374-77B8-47F6-8167-AAE29D4CF84B}">
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+      <registryValue name="" valueType="REG_SZ" value="IID_IPrintWorkflowXpsReceiver" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{04097374-77B8-47F6-8167-AAE29D4CF84B}\ProxyStubClsid32">
+      <registryValue name="" valueType="REG_SZ" value="{52807600-EA97-4647-A9EE-5EE386A2B524}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{52B097EB-7F1F-414B-89AB-A0347DE63A8E}">
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+      <registryValue name="" valueType="REG_SZ" value="PrintWorkflowTriggerDetailsFactory" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{52B097EB-7F1F-414B-89AB-A0347DE63A8E}\InProcServer32">
+      <registryValue name="" valueType="REG_SZ" value="$(runtime.system32)\Windows.Graphics.Printing.Workflow.dll" />
+      <registryValue name="ThreadingModel" valueType="REG_SZ" value="Both" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{A21F5552-8D6C-4DC6-BA46-D8D3363E6BA6}">
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+      <registryValue name="" valueType="REG_SZ" value="PrintWorkflowJobTriggerDetailsFactory" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{A21F5552-8D6C-4DC6-BA46-D8D3363E6BA6}\InProcServer32">
+      <registryValue name="" valueType="REG_SZ" value="$(runtime.system32)\Windows.Graphics.Printing.Workflow.dll" />
+      <registryValue name="ThreadingModel" valueType="REG_SZ" value="Both" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{71DA2664-3D4F-42A0-BCBB-D76F30C00946}">
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+      <registryValue name="" valueType="REG_SZ" value="PrintSupportExtensionTriggerDetailsFactory" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{71DA2664-3D4F-42A0-BCBB-D76F30C00946}\InProcServer32">
+      <registryValue name="" valueType="REG_SZ" value="$(runtime.system32)\Windows.Graphics.Printing.Workflow.dll" />
+      <registryValue name="ThreadingModel" valueType="REG_SZ" value="Both" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{51CEFC53-622D-4C7C-B49B-74B9544DAA61}">
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+      <registryValue name="" valueType="REG_SZ" value="PrintSupportPrintDeviceCapabilitiesChangedEventArgsFactory" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{51CEFC53-622D-4C7C-B49B-74B9544DAA61}\InProcServer32">
+      <registryValue name="" valueType="REG_SZ" value="$(runtime.system32)\Windows.Graphics.Printing.Workflow.dll" />
+      <registryValue name="ThreadingModel" valueType="REG_SZ" value="Both" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{8BB37D52-EB34-4A69-A013-DE72CF54EBE2}">
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+      <registryValue name="" valueType="REG_SZ" value="PrintWorkflowPrintTicketFactory" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{8BB37D52-EB34-4A69-A013-DE72CF54EBE2}\InProcServer32">
+      <registryValue name="" valueType="REG_SZ" value="$(runtime.system32)\Windows.Graphics.Printing.Workflow.dll" />
+      <registryValue name="ThreadingModel" valueType="REG_SZ" value="Both" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{52807600-EA97-4647-A9EE-5EE386A2B524}">
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+      <registryValue name="" valueType="REG_SZ" value="Windows.Graphics.Printing.Workflow.Native.dll" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{52807600-EA97-4647-A9EE-5EE386A2B524}\InProcServer32">
+      <registryValue name="" valueType="REG_SZ" value="$(runtime.system32)\Windows.Graphics.Printing.Workflow.Native.dll" />
+      <registryValue name="ThreadingModel" valueType="REG_SZ" value="Both" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\Software\Microsoft\WindowsRuntime\Server\PrintWorkflowUserSvc">
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+      <registryValue name="ServerType" valueType="REG_DWORD" value="0x00000002" />
+      <registryValue name="Permissions" valueType="REG_BINARY" value="01001480e8000000f4000000140000003000000002001c000100000011001400040000000101000000000010001000000200b80006000000000014000b000000010100000000000512000000000014000b000000010100000000000513000000000014000b000000010100000000000504000000000018000b000000010200000000000f0200000001000000000038000b000000010a00000000000f0300000000040000434917f17937759e2c1571ba3f86a0131da96ce6cbfe8d738a557b1b664fca40000024000b000000010500000000000515000000d1a71aa1539e652f4b7f771add0a000001010000000000050a00000001020000000000052000000021020000" />
+      <registryValue name="ServiceName" valueType="REG_SZ" value="PrintWorkflowUserSvc" />
+      <registryValue name="IdentityType" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="Identity" valueType="REG_SZ" value="nt authority\system" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\Software\Microsoft\WindowsRuntime\ActivatableClassId\Windows.Graphics.Internal.Printing.Workflow.WorkflowSessionManager">
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+      <registryValue name="TrustLevel" valueType="REG_DWORD" value="0x00000000" />
+      <registryValue name="ActivationType" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="Server" valueType="REG_SZ" value="PrintWorkflowUserSvc" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\Software\Microsoft\WindowsRuntime\ActivatableClassId\Windows.Graphics.Internal.Printing.PrintSupport.PrintSupportSettingsBroker">
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+      <registryValue name="TrustLevel" valueType="REG_DWORD" value="0x00000000" />
+      <registryValue name="ActivationType" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="Server" valueType="REG_SZ" value="PrintWorkflowUserSvc" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\Software\Microsoft\WindowsRuntime\ActivatableClassId\Windows.Graphics.Internal.Printing.PrintSupport.PrintSupportSessionManager">
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+      <registryValue name="TrustLevel" valueType="REG_DWORD" value="0x00000000" />
+      <registryValue name="ActivationType" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="Server" valueType="REG_SZ" value="PrintWorkflowUserSvc" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\Software\Microsoft\WindowsRuntime\ActivatableClassId\Windows.Devices.Printers.IppTextWithLanguage">
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+      <registryValue name="TrustLevel" valueType="REG_DWORD" value="0x00000000" />
+      <registryValue name="ActivationType" valueType="REG_DWORD" value="0x00000000" />
+      <registryValue name="DllPath" valueType="REG_SZ" value="$(runtime.system32)\Windows.Graphics.Printing.Workflow.dll" />
+      <registryValue name="Threading" valueType="REG_DWORD" value="0x00000000" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\Software\Microsoft\WindowsRuntime\ActivatableClassId\Windows.Devices.Printers.IppIntegerRange">
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+      <registryValue name="TrustLevel" valueType="REG_DWORD" value="0x00000000" />
+      <registryValue name="ActivationType" valueType="REG_DWORD" value="0x00000000" />
+      <registryValue name="DllPath" valueType="REG_SZ" value="$(runtime.system32)\Windows.Graphics.Printing.Workflow.dll" />
+      <registryValue name="Threading" valueType="REG_DWORD" value="0x00000000" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\Software\Microsoft\WindowsRuntime\ActivatableClassId\Windows.Devices.Printers.IppResolution">
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+      <registryValue name="TrustLevel" valueType="REG_DWORD" value="0x00000000" />
+      <registryValue name="ActivationType" valueType="REG_DWORD" value="0x00000000" />
+      <registryValue name="DllPath" valueType="REG_SZ" value="$(runtime.system32)\Windows.Graphics.Printing.Workflow.dll" />
+      <registryValue name="Threading" valueType="REG_DWORD" value="0x00000000" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\Software\Microsoft\WindowsRuntime\ActivatableClassId\Windows.Devices.Printers.IppAttributeValue">
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+      <registryValue name="TrustLevel" valueType="REG_DWORD" value="0x00000000" />
+      <registryValue name="ActivationType" valueType="REG_DWORD" value="0x00000000" />
+      <registryValue name="DllPath" valueType="REG_SZ" value="$(runtime.system32)\Windows.Graphics.Printing.Workflow.dll" />
+      <registryValue name="Threading" valueType="REG_DWORD" value="0x00000000" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\Software\Microsoft\WindowsRuntime\ActivatableClassId\Windows.Graphics.Printing.Workflow.PrintWorkflowObjectModelSourceFileContent">
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+      <registryValue name="TrustLevel" valueType="REG_DWORD" value="0x00000000" />
+      <registryValue name="ActivationType" valueType="REG_DWORD" value="0x00000000" />
+      <registryValue name="DllPath" valueType="REG_SZ" value="$(runtime.system32)\Windows.Graphics.Printing.Workflow.dll" />
+      <registryValue name="Threading" valueType="REG_DWORD" value="0x00000000" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\Software\Microsoft\WindowsRuntime\ActivatableClassId\Windows.Devices.Printers.PageConfigurationSettings">
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+      <registryValue name="TrustLevel" valueType="REG_DWORD" value="0x00000000" />
+      <registryValue name="ActivationType" valueType="REG_DWORD" value="0x00000000" />
+      <registryValue name="DllPath" valueType="REG_SZ" value="$(runtime.system32)\Windows.Graphics.Printing.Workflow.dll" />
+      <registryValue name="Threading" valueType="REG_DWORD" value="0x00000000" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\Software\Microsoft\WindowsRuntime\ActivatableClassId\Windows.Devices.Printers.IppPrintDevice">
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+      <registryValue name="TrustLevel" valueType="REG_DWORD" value="0x00000000" />
+      <registryValue name="ActivationType" valueType="REG_DWORD" value="0x00000000" />
+      <registryValue name="DllPath" valueType="REG_SZ" value="$(runtime.system32)\Windows.Graphics.Printing.Workflow.dll" />
+      <registryValue name="Threading" valueType="REG_DWORD" value="0x00000000" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\Software\Microsoft\WindowsRuntime\ActivatableClassId\Windows.Graphics.Printing.PrintSupport.PrintSupportPrintTicketElement">
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+      <registryValue name="TrustLevel" valueType="REG_DWORD" value="0x00000000" />
+      <registryValue name="ActivationType" valueType="REG_DWORD" value="0x00000000" />
+      <registryValue name="DllPath" valueType="REG_SZ" value="$(runtime.system32)\Windows.Graphics.Printing.Workflow.dll" />
+      <registryValue name="Threading" valueType="REG_DWORD" value="0x00000000" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\Software\Microsoft\WindowsRuntime\ActivatableClassId\Windows.Graphics.Printing.PrintSupport.PrintSupportPrintDeviceCapabilitiesUpdatePolicy">
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+      <registryValue name="TrustLevel" valueType="REG_DWORD" value="0x00000000" />
+      <registryValue name="ActivationType" valueType="REG_DWORD" value="0x00000000" />
+      <registryValue name="DllPath" valueType="REG_SZ" value="$(runtime.system32)\Windows.Graphics.Printing.Workflow.dll" />
+      <registryValue name="Threading" valueType="REG_DWORD" value="0x00000000" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\BackgroundModel\EventSettings\727">
+      <registryValue name="ResourceSetType" valueType="REG_SZ" value="GenericExtendedExecution" />
+      <registryValue name="RescheduleOnCancel" valueType="REG_DWORD" value="0x00000000" />
+      <registryValue name="RescheduleOnAbort" valueType="REG_DWORD" value="0x00000000" />
+      <registryValue name="WallClockLimitMs" valueType="REG_DWORD" value="0x00091438" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\System\CurrentControlset\Services\PrintWorkflowUserSvc\Parameters">
+      <registryValue name="ServiceDll" valueType="REG_EXPAND_SZ" value="%SystemRoot%\System32\PrintWorkflowService.dll" />
+      <registryValue name="ServiceDllUnloadOnStop" valueType="REG_DWORD" value="0x00000001" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Svchost\PrintWorkflow">
+      <registryValue name="CoInitializeSecurityParam" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="CoInitializeSecurityAllowInteractiveUsers" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="CoInitializeSecurityAllowLowBox" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="CoInitializeSecurityAllowComCapability" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="COM_UnmarshalingPolicy" valueType="REG_DWORD" value="0x00000001" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{8cd48002-1c68-54c7-9bcc-f361b0566ea9}">
+      <registryValue name="AppID" valueType="REG_SZ" value="{01C337F2-5519-4720-B560-4871783A6DD5}" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\AppID\{01C337F2-5519-4720-B560-4871783A6DD5}">
+      <registryValue name="LocalService" valueType="REG_SZ" value="PrintWorkflowUserSvc" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+  </registryKeys>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="WRP_REGKEY_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;CI;GA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;CI;GR;;;SY)(A;CI;GR;;;BA)(A;CI;GR;;;BU)(A;CI;GR;;;S-1-15-2-1)(A;CI;GR;;;S-1-15-3-1024-1065365936-1281604716-3511738428-1654721687-432734479-3232135806-4053264122-3456934681)" operationHint="replace" />
+          <securityDescriptorDefinition name="PRINTWORKFLOW_SERVICE_SDDL" sddl="O:SYG:SYD:(A;;CCLCSWRPWPDTLOCRRC;;;SU)(A;;CCLCSWRPWPDTLOCRRC;;;IU)(A;;CCLCSWRPWPDTLOCRRC;;;AU)(A;;CCLCSWRPWPDTLOCRRC;;;AC)(A;;CCLCSWRPWPDTLOCRRC;;;S-1-15-3-1024-4044835139-2658482041-3127973164-329287231-3865880861-1938685643-461067658-1087000422)(A;;CCLCSWRPWPDTLOCRRC;;;S-1-5-21-2702878673-795188819-444038987-2781)" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" description="Default SDDL for Windows Resource Protected file" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+</assembly>

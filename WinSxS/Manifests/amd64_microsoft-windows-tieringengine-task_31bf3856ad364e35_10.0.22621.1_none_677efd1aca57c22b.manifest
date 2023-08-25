@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-TieringEngine-Task" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <taskScheduler>
+    <Task xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task">
+      <RegistrationInfo>
+        <Source>$(@%systemroot%\system32\TieringEngineService.exe,-601)</Source>
+        <Author>$(@%systemroot%\system32\TieringEngineService.exe,-600)</Author>
+        <Description>$(@%systemroot%\system32\TieringEngineService.exe,-602)</Description>
+        <URI>\Microsoft\Windows\Storage Tiers Management\Storage Tiers Management Initialization</URI>
+        <SecurityDescriptor>D:AI(A;;FA;;;BA)(A;;FA;;;SY)(A;;FRFX;;;LS)(A;;FR;;;AU)</SecurityDescriptor>
+      </RegistrationInfo>
+      <Triggers>
+        <WnfStateChangeTrigger id="TieredVolumeEvent">
+          <Enabled>true</Enabled>
+          <StateName>7508BCA32B1D940D</StateName>
+        </WnfStateChangeTrigger>
+      </Triggers>
+      <Principals>
+        <Principal id="LocalSystem">
+          <UserId>S-1-5-18</UserId>
+          <RunLevel>HighestAvailable</RunLevel>
+        </Principal>
+      </Principals>
+      <Settings>
+        <MultipleInstancesPolicy>IgnoreNew</MultipleInstancesPolicy>
+        <DisallowStartIfOnBatteries>false</DisallowStartIfOnBatteries>
+        <StopIfGoingOnBatteries>false</StopIfGoingOnBatteries>
+        <AllowHardTerminate>true</AllowHardTerminate>
+        <StartWhenAvailable>true</StartWhenAvailable>
+        <RunOnlyIfNetworkAvailable>false</RunOnlyIfNetworkAvailable>
+        <IdleSettings>
+          <StopOnIdleEnd>false</StopOnIdleEnd>
+          <RestartOnIdle>false</RestartOnIdle>
+        </IdleSettings>
+        <AllowStartOnDemand>true</AllowStartOnDemand>
+        <Enabled>true</Enabled>
+        <Hidden>false</Hidden>
+        <RunOnlyIfIdle>false</RunOnlyIfIdle>
+        <DisallowStartOnRemoteAppSession>false</DisallowStartOnRemoteAppSession>
+        <UseUnifiedSchedulingEngine>true</UseUnifiedSchedulingEngine>
+        <WakeToRun>false</WakeToRun>
+        <ExecutionTimeLimit>PT0S</ExecutionTimeLimit>
+        <Priority>7</Priority>
+      </Settings>
+      <Actions Context="LocalSystem">
+        <ComHandler>
+          <ClassId>{5C9AB547-345D-4175-9AF6-65133463A100}</ClassId>
+        </ComHandler>
+      </Actions>
+    </Task>
+    <Task xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task">
+      <RegistrationInfo>
+        <Source>$(@%systemroot%\system32\TieringEngineService.exe,-601)</Source>
+        <Author>$(@%systemroot%\system32\TieringEngineService.exe,-600)</Author>
+        <Description>$(@%systemroot%\system32\TieringEngineService.exe,-603)</Description>
+        <URI>\Microsoft\Windows\Storage Tiers Management\Storage Tiers Optimization</URI>
+        <SecurityDescriptor>D:AI(A;;FA;;;BA)(A;;FA;;;SY)(A;;FRFX;;;LS)(A;;FR;;;AU)</SecurityDescriptor>
+      </RegistrationInfo>
+      <Triggers>
+        <TimeTrigger>
+          <Repetition>
+            <Interval>PT4H</Interval>
+            <StopAtDurationEnd>false</StopAtDurationEnd>
+          </Repetition>
+          <StartBoundary>2013-01-01T01:00:00</StartBoundary>
+          <Enabled>true</Enabled>
+        </TimeTrigger>
+      </Triggers>
+      <Settings>
+        <Enabled>false</Enabled>
+        <UseUnifiedSchedulingEngine>true</UseUnifiedSchedulingEngine>
+        <AllowStartOnDemand>true</AllowStartOnDemand>
+        <MultipleInstancesPolicy>IgnoreNew</MultipleInstancesPolicy>
+        <DisallowStartIfOnBatteries>false</DisallowStartIfOnBatteries>
+        <StopIfGoingOnBatteries>false</StopIfGoingOnBatteries>
+        <StartWhenAvailable>true</StartWhenAvailable>
+        <RunOnlyIfIdle>false</RunOnlyIfIdle>
+        <WakeToRun>false</WakeToRun>
+        <AllowHardTerminate>true</AllowHardTerminate>
+        <RunOnlyIfNetworkAvailable>false</RunOnlyIfNetworkAvailable>
+        <Hidden>false</Hidden>
+      </Settings>
+      <Principals>
+        <Principal id="LocalSystem">
+          <UserId>S-1-5-18</UserId>
+          <RunLevel>HighestAvailable</RunLevel>
+        </Principal>
+      </Principals>
+      <Actions Context="LocalSystem">
+        <Exec>
+          <Command>%windir%\system32\defrag.exe</Command>
+          <Arguments>-c -h -g -# -m 8 -i 13500</Arguments>
+        </Exec>
+      </Actions>
+    </Task>
+  </taskScheduler>
+</assembly>

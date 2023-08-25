@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved." xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <assemblyIdentity name="Microsoft-Windows-UnattendedJoin" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <dependency discoverable="no" resourceType="Resources">
+    <dependentAssembly>
+      <assemblyIdentity name="Microsoft-Windows-UnattendedJoin.Resources" version="10.0.22621.1" processorArchitecture="amd64" language="*" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </dependentAssembly>
+  </dependency>
+  <file name="djoin.exe" destinationPath="$(runtime.system32)\" sourceName="djoin.exe" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>BdV2dCo9TAkqfR8sWGs34yNgUr7QSSxGBOU3DTQ224k=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <unattendActions>
+    <unattendAction executableName="$(runtime.system32)\djoin.exe" passes="specialize" />
+  </unattendActions>
+  <configuration xmlns:app="unattendJoinSchema" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State">
+    <configurationSchema>
+      <xsd:schema xmlns="unattendJoinSchema" targetNamespace="unattendJoinSchema">
+        <xsd:complexType name="CredentialsType">
+          <xsd:sequence>
+            <xsd:element name="Domain" type="xsd:string" />
+            <xsd:element name="Username" type="xsd:string" />
+            <xsd:element name="Password" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+        <xsd:complexType name="ProvisioningType">
+          <xsd:sequence>
+            <xsd:element name="AccountData" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+        <xsd:complexType name="OfflineIdentificationType">
+          <xsd:sequence>
+            <xsd:element name="Provisioning" type="ProvisioningType" />
+          </xsd:sequence>
+        </xsd:complexType>
+        <xsd:complexType name="IdentificationType">
+          <xsd:sequence>
+            <xsd:element name="Credentials" type="CredentialsType" />
+            <xsd:element name="Provisioning" type="ProvisioningType" />
+            <xsd:element name="JoinDomain" type="xsd:string" />
+            <xsd:element name="JoinWorkgroup" type="xsd:string" />
+            <xsd:element name="MachineObjectOU" type="xsd:string" />
+            <xsd:element default="false" name="UnsecureJoin" type="xsd:string" />
+            <xsd:element name="MachinePassword" type="xsd:string" />
+            <xsd:element default="false" name="DebugJoin" type="xsd:string" />
+            <xsd:element default="0" name="DebugJoinOnlyOnThisError" type="xsd:string" />
+            <xsd:element default="0" name="TimeoutPeriodInMinutes" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+        <xsd:element name="Identification" type="IdentificationType" wcm:dataOnly="false" wcm:description="Domain join unattend parameters." wcm:displayName="Identification" wcm:handler="regkey('HKLM\Software\Microsoft\Windows NT\CurrentVersion\UnattendSettings\Microsoft-Windows-UnattendedJoin')" wcm:passes="specialize" wcm:visible="true" />
+        <xsd:element name="OfflineIdentification" type="OfflineIdentificationType" wcm:dataOnly="false" wcm:description="Offline Domain join unattend parameters." wcm:displayName="OfflineIdentification" wcm:handler="regkey('HKLM\Software\Microsoft\Windows NT\CurrentVersion\UnattendSettings\Microsoft-Windows-UnattendedJoin')" wcm:passes="offlineServicing" wcm:visible="true" />
+      </xsd:schema>
+    </configurationSchema>
+  </configuration>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" description="Default SDDL for Windows Resource Protected file" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+</assembly>

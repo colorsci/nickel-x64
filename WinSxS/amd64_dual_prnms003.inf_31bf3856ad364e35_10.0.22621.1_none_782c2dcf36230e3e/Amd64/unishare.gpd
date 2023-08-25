@@ -1,0 +1,122 @@
+*%
+*% Copyright (c) 2011 Microsoft Corporation
+*% All Rights Reserved.
+*%
+*GPDFileVersion: "1.0"
+*GPDSpecVersion: "1.0"
+*GPDFileName:    "unishare.gpd"
+*ModelName:      "Microsoft enhanced Point and Print driver"
+*MasterUnits:    PAIR(1200, 1200)
+*PrinterType:    PAGE
+*MaxCopies:      1
+
+*IsXPSDriver?: TRUE
+
+*%******************************************************************************
+*%                             Orientation
+*%******************************************************************************
+*Feature: Orientation
+{
+    *Name: "Orientation"
+    *DefaultOption: PORTRAIT
+
+    *Option: PORTRAIT
+    {
+        *Name: "Portrait"
+    }
+
+    *Option: LANDSCAPE_CC270
+    {
+        *Name: "Landscape"
+    }
+}
+
+
+*%******************************************************************************
+*%                             Input Bin
+*%******************************************************************************
+*Feature: InputBin
+{
+    *DefaultOption: FORMSOURCE
+    *ConcealFromUI?: TRUE
+    *Name: "Input Bin"
+
+    *Option: FORMSOURCE
+    {
+        *Name: "Form Source"
+    }
+}
+
+*%******************************************************************************
+*%                              Resolution
+*%******************************************************************************
+*Feature: Resolution
+{
+    *Name: "Resolution"
+    *DefaultOption: Option1
+
+    *Option: Option1
+    {
+        *Name: "600x600"
+        *DPI: PAIR(600, 600)
+        *TextDPI: PAIR(600, 600)
+        *SpotDiameter: 100
+        *Command: CmdBeginRaster { *Cmd : "<1B>*v7S<1B>*r1A" }
+        *Command: CmdEndRaster { *Cmd : "<1B>*rC" }
+        *Command: CmdSendBlockData { *Cmd : "<1B>*b" %d{NumOfDataBytes}"W" }
+    }
+}
+
+*%******************************************************************************
+*%                            Paper Size
+*%******************************************************************************
+*Feature: PaperSize
+{
+    *DefaultOption: LETTER
+    *Name: "Paper Size"
+ 
+    *Option: LETTER
+    {
+        *Name: "Letter"
+        *switch: Orientation
+        {
+            *case: PORTRAIT
+            {
+                *PrintableArea: PAIR(10200, 13200)
+                *PrintableOrigin: PAIR(0, 0)
+                *CursorOrigin: PAIR(0, 0)
+            }
+            *case: LANDSCAPE_CC270
+            {
+                *PrintableArea: PAIR(10200, 13200)
+                *PrintableOrigin: PAIR(0, 0)
+                *CursorOrigin: PAIR(0, 0)
+            }
+        }
+    }
+}
+
+*%******************************************************************************
+*%                            Color Mode
+*%******************************************************************************
+*Feature: ColorMode
+{
+    *Name: "Color Mode"
+    *DefaultOption: 24bpp
+    *ConcealFromUI?: TRUE
+
+    *Option: 24bpp
+    {
+        *Name: "24 bpp"
+        *DevNumOfPlanes: 1
+        *DevBPP: 24
+        *DrvBPP: 24
+    }
+}
+
+*%******************************************************************************
+*%                         Cursor Commands
+*%******************************************************************************
+*Command: CmdCR { *Cmd : "<0D>" }
+*Command: CmdLF { *Cmd : "<0A>" }
+*Command: CmdFF { *Cmd : "<0C>" }

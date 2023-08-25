@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved." xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <assemblyIdentity name="Microsoft-Windows-RasBase-RasMobilitymanager" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <dependency discoverable="no" resourceType="Resources">
+    <dependentAssembly dependencyType="prerequisite">
+      <assemblyIdentity name="Microsoft-Windows-RasBase-RasMobilitymanager.Resources" version="10.0.22621.1" processorArchitecture="amd64" language="*" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </dependentAssembly>
+  </dependency>
+  <file name="rasmbmgr.dll" destinationPath="$(runtime.system32)\" sourceName="rasmbmgr.dll" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>4qaEbUyfuTs6Lb5sS9c1mKSoxyRk9QtsC1nLwkUU8ro=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <memberships>
+    <categoryMembership>
+      <id name="Microsoft-Windows-Networking-Remote Access and Routing" version="10.0.22621.1" publicKeyToken="31bf3856ad364e35" buildType="release" language="neutral" processorArchitecture="amd64" versionScope="nonSxS" />
+    </categoryMembership>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories" version="1.0.0.0" publicKeyToken="365143bb27e7ac8b" />
+    </categoryMembership>
+  </memberships>
+  <taskScheduler>
+    <Task xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task">
+      <RegistrationInfo>
+        <URI>Microsoft\Windows\Ras\MobilityManager</URI>
+        <SecurityDescriptor>D:P(A;;FA;;;BA)(A;;FA;;;SY)(A;;FR;;;LS)</SecurityDescriptor>
+        <Author>$(@%SystemRoot%\system32\rasmbmgr.dll,-201)</Author>
+        <Description>$(@%SystemRoot%\system32\rasmbmgr.dll,-202)</Description>
+      </RegistrationInfo>
+      <Triggers>
+        <EventTrigger>
+          <Enabled>true</Enabled>
+          <Subscription>&lt;QueryList&gt;
+
+
+
+
+
+
+
+              &lt;Query
+
+
+
+
+
+
+
+                  Id="0"
+
+
+
+
+
+
+
+                  Path="Application"
+
+
+
+
+
+
+
+                  &gt;
+
+
+
+
+
+
+
+                &lt;Select Path="Application"&gt;*[System[Provider[@Name='RasClient'] and (Level=4 or Level=0) and (EventID=20281)]]&lt;/Select&gt;
+
+
+
+
+
+
+
+              &lt;/Query&gt;
+
+
+
+
+
+
+
+            &lt;/QueryList&gt;</Subscription>
+        </EventTrigger>
+      </Triggers>
+      <Principals>
+        <Principal id="LocalService">
+          <GroupId>S-1-5-19</GroupId>
+        </Principal>
+      </Principals>
+      <Actions Context="LocalService">
+        <ComHandler>
+          <ClassId>{c463a0fc-794f-4fdf-9201-01938ceacafa}</ClassId>
+        </ComHandler>
+      </Actions>
+      <Settings>
+        <Enabled>true</Enabled>
+        <MultipleInstancesPolicy>Parallel</MultipleInstancesPolicy>
+        <StartWhenAvailable>true</StartWhenAvailable>
+        <DisallowStartIfOnBatteries>false</DisallowStartIfOnBatteries>
+        <StopIfGoingOnBatteries>false</StopIfGoingOnBatteries>
+        <UseUnifiedSchedulingEngine>true</UseUnifiedSchedulingEngine>
+      </Settings>
+    </Task>
+  </taskScheduler>
+  <registryKeys>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{c463a0fc-794f-4fdf-9201-01938ceacafa}">
+      <registryValue name="" valueType="REG_SZ" value="RasMobilityManager" />
+      <registryValue name="AppID" valueType="REG_SZ" value="{292bed96-e9ce-40f8-b71b-c313defa3a78}" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{c463a0fc-794f-4fdf-9201-01938ceacafa}\InProcServer32">
+      <registryValue name="" valueType="REG_EXPAND_SZ" value="%systemroot%\system32\rasmbmgr.dll" />
+      <registryValue name="ThreadingModel" valueType="REG_SZ" value="Both" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\AppID\{292bed96-e9ce-40f8-b71b-c313defa3a78}">
+      <registryValue name="" valueType="REG_SZ" value="RasMobilityManager" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+  </registryKeys>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="WRP_REGKEY_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;CI;GA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;CI;GR;;;SY)(A;CI;GR;;;BA)(A;CI;GR;;;BU)(A;CI;GR;;;S-1-15-2-1)(A;CI;GR;;;S-1-15-3-1024-1065365936-1281604716-3511738428-1654721687-432734479-3232135806-4053264122-3456934681)" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" description="Default SDDL for Windows Resource Protected file" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+  <migration settingsVersion="0">
+    <supportedComponents>
+      <supportedComponent>
+        <assemblyIdentity name="_" version="1.0.0.0" />
+        <supportedComponentIdentity buildType="release" language="neutral" name="Microsoft-Windows-RasBase-RasMobilitymanager" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" settingsVersionRange="0" versionScope="nonSxS" xmlns="urn:schemas-microsoft-com:asm.v3" />
+      </supportedComponent>
+    </supportedComponents>
+  </migration>
+  <asmv3:configuration xmlns:asmv3="urn:schemas-microsoft-com:asm.v3" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State">
+    <asmv3:configurationSchema>
+      <xsd:schema xmlns="Microsoft-Windows-RasBase-RasMobilitymanager" targetNamespace="Microsoft-Windows-RasBase-RasMobilitymanager">
+        <xsd:element default="010004805c0000006c00000000000000140000000200480003000000000014000b000000010100000000000512000000000018000b00000001020000000000052000000020020000000014000b0000000101000000000005130000000102000000000005200000002002000001020000000000052000000020020000" name="HKEY_CLASSES_ROOT_AppID_292bed96_e9ce_40f8_b71b_c313defa3a78_AccessPermission" type="xsd:hexBinary" wcm:description="Access Permission" wcm:displayName="AccessPermission" wcm:handler="regkey('HKEY_CLASSES_ROOT\AppID\{292bed96-e9ce-40f8-b71b-c313defa3a78}\')" wcm:legacyName="AccessPermission" wcm:legacyType="REG_BINARY" wcm:migrate="yes" wcm:scope="allUsers" />
+        <xsd:element default="010004807000000080000000000000001400000002005c00040000000000180003000000010200000000000520000000200200000000140003000000010100000000000513000000000014000300000001010000000000050a00000000001400030000000101000000000005120000000102000000000005200000002002000001020000000000052000000020020000" name="HKEY_CLASSES_ROOT_AppID_292bed96_e9ce_40f8_b71b_c313defa3a78_LaunchPermission" type="xsd:hexBinary" wcm:description="Launch Permission" wcm:displayName="LaunchPermission" wcm:handler="regkey('HKEY_CLASSES_ROOT\AppID\{292bed96-e9ce-40f8-b71b-c313defa3a78}\')" wcm:legacyName="LaunchPermission" wcm:legacyType="REG_BINARY" wcm:migrate="yes" wcm:scope="allUsers" />
+      </xsd:schema>
+    </asmv3:configurationSchema>
+  </asmv3:configuration>
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string id="displayNameAccessPermission" value="AccessPermission" />
+        <string id="descriptionAccessPermission" value="Access Permission" />
+        <string id="displayNameLaunchPermission" value="LaunchPermission" />
+        <string id="descriptionLaunchPermission" value="Launch Permission" />
+      </stringTable>
+    </resources>
+  </localization>
+</assembly>

@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-Security-NGC-Tasks" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <dependency discoverable="no" resourceType="Resources">
+    <dependentAssembly dependencyType="prerequisite">
+      <assemblyIdentity name="Microsoft-Windows-Security-NGC-Tasks.Resources" version="10.0.22621.1" processorArchitecture="amd64" language="*" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+    </dependentAssembly>
+  </dependency>
+  <file name="ngctasks.dll" destinationPath="$(runtime.system32)\" sourceName="ngctasks.dll" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>MzGRYrVorUlNTkXc5jszCwc2OCfN+FuSrS29Jz0ZQSo=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <registryKeys>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{47e30d54-dac1-473a-aff7-2355bf78881f}">
+      <registryValue name="" valueType="REG_SZ" value="NGC Pregeneration Task Handler" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{47e30d54-dac1-473a-aff7-2355bf78881f}\InprocServer32">
+      <registryValue name="" valueType="REG_EXPAND_SZ" value="%systemroot%\system32\ngctasks.dll" />
+      <registryValue name="ThreadingModel" valueType="REG_SZ" value="Both" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Ubpm">
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+      <registryValue name="OOBETask_NgcKeyPreGen" valueType="REG_SZ" value="NT TASK\Microsoft\Windows\CertificateServicesClient\KeyPreGenTask" />
+      <registryValue name="OOBETask_AikCertEnroll" valueType="REG_SZ" value="NT TASK\Microsoft\Windows\CertificateServicesClient\AikCertEnrollTask" />
+    </registryKey>
+  </registryKeys>
+  <taskScheduler>
+    <Task xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task">
+      <RegistrationInfo>
+        <URI>\Microsoft\Windows\CertificateServicesClient\KeyPreGenTask</URI>
+        <Author>$(@%SystemRoot%\system32\ngctasks.dll,-100)</Author>
+        <Source>$(@%SystemRoot%\system32\ngctasks.dll,-101)</Source>
+        <Description>$(@%SystemRoot%\system32\ngctasks.dll,-102)</Description>
+        <SecurityDescriptor>D:P(A;;FA;;;BA)(A;;FA;;;SY)(A;;FRFX;;;LS)(A;;FRFX;;;NS)</SecurityDescriptor>
+      </RegistrationInfo>
+      <Triggers>
+        <WnfStateChangeTrigger id="ImmediateTrigger">
+          <StateName>7508bca323098541</StateName>
+        </WnfStateChangeTrigger>
+        <WnfStateChangeTrigger id="DelayedTrigger">
+          <StateName>7520bca323098541</StateName>
+          <Delay>PT10M</Delay>
+        </WnfStateChangeTrigger>
+        <WnfStateChangeTrigger id="DeviceUnlockedTrigger">
+          <StateName>75c0bca33e06830d</StateName>
+          <Delay>PT10M</Delay>
+        </WnfStateChangeTrigger>
+        <LogonTrigger id="UserSignOnTrigger">
+          <Enabled>false</Enabled>
+          <Delay>PT10M</Delay>
+        </LogonTrigger>
+        <SessionStateChangeTrigger id="LocalConsoleConnectTrigger">
+          <Enabled>false</Enabled>
+          <StateChange>ConsoleConnect</StateChange>
+          <Delay>PT10M</Delay>
+        </SessionStateChangeTrigger>
+      </Triggers>
+      <Principals>
+        <Principal id="LocalSystem">
+          <UserId>S-1-5-18</UserId>
+          <RunLevel>LeastPrivilege</RunLevel>
+        </Principal>
+      </Principals>
+      <Settings>
+        <MultipleInstancesPolicy>Queue</MultipleInstancesPolicy>
+        <DisallowStartIfOnBatteries>false</DisallowStartIfOnBatteries>
+        <StopIfGoingOnBatteries>false</StopIfGoingOnBatteries>
+        <AllowStartOnDemand>true</AllowStartOnDemand>
+        <Enabled>true</Enabled>
+        <Hidden>false</Hidden>
+        <UseUnifiedSchedulingEngine>true</UseUnifiedSchedulingEngine>
+      </Settings>
+      <Actions Context="LocalSystem">
+        <ComHandler>
+          <ClassId>{47e30d54-dac1-473a-aff7-2355bf78881f}</ClassId>
+          <Data>NGCKeyPregen</Data>
+        </ComHandler>
+      </Actions>
+    </Task>
+    <Task xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task">
+      <RegistrationInfo>
+        <URI>\Microsoft\Windows\CertificateServicesClient\AikCertEnrollTask</URI>
+        <Author>$(@%SystemRoot%\system32\ngctasks.dll,-100)</Author>
+        <Source>$(@%SystemRoot%\system32\ngctasks.dll,-101)</Source>
+        <Description>$(@%SystemRoot%\system32\ngctasks.dll,-103)</Description>
+        <SecurityDescriptor>D:P(A;;FA;;;BA)(A;;FA;;;SY)(A;;FRFX;;;LS)(A;;FRFX;;;NS)</SecurityDescriptor>
+      </RegistrationInfo>
+      <Triggers>
+        <WnfStateChangeTrigger>
+          <StateName>7510bca323098541</StateName>
+        </WnfStateChangeTrigger>
+      </Triggers>
+      <Principals>
+        <Principal id="LocalSystem">
+          <UserId>S-1-5-18</UserId>
+          <RunLevel>LeastPrivilege</RunLevel>
+        </Principal>
+      </Principals>
+      <Settings>
+        <MultipleInstancesPolicy>Queue</MultipleInstancesPolicy>
+        <DisallowStartIfOnBatteries>false</DisallowStartIfOnBatteries>
+        <StopIfGoingOnBatteries>false</StopIfGoingOnBatteries>
+        <AllowStartOnDemand>true</AllowStartOnDemand>
+        <StartWhenAvailable>true</StartWhenAvailable>
+        <Enabled>true</Enabled>
+        <Hidden>false</Hidden>
+        <UseUnifiedSchedulingEngine>true</UseUnifiedSchedulingEngine>
+      </Settings>
+      <Actions Context="LocalSystem">
+        <ComHandler>
+          <ClassId>{47e30d54-dac1-473a-aff7-2355bf78881f}</ClassId>
+          <Data>AIKCertEnroll</Data>
+        </ComHandler>
+      </Actions>
+    </Task>
+    <Task xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task">
+      <RegistrationInfo>
+        <URI>\Microsoft\Windows\CertificateServicesClient\CryptoPolicyTask</URI>
+        <Author>$(@%SystemRoot%\system32\ngctasks.dll,-100)</Author>
+        <Source>$(@%SystemRoot%\system32\ngctasks.dll,-101)</Source>
+        <Description>$(@%SystemRoot%\system32\ngctasks.dll,-104)</Description>
+        <SecurityDescriptor>D:P(A;;FA;;;BA)(A;;FA;;;SY)(A;;FRFX;;;LS)(A;;FRFX;;;NS)</SecurityDescriptor>
+      </RegistrationInfo>
+      <Triggers>
+        <WnfStateChangeTrigger>
+          <StateName>7530bca323098541</StateName>
+        </WnfStateChangeTrigger>
+      </Triggers>
+      <Principals>
+        <Principal id="LocalSystem">
+          <UserId>S-1-5-18</UserId>
+          <RunLevel>LeastPrivilege</RunLevel>
+        </Principal>
+      </Principals>
+      <Settings>
+        <MultipleInstancesPolicy>Queue</MultipleInstancesPolicy>
+        <DisallowStartIfOnBatteries>false</DisallowStartIfOnBatteries>
+        <StopIfGoingOnBatteries>false</StopIfGoingOnBatteries>
+        <AllowStartOnDemand>true</AllowStartOnDemand>
+        <Enabled>true</Enabled>
+        <Hidden>false</Hidden>
+        <UseUnifiedSchedulingEngine>true</UseUnifiedSchedulingEngine>
+      </Settings>
+      <Actions Context="LocalSystem">
+        <ComHandler>
+          <ClassId>{47e30d54-dac1-473a-aff7-2355bf78881f}</ClassId>
+          <Data>CryptoPolicy</Data>
+        </ComHandler>
+      </Actions>
+    </Task>
+  </taskScheduler>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="WRP_REGKEY_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;CI;GA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;CI;GR;;;SY)(A;CI;GR;;;BA)(A;CI;GR;;;BU)(A;CI;GR;;;S-1-15-2-1)(A;CI;GR;;;S-1-15-3-1024-1065365936-1281604716-3511738428-1654721687-432734479-3232135806-4053264122-3456934681)" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" description="Default SDDL for Windows Resource Protected file" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+</assembly>

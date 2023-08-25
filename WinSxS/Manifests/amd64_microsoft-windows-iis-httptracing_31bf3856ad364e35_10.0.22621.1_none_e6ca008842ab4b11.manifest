@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-IIS-HttpTracing" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <dependency discoverable="no" resourceType="Resources">
+    <dependentAssembly dependencyType="prerequisite">
+      <assemblyIdentity name="Microsoft-Windows-IIS-HttpTracing.Resources" version="10.0.22621.1" processorArchitecture="amd64" language="*" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+    </dependentAssembly>
+  </dependency>
+  <dependency discoverable="no" name="SharedLibraries">
+    <dependentAssembly dependencyType="prerequisite">
+      <assemblyIdentity name="Microsoft-Windows-IIS-SharedLibraries-ServerCommon" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+    </dependentAssembly>
+  </dependency>
+  <genericCommands>
+    <genericCommand arguments="/launch $(runtime.system32)\inetsrv\appcmd.exe reset config -section:system.webServer/httpTracing" executableName="$(runtime.system32)\inetsrv\iissetup.exe" />
+    <genericCommand arguments="/launch $(runtime.system32)\inetsrv\appcmd.exe reset config -section:system.webServer/tracing/traceFailedRequests" executableName="$(runtime.system32)\inetsrv\iissetup.exe" />
+    <genericCommand arguments="/launch $(runtime.system32)\inetsrv\appcmd.exe install module -name:TracingModule -image:$(runtime.system32)\inetsrv\iisetw.dll -add:false -lock:true" executableName="$(runtime.system32)\inetsrv\iissetup.exe" />
+    <genericCommand arguments="/launch $(runtime.system32)\inetsrv\appcmd.exe install module -name:FailedRequestsTracingModule -image:$(runtime.system32)\inetsrv\iisfreb.dll -lock:true" executableName="$(runtime.system32)\inetsrv\iissetup.exe" />
+    <genericCommand arguments="/install HttpTracing" executableName="$(runtime.system32)\inetsrv\iissetup.exe" />
+    <genericCommand arguments="/install HttpTracingBinaries" executableName="$(runtime.system32)\inetsrv\iissetup.exe" />
+    <genericCommand arguments="/uninstall HttpTracing" executableName="$(dependentAssembly.SharedLibraries.path)\iissetup.exe" install="false" />
+    <genericCommand arguments="/uninstall HttpTracingBinaries" executableName="$(dependentAssembly.SharedLibraries.path)\iissetup.exe" install="false" />
+    <genericCommand arguments="/launch_uninstall $(runtime.system32)\inetsrv\appcmd.exe clear config -section:system.webServer/httpTracing" executableName="$(dependentAssembly.SharedLibraries.path)\iissetup.exe" install="false" />
+    <genericCommand arguments="/launch_uninstall $(runtime.system32)\inetsrv\appcmd.exe clear config -section:system.webServer/tracing/traceFailedRequests" executableName="$(dependentAssembly.SharedLibraries.path)\iissetup.exe" install="false" />
+    <genericCommand arguments="/launch_uninstall $(runtime.system32)\inetsrv\appcmd.exe uninstall module TracingModule" executableName="$(dependentAssembly.SharedLibraries.path)\iissetup.exe" install="false" />
+    <genericCommand arguments="/launch_uninstall $(runtime.system32)\inetsrv\appcmd.exe uninstall module FailedRequestsTracingModule" executableName="$(dependentAssembly.SharedLibraries.path)\iissetup.exe" install="false" />
+  </genericCommands>
+</assembly>

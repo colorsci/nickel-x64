@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-UserModePowerService-Extensions" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <dependency discoverable="no" resourceType="Resources">
+    <dependentAssembly>
+      <assemblyIdentity name="Microsoft-Windows-UserModePowerService-Extensions.Resources" version="10.0.22621.1" processorArchitecture="amd64" language="*" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </dependentAssembly>
+  </dependency>
+  <file name="umpoext.dll" destinationPath="$(runtime.system32)\" sourceName="umpoext.dll" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>K0su4/EwRVfIPua8QMof/J8P0EG9aJIsudczURn2/+Q=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <file name="umpodev.dll" destinationPath="$(runtime.system32)\" sourceName="umpodev.dll" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>bJPvG4nnK+Gs+kVs7FXDTcf89SIFsRs10SRWmANXPFc=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <memberships>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories" version="1.0.0.0" publicKeyToken="365143bb27e7ac8b" typeName="BootRecovery" />
+    </categoryMembership>
+  </memberships>
+  <instrumentation xmlns:win="http://manifests.microsoft.com/win/2004/08/windows/events" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <events xmlns="http://schemas.microsoft.com/win/2004/08/events">
+      <provider guid="{306c4e0b-e148-543d-315b-c618eb93157c}" messageFileName="%SystemRoot%\system32\umpoext.dll" name="Microsoft-Windows-Power-Meter-Polling" resourceFileName="%SystemRoot%\system32\umpoext.dll" symbol="UMPO_METER_POLLING_ETW_PROVIDER">
+        <channels>
+          <channel chid="chidPower" name="Microsoft-Windows-Power-Meter-Polling/Diagnostic" type="Analytic" />
+          <importChannel chid="System" name="System" />
+        </channels>
+      </provider>
+      <cmi />
+    </events>
+    <counters xmlns="http://schemas.microsoft.com/win/2005/12/counters" schemaVersion="2.0">
+      <provider applicationIdentity="%SystemRoot%\system32\umpoext.dll" callback="custom" providerGuid="{74800676-866F-4bbd-8680-DAC6A6FB6C8E}" providerName="PowerMeterCounter" providerType="userMode" symbol="PowerMeterCounter">
+        <counterSet description="This counter set displays power metering and budgeting information" descriptionID="3" guid="{AD8644C4-AE02-4b22-990D-52B491F91C26}" instances="multipleAggregate" name="Power Meter" nameID="1" symbol="PowerMeterSet" uri="Microsoft.Windows.System.PerfCounters.PowerMeter">
+          <counter aggregate="avg" description="This counter displays power consumption in milliwatts." descriptionID="7" detailLevel="standard" id="1" name="Power" nameID="5" type="perf_counter_rawcount" uri="Microsoft.Windows.System.PerfCounters.PowerMeter.Power" />
+          <counter aggregate="max" description="This counter displays the power budget for this device or subcomponent in milliwatts." descriptionID="11" detailLevel="standard" id="2" name="Power Budget" nameID="9" type="perf_counter_rawcount" uri="Microsoft.Windows.System.PerfCounters.PowerMeter.Budget" />
+        </counterSet>
+        <counterSet description="The Energy Meter performance object measures total energy consumption." descriptionID="15" guid="{06EBF20D-17FB-4338-A08D-7A99F17CA678}" instances="multipleAggregate" name="Energy Meter" nameID="13" symbol="EnergyMeterSet" uri="Microsoft.Windows.System.PerfCounters.EnergyMeter">
+          <counter aggregate="undefined" description="The Time counter measures the duration of meter operation in milliseconds." descriptionID="19" detailLevel="standard" id="1" name="Time" nameID="17" type="perf_counter_large_rawcount" uri="Microsoft.Windows.System.PerfCounters.EnergyMeter.Time" />
+          <counter aggregate="sum" description="The Energy counter measures the total energy consumed on the metered channel in picowatt-hours." descriptionID="23" detailLevel="standard" id="2" name="Energy" nameID="21" type="perf_counter_large_rawcount" uri="Microsoft.Windows.System.PerfCounters.EnergyMeter.Energy" />
+          <counter aggregate="undefined" baseID="4" description="The Power counter measures average power over each sampling interval in milliwatts." descriptionID="27" detailLevel="standard" id="3" name="Power" nameID="25" type="perf_average_bulk" uri="Microsoft.Windows.System.PerfCounters.EnergyMeter.Power">
+            <counterAttributes>
+              <counterAttribute name="displayAsReal" />
+            </counterAttributes>
+          </counter>
+          <counter aggregate="undefined" detailLevel="standard" id="4" type="perf_average_base" uri="Microsoft.Windows.System.PerfCounters.EnergyMeter.PowerBase">
+            <counterAttributes>
+              <counterAttribute name="noDisplay" />
+            </counterAttributes>
+          </counter>
+        </counterSet>
+      </provider>
+    </counters>
+  </instrumentation>
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string id="EventMap.MeterType.Energy" value="Energy" />
+        <string id="EventMap.MeterType.Power" value="Power" />
+      </stringTable>
+    </resources>
+  </localization>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" description="Default SDDL for Windows Resource Protected file" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+</assembly>

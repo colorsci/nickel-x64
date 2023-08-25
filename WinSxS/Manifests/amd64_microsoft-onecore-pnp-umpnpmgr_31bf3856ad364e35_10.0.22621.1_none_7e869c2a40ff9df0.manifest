@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved." xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <assemblyIdentity name="Microsoft-OneCore-Pnp-Umpnpmgr" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <dependency discoverable="no" resourceType="Resources">
+    <dependentAssembly>
+      <assemblyIdentity name="Microsoft-OneCore-Pnp-Umpnpmgr.Resources" version="10.0.22621.1" processorArchitecture="amd64" language="*" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </dependentAssembly>
+  </dependency>
+  <file name="umpnpmgr.dll" destinationPath="$(runtime.system32)\" sourceName="umpnpmgr.dll" importPath="$(build.nttree)\" sourcePath=".\">
+    <signatureInfo>
+      <signatureDescriptor PETrust="true" pageHash="true" />
+    </signatureInfo>
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>LCtMjhiiE7mIzD8zzCGUFFFfB/zKRLlo+b/odWNOWl0=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <memberships>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories.Services" version="10.0.22621.1" publicKeyToken="31bf3856ad364e35" typeName="Service" />
+      <categoryInstance subcategory="DeviceInstall">
+        <serviceData name="DeviceInstall" displayName="@%SystemRoot%\system32\umpnpmgr.dll,-100" errorControl="normal" start="demand" type="win32ShareProcess" description="@%SystemRoot%\system32\umpnpmgr.dll,-101" failureActionsFlag="true" group="PlugPlay" imagePath="%SystemRoot%\system32\svchost.exe -k DcomLaunch -p" objectName="LocalSystem" requiredPrivileges="SeTcbPrivilege,SeSecurityPrivilege,SeAssignPrimaryTokenPrivilege,SeTakeOwnershipPrivilege,SeLoadDriverPrivilege,SeBackupPrivilege,SeRestorePrivilege,SeImpersonatePrivilege,SeAuditPrivilege,SeChangeNotifyPrivilege,SeUndockPrivilege,SeDebugPrivilege,SeShutdownPrivilege" sidType="unrestricted">
+          <serviceTrigger action="start" subtype="RPC_INTERFACE_EVENT" type="NetworkEndpointEvent">
+            <triggerData type="string" value="5c9a4cd7-ba75-45d2-9898-1773b3d1e5f1" />
+          </serviceTrigger>
+          <serviceTrigger action="start" subtype="WNF_STATE_CHANGE" type="WnfStateEvent">
+            <triggerData type="binary" value="7510bca33d009602" />
+          </serviceTrigger>
+          <failureActions resetPeriod="3600">
+            <actions>
+              <action delay="60000" type="restartService" />
+              <action delay="120000" type="restartService" />
+              <action delay="0" type="none" />
+            </actions>
+          </failureActions>
+        </serviceData>
+      </categoryInstance>
+    </categoryMembership>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories" version="1.0.0.0" publicKeyToken="365143bb27e7ac8b" typeName="BootRecovery" />
+    </categoryMembership>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories" version="1.0.0.0" publicKeyToken="365143bb27e7ac8b" typeName="SvcHost" />
+      <categoryInstance subcategory="DcomLaunch">
+        <serviceGroup position="last" serviceName="DeviceInstall" />
+      </categoryInstance>
+    </categoryMembership>
+  </memberships>
+  <registryKeys>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\SafeBoot\Minimal\DeviceInstall">
+      <registryValue name="" valueType="REG_SZ" value="Service" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\SafeBoot\Network\DeviceInstall">
+      <registryValue name="" valueType="REG_SZ" value="Service" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\System\CurrentControlSet\Services\DeviceInstall">
+      <registryValue name="PreshutdownTimeout" valueType="REG_DWORD" value="0x0036EE80" />
+      <registryValue name="MitigationFlags" valueType="REG_DWORD" value="0x00000032" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\System\CurrentControlSet\Services\DeviceInstall\Parameters">
+      <registryValue name="ServiceDll" valueType="REG_EXPAND_SZ" value="%SystemRoot%\system32\umpnpmgr.dll" />
+      <registryValue name="ServiceDllUnloadOnStop" valueType="REG_DWORD" value="0x00000001" />
+    </registryKey>
+  </registryKeys>
+  <asmv3:configuration xmlns:asmv3="urn:schemas-microsoft-com:asm.v3" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State">
+    <asmv3:configurationSchema>
+      <xsd:schema xmlns="Microsoft-OneCore-Pnp-Umpnpmgr" targetNamespace="Microsoft-OneCore-Pnp-Umpnpmgr">
+        <xsd:element name="FactoryPreInstallInProgress" type="xsd:unsignedInt" wcm:handler="regkey('HKLM\SYSTEM\Setup')" wcm:legacyType="REG_DWORD" />
+      </xsd:schema>
+    </asmv3:configurationSchema>
+  </asmv3:configuration>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="WRP_REGKEY_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;CI;GA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;CI;GR;;;SY)(A;CI;GR;;;BA)(A;CI;GR;;;BU)(A;CI;GR;;;S-1-15-2-1)(A;CI;GR;;;S-1-15-3-1024-1065365936-1281604716-3511738428-1654721687-432734479-3232135806-4053264122-3456934681)" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" description="Default SDDL for Windows Resource Protected file" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string id="description" value="This component implements umpnpmgr." />
+        <string id="displayName" value="OneCore Plug and Play Umpnpmgr" />
+      </stringTable>
+    </resources>
+  </localization>
+</assembly>

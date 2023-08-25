@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-Font-FMS" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <dependency discoverable="no" resourceType="Resources">
+    <dependentAssembly>
+      <assemblyIdentity name="Microsoft-Windows-Font-FMS.Resources" version="10.0.22621.1" processorArchitecture="amd64" language="*" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </dependentAssembly>
+  </dependency>
+  <file name="fms_metadata.xml" destinationPath="$(runtime.fonts)\" sourceName="fms_metadata.xml" importPath="$(build.nttree)\" attributes="hidden system readOnly" sourcePath=".\" writeableType="systemData">
+    <securityDescriptor name="#MutableFileDefaultSecurityDescriptor" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>/GBtxS/Cn3x3rh6PJV9t0wWq4lWemP7BdCOPZsKplIc=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <file name="fms.dll" destinationPath="$(runtime.system32)\" sourceName="fms.dll" importPath="$(build.nttree)\" sourcePath=".\">
+    <signatureInfo>
+      <signatureDescriptor pageHash="true" />
+    </signatureInfo>
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>O9QEFI8OHiJXzFPIH23Frn3uKSJtHhbL2aijhwijOyo=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <registryKeys>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Font Management">
+      <registryValue name="Metadata" valueType="REG_EXPAND_SZ" value="%SystemRoot%\Fonts\fms_metadata.xml" />
+      <registryValue name="Auto Deactivation Exclude" valueType="REG_MULTI_SZ" value="&quot;Calibri&quot;,&quot;Cambria&quot;,&quot;Consolas&quot;,&quot;Georgia&quot;,&quot;Segoe UI Symbol&quot;,&quot;Verdana&quot;" />
+    </registryKey>
+  </registryKeys>
+  <migration settingsVersion="0">
+    <migXml xmlns="">
+      <rules context="User">
+        <include>
+          <objectSet>
+            <pattern type="Registry">HKCU\Software\Microsoft\Windows NT\CurrentVersion\Font Management [Active Languages]</pattern>
+            <pattern type="Registry">HKCU\Software\Microsoft\Windows NT\CurrentVersion\Font Management [Inactive Fonts]</pattern>
+            <pattern type="Registry">HKCU\Software\Microsoft\Windows NT\CurrentVersion\Font Management [Auto Activation Mode]</pattern>
+            <pattern type="Registry">HKCU\Software\Microsoft\Windows NT\CurrentVersion\Font Management\Auto Activation Languages [*]</pattern>
+          </objectSet>
+        </include>
+      </rules>
+    </migXml>
+    <supportedComponents>
+      <supportedComponent>
+        <assemblyIdentity name="_" version="1.0.0.0" />
+        <supportedComponentIdentity language="neutral" name="Microsoft-Windows-Font-FMS" processorArchitecture="*" settingsVersionRange="0" xmlns="urn:schemas-microsoft-com:asm.v3" />
+      </supportedComponent>
+    </supportedComponents>
+  </migration>
+  <instrumentation xmlns:win="http://manifests.microsoft.com/win/2004/08/windows/events" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <events xmlns="http://schemas.microsoft.com/win/2004/08/events">
+      <provider guid="{dea07764-0790-44de-b9c4-49677b17174f}" message="$(string.FMS_ETW_PROVIDER.Message)" messageFileName="%SystemRoot%\system32\fms.dll" name="Microsoft-Windows-FMS" resourceFileName="%SystemRoot%\system32\fms.dll" symbol="FMS_ETW_PROVIDER">
+        <channels>
+          <importChannel chid="FMS_ETW_CHANNEL_ADMIN" name="System">$(string.FMS_ETW_CHANNEL_ADMIN.Description)</importChannel>
+          <channel chid="FMS_ETW_CHANNEL_OPERATIONAL" enabled="true" isolation="System" message="$(string.FMS_ETW_CHANNEL_OPERATIONAL.Message)" name="Microsoft-Windows-FMS/Operational" symbol="FMS_ETW_CHANNEL_OPERATIONAL" type="Operational">$(string.FMS_ETW_CHANNEL_OPERATIONAL.Description)</channel>
+          <channel chid="FMS_ETW_CHANNEL_ANALYTIC" enabled="false" isolation="System" message="$(string.FMS_ETW_CHANNEL_ANALYTIC.Message)" name="Microsoft-Windows-FMS/Analytic" symbol="FMS_ETW_CHANNEL_ANALYTIC" type="Analytic">$(string.FMS_ETW_CHANNEL_ANALYTIC.Description)</channel>
+          <channel chid="FMS_ETW_CHANNEL_DEBUG" enabled="false" isolation="System" message="$(string.FMS_ETW_CHANNEL_DEBUG.Message)" name="Microsoft-Windows-FMS/Debug" symbol="FMS_ETW_CHANNEL_DEBUG" type="Debug">$(string.FMS_ETW_CHANNEL_DEBUG.Description)</channel>
+        </channels>
+      </provider>
+      <cmi />
+    </events>
+  </instrumentation>
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string id="description" value="This is part of the required font support" />
+        <string id="displayName" value="FMS (font management service)" />
+        <string id="FMS_ETW_PROVIDER.Message" value="Microsoft-Windows-FMS" />
+        <string id="FMS_ETW_CHANNEL_OPERATIONAL.Message" value="Microsoft-Windows-FMS/Operational" />
+        <string id="FMS_ETW_CHANNEL_ANALYTIC.Message" value="Microsoft-Windows-FMS/Analytic" />
+        <string id="FMS_ETW_CHANNEL_DEBUG.Message" value="Microsoft-Windows-FMS/Debug" />
+        <string id="FMS_ETW_CHANNEL_ADMIN.Description" value="This channel contains admin events about FMS operations performed on the system" />
+        <string id="FMS_ETW_CHANNEL_OPERATIONAL.Description" value="This channel contains operational events about FMS operations performed on the system" />
+        <string id="FMS_ETW_CHANNEL_ANALYTIC.Description" value="This channel contains analytic events about FMS operations performed on the system" />
+        <string id="FMS_ETW_CHANNEL_DEBUG.Description" value="This channel contains debug events about FMS operations performed on the system" />
+        <string id="FMS_ETW_INITIALIZATION.TaskMessage" value="FMS DLL initialization" />
+        <string id="FMS_ETW_API_ENTRY.TaskMessage" value="FMS API entry call" />
+        <string id="FMS_ETW_API_EXIT.TaskMessage" value="FMS API exit call" />
+        <string id="FmsDLLInitError.EventMessage" value="FMS DLL initialization failed" />
+        <string id="FmsAPIEntryCall.EventMessage" value="FMS API entry for: %1" />
+        <string id="FmsAPIExitCall.EventMessage" value="FMS API exit for: %1" />
+        <string id="FMS_ETW_EVENT_NAMERESOLUTION.EventMessage" value="FMS ETW: %1" />
+        <string id="FMS_ETW_NAMERES_OPERATION.OpcodeMessage" value="NameResolution" />
+        <string id="FMS_GET_FONT_NAME_TABLE_START_EVENT.EventMessage" value="FMS ETW: %1" />
+        <string id="FMS_GET_FONT_NAME_TABLE_START_OPERATION.OpcodeMessage" value="GetFontNameTable Start" />
+        <string id="FMS_GET_FONT_NAME_TABLE_STOP_EVENT.EventMessage" value="FMS ETW: %1" />
+        <string id="FMS_GET_FONT_NAME_TABLE_STOP_OPERATION.OpcodeMessage" value="GetFontNameTable Stop" />
+        <string id="FMS_GET_NAME_RECORD_START_EVENT.EventMessage" value="FMS ETW: %1" />
+        <string id="FMS_GET_NAME_RECORD_START_OPERATION.OpcodeMessage" value="Get Name Record Start" />
+        <string id="FMS_GET_NAME_RECORD_STOP_EVENT.EventMessage" value="FMS ETW: %1" />
+        <string id="FMS_GET_NAME_RECORD_STOP_OPERATION.OpcodeMessage" value="Get Name Record Stop" />
+        <string id="FMS_GET_NAME_STRINGS_START_EVENT.EventMessage" value="FMS ETW: %1" />
+        <string id="FMS_GET_NAME_STRINGS_START_OPERATION.OpcodeMessage" value="Get Name Strings Start" />
+        <string id="FMS_GET_NAME_STRINGS_STOP_EVENT.EventMessage" value="FMS ETW: %1" />
+        <string id="FMS_GET_NAME_STRINGS_STOP_OPERATION.OpcodeMessage" value="Get Name Strings Stop" />
+        <string id="FMS_GET_FONT_DATA_START_EVENT.EventMessage" value="FMS ETW: %1" />
+        <string id="FMS_GET_FONT_DATA_START_OPERATION.OpcodeMessage" value="Get Font Data Start" />
+        <string id="FMS_GET_FONT_DATA_STOP_EVENT.EventMessage" value="FMS ETW: %1" />
+        <string id="FMS_GET_FONT_DATA_STOP_OPERATION.OpcodeMessage" value="Get Font Data Stop" />
+        <string id="FMS_GDI_GET_FONT_REALIZATION_INFO_START_EVENT.EventMessage" value="FMS ETW: %1" />
+        <string id="FMS_GDI_GET_FONT_REALIZATION_INFO_START_OPERATION.OpcodeMessage" value="GdiGetFontRealizationInfo Start" />
+        <string id="FMS_GDI_GET_FONT_REALIZATION_INFO_STOP_EVENT.EventMessage" value="FMS ETW: %1" />
+        <string id="FMS_ERROR_MESSAGE_EVENT.EventMessage" value="FMS ETW: %1" />
+        <string id="FMS_ERROR_MESSAGE_OPERATION.OpcodeMessage" value="FmsErrorMessage" />
+        <string id="FMS_GDI_GET_FONT_REALIZATION_INFO_STOP_OPERATION.OpcodeMessage" value="GdiGetFontRealizationInfo Stop" />
+        <string id="FMS_ETW_TASK.TaskMessage" value="ETW Debug Msg" />
+      </stringTable>
+    </resources>
+  </localization>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="#MutableFileDefaultSecurityDescriptor" sddl="O:SYG:SYD:AIS:" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" description="Default SDDL for Windows Resource Protected file" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+</assembly>

@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved." xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <assemblyIdentity name="Microsoft-Windows-msmq-triggers-service" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <file name="mqtgsvc.exe" destinationPath="$(runtime.system32)\" sourceName="mqtgsvc.exe" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>zvLcEiGAZj1osrPE/oKPg8zCzOEXf3inT2sqSFWUpZo=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <file name="mqtgsvc.exe.cfg" destinationPath="$(runtime.system32)\" sourceName="mqtgsvc.cfg" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>XV4ooyIYAoS5LiBtnnx7OKVWReduSUIhHtPDNivNUAE=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <memberships>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories.Services" version="10.0.22621.1" publicKeyToken="31bf3856ad364e35" typeName="Service" />
+      <categoryInstance subcategory="MSMQTriggers">
+        <serviceData name="MSMQTriggers" displayName="@mqutil.dll,-6203" errorControl="normal" start="demand" type="win32OwnProcess" description="@mqutil.dll,-6206" dependOnService="msmq" imagePath="%Systemroot%\system32\mqtgsvc.exe" objectName="NT Authority\NetworkService" requiredPrivileges="SeChangeNotifyPrivilege,SeCreateGlobalPrivilege,SeImpersonatePrivilege" sidType="unrestricted">
+          <failureActions resetPeriod="900">
+            <actions>
+              <action delay="120000" type="restartService" />
+              <action delay="0" type="none" />
+              <action delay="0" type="none" />
+            </actions>
+          </failureActions>
+        </serviceData>
+      </categoryInstance>
+    </categoryMembership>
+  </memberships>
+  <registryKeys>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\SharedAccess\Parameters\FirewallPolicy\RestrictedServices\Static\System">
+      <registryValue name="MSMQ-Triggers-Block-In" valueType="REG_SZ" value="V2.0|Action=Block|Dir=In|App=%SystemRoot%\System32\mqtgsvc.exe|Name=MessageQueuing-BlockOthers-Inbound|Desc=Block any inbound traffic other than specified|" />
+      <registryValue name="MSMQ-Triggers-Block-Out" valueType="REG_SZ" value="V2.0|Action=Block|Dir=Out|App=%SystemRoot%\System32\mqtgsvc.exe|Name=MessageQueuing-BlockOthers-Outbound|Desc=Block any outbound traffic other than specified|" />
+      <registryValue name="MSMQ-Triggers-Allow-TCP-In" valueType="REG_SZ" value="V2.0|Action=Allow|Dir=In|Protocol=6|App=%SystemRoot%\System32\mqtgsvc.exe|Name=MessageQueuing-TCP-Inbound|Desc=Allow inbound Message Queuing traffic over TCP|" />
+      <registryValue name="MSMQ-Triggers-Allow-TCP-Out" valueType="REG_SZ" value="V2.0|Action=Allow|Dir=Out|Protocol=6|App=%SystemRoot%\System32\mqtgsvc.exe|Name=MessageQueuing-TCP-Outbound|Desc=Allow outbound Message Queuing traffic over TCP|" />
+      <registryValue name="MSMQ-Triggers-Allow-UDP-In" valueType="REG_SZ" value="V2.0|Action=Allow|Dir=In|Protocol=17|App=%SystemRoot%\System32\mqtgsvc.exe|Name=MessageQueuing-UDP-Inbound|Desc=Allow inbound Message Queuing traffic over UDP|" />
+      <registryValue name="MSMQ-Triggers-Allow-UDP-Out" valueType="REG_SZ" value="V2.0|Action=Allow|Dir=Out|Protocol=17|App=%SystemRoot%\System32\mqtgsvc.exe|Name=MessageQueuing-UDP-Outbound|Desc=Allow outbound Message Queuing traffic over UDP|" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\MSMQ\Setup">
+      <registryValue name="msmq_TriggersService" valueType="REG_DWORD" value="0x00000001" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Eventlog\Application\MSMQTriggers">
+      <registryValue name="EventMessageFile" valueType="REG_SZ" value="mqutil.dll" />
+      <registryValue name="TypesSupported" valueType="REG_DWORD" value="0x00000007" />
+      <registryValue name="ProviderGuid" valueType="REG_SZ" value="{2787cc62-2654-4227-9b35-b53f838507ae}" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\MSMQ\Triggers\Data\Rules" />
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\MSMQ\Triggers\Data\Triggers" />
+  </registryKeys>
+  <asmv3:configuration xmlns:asmv3="urn:schemas-microsoft-com:asm.v3" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State">
+    <asmv3:configurationSchema>
+      <xsd:schema xmlns="Microsoft-Windows-msmq-triggers-service" targetNamespace="Microsoft-Windows-msmq-triggers-service">
+        <xsd:element default="2048" name="DefaultMsgBodySize" type="xsd:int" wcm:description="Default Message Body Size" wcm:displayName="DefaultMsgBodySize" wcm:handler="regkey('HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\MSMQ\Triggers')" wcm:legacyType="REG_DWORD" wcm:migrate="yes" wcm:scope="allUsers" wcm:subScope="machineIndependent" />
+        <xsd:element default="20" name="MaxThreads" type="xsd:int" wcm:description="Number of Maximum Threads" wcm:displayName="MaxThreads" wcm:handler="regkey('HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\MSMQ\Triggers')" wcm:legacyType="REG_DWORD" wcm:migrate="yes" wcm:scope="allUsers" wcm:subScope="machineIndependent" />
+        <xsd:element default="30000" name="InitTimeout" type="xsd:int" wcm:description="Trigger rule Initialiation Timeout" wcm:displayName="InitTimeout" wcm:handler="regkey('HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\MSMQ\Triggers')" wcm:legacyType="REG_DWORD" wcm:migrate="yes" wcm:scope="allUsers" wcm:subScope="machineIndependent" />
+        <xsd:element default="5" name="InitialThreads" type="xsd:int" wcm:description="Number of initial threads" wcm:displayName="InitialThreads" wcm:handler="regkey('HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\MSMQ\Triggers')" wcm:legacyType="REG_DWORD" wcm:migrate="yes" wcm:scope="allUsers" wcm:subScope="machineIndependent" />
+      </xsd:schema>
+    </asmv3:configurationSchema>
+    <asmv3:metadata />
+  </asmv3:configuration>
+  <MsmqWorkgroupOnlineInstall xmlns="urn:schemas-microsoft-com:msmq.v1" />
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="WRP_REGKEY_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;CI;GA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;CI;GR;;;SY)(A;CI;GR;;;BA)(A;CI;GR;;;BU)(A;CI;GR;;;S-1-15-2-1)(A;CI;GR;;;S-1-15-3-1024-1065365936-1281604716-3511738428-1654721687-432734479-3232135806-4053264122-3456934681)" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" description="Default SDDL for Windows Resource Protected file" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string id="description" value="MSMQ Trigger Service" />
+        <string id="description1" value="Default Message Body Size" />
+        <string id="description2" value="Number of Maximum Threads" />
+        <string id="description3" value="Trigger rule Initialiation Timeout" />
+        <string id="description4" value="Number of initial threads" />
+        <string id="description5" value="Provides rule-based monitoring of messages arriving in a Message Queuing queue and, when the conditions of a rule are satisfied, invokes a COM component or a stand-alone executable program to process the message." />
+        <string id="displayName" value="MSMQ Trigger Service" />
+        <string id="displayName1" value="DefaultMsgBodySize" />
+        <string id="displayName2" value="MaxThreads" />
+        <string id="displayName3" value="InitTimeout" />
+        <string id="displayName4" value="InitialThreads" />
+        <string id="displayName5" value="Message Queuing Triggers" />
+      </stringTable>
+    </resources>
+  </localization>
+  <migration settingsVersion="1">
+    <migXml xmlns="">
+      <rules context="System">
+        <include>
+          <objectSet>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\MSMQ\Triggers\* [*]</pattern>
+          </objectSet>
+        </include>
+      </rules>
+    </migXml>
+    <supportedComponents>
+      <supportedComponent>
+        <assemblyIdentity name="_" version="1.0.0.0" />
+        <supportedComponentIdentity buildType="release" language="neutral" name="Microsoft-Windows-msmq-triggers-service" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" settingsVersionRange="1" versionScope="nonSxS" xmlns="urn:schemas-microsoft-com:asm.v3" />
+      </supportedComponent>
+      <supportedComponent>
+        <assemblyIdentity name="_" version="1.0.0.0" />
+        <supportedComponentIdentity buildType="release" language="neutral" name="Microsoft-Windows-msmq-triggers" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" settingsVersionRange="0" versionScope="nonSxS" xmlns="urn:schemas-microsoft-com:asm.v3" />
+      </supportedComponent>
+      <supportedComponent>
+        <assemblyIdentity name="_" version="1.0.0.0" />
+        <supportedComponentIdentity language="*" name="Microsoft-Windows-msmq-triggers-DL" processorArchitecture="*" settingsVersionRange="0" xmlns="urn:schemas-microsoft-com:asm.v3" />
+      </supportedComponent>
+    </supportedComponents>
+  </migration>
+</assembly>

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-PCW" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <file name="pcw.sys" destinationPath="$(runtime.drivers)\" sourceName="pcw.sys" importPath="$(build.nttree)\" sourcePath=".\">
+    <dependencies />
+    <signatureInfo>
+      <signatureDescriptor PETrust="true" />
+    </signatureInfo>
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>rOo6Ma7Bznj8QGnelsriqZnZHmsHKug3Az89Fzj3wKo=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <memberships>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories" version="1.0.0.0" publicKeyToken="365143bb27e7ac8b" typeName="BootCritical" />
+    </categoryMembership>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories" version="1.0.0.0" publicKeyToken="365143bb27e7ac8b" typeName="BootRecovery" />
+    </categoryMembership>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories.Services" version="10.0.22621.1" publicKeyToken="31bf3856ad364e35" typeName="Service" />
+      <categoryInstance subcategory="pcw">
+        <serviceData name="pcw" displayName="Performance Counters for Windows Driver" errorControl="normal" start="boot" type="kernelDriver" group="System Reserved" imagePath="System32\drivers\pcw.sys" />
+      </categoryInstance>
+    </categoryMembership>
+  </memberships>
+  <instrumentation xmlns:win="http://manifests.microsoft.com/win/2004/08/windows/events" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <events xmlns="http://schemas.microsoft.com/win/2004/08/events">
+      <provider guid="{aabf8b86-7936-4fa2-acb0-63127f879dbf}" message="$(string.PCW.ProviderName)" messageFileName="%SystemRoot%\System32\pcwum.dll" name="Microsoft-Windows-Diagnosis-PCW" resourceFileName="%SystemRoot%\System32\pcwum.dll" symbol="PCW_EVENT_PROVIDER">
+        <channels>
+          <channel chid="cOperational" enabled="true" isolation="Application" message="$(string.Channel.Operational)" name="Microsoft-Windows-Diagnosis-PCW/Operational" symbol="PCW_CHANNEL_OPERATIONAL" type="Operational" />
+          <channel chid="cAnalytic" isolation="Application" message="$(string.Channel.Analytic)" name="Microsoft-Windows-Diagnosis-PCW/Analytic" symbol="PCW_CHANNEL_ANALYTIC" type="Analytic" />
+          <channel chid="cDebug" isolation="Application" message="$(string.Channel.Debug)" name="Microsoft-Windows-Diagnosis-PCW/Debug" symbol="PCW_CHANNEL_DEBUG" type="Debug" />
+        </channels>
+      </provider>
+      <cmi />
+    </events>
+  </instrumentation>
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string id="PCW.ProviderName" value="Microsoft-Windows-Diagnosis-PCW" />
+        <string id="Channel.Operational" value="Microsoft-Windows-Diagnosis-PCW/Operational" />
+        <string id="Channel.Analytic" value="Microsoft-Windows-Diagnosis-PCW/Analytic" />
+        <string id="Channel.Debug" value="Microsoft-Windows-Diagnosis-PCW/Debug" />
+        <string id="errors.KeywordMessage" value="Errors" />
+        <string id="callouts.KeywordMessage" value="Provider callouts" />
+        <string id="notifications.KeywordMessage" value="Provider notifications" />
+        <string id="queries.KeywordMessage" value="Provider queries" />
+        <string id="event.ProviderRegisterFail" value="Provider %2 failed to register. Error: &quot;%1&quot;" />
+        <string id="event.ProviderUnregisterFail" value="Provider %2 failed to unregister. Error: &quot;%1&quot;" />
+        <string id="event.CounterSetRegisterFail" value="Provider %2 failed to register counter set %3. Error: &quot;%1&quot;" />
+        <string id="event.InstanceCreateFail" value="Instance (%2, %3, %4) could not be created. Error: &quot;%1&quot;" />
+        <string id="event.InstanceCloseFail" value="Instance (%2, %3, %4) could not be closed. Error: &quot;%1&quot;" />
+        <string id="event.InstanceQueryFail" value="Instance (%2, %3, %4) could not be queried. Error: &quot;%1&quot;" />
+        <string id="event.CounterError" value="Counter %5 of instance (%2, %3, %4) could not be modified. Error: &quot;%1&quot;" />
+        <string id="event.PreCallback" value="About to call provider %1 callback with arguments (%2, %3, %4)." />
+        <string id="event.PostCallback" value="Callback returned. Return value: &quot;%1&quot;" />
+        <string id="event.InvalidNotification" value="Provider %1 received an invalid notification with size %2." />
+        <string id="event.PreNotification" value="Provider %1 received notification: %2." />
+        <string id="event.NotificationReply" value="Provider %1 notification handler has replied with size %3 and error code &quot;%2&quot;." />
+        <string id="event.PostNotification" value="Notification returning with status: &quot;%1&quot;" />
+        <string id="event.QueryCollected" value="Query of provider %1 with id %2 had data collected." />
+        <string id="event.DriverLoadFail" value="Unable to load pcw.sys, phase %2 failed. Error: &quot;%1&quot;" />
+        <string id="event.PcwRegisterFail" value="Kernel-mode provider failed to register counter set %3. Error: &quot;%1&quot;" />
+        <string id="event.PcwCreateInstanceFail" value="Kernel-mode provider failed to create instance %5 of counter set %3. Error: &quot;%1&quot;" />
+        <string id="event.PcwAddInstanceFail" value="Kernel-mode provider failed to add instance %5 of counter set %3. Error: &quot;%1&quot;" />
+        <string id="event.PcwIoctlFail" value="PCW driver failed when executing ioctl function %2. Error: &quot;%1&quot;" />
+        <string id="event.DeviceMissing" value="PCW device missing during registration of counter set %2 of provider %1." />
+        <string id="Map.AddCounter" value="add counter" />
+        <string id="Map.RemoveCounter" value="remove counter" />
+        <string id="Map.EnumInstances" value="enumerate instances" />
+        <string id="Map.CollectData" value="collect data" />
+        <string id="Map.LayoutInfo" value="set layout info" />
+        <string id="Map.Disconnect" value="disconnect" />
+      </stringTable>
+    </resources>
+  </localization>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" description="Default SDDL for Windows Resource Protected file" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+</assembly>

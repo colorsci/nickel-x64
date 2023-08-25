@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved." xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <assemblyIdentity name="Microsoft-Windows-FileInfoMinifilter" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <file name="fileinfo.sys" destinationPath="$(runtime.system32)\drivers\" sourceName="fileinfo.sys" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>b0939hSQTkwlJrxFeCZIr6fOY+N/qHe+0vboDkiMoLU=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <memberships>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories" version="1.0.0.0" publicKeyToken="365143bb27e7ac8b" typeName="BootCritical" />
+    </categoryMembership>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories.Services" version="10.0.22621.1" publicKeyToken="31bf3856ad364e35" typeName="Service" />
+      <categoryInstance subcategory="FileInfo">
+        <serviceData name="FileInfo" displayName="@%SystemRoot%\system32\drivers\fileinfo.sys,-100" errorControl="normal" start="boot" type="fileSystemDriver" description="@%SystemRoot%\system32\drivers\fileinfo.sys,-101" dependOnService="fltmgr" group="FSFilter Bottom" imagePath="System32\drivers\fileinfo.sys" />
+      </categoryInstance>
+    </categoryMembership>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories" version="1.0.0.0" publicKeyToken="365143bb27e7ac8b" typeName="BootRecovery" />
+    </categoryMembership>
+  </memberships>
+  <configuration xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State">
+    <configurationSchema>
+      <xsd:schema xmlns="Microsoft-Windows-FileInfoMinifilter" targetNamespace="Microsoft-Windows-FileInfoMinifilter">
+        <xsd:element default="0" name="Start" type="xsd:unsignedInt" wcm:description="Start type of the service" wcm:handler="regkey('HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\fileinfo')" wcm:legacyName="Start" wcm:legacyType="REG_DWORD" wcm:scope="allUsers" />
+        <xsd:element default="System32\drivers\fileinfo.sys" name="ImagePath" type="xsd:string" wcm:description="Image path of the service" wcm:handler="regkey('HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\fileinfo')" wcm:legacyName="ImagePath" wcm:legacyType="REG_EXPAND_SZ" wcm:scope="allUsers" />
+      </xsd:schema>
+    </configurationSchema>
+    <metadata />
+  </configuration>
+  <instrumentation xmlns:fi="http://manifests.microsoft.com/win/2004/08/windows/fi" xmlns:win="http://manifests.microsoft.com/win/2004/08/windows/events">
+    <events xmlns="http://schemas.microsoft.com/win/2004/08/events">
+      <provider guid="{a319d300-015c-48be-acdb-47746e154751}" message="$(string.eventProviderName)" messageFileName="%windir%\system32\drivers\fileinfo.sys" name="Microsoft-Windows-FileInfoMinifilter" resourceFileName="%windir%\system32\drivers\fileinfo.sys" symbol="FileInfoEventProvider">
+        <channels>
+          <channel chid="defch" name="Microsoft-Windows-FileInfoMinifilter/Operational" type="Analytic" />
+        </channels>
+      </provider>
+      <cmi />
+    </events>
+  </instrumentation>
+  <registryKeys>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\System\CurrentControlset\Services\FileInfo\Instances\FileInfo">
+      <registryValue name="Altitude" valueType="REG_SZ" value="40500" />
+      <registryValue name="Flags" valueType="REG_DWORD" value="0x00000000" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\System\CurrentControlset\Services\FileInfo\Instances">
+      <registryValue name="DefaultInstance" valueType="REG_SZ" value="FileInfo" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\System\CurrentControlset\Services\FileInfo">
+      <registryValue name="SupportedFeatures" valueType="REG_DWORD" value="0x0000000F" />
+    </registryKey>
+  </registryKeys>
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string id="description1" value="File Information FS MiniFilter" />
+        <string id="description" value="Collects information about files in memory to be consumed by other system services." />
+        <string id="displayName" value="File Information Mini Filter" />
+        <string id="displayName4" value="StartType" />
+        <string id="description5" value="Start type of the service" />
+        <string id="description6" value="Image path of the service" />
+        <string id="eventProviderName" value="Microsoft-Windows-FileInfoMinifilter" />
+      </stringTable>
+    </resources>
+  </localization>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" description="Default SDDL for Windows Resource Protected file" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+</assembly>

@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-DFSClient" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <file name="dfsc.sys" destinationPath="$(runtime.drivers)\" sourceName="dfsc.sys" importPath="$(build.nttree)\" sourcePath=".\\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>fRbJS2ZZbHu/OTlW299wMcqbArA037GfywXGYYXm9TE=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <memberships>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories" version="1.0.0.0" publicKeyToken="365143bb27e7ac8b" typeName="BootCritical" />
+    </categoryMembership>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories.Services" version="10.0.22621.1" publicKeyToken="31bf3856ad364e35" typeName="Service" />
+      <categoryInstance subcategory="DfsC">
+        <serviceData name="DfsC" displayName="@%systemroot%\system32\wkssvc.dll,-1008" errorControl="normal" start="system" type="fileSystemDriver" description="@%systemroot%\system32\wkssvc.dll,-1009" dependOnService="Mup" group="Network" imagePath="System32\Drivers\dfsc.sys" />
+      </categoryInstance>
+    </categoryMembership>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories" version="1.0.0.0" publicKeyToken="365143bb27e7ac8b" typeName="BootRecovery" />
+    </categoryMembership>
+  </memberships>
+  <migration settingsVersion="0">
+    <supportedComponents>
+      <supportedComponent>
+        <assemblyIdentity name="_" version="1.0.0.0" />
+        <supportedComponentIdentity buildType="release" language="*" name="Microsoft-Windows-DFSClient" processorArchitecture="*" publicKeyToken="31bf3856ad364e35" settingsVersionRange="0" versionScope="nonSxS" xmlns="urn:schemas-microsoft-com:asm.v3" />
+        <migXml xmlns="">
+          <rules context="System">
+            <merge script="MigXmlHelper.SourcePriority()">
+              <objectSet>
+                <pattern type="Registry">HKLM\System\CurrentControlSet\Services\Mup [DisableDfs]</pattern>
+                <pattern type="Registry">HKLM\System\CurrentControlSet\Services\Mup\Parameters [EnableDfsLoopbackTargets]</pattern>
+                <pattern type="Registry">HKLM\System\CurrentControlSet\Services\DfsC\Parameters [MaxReferralTTLInSeconds]</pattern>
+                <pattern type="Registry">HKLM\System\CurrentControlSet\Services\DfsC\Parameters [MaxDomainTTLInSeconds]</pattern>
+                <pattern type="Registry">HKLM\System\CurrentControlSet\Services\DfsC\Parameters [ReferralTTLMultiplier]</pattern>
+                <pattern type="Registry">HKLM\System\CurrentControlSet\Services\DfsC\Parameters [DomainTTLMultiplier]</pattern>
+                <pattern type="Registry">HKLM\System\CurrentControlSet\Services\DfsC\Parameters [MaxReferralCacheKBytes]</pattern>
+                <pattern type="Registry">HKLM\System\CurrentControlSet\Services\DfsC\Parameters [MaxDomainCacheKBytes]</pattern>
+                <pattern type="Registry">HKLM\System\CurrentControlSet\Services\DfsC\Parameters [ScavengerThreadIntervalSeconds]</pattern>
+                <pattern type="Registry">HKLM\System\CurrentControlSet\Services\DfsC\Parameters [MaxEntriesDeletedPerInterval]</pattern>
+              </objectSet>
+            </merge>
+          </rules>
+        </migXml>
+      </supportedComponent>
+      <supportedComponent>
+        <assemblyIdentity name="_" version="1.0.0.0" />
+        <supportedComponentIdentity language="*" name="Microsoft-Windows-DFSClient-DL" processorArchitecture="*" settingsVersionRange="0" xmlns="urn:schemas-microsoft-com:asm.v3" />
+        <migXml xmlns="">
+          <rules context="System">
+            <merge script="MigXmlHelper.SourcePriority()">
+              <objectSet>
+                <pattern type="Registry">HKLM\System\CurrentControlSet\Services\Mup [DisableDfs]</pattern>
+                <pattern type="Registry">HKLM\System\CurrentControlSet\Services\Mup\Parameters [EnableDfsLoopbackTargets]</pattern>
+              </objectSet>
+            </merge>
+          </rules>
+        </migXml>
+      </supportedComponent>
+    </supportedComponents>
+    <migXml xmlns="">
+      <rules context="System">
+        <include>
+          <objectSet>
+            <pattern type="Registry">HKLM\System\CurrentControlSet\Services\Mup [DisableDfs]</pattern>
+            <pattern type="Registry">HKLM\System\CurrentControlSet\Services\Mup\Parameters [EnableDfsLoopbackTargets]</pattern>
+            <pattern type="Registry">HKLM\System\CurrentControlSet\Services\DfsC\Parameters [MaxReferralTTLInSeconds]</pattern>
+            <pattern type="Registry">HKLM\System\CurrentControlSet\Services\DfsC\Parameters [MaxDomainTTLInSeconds]</pattern>
+            <pattern type="Registry">HKLM\System\CurrentControlSet\Services\DfsC\Parameters [ReferralTTLMultiplier]</pattern>
+            <pattern type="Registry">HKLM\System\CurrentControlSet\Services\DfsC\Parameters [DomainTTLMultiplier]</pattern>
+            <pattern type="Registry">HKLM\System\CurrentControlSet\Services\DfsC\Parameters [MaxReferralCacheKBytes]</pattern>
+            <pattern type="Registry">HKLM\System\CurrentControlSet\Services\DfsC\Parameters [MaxDomainCacheKBytes]</pattern>
+            <pattern type="Registry">HKLM\System\CurrentControlSet\Services\DfsC\Parameters [ScavengerThreadIntervalSeconds]</pattern>
+            <pattern type="Registry">HKLM\System\CurrentControlSet\Services\DfsC\Parameters [MaxEntriesDeletedPerInterval]</pattern>
+          </objectSet>
+        </include>
+        <merge script="MigXmlHelper.SourcePriority()">
+          <objectSet>
+            <pattern type="Registry">HKLM\System\CurrentControlSet\Services\Mup [DisableDfs]</pattern>
+            <pattern type="Registry">HKLM\System\CurrentControlSet\Services\Mup\Parameters [EnableDfsLoopbackTargets]</pattern>
+            <pattern type="Registry">HKLM\System\CurrentControlSet\Services\DfsC\Parameters [MaxReferralTTLInSeconds]</pattern>
+            <pattern type="Registry">HKLM\System\CurrentControlSet\Services\DfsC\Parameters [MaxDomainTTLInSeconds]</pattern>
+            <pattern type="Registry">HKLM\System\CurrentControlSet\Services\DfsC\Parameters [ReferralTTLMultiplier]</pattern>
+            <pattern type="Registry">HKLM\System\CurrentControlSet\Services\DfsC\Parameters [DomainTTLMultiplier]</pattern>
+            <pattern type="Registry">HKLM\System\CurrentControlSet\Services\DfsC\Parameters [MaxReferralCacheKBytes]</pattern>
+            <pattern type="Registry">HKLM\System\CurrentControlSet\Services\DfsC\Parameters [MaxDomainCacheKBytes]</pattern>
+            <pattern type="Registry">HKLM\System\CurrentControlSet\Services\DfsC\Parameters [ScavengerThreadIntervalSeconds]</pattern>
+            <pattern type="Registry">HKLM\System\CurrentControlSet\Services\DfsC\Parameters [MaxEntriesDeletedPerInterval]</pattern>
+          </objectSet>
+        </merge>
+      </rules>
+    </migXml>
+  </migration>
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string id="displayName" value="Microsoft Distributed File System Client" />
+        <string id="description" value="Windows Distributed File System Client" />
+      </stringTable>
+    </resources>
+  </localization>
+  <registryKeys>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\System\CurrentControlSet\Services\Dfsc\Parameters">
+      <registryValue name="UseDCLocatorSiteName" valueType="REG_DWORD" value="0x00000000" />
+    </registryKey>
+  </registryKeys>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" description="Default SDDL for Windows Resource Protected file" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+</assembly>

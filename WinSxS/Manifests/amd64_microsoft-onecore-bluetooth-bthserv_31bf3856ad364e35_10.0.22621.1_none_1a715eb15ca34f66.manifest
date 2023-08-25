@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-OneCore-Bluetooth-BthServ" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <dependency discoverable="no" resourceType="Resources">
+    <dependentAssembly dependencyType="prerequisite">
+      <assemblyIdentity name="Microsoft-OneCore-Bluetooth-BthServ.Resources" version="10.0.22621.1" processorArchitecture="amd64" language="*" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </dependentAssembly>
+  </dependency>
+  <file name="bthserv.dll" destinationPath="$(runtime.system32)\" sourceName="bthserv.dll" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>n8OK6e8Cw9aK7L+ik5ItUQ4bi8ENNRwWkv6Ed8K4jxs=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <registryKeys>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\System\CurrentControlSet\Policies\Hardware\Bluetooth">
+      <securityDescriptor name="BTHSERV_SDDL" />
+    </registryKey>
+  </registryKeys>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="BTHSERV_SDDL" sddl="O:S-1-5-80-2586557155-168560303-1373426920-983201488-1499765686G:S-1-5-80-2586557155-168560303-1373426920-983201488-1499765686D:(A;CI;GA;;;S-1-5-80-2586557155-168560303-1373426920-983201488-1499765686)" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" description="Default SDDL for Windows Resource Protected file" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+  <instrumentation xmlns:win="http://manifests.microsoft.com/win/2004/08/windows/events">
+    <events xmlns="http://schemas.microsoft.com/win/2004/08/events">
+      <provider guid="{4AF188AC-E9C4-4C11-B07B-1FABC07DFEB2}" message="$(string.providerDisplayName_BthLEPrepairing)" messageFileName="%SystemRoot%\system32\bthserv.dll" name="Microsoft-Windows-Bluetooth-BthLEPrepairing" resourceFileName="%SystemRoot%\system32\bthserv.dll" symbol="BTHLEPREPAIRING_EVENT_PROVIDER">
+        <channels>
+          <channel chid="chOperational" enabled="true" isolation="System" message="$(string.Event.OperationalChannelName)" name="Microsoft-Windows-Bluetooth-BthLEPrepairing/Operational" type="Operational" />
+          <importChannel chid="System" name="System" />
+        </channels>
+      </provider>
+      <cmi />
+    </events>
+    <counters xmlns="http://schemas.microsoft.com/win/2005/12/counters" schemaVersion="2.0">
+      <provider applicationIdentity="%SystemRoot%\system32\bthserv.dll" providerGuid="{9EEEDEB1-DE39-4FBA-9CD5-6521B9F19984}" providerType="kernelMode">
+        <counterSet description="Counters related to a local Bluetooth radio" descriptionID="1103" guid="{C71CFB00-0ECC-43A3-BF5A-A90CA7718033}" instances="multiple" name="Bluetooth Radio" nameID="1101" symbol="BluetoothRadio" uri="Microsoft.Windows.Bluetooth.Core.BluetoothRadio">
+          <structs>
+            <struct name="BluetoothRadioCounter" type="InternalBluetoothRadioPerfCounter" />
+          </structs>
+          <counter defaultScale="-3" description="Number of Classic ACL bytes written per second" descriptionID="1113" detailLevel="standard" field="ClassicAclWriteBytes" id="1" name="Classic ACL bytes written/sec" nameID="1111" struct="BluetoothRadioCounter" symbol="RADIO_CLASSIC_ACL_WRITES_PER_SEC" type="perf_counter_counter" uri="Microsoft.Windows.Bluetooth.Core.BluetoothRadio.ClassicAclWritesPerSec" />
+          <counter defaultScale="-2" description="Number of Low Energy ACL bytes written per second" descriptionID="1117" detailLevel="standard" field="LEAclWriteBytes" id="2" name="LE ACL bytes written/sec" nameID="1115" struct="BluetoothRadioCounter" symbol="RADIO_LE_ACL_WRITES_PER_SEC" type="perf_counter_counter" uri="Microsoft.Windows.Bluetooth.Core.BluetoothRadio.LEAclWritesPerSec" />
+          <counter defaultScale="-3" description="Number of SCO bytes written per second" descriptionID="1121" detailLevel="standard" field="ScoWriteBytes" id="3" name="SCO bytes written/sec" nameID="1119" struct="BluetoothRadioCounter" symbol="RADIO_SCO_WRITES_PER_SEC" type="perf_counter_counter" uri="Microsoft.Windows.Bluetooth.Core.BluetoothRadio.ScoAclWritesPerSec" />
+          <counter defaultScale="-3" description="Number of Classic ACL bytes read per second" descriptionID="1125" detailLevel="standard" field="ClassicAclReadBytes" id="4" name="Classic ACL bytes read/sec" nameID="1123" struct="BluetoothRadioCounter" symbol="RADIO_CLASSIC_ACL_READ_PER_SEC" type="perf_counter_counter" uri="Microsoft.Windows.Bluetooth.Core.BluetoothRadio.ClassicAclReadPerSec" />
+          <counter defaultScale="-2" description="Number of Low Energy ACL bytes read per second" descriptionID="1129" detailLevel="standard" field="LEAclReadBytes" id="5" name="LE ACL bytes read/sec" nameID="1127" struct="BluetoothRadioCounter" symbol="RADIO_LE_ACL_READ_PER_SEC" type="perf_counter_counter" uri="Microsoft.Windows.Bluetooth.Core.BluetoothRadio.LEAclReadPerSec" />
+          <counter defaultScale="-3" description="Number of SCO bytes read per second" descriptionID="1133" detailLevel="standard" field="ScoReadBytes" id="6" name="SCO bytes read/sec" nameID="1131" struct="BluetoothRadioCounter" symbol="RADIO_SCO_READ_PER_SEC" type="perf_counter_counter" uri="Microsoft.Windows.Bluetooth.Core.BluetoothRadio.ScoAclReadPerSec" />
+          <counter description="Number of Classic ACL connections" descriptionID="1137" detailLevel="standard" field="ClassicAclConnectionCount" id="7" name="Classic ACL Connections" nameID="1135" struct="BluetoothRadioCounter" symbol="RADIO_CLASSIC_ACL_CONNECTION_COUNT" type="perf_counter_rawcount" uri="Microsoft.Windows.Bluetooth.Core.BluetoothRadio.ClassicAclConnectionCount" />
+          <counter description="Number of LE ACL connections" descriptionID="1141" detailLevel="standard" field="LEAclConnectionCount" id="8" name="LE ACL Connections" nameID="1139" struct="BluetoothRadioCounter" symbol="RADIO_LE_ACL_CONNECTION_COUNT" type="perf_counter_rawcount" uri="Microsoft.Windows.Bluetooth.Core.BluetoothRadio.LEAclConnectionCount" />
+          <counter description="Number of SCO connections" descriptionID="1145" detailLevel="standard" field="ScoConnectionCount" id="9" name="SCO Connections" nameID="1143" struct="BluetoothRadioCounter" symbol="RADIO_SCO_CONNECTION_COUNT" type="perf_counter_rawcount" uri="Microsoft.Windows.Bluetooth.Core.BluetoothRadio.ScoConnectionCount" />
+          <counter description="Number of Sideband SCO connections" descriptionID="1149" detailLevel="standard" field="SidebandScoConnectionCount" id="10" name="Sideband SCO Connections" nameID="1147" struct="BluetoothRadioCounter" symbol="RADIO_SIDEBAND_SCO_CONNECTION_COUNT" type="perf_counter_rawcount" uri="Microsoft.Windows.Bluetooth.Core.BluetoothRadio.SidebandScoConnectionCount" />
+          <counter description="Number of ACL flush events per second" descriptionID="1157" detailLevel="standard" field="AclFlushEventCount" id="12" name="ACL flush events/sec" nameID="1155" struct="BluetoothRadioCounter" symbol="RADIO_ACL_FLUSH_EVENTS" type="perf_counter_counter" uri="Microsoft.Windows.Bluetooth.Core.BluetoothRadio.AclFlushEventCount" />
+          <counter description="Number of LE ACL write credits" descriptionID="1161" detailLevel="standard" field="LEAclWriteCredits" id="13" name="LE ACL write credits" nameID="1159" struct="BluetoothRadioCounter" symbol="RADIO_LE_ACL_WRITE_CREDITS" type="perf_counter_rawcount" uri="Microsoft.Windows.Bluetooth.Core.BluetoothRadio.LEAclWriteCredits" />
+          <counter description="Number of Classic ACL write credits" descriptionID="1165" detailLevel="standard" field="BRAclWriteCredits" id="14" name="Classic ACL write credits" nameID="1163" struct="BluetoothRadioCounter" symbol="RADIO_BR_ACL_WRITE_CREDITS" type="perf_counter_rawcount" uri="Microsoft.Windows.Bluetooth.Core.BluetoothRadio.BRAclWriteCredits" />
+          <counter description="LE Advertisement Scan Duty Cycle (%) - Uncoded 1M Phy" descriptionID="1169" detailLevel="standard" field="LE1MScanDutyCycle" id="15" name="LE Scan Duty Cycle (%) - Uncoded 1M Phy" nameID="1167" struct="BluetoothRadioCounter" symbol="RADIO_LE_SCAN_DUTY_CYCLE" type="perf_counter_rawcount" uri="Microsoft.Windows.Bluetooth.Core.BluetoothRadio.LEUScanDutyCycle" />
+          <counter description="Raw LE Advertisement Scan Window - Uncoded 1M Phy" descriptionID="1173" detailLevel="standard" field="LE1MScanWindow" id="16" name="LE Scan Window - Uncoded 1M Phy" nameID="1171" struct="BluetoothRadioCounter" symbol="RADIO_LE_SCAN_WINDOW" type="perf_counter_rawcount" uri="Microsoft.Windows.Bluetooth.Core.BluetoothRadio.LEScanWindow" />
+          <counter description="Raw LE Advertisement Scan Interval - Uncoded 1M Phy" descriptionID="1177" detailLevel="standard" field="LE1MScanInterval" id="17" name="LE Scan Interval - Uncoded 1M Phy" nameID="1175" struct="BluetoothRadioCounter" symbol="RADIO_LE_SCAN_INTERVAL" type="perf_counter_rawcount" uri="Microsoft.Windows.Bluetooth.Core.BluetoothRadio.LEScanInterval" />
+          <counter description="Page Scan Duty Cycle (%)" descriptionID="1181" detailLevel="standard" field="PageScanDutyCycle" id="18" name="Page Scan Duty Cycle (%)" nameID="1179" struct="BluetoothRadioCounter" symbol="RADIO_PAGE_SCAN_DUTY_CYCLE" type="perf_counter_rawcount" uri="Microsoft.Windows.Bluetooth.Core.BluetoothRadio.PageScanDutyCycle" />
+          <counter description="Raw Page Scan Window" descriptionID="1185" detailLevel="standard" field="PageScanWindow" id="19" name="Page Scan Window" nameID="1183" struct="BluetoothRadioCounter" symbol="RADIO_PAGE_SCAN_WINDOW" type="perf_counter_rawcount" uri="Microsoft.Windows.Bluetooth.Core.BluetoothRadio.PageScanWindow" />
+          <counter description="Raw Page Scan Interval" descriptionID="1189" detailLevel="standard" field="PageScanInterval" id="20" name="Page Scan Interval" nameID="1187" struct="BluetoothRadioCounter" symbol="RADIO_PAGE_SCAN_INTERVAL" type="perf_counter_rawcount" uri="Microsoft.Windows.Bluetooth.Core.BluetoothRadio.PageScanInterval" />
+          <counter description="Inquiry Scan Duty Cycle (%)" descriptionID="1193" detailLevel="standard" field="InquiryScanDutyCycle" id="21" name="Inquiry Scan Duty Cycle (%)" nameID="1191" struct="BluetoothRadioCounter" symbol="RADIO_INQUIRY_SCAN_DUTY_CYCLE" type="perf_counter_rawcount" uri="Microsoft.Windows.Bluetooth.Core.BluetoothRadio.InquiryScanDutyCycle" />
+          <counter description="Raw Inquiry Scan Window" descriptionID="1197" detailLevel="standard" field="InquiryScanWindow" id="22" name="Inquiry Scan Window" nameID="1195" struct="BluetoothRadioCounter" symbol="RADIO_INQUIRY_SCAN_WINDOW" type="perf_counter_rawcount" uri="Microsoft.Windows.Bluetooth.Core.BluetoothRadio.InquiryScanWindow" />
+          <counter description="Raw Inquiry Scan Interval" descriptionID="1201" detailLevel="standard" field="InquiryScanInterval" id="23" name="Inquiry Scan Interval" nameID="1199" struct="BluetoothRadioCounter" symbol="RADIO_INQUIRY_SCAN_INTERVAL" type="perf_counter_rawcount" uri="Microsoft.Windows.Bluetooth.Core.BluetoothRadio.InquiryScanInterval" />
+          <counter description="LE Advertisement Scan Duty Cycle (%) - Coded Phy" descriptionID="2029" detailLevel="standard" field="LECodedScanDutyCycle" id="24" name="LE Scan Duty Cycle (%) - Coded Phy" nameID="2031" struct="BluetoothRadioCounter" symbol="RADIO_LE_CODED_SCAN_DUTY_CYCLE" type="perf_counter_rawcount" uri="Microsoft.Windows.Bluetooth.Core.BluetoothRadio.LECodedScanDutyCycle" />
+          <counter description="Raw LE Advertisement Scan Window - Coded Phy" descriptionID="2033" detailLevel="standard" field="LECodedScanWindow" id="25" name="LE Scan Window - Coded Phy" nameID="2035" struct="BluetoothRadioCounter" symbol="RADIO_LE_CODED_SCAN_WINDOW" type="perf_counter_rawcount" uri="Microsoft.Windows.Bluetooth.Core.BluetoothRadio.LECodedScanWindow" />
+          <counter description="Raw LE Advertisement Scan Interval - Coded Phy" descriptionID="2037" detailLevel="standard" field="LECodedScanInterval" id="26" name="LE Scan Interval - Coded Phy" nameID="2039" struct="BluetoothRadioCounter" symbol="RADIO_LE_CODED_SCAN_INTERVAL" type="perf_counter_rawcount" uri="Microsoft.Windows.Bluetooth.Core.BluetoothRadio.LECodedScanInterval" />
+          <counter description="Number of Offload A2dp connections" descriptionID="2041" detailLevel="standard" field="A2dpOffloadConnectionCount" id="27" name="A2dp Offload Connections" nameID="2043" struct="BluetoothRadioCounter" symbol="RADIO_A2DP_OFFLOAD_CONNECTION_COUNT" type="perf_counter_rawcount" uri="Microsoft.Windows.Bluetooth.Core.BluetoothRadio.A2dpOffloadConnectionCount" />
+        </counterSet>
+        <counterSet description="Counters related to a remote Bluetooth device" descriptionID="2003" guid="{2B048375-F829-4B1D-B117-681E9EAD1D50}" instances="multiple" name="Bluetooth Device" nameID="2001" symbol="BluetoothDevice" uri="Microsoft.Windows.Bluetooth.Core.BluetoothDevice">
+          <structs>
+            <struct name="BluetoothDeviceCounter" type="InternalBluetoothDevicePerfCounter" />
+          </structs>
+          <counter defaultScale="-3" description="Number of Classic ACL bytes written per second" descriptionID="2007" detailLevel="standard" field="ClassicAclWriteBytes" id="1" name="Classic ACL bytes written/sec" nameID="2005" struct="BluetoothDeviceCounter" symbol="DEVICE_CLASSIC_ACL_WRITES_PER_SEC" type="perf_counter_counter" uri="Microsoft.Windows.Bluetooth.Core.BluetoothDevice.ClassicAclWritesPerSec" />
+          <counter defaultScale="-2" description="Number of Low Energy ACL bytes written per second" descriptionID="2011" detailLevel="standard" field="LEAclWriteBytes" id="2" name="LE ACL bytes written/sec" nameID="2009" struct="BluetoothDeviceCounter" symbol="CONNECTION_LE_ACL_WRITES_PER_SEC" type="perf_counter_counter" uri="Microsoft.Windows.Bluetooth.Core.BluetoothDevice.LEAclWritesPerSec" />
+          <counter defaultScale="-3" description="Number of SCO bytes written per second" descriptionID="2015" detailLevel="standard" field="ScoWriteBytes" id="3" name="SCO bytes written/sec" nameID="2013" struct="BluetoothDeviceCounter" symbol="CONNECTION_SCO_WRITES_PER_SEC" type="perf_counter_counter" uri="Microsoft.Windows.Bluetooth.Core.BluetoothDevice.ScoAclWritesPerSec" />
+          <counter defaultScale="-3" description="Number of Classic ACL bytes read per second" descriptionID="2019" detailLevel="standard" field="ClassicAclReadBytes" id="4" name="Classic ACL bytes read/sec" nameID="2017" struct="BluetoothDeviceCounter" symbol="CONNECTION_CLASSIC_ACL_READ_PER_SEC" type="perf_counter_counter" uri="Microsoft.Windows.Bluetooth.Core.BluetoothDevice.ClassicAclReadPerSec" />
+          <counter defaultScale="-2" description="Number of Low Energy ACL bytes read per second" descriptionID="2023" detailLevel="standard" field="LEAclReadBytes" id="5" name="LE ACL bytes read/sec" nameID="2021" struct="BluetoothDeviceCounter" symbol="CONNECTION_LE_ACL_READ_PER_SEC" type="perf_counter_counter" uri="Microsoft.Windows.Bluetooth.Core.BluetoothDevice.LEAclReadPerSec" />
+          <counter defaultScale="-3" description="Number of SCO bytes read per second" descriptionID="2027" detailLevel="standard" field="ScoReadBytes" id="6" name="SCO bytes read/sec" nameID="2025" struct="BluetoothDeviceCounter" symbol="CONNECTION_SCO_READ_PER_SEC" type="perf_counter_counter" uri="Microsoft.Windows.Bluetooth.Core.BluetoothDevice.ScoAclReadPerSec" />
+          <counter defaultScale="0" description="LE Peripheral Latency" descriptionID="2047" detailLevel="standard" field="LEPeripheralLatency" id="7" name="LE Peripheral Latency" nameID="2045" struct="BluetoothDeviceCounter" symbol="CONNECTION_LE_PERIPHERAL_LATENCY" type="perf_counter_rawcount" uri="Microsoft.Windows.Bluetooth.Core.BluetoothDevice.LEPeripheralLatency" />
+          <counter defaultScale="-2" description="LE Connection Supervision Timeout" descriptionID="2051" detailLevel="standard" field="LEConnectionSupervisionTimeout" id="8" name="LE Connection Supervision Timeout" nameID="2049" struct="BluetoothDeviceCounter" symbol="CONNECTION_LE_CONNECTION_SUPERVISION_TIMEOUT" type="perf_counter_rawcount" uri="Microsoft.Windows.Bluetooth.Core.BluetoothDevice.LEConnectionSupervisionTimeout" />
+          <counter defaultScale="0" description="LE Subrate Factor" descriptionID="2055" detailLevel="standard" field="LESubrateFactor" id="9" name="LE Subrate Factor" nameID="2053" struct="BluetoothDeviceCounter" symbol="CONNECTION_LE_SUBRATE_FACTOR" type="perf_counter_rawcount" uri="Microsoft.Windows.Bluetooth.Core.BluetoothDevice.LESubrateFactor" />
+          <counter defaultScale="0" description="LE Continuation Number" descriptionID="2059" detailLevel="standard" field="LEContinuationNumber" id="10" name="LE Continuation Number" nameID="2057" struct="BluetoothDeviceCounter" symbol="CONNECTION_LE_CONTINUATION_NUMBER" type="perf_counter_rawcount" uri="Microsoft.Windows.Bluetooth.Core.BluetoothDevice.LEContinuationNumber" />
+          <counter defaultScale="0" description="LE Connection Interval" descriptionID="2063" detailLevel="standard" field="LEConnectionInterval" id="11" name="LE Connection Interval" nameID="2061" struct="BluetoothDeviceCounter" symbol="CONNECTION_LE_CONNECTION_INTERVAL" type="perf_counter_rawcount" uri="Microsoft.Windows.Bluetooth.Core.BluetoothDevice.LEConnectionInterval" />
+        </counterSet>
+      </provider>
+    </counters>
+  </instrumentation>
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string id="providerDisplayName_BthLEPrepairing" value="Microsoft-Windows-Bluetooth-BthLEPrepairing" />
+        <string id="Event.OperationalChannelName" value="Microsoft-Windows-Bluetooth-BthLEPrepairing/Operational" />
+        <string id="eventPrepairingComplete" value="Device successfully prepaired (%1)" />
+      </stringTable>
+    </resources>
+  </localization>
+</assembly>

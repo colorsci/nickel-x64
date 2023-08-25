@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-Shell-PPIPolicies-Miracast" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <registryKeys>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\MiracastReceiver">
+      <registryValue name="Use Device Description" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="Max Simultaneous Connections" valueType="REG_DWORD" value="0x00000002" />
+      <registryValue name="Primary Authorization Method" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="Secondary Authorization Method" valueType="REG_DWORD" value="0x00000002" />
+      <registryValue name="Tertiary Authorization Method" valueType="REG_DWORD" value="0x00000000" />
+      <registryValue name="WirelessDisplayBeacon" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="MiracastDisabled" valueType="REG_DWORD" value="0x00000000" />
+      <registryValue name="EnabledOnLockScreenOnly" valueType="REG_DWORD" value="0x00000000" />
+      <registryValue name="EnabledOnACOnly" valueType="REG_DWORD" value="0x00000000" />
+      <registryValue name="NetworkQualificationEnabled" valueType="REG_DWORD" value="0x00000000" />
+      <registryValue name="ConsentToast" valueType="REG_DWORD" value="0x00000000" />
+      <securityDescriptor name="PPI_ADD_AUTHENTICATED_USERS" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\PlayToReceiver">
+      <registryValue name="AutoEnabled" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="LockScreenActivation" valueType="REG_DWORD" value="0x00000000" />
+      <registryValue name="Custom Launch Callback" valueType="REG_SZ" value="{5FBFF0AC-3A2C-47EF-B01C-77DA30EC67F6}" />
+      <registryValue name="RedirectionKey" valueType="REG_SZ" value="SOFTWARE\Microsoft\MiracastReceiver" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion\WirelessDisplay">
+      <registryValue name="MediaStreamingModeSupported" valueType="REG_DWORD" value="0x00000001" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\System\CurrentControlSet\Services\Miracast">
+      <securityDescriptor name="UMDF_REGISTRY_SYSTEM" />
+    </registryKey>
+  </registryKeys>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="UMDF_REGISTRY_SYSTEM" sddl="D:(A;CIOI;KA;;;SY)(A;CIOI;KR;;;LS)(A;CIOI;KR;;;NS)(A;CIOI;KA;;;BA)(A;CIOI;KR;;;BU)" operationHint="replace" />
+          <securityDescriptorDefinition name="PPI_ADD_AUTHENTICATED_USERS" sddl="D:(A;CI;KA;;;AU)" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_REGKEY_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;CI;GA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;CI;GR;;;SY)(A;CI;GR;;;BA)(A;CI;GR;;;BU)(A;CI;GR;;;S-1-15-2-1)(A;CI;GR;;;S-1-15-3-1024-1065365936-1281604716-3511738428-1654721687-432734479-3232135806-4053264122-3456934681)" operationHint="replace" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+  <migration settingsVersion="8">
+    <supportedComponents>
+      <supportedComponent>
+        <assemblyIdentity name="_" version="1.0.0.0" />
+        <supportedComponentIdentity language="neutral" name="Microsoft-Windows-Shell-PPIPolicies-Miracast" processorArchitecture="*" settingsVersionRange="1-8" xmlns="urn:schemas-microsoft-com:asm.v3" />
+        <machineSpecific>
+          <migXml xmlns="">
+            <rules context="System">
+              <exclude>
+                <objectSet>
+                  <pattern type="Registry">HKLM\SOFTWARE\Microsoft\MiracastReceiver [Allow Takeover]</pattern>
+                  <pattern type="Registry">HKLM\SOFTWARE\Microsoft\MiracastReceiver [Model Name]</pattern>
+                </objectSet>
+              </exclude>
+            </rules>
+            <rules context="System">
+              <conditions>
+                <condition>MigXmlHelper.DoesStringContentEqual("Registry", "HKLM\SOFTWARE\Microsoft\MiracastReceiver [Secondary Authorization Method]", "0x00000000")</condition>
+              </conditions>
+              <contentModify script="MigXmlHelper.SetValueByTable('3', '3', '3')">
+                <objectSet>
+                  <pattern type="Registry">HKLM\SOFTWARE\Microsoft\MiracastReceiver [Primary Authorization Method]</pattern>
+                </objectSet>
+              </contentModify>
+            </rules>
+            <rules context="System">
+              <conditions>
+                <condition negation="Yes">MigXmlHelper.DoesStringContentEqual("Registry", "HKLM\SOFTWARE\Microsoft\MiracastReceiver [Secondary Authorization Method]", "0x00000000")</condition>
+              </conditions>
+              <contentModify script="MigXmlHelper.SetValueByTable('1', '1', '1')">
+                <objectSet>
+                  <pattern type="Registry">HKLM\SOFTWARE\Microsoft\MiracastReceiver [Primary Authorization Method]</pattern>
+                </objectSet>
+              </contentModify>
+              <contentModify script="MigXmlHelper.SetValueByTable('2', '2', '2')">
+                <objectSet>
+                  <pattern type="Registry">HKLM\SOFTWARE\Microsoft\MiracastReceiver [Secondary Authorization Method]</pattern>
+                </objectSet>
+              </contentModify>
+            </rules>
+          </migXml>
+        </machineSpecific>
+      </supportedComponent>
+    </supportedComponents>
+    <machineSpecific>
+      <migXml xmlns="">
+        <rules context="System">
+          <include>
+            <objectSet>
+              <pattern type="Registry">HKLM\SOFTWARE\Microsoft\MiracastReceiver [*]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\mrvlpcie8897 [OperatingChannel]</pattern>
+              <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\Miracast [*]</pattern>
+              <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Team\Settings\Connect [*]</pattern>
+            </objectSet>
+          </include>
+          <exclude>
+            <objectSet>
+              <pattern type="Registry">HKLM\SOFTWARE\Microsoft\MiracastReceiver [Allow Takeover]</pattern>
+              <pattern type="Registry">HKLM\SOFTWARE\Microsoft\MiracastReceiver [Model Name]</pattern>
+            </objectSet>
+          </exclude>
+        </rules>
+        <rules context="System">
+          <conditions>
+            <condition>MigXmlHelper.DoesStringContentEqual("Registry", "HKLM\SOFTWARE\Microsoft\MiracastReceiver [Secondary Authorization Method]", "0x00000000")</condition>
+          </conditions>
+          <contentModify script="MigXmlHelper.SetValueByTable('3', '3', '3')">
+            <objectSet>
+              <pattern type="Registry">HKLM\SOFTWARE\Microsoft\MiracastReceiver [Primary Authorization Method]</pattern>
+            </objectSet>
+          </contentModify>
+        </rules>
+        <rules context="System">
+          <conditions>
+            <condition negation="Yes">MigXmlHelper.DoesStringContentEqual("Registry", "HKLM\SOFTWARE\Microsoft\MiracastReceiver [Secondary Authorization Method]", "0x00000000")</condition>
+          </conditions>
+          <contentModify script="MigXmlHelper.SetValueByTable('1', '1', '1')">
+            <objectSet>
+              <pattern type="Registry">HKLM\SOFTWARE\Microsoft\MiracastReceiver [Primary Authorization Method]</pattern>
+            </objectSet>
+          </contentModify>
+          <contentModify script="MigXmlHelper.SetValueByTable('2', '2', '2')">
+            <objectSet>
+              <pattern type="Registry">HKLM\SOFTWARE\Microsoft\MiracastReceiver [Secondary Authorization Method]</pattern>
+            </objectSet>
+          </contentModify>
+        </rules>
+      </migXml>
+    </machineSpecific>
+  </migration>
+</assembly>

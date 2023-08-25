@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-IIS-AdminService" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <dependency discoverable="no" resourceType="Resources">
+    <dependentAssembly dependencyType="prerequisite">
+      <assemblyIdentity name="Microsoft-Windows-IIS-AdminService.Resources" version="10.0.22621.1" processorArchitecture="amd64" language="*" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+    </dependentAssembly>
+  </dependency>
+  <dependency discoverable="no" name="SharedLibraries">
+    <dependentAssembly dependencyType="prerequisite">
+      <assemblyIdentity name="Microsoft-Windows-IIS-SharedLibraries" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+    </dependentAssembly>
+  </dependency>
+  <file name="WMSvc.exe" destinationPath="$(runtime.system32)\inetsrv\" sourceName="WMSvc.exe" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>T5MV/87afngOQZyxsxbp7JML3X7Po5YXi16WyDD6DUc=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <file name="wmsvc.exe.config" destinationPath="$(runtime.system32)\inetsrv\" sourceName="wmsvc.exe.config" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>vlBFRpxYAPUMTBVvWGZocqjqOFM1kRBdpTV2olWAyUE=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <directories>
+    <directory destinationPath="$(runtime.bootDrive)\inetpub\logs" owner="false">
+      <securityDescriptor name="WmSvcListFolder" />
+    </directory>
+    <directory destinationPath="$(runtime.bootDrive)\inetpub\logs\wmsvc">
+      <securityDescriptor name="WmSvcAll" />
+    </directory>
+  </directories>
+  <firewallRule action="allow" active="false" binary="system" desc="@%SystemRoot%\system32\firewallapi.dll,-38536" dir="in" group="@%SystemRoot%\system32\firewallapi.dll,-38527" internalName="IIS-WebServerRole-WMSVC-In-TCP" lport="8172" name="@%SystemRoot%\system32\firewallapi.dll,-38526" protocol="6" />
+  <memberships>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories.Services" version="10.0.22621.1" publicKeyToken="31bf3856ad364e35" typeName="Service" />
+      <categoryInstance>
+        <serviceData name="WMSvc" displayName="@%windir%\system32\inetsrv\iisres.dll,-20001" errorControl="normal" start="demand" type="win32OwnProcess" description="@%windir%\system32\inetsrv\iisres.dll,-20002" dependOnService="HTTP" imagePath="%windir%\system32\inetsrv\wmsvc.exe" objectName="NT AUTHORITY\LocalService" requiredPrivileges="SeChangeNotifyPrivilege,SeImpersonatePrivilege" sidType="unrestricted">
+          <failureActions resetPeriod="300">
+            <actions>
+              <action delay="0" type="restartService" />
+              <action delay="0" type="restartService" />
+              <action delay="0" type="none" />
+            </actions>
+          </failureActions>
+        </serviceData>
+      </categoryInstance>
+    </categoryMembership>
+  </memberships>
+  <registryKeys>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\System\CurrentControlSet\Services\EventLog\Application\WMSVC">
+      <registryValue name="TypesSupported" valueType="REG_DWORD" value="0x00000007" />
+      <registryValue name="EventMessageFile" valueType="REG_EXPAND_SZ" value="%windir%\system32\inetsrv\iisres.dll" />
+      <registryValue name="providerGuid" valueType="REG_SZ" value="{23108B68-1B7E-43FA-94FB-EC3066805744}" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\WMSVC\Parameters">
+      <registryValue name="MajorVersion" valueType="REG_DWORD" value="0x0000000A" />
+      <registryValue name="MinorVersion" valueType="REG_DWORD" value="0x00000000" />
+    </registryKey>
+  </registryKeys>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="WRP_REGKEY_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;CI;GA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;CI;GR;;;SY)(A;CI;GR;;;BA)(A;CI;GR;;;BU)(A;CI;GR;;;S-1-15-2-1)(A;CI;GR;;;S-1-15-3-1024-1065365936-1281604716-3511738428-1654721687-432734479-3232135806-4053264122-3456934681)" operationHint="replace" />
+          <securityDescriptorDefinition name="WmSvcAll" sddl="D:AI(A;OICI;0x1301bf;;;S-1-5-80-257763619-1023834443-750927789-3464696139-1457670516)" operationHint="replace" />
+          <securityDescriptorDefinition name="WmSvcListFolder" sddl="D:AI(A;CI;0x1200a9;;;S-1-5-80-257763619-1023834443-750927789-3464696139-1457670516)" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" description="Default SDDL for Windows Resource Protected file" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string id="displayName0" value="Admin Service" />
+        <string id="description1" value="Admin Service" />
+        <string id="displayName3" value="WRP_FILE_DEFAULT_SDDL" />
+        <string id="description5" value="Default SDDL for Windows Resource Protected file" />
+        <string id="displayName7" value="WmSvcAll" />
+        <string id="displayName8" value="WmSvcListFolder" />
+      </stringTable>
+    </resources>
+  </localization>
+  <migration settingsVersion="1">
+    <machineSpecific>
+      <migXml xmlns="">
+        <rules context="System">
+          <include>
+            <objectSet>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\WMSVC [Start]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\WMSVC [DelayedAutostart]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\WMSVC [FailureActions]</pattern>
+            </objectSet>
+          </include>
+        </rules>
+      </migXml>
+    </machineSpecific>
+    <supportedComponents>
+      <supportedComponent>
+        <assemblyIdentity name="_" version="1.0.0.0" />
+        <supportedComponentIdentity buildType="release" language="neutral" name="Microsoft-Windows-IIS-AdminService" processorArchitecture="*" publicKeyToken="31bf3856ad364e35" settingsVersionRange="0-1" versionScope="nonSxS" xmlns="urn:schemas-microsoft-com:asm.v3" />
+      </supportedComponent>
+    </supportedComponents>
+  </migration>
+</assembly>

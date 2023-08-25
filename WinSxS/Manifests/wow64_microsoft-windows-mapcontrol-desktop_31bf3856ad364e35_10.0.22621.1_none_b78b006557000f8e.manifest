@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved." xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <assemblyIdentity name="Microsoft-Windows-MapControl-Desktop" version="10.0.22621.1" processorArchitecture="wow64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <configuration xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State">
+    <configurationSchema>
+      <xsd:schema xmlns="Microsoft-Windows-MapControl-Desktop" targetNamespace="Microsoft-Windows-MapControl-Desktop">
+        <xsd:simpleType name="MapsBooleanType">
+          <xsd:restriction base="xsd:integer">
+            <xsd:minInclusive value="0" />
+            <xsd:maxInclusive value="1" />
+          </xsd:restriction>
+        </xsd:simpleType>
+      </xsd:schema>
+    </configurationSchema>
+  </configuration>
+  <migration settingsVersion="2">
+    <migXml xmlns="">
+      <plugin classId="{39CC25F3-AF21-4C42-854D-0524249F02CE}" file="%windir%\system32\migration\MapsMigPlugin.dll" offlineApply="Yes" />
+      <rules context="System">
+        <include>
+          <objectSet>
+            <pattern type="Registry">HKLM\System\Maps\* [*]</pattern>
+            <pattern type="File">%ProgramData%\Microsoft\MapData\* [*]</pattern>
+          </objectSet>
+        </include>
+        <excludeAttributes attributes="Security">
+          <objectSet>
+            <pattern type="Registry">HKLM\System\Maps\* [*]</pattern>
+            <pattern type="File">%ProgramData%\Microsoft\MapData\* [*]</pattern>
+          </objectSet>
+        </excludeAttributes>
+        <merge script="MigXmlHelper.SourcePriority()">
+          <objectSet>
+            <pattern type="File">%ProgramData%\Microsoft\MapData\* [*]</pattern>
+          </objectSet>
+        </merge>
+      </rules>
+    </migXml>
+    <supportedComponents>
+      <supportedComponent>
+        <assemblyIdentity name="_" version="1.0.0.0" />
+        <supportedComponentIdentity language="neutral" name="Microsoft-Windows-MapControl-Desktop" processorArchitecture="*" settingsVersionRange="2" xmlns="urn:schemas-microsoft-com:asm.v3" />
+        <migXml xmlns="">
+          <rules context="System">
+            <merge script="MigXmlHelper.SourcePriority()">
+              <objectSet>
+                <pattern type="File">%ProgramData%\Microsoft\MapData\* [*]</pattern>
+              </objectSet>
+            </merge>
+          </rules>
+        </migXml>
+      </supportedComponent>
+    </supportedComponents>
+  </migration>
+  <file name="MapsMigPlugin.dll" destinationPath="$(runtime.system32)\migration\" sourceName="MapsMigPlugin.dll" importPath="$(build.nttree)\Setup\Sources\replacementmanifests\Microsoft-Windows-MapsControl-Migration\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>+JB1zvomDW+Eegs1HLjzsMiAeKLjw9TIzd7u7EAUJsA=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" description="Default SDDL for Windows Resource Protected file" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+</assembly>

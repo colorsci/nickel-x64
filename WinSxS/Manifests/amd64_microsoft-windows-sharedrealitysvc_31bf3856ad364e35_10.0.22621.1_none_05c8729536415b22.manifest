@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-SharedRealitySvc" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSXS" />
+  <file name="SharedRealitySvc.dll" destinationPath="$(runtime.system32)\" sourceName="SharedRealitySvc.dll" importPath="$(build.nttree)\Analog\bin\Input\Sharing\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>g18ZTuq3eALWtVnndYHIkhfrGKsHwC8SBrr6RjOjJFM=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <dependency discoverable="no" resourceType="Resources">
+    <dependentAssembly dependencyType="prerequisite">
+      <assemblyIdentity name="Microsoft-Windows-SharedRealitySvc.Resources" version="10.0.22621.1" processorArchitecture="amd64" language="*" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+    </dependentAssembly>
+  </dependency>
+  <memberships>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories.Services" version="10.0.22621.1" publicKeyToken="31bf3856ad364e35" typeName="Service" />
+      <categoryInstance>
+        <serviceData name="SharedRealitySvc" displayName="@%SystemRoot%\system32\SharedRealitySvc.dll,-100" errorControl="normal" start="demand" type="win32ShareProcess" description="@%SystemRoot%\system32\SharedRealitySvc.dll,-101" dependOnService="RpcSS" imagePath="%SystemRoot%\system32\svchost.exe -k LocalService -p" objectName="NT AUTHORITY\LocalService" requiredPrivileges="SeImpersonatePrivilege" sidType="unrestricted">
+          <failureActions resetPeriod="86400">
+            <actions>
+              <action delay="500" type="restartService" />
+              <action delay="500" type="restartService" />
+              <action delay="500" type="restartService" />
+              <action delay="0" type="none" />
+            </actions>
+          </failureActions>
+          <securityDescriptor name="SharedRealitySvcSecurity" />
+        </serviceData>
+      </categoryInstance>
+    </categoryMembership>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories" version="1.0.0.0" publicKeyToken="365143bb27e7ac8b" typeName="SvcHost" />
+      <categoryInstance subcategory="LocalService">
+        <serviceGroup position="last" serviceName="SharedRealitySvc" />
+      </categoryInstance>
+    </categoryMembership>
+  </memberships>
+  <registryKeys>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\System\CurrentControlset\Services\SharedRealitySvc\Parameters">
+      <registryValue name="ServiceDll" valueType="REG_EXPAND_SZ" value="%SystemRoot%\System32\SharedRealitySvc.dll" />
+      <registryValue name="ServiceDllUnloadOnStop" valueType="REG_DWORD" value="0x00000001" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\AppId\{1538524A-8AC3-4C33-BF0C-C2F9CE51DD50}">
+      <registryValue name="AccessPermission" valueType="REG_BINARY" value="01001480b4000000c0000000140000003000000002001c000100000011001400040000000101000000000010001000000200840004000000000018001f000000010200000000000f0200000001000000000014001f000000010100000000000100000000000028001f000000010600000000000550000000de14caa2cf6efdfcc0100a7489a5d2dde2db901c000028001f000000010600000000000554000000000000000000000000000000000000000000000001010000000000050a00000001020000000000052000000021020000" />
+      <registryValue name="LaunchPermission" valueType="REG_BINARY" value="01001480b4000000c0000000140000003000000002001c000100000011001400040000000101000000000010001000000200840004000000000018001f000000010200000000000f0200000001000000000014001f000000010100000000000100000000000028001f000000010600000000000550000000de14caa2cf6efdfcc0100a7489a5d2dde2db901c000028001f000000010600000000000554000000000000000000000000000000000000000000000001010000000000050a00000001020000000000052000000021020000" />
+      <registryValue name="LocalService" valueType="REG_SZ" value="SharedRealitySvc" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{5C329169-78BB-4422-83CF-27BC1B43C739}">
+      <registryValue name="" valueType="REG_SZ" value="SpatialEntityStoreManager" />
+      <registryValue name="AppID" valueType="REG_SZ" value="{1538524A-8AC3-4C33-BF0C-C2F9CE51DD50}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{D81A5E22-B8E9-4413-AFCB-ADA8424B3184}">
+      <registryValue name="" valueType="REG_SZ" value="SurfaceReconStoreManager" />
+      <registryValue name="AppID" valueType="REG_SZ" value="{1538524A-8AC3-4C33-BF0C-C2F9CE51DD50}" />
+    </registryKey>
+  </registryKeys>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="SharedRealitySvcSecurity" sddl="D:(A;;CCLCSWRPWPDTLOCRRC;;;SY)(A;;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;BA)(A;;CCLCSWLOCRRC;;;IU)(A;;CCLCSWLOCRRC;;;SU)(A;;CR;;;AU)S:(AU;FA;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;WD)" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_REGKEY_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;CI;GA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;CI;GR;;;SY)(A;CI;GR;;;BA)(A;CI;GR;;;BU)(A;CI;GR;;;S-1-15-2-1)(A;CI;GR;;;S-1-15-3-1024-1065365936-1281604716-3511738428-1654721687-432734479-3232135806-4053264122-3456934681)" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" description="Default SDDL for Windows Resource Protected file" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+</assembly>

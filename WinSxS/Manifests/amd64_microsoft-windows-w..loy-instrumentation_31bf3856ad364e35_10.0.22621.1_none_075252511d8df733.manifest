@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-Windeploy-Instrumentation" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <registryKeys>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\WMI\AutoLogger\Microsoft-Windows-Setup\{75EBC33E-C8AE-4f93-9CA1-683A53E20CB6}">
+      <registryValue name="Enabled" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="EnableLevel" valueType="REG_DWORD" value="0x00000004" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\WMI\AutoLogger\SetupPlatform\{75EBC33E-C8AE-4f93-9CA1-683A53E20CB6}">
+      <registryValue name="Enabled" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="EnableLevel" valueType="REG_DWORD" value="0x00000004" />
+    </registryKey>
+  </registryKeys>
+  <instrumentation xmlns:ms="http://manifests.microsoft.com/win/2004/08/windows/events" xmlns:win="http://manifests.microsoft.com/win/2004/08/windows/events" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <events xmlns="http://schemas.microsoft.com/win/2004/08/events">
+      <provider guid="{75EBC33E-C8AE-4f93-9CA1-683A53E20CB6}" message="$(string.Windeploy.ProviderMessage)" messageFileName="%SystemRoot%\system32\oobe\windeploy.exe" name="Microsoft-Windows-Windeploy" resourceFileName="%SystemRoot%\system32\oobe\windeploy.exe" symbol="Microsoft_Windows_Windeploy">
+        <channels>
+          <channel chid="chaWindeployAnalytic" name="Microsoft-Windows-Windeploy/Analytic" type="Analytic" />
+          <importChannel chid="chaSetup" name="Setup" />
+        </channels>
+      </provider>
+      <cmi />
+    </events>
+  </instrumentation>
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string id="Performance.KeywordMessage" value="Performance" />
+        <string id="Windeploy.ProviderMessage" value="Microsoft-Windows-Windeploy" />
+        <string id="RunWindeploy.TaskMessage" value="Run Windeploy" />
+        <string id="RunWindeploy.StartMessage" value="Windeploy.exe is running." />
+        <string id="RunWindeploy.StopMessage" value="Windeploy.exe exiting with status %1." />
+        <string id="LaunchAndWaitFor.TaskMessage" value="Launch and wait for external process" />
+        <string id="LaunchAndWaitFor.StartMessage" value="Launching &quot;%1&quot;." />
+        <string id="LaunchAndWaitFor.StopMessageExecuted" value="External process exited with status %1." />
+        <string id="LaunchAndWaitFor.StopMessageFailedToExecute" value="Failed to start external process with status %1." />
+        <string id="RunUserProvidedScript.TaskMessage" value="Run user-provided script" />
+        <string id="RunUserProvidedScript.StartMessage" value="Running user-provided script: &quot;%1&quot;." />
+        <string id="RunUserProvidedScript.StopMessageExecuted" value="Successfully executed script: &quot;%1&quot;. Exit code is %2." />
+        <string id="RunUserProvidedScript.StopMessageFailedToExecute" value="Failed to execute script: &quot;%1&quot;.Exit code is %2." />
+      </stringTable>
+    </resources>
+  </localization>
+</assembly>

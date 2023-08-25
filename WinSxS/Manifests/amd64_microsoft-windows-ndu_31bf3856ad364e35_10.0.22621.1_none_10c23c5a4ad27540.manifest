@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-Ndu" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <dependency discoverable="no" resourceType="Resources">
+    <dependentAssembly dependencyType="prerequisite">
+      <assemblyIdentity name="Microsoft-Windows-Ndu.Resources" version="10.0.22621.1" processorArchitecture="amd64" language="*" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </dependentAssembly>
+  </dependency>
+  <file name="Ndu.sys" destinationPath="$(runtime.drivers)\" sourceName="Ndu.sys" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>zMgIP+JozQoAKR7rjSWY2ug1W3srHtTunO3aD3KMYL0=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <file name="nduprov.dll" destinationPath="$(runtime.system32)\" sourceName="nduprov.dll" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>AeAWbxb/ogmgdulHvzOSBPNdmeYZlyWNoIuu9k/WzJY=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <memberships>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories.Services" version="10.0.22621.1" publicKeyToken="31bf3856ad364e35" typeName="Service" />
+      <categoryInstance>
+        <serviceData name="Ndu" displayName="@%SystemRoot%\system32\drivers\Ndu.sys,-10001" errorControl="normal" start="auto" type="kernelDriver" description="@%SystemRoot%\system32\drivers\Ndu.sys,-10002" dependOnService="tcpip" imagePath="system32\drivers\Ndu.sys" />
+      </categoryInstance>
+    </categoryMembership>
+  </memberships>
+  <registryKeys>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion\SRUM\Extensions\{973F5D5C-1D90-4944-BE8E-24B94231A174}">
+      <registryValue name="" valueType="REG_SZ" value="Windows Network Data Usage Monitor" />
+      <registryValue name="DllName" valueType="REG_EXPAND_SZ" value="%SystemRoot%\System32\nduprov.dll" />
+      <registryValue name="CapabilityFlags" valueType="REG_DWORD" value="0x00000502" />
+    </registryKey>
+  </registryKeys>
+  <instrumentation xmlns:ut="http://manifests.microsoft.com/win/2004/08/windows/networkevents" xmlns:win="http://manifests.microsoft.com/win/2004/08/windows/events" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <events xmlns="http://schemas.microsoft.com/win/2004/08/events">
+      <provider guid="{DF271536-4298-45E1-B0F2-E88F78619C5D}" message="$(string.NduEventProviderName)" messageFileName="%windir%\system32\drivers\ndu.sys" name="Microsoft-Windows-Ndu" resourceFileName="%windir%\system32\drivers\ndu.sys" symbol="NduTraceProvider">
+        <channels>
+          <channel chid="NduTraceChannel" enabled="false" name="Microsoft-Windows-Ndu/Diagnostic" type="Analytic" />
+        </channels>
+      </provider>
+      <cmi />
+    </events>
+  </instrumentation>
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string id="description" value="This component provides network data usage monitoring functionality" />
+        <string id="displayName0" value="Windows Network Data Usage Monitoring Driver" />
+        <string id="NduEventProviderName" value="Microsoft-Windows-Ndu" />
+        <string id="Keyword.NduDebugTrace" value="NduDebugTrace" />
+        <string id="Keyword.NduPerInterfaceStats" value="PerInterfaceStats" />
+        <string id="Keyword.NduPerFlowStats" value="PerFlowStats" />
+        <string id="Keyword.NduTokenTracking" value="TokenTracking" />
+        <string id="Keyword.NduPowerDebug" value="NduPowerDebug" />
+        <string id="Keyword.NduUpdateProcessStatsForContainerOrVmId" value="NduUpdateProcessStatsForContainerOrVmId" />
+        <string id="Keyword.NduVpnDebugInfo" value="NduVpnDebugInfo" />
+        <string id="Task.NduDebugTrace" value="NduDebugTrace" />
+        <string id="Task.NduPerInterfaceStats" value="PerInterfaceStats" />
+        <string id="Task.NduPerFlowStats" value="PerFlowStats" />
+        <string id="Task.NduTokenTracking" value="TokenTracking" />
+        <string id="Task.NduPowerDebug" value="NduPowerDebug" />
+        <string id="Task.NduPowerQueueWorkItem" value="NduPowerQueueWorkItem" />
+        <string id="Task.NduUpdateProcessStatsForContainerOrVmId" value="NduUpdateProcessStatsForContainerOrVmId" />
+        <string id="Task.NduVpnDebugInfo" value="NduVpnDebugInfo" />
+        <string id="evtNduTraceDebugString" value="%1" />
+        <string id="evtNduTraceError" value="%1 Failed with %2" />
+        <string id="evtNduNewInterfaceAddedForPic" value="Interface (Luid:%1) added to per-interface list for proc %2 at active index %3" />
+        <string id="evtNduFlowEstablished" value="%1 Flow (Id:%2) established. ExePath: %3 SvcTag:%4 PkgName:%5 UserId:%6 Pid: %7" />
+        <string id="evtNduFlowContextRefcount" value="Flow Context (Flow Id:%1) Refcount%2" />
+        <string id="evtNduUpdateInterfaceStatsCounters" value="Updated Interface Stats IfLuid:%1 ProfileId:%2 BytesSent:%3 BytesRecvd:%4" />
+        <string id="evtNduUpdateFlowStatsCounters" value="Updated Flow Stats (Flow Id:%2) IfLuid:%1 BytesSent:%3 BytesRecvd:%4" />
+        <string id="evtNduTokenRegisterQuotaExceeded" value="Registration for quota exceeded notification. ExePath: %1 SvcTag:%2 PkgName:%3 UserId:%4 Cookie: %5 Quota: %6" />
+        <string id="evtNduTokenUnregisterQuotaExceeded" value="Unregistered from quota exceeded notification. Cookie: %1" />
+        <string id="evtNduRegisterBytesLimitExceeded" value="Registration for byte count limit. Luid: %1 ProfileId:%2 Limit: %3" />
+        <string id="evtNduUnregisterBytesLimitExceeded" value="Unregistered from byte count limit notification. Luid: %1 ProfileId:%2" />
+        <string id="evtNduTraceDebugStringVerbose" value="%1" />
+        <string id="evtNduTraceDebugStringError" value="%1" />
+        <string id="Keyword.NduLwtPerMinuteInterfaceStats" value="LwtPerMinuteInterfaceStats" />
+        <string id="evtNduLwtUpdatePerMinuteInterfaceStats" value="IfLuid:%1 ProfileId:%2 BytesSent:%3 BytesRecvd:%4 IsCosted: %5" />
+        <string id="evtNduMergeSmbStatsListSystemSmbNotEqualToOne" value="NduMergeSmbStatsList: Not transferred InterfaceLuid and ProfileId to Smb stats because there is no one-and-only-one file transfer service (SMB) in the system. SystemSMB count:%1 InContainer:%2;" />
+        <string id="evtNduGetProfileIdForInterfaceNotFound" value="ProfileIdTracker::GetProfileIdForInterface: Profile Id not found. Luid: %1" />
+        <string id="evtSessionIdNotFoundFromUMgrEnumerateSessionUsers" value="NduGetHostSid::UMgrEnumerateSessionUsers could not find SessionId: %1" />
+        <string id="evtNduUpdateProcessStatsForContainerOrVmId" value="NduUpdateProcessStatsForContainerOrVmId succeeded: CurrentProcNumber:%1 PartitionId:%2 Direction:%3 IfLuid:%4 IfType:%5 BytesSent:%6 BytesRecvd:%7" />
+        <string id="evtNduVpnDebugInfo" value="%1: VirtualIfLuid:%2 OuterProcessId:%3 IfAlias:%4" />
+      </stringTable>
+    </resources>
+  </localization>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" description="Default SDDL for Windows Resource Protected file" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+</assembly>

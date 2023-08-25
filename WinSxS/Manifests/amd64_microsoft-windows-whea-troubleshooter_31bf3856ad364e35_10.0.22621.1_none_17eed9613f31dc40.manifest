@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-WHEA-Troubleshooter" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <dependency discoverable="no" resourceType="resources">
+    <dependentAssembly dependencyType="prerequisite">
+      <assemblyIdentity name="Microsoft-Windows-WHEA-Troubleshooter.Resources" version="10.0.22621.1" processorArchitecture="amd64" language="*" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+    </dependentAssembly>
+  </dependency>
+  <file name="whealogr.dll" destinationPath="$(runtime.system32)\" sourceName="whealogr.dll" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>n/f9eAyUiRIkc+CLfxIybBRUekjlBTbDi1wwdhijk9A=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <registryKeys>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\WDI\DiagnosticModules\{85e0acd9-809a-482b-b60b-bcad1f8d0cd7}">
+      <registryValue name="ImagePath" valueType="REG_EXPAND_SZ" value="%windir%\system32\whealogr.dll" />
+      <registryValue name="NeverUnload" valueType="REG_DWORD" value="0x00000001" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\WDI\Scenarios\{d9d40260-82a9-41b0-9bc1-c4446c44c0a3}\DiagnosticModules\DM1">
+      <registryValue name="DMGUID" valueType="REG_SZ" value="{85e0acd9-809a-482b-b60b-bcad1f8d0cd7}" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\WDI\Scenarios\{d9d40260-82a9-41b0-9bc1-c4446c44c0a3}\Instrumentation\{7b563579-53c8-44e7-8236-0f87b9fe6594};20">
+      <registryValue name="Keyword" valueType="REG_QWORD" value="0008000000000000" />
+    </registryKey>
+  </registryKeys>
+  <instrumentation xmlns:win="http://manifests.microsoft.com/win/2004/08/windows/events">
+    <events xmlns="http://schemas.microsoft.com/win/2004/08/events">
+      <provider xmlns:whealogr="http://manifests.microsoft.com/windows/kernel/whea/troubleshooter" guid="{c26c4f3c-3f66-4e99-8f8a-39405cfed220}" message="$(string.ProviderName)" messageFileName="%systemroot%\system32\whealogr.dll" name="Microsoft-Windows-WHEA-Logger" resourceFileName="%systemroot%\system32\whealogr.dll" symbol="WHEA_TS_ETW_PROVIDER">
+        <channels>
+          <importChannel chid="chidSystem" name="System" />
+        </channels>
+      </provider>
+      <cmi />
+    </events>
+  </instrumentation>
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string id="displayName0" value="WHEA Error Logger" />
+        <string id="displayName1" value="WRP_FILE_DEFAULT_SDDL" />
+        <string id="description2" value="Default SDDL for Windows Resource Protected file" />
+        <string id="ProviderName" value="Microsoft-Windows-WHEA-Logger" />
+        <string id="WHEA_LOGGER_INIT_KEYWORD.KeywordMessage" value="WHEA Logging Service Initialization" />
+        <string id="WHEA_LOGGER_ERRLOG_KEYWORD.KeywordMessage" value="WHEA Error Event Logs" />
+        <string id="EventMap.General.NotApplicable" value="N/A" />
+        <string id="EventMap.YesNo.No" value="No" />
+        <string id="EventMap.YesNo.Yes" value="Yes" />
+        <string id="EventMap.General.ErrorSource.Unknown" value="Unknown Error Source" />
+        <string id="EventMap.General.ErrorSource.CMC" value="Corrected Machine Check" />
+        <string id="EventMap.General.ErrorSource.CPE" value="Corrected Platform Error" />
+        <string id="EventMap.General.ErrorSource.MCE" value="Machine Check Exception" />
+        <string id="EventMap.General.ErrorSource.PCIe" value="Advanced Error Reporting (PCI Express)" />
+        <string id="EventMap.General.ErrorSource.INIT" value="INIT" />
+        <string id="EventMap.General.ErrorSource.NMI" value="Non-maskable Interrupt" />
+        <string id="EventMap.General.ErrorSource.BOOT" value="BOOT" />
+        <string id="EventMap.General.ErrorSource.Generic" value="Generic" />
+        <string id="EventMap.ARMAccessMode.Secure" value="Secure" />
+        <string id="EventMap.ARMAccessMode.Normal" value="Normal" />
+        <string id="EventMap.ARMAddressSpace.External" value="External Memory Access" />
+        <string id="EventMap.ARMAddressSpace.Internal" value="Internal Memory Access" />
+        <string id="EventMap.ARMAddressSpace.Device" value="Device Memory Access" />
+        <string id="EventMap.ARMErrorType.CacheError" value="Cache Error" />
+        <string id="EventMap.ARMErrorType.TLBError" value="TLB Error" />
+        <string id="EventMap.ARMErrorType.BUSError" value="BUS Error" />
+        <string id="EventMap.ARMErrorType.MicroArchitecturalError" value="Micro-architectural Error" />
+        <string id="EventMap.ARMParticipationType.LocalOriginated" value="Local node originated the request" />
+        <string id="EventMap.ARMParticipationType.LocalResponded" value="Local node responded to the request" />
+        <string id="EventMap.ARMParticipationType.LocalObserved" value="Local node observed the request as 3rd party" />
+        <string id="EventMap.ARMParticipationType.Generic" value="Generic" />
+        <string id="EventMap.ARMTransactionType.Instruction" value="Instruction" />
+        <string id="EventMap.ARMTransactionType.Data" value="Data" />
+        <string id="EventMap.ARMTransactionType.Generic" value="Generic" />
+        <string id="EventMap.ARMTransactionType.Reserved" value="Reserved" />
+        <string id="EventMap.ARMOperationType.GenericError" value="Generic" />
+        <string id="EventMap.ARMOperationType.GenericRead" value="Generic Read" />
+        <string id="EventMap.ARMOperationType.GenericWrite" value="Generic Write" />
+        <string id="EventMap.ARMOperationType.DataRead" value="Data Read" />
+        <string id="EventMap.ARMOperationType.DataWrite" value="Data Write" />
+        <string id="EventMap.ARMOperationType.InstructionFetch" value="Instruction Fetch" />
+        <string id="EventMap.ARMOperationType.Prefetch" value="Prefetch" />
+        <string id="EventMap.ARMOperationType.Evict" value="Eviction" />
+        <string id="EventMap.ARMOperationType.Snoop" value="Snoop" />
+        <string id="EventMap.ARMOperationType.Snooped" value="Snooped" />
+        <string id="EventMap.ARMOperationType.Management" value="Management" />
+        <string id="EventMap.ARMTLBOperationType.Management" value="Management" />
+        <string id="EventMap.ARMTLBOperationType.ExternalManagement" value="External Management" />
+        <string id="EventMap.MCTransactionType.Instruction" value="Instruction" />
+        <string id="EventMap.MCTransactionType.Data" value="Data" />
+        <string id="EventMap.MCTransactionType.Generic" value="Generic" />
+        <string id="EventMap.MCTransactionType.Reserved" value="Reserved" />
+        <string id="EventMap.MCProcessorParticipation.LocalOriginated" value="Local node originated the request" />
+        <string id="EventMap.MCProcessorParticipation.LocalResponded" value="Local node responded to the request" />
+        <string id="EventMap.MCProcessorParticipation.LocalObserved" value="Local node observed the request as 3rd party" />
+        <string id="EventMap.MCProcessorParticipation.Generic" value="Generic" />
+        <string id="EventMap.MCMemoryTransactionType.GenericError" value="Generic Error" />
+        <string id="EventMap.MCMemoryTransactionType.GenericRead" value="Generic Read" />
+        <string id="EventMap.MCMemoryTransactionType.GenericWrite" value="Generic Write" />
+        <string id="EventMap.MCMemoryTransactionType.DataRead" value="Data Read" />
+        <string id="EventMap.MCMemoryTransactionType.DataWrite" value="Data Write" />
+        <string id="EventMap.MCMemoryTransactionType.InstructionFetch" value="Instruction Fetch" />
+        <string id="EventMap.MCMemoryTransactionType.Prefetch" value="Prefetch" />
+        <string id="EventMap.MCMemoryTransactionType.Evict" value="Evict" />
+        <string id="EventMap.MCMemoryTransactionType.Snoop" value="Snoop" />
+        <string id="EventMap.MCCacheLevel.Level0" value="Level 0" />
+        <string id="EventMap.MCCacheLevel.Level1" value="Level 1" />
+        <string id="EventMap.MCCacheLevel.Level2" value="Level 2" />
+        <string id="EventMap.MCCacheLevel.Generic" value="Generic" />
+        <string id="EventMap.MCMemoryOrIO.Memory" value="Memory" />
+        <string id="EventMap.MCMemoryOrIO.Reserved" value="Reserved" />
+        <string id="EventMap.MCMemoryOrIO.IO" value="I/O" />
+        <string id="EventMap.MCMemoryOrIO.Generic" value="Generic" />
+        <string id="EventMap.MCTimeout.No" value="No" />
+        <string id="EventMap.MCTimeout.Yes" value="Yes" />
+        <string id="EventMap.mapMCOperationType.Generic" value="Generic" />
+        <string id="EventMap.mapMCOperationType.Read" value="Read" />
+        <string id="EventMap.mapMCOperationType.Write" value="Write" />
+        <string id="EventMap.mapMCOperationType.AddressCommand" value="Address/Command" />
+        <string id="EventMap.MCErrorType.NoError" value="No Error" />
+        <string id="EventMap.MCErrorType.Unclassified" value="Unclassified Error" />
+        <string id="EventMap.MCErrorType.MicrocodeROMParity" value="Microcode ROM Parity Error" />
+        <string id="EventMap.MCErrorType.External" value="External Error" />
+        <string id="EventMap.MCErrorType.FRC" value="FRC Error" />
+        <string id="EventMap.MCErrorType.InternalTimer" value="Internal Timer Error" />
+        <string id="EventMap.MCErrorType.InternalUnclassified" value="Internal Unclassified Error" />
+        <string id="EventMap.MCErrorType.GenericMemoryHierarchy" value="Generic Cache Hierarchy Error" />
+        <string id="EventMap.MCErrorType.TLB" value="Translation Lookaside Buffer Error" />
+        <string id="EventMap.MCErrorType.MemoryHierarchy" value="Cache Hierarchy Error" />
+        <string id="EventMap.MCErrorType.BusInterconnect" value="Bus/Interconnect Error" />
+        <string id="EventMap.MCErrorType.MemoryController" value="Memory Controller Error" />
+        <string id="EventMap.MCErrorType.Unknown" value="Unknown Error" />
+        <string id="EventMap.MCNBErrorType.ECC" value="ECC Memory Error" />
+        <string id="EventMap.MCNBErrorType.CRC" value="CRC Error" />
+        <string id="EventMap.MCNBErrorType.Sync" value="Sync Error" />
+        <string id="EventMap.MCNBErrorType.MstAbort" value="Master Abort Error" />
+        <string id="EventMap.MCNBErrorType.TgtAbort" value="Target Abort Error" />
+        <string id="EventMap.MCNBErrorType.GART" value="GART Error" />
+        <string id="EventMap.MCNBErrorType.RMW" value="RMW Error" />
+        <string id="EventMap.MCNBErrorType.Wdog" value="HyperTransport Watchdog Timeout Error" />
+        <string id="EventMap.MCNBErrorType.ChipKillECC" value="ChipKill ECC Memory Error" />
+        <string id="EventMap.MemoryErrorType.Unknown" value="Unknown Error" />
+        <string id="EventMap.MemoryErrorType.NoError" value="No Error" />
+        <string id="EventMap.MemoryErrorType.SingleBitECC" value="Single-Bit ECC" />
+        <string id="EventMap.MemoryErrorType.MultiBitECC" value="Multi-Bit ECC" />
+        <string id="EventMap.MemoryErrorType.SingleSymChipKill" value="Single-Symbol ChipKill" />
+        <string id="EventMap.MemoryErrorType.MultiSymChipKill" value="Multi-Symbol ChipKill" />
+        <string id="EventMap.MemoryErrorType.MasterAbort" value="Master Abort" />
+        <string id="EventMap.MemoryErrorType.TargetAbort" value="Target Abort" />
+        <string id="EventMap.MemoryErrorType.ParityError" value="Parity Error" />
+        <string id="EventMap.MemoryErrorType.WatchdogTimeout" value="Watchdog Timeout" />
+        <string id="EventMap.MemoryErrorType.InvalidAddress" value="Invalid Address" />
+        <string id="EventMap.MemoryErrorType.MirrorBroken" value="Broken Mirror" />
+        <string id="EventMap.MemoryErrorType.MemorySparing" value="Memory Sparing Error" />
+        <string id="EventMap.PciExpressPortType.Endpoint" value="PCI Express Endpoint" />
+        <string id="EventMap.PciExpressPortType.LegacyEndpoint" value="PCI Express Legacy Endpoint" />
+        <string id="EventMap.PciExpressPortType.RootPort" value="PCI Express Root Port" />
+        <string id="EventMap.PciExpressPortType.UpstreamSwitchPort" value="PCI Express Upstream Switch Port" />
+        <string id="EventMap.PciExpressPortType.DownstreamSwitchPort" value="PCI Express Downstream Switch Port" />
+        <string id="EventMap.PciExpressPortType.PCIeToPCIXBridge" value="PCI Express To PCI-X Bridge" />
+        <string id="EventMap.PciExpressPortType.PCIXToPCIeBridge" value="PCI-X To PCI Express Bridge" />
+        <string id="EventMap.PciExpressPortType.RootComplexIntegratedEndpoint" value="PCI Express Root Complex Integrated Endpoint" />
+        <string id="EventMap.PciExpressPortType.RootComplexEventCollector" value="PCI Express Root Complex Event Collector" />
+        <string id="EventMap.WheaErrorType.Reserved0" value="Reserved" />
+        <string id="EventMap.WheaErrorType.Internal" value="Internal Error" />
+        <string id="EventMap.WheaErrorType.Reserved2" value="Reserved" />
+        <string id="EventMap.WheaErrorType.Reserved3" value="Reserved" />
+        <string id="EventMap.WheaErrorType.Memory" value="Memory Error" />
+        <string id="EventMap.WheaErrorType.TLB" value="TLB Error" />
+        <string id="EventMap.WheaErrorType.Cache" value="Cache Error" />
+        <string id="EventMap.WheaErrorType.Function" value="Functional Unit Error" />
+        <string id="EventMap.WheaErrorType.Selftest" value="Component Self Test Error" />
+        <string id="EventMap.WheaErrorType.Flow" value="Internal Queue Overflow/Underflow" />
+        <string id="EventMap.WheaErrorType.Reserved10" value="Reserved" />
+        <string id="EventMap.WheaErrorType.Reserved11" value="Reserved" />
+        <string id="EventMap.WheaErrorType.Reserved12" value="Reserved" />
+        <string id="EventMap.WheaErrorType.Reserved13" value="Reserved" />
+        <string id="EventMap.WheaErrorType.Reserved14" value="Reserved" />
+        <string id="EventMap.WheaErrorType.Reserved15" value="Reserved" />
+        <string id="EventMap.WheaErrorType.Bus" value="Bus Error" />
+        <string id="EventMap.WheaErrorType.Map" value="Virtual Address Mapping Error" />
+        <string id="EventMap.WheaErrorType.Improper" value="Improper Access" />
+        <string id="EventMap.WheaErrorType.Unimplemented" value="Access To Unimplemented Device Memory" />
+        <string id="EventMap.WheaErrorType.LOL" value="Loss Of Lockstep" />
+        <string id="EventMap.WheaErrorType.Response" value="Invalid Response" />
+        <string id="EventMap.WheaErrorType.Parity" value="Parity Error" />
+        <string id="EventMap.WheaErrorType.Protocol" value="Protocol Error" />
+        <string id="EventMap.WheaErrorType.Path" value="Path Error" />
+        <string id="EventMap.WheaErrorType.Timeout" value="Bus Timeout" />
+        <string id="EventMap.WheaErrorType.Poisoned" value="Poisoned Data" />
+        <string id="EventMap.PciXBusErrorType.Unknown" value="Unknown or OEM-specific Error" />
+        <string id="EventMap.PciXBusErrorType.Perr" value="Data Parity Error" />
+        <string id="EventMap.PciXBusErrorType.Serr" value="System Error" />
+        <string id="EventMap.PciXBusErrorType.MasterAbort" value="Master Abort" />
+        <string id="EventMap.PciXBusErrorType.BusTimeout" value="Bus Timeout or No Device Present" />
+        <string id="EventMap.PciXBusErrorType.MasterDataParity" value="Master Data Parity Error" />
+        <string id="EventMap.PciXBusErrorType.AddressParity" value="Address Parity Error" />
+        <string id="EventMap.PciXBusErrorType.CommandParity" value="Command Parity Error" />
+        <string id="EventMessage.ARMProcErr" value="A corrected hardware error has occurred.%n%nReported by component: Processor Core%nError Source: %1%nError Type: %6%n%n%nThe details view of this entry contains further information." />
+        <string id="EventMessage.ARMProcWrn" value="A fatal hardware error has occurred.%n%nReported by component: Processor Core%nError Source: %1%nError Type: %6%n%n%nThe details view of this entry contains further information." />
+        <string id="EventMessage.DefaultInfo" value="A hardware event has occurred. An informational record describing the condition is contained in the data section of this event." />
+        <string id="EventMessage.DefaultWarning" value="A corrected hardware error has occurred. A record describing the condition is contained in the data section of this event." />
+        <string id="EventMessage.DefaultError" value="A fatal hardware error has occurred. A record describing the condition is contained in the data section of this event." />
+        <string id="EventMessage.XpfMcaWrn" value="A corrected hardware error has occurred.%n%nReported by component: Processor Core%nError Source: %1%nError Type: %7%nProcessor APIC ID: %2%n%nThe details view of this entry contains further information." />
+        <string id="EventMessage.XpfMcaErr" value="A fatal hardware error has occurred.%n%nReported by component: Processor Core%nError Source: %1%nError Type: %7%nProcessor APIC ID: %2%n%nThe details view of this entry contains further information." />
+        <string id="EventMessage.XpfAMD64NBMcaWrn" value="A corrected hardware error has occurred.%n%nComponent: AMD Northbridge%nError Source: %1%nError Type: %7%nProcessor APIC ID: %2%n%nThe details view of this entry contains further information." />
+        <string id="EventMessage.XpfAMD64NBMcaErr" value="A fatal hardware error has occurred.%n%nComponent: AMD Northbridge%nError Source: %1%nError Type: %7%nProcessor APIC ID: %2%n%nThe details view of this entry contains further information." />
+        <string id="EventMessage.MemoryWrn" value="A corrected hardware error has occurred.%n%nComponent: Memory%nError Source: %1%nError Type: %19%n%nThe details view of this entry contains further information." />
+        <string id="EventMessage.MemoryErr" value="A fatal hardware error has occurred.%n%nComponent: Memory%nError Source: %1%nError Type: %19%n%nThe details view of this entry contains further information." />
+        <string id="Event.PciExpress.Error_V0" value="A fatal hardware error has occurred.%n%nComponent: %5%nError Source: %1%n%nBus:Device:Function: %9:%10:%11%nVendor ID:Device ID: %15:%16%nClass Code: %17%n%nThe details view of this entry contains further information." />
+        <string id="Event.Memory.Error" value="A fatal memory error has occurred.%n%nError Source: %1%n%nError Bank: %2%nMCi_STATUS: %3%nPhysical Address: %4%nMCi_MISC: %5%nFRU Text: %6" />
+        <string id="Event.Memory.Warning" value="A corrected memory error has occurred.%n%nError Source: %1%n%nError Bank: %2%nMCi_STATUS: %3%nPhysical Address: %4%nMCi_MISC: %5%nFRU Text: %6" />
+        <string id="Event.PciExpress.Warning_V0" value="A corrected hardware error has occurred.%n%nComponent: %5%nError Source: %1%n%nBus:Device:Function: %9:%10:%11%nVendor ID:Device ID: %15:%16%nClass Code: %17%n%nThe details view of this entry contains further information." />
+        <string id="Event.PciExpress.Error" value="A fatal hardware error has occurred.%n%nComponent: %5%nError Source: %1%n%nPrimary Bus:Device:Function: %9:%10:%11%nSecondary Bus:Device:Function: %13:%14:%15%nPrimary Device Name:%25%nSecondary Device Name:%26" />
+        <string id="Event.PciExpress.Warning" value="A corrected hardware error has occurred.%n%nComponent: %5%nError Source: %1%n%nPrimary Bus:Device:Function: %9:%10:%11%nSecondary Bus:Device:Function: %13:%14:%15%nPrimary Device Name:%25%nSecondary Device Name:%26" />
+        <string id="Event.PciExpress.NoDeviceId.Error" value="A fatal hardware error has occurred.%n%nComponent: %5%nError Source: %1%n%nThe details view of this entry contains further information." />
+        <string id="Event.PciExpress.NoDeviceId.Warning" value="A corrected hardware error has occurred.%n%nComponent: %5%nError Source: %1%n%nThe details view of this entry contains further information." />
+        <string id="EventMessage.PciXBus.Wrn" value="A corrected hardware error has occurred.%n%nComponent: PCI/PCI-X Bus%nError Source: %1%nError Type: %5%nSegment:Bus: %7:%6%n%nThe details view of this entry contains further information." />
+        <string id="EventMessage.PciXBus.Err" value="A fatal hardware error has occurred.%n%nComponent: PCI/PCI-X Bus%nError Source: %1%nError Type: %5%nSegment:Bus: %7:%6%n%nThe details view of this entry contains further information." />
+        <string id="EventMessage.PciXBus.NoDeviceId.Wrn" value="A corrected hardware error has occurred.%n%nComponent: PCI/PCI-X Bus%nError Source: %1%nError Type: %5%n%nThe details view of this entry contains further information." />
+        <string id="EventMessage.PciXBus.NoDeviceId.Err" value="A fatal hardware error has occurred.%n%nComponent: PCI/PCI-X Bus%nError Source: %1%nError Type: %5%n%nThe details view of this entry contains further information." />
+        <string id="EventMessage.PciXDevice.Wrn" value="A corrected hardware error has occurred.%n%nComponent: PCI/PCI-X Device%nError Source: %1%nError Type: %5%n%nSegment:Bus:Device:Function: %12:%11:%10:%9%nVendor ID:Device ID: %6:%7%nClass Code: %8%n%nThe details view of this entry contains further information." />
+        <string id="EventMessage.PciXDevice.Err" value="A fatal hardware error has occurred.%n%nComponent: PCI/PCI-X Device%nError Source: %1%nError Type: %5%n%nSegment:Bus:Device:Function: %12:%11:%10:%9%nVendor ID:Device ID: %6:%7%nClass Code: %8%n%nThe details view of this entry contains further information." />
+        <string id="EventMessage.PciXDevice.NoDeviceId.Wrn" value="A corrected hardware error has occurred.%n%nComponent: PCI/PCI-X Device%nError Source: %1%nError Type: %5%n%nThe details view of this entry contains further information." />
+        <string id="EventMessage.PciXDevice.NoDeviceId.Err" value="A fatal hardware error has occurred.%n%nComponent: PCI/PCI-X Device%nError Source: %1%nError Type: %5%n%nThe details view of this entry contains further information." />
+        <string id="EventMap.MCErrorType.InternalParity" value="Internal parity error" />
+        <string id="EventMessage.MemoryNoTypeWrn" value="A corrected hardware error has occurred.%n%nComponent: Memory%nError Source: %1%n%nThe details view of this entry contains further information." />
+        <string id="EventMessage.MemoryNoTypeErr" value="A fatal hardware error has occurred.%n%nComponent: Memory%nError Source: %1%n%nThe details view of this entry contains further information." />
+      </stringTable>
+    </resources>
+  </localization>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" description="Default SDDL for Windows Resource Protected file" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+</assembly>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-OobeLdr-Instrumentation" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <registryKeys>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\WMI\AutoLogger\Microsoft-Windows-Setup\{75EBC33E-8670-4eb6-B535-3B9D6BB222FD}">
+      <registryValue name="Enabled" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="EnableLevel" valueType="REG_DWORD" value="0x00000004" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\WMI\AutoLogger\SetupPlatform\{75EBC33E-8670-4eb6-B535-3B9D6BB222FD}">
+      <registryValue name="Enabled" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="EnableLevel" valueType="REG_DWORD" value="0x00000004" />
+    </registryKey>
+  </registryKeys>
+  <instrumentation xmlns:ms="http://manifests.microsoft.com/win/2004/08/windows/events" xmlns:win="http://manifests.microsoft.com/win/2004/08/windows/events" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <events xmlns="http://schemas.microsoft.com/win/2004/08/events">
+      <provider guid="{75EBC33E-8670-4eb6-B535-3B9D6BB222FD}" message="$(string.OobeLdr.ProviderMessage)" messageFileName="%SystemRoot%\system32\oobe\OobeLdr.exe" name="Microsoft-Windows-OobeLdr" resourceFileName="%SystemRoot%\system32\oobe\OobeLdr.exe" symbol="Microsoft_Windows_OobeLdr">
+        <channels>
+          <channel chid="chaOobeLdrAnalytic" name="Microsoft-Windows-OobeLdr/Analytic" type="Analytic" />
+          <importChannel chid="chaSetup" name="Setup" />
+        </channels>
+      </provider>
+      <cmi />
+    </events>
+  </instrumentation>
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string id="Performance.KeywordMessage" value="Performance" />
+        <string id="Diagnostic.KeywordMessage" value="Diagnostic" />
+        <string id="OobeLdr.ProviderMessage" value="Microsoft-Windows-OobeLdr" />
+        <string id="RunOobeLdr.TaskMessage" value="Run OobeLdr" />
+        <string id="RunOobeLdr.StartMessage" value="OobeLdr.exe is running with command line &quot;%1&quot;." />
+        <string id="RunOobeLdr.StopMessage" value="OobeLdr.exe exiting with status %1." />
+        <string id="OobeLdrProcessUnattend.TaskMessage" value="OobeLdr Process Unattend" />
+        <string id="OobeLdrProcessUnattend.StartMessage" value="Executing unattend settings pass &quot;%1&quot;." />
+        <string id="OobeLdrProcessUnattend.StopMessageExecuted" value="Finished executing unattend pass with status %1." />
+        <string id="OobeLdrProcessUnattend.StopMessageFailedToExecute" value="Failed to execute unattend pass with status %1." />
+        <string id="OobeLdrProcessUnattend.UsingFile" value="Using unattend file &quot;%2&quot; for pass &quot;%1&quot;." />
+        <string id="LaunchOobe.TaskMessage" value="Launch Oobe" />
+        <string id="LaunchOobe.StartMessage" value="Launching Oobe." />
+        <string id="LaunchOobe.StopMessage" value="Oobe exited with status %1." />
+      </stringTable>
+    </resources>
+  </localization>
+</assembly>

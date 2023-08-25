@@ -1,0 +1,703 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PowerShellMetadata xmlns="http://schemas.microsoft.com/cmdlets-over-objects/2009/11">
+  <Class ClassName="ROOT/microsoft/ipam/MSFT_IPAM_Range" ClassVersion="1.0.0">
+    <Version>1.0.0</Version>
+    <DefaultNoun>IpamRange</DefaultNoun>
+    <InstanceCmdlets>
+
+      <GetCmdletParameters>
+        <QueryableProperties>
+          <Property PropertyName="StartAddress">
+            <Type PSType="System.Net.IPAddress" />
+            <RegularQuery AllowGlobbing="false">
+              <CmdletParameterMetadata PSName="StartIPAddress" IsMandatory="true" Position="1" ValueFromPipelineByPropertyName="true" >
+                <ValidateNotNullOrEmpty />
+              </CmdletParameterMetadata>
+            </RegularQuery>
+          </Property>
+
+          <Property PropertyName="EndAddress">
+            <Type PSType="System.Net.IPAddress" />
+            <RegularQuery AllowGlobbing="false">
+              <CmdletParameterMetadata PSName="EndIPAddress" IsMandatory="true" Position="2" ValueFromPipelineByPropertyName="true" >
+                <ValidateNotNullOrEmpty />
+              </CmdletParameterMetadata>
+            </RegularQuery>
+          </Property>
+
+          <Property PropertyName="ManagedByService">
+            <Type PSType="string" />
+            <RegularQuery AllowGlobbing="false">
+              <CmdletParameterMetadata PSName="ManagedByService" Aliases="MB" IsMandatory="false"  ValueFromPipelineByPropertyName="true" >
+                <ValidateNotNullOrEmpty />
+              </CmdletParameterMetadata>
+            </RegularQuery>
+          </Property>
+
+          <Property PropertyName="ServiceInstance">
+            <Type PSType="string" />
+            <RegularQuery AllowGlobbing="false">
+              <CmdletParameterMetadata PSName="ServiceInstance" Aliases="SI" IsMandatory="false"  ValueFromPipelineByPropertyName="true" >
+                <ValidateNotNullOrEmpty />
+              </CmdletParameterMetadata>
+            </RegularQuery>
+          </Property>
+
+          <Property PropertyName="NetworkType">
+            <Type PSType="Ipam.VirtualizationType" />
+            <RegularQuery AllowGlobbing="false">
+              <CmdletParameterMetadata IsMandatory="false" ValueFromPipelineByPropertyName="true" />
+            </RegularQuery>
+          </Property>
+
+          <Property PropertyName="AddressSpace">
+            <Type PSType="string" />
+            <RegularQuery AllowGlobbing="false">
+              <CmdletParameterMetadata IsMandatory="false" ValueFromPipelineByPropertyName="true" />
+            </RegularQuery>
+          </Property>
+        </QueryableProperties>
+      </GetCmdletParameters>
+
+      <GetCmdlet>
+        <CmdletMetadata Verb="Get" />
+          <GetCmdletParameters>
+            <QueryableProperties>
+              <Property PropertyName="StartAddress">
+                <Type PSType="System.Net.IPAddress" />
+                <RegularQuery AllowGlobbing="false">
+                  <CmdletParameterMetadata PSName="StartIPAddress" IsMandatory="true" ValueFromPipelineByPropertyName="true" CmdletParameterSets="ByID" >
+                    <ValidateNotNullOrEmpty />
+                  </CmdletParameterMetadata>
+                </RegularQuery>
+              </Property>
+
+              <Property PropertyName="EndAddress">
+                <Type PSType="System.Net.IPAddress" />
+                <RegularQuery AllowGlobbing="false">
+                  <CmdletParameterMetadata PSName="EndIPAddress" IsMandatory="true" ValueFromPipelineByPropertyName="true" CmdletParameterSets="ByID" >
+                    <ValidateNotNullOrEmpty />
+                  </CmdletParameterMetadata>
+                </RegularQuery>
+              </Property>
+
+              <Property PropertyName="AddressType">
+                <Type PSType="Ipam.AddressFamily" />
+                <RegularQuery AllowGlobbing="false">
+                  <CmdletParameterMetadata PSName="AddressFamily" IsMandatory="true" ValueFromPipelineByPropertyName="true" CmdletParameterSets="ByAF" >
+                    <ValidateNotNullOrEmpty />
+                  </CmdletParameterMetadata>
+                </RegularQuery>
+              </Property>
+              
+              <Property PropertyName="AddressCategory">
+                <Type PSType="Ipam.AddressCategory" />
+                <RegularQuery AllowGlobbing="false">
+                  <CmdletParameterMetadata PSName="AddressCategory" IsMandatory="false" ValueFromPipelineByPropertyName="true" CmdletParameterSets="ByAF" >
+                    <ValidateNotNullOrEmpty />
+                  </CmdletParameterMetadata>
+                </RegularQuery>
+              </Property>
+
+              <Property PropertyName="ManagedByService">
+                <Type PSType="string" />
+                <RegularQuery AllowGlobbing="false">
+                  <CmdletParameterMetadata PSName="ManagedByService" Aliases="MB" IsMandatory="false"  ValueFromPipelineByPropertyName="true" CmdletParameterSets="ByAF ByID" >
+                    <ValidateNotNullOrEmpty />
+                  </CmdletParameterMetadata>
+                </RegularQuery>
+              </Property>
+              
+              <Property PropertyName="ServiceInstance">
+                <Type PSType="string" />
+                <RegularQuery AllowGlobbing="false">
+                  <CmdletParameterMetadata PSName="ServiceInstance" Aliases="SI" IsMandatory="false"  ValueFromPipelineByPropertyName="true" CmdletParameterSets="ByAF ByID" >
+                    <ValidateNotNullOrEmpty />
+                  </CmdletParameterMetadata>
+                </RegularQuery>
+              </Property>
+
+              <Property PropertyName="NetworkType">
+                <Type PSType="Ipam.VirtualizationType" />
+                <RegularQuery AllowGlobbing="false">
+                  <CmdletParameterMetadata IsMandatory="false" ValueFromPipelineByPropertyName="true" CmdletParameterSets="ByAF ByID" />
+                </RegularQuery>
+              </Property>
+
+              <Property PropertyName="AddressSpace">
+                <Type PSType="string" />
+                <RegularQuery AllowGlobbing="false">
+                  <CmdletParameterMetadata IsMandatory="false" ValueFromPipelineByPropertyName="true" CmdletParameterSets="ByAF ByID" />
+                </RegularQuery>
+              </Property>
+            </QueryableProperties>        
+                       
+        
+            <QueryableAssociations>
+               <!--by association, get all ranges corresponding to a block-->               
+              <Association Association="MSFT_IPAM_Range_Block_Association" ResultRole="PartComponent" SourceRole="GroupComponent">
+                <AssociatedInstance>
+                  <Type PSType="Microsoft.Management.Infrastructure.CimInstance" ETSType="Microsoft.Management.Infrastructure.CimInstance#root/microsoft/ipam/MSFT_IPAM_Block" />
+                  <CmdletParameterMetadata PSName="MappingToBlock" ValueFromPipeline="true" IsMandatory="true" CmdletParameterSets="ByBlock" />
+                </AssociatedInstance>
+              </Association>
+
+               <!--by association, get all ranges corresponding to a subnet--> 
+              <Association Association="MSFT_IPAM_Range_Subnet_Association" ResultRole="PartComponent" SourceRole="GroupComponent">
+                <AssociatedInstance>
+                  <Type PSType="Microsoft.Management.Infrastructure.CimInstance" ETSType="Microsoft.Management.Infrastructure.CimInstance#root/microsoft/ipam/MSFT_IPAM_Subnet" />
+                  <CmdletParameterMetadata PSName="MappingToSubnet" ValueFromPipeline="true" IsMandatory="true" CmdletParameterSets="BySubnet" />
+                </AssociatedInstance>
+              </Association>              
+            </QueryableAssociations>
+
+            <QueryOptions>
+              <Option OptionName="Unmapped">
+                <Type PSType="System.Management.Automation.SwitchParameter" />            
+                  <CmdletParameterMetadata PSName="Unmapped" IsMandatory="false" ValueFromPipelineByPropertyName="false" CmdletParameterSets="ByAF">
+                    <ValidateNotNullOrEmpty />
+                  </CmdletParameterMetadata>            
+              </Option>          
+            </QueryOptions>
+          </GetCmdletParameters>
+      </GetCmdlet>
+        
+      <Cmdlet>
+        <CmdletMetadata Verb="Remove" ConfirmImpact="Medium" />
+        <Method MethodName="cim:DeleteInstance" >
+          <Parameters>
+            <Parameter ParameterName="cim:operationOption:DeleteMappedAddresses">
+              <Type PSType="System.Management.Automation.SwitchParameter" />
+              <CmdletParameterMetadata PSName="DeleteMappedAddresses" >
+                <ValidateNotNullOrEmpty />
+              </CmdletParameterMetadata>
+            </Parameter>
+            <Parameter ParameterName="cim:operationOption:Force">
+              <Type PSType="System.Management.Automation.SwitchParameter" />
+              <CmdletParameterMetadata PSName="Force">
+              </CmdletParameterMetadata>
+            </Parameter>            
+          </Parameters>
+        </Method>
+      </Cmdlet>
+
+      <Cmdlet>
+        <CmdletMetadata Verb="Set" ConfirmImpact="Medium" />
+        <Method MethodName="cim:ModifyInstance">
+          <Parameters>
+            <Parameter ParameterName="cim:operationOption:CreateSubnetIfNotFound">
+              <Type PSType="System.Management.Automation.SwitchParameter" />
+              <CmdletParameterMetadata PSName="CreateSubnetIfNotFound" IsMandatory="false" ValueFromPipelineByPropertyName="false" >
+                <ValidateNotNullOrEmpty />
+              </CmdletParameterMetadata>
+            </Parameter>
+            <Parameter ParameterName="NetworkId">
+              <Type PSType="System.String" />
+              <CmdletParameterMetadata PSName="NewNetworkId" IsMandatory="false" ValueFromPipelineByPropertyName="true" >
+                <ValidateNotNullOrEmpty />
+              </CmdletParameterMetadata>
+            </Parameter>
+            <Parameter ParameterName="StartAddress">
+              <Type PSType="System.Net.IPAddress" />
+              <CmdletParameterMetadata PSName="NewStartIPAddress" IsMandatory="false" ValueFromPipelineByPropertyName="true" >
+                <ValidateNotNullOrEmpty />
+              </CmdletParameterMetadata>
+            </Parameter>
+            <Parameter ParameterName="EndAddress">
+              <Type PSType="System.Net.IPAddress" />
+              <CmdletParameterMetadata PSName="NewEndIPAddress" IsMandatory="false" ValueFromPipelineByPropertyName="true" >
+                <ValidateNotNullOrEmpty />
+              </CmdletParameterMetadata>
+            </Parameter>
+            <Parameter ParameterName="ManagedByService">
+              <Type PSType="System.String" />
+              <CmdletParameterMetadata PSName="NewManagedByService" IsMandatory="false" ValueFromPipelineByPropertyName="true" >
+                <ValidateNotNullOrEmpty />
+              </CmdletParameterMetadata>
+            </Parameter>
+            <Parameter ParameterName="ServiceInstance">
+              <Type PSType="System.String" />
+              <CmdletParameterMetadata PSName="NewServiceInstance" IsMandatory="false" ValueFromPipelineByPropertyName="true" >
+                <ValidateNotNullOrEmpty />
+              </CmdletParameterMetadata>
+            </Parameter>
+            <Parameter ParameterName="NetworkType">
+              <Type PSType="Ipam.VirtualizationType" />
+              <CmdletParameterMetadata PSName="NewNetworkType" IsMandatory="false" ValueFromPipelineByPropertyName="true">
+                <ValidateNotNullOrEmpty />
+                <ValidateSet>
+                  <AllowedValue>NonVirtualized</AllowedValue>
+                  <AllowedValue>Provider</AllowedValue>
+                </ValidateSet>
+              </CmdletParameterMetadata>
+            </Parameter>
+            <Parameter ParameterName="AddressSpace">
+              <Type PSType="System.String" />
+              <CmdletParameterMetadata PSName="NewAddressSpace" IsMandatory="false" ValueFromPipelineByPropertyName="true" >
+                <ValidateNotNullOrEmpty />
+              </CmdletParameterMetadata>
+            </Parameter>   
+            <Parameter ParameterName="AssignmentType">
+              <Type PSType="Ipam.AddressAssignment" />
+              <CmdletParameterMetadata PSName="AssignmentType" IsMandatory="false" ValueFromPipelineByPropertyName="true" >
+                <ValidateNotNullOrEmpty />                              
+              </CmdletParameterMetadata>
+            </Parameter>
+            <Parameter ParameterName="AssignmentDate">
+              <Type PSType="Nullable[System.DateTime]" />
+              <CmdletParameterMetadata PSName="AssignmentDate" IsMandatory="false" ValueFromPipelineByPropertyName="true" >                              </CmdletParameterMetadata>
+            </Parameter>
+            <Parameter ParameterName="UtilizationCalculation">
+              <Type PSType="Ipam.UtilizationCalculation" />
+              <CmdletParameterMetadata PSName="UtilizationCalculation" IsMandatory="false" ValueFromPipelineByPropertyName="true" >
+                <ValidateNotNullOrEmpty />
+              </CmdletParameterMetadata>
+            </Parameter>
+            <Parameter ParameterName="UtilizedAddresses">
+              <Type PSType="System.Double" />
+              <CmdletParameterMetadata PSName="UtilizedAddresses" IsMandatory="false" ValueFromPipelineByPropertyName="true" >
+                <ValidateNotNullOrEmpty />                
+              </CmdletParameterMetadata>
+            </Parameter>
+            <Parameter ParameterName="Description">
+              <Type PSType="System.String" />
+              <CmdletParameterMetadata PSName="Description" IsMandatory="false" ValueFromPipelineByPropertyName="true" >
+              </CmdletParameterMetadata>
+            </Parameter>
+            <Parameter ParameterName="Owner">
+              <Type PSType="System.String" />
+              <CmdletParameterMetadata PSName="Owner" IsMandatory="false" ValueFromPipelineByPropertyName="true" >
+              </CmdletParameterMetadata>
+            </Parameter>
+            <Parameter ParameterName="ReservedIPAddresses">
+              <Type PSType="System.String[]" />
+              <CmdletParameterMetadata PSName="ReservedAddress" IsMandatory="false" ValueFromPipelineByPropertyName="true" >                            </CmdletParameterMetadata>
+            </Parameter>
+            <Parameter ParameterName="DnsServers">
+              <Type PSType="System.Net.IPAddress[]" />
+              <CmdletParameterMetadata PSName="DnsServer" IsMandatory="false" ValueFromPipelineByPropertyName="true" >                
+              </CmdletParameterMetadata>
+            </Parameter>
+            <Parameter ParameterName="DnsSuffixes">
+              <Type PSType="System.String[]" />
+              <CmdletParameterMetadata PSName="DnsSuffix" IsMandatory="false" ValueFromPipelineByPropertyName="true" >
+              </CmdletParameterMetadata>
+            </Parameter>
+            <Parameter ParameterName="ConnectionSpecificDnsSuffix">
+              <Type PSType="System.String" />
+              <CmdletParameterMetadata PSName="ConnectionSpecificDnsSuffix" IsMandatory="false" ValueFromPipelineByPropertyName="true" >                </CmdletParameterMetadata>
+            </Parameter>
+            <Parameter ParameterName="WinsServers">
+              <Type PSType="System.Net.IPAddress[]" />
+              <CmdletParameterMetadata PSName="WinsServer" IsMandatory="false" ValueFromPipelineByPropertyName="true" >                
+              </CmdletParameterMetadata>
+            </Parameter>
+            <Parameter ParameterName="VIP">
+              <Type PSType="System.String[]" />
+              <CmdletParameterMetadata PSName="VIP" IsMandatory="false" ValueFromPipelineByPropertyName="true" >                
+              </CmdletParameterMetadata>
+            </Parameter>
+            <Parameter ParameterName="Gateway">
+              <Type PSType="System.String[]" />
+              <CmdletParameterMetadata PSName="Gateway" IsMandatory="false" ValueFromPipelineByPropertyName="true" >
+              </CmdletParameterMetadata>
+            </Parameter>
+            <Parameter ParameterName="CustomConfiguration">
+              <Type PSType="System.String" />
+              <CmdletParameterMetadata PSName="AddCustomConfiguration" IsMandatory="false" ValueFromPipelineByPropertyName="true" >
+              </CmdletParameterMetadata>
+            </Parameter>
+            <Parameter ParameterName="cim:operationOption:RemoveCustomConfiguration">
+              <Type PSType="System.String" />
+              <CmdletParameterMetadata PSName="RemoveCustomConfiguration" IsMandatory="false" ValueFromPipelineByPropertyName="false" >
+              </CmdletParameterMetadata>
+            </Parameter>   
+			<Parameter ParameterName="AssociatedReverseLookupZone">
+              <Type PSType="System.String" />
+              <CmdletParameterMetadata PSName="AssociatedReverseLookupZone" IsMandatory="false" ValueFromPipelineByPropertyName="true" >
+              </CmdletParameterMetadata>
+            </Parameter>
+          </Parameters>
+        </Method>
+      </Cmdlet>
+    </InstanceCmdlets>
+
+    <StaticCmdlets>
+      <Cmdlet>
+        <CmdletMetadata Verb="Add" ConfirmImpact="Medium" />
+        <Method MethodName="AddRange" >
+          <Parameters>
+            <Parameter ParameterName="cim:operationOption:CreateSubnetIfNotFound">
+              <Type PSType="System.Management.Automation.SwitchParameter" />
+              <CmdletParameterMetadata PSName="CreateSubnetIfNotFound" IsMandatory="false" ValueFromPipelineByPropertyName="false" >
+                <ValidateNotNullOrEmpty />
+              </CmdletParameterMetadata>
+            </Parameter>            
+            <Parameter ParameterName="NetworkId">
+              <Type PSType="System.String" />
+              <CmdletParameterMetadata PSName="NetworkId" Position="1" IsMandatory="true" ValueFromPipelineByPropertyName="true" >
+                <ValidateNotNullOrEmpty />
+              </CmdletParameterMetadata>
+            </Parameter>
+            <Parameter ParameterName="StartAddress">
+              <Type PSType="System.Net.IPAddress" />
+              <CmdletParameterMetadata PSName="StartIPAddress" Position="2" IsMandatory="false" ValueFromPipelineByPropertyName="true" >
+                <ValidateNotNullOrEmpty />
+              </CmdletParameterMetadata>
+            </Parameter>
+            <Parameter ParameterName="EndAddress">
+              <Type PSType="System.Net.IPAddress" />
+              <CmdletParameterMetadata PSName="EndIPAddress" Position="3" IsMandatory="false" ValueFromPipelineByPropertyName="true" >
+                <ValidateNotNullOrEmpty />
+              </CmdletParameterMetadata>
+            </Parameter>
+            <Parameter ParameterName="ManagedByService">
+              <Type PSType="System.String" />
+              <CmdletParameterMetadata PSName="ManagedByService" Aliases="MB" IsMandatory="false" ValueFromPipelineByPropertyName="true" >
+                <ValidateNotNullOrEmpty />
+              </CmdletParameterMetadata>
+            </Parameter>
+            <Parameter ParameterName="ServiceInstance">
+              <Type PSType="System.String" />
+              <CmdletParameterMetadata PSName="ServiceInstance" Aliases="SI" IsMandatory="false" ValueFromPipelineByPropertyName="true" >
+                <ValidateNotNullOrEmpty />
+              </CmdletParameterMetadata>
+            </Parameter>
+            <Parameter ParameterName="NetworkType">
+              <Type PSType="Ipam.VirtualizationType" />
+              <CmdletParameterMetadata IsMandatory="false" ValueFromPipelineByPropertyName="true">
+                <ValidateNotNullOrEmpty />
+              </CmdletParameterMetadata>
+            </Parameter>
+            <Parameter ParameterName="AddressSpace">
+              <Type PSType="System.String" />
+              <CmdletParameterMetadata IsMandatory="false" ValueFromPipelineByPropertyName="true" >
+                <ValidateNotNullOrEmpty />
+              </CmdletParameterMetadata>
+            </Parameter>
+            <Parameter ParameterName="UtilizationCalculation">
+              <Type PSType="Ipam.UtilizationCalculation" />
+              <CmdletParameterMetadata PSName="UtilizationCalculation" IsMandatory="false" ValueFromPipelineByPropertyName="true" >
+                <ValidateNotNullOrEmpty />
+              </CmdletParameterMetadata>
+            </Parameter>
+            <Parameter ParameterName="UtilizedAddresses">
+              <Type PSType="System.Double" />
+              <CmdletParameterMetadata PSName="UtilizedAddresses" IsMandatory="false"  ValueFromPipelineByPropertyName="true" >
+                <ValidateNotNullOrEmpty />
+              </CmdletParameterMetadata>
+            </Parameter>
+            <Parameter ParameterName="Description">
+              <Type PSType="System.String" />
+              <CmdletParameterMetadata PSName="Description" IsMandatory="false" ValueFromPipelineByPropertyName="true" >
+              </CmdletParameterMetadata>
+            </Parameter>
+            <Parameter ParameterName="Owner">
+              <Type PSType="System.String" />
+              <CmdletParameterMetadata PSName="Owner" IsMandatory="false" ValueFromPipelineByPropertyName="true" >
+              </CmdletParameterMetadata>
+            </Parameter>
+            <Parameter ParameterName="AssignmentType">
+              <Type PSType="Ipam.AddressAssignment" />
+              <CmdletParameterMetadata PSName="AssignmentType" IsMandatory="false" ValueFromPipelineByPropertyName="true" >
+                <ValidateNotNullOrEmpty />
+              </CmdletParameterMetadata>
+            </Parameter>
+            <Parameter ParameterName="AssignmentDate">
+              <Type PSType="Nullable[System.DateTime]" />
+              <CmdletParameterMetadata PSName="AssignmentDate" IsMandatory="false" ValueFromPipelineByPropertyName="true" >
+              </CmdletParameterMetadata>
+            </Parameter>
+            <Parameter ParameterName="ReservedIPAddresses">
+              <Type PSType="System.String[]" />
+              <CmdletParameterMetadata PSName="ReservedAddress" IsMandatory="false" ValueFromPipelineByPropertyName="true" >                
+              </CmdletParameterMetadata>
+            </Parameter>
+            <Parameter ParameterName="DnsServers">
+              <Type PSType="System.Net.IPAddress[]" />
+              <CmdletParameterMetadata PSName="DnsServer" IsMandatory="false" ValueFromPipelineByPropertyName="true" >                
+              </CmdletParameterMetadata>
+            </Parameter>
+            <Parameter ParameterName="DnsSuffixes">
+              <Type PSType="System.String[]" />
+              <CmdletParameterMetadata PSName="DnsSuffix" IsMandatory="false" ValueFromPipelineByPropertyName="true" >
+              </CmdletParameterMetadata>
+            </Parameter>
+            <Parameter ParameterName="ConnectionSpecificDnsSuffix">
+              <Type PSType="System.String" />
+              <CmdletParameterMetadata PSName="ConnectionSpecificDnsSuffix" IsMandatory="false" ValueFromPipelineByPropertyName="true" >                
+              </CmdletParameterMetadata>
+            </Parameter>
+            <Parameter ParameterName="WinsServers">
+              <Type PSType="System.Net.IPAddress[]" />
+              <CmdletParameterMetadata PSName="WinsServer" IsMandatory="false" ValueFromPipelineByPropertyName="true" >                
+              </CmdletParameterMetadata>
+            </Parameter>
+            <Parameter ParameterName="VIP">
+              <Type PSType="System.String[]" />
+              <CmdletParameterMetadata PSName="VIP" IsMandatory="false" ValueFromPipelineByPropertyName="true" >                
+              </CmdletParameterMetadata>
+            </Parameter>
+            <Parameter ParameterName="Gateway">
+              <Type PSType="System.String[]"/>
+              <CmdletParameterMetadata PSName="Gateway" IsMandatory="false" ValueFromPipelineByPropertyName="true" >
+              </CmdletParameterMetadata>
+            </Parameter>            
+            <Parameter ParameterName="CustomConfiguration">
+              <Type PSType="System.String" />
+              <CmdletParameterMetadata PSName="CustomConfiguration" IsMandatory="false" ValueFromPipelineByPropertyName="true">
+              </CmdletParameterMetadata>
+            </Parameter>
+			<Parameter ParameterName="AssociatedReverseLookupZone">
+              <Type PSType="System.String" />
+              <CmdletParameterMetadata PSName="AssociatedReverseLookupZone" IsMandatory="false" ValueFromPipelineByPropertyName="true" >
+              </CmdletParameterMetadata>
+            </Parameter>
+            <Parameter ParameterName="cim:operationOption:PassThru">
+              <Type PSType="System.Management.Automation.SwitchParameter" />
+              <CmdletParameterMetadata PSName="PassThru">
+              </CmdletParameterMetadata>
+            </Parameter>
+            <Parameter ParameterName="OutputRange">
+              <Type PSType="Microsoft.Management.Infrastructure.CimInstance" ETSType="Microsoft.Management.Infrastructure.CimInstance#root/microsoft/ipam/MSFT_IPAM_Range" />
+              <CmdletOutputMetadata />
+            </Parameter>
+          </Parameters>
+        </Method>
+      </Cmdlet>
+
+      <Cmdlet>
+        <CmdletMetadata Verb="Import" DefaultCmdletParameterSet="Import" ConfirmImpact="Medium" />
+        <Method MethodName="ImportRange" CmdletParameterSet="Import">
+          <Parameters>
+            <Parameter ParameterName="Path">
+              <Type PSType="String" />
+              <CmdletParameterMetadata IsMandatory="true" ValueFromPipeline="true" >
+                <ValidateNotNullOrEmpty />
+              </CmdletParameterMetadata>
+            </Parameter>
+            <Parameter ParameterName="AddressFamily">
+              <Type PSType="Ipam.AddressFamily" />
+              <CmdletParameterMetadata IsMandatory="true" ValueFromPipelineByPropertyName="true" >
+                <ValidateNotNullOrEmpty />
+              </CmdletParameterMetadata>
+            </Parameter>
+            <Parameter ParameterName="ErrorPath">
+              <Type PSType="String" />
+              <CmdletParameterMetadata IsMandatory="false" ValueFromPipelineByPropertyName="true" >
+                <ValidateNotNullOrEmpty />
+              </CmdletParameterMetadata>
+            </Parameter>
+            <Parameter ParameterName="CreateSubnetIfNotFound">
+              <Type PSType="System.Management.Automation.SwitchParameter" />
+              <CmdletParameterMetadata IsMandatory="false" ValueFromPipelineByPropertyName="true" >
+                <ValidateNotNullOrEmpty />
+              </CmdletParameterMetadata>
+            </Parameter>
+            <Parameter ParameterName="cim:operationOption:Force">
+              <Type PSType="System.Management.Automation.SwitchParameter" />
+              <CmdletParameterMetadata PSName="Force">
+              </CmdletParameterMetadata>
+            </Parameter>
+            <Parameter ParameterName="Output">
+              <Type PSType="String" />
+              <CmdletOutputMetadata />
+            </Parameter>
+          </Parameters>
+        </Method>
+
+        <Method MethodName="ImportRange" CmdletParameterSet="InventoryImport">
+          <Parameters>
+            <Parameter ParameterName="Path">
+              <Type PSType="String" />
+              <CmdletParameterMetadata IsMandatory="true" ValueFromPipeline="true" >
+                <ValidateNotNullOrEmpty />
+              </CmdletParameterMetadata>
+            </Parameter>
+            <Parameter ParameterName="AddressFamily">
+              <Type PSType="Ipam.AddressFamily" />
+              <CmdletParameterMetadata IsMandatory="true" ValueFromPipelineByPropertyName="true" >
+                <ValidateNotNullOrEmpty />
+              </CmdletParameterMetadata>
+            </Parameter>
+            <Parameter ParameterName="ManagedByService">
+              <Type PSType="String" />
+              <CmdletParameterMetadata IsMandatory="true" Aliases="MB" ValueFromPipelineByPropertyName="true" >
+                <ValidateNotNullOrEmpty />
+              </CmdletParameterMetadata>
+            </Parameter>
+            <Parameter ParameterName="ServiceInstance">
+              <Type PSType="String" />
+              <CmdletParameterMetadata IsMandatory="true" Aliases="SI" ValueFromPipelineByPropertyName="true" >
+                <ValidateNotNullOrEmpty />
+              </CmdletParameterMetadata>
+            </Parameter>
+            <Parameter ParameterName="AddManagedByService">
+              <Type PSType="System.Management.Automation.SwitchParameter" />
+              <CmdletParameterMetadata IsMandatory="false" ValueFromPipelineByPropertyName="true" >
+                <ValidateNotNullOrEmpty />
+              </CmdletParameterMetadata>
+            </Parameter>
+            <Parameter ParameterName="AddServiceInstance">
+              <Type PSType="System.Management.Automation.SwitchParameter" />
+              <CmdletParameterMetadata IsMandatory="false" ValueFromPipelineByPropertyName="true" >
+                <ValidateNotNullOrEmpty />
+              </CmdletParameterMetadata>
+            </Parameter>
+            <Parameter ParameterName="DeleteMappedAddresses">
+              <Type PSType="System.Management.Automation.SwitchParameter" />
+              <CmdletParameterMetadata IsMandatory="false" ValueFromPipelineByPropertyName="true" >
+                <ValidateNotNullOrEmpty />
+              </CmdletParameterMetadata>
+            </Parameter>
+            <Parameter ParameterName="CreateSubnetIfNotFound">
+              <Type PSType="System.Management.Automation.SwitchParameter" />
+              <CmdletParameterMetadata IsMandatory="false" ValueFromPipelineByPropertyName="true" >
+                <ValidateNotNullOrEmpty />
+              </CmdletParameterMetadata>
+            </Parameter>
+            <Parameter ParameterName="ErrorPath">
+              <Type PSType="String" />
+              <CmdletParameterMetadata IsMandatory="false" ValueFromPipelineByPropertyName="true" >
+                <ValidateNotNullOrEmpty />
+              </CmdletParameterMetadata>
+            </Parameter>
+            <Parameter ParameterName="cim:operationOption:Force">
+              <Type PSType="System.Management.Automation.SwitchParameter" />
+              <CmdletParameterMetadata PSName="Force">
+              </CmdletParameterMetadata>
+            </Parameter>
+            <Parameter ParameterName="Output">
+              <Type PSType="String" />
+              <CmdletOutputMetadata />
+            </Parameter>
+          </Parameters>
+        </Method>
+      </Cmdlet>
+
+
+      <Cmdlet>
+        <CmdletMetadata Verb="Export" />
+        <Method MethodName="ExportRange" >
+          <Parameters>
+            <Parameter ParameterName="AddressType">
+              <Type PSType="Ipam.AddressFamily" />
+              <CmdletParameterMetadata PSName="AddressFamily" IsMandatory="true" ValueFromPipelineByPropertyName="true" >
+                  <ValidateNotNullOrEmpty />
+                </CmdletParameterMetadata>
+            </Parameter>
+
+            <Parameter ParameterName="NetworkType">
+              <Type PSType="Ipam.VirtualizationType" />
+              <CmdletParameterMetadata IsMandatory="false" ValueFromPipelineByPropertyName="true" >
+                <ValidateNotNullOrEmpty />
+              </CmdletParameterMetadata>
+            </Parameter>
+
+            <Parameter ParameterName="Path">
+              <Type PSType="System.String" />
+              <CmdletParameterMetadata PSName="Path" IsMandatory="false" ValueFromPipelineByPropertyName="true" >
+                <ValidateNotNullOrEmpty />
+              </CmdletParameterMetadata>
+            </Parameter>
+
+            <Parameter ParameterName="cim:operationOption:PassThru">
+              <Type PSType="System.Management.Automation.SwitchParameter" />
+              <CmdletParameterMetadata PSName="PassThru">
+              </CmdletParameterMetadata>
+            </Parameter>
+
+            <Parameter ParameterName="cim:operationOption:Force">
+              <Type PSType="System.Management.Automation.SwitchParameter" />
+              <CmdletParameterMetadata PSName="Force">
+              </CmdletParameterMetadata>
+            </Parameter>
+            
+            <Parameter ParameterName="Output">
+              <Type PSType="Microsoft.Management.Infrastructure.CimInstance[]" ETSType="Microsoft.Management.Infrastructure.CimInstance#root/microsoft/ipam/MSFT_IPAM_Range[]" />
+              <CmdletOutputMetadata />
+            </Parameter>
+          </Parameters>
+        </Method>
+      </Cmdlet>
+      
+      <Cmdlet>
+        <CmdletMetadata Verb="Find" Noun="IpamFreeRange" DefaultCmdletParameterSet="Metric" />
+        <Method MethodName="FindIpamFreeRange" CmdletParameterSet="Metric">
+          <ReturnValue>
+            <Type PSType="System.Int32" />
+            <CmdletOutputMetadata>
+              <ErrorCode />
+            </CmdletOutputMetadata>
+          </ReturnValue>
+          <Parameters>
+            <!--
+              Find-IpamFreeRange
+                 -InputObject<IpamSubnet>
+                 -NumberOfAddresses <UInt32>
+                 [-NumberOfRanges <UInt32> ]                 
+            -->
+            <Parameter ParameterName="Subnet">
+              <Type PSType="Microsoft.Management.Infrastructure.CimInstance" ETSType="Microsoft.Management.Infrastructure.CimInstance#MSFT_IPAM_Subnet" />
+              <CmdletParameterMetadata PSName="InputObject" Position="1" IsMandatory="true" ValueFromPipeline="true" >
+                <ValidateNotNullOrEmpty />
+              </CmdletParameterMetadata>
+            </Parameter>
+            <Parameter ParameterName="NumberOfAddresses">
+              <Type PSType="System.UInt32" />
+              <CmdletParameterMetadata PSName="NumberOfAddresses" Position="2" IsMandatory="true" ValueFromPipelineByPropertyName="false" >
+                <ValidateNotNullOrEmpty />
+              </CmdletParameterMetadata>
+            </Parameter>
+            <Parameter ParameterName="NumberOfRanges">
+              <Type PSType="System.UInt32" />
+              <CmdletParameterMetadata PSName="NumberOfRanges" Position="3" IsMandatory="false" ValueFromPipelineByPropertyName="false" >
+                <ValidateNotNullOrEmpty />
+              </CmdletParameterMetadata>
+            </Parameter>
+            <Parameter ParameterName="FreeIPRanges">
+              <Type PSType="Microsoft.Management.Infrastructure.CimInstance[]" ETSType="Microsoft.Management.Infrastructure.CimInstance#MSFT_IPAM_FreeRange" />
+              <CmdletOutputMetadata />
+            </Parameter>            
+          </Parameters>
+        </Method>
+      </Cmdlet>
+            
+    </StaticCmdlets>
+  </Class>
+
+  <Enums>
+    <Enum EnumName="Ipam.AddressFamily" UnderlyingType="UInt16">
+      <Value Name="IPv4" Value="1" />
+      <Value Name="IPv6" Value="2" />
+    </Enum>    
+    <Enum EnumName="Ipam.AddressCategory" UnderlyingType="UInt16">
+      <Value Name="Public"  Value="1" />
+      <Value Name="Private" Value="2" />
+      <Value Name="Global" Value="3" />
+    </Enum>
+    <Enum EnumName="Ipam.VirtualizationType" UnderlyingType="UInt16">
+      <Value Name="NonVirtualized"  Value="1" />
+      <Value Name="Provider" Value="2" />
+      <Value Name="Customer" Value="4" />
+    </Enum>
+    <Enum EnumName="Ipam.AddressAssignment" UnderlyingType="UInt16">      
+      <Value Name="Static" Value="1" />
+      <Value Name="Dynamic" Value="2" />
+      <Value Name="Auto"  Value="3" />
+      <Value Name="VIP" Value="4" />
+      <Value Name="Reserved" Value="5" />
+    </Enum>
+    <Enum EnumName="Ipam.UtilizationCalculation" UnderlyingType="UInt16">      
+      <Value Name="Auto" Value="1" />
+      <Value Name="UserSpecified" Value="2" />
+    </Enum>
+    <Enum EnumName="Ipam.Utilization" UnderlyingType="UInt16">
+      <Value Name="None" Value="0" />
+      <Value Name="Under" Value="1" />
+      <Value Name="Optimal" Value="2" />
+      <Value Name="Over" Value="3" />
+    </Enum>
+  </Enums>
+
+</PowerShellMetadata>

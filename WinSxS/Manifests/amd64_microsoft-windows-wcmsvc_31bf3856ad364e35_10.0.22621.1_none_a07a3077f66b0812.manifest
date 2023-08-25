@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-Wcmsvc" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <dependency discoverable="no" resourceType="Resources">
+    <dependentAssembly dependencyType="prerequisite">
+      <assemblyIdentity name="Microsoft-Windows-Wcmsvc.Resources" version="10.0.22621.1" processorArchitecture="amd64" language="*" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+    </dependentAssembly>
+  </dependency>
+  <file name="wcmsvc.dll" destinationPath="$(runtime.system32)\" sourceName="wcmsvc.dll" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>0zohHl3S13kkV5Rhyf/twdxyRzK0j5kvSk/ZrQ/Bb88=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <file name="wcmcsp.dll" destinationPath="$(runtime.system32)\" sourceName="wcmcsp.dll" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>kSRQ8hFivALpLqn4g+fdqZ/20W13DyvTopEokjADj1U=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <file name="cellulardatacapabilityhandler.dll" destinationPath="$(runtime.system32)\" sourceName="cellulardatacapabilityhandler.dll" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>oMvPlwaVfCgaZIev+hHk8mvJN8jaNbzlCEbCukBfhEU=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <file name="wifidatacapabilityhandler.dll" destinationPath="$(runtime.system32)\" sourceName="wifidatacapabilityhandler.dll" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>fcSnB0HjZfHnCnx+qPRSdCgv1zsVxwIKusS2gapOpVY=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <memberships>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories.Services" version="10.0.22621.1" publicKeyToken="31bf3856ad364e35" typeName="Service" />
+      <categoryInstance>
+        <serviceData name="Wcmsvc" displayName="@%SystemRoot%\System32\wcmsvc.dll,-4097" errorControl="normal" start="auto" type="win32OwnProcess" description="@%SystemRoot%\System32\wcmsvc.dll,-4098" dependOnService="RpcSs,NSI" group="TDI" imagePath="%SystemRoot%\system32\svchost.exe -k LocalServiceNetworkRestricted -p" objectName="NT Authority\LocalService" requiredPrivileges="SeChangeNotifyPrivilege,SeImpersonatePrivilege" sidType="unrestricted">
+          <failureActions resetPeriod="86400">
+            <actions>
+              <action delay="120000" type="restartService" />
+              <action delay="300000" type="restartService" />
+              <action delay="0" type="none" />
+            </actions>
+          </failureActions>
+          <serviceTrigger action="start" subtype="{aa1f73e8-15fd-45d2-abfd-e7f64f78eb11}" type="Custom">
+            <triggerData type="binary" value="01000000" />
+          </serviceTrigger>
+          <securityDescriptor name="WCM_SVC_SDDL" />
+        </serviceData>
+      </categoryInstance>
+    </categoryMembership>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories" version="1.0.0.0" publicKeyToken="365143bb27e7ac8b" typeName="SvcHost" />
+      <categoryInstance subcategory="LocalServiceNetworkRestricted">
+        <serviceGroup position="last" serviceName="wcmsvc" />
+      </categoryInstance>
+    </categoryMembership>
+  </memberships>
+  <registryKeys>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Wcmsvc\Parameters">
+      <registryValue name="ServiceDll" valueType="REG_EXPAND_SZ" value="%SystemRoot%\System32\wcmsvc.dll" />
+      <registryValue name="ServiceDllUnloadOnStop" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="ServiceMain" valueType="REG_SZ" value="WcmSvcMain" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Wcmsvc\Csps\cspethernet">
+      <registryValue name="Dll" valueType="REG_SZ" value="wcmcsp.dll" />
+      <registryValue name="InitFunction" valueType="REG_SZ" value="EthernetCspInit" />
+      <registryValue name="DeinitFunction" valueType="REG_SZ" value="EthernetCspDeInit" />
+      <registryValue name="WcmMediaType" valueType="REG_DWORD" value="0x00000001" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Wcmsvc\Csps\cspwlan">
+      <registryValue name="Dll" valueType="REG_SZ" value="wcmcsp.dll" />
+      <registryValue name="InitFunction" valueType="REG_SZ" value="WlanCspInit" />
+      <registryValue name="DeinitFunction" valueType="REG_SZ" value="WlanCspDeInit" />
+      <registryValue name="WcmMediaType" valueType="REG_DWORD" value="0x00000002" />
+      <registryValue name="MediaService" valueType="REG_SZ" value="wlansvc" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Wcmsvc\Csps\cspwwan">
+      <registryValue name="Dll" valueType="REG_SZ" value="wcmcsp.dll" />
+      <registryValue name="InitFunction" valueType="REG_SZ" value="WwanCspInit" />
+      <registryValue name="DeinitFunction" valueType="REG_SZ" value="WwanCspDeInit" />
+      <registryValue name="WcmMediaType" valueType="REG_DWORD" value="0x00000003" />
+      <registryValue name="MediaService" valueType="REG_SZ" value="wwansvc" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\SharedAccess\Parameters\FirewallPolicy\RestrictedServices\Static\System">
+      <registryValue name="Wcmsvc-1" valueType="REG_SZ" value="V2.0|Action=Block|Dir=In|App=%SystemRoot%\System32\svchost.exe|Svc=Wcmsvc|Name=Block any traffic to Wcmsvc|" />
+      <registryValue name="Wcmsvc-2" valueType="REG_SZ" value="V2.0|Action=Allow|Dir=Out|Protocol=6|App=%SystemRoot%\System32\svchost.exe|Svc=Wcmsvc|Name=Allow TCP traffic from Wcmsvc|" />
+      <registryValue name="Wcmsvc-NTP Allow OUT" valueType="REG_SZ" value="V2.0|Action=Allow|Dir=Out|Protocol=17|RPort=123|App=%SystemRoot%\System32\svchost.exe|Svc=Wcmsvc|Name=Allow NTP traffic from Wcmsvc|" />
+      <registryValue name="Wcmsvc-3" valueType="REG_SZ" value="V2.0|Action=Block|Dir=Out|App=%SystemRoot%\System32\svchost.exe|Svc=Wcmsvc|Name=Block other traffic from Wcmsvc|" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\WcmSvc\GroupPolicy">
+      <securityDescriptor name="WCM_POLICY_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\WcmSvc\Local">
+      <registryValue name="WCMPresent" valueType="REG_DWORD" value="0x00000001" />
+      <securityDescriptor name="WCM_POLICY_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\WcmSvc">
+      <registryValue name="CMPOL" valueType="REG_MULTI_SZ" value="0" />
+      <securityDescriptor name="WCM_POLICY_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\WcmSvc\CellularFailover" />
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\WcmSvc\Policy\PoliciesBySource" />
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\WcmSvc\Selection" />
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\CurrentVersion\Internet Settings">
+      <registryValue name="CallLegacyWCMPolicies" valueType="REG_DWORD" value="0x00000000" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{C1B22BC2-5EE5-4A3E-BA37-A188922BC827}">
+      <registryValue name="" valueType="REG_SZ" value="Cellular Data Capability Handler" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{C1B22BC2-5EE5-4A3E-BA37-A188922BC827}\InProcServer32">
+      <registryValue name="" valueType="REG_EXPAND_SZ" value="%SystemRoot%\system32\cellulardatacapabilityhandler.dll" />
+      <registryValue name="ThreadingModel" valueType="REG_SZ" value="Both" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{C1B22BC2-5EE5-4A3E-BA37-A188922BC827}\Programmable">
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{C1B22BC2-5EE5-4A3E-BA37-A188922BC827}\TypeLib">
+      <registryValue name="" valueType="REG_SZ" value="{D812C6AE-0441-4CC1-96CB-F97833F8E175}" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{C1B22BC2-5EE5-4A3E-BA37-A188922BC827}\Version">
+      <registryValue name="" valueType="REG_SZ" value="1.0" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\Capabilities\cellularData\CapabilityHandlers\{C1B22BC2-5EE5-4A3E-BA37-A188922BC827}">
+      <registryValue name="Rank" valueType="REG_DWORD" value="0x00000064" />
+      <registryValue name="AccessChangeSupported" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="AccessCheckSupported" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="CustomConsentSupported" valueType="REG_DWORD" value="0x00000000" />
+      <registryValue name="PolicySupported" valueType="REG_DWORD" value="0x00000000" />
+      <registryValue name="ProvisionSupported" valueType="REG_DWORD" value="0x00000001" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{16A78C67-DCE5-45E9-A45E-7A051B50C09E}">
+      <registryValue name="" valueType="REG_SZ" value="Wifi Data Capability Handler" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{16A78C67-DCE5-45E9-A45E-7A051B50C09E}\InProcServer32">
+      <registryValue name="" valueType="REG_EXPAND_SZ" value="%SystemRoot%\system32\wifidatacapabilityhandler.dll" />
+      <registryValue name="ThreadingModel" valueType="REG_SZ" value="Both" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{16A78C67-DCE5-45E9-A45E-7A051B50C09E}\Programmable">
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{16A78C67-DCE5-45E9-A45E-7A051B50C09E}\TypeLib">
+      <registryValue name="" valueType="REG_SZ" value="{593FCBD0-C546-4B6A-B9A0-CA0CF581A4F0}" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{16A78C67-DCE5-45E9-A45E-7A051B50C09E}\Version">
+      <registryValue name="" valueType="REG_SZ" value="1.0" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\Capabilities\wifiData\CapabilityHandlers\{16A78C67-DCE5-45E9-A45E-7A051B50C09E}">
+      <registryValue name="Rank" valueType="REG_DWORD" value="0x00000064" />
+      <registryValue name="AccessChangeSupported" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="AccessCheckSupported" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="CustomConsentSupported" valueType="REG_DWORD" value="0x00000000" />
+      <registryValue name="PolicySupported" valueType="REG_DWORD" value="0x00000000" />
+      <registryValue name="ProvisionSupported" valueType="REG_DWORD" value="0x00000001" />
+    </registryKey>
+  </registryKeys>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="WCM_SVC_SDDL" sddl="D:(A;;CCLCSWRPWPDTLOCRRC;;;SY)(A;;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;BA)(A;;CCLCSWLOCRRC;;;IU)(A;;CCLCSWLOCRRC;;;SU)" operationHint="replace" />
+          <securityDescriptorDefinition name="WCM_POLICY_SDDL" sddl="D:AI(D;CIOI;GA;;;BG)(A;CIOI;GA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;CIOI;GA;;;S-1-5-80-4155767994-3874329934-3800885181-2130851812-726865888)(A;CIOI;GA;;;S-1-5-80-4071458001-3563271761-1846288968-3700919931-3809667977)" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_REGKEY_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;CI;GA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;CI;GR;;;SY)(A;CI;GR;;;BA)(A;CI;GR;;;BU)(A;CI;GR;;;S-1-15-2-1)(A;CI;GR;;;S-1-15-3-1024-1065365936-1281604716-3511738428-1654721687-432734479-3232135806-4053264122-3456934681)" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" description="Default SDDL for Windows Resource Protected file" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+  <instrumentation xmlns:ms="http://manifests.microsoft.com/win/2004/08/windows/events" xmlns:ut="http://manifests.microsoft.com/win/2004/08/windows/networkevents" xmlns:win="http://manifests.microsoft.com/win/2004/08/windows/events" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <events xmlns="http://schemas.microsoft.com/win/2004/08/events">
+      <provider guid="{67d07935-283a-4791-8f8d-fa9117f3e6f2}" message="$(string.WcmEventProviderName)" messageFileName="%SystemRoot%\system32\wcmsvc.dll" name="Microsoft-Windows-Wcmsvc" resourceFileName="%SystemRoot%\system32\wcmsvc.dll" symbol="WCM_EVT_GUID">
+        <channels>
+          <channel chid="cOperational" enabled="true" message="$(string.WcmOperationalChannel)" name="Microsoft-Windows-Wcmsvc/Operational" type="Operational" />
+          <channel chid="cAnalytic" enabled="false" message="$(string.WcmAnalyticChannel)" name="Microsoft-Windows-Wcmsvc/Diagnostic" type="Analytic" />
+        </channels>
+      </provider>
+      <cmi />
+    </events>
+  </instrumentation>
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string id="displayName0" value="WRP_FILE_DEFAULT_SDDL" />
+        <string id="description0" value="Default SDDL for Windows Resource Protected file" />
+        <string id="displayName1" value="WRP_REGKEY_DEFAULT_SDDL" />
+        <string id="description1" value="Default SDDL for Windows Resource Protected registry key" />
+        <string id="displayName2" value="ALLOW_LOCALSYSTEM_AND_ADMIN_WRITE" />
+        <string id="description2" value="Grant all access to builtin Admins and Local System" />
+        <string id="WcmEventProviderName" value="Microsoft-Windows-Wcmsvc" />
+        <string id="WcmOperationalChannel" value="Operational" />
+        <string id="WcmAnalyticChannel" value="Diagnostic" />
+        <string id="evStartSvcStartup" value="WCMSVC: Start WCM Service Startup" />
+        <string id="evCompleteSvcStartup" value="WCMSVC: Complete WCM Service Startup" />
+        <string id="evStartSvcShutdown" value="WCMSVC: Start Service Shutdown" />
+        <string id="evCompleteSvcShutdown" value="WCMSVC: Complete Service Shutdown" />
+        <string id="evStartSvcResume" value="WCMSVC: Start Service Resume" />
+        <string id="evCompleteSvcResume" value="WCMSVC: Complete Service Resume" />
+        <string id="evStartSvcSuspend" value="WCMSVC: Start Service Suspend" />
+        <string id="evCompleteSvcSuspend" value="WCMSVC: Complete Service Suspend" />
+        <string id="taskWwanResumeReconnect" value="Measure WWAN Resume Reconnect task" />
+        <string id="taskWlanResumeReconnect" value="Measure WLAN Resume Reconnect task" />
+        <string id="evServiceStart" value="WCMSVC: Service Startup" />
+        <string id="evServiceStop" value="WCMSVC: Service Shutdown" />
+        <string id="MediaSvcStateChange" value="CDE reported a state change %n%n State: %1 %n%n Name: %2" />
+        <string id="GroupPolicyChangeEvent" value="A Group Policy change was processed" />
+        <string id="PowerChangeEvent" value="A Power change was processed. %n%n Reason: %1" />
+        <string id="SessionChangeEvent" value="A Terminal Services session change was processed. %n%n Reason: %1" />
+        <string id="TSConsoleConnect" value="A session was connected to the console terminal" />
+        <string id="TSConsoleDisconnect" value="A session was disconnected from the console terminal" />
+        <string id="TSRemoteConnect" value="A session was connected to the remote terminal" />
+        <string id="TSRemoteDisconnect" value="A session was disconnected from the remote terminal" />
+        <string id="TSSessionLogon" value="A user has logged on to the session" />
+        <string id="TSSessionLogoff" value="A user has logged off the session" />
+        <string id="TSSessionLock" value="A session has been locked" />
+        <string id="TSSessionUnlock" value="A session has been unlocked" />
+        <string id="TSRemoteControl" value="A session has changed its remote controlled status" />
+        <string id="PowerStatusChange" value="Power status has changed" />
+        <string id="PowerResumeAuto" value="Operation is resuming automatically from a low-power state" />
+        <string id="PowerResumeUser" value="A resume was triggered by user input" />
+        <string id="PowerSuspend" value="System is suspending operation" />
+        <string id="PowerSettingChange" value="A power setting change event has been received" />
+        <string id="MediaServiceUnknown" value="Unknown" />
+        <string id="MediaServiceDisconnected" value="Disconnected. Service is not started." />
+        <string id="MediaServiceConnected" value="Connected. Service is running." />
+        <string id="WwanMediaServiceName" value="Wwansvc." />
+        <string id="WlanMediaServiceName" value="Wlansvc." />
+        <string id="EthernetMediaServiceName" value="Ethernet." />
+        <string id="Wwan" value="Wwan." />
+        <string id="Wlan" value="Wlan" />
+        <string id="Ethernet" value="Ethernet." />
+        <string id="NlaSvcStateChange" value="CDE reported a state change %n%n State: %1 %n%n Name: Nlasvc." />
+        <string id="NlaInterfacePropertyChange" value="NLA interface property change %n%nInterface: %1%nInternet v4: %2%nInternet v6: %3%nProbe Complete v4: %4%nProbe Complete v6: %5%nDomain Authenticated: %6%nDomain Probe Complete: %7" />
+        <string id="Unknown" value="UNKNOWN" />
+        <string id="Invalid" value="INVALID" />
+        <string id="L2AdapterArrivalEvent" value="CDE reported an L2 adapter arrival %n%n Interface: %1 %n%n Type: %2" />
+        <string id="L2AdapterRemovalEvent" value="CDE reported an L2 adapter removal %n%n Interface: %1 %n%n Type: %2" />
+        <string id="NdisAdapterArrivalEvent" value="CDE reported an NDIS adapter arrival %n%n Interface: %1 %n%n Type: %2" />
+        <string id="NdisAdapterRemovalEvent" value="CDE reported an NDIS adapter removal %n%n Interface: %1 %n%n Type: %2" />
+        <string id="ProfileUnblockedEvent" value="CDE reported an unblocked profile %n%n Interface: %1 %n%n Type: %2%n%n Profile: %3" />
+        <string id="ConnectionFailedEvent" value="CDE reported a connection failure %n%n Interface: %1 %n%n Type: %2%n%n Status: %3" />
+        <string id="ConnectedEvent" value="CDE reported a successful connection %n%n Interface: %1 %n%n Type: %2" />
+        <string id="DisconnectedEvent" value="CDE reported a disconnection %n%n Interface: %1 %n%n Type: %2" />
+        <string id="PreferredOrderListEvent" value="WCM Preferred Order List:%n%1" />
+        <string id="EnterConnectedStandbyEvent" value="WCM entered connected standby" />
+        <string id="ExitConnectedStandbyEvent" value="WCM exited connected standby" />
+        <string id="EnterNetQuietModeEvent" value="WCM entered net quiet mode" />
+        <string id="ExitNetQuietModeEvent" value="WCM exited net quiet mode" />
+        <string id="AcquiredNdisRefEvent" value="Acquired NDIS NIC Active Reference for interface: %1" />
+        <string id="ReleasedNdisRefEvent" value="Released NDIS NIC Active Reference for interface: %1" />
+        <string id="AcquiredNdisRefFailedEvent" value="Acquire NDIS NIC Active Reference Failed for interface: %1" />
+        <string id="ReleasedNdisRefFailedEvent" value="Release NDIS NIC Active Reference Failed for interface: %1" />
+        <string id="OnDemandInterfaceStateChanged" value="OnDemandInterfaceStateChanged. OnDemandType:%1, Interface: %2, OnDemandInfo:%3, ProviderID:%4, NewState:%5, Ref counter:%6" />
+        <string id="OnDemandPdpProfileCreated" value="OnDemand PDP Profile Created. OnDemandInfo:%1, ProviderID:%2, SubscriberID:%3, Profile Name:%4" />
+        <string id="OnDemandPdpProfileDeleted" value="OnDemand PDP Profile Deleted. Profile Name:%1" />
+        <string id="OnDemandRequestOpen" value="OnDemand Request opened. App ID:%1, ProcessID:%2,OnDemandType:%3, OnDemandInfo:%4, ProviderID:%5, Error: %6" />
+        <string id="OnDemandRequestClose" value="OnDemand Request closed. App ID:%1, ProcessID:%2,OnDemandType:%3, OnDemandInfo:%4, ProviderID:%5, Error: %6" />
+        <string id="OnDemandRequestStart" value="OnDemand Request started. App ID:%1, ProcessID:%2,OnDemandType:%3, OnDemandInfo:%4, ProviderID:%5, Error: %6" />
+        <string id="OnDemandRequestCancel" value="OnDemand Request cancelled. App ID:%1, ProcessID:%2,OnDemandType:%3, OnDemandInfo:%4, ProviderID:%5, Error: %6" />
+        <string id="InterfaceTokenApplied" value="Interface Token Applied%n%nInterface: %1%nMedia Type: %2%nManual enabled: %3%nManual Filter: %4%nNum Manual: %5%nManual Profiles: %6%nAuto enabled: %7%nAuto filter: %8%nNum Auto: %9%nAuto Profiles: %10" />
+        <string id="InterfaceTokenFailed" value="Interface Token Failed%n%nInterface: %1%nMedia Type: %2%nManual enabled: %3%nManual Filter: %4%nNum Manual: %5%nManual Profiles: %6%nAuto enabled: %7%nAuto filter: %8%nNum Auto: %9%nAutoProfiles: %10%nStatus: %11" />
+        <string id="InterfaceTokenAppliedv2" value="Interface Token Applied%n%nInterface: %1%nMedia Type: %2%nManual enabled: %3%nAuto enabled: %4" />
+        <string id="InterfaceTokenFailedv2" value="Interface Token Failed%n%nInterface: %1%nMedia Type: %2%nManual enabled: %3%nAuto enabled: %4%nStatus: %5" />
+        <string id="WcmSetParameterCalled" value="WcmSetParameter Called%n%nInterface: %1%nProfile Name: %2%nWcm Opcode: %3%nData Length: %4%nCaller Process ID: %5%nReturn Value: %6" />
+        <string id="SoftDisconnectOverThresholds" value="Soft disconnect over thresholds for interface: %1%nAvgIn: %2 AvgOut: %3 SpikeIn: %4 SpikeOut: %5%nThresholds: AvgIn: %6 AvgOut: %7 SpikeIn: %8 SpikeOut:%9%nAll values are in bytes/second" />
+        <string id="SoftDisconnectUnderThresholds" value="Soft disconnect under thresholds for interface: %1%nAvgIn: %2 AvgOut: %3 SpikeIn: %4 SpikeOut: %5%nThresholds: AvgIn: %6 AvgOut: %7 SpikeIn: %8 SpikeOut:%9%nAll values are in bytes/second" />
+        <string id="wcm_intf_opcode_current_connection" value="wcm_intf_opcode_current_connection" />
+        <string id="wcm_global_opcode_domain_policy" value="wcm_global_opcode_domain_policy" />
+        <string id="wcm_global_opcode_minimize_policy" value="wcm_global_opcode_minimize_policy" />
+        <string id="wcm_global_opcode_roaming_policy" value="wcm_global_opcode_roaming_policy" />
+        <string id="wcm_global_opcode_media_order" value="wcm_global_opcode_media_order" />
+        <string id="wcm_intf_opcode_cost_data_user" value="wcm_intf_opcode_cost_data_user" />
+        <string id="wcm_intf_opcode_cost_data_operator" value="wcm_intf_opcode_cost_data_operator" />
+        <string id="wcm_intf_opcode_cost_profile_data_operator" value="wcm_intf_opcode_cost_profile_data_operator" />
+        <string id="wcm_intf_opcode_wispr_creds" value="wcm_intf_opcode_wispr_creds" />
+        <string id="wcm_intf_opcode_provisioning" value="wcm_intf_opcode_provisioning" />
+        <string id="IgnoreProfileList" value="IgnoreProfileList" />
+        <string id="AllowProfileList" value="AllowProfileList" />
+        <string id="DenyProfileList" value="DenyProfileList" />
+        <string id="ServerTimeRetrievalFailure" value="Server Time Retrieval Failure" />
+        <string id="BillingCycleResetSuccessful" value="Billing Cycle Reset Successful" />
+        <string id="evTetheringMgrLoadedSuccessfully" value="Tethering Manager Loaded Successfully" />
+        <string id="evTetheringMgrUnloadedSuccessfully" value="Tethering Manager Unloaded Successfully" />
+        <string id="StopWwanResumeReconnect" value="End of Wwan Resume Reconnect" />
+        <string id="StopWlanResumeReconnectSameNetwork" value="End of Wlan Resume Reconnect to Same Network" />
+        <string id="StopWlanResumeReconnectSameNetworkOneX" value="End of Wlan Resume Reconnect to Same Network OneX" />
+        <string id="StopWlanResumeReconnectDifferentNetwork" value="End of Wlan Resume Reconnect to Different Network" />
+        <string id="StopWlanResumeReconnectDifferentNetworkOneX" value="End of Wlan Resume Reconnect to Different Network OneX" />
+        <string id="CancelWlanResumeReconnect2" value="Cancel of Wlan Resume Reconnect2" />
+        <string id="DetailedAcquiredNicRefSuccessEvent" value="WcmSvc acquired the NIC reference for Interface: %1 for reason: %2" />
+        <string id="DetailedReleasedNicRefSuccessEvent" value="WcmSvc released the NIC reference for Interface: %1 for reason: %2" />
+        <string id="SignalDisconnectedStandbyEnableEvent" value="WcmSvc signalled disconnected standby" />
+        <string id="SignalDisconnectedStandbyDisableEvent" value="WcmSvc signalled end of disconnected standby" />
+        <string id="PowerPolicyNetworkingInStandbyUpdateEvent" value="WcmSvc received power policy update for networking in standby - the new policy value is %1" />
+        <string id="WcmPdcActivationClientRegister" value="WcmSvc CmPdcActivationClientRegister - Status [%1]" />
+        <string id="WcmPdcActivationClientUnregister" value="WcmSvc CmPdcActivationClientUnregister - Status [%1]" />
+        <string id="WcmPdcActivationClientActivityRequest" value="WcmSvc CmPdcActivationClientActivityRequest - Activate [%1], Status [%2]" />
+        <string id="WcmSetNetworkReference" value="WcmSvc SetNetworkReference - Activate [%1], Result [%2], TotalNetworkRefCount [%3], ProcessId [%4], PerProcessNetworkRefCount [%5], App [%6]" />
+        <string id="WcmReleaseNetworkReferenceInProcess" value="WcmSvc ReleaseNetworkReferenceInProcess - ProcessId [%1], PerProcessNetworkRefCount [%2], TotalNetworkRefCount [%3]" />
+        <string id="WcmAcquireNdisReference" value="WcmSvc AcquireNdisReference - Result [%1], TotalCmNdisRefCount [%2], ProcessId [%3], PerProcessCmNdisRefCount [%4], App [%5]" />
+        <string id="WcmReleaseNdisReference" value="WcmSvc ReleaseNdisReference - Result [%1], TotalCmNdisRefCount [%2], ProcessId [%3], PerProcessCmNdisRefCount [%4], App [%5]" />
+        <string id="WcmReleaseNdisReferenceInProcess" value="WcmSvc ReleaseNdisReferenceInProcess - ProcessId [%1], PerProcessCmNdisRefCount [%2], TotalCmNdisRefCount [%3]" />
+        <string id="WcmNdisReferenceError" value="WcmSvc NdisReferenceError - [%1]: Result [%2]" />
+        <string id="WcmNdisReferenceIoctlResult" value="CmService::NdisReference - [%1] InterfaceLuid [%2], Result [%3]" />
+      </stringTable>
+    </resources>
+  </localization>
+</assembly>

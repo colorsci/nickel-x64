@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-DeliveryOptimization" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <dependency discoverable="no" resourceType="Resources">
+    <dependentAssembly>
+      <assemblyIdentity name="Microsoft-Windows-DeliveryOptimization.Resources" version="10.0.22621.1" processorArchitecture="amd64" language="*" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+    </dependentAssembly>
+  </dependency>
+  <file name="doclient.dll" destinationPath="$(runtime.system32)\" sourceName="doclient.dll" importPath="$(build.nttree)\UndockedUpdateStack\" sourcePath=".\">
+    <link destination="$(runtime.windows)\UUS\amd64\doclient.dll" />
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>pgOvA7UkTdWgAb5req5ATASZeoGML1Nk1dOVUK231oM=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <file name="dosvc.dll" destinationPath="$(runtime.system32)\" sourceName="dosvc.dll" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>5pbpw3oIHiiroxLvJuGSnGlvrXNFk0M1pp/tm0LhD0U=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <memberships>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories.Services" version="10.0.22621.1" publicKeyToken="31bf3856ad364e35" typeName="Service" />
+      <categoryInstance subcategory="dosvc">
+        <serviceData name="dosvc" displayName="@%systemroot%\system32\dosvc.dll,-100" errorControl="normal" start="demand" type="win32OwnProcess" description="@%systemroot%\system32\dosvc.dll,-101" dependOnService="rpcss" imagePath="%SystemRoot%\System32\svchost.exe -k NetworkService -p" launchProtected="windowsLight" objectName="NT Authority\NetworkService" sidType="unrestricted">
+          <securityDescriptor name="DO-SVC-SDDL" />
+          <failureActions resetPeriod="86400">
+            <actions>
+              <action delay="60000" type="restartService" />
+              <action delay="60000" type="restartService" />
+              <action delay="0" type="none" />
+            </actions>
+          </failureActions>
+          <serviceTrigger action="start" subtype="WNF_STATE_CHANGE" type="WnfStateEvent">
+            <triggerData type="binary" value="7510bca32901c641" />
+          </serviceTrigger>
+          <serviceTrigger action="start" subtype="MACHINE_POLICY_PRESENT" type="GroupPolicyChange" />
+        </serviceData>
+      </categoryInstance>
+    </categoryMembership>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories" version="1.0.0.0" publicKeyToken="365143bb27e7ac8b" typeName="SvcHost" />
+      <categoryInstance subcategory="NetworkService">
+        <serviceGroup position="last" serviceName="dosvc" />
+      </categoryInstance>
+    </categoryMembership>
+  </memberships>
+  <file name="2213703c9c64cc61ba900531652e23c84728d2a2.xml" destinationPath="$(runtime.windows)\WaaS\services\" sourceName="2213703c9c64cc61ba900531652e23c84728d2a2.xml" importPath="$(build.nttree)\PkgBldr.Service\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>yIIEsOgPYzvyEXkiEnVsnXJ1fhynIe0HzEd+gXK/4/0=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <registryKeys>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\DoSvc">
+      <registryValue name="ServiceDll" valueType="REG_EXPAND_SZ" value="%SystemRoot%\system32\dosvc.dll" />
+      <registryValue name="ServiceDllUnloadOnStop" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="SvcMemSoftLimitInMB" valueType="REG_DWORD" value="0x0000000F" />
+      <registryValue name="SvcMemMidLimitInMB" valueType="REG_DWORD" value="0x0000001B" />
+      <registryValue name="SvcMemHardLimitInMB" valueType="REG_DWORD" value="0x00000027" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\System\CurrentControlSet\Services\EventLog\Application\DeliveryOptimization">
+      <registryValue name="EventMessageFile" valueType="REG_SZ" value="%SystemRoot%\system32\dosvc.dll" />
+      <registryValue name="TypesSupported" valueType="REG_DWORD" value="0x00000007" />
+      <securityDescriptor name="REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\AppId\{379001DE-7108-4A45-8A74-6CD0A9FBEF2C}">
+      <securityDescriptor name="REGKEY_DEFAULT_SDDL" />
+      <registryValue name="" valueType="REG_SZ" value="Delivery Optimization" />
+      <registryValue name="AccessPermission" valueType="REG_BINARY" value="010004805c0000006c00000000000000140000000200480003000000000014000300000001010000000000050a00000000001400030000000101000000000005120000000000180003000000010200000000000520000000210200000102000000000005200000002002000001020000000000052000000020020000" />
+      <registryValue name="LaunchPermission" valueType="REG_BINARY" value="010004806000000070000000000000001400000002004c0003000000000014000b000000010100000000000512000000000018000b00000001020000000000052000000020020000000018000b000000010200000000000520000000210200000102000000000005200000002002000001020000000000052000000020020000" />
+      <registryValue name="LocalService" valueType="REG_SZ" value="dosvc" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{5B99FA76-721C-423C-ADAC-56D03C8A8007}">
+      <securityDescriptor name="REGKEY_DEFAULT_SDDL" />
+      <registryValue name="" valueType="REG_SZ" value="Delivery Optimization Class" />
+      <registryValue name="AppID" valueType="REG_SZ" value="{379001DE-7108-4A45-8A74-6CD0A9FBEF2C}" />
+    </registryKey>
+  </registryKeys>
+  <firewallRule action="allow" active="true" binary="%SystemRoot%\system32\svchost.exe" desc="@%systemroot%\system32\dosvc.dll,-104" dir="in" edge="true" edgedefer="None" group="@%systemroot%\system32\dosvc.dll,-100" internalName="DeliveryOptimization-TCP-In" lport="7680" name="@%systemroot%\system32\dosvc.dll,-102" protocol="TCP" svc="dosvc" />
+  <firewallRule action="allow" active="true" binary="%SystemRoot%\system32\svchost.exe" desc="@%systemroot%\system32\dosvc.dll,-104" dir="in" edge="true" edgedefer="None" group="@%systemroot%\system32\dosvc.dll,-100" internalName="DeliveryOptimization-UDP-In" lport="7680" name="@%systemroot%\system32\dosvc.dll,-103" protocol="UDP" svc="dosvc" />
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="DO-SVC-SDDL" sddl="D:(A;;0x0002009D;;;AU)(A;;0x000F01FF;;;BA)(A;;0x000F01FF;;;SY)(A;;0x00020022;;;S-1-5-80-3055155277-3816794035-3994065555-2874236192-2193176987)S:(AU;FA;0x000F01FF;;;WD)" operationHint="replace" />
+          <securityDescriptorDefinition name="REGKEY_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;CI;GA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;CI;GR;;;SY)(A;CI;GR;;;BA)(A;CI;GR;;;BU)(A;CI;GR;;;S-1-15-2-1)(A;CI;GR;;;S-1-15-3-1024-1065365936-1281604716-3511738428-1654721687-432734479-3232135806-4053264122-3456934681)" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" description="Default SDDL for Windows Resource Protected file" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+  <imaging>
+    <sysprepInformation>
+      <sysprepProvider stage="cleanup">
+        <sysprepOrder order="0x1800" />
+        <serviceActions>
+          <stopService serviceName="dosvc" />
+        </serviceActions>
+        <fileActions>
+          <deleteDirectory path="$(runtime.windows)\ServiceProfiles\NetworkService\AppData\Local\Microsoft\Windows\DeliveryOptimization\Cache" />
+          <deleteDirectory path="$(runtime.windows)\ServiceProfiles\NetworkService\AppData\Local\Microsoft\Windows\DeliveryOptimization\State" />
+          <deleteFile path="$(runtime.windows)\ServiceProfiles\NetworkService\AppData\Local\Microsoft\Windows\DeliveryOptimization\Logs\dosvc*.etl" />
+        </fileActions>
+      </sysprepProvider>
+    </sysprepInformation>
+  </imaging>
+  <migration offlineApply="No" scope="Upgrade,MigWiz,USMT" settingsVersion="3">
+    <migXml xmlns="">
+      <rules context="System">
+        <include>
+          <objectSet>
+            <pattern type="File">%WINDIR%\ServiceProfiles\NetworkService\AppData\Local\Microsoft\Windows\DeliveryOptimization\* [*]</pattern>
+          </objectSet>
+        </include>
+        <excludeAttributes attributes="Security">
+          <objectSet>
+            <pattern type="File">%WINDIR%\ServiceProfiles\NetworkService\AppData\Local\Microsoft\Windows\DeliveryOptimization\* [*]</pattern>
+          </objectSet>
+        </excludeAttributes>
+        <merge script="MigXmlHelper.SourcePriority()">
+          <objectSet>
+            <pattern type="File">%WINDIR%\ServiceProfiles\NetworkService\AppData\Local\Microsoft\Windows\DeliveryOptimization\* [*]</pattern>
+          </objectSet>
+        </merge>
+        <merge script="MigXmlHelper.DestinationPriority()">
+          <objectSet>
+            <pattern type="File">%WINDIR%\ServiceProfiles\NetworkService\AppData\Local\Microsoft\Windows\DeliveryOptimization\Cache</pattern>
+          </objectSet>
+        </merge>
+      </rules>
+    </migXml>
+    <supportedComponents>
+      <supportedComponent>
+        <assemblyIdentity name="_" version="1.0.0.0" />
+        <supportedComponentIdentity language="neutral" name="Microsoft-Windows-DeliveryOptimization" processorArchitecture="*" settingsVersionRange="3" xmlns="urn:schemas-microsoft-com:asm.v3" />
+        <migXml xmlns="">
+          <rules context="System">
+            <merge script="MigXmlHelper.SourcePriority()">
+              <objectSet>
+                <pattern type="File">%WINDIR%\ServiceProfiles\NetworkService\AppData\Local\Microsoft\Windows\DeliveryOptimization\* [*]</pattern>
+              </objectSet>
+            </merge>
+            <merge script="MigXmlHelper.DestinationPriority()">
+              <objectSet>
+                <pattern type="File">%WINDIR%\ServiceProfiles\NetworkService\AppData\Local\Microsoft\Windows\DeliveryOptimization\Cache</pattern>
+              </objectSet>
+            </merge>
+          </rules>
+        </migXml>
+      </supportedComponent>
+      <supportedComponent>
+        <assemblyIdentity name="_" version="1.0.0.0" />
+        <supportedComponentIdentity language="neutral" name="Microsoft-Windows-DeliveryOptimization" processorArchitecture="*" settingsVersionRange="2" xmlns="urn:schemas-microsoft-com:asm.v3" />
+        <migXml xmlns="">
+          <rules context="System">
+            <merge script="MigXmlHelper.SourcePriority()">
+              <objectSet>
+                <pattern type="File">%WINDIR%\ServiceProfiles\NetworkService\AppData\Local\Microsoft\Windows\DeliveryOptimization\* [*]</pattern>
+                <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\DeliveryOptimization\* [*]</pattern>
+              </objectSet>
+            </merge>
+            <merge script="MigXmlHelper.DestinationPriority()">
+              <objectSet>
+                <pattern type="File">%WINDIR%\ServiceProfiles\NetworkService\AppData\Local\Microsoft\Windows\DeliveryOptimization\Cache</pattern>
+              </objectSet>
+            </merge>
+          </rules>
+        </migXml>
+      </supportedComponent>
+      <supportedComponent>
+        <assemblyIdentity name="_" version="1.0.0.0" />
+        <supportedComponentIdentity language="neutral" name="Microsoft-Windows-DeliveryOptimization" processorArchitecture="*" settingsVersionRange="1" xmlns="urn:schemas-microsoft-com:asm.v3" />
+        <migXml xmlns="">
+          <rules context="System">
+            <locationModify script="MigXmlHelper.RelativeMove('%WINDIR%\SoftwareDistribution\DeliveryOptimization','%WINDIR%\ServiceProfiles\NetworkService\AppData\Local\Microsoft\Windows\DeliveryOptimization\Cache')">
+              <objectSet>
+                <pattern type="File">%WINDIR%\SoftwareDistribution\DeliveryOptimization\* [*]</pattern>
+              </objectSet>
+            </locationModify>
+            <locationModify script="MigXmlHelper.RelativeMove('%WINDIR%\DeliveryOptimization','%WINDIR%\ServiceProfiles\NetworkService\AppData\Local\Microsoft\Windows\DeliveryOptimization\Cache')">
+              <objectSet>
+                <pattern type="File">%WINDIR%\DeliveryOptimization\* [*]</pattern>
+              </objectSet>
+            </locationModify>
+            <locationModify script="MigXmlHelper.RelativeMove('%WINDIR%\logs\dosvc','%WINDIR%\ServiceProfiles\NetworkService\AppData\Local\Microsoft\Windows\DeliveryOptimization\Logs')">
+              <objectSet>
+                <pattern type="File">%WINDIR%\logs\dosvc\* [*]</pattern>
+              </objectSet>
+            </locationModify>
+            <excludeAttributes attributes="Security">
+              <objectSet>
+                <pattern type="File">%WINDIR%\SoftwareDistribution\DeliveryOptimization\* [*]</pattern>
+                <pattern type="File">%WINDIR%\DeliveryOptimization\* [*]</pattern>
+                <pattern type="File">%WINDIR%\logs\dosvc\* [*]</pattern>
+                <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\DeliveryOptimization\* [*]</pattern>
+              </objectSet>
+            </excludeAttributes>
+            <merge script="MigXmlHelper.SourcePriority()">
+              <objectSet>
+                <pattern type="File">%WINDIR%\logs\dosvc\* [*]</pattern>
+                <pattern type="File">%WINDIR%\SoftwareDistribution\DeliveryOptimization\* [*]</pattern>
+                <pattern type="File">%WINDIR%\DeliveryOptimization\* [*]</pattern>
+                <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\DeliveryOptimization\* [*]</pattern>
+              </objectSet>
+            </merge>
+            <merge script="MigXmlHelper.DestinationPriority()">
+              <objectSet>
+                <pattern type="File">%WINDIR%\ServiceProfiles\NetworkService\AppData\Local\Microsoft\Windows\DeliveryOptimization\* [*]</pattern>
+              </objectSet>
+            </merge>
+          </rules>
+        </migXml>
+      </supportedComponent>
+    </supportedComponents>
+  </migration>
+</assembly>

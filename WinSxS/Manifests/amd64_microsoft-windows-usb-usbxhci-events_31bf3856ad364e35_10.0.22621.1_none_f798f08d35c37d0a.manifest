@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-USB-USBXHCI-Events" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <instrumentation xmlns:ms="http://manifests.microsoft.com/win/2004/08/windows/events" xmlns:trace="http://schemas.microsoft.com/win/2004/08/events/trace" xmlns:win="http://manifests.microsoft.com/win/2004/08/windows/events" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <events xmlns="http://schemas.microsoft.com/win/2004/08/events">
+      <provider guid="{30e1d284-5d88-459c-83fd-6345b39b19ec}" messageFileName="%SystemRoot%\system32\drivers\usbxhci.sys" name="Microsoft-Windows-USB-USBXHCI" resourceFileName="%SystemRoot%\system32\drivers\usbxhci.sys" symbol="MS_USBXHCI_ETW_PROVIDER">
+        <channels>
+          <importChannel chid="System" name="System" />
+          <channel chid="Microsoft-Windows-USB-USBXHCI-Analytic" enabled="false" message="$(string.Microsoft-Windows-USB-USBXHCI.channel.UsbXhciAnalyticChannel.message)" name="Microsoft-Windows-USB-USBXHCI-Analytic" symbol="UsbXhciAnalyticChannel" type="Analytic" />
+          <channel chid="Microsoft-Windows-USB-USBXHCI-Trustlet-Analytic" enabled="false" message="$(string.Microsoft-Windows-USB-USBXHCI.channel.UsbXhciTrustletAnalyticChannel.message)" name="Microsoft-Windows-USB-USBXHCI-Trustlet-Analytic" symbol="UsbXhciTrustletAnalyticChannel" type="Analytic" />
+        </channels>
+      </provider>
+      <cmi />
+    </events>
+    <counters xmlns="http://schemas.microsoft.com/win/2005/12/counters" schemaVersion="2.0">
+      <provider applicationIdentity="%SystemRoot%\system32\drivers\usbxhci.sys" providerGuid="{408443b2-2164-418a-ad52-c761f93310f3}" providerType="kernelMode">
+        <counterSet description="Consists of counters that measure aspects of an interrupter of an xHCI controller." descriptionID="3" guid="{f961fa1c-6b9b-4d16-b414-499ed1f6d6f2}" instances="multipleAggregate" name="XHCI Interrupter" nameID="1" symbol="Interrupter" uri="Microsoft.Windows.Usb.UsbXhci.Interrupter">
+          <structs>
+            <struct name="InterrupterCounter" type="INTERRUPTER_COUNTER" />
+          </structs>
+          <counter description="Number of interrupts generated per second" descriptionID="7" detailLevel="standard" field="IsrCount" id="0" name="Interrupts/sec" nameID="5" struct="InterrupterCounter" symbol="INTERRUPTER_INTERRUPTS_PER_SEC" type="perf_counter_counter" uri="Microsoft.Windows.Usb.UsbXhci.Interrupter.InterruptsPerSec" />
+          <counter description="Number of Interrupt DPCs executed per second" descriptionID="11" detailLevel="standard" field="DpcCount" id="1" name="DPCs/sec" nameID="9" struct="InterrupterCounter" symbol="INTERRUPTER_DPCS_PER_SEC" type="perf_counter_counter" uri="Microsoft.Windows.Usb.UsbXhci.Interrupter.DPCsPerSec" />
+          <counter baseID="3" description="Number of Events processed per DPC" descriptionID="15" detailLevel="standard" field="EventCount" id="2" name="Events processed/DPC" nameID="13" struct="InterrupterCounter" symbol="INTERRUPTER_EVENTS_PROCESSED_PER_DPC" type="perf_average_bulk" uri="Microsoft.Windows.Usb.UsbXhci.Interrupter.EventsProcessedPerDPC" />
+          <counter description="Number of DPCs executed since the interrupter was started" descriptionID="19" detailLevel="standard" field="DpcCount" id="3" name="DPC count" nameID="17" struct="InterrupterCounter" symbol="INTERRUPTER_DPC_COUNT" type="perf_average_base" uri="Microsoft.Windows.Usb.UsbXhci.Interrupter.DPCCount">
+            <counterAttributes>
+              <counterAttribute name="noDisplay" />
+            </counterAttributes>
+          </counter>
+          <counter description="Number of times Event Ring got full since the creation of the device node" descriptionID="23" detailLevel="standard" field="EventRingFull" id="4" name="EventRingFullCount" nameID="21" struct="InterrupterCounter" symbol="INTERRUPTER_EVENTRING_FULL_COUNT" type="perf_counter_rawcount" uri="Microsoft.Windows.Usb.UsbXhci.Interrupter.EventRingFullCount" />
+          <counter description="Number of times the Interrupt Dpc was requeued to prevent a DPC timeout" descriptionID="27" detailLevel="standard" field="RequeueCount" id="5" name="DpcRequeueCount" nameID="25" struct="InterrupterCounter" symbol="INTERRUPTER_DPC_REQUEUE_COUNT" type="perf_counter_rawcount" uri="Microsoft.Windows.Usb.UsbXhci.Interrupter.DpcRequeueCount" />
+        </counterSet>
+        <counterSet description="Consists of counters that measure aspects of a CommonBuffer object of an xHCI controller." descriptionID="203" guid="{c3cf1c57-275d-4b71-a5a6-e4e90401b821}" instances="multipleAggregate" name="XHCI CommonBuffer" nameID="201" symbol="CommonBuffer" uri="Microsoft.Windows.Usb.UsbXhci.CommonBuffer">
+          <structs>
+            <struct name="CommonBufferCounter" type="XILCORE_COMMON_BUFFER_COUNTER" />
+          </structs>
+          <counter description="Total number of CommonBuffer pages currently allocated" descriptionID="207" detailLevel="standard" field="PagesTotal" id="0" name="PagesTotal" nameID="205" struct="CommonBufferCounter" symbol="COMMON_BUFFER_PAGES_TOTAL" type="perf_counter_rawcount" uri="Microsoft.Windows.Usb.UsbXhci.CommonBuffer.PagesTotal" />
+          <counter description="Number of pages of CommonBuffer currently in use" descriptionID="211" detailLevel="standard" field="PagesInUse" id="1" name="PagesInUse" nameID="209" struct="CommonBufferCounter" symbol="COMMON_BUFFER_PAGES_IN_USE" type="perf_counter_rawcount" uri="Microsoft.Windows.Usb.UsbXhci.CommonBuffer.PagesInUse" />
+          <counter description="Number of times CommonBuffer allocations were done" descriptionID="215" detailLevel="standard" field="AllocationCount" id="2" name="AllocationCount" nameID="213" struct="CommonBufferCounter" symbol="COMMON_BUFFER_ALLOCATION_COUNT" type="perf_counter_rawcount" uri="Microsoft.Windows.Usb.UsbXhci.CommonBuffer.AllocationCount" />
+          <counter description="Number of times CommonBuffer was freed back to the DMA adapter" descriptionID="219" detailLevel="standard" field="FreeCount" id="3" name="FreeCount" nameID="217" struct="CommonBufferCounter" symbol="COMMON_BUFFER_FREE_COUNT" type="perf_counter_rawcount" uri="Microsoft.Windows.Usb.UsbXhci.CommonBuffer.FreeCount" />
+        </counterSet>
+        <counterSet description="Consists of counters that measure aspects of a transferring of an xHCI controller." descriptionID="103" guid="{e363bd27-bfbd-4581-a142-ecc006a7b82b}" instances="multipleAggregate" name="XHCI TransferRing" nameID="101" symbol="TransferRing" uri="Microsoft.Windows.Usb.UsbXhci.TransferRing">
+          <structs>
+            <struct name="TransferRingCounter" type="TRANSFERRING_COUNTER" />
+          </structs>
+          <counter description="Number of transfers completed per second" descriptionID="107" detailLevel="standard" field="TransferCount" id="0" name="Transfers/sec" nameID="105" struct="TransferRingCounter" symbol="TRANSFERRING_TRANSFERS_PER_SEC" type="perf_counter_counter" uri="Microsoft.Windows.Usb.UsbXhci.TransferRing.TransfersPerSec" />
+          <counter description="Number of failed transfers" descriptionID="111" detailLevel="standard" field="FailedTransferCount" id="1" name="Failed Transfer Count" nameID="109" struct="TransferRingCounter" symbol="TRANSFERRING_FAILED_TRANSFER_COUNT" type="perf_counter_rawcount" uri="Microsoft.Windows.Usb.UsbXhci.TransferRing.FailedTransferCount" />
+          <counter description="Bytes transferred per second" descriptionID="115" detailLevel="standard" field="BytesTransferred" id="2" name="Bytes/Sec" nameID="113" struct="TransferRingCounter" symbol="TRANSFERRING_BYTES_PER_SEC" type="perf_counter_counter" uri="Microsoft.Windows.Usb.UsbXhci.TransferRing.BytesPerSec" />
+          <counter description="Number of Isoch TDs completed per second" descriptionID="119" detailLevel="standard" field="IsochTDCount" id="3" name="Isoch TD/sec" nameID="117" struct="TransferRingCounter" symbol="TRANSFERRING_ISOCH_TD_PER_SEC" type="perf_counter_counter" uri="Microsoft.Windows.Usb.UsbXhci.TransferRing.IsochTDPerSec" />
+          <counter description="Number of Isoch TD failures per second" descriptionID="123" detailLevel="standard" field="IsochTDFailCount" id="4" name="Isoch TD Failures/sec" nameID="121" struct="TransferRingCounter" symbol="TRANSFERRING_ISOCH_TD_FAILURE_PER_SEC" type="perf_counter_counter" uri="Microsoft.Windows.Usb.UsbXhci.TransferRing.IsochTDFailurePerSec" />
+          <counter description="Total Number of Isoch Missed Service Error events received" descriptionID="127" detailLevel="standard" field="MissedServiceErrorCount" id="5" name="Missed Service Error Count" nameID="125" struct="TransferRingCounter" symbol="TRANSFERRING_ISOCH_MSE_COUNT" type="perf_counter_rawcount" uri="Microsoft.Windows.Usb.UsbXhci.TransferRing.IsochMissedServiceErrorCount" />
+          <counter description="Total Number of Isoch Underrun/Overrun events received" descriptionID="131" detailLevel="standard" field="UnderrunOverrunCount" id="6" name="Underrun Overrun count" nameID="129" struct="TransferRingCounter" symbol="TRANSFERRING_ISOCH_UNDERRUN_OVERRUN_COUNT" type="perf_counter_rawcount" uri="Microsoft.Windows.Usb.UsbXhci.TransferRing.IsochUnderrunOverrunCount" />
+        </counterSet>
+      </provider>
+    </counters>
+  </instrumentation>
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string id="Microsoft-Windows-USB-USBXHCI.channel.UsbXhciAnalyticChannel.message" value="This is the Analytic channel to which internal Analytic events from the USBXHCI driver are sent." />
+        <string id="USBXHCI_ETW_PROVIDER.event.USBXHCI_ETW_EVENT_RUNDOWN_START.message" value="Start Rundown" />
+        <string id="USBXHCI_ETW_PROVIDER.event.USBXHCI_ETW_EVENT_RUNDOWN_COMPLETE.message" value="Complete Rundown" />
+        <string id="USBXHCI_ETW_PROVIDER.event.USBXHCI_ETW_EVENT_RUNDOWN_CONTROLLER_INFORMATION.message" value="USBXHCI Controller Information" />
+        <string id="USBXHCI_ETW_PROVIDER.event.USBXHCI_ETW_EVENT_RUNDOWN_DEVICE_INFORMATION.message" value="USBXHCI Device Information" />
+        <string id="USBXHCI_ETW_PROVIDER.event.USBXHCI_ETW_EVENT_RUNDOWN_ENDPOINT_INFORMATION.message" value="USBXHCI Endpoint Information" />
+        <string id="USBXHCI_ETW_PROVIDER.event.USBXHCI_ETW_EVENT_CONTROLLER_CREATE.message" value="USBXHCI Controller Create" />
+        <string id="USBXHCI_ETW_PROVIDER.event.USBXHCI_ETW_EVENT_CONTROLLER_DELETE.message" value="USBXHCI Controller Delete" />
+        <string id="USBXHCI_ETW_PROVIDER.event.USBXHCI_ETW_EVENT_DEVICE_CREATE.message" value="USBXHCI Device Create" />
+        <string id="USBXHCI_ETW_PROVIDER.event.USBXHCI_ETW_EVENT_DEVICE_UPDATE.message" value="USBXHCI Device Update" />
+        <string id="USBXHCI_ETW_PROVIDER.event.USBXHCI_ETW_EVENT_DEVICE_DELETE.message" value="USBXHCI Device Delete" />
+        <string id="USBXHCI_ETW_PROVIDER.event.USBXHCI_ETW_EVENT_ENDPOINT_CREATE.message" value="USBXHCI Endpoint Create" />
+        <string id="USBXHCI_ETW_PROVIDER.event.USBXHCI_ETW_EVENT_ENDPOINT_UPDATE.message" value="USBXHCI Endpoint Update" />
+        <string id="USBXHCI_ETW_PROVIDER.event.USBXHCI_ETW_EVENT_ENDPOINT_DELETE.message" value="USBXHCI Endpoint Delete" />
+        <string id="USBXHCI_ETW_PROVIDER.event.USBXHCI_ETW_EVENT_STARTDEVICE_FAIL.message" value="Windows failed to start the %3 for the following reason:%n%4" />
+        <string id="USBXHCI_ETW_PROVIDER.event.USBXHCI_ETW_EVENT_CONTROLLER_FIRMWARE_VERSION_UPDATE.message" value="USBXHCI Controller Firmware Version Update" />
+        <string id="USBXHCI_ETW_PROVIDER.event.USBXHCI_ETW_EVENT_CONTROLLER_D0_ENTRY_START.message" value="USBXHCI Controller EvtDeviceD0Entry Start" />
+        <string id="USBXHCI_ETW_PROVIDER.event.USBXHCI_ETW_EVENT_CONTROLLER_D0_ENTRY_COMPLETE.message" value="USBXHCI Controller EvtDeviceD0Entry Complete" />
+        <string id="USBXHCI_ETW_PROVIDER.event.USBXHCI_ETW_EVENT_CONTROLLER_D0_ENTRY_POST_INTERRUPTS_START.message" value="USBXHCI Controller EvtDeviceD0EntryPostInterruptsEnabled Start" />
+        <string id="USBXHCI_ETW_PROVIDER.event.USBXHCI_ETW_EVENT_CONTROLLER_D0_ENTRY_POST_INTERRUPTS_COMPLETE.message" value="USBXHCI Controller EvtDeviceD0EntryPostInterruptsEnabled Complete" />
+        <string id="USBXHCI_ETW_PROVIDER.event.USBXHCI_ETW_EVENT_CONTROLLER_D0_EXIT_PRE_INTERRUPTS_START.message" value="USBXHCI Controller EvtDeviceD0ExitPreInterruptsDisabled Start" />
+        <string id="USBXHCI_ETW_PROVIDER.event.USBXHCI_ETW_EVENT_CONTROLLER_D0_EXIT_PRE_INTERRUPTS_COMPLETE.message" value="USBXHCI Controller EvtDeviceD0ExitPreInterruptsDisabled Complete" />
+        <string id="USBXHCI_ETW_PROVIDER.event.USBXHCI_ETW_EVENT_CONTROLLER_D0_EXIT_START.message" value="USBXHCI Controller EvtDeviceD0Exit Start" />
+        <string id="USBXHCI_ETW_PROVIDER.event.USBXHCI_ETW_EVENT_CONTROLLER_D0_EXIT_COMPLETE.message" value="USBXHCI Controller EvtDeviceD0Exit Complete" />
+        <string id="USBXHCI_ETW_PROVIDER.event.USBXHCI_ETW_EVENT_CONTROLLER_SAVE_STATE_START.message" value="USBXHCI Controller Save State Start" />
+        <string id="USBXHCI_ETW_PROVIDER.event.USBXHCI_ETW_EVENT_CONTROLLER_SAVE_STATE_COMPLETE.message" value="USBXHCI Controller Save State Complete" />
+        <string id="USBXHCI_ETW_PROVIDER.event.USBXHCI_ETW_EVENT_CONTROLLER_RESTORE_STATE_START.message" value="USBXHCI Controller Restore State Start" />
+        <string id="USBXHCI_ETW_PROVIDER.event.USBXHCI_ETW_EVENT_CONTROLLER_RESTORE_STATE_COMPLETE.message" value="USBXHCI Controller Restore State Complete" />
+        <string id="USBXHCI_ETW_PROVIDER.event.USBXHCI_ETW_EVENT_CONTROLLER_INTERNAL_RESET_START.message" value="USBXHCI Controller Internal Reset Start" />
+        <string id="USBXHCI_ETW_PROVIDER.event.USBXHCI_ETW_EVENT_CONTROLLER_INTERNAL_RESET_COMPLETE.message" value="USBXHCI Controller Internal Reset Complete" />
+        <string id="USBXHCI_ETW_PROVIDER.event.USBXHCI_ETW_EVENT_CONTROLLER_ERROR.message" value="USBXHCI Controller Error detected. To recover from this Error, Windows may need to reset the Controller and re-enumerate USB devices downstream of the Controller. Please refer Event Properties for more contextual information about this Error.%nHardware Verifier Flag: %4.%nDetailed description: %5" />
+        <string id="USBXHCI_ETW_PROVIDER.event.USBXHCI_ETW_EVENT_COMMAND_SEND.message" value="xHCI Command sent to Controller" />
+        <string id="USBXHCI_ETW_PROVIDER.event.USBXHCI_ETW_EVENT_COMMAND_WAITLISTED.message" value="xHCI Command waitlisted due to Command Ring full or Command Serialization" />
+        <string id="USBXHCI_ETW_PROVIDER.event.USBXHCI_ETW_EVENT_COMMAND_COMPLETE.message" value="xHCI Command Complete" />
+        <string id="USBXHCI_ETW_PROVIDER.event.USBXHCI_ETW_EVENT_COMMAND_COMPLETE_ERROR.message" value="xHCI Command Complete with Error" />
+        <string id="USBXHCI_ETW_PROVIDER.event.USBXHCI_ETW_EVENT_CONTROLLER_QUERY_USB_CAPABILITY.message" value="Query USB capability for controller" />
+        <string id="USBXHCI_ETW_PROVIDER.task.task_USBXHCI_RUNDOWN.message" value="USBXHCI Driver Rundown" />
+        <string id="USBXHCI_ETW_PROVIDER.task.task_USBXHCI_CONTROLLER_RUNDOWN.message" value="USBXHCI Controler Rundown" />
+        <string id="USBXHCI_ETW_PROVIDER.task.task_USBXHCI_DEVICE_RUNDOWN.message" value="USBXHCI Device Rundown" />
+        <string id="USBXHCI_ETW_PROVIDER.task.task_USBXHCI_ENDPOINT_RUNDOWN.message" value="USBXHCI Endpoint Rundown" />
+        <string id="USBXHCI_ETW_PROVIDER.task.task_USBXHCI_CONTROLLER_CREATE.message" value="USBXHCI Controller Create" />
+        <string id="USBXHCI_ETW_PROVIDER.task.task_USBXHCI_CONTROLLER_DELETE.message" value="USBXHCI Controller Delete" />
+        <string id="USBXHCI_ETW_PROVIDER.task.task_USBXHCI_DEVICE_CREATE.message" value="USBXHCI Device Create" />
+        <string id="USBXHCI_ETW_PROVIDER.task.task_USBXHCI_DEVICE_UPDATE.message" value="USBXHCI Device Update" />
+        <string id="USBXHCI_ETW_PROVIDER.task.task_USBXHCI_DEVICE_DELETE.message" value="USBXHCI Device Delete" />
+        <string id="USBXHCI_ETW_PROVIDER.task.task_USBXHCI_ENDPOINT_CREATE.message" value="USBXHCI Endpoint Create" />
+        <string id="USBXHCI_ETW_PROVIDER.task.task_USBXHCI_ENDPOINT_UPDATE.message" value="USBXHCI Endpoint Update" />
+        <string id="USBXHCI_ETW_PROVIDER.task.task_USBXHCI_ENDPOINT_DELETE.message" value="USBXHCI Endpoint Delete" />
+        <string id="USBXHCI_ETW_PROVIDER.task.task_USBXHCI_CONTROLLER_FIRMWARE_VERSION_UPDATE.message" value="USBXHCI Controller Firmware Version Update" />
+        <string id="USBXHCI_ETW_PROVIDER.task.task_USBXHCI_CONTROLLER_D0_ENTRY.message" value="USBXHCI Controller D0 Entry" />
+        <string id="USBXHCI_ETW_PROVIDER.task.task_USBXHCI_CONTROLLER_D0_ENTRY_POST_INTERRUPTS.message" value="USBXHCI Controller D0 Entry Post Interrupts Enabled" />
+        <string id="USBXHCI_ETW_PROVIDER.task.task_USBXHCI_CONTROLLER_D0_EXIT_PRE_INTERRUPTS.message" value="USBXHCI Controller D0 Exit Pre Interrupts Disabled" />
+        <string id="USBXHCI_ETW_PROVIDER.task.task_USBXHCI_CONTROLLER_D0_EXIT.message" value="USBXHCI Controller D0 Exit" />
+        <string id="USBXHCI_ETW_PROVIDER.task.task_USBXHCI_CONTROLLER_SAVE_STATE.message" value="USBXHCI Controller Save State" />
+        <string id="USBXHCI_ETW_PROVIDER.task.task_USBXHCI_CONTROLLER_RESTORE_STATE.message" value="USBXHCI Controller Restore State" />
+        <string id="USBXHCI_ETW_PROVIDER.task.task_USBXHCI_CONTROLLER_INTERNAL_RESET.message" value="USBXHCI Controller Internal Reset" />
+        <string id="USBXHCI_ETW_PROVIDER.task.task_USBXHCI_ETW_EVENT_CONTROLLER_ERROR.message" value="USBXHCI Controller Error" />
+        <string id="USBXHCI_ETW_PROVIDER.task.task_USBXHCI_ETW_COMMAND.message" value="USBXHCI Command" />
+        <string id="USBXHCI_ETW_PROVIDER.opcode.op_INFORMATION.message" value="Information" />
+        <string id="USBXHCI_ETW_PROVIDER.opcode.StartDeviceFailReason.BiosHandoffFail.message" value="BIOS Handoff failed. Check with your computer manufacturer for an updated BIOS, or an updated firmware for the controller." />
+        <string id="USBXHCI_ETW_PROVIDER.opcode.StartDeviceFailReason.ControllerNotHaltedAfterHandoff.message" value="Controller was not halted after a BIOS handoff. Check with your computer manufacturer for an updated BIOS." />
+        <string id="USBXHCI_ETW_PROVIDER.opcode.StartDeviceFailReason.ControllerResetTimedOut.message" value="Controller reset timed out. Check with your computer manufacturer for an updated firmware for the controller." />
+        <string id="USBXHCI_ETW_PROVIDER.map.MapParentBusType.ParentBusTypePci.message" value="ParentBusTypePci" />
+        <string id="USBXHCI_ETW_PROVIDER.map.MapParentBusType.ParentBusTypeAcpi.message" value="ParentBusTypeAcpi" />
+        <string id="USBXHCI_ETW_PROVIDER.map.S0IdleStatus.Configured.message" value="S0IdleConfigured" />
+        <string id="USBXHCI_ETW_PROVIDER.map.S0IdleStatus.NotConfiguredDueToHackFlag.message" value="S0IdleNotConfiguredDueToHackFlag" />
+        <string id="USBXHCI_ETW_PROVIDER.map.S0IdleStatus.NotConfiguredDueToNoS0WakeCapability.message" value="NotConfiguredDueToNoS0WakeCapability" />
+        <string id="USBXHCI_ETW_PROVIDER.map.S0IdleStatus.NotConfiguredDueToRegKeyPresent.message" value="S0IdleNotConfiguredDueToRegKeyPresent" />
+        <string id="USBXHCI_ETW_PROVIDER.map.CommandWaitlistReason.CommandRingFull.message" value="CommandRingFull" />
+        <string id="USBXHCI_ETW_PROVIDER.map.CommandWaitlistReason.CommandsSerialized.message" value="CommandsSerialized" />
+        <string id="USBXHCI_ETW_PROVIDER.map.CommandWaitlistReason.CommandAbortInProgress.message" value="CommandAbortInProgress" />
+        <string id="USBXHCI_ETW_PROVIDER.map.CommandWaitlistReason.ControllerResetInProgress.message" value="ControllerResetInProgress" />
+        <string id="USBXHCI_ETW_PROVIDER.map.TrbCompletionCode.TRB_COMPLETION_CODE_INVALID.message" value="Invalid" />
+        <string id="USBXHCI_ETW_PROVIDER.map.TrbCompletionCode.TRB_COMPLETION_CODE_SUCCESS.message" value="Success" />
+        <string id="USBXHCI_ETW_PROVIDER.map.TrbCompletionCode.TRB_COMPLETION_CODE_DATA_BUFFER_ERROR.message" value="Data Buffer Error" />
+        <string id="USBXHCI_ETW_PROVIDER.map.TrbCompletionCode.TRB_COMPLETION_CODE_BABBLE_DETECTED_ERROR.message" value="Babble Detected Error" />
+        <string id="USBXHCI_ETW_PROVIDER.map.TrbCompletionCode.TRB_COMPLETION_CODE_USB_TRANSACTION_ERROR.message" value="Usb Transaction Error" />
+        <string id="USBXHCI_ETW_PROVIDER.map.TrbCompletionCode.TRB_COMPLETION_CODE_TRB_ERROR.message" value="Trb Error" />
+        <string id="USBXHCI_ETW_PROVIDER.map.TrbCompletionCode.TRB_COMPLETION_CODE_STALL_ERROR.message" value="Stall Error" />
+        <string id="USBXHCI_ETW_PROVIDER.map.TrbCompletionCode.TRB_COMPLETION_CODE_RESOURCE_ERROR.message" value="Resource Error" />
+        <string id="USBXHCI_ETW_PROVIDER.map.TrbCompletionCode.TRB_COMPLETION_CODE_BANDWIDTH_ERROR.message" value="Bandwidth Error" />
+        <string id="USBXHCI_ETW_PROVIDER.map.TrbCompletionCode.TRB_COMPLETION_CODE_NO_SLOTS_AVAILABLE_ERROR.message" value="No Slots Available Error" />
+        <string id="USBXHCI_ETW_PROVIDER.map.TrbCompletionCode.TRB_COMPLETION_CODE_INVALID_STREAM_TYPE_ERROR.message" value="Invalid Stream Type Error" />
+        <string id="USBXHCI_ETW_PROVIDER.map.TrbCompletionCode.TRB_COMPLETION_CODE_SLOT_NOT_ENABLED_ERROR.message" value="Slot Not Enabled Error" />
+        <string id="USBXHCI_ETW_PROVIDER.map.TrbCompletionCode.TRB_COMPLETION_CODE_ENDPOINT_NOT_ENABLED_ERROR.message" value="Endpoint Not Enabled Error" />
+        <string id="USBXHCI_ETW_PROVIDER.map.TrbCompletionCode.TRB_COMPLETION_CODE_SHORT_PACKET.message" value="Short Packet" />
+        <string id="USBXHCI_ETW_PROVIDER.map.TrbCompletionCode.TRB_COMPLETION_CODE_RING_UNDERRUN.message" value="Ring Underrun" />
+        <string id="USBXHCI_ETW_PROVIDER.map.TrbCompletionCode.TRB_COMPLETION_CODE_RING_OVERRUN.message" value="Ring Overrun" />
+        <string id="USBXHCI_ETW_PROVIDER.map.TrbCompletionCode.TRB_COMPLETION_CODE_VF_EVENT_RING_FULL_ERROR.message" value="Vf Event Ring Full Error" />
+        <string id="USBXHCI_ETW_PROVIDER.map.TrbCompletionCode.TRB_COMPLETION_CODE_PARAMETER_ERROR.message" value="Parameter Error" />
+        <string id="USBXHCI_ETW_PROVIDER.map.TrbCompletionCode.TRB_COMPLETION_CODE_BANDWIDTH_OVERRUN_ERROR.message" value="Bandwidth Overrun Error" />
+        <string id="USBXHCI_ETW_PROVIDER.map.TrbCompletionCode.TRB_COMPLETION_CODE_CONTEXT_STATE_ERROR.message" value="Context State Error" />
+        <string id="USBXHCI_ETW_PROVIDER.map.TrbCompletionCode.TRB_COMPLETION_CODE_NO_PING_RESPONSE_ERROR.message" value="No Ping Response Error" />
+        <string id="USBXHCI_ETW_PROVIDER.map.TrbCompletionCode.TRB_COMPLETION_CODE_EVENT_RING_FULL_ERROR.message" value="Event Ring Full Error" />
+        <string id="USBXHCI_ETW_PROVIDER.map.TrbCompletionCode.TRB_COMPLETION_CODE_INCOMPATIBLE_DEVICE_ERROR.message" value="Incompatible Device Error" />
+        <string id="USBXHCI_ETW_PROVIDER.map.TrbCompletionCode.TRB_COMPLETION_CODE_MISSED_SERVICE_ERROR.message" value="Missed Service Error" />
+        <string id="USBXHCI_ETW_PROVIDER.map.TrbCompletionCode.TRB_COMPLETION_CODE_COMMAND_RING_STOPPED.message" value="Command Ring Stopped" />
+        <string id="USBXHCI_ETW_PROVIDER.map.TrbCompletionCode.TRB_COMPLETION_CODE_COMMAND_ABORTED.message" value="Command Aborted" />
+        <string id="USBXHCI_ETW_PROVIDER.map.TrbCompletionCode.TRB_COMPLETION_CODE_STOPPED.message" value="Stopped" />
+        <string id="USBXHCI_ETW_PROVIDER.map.TrbCompletionCode.TRB_COMPLETION_CODE_STOPPED_LENGTH_INVALID.message" value="Stopped Length Invalid" />
+        <string id="USBXHCI_ETW_PROVIDER.map.TrbCompletionCode.TRB_COMPLETION_CODE_STOPPED_SHORT_PACKET.message" value="Stopped Short Packet" />
+        <string id="USBXHCI_ETW_PROVIDER.map.TrbCompletionCode.TRB_COMPLETION_CODE_MAX_EXIT_LATENCY_TOO_LARGE_ERROR.message" value="Max Exit Latency Too Large Error" />
+        <string id="USBXHCI_ETW_PROVIDER.map.TrbCompletionCode.TRB_COMPLETION_CODE_ISOCH_BUFFER_OVERRUN.message" value="Isoch Buffer Overrun" />
+        <string id="USBXHCI_ETW_PROVIDER.map.TrbCompletionCode.TRB_COMPLETION_CODE_EVENT_LOST_ERROR.message" value="Event Lost Error" />
+        <string id="USBXHCI_ETW_PROVIDER.map.TrbCompletionCode.TRB_COMPLETION_CODE_UNDEFINED_ERROR.message" value="Undefined Error" />
+        <string id="USBXHCI_ETW_PROVIDER.map.TrbCompletionCode.TRB_COMPLETION_CODE_INVALID_STREAM_ID_ERROR.message" value="Invalid Stream Id Error" />
+        <string id="USBXHCI_ETW_PROVIDER.map.TrbCompletionCode.TRB_COMPLETION_CODE_SECONDARY_BANDWIDTH_ERROR.message" value="Secondary Bandwidth Error" />
+        <string id="USBXHCI_ETW_PROVIDER.map.TrbCompletionCode.TRB_COMPLETION_CODE_SPLIT_TRANSACTION_ERROR.message" value="Split Transaction Error" />
+        <string id="USBXHCI_ETW_PROVIDER.map.TrbCompletionStatus.CrbCompletionSuccess.message" value="Success" />
+        <string id="USBXHCI_ETW_PROVIDER.map.TrbCompletionStatus.CrbCompletionUnsuccessful.message" value="Unsuccessful" />
+        <string id="USBXHCI_ETW_PROVIDER.map.TrbCompletionStatus.CrbCompletionTimeout.message" value="Timeout" />
+        <string id="USBXHCI_ETW_PROVIDER.map.TrbCompletionStatus.CrbCompletionControllerGone.message" value="Controller Gone" />
+        <string id="USBXHCI_ETW_PROVIDER.map.TrbCompletionStatus.CrbCompletionNotComplete.message" value="Not Complete" />
+        <string id="USBXHCI_ETW_PROVIDER.keyword.USBXHCI_ETW_KEYWORD_HW_VERIFYHOST" value="USBXHCI Controller Hardware Verifier Error Events" />
+        <string id="USBXHCI_ETW_PROVIDER.keyword.USBXHCI_ETW_KEYWORD_HW_VERIFYHUB" value="USB HUB Hardware Verifier Error Events" />
+        <string id="USBXHCI_ETW_PROVIDER.keyword.USBXHCI_ETW_KEYWORD_HW_VERIFYDEVICE" value="USB Device Hardware Verifier Error Events" />
+        <string id="USBXHCI_ETW_PROVIDER.event.USBXHCI_ETW_EVENT_CONTROLLER_WDF_POWER_REFERENCE_FOR_DEBUGGER.message" value="Wdf Power Reference acquired or released because controller is shared with debugger" />
+        <string id="USBXHCI_ETW_PROVIDER.task.task_USBXHCI_TRUSTLET_REQUEST.message" value="Request to VTL1 IUM trustlet" />
+        <string id="USBXHCI_ETW_PROVIDER.opcode.op_RECEIVED_IN_TRUSTLET.message" value="Request from VTL0 driver received in trustlet" />
+        <string id="USBXHCI_ETW_PROVIDER.opcode.op_COMPLETED_IN_TRUSTLET.message" value="Request from VTL0 driver completed in trustlet" />
+        <string id="Microsoft-Windows-USB-USBXHCI.channel.UsbXhciTrustletAnalyticChannel.message" value="This is the Analytic channel to which internal Analytic events from the USBXHCI trustlet are sent from VTL1." />
+        <string id="USBXHCI_ETW_PROVIDER.task.task_USBXHCI_TRANSFER.message" value="USB transfer" />
+        <string id="USBXHCI_ETW_PROVIDER.opcode.op_TRANSFER_INITIALIZED.message" value="USB transfer initialized" />
+        <string id="USBXHCI_ETW_PROVIDER.task.task_USBXHCI_DEFERRED_WORK.message" value="Deferred work (DPC/WorkItem)" />
+        <string id="USBXHCI_ETW_PROVIDER.event.USBXHCI_ETW_EVENT_START_TRACKING_FOR_TIME_SYNC.message" value="Start Tracking For Time Sync" />
+        <string id="USBXHCI_ETW_PROVIDER.task.task_USBXHCI_START_TRACKING_FOR_TIME_SYNC.message" value="Start Tracking For Time Sync" />
+        <string id="USBXHCI_ETW_PROVIDER.event.USBXHCI_ETW_EVENT_STOP_TRACKING_FOR_TIME_SYNC.message" value="Stop Tracking For Time Sync" />
+        <string id="USBXHCI_ETW_PROVIDER.task.task_USBXHCI_STOP_TRACKING_FOR_TIME_SYNC.message" value="Stop Tracking For Time Sync" />
+        <string id="USBXHCI_ETW_PROVIDER.event.USBXHCI_ETW_EVENT_CONFIGURE_ENDPOINT.message" value="Configure Endpoint" />
+        <string id="USBXHCI_ETW_PROVIDER.task.task_USBXHCI_CONFIGURE_ENDPOINT.message" value="Configure Endpoint" />
+        <string id="USBXHCI_ETW_PROVIDER.event.USBXHCI_ETW_EVENT_CONTROLLER_HEALTH.message" value="USBXHCI Controller Health Information" />
+        <string id="USBXHCI_ETW_PROVIDER.task.task_USBXHCI_CONTROLLER_HEALTH.message" value="USBXHCI Controller Health Information" />
+      </stringTable>
+    </resources>
+  </localization>
+</assembly>

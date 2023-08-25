@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-SystemMaintenanceService-Core" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <dependency discoverable="no" resourceType="Resources">
+    <dependentAssembly dependencyType="prerequisite">
+      <assemblyIdentity name="Microsoft-Windows-SystemMaintenanceService-Core.Resources" version="10.0.22621.1" processorArchitecture="amd64" language="*" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+    </dependentAssembly>
+  </dependency>
+  <file name="sysmain.dll" destinationPath="$(runtime.system32)\" sourceName="sysmain.dll" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>IqyQDl2sM08Vo+dOSRYE7INWsSuM2p/JpmCx4hfxcLI=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <memberships>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories" version="1.0.0.0" publicKeyToken="365143bb27e7ac8b" typeName="SvcHost" />
+      <categoryInstance subcategory="LocalSystemNetworkRestricted">
+        <serviceGroup position="last" serviceName="sysmain" />
+      </categoryInstance>
+    </categoryMembership>
+  </memberships>
+  <registryKeys>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Superfetch">
+      <securityDescriptor name="AdminGroupOnly" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management\PrefetchParameters">
+      <securityDescriptor name="AdminGroupOnly" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\System\CurrentControlset\Services\SysMain">
+      <registryValue name="MitigationFlags" valueType="REG_DWORD" value="0x00000002" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\System\CurrentControlset\Services\SysMain\Parameters">
+      <registryValue name="ServiceDll" valueType="REG_EXPAND_SZ" value="%systemroot%\system32\sysmain.dll" />
+      <registryValue name="ServiceMain" valueType="REG_SZ" value="SysMtServiceMain" />
+      <registryValue name="ServiceDllUnloadOnStop" valueType="REG_DWORD" value="0x00000001" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\SharedAccess\Parameters\FirewallPolicy\RestrictedServices\Static\System">
+      <registryValue name="Sysmain-1" valueType="REG_SZ" value="V2.0|Action=Block|Dir=In|App=%SystemRoot%\system32\svchost.exe|Svc=sysmain|Name=Block inbound access to sysmain|" />
+      <registryValue name="Sysmain-2" valueType="REG_SZ" value="V2.0|Action=Block|Dir=Out|App=%SystemRoot%\system32\svchost.exe|Svc=sysmain|Name=Block outbound access to sysmain|" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{382AC1B5-9C16-4CCD-9D00-D5053977B8D6}\InprocServer32\">
+      <registryValue name="" valueType="REG_EXPAND_SZ" value="%SystemRoot%\system32\sysmain.dll" />
+      <registryValue name="ThreadingModel" valueType="REG_SZ" value="Both" />
+    </registryKey>
+  </registryKeys>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="AdminGroupOnly" sddl="D:(A;OICI;GA;;;BA)" operationHint="replace" />
+          <securityDescriptorDefinition name="AdminGroupOnlyNoInherit" sddl="D:PAI(A;OICI;GA;;;BA)" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_REGKEY_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;CI;GA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;CI;GR;;;SY)(A;CI;GR;;;BA)(A;CI;GR;;;BU)(A;CI;GR;;;S-1-15-2-1)(A;CI;GR;;;S-1-15-3-1024-1065365936-1281604716-3511738428-1654721687-432734479-3232135806-4053264122-3456934681)" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_PARENT_DIR_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;CI;GA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;0x1301bf;;;SY)(A;IOCIOI;GA;;;SY)(A;;0x1301bf;;;BA)(A;IOCIOI;GA;;;BA)(A;CIOI;GRGX;;;BU)(A;OICIIO;GA;;;CO)(A;CIOI;GRGX;;;S-1-15-2-1)(A;CIOI;GRGX;;;S-1-15-2-2)" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" description="Default SDDL for Windows Resource Protected file" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+  <directories>
+    <directory destinationPath="$(runtime.windows)\prefetch" owner="True">
+      <securityDescriptor name="AdminGroupOnlyNoInherit" />
+    </directory>
+  </directories>
+  <instrumentation xmlns:win="http://manifests.microsoft.com/win/2004/08/windows/events">
+    <events xmlns="http://schemas.microsoft.com/win/2004/08/events">
+      <provider guid="{e6307a09-292c-497e-aad6-498f68e2b619}" message="$(string.ReadyBoostProviderName)" messageFileName="%SystemRoot%\system32\sysmain.dll" name="Microsoft-Windows-ReadyBoost" resourceFileName="%SystemRoot%\system32\sysmain.dll" symbol="SYSMAIN_SERVICE_EVENT_PROVIDER">
+        <channels>
+          <channel chid="cService" enabled="true" message="$(string.OperationalChannel.Name)" name="Microsoft-Windows-ReadyBoost/Operational" type="Operational" />
+          <channel chid="cServiceTraceOnly" name="Microsoft-Windows-ReadyBoost/Analytic" type="Analytic" />
+        </channels>
+      </provider>
+      <provider guid="{99806515-9F51-4c2f-B918-1EAE407AA8CB}" message="$(string.SuperfetchProviderName)" messageFileName="%SystemRoot%\system32\sysmain.dll" name="Microsoft-Windows-Superfetch" resourceFileName="%SystemRoot%\system32\sysmain.dll" symbol="SUPERFETCH_ANALYTIC_EVENT_PROVIDER">
+        <channels>
+          <channel chid="cMain" message="$(string.MainChannel.Name)" name="Microsoft-Windows-Superfetch/Main" type="Analytic">
+            <publishing>
+              <keywords>3</keywords>
+            </publishing>
+          </channel>
+          <channel chid="cStoreLog" message="$(string.StoreLogChannel.Name)" name="Microsoft-Windows-Superfetch/StoreLog" type="Analytic">
+            <publishing>
+              <keywords>4</keywords>
+            </publishing>
+          </channel>
+          <channel chid="cPfApLog" name="Microsoft-Windows-Superfetch/PfApLog" type="Analytic" />
+        </channels>
+      </provider>
+      <cmi />
+    </events>
+  </instrumentation>
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string id="ReadyBoostProviderName" value="Microsoft-Windows-ReadyBoost" />
+        <string id="Rdb.GoodDevice" value="The device (%1) is suitable for a ReadyBoost cache.  The random read speed is %3 KB/sec.  The random write speed is %4 KB/sec." />
+        <string id="Rdb.BadInterfaceError" value="The device (%1) will not be used for a ReadyBoost cache because it is not attached to a supported interface.%n     For USB devices, ReadyBoost requires that the device be connected to a USB 2.0 interface.%n" />
+        <string id="Rdb.LackFreeSpaceError" value="The device (%1) will not be used for a ReadyBoost cache because it does not have enough free space. Free Space %2 MB, required %3 MB." />
+        <string id="Rdb.SlowWriteError" value="The device (%1) will not be used for a ReadyBoost cache because it has insufficient write performance: %2 KB/sec." />
+        <string id="Rdb.SlowReadError" value="The device (%1) will not be used for a ReadyBoost cache because it has insufficient read performance: %2 KB/sec." />
+        <string id="Rdb.Win32Error" value="The ReadyBoost service encountered an error during the analysis of the new device (%1). Error code: %2" />
+        <string id="Rdb.NotFormatted" value="The device (%1) will not be used for a ReadyBoost cache because it is not formatted with FAT, FAT32, exFAT, or NTFS." />
+        <string id="Rdb.BadRegionError" value="The device (%1) will not be used for a ReadyBoost cache because it does not exhibit uniform performance across the device.  Size of fast region: %2 MB." />
+        <string id="Rdb.DeviceSizeTooSmall" value="The device (%1) will not be used for a ReadyBoost cache because the device is too small. Size: %2 MB.  Minimum Size: %3 MB" />
+        <string id="Rdb.InvalidMediaType" value="The device (%1) will not be used for a ReadyBoost cache because it is remote, read-only, virtual, or otherwise unsupported." />
+        <string id="Rdb.DeviceSystemVolume" value="The device (%1) will not be used for a ReadyBoost cache because it contains a system volume." />
+        <string id="Rdb.CacheCreated" value="A ReadyBoost cache was successfully created on the device (%1) of size %2 MB." />
+        <string id="Rdb.DeviceHasSeekPenalty" value="The device (%1) will not be used for a ReadyBoost cache because it incurs seek penalties." />
+        <string id="Rdb.DeviceIsVHD" value="The device (%1) will not be used for a ReadyBoost cache because it is a VHD (virtual hard disk)." />
+        <string id="Rdb.DeviceProhibited" value="The device (%1) will not be used for a ReadyBoost cache because it contains a configuration file which explicitly prohibits this." />
+        <string id="Rdb.AttachedToStack" value="The device (%1) will not be used for a ReadyBoost cache because the ReadyBoost driver is attached to its volume stack." />
+        <string id="Rdb.ReadOnlyVolume" value="The device (%1) will not be used for a ReadyBoost cache because it is mounted read-only.%n%n This is usually caused by one of the following reasons:%n * Write-protected devices/media%n * BitLocker group policy settings prohibit write access to non-encrypted removable devices" />
+        <string id="Rdb.CacheDeleted" value="A ReadyBoost cache was successfully deleted on the device (%1)." />
+        <string id="Rdb.BootPlanCalculation" value="Boot plan calculation completed in %3 ms.%n     Boot Plan Timestamp: %1%n     Reason: %4%n     Result: %2" />
+        <string id="Rdb.BootSummary.v1" value="Summary of ReadyBoot Performance:%n     Io Read Count: %5%n     Io Read Bytes: %1%n     Cache Hit Count: %6%n     Cache Hit Bytes: %2%n     Cache Hit Percentage: %4%n     Boot Prefetch Time (us): %8%n     Boot Prefetch Bytes: %3%n     Boot Prefetch Read Count: %7%n" />
+        <string id="Rdb.BootSummary" value="Summary of ReadyBoot Performance:%n     Io Read Count: %5%n     Io Read Bytes: %1%n     Cache Hit Count: %6%n     Cache Hit Bytes: %2%n     Cache Hit Percentage: %4%n     Boot Prefetch Time (us): %8%n     Boot Prefetch Bytes: %3%n     Boot Prefetch Read Count: %7%n     Flags: %13%n     Sync Prefetch IO Bytes: %9%n     Sync Prefetch IO Count: %10%n     Sync Prefetch Duration (us): %11%n     Post Sync Phase Pend Count: %12%n" />
+        <string id="Rdb.AttachStateChange" value="The attach state for volume %6 (Unique Id: %1) has changed.%n     Old ReadyBoost State: %2%n     New ReadyBoost State: %3%n%n     Old Hybrid Drive State: %4%n     New Hybrid Drive State: %5%n" />
+        <string id="Rdb.SystemVolumeIdStore" value="ReadyBoot has updated the system volume unique ID: %3%n ErrorCode: %1" />
+        <string id="Hbdrv.DisabledPerformance" value="Caching on the solid state hybrid disk (Disk number: %1) has been disabled due to insufficient device performance." />
+        <string id="Hbdrv.SpeedTest" value="A speed test was performed on the Hybrid Disk.%nTest result: %1%nErrorCode: %7" />
+        <string id="Rdb.DiskAssessment" value="ReadyBoot disk assessment completed in %3 ms.%n     Disk Assessment Timestamp: %1%n     Result: %2" />
+        <string id="Map.BootComplete" value="System boot completion" />
+        <string id="Map.Defrag" value="Disk defragmentation" />
+        <string id="Map.UserRequest" value="Explicit user request" />
+        <string id="Map.RdbAttach" value="ReadyBoost caching enabled for this device." />
+        <string id="Map.RdbPerformance" value="ReadyBoost caching disabled due to high performance device." />
+        <string id="Map.RdbReadyBootOnly" value="ReadyBoost caching enabled for ReadyBoot only." />
+        <string id="Map.RdbNoAttach" value="ReadyBoost caching disabled for this device." />
+        <string id="Map.RdbMax" value="ReadyBoost state not determined." />
+        <string id="Map.HbdrvNoAttach" value="Hybrid Drive disabled." />
+        <string id="Map.HbdrvAttach" value="Hybrid Drive enabled." />
+        <string id="Map.HbdrvNoSeq" value="Hybrid Drive enabled, slow sequential I/O performance detected." />
+        <string id="Map.HbdrvNoCache" value="Hybrid Drive host hinting suspended due to slow device performance." />
+        <string id="Map.HbdrvPerformance" value="Hybrid Drive disabled due to slow device performance." />
+        <string id="Map.HbdrvMax" value="Hybrid Drive state not determined." />
+        <string id="Map.HbdrvPerfUnknown" value="Test inconclusive." />
+        <string id="Map.HbdrvPerfFast" value="Speed tests passed." />
+        <string id="Map.HbdrvPerfSlow" value="Speed insufficient for sequential I/O caching." />
+        <string id="Map.HbdrvPerfNoCache" value="Performance unacceptable for caching." />
+        <string id="Map.HbdrvPerfNotSupported" value="Performance unacceptable for caching." />
+        <string id="Map.HbdrvPerfMax" value="Performance not determined." />
+        <string id="displayName2" value="AdminGroupOnly" />
+        <string id="displayName3" value="AdminGroupOnlyNoInherit" />
+        <string id="description" value="Maintains and improves system performance over time." />
+        <string id="displayName" value="SysMain" />
+        <string id="OperationalChannel.Name" value="Operational" />
+        <string id="SuperfetchProviderName" value="Microsoft-Windows-Superfetch" />
+        <string id="MainChannel.Name" value="Main" />
+        <string id="StoreLogChannel.Name" value="StoreLog" />
+        <string id="Rdb.ReadyBootTask" value="ReadyBoot" />
+        <string id="Rdb.ReadyBoostTask" value="ReadyBoost" />
+        <string id="Hbdrv.HybridDriveTask" value="HybridDrive" />
+        <string id="PfAp.FreeNetwork" value="FreeNetwork" />
+        <string id="PfAp.BackgroundCostNotHigh" value="BackgroundCostNotHigh" />
+        <string id="PfAp.ACPowered" value="ACPowered" />
+        <string id="PfAp.Prelaunch" value="Prelaunch" />
+        <string id="PfAp.Prefetch" value="Prefetch" />
+        <string id="PfAp.Successful" value="Successful" />
+        <string id="PfAp.ActivationFailed" value="ActivationFailed" />
+        <string id="PfAp.Crashed" value="Crashed" />
+        <string id="PfAp.SwitchedTo" value="SwitchedTo" />
+        <string id="PfAp.Throttled" value="Throttled" />
+        <string id="PfAp.Suspended" value="Suspended" />
+        <string id="PfAp.NotThrottled" value="NotThrottled" />
+        <string id="PfAp.NotAvailable" value="NotAvailable" />
+        <string id="PfAp.SameCSSession" value="SameCSSession" />
+        <string id="PfAp.PrelaunchedInPastHour" value="PrelaunchedInPastHour" />
+        <string id="PfAp.TooBigToBeSwapped" value="TooBigToBeSwapped" />
+        <string id="PfAp.BiggerThanWorkingSetLimit" value="BiggerThanWorkingSetLimit" />
+        <string id="PfAp.Speculative" value="Speculative" />
+        <string id="PfAp.RPCRequest" value="RPCRequest" />
+        <string id="PfAp.Install" value="Install" />
+        <string id="PfAp.Filter" value="Filter" />
+        <string id="PfAp.Cleanup" value="Cleanup" />
+        <string id="PfAp.Duplicate" value="Duplicate" />
+        <string id="PfAp.Installed" value="Installed" />
+        <string id="PfAp.Uninstalled" value="Uninstalled" />
+        <string id="PfAp.PrelaunchApp" value="PrelaunchApp" />
+        <string id="PfAp.TaskAlreadyScheduled" value="TaskAlreadyScheduled" />
+        <string id="PfAp.SwitchedToRecently" value="SwitchedToRecently" />
+        <string id="PfAp.PrefetchedRecently" value="PrefetchedRecently" />
+        <string id="PfAp.Other" value="Other" />
+        <string id="PfAp.Inbox" value="Inbox" />
+        <string id="PfAp.AppStore" value="AppStore" />
+        <string id="PfAp.AddApp" value="AddApp" />
+        <string id="PfAp.RemoveApp" value="RemoveApp" />
+        <string id="PfAp.StartCallback" value="StartCallback" />
+        <string id="PfAp.BenefitScore" value="BenefitScore" />
+        <string id="EcCaTst.LackFreeSpaceError" value="The device (%1) will not be used for a ReadyBoost cache because it does not have enough free space. Free Space: %2 MB" />
+        <string id="EcCaTst.NotFormatted" value="The device (%1) will not be used for a ReadyBoost cache because it is not formatted with FAT, FAT32, or NTFS. Current Format:%2" />
+        <string id="EcCaTst.CachingEnabled" value="Caching was enabled for device (%1)." />
+        <string id="EcCaTst.CacheAlreadyExists" value="The device (%1) will not be used for a ReadyBoost cache because a ReadyBoost cache already exists (on device %2) and only one cache is supported at a given time." />
+        <string id="EcCaTst.CachingDisabled" value="Caching was disabled for device (%1)." />
+        <string id="EcReadyBoot.Summary" value="Summary of ReadyBoot Performance:%n     Io Read Count: %12%n     Io Read KB: %3%n     Cache Hit Count: %13%n     Cache Hit KB: %4%n     Cache Hit Percentage: %9%n     Cache Fragmentation: %10%n     Compressed Data Size KB: %5%n     Raw Data Size KB: %6%n     Compression Ratio: %11%n     Cache Size KB: %14%n     Boot Prefetch Time us: %7%n     Boot Prefetch Bytes Read: %8%n     Boot Timestamp (UTC): %1%n     Last Boot Plan Timestamp (UTC): %2%n     Last Boot Plan Timestamp (Local): %16" />
+        <string id="EcReadyBoot.BootPlanCalculation" value="Boot plan calculation completed.%n     Boot Plan Timestamp (UTC): %1%n     Valid Boot Plan Obtained: %2" />
+        <string id="EcReadyBoot.DiskAssessment" value="ReadyBoot disk assessment completed.%n     Disk Assessment Timestamp (UTC): %1%n     Success: %2" />
+        <string id="EcReadyBoot.DefragCompleted" value="A defrag. operation has completed.  A boot plan will be calculated soon.  Defrag. Timestamp (UTC): %1" />
+      </stringTable>
+    </resources>
+  </localization>
+  <imaging>
+    <sysprepInformation>
+      <sysprepProvider stage="cleanup">
+        <sysprepOrder order="0x0600" />
+        <sysprepModule methodName="PfSvSysprepCleanup" moduleName="$(runtime.system32)\sysmain.dll" />
+      </sysprepProvider>
+    </sysprepInformation>
+  </imaging>
+</assembly>

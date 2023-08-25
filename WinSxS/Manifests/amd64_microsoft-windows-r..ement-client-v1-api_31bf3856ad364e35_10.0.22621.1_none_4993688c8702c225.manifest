@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved." xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <assemblyIdentity name="Microsoft-Windows-Rights-Management-Client-v1-API" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <dependency discoverable="no" resourceType="Resources">
+    <dependentAssembly dependencyType="prerequisite">
+      <assemblyIdentity name="Microsoft-Windows-Rights-Management-Client-v1-API.Resources" version="10.0.22621.1" processorArchitecture="amd64" language="*" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+    </dependentAssembly>
+  </dependency>
+  <file name="msdrm.dll" destinationPath="$(runtime.system32)\" sourceName="msdrm.dll" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>vILVhHJ5zCegsf8Qys9qOR9D3qhcyrANr2qT2ayQEqM=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <directories>
+    <directory destinationPath="$(runtime.programData)\Microsoft\DRM\Server" attributes="hidden system">
+      <securityDescriptor name="MS-DRM-SERVERBOX-ACL" />
+    </directory>
+  </directories>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="MS-DRM-SERVERBOX-ACL" sddl="D:PAI(A;OICI;FA;;;SY)(A;OICI;FA;;;BA)(A;OICI;0x12008d;;;WD)" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_KEY_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;CI;GA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;CI;GR;;;SY)(A;CI;GR;;;BA)(A;CI;GR;;;BU)(A;CI;GR;;;S-1-15-2-1)(A;CI;GR;;;S-1-15-3-1024-1065365936-1281604716-3511738428-1654721687-432734479-3232135806-4053264122-3456934681)" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" description="Default SDDL for Windows Resource Protected file" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+  <registryKeys>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{CF2CF428-325B-48d3-8CA8-7633E36E5A32}">
+      <registryValue name="" valueType="REG_SZ" value="AD RMS Rights Policy Template Management (Automated) Task Handler" />
+      <securityDescriptor name="WRP_KEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{CF2CF428-325B-48d3-8CA8-7633E36E5A32}\InprocServer32">
+      <registryValue name="" valueType="REG_EXPAND_SZ" value="%systemroot%\system32\msdrm.dll" />
+      <registryValue name="ThreadingModel" valueType="REG_SZ" value="Free" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{BF5CB148-7C77-4d8a-A53E-D81C70CF743C}">
+      <registryValue name="" valueType="REG_SZ" value="AD RMS Rights Policy Template Management (Manual) Task Handler" />
+      <securityDescriptor name="WRP_KEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{BF5CB148-7C77-4d8a-A53E-D81C70CF743C}\InprocServer32">
+      <registryValue name="" valueType="REG_EXPAND_SZ" value="%systemroot%\system32\msdrm.dll" />
+      <registryValue name="ThreadingModel" valueType="REG_SZ" value="Free" />
+    </registryKey>
+  </registryKeys>
+  <taskScheduler>
+    <Task xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task">
+      <RegistrationInfo>
+        <Date>2006-11-10T14:29:55.5851926</Date>
+        <Author>$(@%systemRoot%\System32\msdrm.dll,-6001)</Author>
+        <Description>$(@%systemRoot%\System32\msdrm.dll,-6002)</Description>
+        <URI>\Microsoft\Windows\Active Directory Rights Management Services Client\AD RMS Rights Policy Template Management (Automated)</URI>
+        <SecurityDescriptor>D:(A;;FA;;;BA)(A;;FA;;;SY)(A;;FRFX;;;WD)</SecurityDescriptor>
+      </RegistrationInfo>
+      <Triggers>
+        <CalendarTrigger id="7dba1862-fdda-4030-83de-895375c111d4">
+          <StartBoundary>2006-11-09T03:00:00</StartBoundary>
+          <Enabled>true</Enabled>
+          <RandomDelay>PT1H</RandomDelay>
+          <ScheduleByDay>
+            <DaysInterval>1</DaysInterval>
+          </ScheduleByDay>
+        </CalendarTrigger>
+        <LogonTrigger id="06b3f632-87ad-4ac0-9737-48ea5ddbaf11">
+          <Enabled>true</Enabled>
+          <Delay>PT1H</Delay>
+        </LogonTrigger>
+      </Triggers>
+      <Principals>
+        <Principal id="AllUsers">
+          <GroupId>S-1-1-0</GroupId>
+          <RunLevel>LeastPrivilege</RunLevel>
+        </Principal>
+      </Principals>
+      <Settings>
+        <IdleSettings>
+          <Duration>PT10M</Duration>
+          <WaitTimeout>PT1H</WaitTimeout>
+          <StopOnIdleEnd>true</StopOnIdleEnd>
+          <RestartOnIdle>false</RestartOnIdle>
+        </IdleSettings>
+        <MultipleInstancesPolicy>Parallel</MultipleInstancesPolicy>
+        <DisallowStartIfOnBatteries>false</DisallowStartIfOnBatteries>
+        <StopIfGoingOnBatteries>false</StopIfGoingOnBatteries>
+        <AllowHardTerminate>false</AllowHardTerminate>
+        <StartWhenAvailable>true</StartWhenAvailable>
+        <RunOnlyIfNetworkAvailable>true</RunOnlyIfNetworkAvailable>
+        <AllowStartOnDemand>true</AllowStartOnDemand>
+        <Enabled>false</Enabled>
+        <Hidden>false</Hidden>
+        <RunOnlyIfIdle>false</RunOnlyIfIdle>
+        <WakeToRun>false</WakeToRun>
+        <ExecutionTimeLimit>PT1H</ExecutionTimeLimit>
+        <Priority>7</Priority>
+        <UseUnifiedSchedulingEngine>true</UseUnifiedSchedulingEngine>
+      </Settings>
+      <Actions Context="AllUsers">
+        <ComHandler>
+          <ClassId>{CF2CF428-325B-48D3-8CA8-7633E36E5A32}</ClassId>
+        </ComHandler>
+      </Actions>
+    </Task>
+    <Task xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task">
+      <RegistrationInfo>
+        <Date>2006-11-10T14:29:55.5851926</Date>
+        <Author>$(@%systemRoot%\System32\msdrm.dll,-6001)</Author>
+        <Description>$(@%systemRoot%\System32\msdrm.dll,-6003)</Description>
+        <URI>\Microsoft\Windows\Active Directory Rights Management Services Client\AD RMS Rights Policy Template Management (Manual)</URI>
+        <SecurityDescriptor>D:(A;;FA;;;BA)(A;;FA;;;SY)(A;;FRFX;;;WD)</SecurityDescriptor>
+      </RegistrationInfo>
+      <Triggers>
+        <LogonTrigger id="06b3f632-87ad-4ac0-9737-48ea5ddbaf11">
+          <Enabled>false</Enabled>
+          <Delay>PT1H</Delay>
+        </LogonTrigger>
+      </Triggers>
+      <Principals>
+        <Principal id="AllUsers">
+          <GroupId>S-1-1-0</GroupId>
+          <RunLevel>LeastPrivilege</RunLevel>
+        </Principal>
+      </Principals>
+      <Settings>
+        <IdleSettings>
+          <Duration>PT10M</Duration>
+          <WaitTimeout>PT1H</WaitTimeout>
+          <StopOnIdleEnd>true</StopOnIdleEnd>
+          <RestartOnIdle>false</RestartOnIdle>
+        </IdleSettings>
+        <MultipleInstancesPolicy>Parallel</MultipleInstancesPolicy>
+        <DisallowStartIfOnBatteries>true</DisallowStartIfOnBatteries>
+        <StopIfGoingOnBatteries>true</StopIfGoingOnBatteries>
+        <AllowHardTerminate>false</AllowHardTerminate>
+        <StartWhenAvailable>true</StartWhenAvailable>
+        <RunOnlyIfNetworkAvailable>true</RunOnlyIfNetworkAvailable>
+        <AllowStartOnDemand>true</AllowStartOnDemand>
+        <Enabled>true</Enabled>
+        <Hidden>false</Hidden>
+        <RunOnlyIfIdle>false</RunOnlyIfIdle>
+        <WakeToRun>false</WakeToRun>
+        <ExecutionTimeLimit>PT1H</ExecutionTimeLimit>
+        <Priority>7</Priority>
+        <UseUnifiedSchedulingEngine>true</UseUnifiedSchedulingEngine>
+      </Settings>
+      <Actions Context="AllUsers">
+        <ComHandler>
+          <ClassId>{BF5CB148-7C77-4d8a-A53E-D81C70CF743C}</ClassId>
+        </ComHandler>
+      </Actions>
+    </Task>
+  </taskScheduler>
+  <asmv3:configuration xmlns:asmv3="urn:schemas-microsoft-com:asm.v3" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State">
+    <asmv3:configurationSchema>
+      <xsd:schema xmlns="Microsoft-Windows-Rights-Management-Client-v1-API" targetNamespace="Microsoft-Windows-Rights-Management-Client-v1-API">
+        <xsd:element default="0" name="Hierarchy" type="xsd:unsignedInt" wcm:changeImpact="noImpact" wcm:description="Hierarchy" wcm:displayName="Hierarchy" wcm:handler="regkey('HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\uDRM')" wcm:legacyType="REG_DWORD" wcm:migrate="yes" wcm:scope="allUsers" />
+      </xsd:schema>
+    </asmv3:configurationSchema>
+  </asmv3:configuration>
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string id="displayName7" value="Hierarchy" />
+        <string id="description8" value="Hierarchy" />
+      </stringTable>
+    </resources>
+  </localization>
+  <migration scope="Upgrade,MigWiz,USMT" settingsVersion="1">
+    <migXml xmlns="">
+      <rules context="User">
+        <include>
+          <objectSet>
+            <pattern type="Registry">HKCU\Software\Microsoft\MSDRM\* [*]</pattern>
+            <pattern type="Registry">HKCU\Software\Policies\Microsoft\MSDRM\* [*]</pattern>
+            <pattern type="File">%CSIDL_LOCAL_APPDATA%\Microsoft\DRM\* [EUL*]</pattern>
+            <pattern type="File">%CSIDL_LOCAL_APPDATA%\Microsoft\DRM\* [RL*]</pattern>
+            <pattern type="File">%CSIDL_LOCAL_APPDATA%\Microsoft\DRM\* [TMP*]</pattern>
+          </objectSet>
+        </include>
+        <merge script="MigXmlHelper.SourcePriority()">
+          <objectSet>
+            <pattern type="Registry">HKCU\Software\Microsoft\MSDRM\* [*]</pattern>
+            <pattern type="Registry">HKCU\Software\Policies\Microsoft\MSDRM\* [*]</pattern>
+            <pattern type="File">%CSIDL_LOCAL_APPDATA%\Microsoft\DRM\* [EUL*]</pattern>
+            <pattern type="File">%CSIDL_LOCAL_APPDATA%\Microsoft\DRM\* [RL*]</pattern>
+            <pattern type="File">%CSIDL_LOCAL_APPDATA%\Microsoft\DRM\* [TMP*]</pattern>
+          </objectSet>
+        </merge>
+      </rules>
+      <rules context="System">
+        <include>
+          <objectSet>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\MSDRM\* [*]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\uDRM [Hierarchy]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Wow6432Node\Microsoft\MSDRM\* [*]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Wow6432Node\Microsoft\uDRM [Hierarchy]</pattern>
+            <pattern type="File">%CSIDL_COMMON_APPDATA%\Microsoft\DRM\Server\* [EUL*]</pattern>
+            <pattern type="File">%CSIDL_COMMON_APPDATA%\Microsoft\DRM\Server\* [RL*]</pattern>
+            <pattern type="File">%CSIDL_COMMON_APPDATA%\Microsoft\DRM\Server\* [TMP*]</pattern>
+          </objectSet>
+        </include>
+        <merge script="MigXmlHelper.SourcePriority()">
+          <objectSet>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\MSDRM\* [*]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\uDRM [Hierarchy]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Wow6432Node\Microsoft\MSDRM\* [*]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Wow6432Node\Microsoft\uDRM [Hierarchy]</pattern>
+            <pattern type="File">%CSIDL_COMMON_APPDATA%\Microsoft\DRM\Server\* [EUL*]</pattern>
+            <pattern type="File">%CSIDL_COMMON_APPDATA%\Microsoft\DRM\Server\* [RL*]</pattern>
+            <pattern type="File">%CSIDL_COMMON_APPDATA%\Microsoft\DRM\Server\* [TMP*]</pattern>
+          </objectSet>
+        </merge>
+      </rules>
+    </migXml>
+    <migrationDisplayID>Security</migrationDisplayID>
+    <supportedComponents>
+      <supportedComponent>
+        <assemblyIdentity name="_" version="1.0.0.0" />
+        <supportedComponentIdentity buildType="release" language="neutral" name="Microsoft-Windows-Rights-Management-Client-v1-API" processorArchitecture="*" publicKeyToken="31bf3856ad364e35" settingsVersionRange="0-1" versionScope="nonSxS" xmlns="urn:schemas-microsoft-com:asm.v3" />
+        <migXml xmlns="">
+          <rules context="User">
+            <merge script="MigXmlHelper.SourcePriority()">
+              <objectSet>
+                <pattern type="Registry">HKCU\Software\Microsoft\MSDRM\* [*]</pattern>
+                <pattern type="Registry">HKCU\Software\Policies\Microsoft\MSDRM\* [*]</pattern>
+                <pattern type="File">%CSIDL_LOCAL_APPDATA%\Microsoft\DRM\* [EUL*]</pattern>
+                <pattern type="File">%CSIDL_LOCAL_APPDATA%\Microsoft\DRM\* [RL*]</pattern>
+                <pattern type="File">%CSIDL_LOCAL_APPDATA%\Microsoft\DRM\* [TMP*]</pattern>
+              </objectSet>
+            </merge>
+          </rules>
+          <rules context="System">
+            <merge script="MigXmlHelper.SourcePriority()">
+              <objectSet>
+                <pattern type="Registry">HKLM\SOFTWARE\Microsoft\MSDRM\* [*]</pattern>
+                <pattern type="Registry">HKLM\SOFTWARE\Microsoft\uDRM [Hierarchy]</pattern>
+                <pattern type="Registry">HKLM\SOFTWARE\Wow6432Node\Microsoft\MSDRM\* [*]</pattern>
+                <pattern type="Registry">HKLM\SOFTWARE\Wow6432Node\Microsoft\uDRM [Hierarchy]</pattern>
+                <pattern type="File">%CSIDL_COMMON_APPDATA%\Microsoft\DRM\Server\* [EUL*]</pattern>
+                <pattern type="File">%CSIDL_COMMON_APPDATA%\Microsoft\DRM\Server\* [RL*]</pattern>
+                <pattern type="File">%CSIDL_COMMON_APPDATA%\Microsoft\DRM\Server\* [TMP*]</pattern>
+              </objectSet>
+            </merge>
+          </rules>
+        </migXml>
+      </supportedComponent>
+      <supportedComponent>
+        <assemblyIdentity name="_" version="1.0.0.0" />
+        <supportedComponentIdentity language="*" name="Microsoft-Windows-Rights-Management-Client-v1-API-DL" processorArchitecture="*" settingsVersionRange="0" version="0.0.0.0" xmlns="urn:schemas-microsoft-com:asm.v3" />
+        <migXml xmlns="">
+          <rules context="user">
+            <merge script="MigXmlHelper.SourcePriority()">
+              <objectSet>
+                <pattern type="Registry">HKCU\Software\Microsoft\MSDRM\* [*]</pattern>
+                <pattern type="Registry">HKCU\Software\Policies\Microsoft\MSDRM\* [*]</pattern>
+                <pattern type="File">%CSIDL_LOCAL_APPDATA%\Microsoft\DRM\* [EUL*]</pattern>
+                <pattern type="File">%CSIDL_LOCAL_APPDATA%\Microsoft\DRM\* [RL*]</pattern>
+                <pattern type="File">%CSIDL_LOCAL_APPDATA%\Microsoft\DRM\* [TMP*]</pattern>
+              </objectSet>
+            </merge>
+          </rules>
+          <rules context="system">
+            <merge script="MigXmlHelper.SourcePriority()">
+              <objectSet>
+                <pattern type="Registry">HKLM\SOFTWARE\Microsoft\MSDRM\* [*]</pattern>
+                <pattern type="Registry">HKLM\SOFTWARE\Wow6432Node\Microsoft\MSDRM\* [*]</pattern>
+                <pattern type="File">%CSIDL_COMMON_APPDATA%\Microsoft\DRM\Server\* [EUL*]</pattern>
+                <pattern type="File">%CSIDL_COMMON_APPDATA%\Microsoft\DRM\Server\* [RL*]</pattern>
+                <pattern type="File">%CSIDL_COMMON_APPDATA%\Microsoft\DRM\Server\* [TMP*]</pattern>
+                <pattern type="Registry">HKLM\SOFTWARE\Microsoft\uDRM [Hierarchy]</pattern>
+                <pattern type="Registry">HKLM\SOFTWARE\Wow6432Node\Microsoft\uDRM [Hierarchy]</pattern>
+              </objectSet>
+            </merge>
+          </rules>
+        </migXml>
+      </supportedComponent>
+    </supportedComponents>
+  </migration>
+</assembly>

@@ -1,0 +1,696 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-GroupPolicy-Base" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <dependency discoverable="no" resourceType="Resources">
+    <dependentAssembly dependencyType="prerequisite">
+      <assemblyIdentity name="Microsoft-Windows-GroupPolicy-Base.Resources" version="10.0.22621.1" processorArchitecture="amd64" language="*" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </dependentAssembly>
+  </dependency>
+  <file name="gpsvc.dll" destinationPath="$(runtime.system32)\" sourceName="gpsvc.dll" importPath="$(build.nttree)\" sourcePath=".\">
+    <signatureInfo>
+      <signatureDescriptor pageHash="true" />
+    </signatureInfo>
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>f0ZTv8wTro+kBJegXrB0rg3agAZc/4xdFsWIrTcIBdQ=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <file name="gpapi.dll" destinationPath="$(runtime.system32)\" sourceName="gpapi.dll" importPath="$(build.nttree)\" sourcePath=".\">
+    <signatureInfo>
+      <signatureDescriptor PETrust="true" pageHash="true" />
+    </signatureInfo>
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>GbtIMJniqB2ctVDfZb2btxbXmpWWpVODqef8Y3PPtDE=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <memberships>
+    <categoryMembership>
+      <id name="Microsoft-Windows-Computer Management-Configuration Management" version="10.0.22621.1" publicKeyToken="31bf3856ad364e35" buildType="release" language="neutral" processorArchitecture="amd64" />
+    </categoryMembership>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories.Services" version="10.0.22621.1" publicKeyToken="31bf3856ad364e35" typeName="Service" />
+      <categoryInstance subcategory="gpsvc">
+        <serviceData name="gpsvc" displayName="@gpapi.dll,-112" errorControl="normal" start="auto" type="win32ShareProcess" description="@gpapi.dll,-113" dependOnService="RPCSS,Mup" group="ProfSvc_Group" imagePath="%systemroot%\system32\svchost.exe -k netsvcs -p" objectName="LocalSystem" requiredPrivileges="SeImpersonatePrivilege,SeTcbPrivilege,SeTakeOwnershipPrivilege,SeIncreaseQuotaPrivilege,SeAssignPrimaryTokenPrivilege,SeSecurityPrivilege,SeChangeNotifyPrivilege,SeCreatePermanentPrivilege,SeShutdownPrivilege,SeLoadDriverPrivilege,SeRestorePrivilege,SeBackupPrivilege,SeCreatePagefilePrivilege">
+          <serviceTrigger action="start" subtype="RPC_INTERFACE_EVENT" type="NetworkEndpointEvent">
+            <triggerData type="string" value="2EB08E3E-639F-4fba-97B1-14F878961076" />
+          </serviceTrigger>
+          <failureActions resetPeriod="86400">
+            <actions>
+              <action delay="120000" type="restartService" />
+              <action delay="300000" type="restartService" />
+              <action delay="0" type="none" />
+            </actions>
+          </failureActions>
+          <securityDescriptor name="GpsvcSD" />
+        </serviceData>
+      </categoryInstance>
+    </categoryMembership>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories" version="1.0.0.0" publicKeyToken="365143bb27e7ac8b" typeName="BootRecovery" />
+    </categoryMembership>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories" version="1.0.0.0" publicKeyToken="365143bb27e7ac8b" typeName="SvcHost" />
+      <categoryInstance subcategory="netsvcs">
+        <serviceGroup position="last" serviceName="gpsvc" />
+      </categoryInstance>
+    </categoryMembership>
+  </memberships>
+  <registryKeys>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Winlogon\Notifications\Components\GPClient">
+      <registryValue name="Events" valueType="REG_SZ" value="CreateSession,Logon,Logoff,StartShell,EndShell" />
+      <registryValue name="Friendly Name" valueType="REG_SZ" value="Group Policy Service" />
+      <registryValue name="ServiceName" valueType="REG_SZ" value="gpsvc" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon\GPExtensions\{35378EAC-683F-11D2-A89A-00C04FBBCFA2}">
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SOFTWARE\Policies" perUserVirtualization="DisableRecurse">
+      <securityDescriptor name="PoliciesKeySD" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Policies" perUserVirtualization="DisableRecurse">
+      <securityDescriptor name="PoliciesKeySD" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\EventLog\Application\GroupPolicy">
+      <registryValue name="EventMessageFile" valueType="REG_EXPAND_SZ" value="%SystemRoot%\System32\gpapi.dll" />
+      <registryValue name="TypesSupported" valueType="REG_DWORD" value="0x00000007" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Group Policy\Cache">
+      <registryValue name="LastLoggedTime" valueType="REG_QWORD" value="0000000000000000" />
+      <securityDescriptor name="PoliciesKeySD" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{B3FF88A4-96EC-4CC1-983F-72BE0EBB368B}">
+      <registryValue name="" valueType="REG_SZ" value="Rsop Logging Mode Provider" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{B3FF88A4-96EC-4CC1-983F-72BE0EBB368B}\InprocServer32">
+      <registryValue name="" valueType="REG_EXPAND_SZ" value="%SystemRoot%\System32\gpsvc.dll" />
+      <registryValue name="ThreadingModel" valueType="REG_SZ" value="Both" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\ProfileNotification\GPSvc">
+      <registryValue name="" valueType="REG_SZ" value="Group Policy" />
+      <registryValue name="CLSID" valueType="REG_SZ" value="{ADAB9B51-4CDD-4af0-892C-AB7FA7B3293F}" />
+      <registryValue name="Events" valueType="REG_DWORD" value="0x00000003" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{ADAB9B51-4CDD-4af0-892C-AB7FA7B3293F}">
+      <registryValue name="" valueType="REG_SZ" value="Group Policy Service User Profile Notification" />
+      <registryValue name="AppID" valueType="REG_SZ" value="{E10F6C3A-F1AE-4ADC-AA9D-2FE65525666E}" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{ADAB9B51-4CDD-4af0-892C-AB7FA7B3293F}\InProcServer32">
+      <registryValue name="" valueType="REG_EXPAND_SZ" value="%SystemRoot%\System32\gpsvc.dll" />
+      <registryValue name="ThreadingModel" valueType="REG_SZ" value="Neutral" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\WMI\Security">
+      <registryValue name="aea1b4fa-97d1-45f2-a64c-4d69fffd92c9" valueType="REG_BINARY" value="01000480140000002400000000000000340000000102000000000005200000002002000001020000000000052000000020020000020048000300000000001400ff0f120001010000000000051200000000001800ff0f1200010200000000000520000000200200000000140080000000010100000000000513000000" />
+      <registryValue name="bd2f4252-5e1e-49fc-9a30-f3978ad89ee2" valueType="REG_BINARY" value="01000480300000003c000000000000001400000002001c000100000000001400ff0f1200010100000000000512000000010100000000000512000000010100000000000512000000" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\gpsvc">
+      <registryValue name="PreshutdownTimeout" valueType="REG_DWORD" value="0x000DBBA0" />
+      <overridable name="Start" scope="Microsoft" type="REG_DWORD" />
+      <securityDescriptor name="GpsvcRegKeySD" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\gpsvc\Parameters">
+      <registryValue name="ServiceDll" valueType="REG_EXPAND_SZ" value="%SystemRoot%\System32\gpsvc.dll" />
+      <registryValue name="ServiceMain" valueType="REG_SZ" value="GroupPolicyClientServiceMain" />
+      <registryValue name="ServiceDllUnloadOnStop" valueType="REG_DWORD" value="0x00000001" />
+    </registryKey>
+  </registryKeys>
+  <instrumentation xmlns:win="http://manifests.microsoft.com/win/2004/08/windows/events">
+    <events xmlns="http://schemas.microsoft.com/win/2004/08/events" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <provider guid="{aea1b4fa-97d1-45f2-a64c-4d69fffd92c9}" message="$(string.eventProviderName)" messageFileName="%systemroot%\system32\gpsvc.dll" name="Microsoft-Windows-GroupPolicy" parameterFileName="%systemroot%\system32\gpsvc.dll" resourceFileName="%systemroot%\system32\gpsvc.dll" symbol="gpEventProvider">
+        <channels>
+          <importChannel chid="System" name="System" />
+          <channel access="O:BAG:SYD:(A;;0xf0007;;;SY)(A;;0x7;;;BA)(A;;0x1;;;LS)(A;;0x1;;;NS)" chid="opnChannel" enabled="true" isolation="System" message="$(string.operationalChannelName)" name="Microsoft-Windows-GroupPolicy/Operational" symbol="GP_OPN_CHANNEL" type="Operational">
+            <logging>
+              <maxSize>4194304</maxSize>
+            </logging>
+          </channel>
+        </channels>
+      </provider>
+      <provider guid="{bd2f4252-5e1e-49fc-9a30-f3978ad89ee2}" messageFileName="%systemroot%\system32\gpsvc.dll" name="Microsoft-Windows-GroupPolicyTriggerProvider" resourceFileName="%systemroot%\system32\gpsvc.dll" symbol="gpTriggerProvider" />
+      <messageTable>
+        <message message="$(string.FAILED_ALLOCATION)" value="1002" />
+        <message message="$(string.FAILED_DS_BIND)" value="1006" />
+        <message message="$(string.FAILED_QUERY_SITE)" value="1007" />
+        <message message="$(string.GPO_QUERY_FAILED)" value="1030" />
+        <message message="$(string.FAILED_ROLE)" value="1052" />
+        <message message="$(string.FAILED_USERNAME)" value="1053" />
+        <message message="$(string.FAILED_DSNAME)" value="1054" />
+        <message message="$(string.FAILED_MACHINENAME)" value="1055" />
+        <message message="$(string.GPT_NOTACCESSIBLE)" value="1058" />
+        <message message="$(string.FAILED_FILTER_CHECK)" value="1065" />
+        <message message="$(string.GPO_PROC_STOPPED)" value="1068" />
+        <message message="$(string.FAILED_GPO_SEARCH)" value="1079" />
+        <message message="$(string.FAILED_OU_SEARCH)" value="1080" />
+        <message message="$(string.EXT_FAILED)" value="1085" />
+        <message message="$(string.TOO_MANY_GPOS)" value="1088" />
+        <message message="$(string.FAILED_RSOPCORE_SESSION_STATUS)" value="1089" />
+        <message message="$(string.FAILED_WBEM_SERVICES)" value="1090" />
+        <message message="$(string.EXT_RSOP_FAILED)" value="1091" />
+        <message message="$(string.RSOP_FAILED)" value="1095" />
+        <message message="$(string.REGISTRY_TEMPLATE_ERROR)" value="1096" />
+        <message message="$(string.FAILED_MACHINE_TOKEN)" value="1097" />
+        <message message="$(string.OU_NOTFOUND)" value="1101" />
+        <message message="$(string.WMIFILTER_NOTFOUND)" value="1104" />
+        <message message="$(string.X_FOREST_GP_DISABLED)" value="1109" />
+        <message message="$(string.X_FOREST_DISCOVERY_FAILED)" value="1110" />
+        <message message="$(string.CSE_REQUIRES_SYNC)" value="1112" />
+        <message message="$(string.INTERNAL_SYSTEM_ERROR)" value="1125" />
+        <message message="$(string.TIME_SKEW)" value="1126" />
+        <message message="$(string.CATCH_ALL)" value="1127" />
+        <message message="$(string.MACHINE_POLICY_APPLIED_NO_CHANGES)" value="1500" />
+        <message message="$(string.USER_POLICY_APPLIED_NO_CHANGES)" value="1501" />
+        <message message="$(string.MACHINE_POLICY_APPLIED_CHANGES)" value="1502" />
+        <message message="$(string.USER_POLICY_APPLIED_CHANGES)" value="1503" />
+        <message message="$(string.EXTENSION_EXECUTION_DENIED)" value="1128" />
+        <message message="$(string.NO_NETWORK)" value="1129" />
+        <message message="$(string.ERROR.SCRIPT_FAILURE)" value="1130" />
+        <message message="$(string.Info.RetrieveDCUsingCachedInfo)" symbol="RETRIEVE_DCNAME_USING_CACHED_INFO" value="0x1000" />
+        <message message="$(string.Info.RetrieveDCNameForcedDiscovery)" symbol="RETRIEVE_DCNAME_FORCED_DISCOVERY" value="0x1001" />
+        <message message="$(string.Info.NetworkChange)" symbol="POLICY_TRIGGER_NETWORK_CHANGE" value="0x1002" />
+        <message message="$(string.NextPolicyApplication.Seconds)" symbol="NEXT_POLICY_APPLICATION_IN_SECONDS" value="0x1003" />
+        <message message="$(string.NextPolicyApplication.Minutes)" symbol="NEXT_POLICY_APPLICATION_IN_MINUTES" value="0x1004" />
+        <message message="$(string.CSEProcessingScenarioStart.NoGPOChanges)" symbol="CSE_NO_GPO_CHANGES" value="0x1005" />
+        <message message="$(string.CSEProcessingScenarioStart.GPOChanges)" symbol="CSE_GPO_CHANGES" value="0x1006" />
+        <message message="$(string.GPMachStartupWait.Warning)" symbol="GPMACH_STARTUP_WAIT_WARNING" value="0x1007" />
+        <message message="$(string.GPNoPolicyInDSRepairMode.Warning)" symbol="GP_NOPOLICY_IN_DSREPAIR_MODE" value="0x1008" />
+        <message message="$(string.Error.AccessCheckError)" symbol="ACCESS_CHECK_BASED_ON_SD_ERROR" value="0x1009" />
+        <message message="$(string.Info.StartupScriptNotVisible)" symbol="STARTUP_SCRIPT_NOT_VISIBLE_INFO" value="0x100A" />
+        <message message="$(string.Error.InvalidSessionError)" symbol="INVALID_SESSION_ERROR" value="0x100B" />
+        <message message="$(string.Error.RefreshAccessCheckError)" symbol="REFRESH_ACCESS_CHECK_ERROR" value="0x100C" />
+        <message message="$(string.Error.NotifyAccessCheckError)" symbol="NOTIFY_ACCESS_CHECK_ERROR" value="0x100D" />
+        <message message="$(string.Error.ConsoleNotifyAccessCheckError)" symbol="CONSOLE_NOTIFY_ACCESS_CHECK_ERROR" value="0x100E" />
+        <message message="$(string.Info.GPMachPolicyDenyUsers)" symbol="GP_MACHPOLICY_DENY_USERS_INFO" value="0x100F" />
+        <message message="$(string.Info.SlowLink)" symbol="SLOW_LINK" value="0x1010" />
+        <message message="$(string.Info.FastLink)" symbol="FAST_LINK" value="0x1011" />
+        <message message="$(string.Info.RetrieveUserNameStart)" symbol="RETRIEVE_USER_NAME_START" value="0x1012" />
+        <message message="$(string.Info.RetrieveUserNameEnd)" symbol="RETRIEVE_USER_NAME_END" value="0x1013" />
+        <message message="$(string.Info.RetrieveUserNameRetry)" symbol="RETRIEVE_USER_NAME_RETRY" value="0x1014" />
+        <message message="$(string.Info.GetUserNameAPICallStart)" symbol="GET_USER_NAME_API_CALL_START" value="0x1015" />
+        <message message="$(string.Info.GetUserNameAPICallEnd)" symbol="GET_USER_NAME_API_CALL_END" value="0x1016" />
+        <message message="$(string.Info.LDAPAPICallStart)" symbol="LDAP_API_CALL_START" value="0x1017" />
+        <message message="$(string.Info.LDAPAPICallEnd)" symbol="LDAP_API_CALL_END" value="0x1018" />
+        <message message="$(string.Info.NlaRefreshQueryFailure)" symbol="NLA_REFRESH_QUERY_FAILURE" value="0x1019" />
+        <message message="$(string.Info.NlaQueryNetSignaturesFailure)" symbol="NLA_QUERY_NET_SIGNATURES_FAILURE" value="0x101A" />
+        <message message="$(string.Info.NlaGetIntranetCapabilityFailure)" symbol="NLA_GET_INTRANET_CAPABILITY_FAILURE" value="0x101B" />
+        <message message="$(string.Info.NlaQueryNetDataFailure)" symbol="NLA_QUERY_NET_DATA_FAILURE" value="0x101C" />
+        <message message="$(string.Info.RegisterForNotificationFailure)" symbol="REGISTER_FOR_NOTIFICIATION_FAILURE" value="0x101D" />
+        <message message="$(string.Info.QuerySecurityPackageInfoFailure)" symbol="QUERY_SECURITY_PACKAGE_INFO_FAILURE" value="0x101E" />
+        <message message="$(string.Info.AcquireCredentialsHandleFailure)" symbol="ACQUIRE_CREDENTIALS_HANDLE_FAILURE" value="0x101F" />
+        <message message="$(string.Info.InitializeSecurityContextFailure)" symbol="INITIALIZE_SECURITY_CONTEXT_FAILURE" value="0x1020" />
+        <message message="$(string.Info.AcceptSecurityContextFailure)" symbol="ACCEPT_SECURITY_CONTEXT_FAILURE" value="0x1021" />
+        <message message="$(string.Info.QuerySecurityContextTokenFailure)" symbol="QUERY_SECURITY_CONTEXT_TOKEN_FAILURE" value="0x1022" />
+        <message message="$(string.Info.FileAccessApiCallStart)" symbol="FILE_ACCESS_API_CALL_START" value="0x1023" />
+        <message message="$(string.Info.FileAccessApiCallEnd)" symbol="FILE_ACCESS_API_CALL_END" value="0x1024" />
+        <message message="$(string.Info.SLAPIAccessErrorDomainIncapableSystem)" symbol="DOMAIN_INCAPABLE_SYSTEM_SL_POLICY_ACCESS_ERROR" value="0x1025" />
+        <message message="$(string.Info.SLAPIAccessErrorWaitForNetwork)" symbol="WAIT_FOR_NETWORK_SL_POLICY_ACCESS_ERROR" value="0x1026" />
+        <message message="$(string.Info.SLAPIAccessErrorNetworkTimeout)" symbol="NETWORK_TIMEOUT_VALUE_SL_POLICY_ACCESS_ERROR" value="0x1027" />
+        <message message="$(string.Info.ServiceConfigInitialization)" symbol="SERVICE_CONFIG_INITIALIZATION" value="0x1040" />
+        <message message="$(string.Info.ServiceConfigValidate)" symbol="SERVICE_CONFIG_VALIDATE" value="0x1041" />
+        <message message="$(string.Info.ServiceConfigUpdateRequired)" symbol="SERVICE_CONFIG_UPDATE_REQUIRED" value="0x1042" />
+        <message message="$(string.Info.ServiceConfigUpdateNotRequired)" symbol="SERVICE_CONFIG_UPDATE_NOT_REQUIRED" value="0x1043" />
+        <message message="$(string.Info.ServiceConfigUpdateAttempted)" symbol="SERVICE_CONFIG_UPDATE_ATTEMPTED" value="0x1044" />
+        <message message="$(string.Info.ServiceConfigValidateCompleted)" symbol="SERVICE_CONFIG_VALIDATE_COMPLETED" value="0x1045" />
+        <message message="$(string.Info.ServiceStateInitialization)" symbol="SERVICE_STATE_INITIALIZATION" value="0x1046" />
+        <message message="$(string.Info.ServiceStatePreviousInstanceFound)" symbol="SERVICE_STATE_PREVIOUS_INSTANCE" value="0x1047" />
+        <message message="$(string.Info.ServiceConfigShared)" symbol="SERVICE_CONFIG_SHARED" value="0x1048" />
+        <message message="$(string.Info.ServiceConfigStandalone)" symbol="SERVICE_CONFIG_STANDALONE" value="0x1049" />
+        <message message="$(string.Info.NoSiteNameWarning)" symbol="NO_SITE_NAME_WARNING" value="0x1050" />
+        <message message="$(string.GPMachStartupDACorpNetWait.Warning)" symbol="GPMACH_STARTUP_DA_CORPNET_WAIT_WARNING" value="0x1051" />
+        <message message="$(string.Info.GPSvcGetGPOsAbortOnLogOff)" symbol="GPSVC_GETGPOS_ABORT_ON_LOGOFF" value="0x1052" />
+        <message message="$(string.NonGPSysvolFileLocked.Warning)" symbol="NON_GP_SYSVOL_FILE_LOCKED" value="0x1060" />
+        <message message="$(string.GPSysvolLockedFileClosed.Warning)" symbol="GP_SYSVOL_LOCKED_FILE_CLOSED" value="0x1061" />
+        <message message="$(string.GPSysvolLockedFileCannotClose.Warning)" symbol="GP_SYSVOL_LOCKED_FILE_CANNOT_CLOSE" value="0x1062" />
+      </messageTable>
+      <cmi />
+    </events>
+  </instrumentation>
+  <migration scope="Upgrade" settingsVersion="2">
+    <migrationDisplayID>Performance_and_Maintenance\System_Settings</migrationDisplayID>
+    <machineSpecific>
+      <migXml xmlns="">
+        <rules context="System">
+          <include>
+            <objectSet>
+              <pattern type="File">%windir%\system32\GroupPolicy\*[*]</pattern>
+              <pattern type="File">%windir%\system32\GroupPolicyUsers\*[*]</pattern>
+              <pattern type="File">%ALLUSERSPROFILE% [ntuser.pol]</pattern>
+              <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [HideStartupScripts]</pattern>
+              <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [HideShutdownScripts]</pattern>
+              <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [RunStartupScriptSync]</pattern>
+              <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [GpNetworkStartTimeoutPolicyValue]</pattern>
+              <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [DenyUsersFromMachGP]</pattern>
+              <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [DisableBkGndGroupPolicy]</pattern>
+              <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [SyncForegroundPolicy]</pattern>
+              <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [DisableLGPOProcessing]</pattern>
+              <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [DenyRsopToInteractiveUser]</pattern>
+              <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [RSoPGarbageCollectionInterval]</pattern>
+              <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [GroupPolicyMinTransferRate]</pattern>
+              <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [WaitForNetwork]</pattern>
+              <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [UserenvDebugLevel]</pattern>
+              <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [RsopDebugLevel]</pattern>
+              <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Diagnostics [gpsvcDebugLevel]</pattern>
+              <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Diagnostics [RunDiagnosticLoggingGlobal]</pattern>
+              <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Diagnostics [RunDiagnosticLoggingGroupPolicy]</pattern>
+              <pattern type="Registry">HKLM\Software\Policies\* [*]</pattern>
+              <pattern type="Registry">HKLM\Software\Microsoft\Windows\CurrentVersion\Policies\* [*]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Policies\* [*]</pattern>
+            </objectSet>
+          </include>
+          <exclude>
+            <objectSet>
+              <pattern type="Registry">HKLM\Software\Policies\Microsoft\Windows\DriverSearching [DriverUpdateWizardWuSearchEnabled]</pattern>
+              <pattern type="Registry">HKLM\Software\Microsoft\Windows\CurrentVersion\Policies\NonEnum\* [*]</pattern>
+              <pattern type="Registry">HKLM\Software\Microsoft\Windows\CurrentVersion\Policies\Servicing\* [*]</pattern>
+            </objectSet>
+          </exclude>
+          <merge script="MigXmlHelper.SourcePriority()">
+            <objectSet>
+              <pattern type="File">%windir%\system32\GroupPolicy\*[*]</pattern>
+              <pattern type="File">%windir%\system32\GroupPolicyUsers\*[*]</pattern>
+              <pattern type="File">%ALLUSERSPROFILE% [ntuser.pol]</pattern>
+              <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [HideStartupScripts]</pattern>
+              <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [HideShutdownScripts]</pattern>
+              <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [RunStartupScriptSync]</pattern>
+              <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [GpNetworkStartTimeoutPolicyValue]</pattern>
+              <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [DenyUsersFromMachGP]</pattern>
+              <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [DisableBkGndGroupPolicy]</pattern>
+              <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [SyncForegroundPolicy]</pattern>
+              <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [DisableLGPOProcessing]</pattern>
+              <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [DenyRsopToInteractiveUser]</pattern>
+              <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [RSoPGarbageCollectionInterval]</pattern>
+              <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [GroupPolicyMinTransferRate]</pattern>
+              <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [WaitForNetwork]</pattern>
+              <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [UserenvDebugLevel]</pattern>
+              <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [RsopDebugLevel]</pattern>
+              <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Diagnostics [gpsvcDebugLevel]</pattern>
+              <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Diagnostics [RunDiagnosticLoggingGlobal]</pattern>
+              <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Diagnostics [RunDiagnosticLoggingGroupPolicy]</pattern>
+              <pattern type="Registry">HKLM\Software\Policies\* [*]</pattern>
+              <pattern type="Registry">HKLM\Software\Microsoft\Windows\CurrentVersion\Policies\* [*]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Policies\* [*]</pattern>
+            </objectSet>
+          </merge>
+          <merge script="MigXmlHelper.DestinationPriority()">
+            <objectSet>
+              <pattern type="Registry">HKLM\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer [NoCommonGroups]</pattern>
+            </objectSet>
+          </merge>
+          <merge script="MigXmlHelper.DestinationPriority()">
+            <objectSet>
+              <pattern type="Registry">HKLM\Software\Policies\Microsoft\Edge [DownloadRestrictions]</pattern>
+            </objectSet>
+          </merge>
+        </rules>
+        <rules context="User">
+          <include>
+            <objectSet>
+              <pattern type="Registry">HKCU\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [HideLogonScripts]</pattern>
+              <pattern type="Registry">HKCU\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [HideLogoffScripts]</pattern>
+              <pattern type="Registry">HKCU\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [RunLogonScriptSync]</pattern>
+              <pattern type="Registry">HKCU\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [GroupPolicyMinTransferRate]</pattern>
+              <pattern type="Registry">HKCU\Software\Policies\* [*]</pattern>
+              <pattern type="Registry">HKCU\Software\Microsoft\Windows\CurrentVersion\Policies\* [*]</pattern>
+              <pattern type="Registry">HKCU\System\CurrentControlSet\Policies\* [*]</pattern>
+            </objectSet>
+          </include>
+          <merge script="MigXmlHelper.SourcePriority()">
+            <objectSet>
+              <pattern type="Registry">HKCU\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [HideLogonScripts]</pattern>
+              <pattern type="Registry">HKCU\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [HideLogoffScripts]</pattern>
+              <pattern type="Registry">HKCU\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [RunLogonScriptSync]</pattern>
+              <pattern type="Registry">HKCU\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [GroupPolicyMinTransferRate]</pattern>
+              <pattern type="Registry">HKCU\Software\Policies\* [*]</pattern>
+              <pattern type="Registry">HKCU\Software\Microsoft\Windows\CurrentVersion\Policies\* [*]</pattern>
+              <pattern type="Registry">HKCU\System\CurrentControlSet\Policies\* [*]</pattern>
+            </objectSet>
+          </merge>
+        </rules>
+      </migXml>
+    </machineSpecific>
+    <supportedComponents>
+      <supportedComponent>
+        <assemblyIdentity name="_" version="1.0.0.0" />
+        <supportedComponentIdentity buildType="release" language="neutral" name="Microsoft-Windows-GroupPolicy-Base" processorArchitecture="*" publicKeyToken="31bf3856ad364e35" settingsVersionRange="2" versionScope="nonSxS" xmlns="urn:schemas-microsoft-com:asm.v3" />
+        <machineSpecific>
+          <migXml xmlns="">
+            <rules context="System">
+              <merge script="MigXmlHelper.SourcePriority()">
+                <objectSet>
+                  <pattern type="File">%windir%\system32\GroupPolicy\*[*]</pattern>
+                  <pattern type="File">%windir%\system32\GroupPolicyUsers\*[*]</pattern>
+                  <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [HideStartupScripts]</pattern>
+                  <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [HideShutdownScripts]</pattern>
+                  <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [RunStartupScriptSync]</pattern>
+                  <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [GpNetworkStartTimeoutPolicyValue]</pattern>
+                  <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [DenyUsersFromMachGP]</pattern>
+                  <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [DisableBkGndGroupPolicy]</pattern>
+                  <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [SyncForegroundPolicy]</pattern>
+                  <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [DisableLGPOProcessing]</pattern>
+                  <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [DenyRsopToInteractiveUser]</pattern>
+                  <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [RSoPGarbageCollectionInterval]</pattern>
+                  <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [GroupPolicyMinTransferRate]</pattern>
+                  <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [WaitForNetwork]</pattern>
+                  <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [UserenvDebugLevel]</pattern>
+                  <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [RsopDebugLevel]</pattern>
+                  <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Diagnostics [gpsvcDebugLevel]</pattern>
+                  <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Diagnostics [RunDiagnosticLoggingGlobal]</pattern>
+                  <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Diagnostics [RunDiagnosticLoggingGroupPolicy]</pattern>
+                  <pattern type="Registry">HKLM\Software\Policies\* [*]</pattern>
+                  <pattern type="Registry">HKLM\Software\Microsoft\Windows\CurrentVersion\Policies\* [*]</pattern>
+                  <pattern type="Registry">HKLM\System\CurrentControlSet\Policies\* [*]</pattern>
+                </objectSet>
+              </merge>
+              <merge script="MigXmlHelper.DestinationPriority()">
+                <objectSet>
+                  <pattern type="Registry">HKLM\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer [NoCommonGroups]</pattern>
+                </objectSet>
+              </merge>
+              <merge script="MigXmlHelper.DestinationPriority()">
+                <objectSet>
+                  <pattern type="Registry">HKLM\Software\Policies\Microsoft\Edge [DownloadRestrictions]</pattern>
+                </objectSet>
+              </merge>
+              <locationModify script="MigXmlHelper.ExactMove('HKLM\Software\Policies\Microsoft\Windows\Onedrive [DisableFileSyncNGSC]')">
+                <objectSet>
+                  <pattern type="Registry">HKLM\Software\Policies\Microsoft\Windows\Skydrive [DisableFileSync]</pattern>
+                </objectSet>
+              </locationModify>
+              <locationModify script="MigXmlHelper.ExactMove('HKLM\Software\Microsoft\Windows\CurrentVersion\Policies\DataCollection [AllowTelemetry]')">
+                <objectSet>
+                  <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\CreatorsUpdatePrivacySettings\SettingChoice\DataCollectionLevel\HKLM [AllowTelemetry]</pattern>
+                </objectSet>
+              </locationModify>
+            </rules>
+            <rules context="User">
+              <merge script="MigXmlHelper.SourcePriority()">
+                <objectSet>
+                  <pattern type="Registry">HKCU\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [HideLogonScripts]</pattern>
+                  <pattern type="Registry">HKCU\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [HideLogoffScripts]</pattern>
+                  <pattern type="Registry">HKCU\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [RunLogonScriptSync]</pattern>
+                  <pattern type="Registry">HKCU\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [GroupPolicyMinTransferRate]</pattern>
+                  <pattern type="Registry">HKCU\Software\Policies\* [*]</pattern>
+                  <pattern type="Registry">HKCU\Software\Microsoft\Windows\CurrentVersion\Policies\* [*]</pattern>
+                  <pattern type="Registry">HKCU\System\CurrentControlSet\Policies\* [*]</pattern>
+                </objectSet>
+              </merge>
+              <locationModify script="MigXmlHelper.ExactMove('HKCU\Software\Policies\Microsoft\Windows\Onedrive [DisableFileSyncNGSC]')">
+                <objectSet>
+                  <pattern type="Registry">HKCU\Software\Policies\Microsoft\Windows\Skydrive [DisableFileSync]</pattern>
+                </objectSet>
+              </locationModify>
+            </rules>
+          </migXml>
+        </machineSpecific>
+      </supportedComponent>
+    </supportedComponents>
+  </migration>
+  <directories>
+    <directory destinationPath="$(runtime.system32)\GroupPolicy">
+      <securityDescriptor name="GroupPolicyFolderSD" />
+    </directory>
+    <directory destinationPath="$(runtime.system32)\GroupPolicyUsers">
+      <securityDescriptor name="GroupPolicyFolderSD" />
+    </directory>
+  </directories>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="GroupPolicyFolderSD" sddl="D:PAI(A;;0x1200a9;;;AU)(A;OICIIO;GXGR;;;AU)(A;;FA;;;BA)(A;OICIIO;GA;;;BA)(A;;FA;;;SY)(A;OICIIO;GA;;;SY)" operationHint="replace" />
+          <securityDescriptorDefinition name="PoliciesKeySD" sddl="D:P(A;;KR;;;AU)(A;;KA;;;SY)(A;;KA;;;BA)(A;OICIIO;GR;;;AU)(A;OICIIO;GA;;;SY)(A;OICIIO;GA;;;BA)(A;;KR;;;S-1-15-2-1)(A;OICIIO;GR;;;S-1-15-2-1)(A;;KR;;;S-1-15-3-1024-1065365936-1281604716-3511738428-1654721687-432734479-3232135806-4053264122-3456934681)(A;OICIIO;GR;;;S-1-15-3-1024-1065365936-1281604716-3511738428-1654721687-432734479-3232135806-4053264122-3456934681)" operationHint="replace" />
+          <securityDescriptorDefinition name="GpsvcSD" sddl="O:SYG:SYD:(A;;GA;;;SY)(A;;0x0002018d;;;BA)(A;;0x0002018d;;;IU)(A;;0x0002018d;;;SU)S:(AU;FASA;0x000D0002;;;WD)" operationHint="replace" />
+          <securityDescriptorDefinition name="GpsvcArmSD" sddl="O:SYG:SYD:(A;;GA;;;SY)(A;;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;BA)(A;;0x0002018d;;;IU)(A;;0x0002018d;;;SU)S:(AU;FASA;0x000D0002;;;WD)" operationHint="replace" />
+          <securityDescriptorDefinition name="GpsvcRegKeySD" sddl="O:SYG:SYD:P(A;CI;GA;;;SY)(A;CI;GRGX;;;BA)(A;CI;GRGX;;;BU)S:(AU;FASA;0x000D0006;;;WD)" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_REGKEY_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;CI;GA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;CI;GR;;;SY)(A;CI;GR;;;BA)(A;CI;GR;;;BU)(A;CI;GR;;;S-1-15-2-1)(A;CI;GR;;;S-1-15-3-1024-1065365936-1281604716-3511738428-1654721687-432734479-3232135806-4053264122-3456934681)" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" description="Default SDDL for Windows Resource Protected file" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string id="displayName2" value="GroupPolicy folder SD" />
+        <string id="description2" value="This is the security descriptor that gets set on the %windir%\system32\GroupPolicy folder." />
+        <string id="displayName16" value="Group Policy Client Service Trace Level" />
+        <string id="displayName" value="Group Policy Base" />
+        <string id="eventProviderName" value="Microsoft-Windows-GroupPolicy" />
+        <string id="operationalChannelName" value="Microsoft-Windows-GroupPolicy/Operational" />
+        <string id="description10" value="This is a preference for the &quot;Turn off background refresh of Group Policy&quot; policy." />
+        <string id="displayName1" value="Group Policy Client" />
+        <string id="description19" value="This is a preference for the &quot;Remove users ability to invoke machine policy refresh&quot; policy." />
+        <string id="displayName20" value="Preference: Group Policy slow link detection" />
+        <string id="displayName21" value="Preference: Disallow Interactive Users from generating Resultant Set of Policy data" />
+        <string id="description" value="Provides the Group Policy Client service, the Script Extension, the Group Policy logging mode provider, and some command-line tools." />
+        <string id="description28" value="This is the security descriptor that is set on the gpsvc service." />
+        <string id="displayName6" value="Preference: Group Policy slow link detection" />
+        <string id="description11" value="This is a preference for the &quot;Group Policy slow link detection&quot; policy." />
+        <string id="description12" value="This is a preference for the &quot;Disallow Interactive Users from generating Resultant Set of Policy data&quot; policy." />
+        <string id="description30" value="This is a preference for the &quot;Disallow Interactive Users from generating Resultant Set of Policy data&quot; policy." />
+        <string id="displayName7" value="Preference:Disallow Interactive Users from generating Resultant Set of Policy data" />
+        <string id="displayName5" value="Preference: Turn off background refresh of Group Policy" />
+        <string id="description22" value="Sets the level for Group Policy Client Service trace messages." />
+        <string id="description27" value="This is the security descriptor that is set on the HKLM-Software\Policies and HKLM-System\CurrentControlSet\Policies keys at setup time.  The HKCU-Software\Policies and HKCU-System\CCS\Policies keys are secured by Profiles." />
+        <string id="displayName18" value="Policies Key Security Descriptor" />
+        <string id="displayName19" value="Gpsvc Service Security Descriptor" />
+        <string id="displayName31" value="Gpsvc Service Registry Key Security Descriptor" />
+        <string id="description29" value="This is a preference for the &quot;Group Policy slow link detection&quot; policy." />
+        <string id="displayName14" value="Preference: Remove users ability to invoke machine policy refresh" />
+        <string id="displayName22" value="WRP_FILE_DEFAULT_SDDL" />
+        <string id="description23" value="Default SDDL for Windows Resource Protected file" />
+        <string id="displayName24" value="WRP_REGKEY_DEFAULT_SDDL" />
+        <string id="description25" value="Default SDDL for Windows Resource Protected registry key" />
+        <string id="description31" value="This sddl allows built-in users to edit the debug files" />
+        <string id="FAILED_ALLOCATION" value="The processing of Group Policy failed because of a system allocation failure. Please ensure the computer is not running low on resources (memory, available disk space). Group Policy processing will be attempted at the next refresh cycle." />
+        <string id="REGISTRY_TEMPLATE_ERROR" value="The processing of Group Policy failed. Windows could not apply the registry-based policy settings for the Group Policy object %8. Group Policy settings will not be resolved until this event is resolved. View the event details for more information on the file name and path that caused the failure." />
+        <string id="GPO_PROC_STOPPED" value="The processing of Group Policy was interrupted. Windows prematurely ended the discovery and enforcement of Group Policy settings because the computer was requested to shutdown or the user logged off. Group Policy processing will be attempted next refresh cycle, on the next computer reboot, or the next user logon." />
+        <string id="GPO_PROC_SYNC_MODE_SLOWLINK" value="Group Policy detected a slow link during sync mode processing." />
+        <string id="GPO_PROC_SYNC_MODE_NO_DC" value="The connection to DC timed out during the Group Policy sync mode process." />
+        <string id="GPO_PROC_SYNC_TO_ASYNC" value="Group Policy switched the sync mode process to async mode." />
+        <string id="GPSVC_START" value="Group Policy Service started." />
+        <string id="GPSVC_STOP" value="Group Policy Service stopped." />
+        <string id="GP_SESSION_START" value="Group Policy Session started." />
+        <string id="GP_SESSION_RETURN_WINLOGON_CALL" value="Group policy session returned to winlogon." />
+        <string id="GP_SESSION_END" value="Group policy session completed successfully." />
+        <string id="GP_SESSION_END_ERROR" value="Group policy session completed with error." />
+        <string id="GP_SAVE_TO_CACHE_START" value="Starting to save policies to the local datastore." />
+        <string id="GP_SAVE_TO_CACHE_END" value="Successfully saved policies to the local datastore." />
+        <string id="GP_SAVE_TO_CACHE_END_ERROR" value="Saved policies to the local datastore with error." />
+        <string id="GP_LOAD_FROM_CACHE_START" value="Starting to load policies from the local datastore." />
+        <string id="GP_LOAD_FROM_CACHE_END" value="Successfully loaded policies from the local datastore." />
+        <string id="GP_LOAD_FROM_CACHE_END_ERROR" value="Loaded policies from the local datastore with error." />
+        <string id="GPO_CACHE_FIRST_WMI_QUERY_START" value="Starting the first WMI query for the policy." />
+        <string id="GPO_CACHE_FIRST_WMI_QUERY_END" value="Successfully completed the first WMI query." />
+        <string id="GP_SERVICE_INIT_START" value="Started the Group Policy service initialization phase." />
+        <string id="GP_SERVICE_INIT_END" value="Successfully completed the Group Policy Service initialization phase." />
+        <string id="GP_POLICY_DOWNLOAD_START" value="Starting to download policies." />
+        <string id="GP_POLICY_DOWNLOAD_END" value="Successfully completed downloading policies." />
+        <string id="GP_POLICY_DOWNLOAD_ERROR" value="Downloaded policies with error." />
+        <string id="FAILED_RSOPCORE_SESSION_STATUS" value="Windows failed to record Resultant Set of Policy (RSoP) information, which describes the scope of Group Policy objects applied to the computer or user. This could be caused by RSOP being disabled or Windows Management Instrumentation (WMI) service being disabled, stopped, or other WMI errors. Group Policy settings successfully applied to the computer or user; however, management tools may not report accurately." />
+        <string id="RSOP_FAILED" value="Windows encountered an error while recording Resultant Set of Policy (RSoP) information, which describes the scope of Group Policy objects applied to the computer or user. Group Policy settings successfully applied to the computer or user; however, management tools may not report accurately." />
+        <string id="WMIFILTER_NOTFOUND" value="Windows was unable to read the Windows Management Instrumentation (WMI) filter information associated with the Group Policy object %8.This may be caused by a deleted WMI Filter defined in the domain that is still in use by Group Policy objects. Group Policy settings for this Group Policy object will not be enforced. Other Group Policy objects may still apply. Windows will attempt to retrieve this information at the next policy cycle. This specific problem may be resolved by identifying all GPOs that reference the WMI filter and removing the references. Contact an administrator if this event recurs for several hours." />
+        <string id="FAILED_QUERY_SITE" value="The processing of Group Policy failed. Windows could not determine the site associated for this computer, which is required for Group Policy processing." />
+        <string id="EXT_RSOP_FAILED" value="Windows could not record  the Resultant Set of Policy (RSoP) information for the Group Policy extension &lt;%8&gt;. Group Policy settings successfully applied to the computer or user; however, management tools may not report accurately." />
+        <string id="FAILED_DS_BIND" value="The processing of Group Policy failed. Windows could not authenticate to the Active Directory service on a domain controller. (LDAP Bind function call failed). Look in the details tab for error code and description." />
+        <string id="TIME_SKEW" value="Windows was unable to determine whether new Group Policy settings defined by a network administrator should be enforced for this user or computer because this computer's clock is not synchronized with the clock of one of the domain controllers for the domain. Because of this issue, this computer system may not be in compliance with the network administrator’s requirements, and users of this system may not be able to use some functionality on the network. Windows will periodically attempt to retry this operation, and it is possible that either this system or the domain controller will correct the time settings without intervention by an administrator, so the problem will be corrected. %n%nIf this issue persists for more than an hour, checking the local system's clock settings to ensure they are accurate and are synchronized with the clocks on the network's domain controllers is one way to resolve this problem. A network administrator may be required to resolve the issue if correcting the local time settings does not address the problem." />
+        <string id="GPO_QUERY_FAILED" value="The processing of Group Policy failed. Windows attempted to retrieve new Group Policy settings for this user or computer. Look in the details tab for error code and description. Windows will automatically retry this operation at the next refresh cycle. Computers joined to the domain must have proper name resolution and network connectivity to a domain controller for discovery of new Group Policy objects and settings. An event will be logged when Group Policy is successful." />
+        <string id="FAILED_ROLE" value="The processing of Group Policy failed. Windows could not determine the role of this computer. Role information (Workgroup, Member Server, or Domain Controller) is required to process Group Policy." />
+        <string id="FAILED_USERNAME" value="The processing of Group Policy failed. Windows could not resolve the user name. This could be caused by one of more of the following: %na) Name Resolution failure on the current domain controller. %nb) Active Directory Replication Latency (an account created on another domain controller has not replicated to the current domain controller)." />
+        <string id="FAILED_MACHINENAME" value="The processing of Group Policy failed. Windows could not resolve the computer name. This could be caused by one of more of the following: %na) Name Resolution failure on the current domain controller. %nb) Active Directory Replication Latency (an account created on another domain controller has not replicated to the current domain controller)." />
+        <string id="FAILED_WBEM_SERVICES" value="Windows failed to record Resultant Set of Policy (RSoP) information, which describes the scope of Group Policy objects applied to the computer or user. This could be caused by Windows Management Instrumentation (WMI) service being disabled, stopped, or other WMI errors. Group Policy settings successfully applied to the computer or user; however, management tools may not report accurately." />
+        <string id="FAILED_DSNAME" value="The processing of Group Policy failed. Windows could not obtain the name of a domain controller. This could be caused by a name resolution failure. Verify your Domain Name System (DNS) is configured and working correctly." />
+        <string id="GPT_NOTACCESSIBLE" value="The processing of Group Policy failed. Windows attempted to read the file %9 from a domain controller and was not successful. Group Policy settings may not be applied until this event is resolved. This issue may be transient and could be caused by one or more of the following: %na) Name Resolution/Network Connectivity to the current domain controller. %nb) File Replication Service Latency (a file created on another domain controller has not replicated to the current domain controller). %nc) The Distributed File System (DFS) client has been disabled." />
+        <string id="FAILED_MACHINE_TOKEN" value="The processing of Group Policy failed. Windows could not determine the computer account to enforce Group Policy settings. This may be transient. Group Policy settings, including computer configuration, will not be enforced for this computer." />
+        <string id="FAILED_FILTER_CHECK" value="The processing of Group Policy failed. Windows could not evaluate the Windows Management Instrumentation (WMI) filter for the Group Policy object %8. This could be caused by RSOP being disabled  or Windows Management Instrumentation (WMI) service being disabled, stopped, or other WMI errors. Make sure the WMI service is started and the startup type is set to automatic. New Group Policy objects or settings will not process until this event has been resolved." />
+        <string id="FAILED_GPO_SEARCH" value="The processing of Group Policy failed. Windows could not obtain the list of Group Policy objects applicable for this computer or user. View the event details for more information." />
+        <string id="FAILED_OU_SEARCH" value="The processing of Group Policy failed. Windows could not search the Active Directory organization unit hierarchy. View the event details for more information." />
+        <string id="TOO_MANY_GPOS" value="The processing of Group Policy failed. Windows attempted to query the list of Group Policy objects and exceeded the maximum limit (999)." />
+        <string id="EXT_FAILED" value="Windows failed to apply the %8 settings. %8 settings might have its own log file. Please click on the &quot;More information&quot; link." />
+        <string id="X_FOREST_GP_DISABLED" value="The user account is in a different forest than the computer account. The processing of Group Policy from another forest is not allowed. Group Policy will be processed using Loopback Replace mode. The scope of the user policy settings will be determined by the location of the computer object in Active Directory. The settings will be acquired from the User Configuration of these policies." />
+        <string id="X_FOREST_DISCOVERY_FAILED" value="The processing of Group Policy failed. Windows could not determine if the user and computer accounts are in the same forest. Ensure the user domain name matches the name of a trusted domain that resides in the same forest as the computer account." />
+        <string id="INTERNAL_SYSTEM_ERROR" value="The processing of Group Policy failed because of an internal system error. Please see the Group Policy operational log for the specific error message. An attempt will be made to process Group Policy again at the next refresh cycle." />
+        <string id="CATCH_ALL" value="The processing of Group Policy failed due to an internal error. Please look into the Group Policy operational log for the specific error message. An attempt will be made to process Group Policy again at the next refresh cycle." />
+        <string id="USER_POLICY_APPLIED_NO_CHANGES" value="The Group Policy settings for the user were processed successfully. There were no changes detected since the last successful processing of Group Policy." />
+        <string id="MACHINE_POLICY_APPLIED_NO_CHANGES" value="The Group Policy settings for the computer were processed successfully. There were no changes detected since the last successful processing of Group Policy." />
+        <string id="USER_POLICY_APPLIED_CHANGES" value="The Group Policy settings for the user were processed successfully. New settings from %6 Group Policy objects were detected and applied." />
+        <string id="MACHINE_POLICY_APPLIED_CHANGES" value="The Group Policy settings for the computer were processed successfully. New settings from %6 Group Policy objects were detected and applied." />
+        <string id="OU_NOTFOUND" value="The processing of Group Policy failed. Windows could not locate the directory object %8. Group Policy settings will not be enforced until this event is resolved. View the event details for more information on this error." />
+        <string id="NO_NETWORK" value="The processing of Group Policy failed because of lack of network connectivity to a domain controller. This may be a transient condition. A success message would be generated once the machine gets connected to the domain controller and Group Policy has successfully processed. If you do not see a success message for several hours, then contact your administrator." />
+        <string id="ERROR.SCRIPT_FAILURE" value="%5 failed. %n%tGPO Name : %6%n%tGPO File System Path : %7%n%tScript Name: %8" />
+        <string id="SyncReasonMap.NoNeedForSync" value="No need for synchronous" />
+        <string id="SyncReasonMap.FirstPolicyRefresh" value="First policy refresh" />
+        <string id="SyncReasonMap.CSERequiresForeground" value="CSE requires foreground" />
+        <string id="SyncReasonMap.CSEReturnedError" value="CSE returned error" />
+        <string id="SyncReasonMap.ForcedSyncRefresh" value="Forced synchronous refresh" />
+        <string id="SyncReasonMap.SyncPolicy" value="Synchronous policy" />
+        <string id="SyncReasonMap.SKU" value="SKU" />
+        <string id="SyncReasonMap.ScriptsSync" value="Scripts synchronous" />
+        <string id="SyncReasonMap.SyncDueToInternalProcessingError" value="Synchronous due to internal processing error" />
+        <string id="PolicyProcessingModeMap.Normal" value="&quot;No loopback mode&quot;" />
+        <string id="PolicyProcessingModeMap.Merge" value="&quot;Merge&quot;" />
+        <string id="PolicyProcessingModeMap.Replace" value="&quot;Replace&quot;" />
+        <string id="PolicyApplicationModeMap.Background" value="Background" />
+        <string id="PolicyApplicationModeMap.ForegroundSync" value="Foreground synchronous" />
+        <string id="PolicyApplicationModeMap.ForegroundAsync" value="Foreground asynchronous" />
+        <string id="ScriptTypeMap.StartupScript" value="Startup script" />
+        <string id="ScriptTypeMap.LogonScript" value="Logon script" />
+        <string id="ScriptTypeMap.LogoffScript" value="Logoff script" />
+        <string id="ScriptTypeMap.ShutdownScript" value="Shutdown script" />
+        <string id="NotificationTypeMap.CreateSession" value="CreateSession" />
+        <string id="NotificationTypeMap.Logon" value="Logon" />
+        <string id="NotificationTypeMap.Logoff" value="Logoff" />
+        <string id="NotificationTypeMap.StartShell" value="StartShell" />
+        <string id="NotificationTypeMap.EndShell" value="EndShell" />
+        <string id="SCMNotificationTypeMap.PreShutdown" value="Preshutdown" />
+        <string id="PolicyApplicationScenarioStart.MachineStartupInfo" value="Starting computer boot policy processing for %2. %nActivity id: %1" />
+        <string id="PolicyApplicationScenarioEnd.MachineEndInfoSuccess" value="Completed computer boot policy processing for %3 in %1 seconds." />
+        <string id="PolicyApplicationScenarioEnd.MachineEndInfoFailure" value="Computer boot policy processing failed for %3 in %1 seconds." />
+        <string id="PolicyApplicationScenarioStart.UserLogonInfo" value="Starting user logon Policy processing for %2. %nActivity id: %1" />
+        <string id="PolicyApplicationScenarioEnd.UserEndInfoSuccess" value="Completed user logon policy processing for %3 in %1 seconds." />
+        <string id="PolicyApplicationScenarioEnd.UserEndInfoFailure" value="User logon policy processing failed for %3 in %1 seconds." />
+        <string id="PolicyApplicationScenarioStart.MachineNetworkChangeStart" value="Starting policy processing due to network state change for computer %2. %nActivity id: %1" />
+        <string id="PolicyApplicationScenarioEnd.MachineNetworkChangeEndSuccess" value="Completed policy processing due to network state change for computer %3 in %1 seconds." />
+        <string id="PolicyApplicationScenarioEnd.MachineNetworkChangeEndFailure" value="Policy processing due to network state change failed for computer %3 in %1 seconds." />
+        <string id="PolicyApplicationScenarioStart.UserNetworkChangeStart" value="Starting policy processing due to network state change for user %2. %nActivity id: %1" />
+        <string id="PolicyApplicationScenarioEnd.UserNetworkChangeEndSuccess" value="Completed policy processing due to network state change for user %3 in %1 seconds." />
+        <string id="PolicyApplicationScenarioEnd.UserNetworkChangeEndFailure" value="Policy processing due to network state change failed for user %3 in %1 seconds." />
+        <string id="PolicyApplicationScenarioStart.MachineRefreshPolicyStart" value="Starting manual processing of policy for computer %2. %nActivity id: %1" />
+        <string id="PolicyApplicationScenarioEnd.MachineRefreshPolicyEndSuccess" value="Completed manual processing of policy for computer %3 in %1 seconds." />
+        <string id="PolicyApplicationScenarioEnd.MachineRefreshPolicyEndFailure" value="Manual processing of policy failed for computer %3 in %1 seconds." />
+        <string id="PolicyApplicationScenarioStart.UserRefreshPolicyStart" value="Starting manual processing of policy for user %2. %nActivity id: %1" />
+        <string id="PolicyApplicationScenarioEnd.UserRefreshPolicyEndSuccess" value="Completed manual processing of policy for user %3 in %1 seconds." />
+        <string id="PolicyApplicationScenarioEnd.UserRefreshPolicyEndFailure" value="Manual processing of policy failed for user %3 in %1 seconds." />
+        <string id="PolicyApplicationScenarioStart.MachineBackgroundPolicyStart" value="Starting periodic policy processing for computer %2. %nActivity id: %1" />
+        <string id="PolicyApplicationScenarioEnd.MachineBackgroundPolicyEndSuccess" value="Completed periodic policy processing for computer %3 in %1 seconds." />
+        <string id="PolicyApplicationScenarioEnd.MachineBackgroundPolicyEndFailure" value="Periodic policy processing failed for computer %3 in %1 seconds." />
+        <string id="PolicyApplicationScenarioStart.UserBackgroundPolicyStart" value="Starting periodic policy processing for user %2. %nActivity id: %1" />
+        <string id="PolicyApplicationScenarioEnd.UserBackgroundPolicyEndSuccess" value="Completed periodic policy processing for user %3 in %1 seconds." />
+        <string id="PolicyApplicationScenarioEnd.UserBackgroundPolicyEndFailure" value="Periodic policy processing failed for user %3 in %1 seconds." />
+        <string id="CSEProcessingScenarioStart.CSEStartInfo" value="Starting %2 Extension Processing. %n%nList of applicable Group Policy objects: (%5)%n%n%6" />
+        <string id="CSEProcessingScenarioRequestSync.Info" value="%1 Extension (%2) requests a sync mode process." />
+        <string id="CSEProcessingScenarioStart.NoGPOChanges" value="No changes were detected." />
+        <string id="CSEProcessingScenarioStart.GPOChanges" value="Changes were detected." />
+        <string id="CSEProcessingScenarioEnd.CSEEndInfo" value="Completed %3 Extension Processing in %1 milliseconds." />
+        <string id="CSEProcessingSkipped.Info" value="Skipped %1 Extension based on Group Policy client-side processing rules.  Refer to a Resultant Set of Policy report for more information." />
+        <string id="APIStartCallTracing.APIStartInfo" value="%1 %n%2" />
+        <string id="CSEProcessingChangedMode.Info" value="Group Policy changed from synchronous foreground to asynchronous foreground based on slow link detection." />
+        <string id="CSEWinLogonStatusReportingCompleted.Info" value="Group Policy Winlogon status reporting has completed." />
+        <string id="CSEWinLogonStartShellCompleted.Info" value="Group Policy Winlogon Start Shell handling completed." />
+        <string id="CSENetworkViaDirectAccess.Info" value="Group Policy network connection is via Direct Access." />
+        <string id="CSEProcessingSyncFg.Info" value="%1 Extension deferred processing until next synchronous foreground.  Refer to a Resultant Set of Policy report for more information." />
+        <string id="APIEndCallTracing.APIEndInfoSuccess" value="%3 %n%4%nThe call completed in %1 milliseconds." />
+        <string id="APIEndCallTracing.APIEndInfoFailure" value="%3 %n%4%nThe call failed after %1 milliseconds." />
+        <string id="ScriptExecutionScenarioStart.PrincipalStartInfo" value="Starting %2 for %1." />
+        <string id="ScriptExecutionScenarioEnd.PrincipalEndInfoSuccess" value="Completed %4 for %3 in %1 seconds." />
+        <string id="ScriptExecutionScenarioEnd.PrincipalEndInfoFailure" value="Script for %3 failed in %1 seconds." />
+        <string id="ScriptExecution.ScriptStartInfo" value="Running script name %1." />
+        <string id="ScriptExecution.ScriptEndInfo" value="Completed %3 in %1 seconds." />
+        <string id="ErrorOpnEvent.ErrorInfo" value="Error: %1 Error code %2." />
+        <string id="WarningOpnEvent.WarningInfo" value="Warning: %1 Warning code %2." />
+        <string id="InfoOpnEvent.InformationalInfo" value="%1" />
+        <string id="UnusedPlaceHolder.AssertMessage" value="Invalid Error Message." />
+        <string id="ComputerInformation.Info" value="Computer details: %n%tComputer role : %1%n%tNetwork name : %2" />
+        <string id="PrincipalInformation.Info" value="Account details: %n%tAccount Name : %1%n%tAccount Domain Name : %2%n%tDC Name : %3%n%tDC Domain Name : %4" />
+        <string id="DCInformation.Info" value="Domain Controller details: %n%tDomain Controller Name : %1%n%tDomain Controller IP Address : %2" />
+        <string id="PolicyProcessingMode.Info" value="The loopback policy processing mode is %1." />
+        <string id="NetworkInformation.Info" value="A %6 link was detected. The Estimated bandwidth is %1 kbps. The slow link threshold is %3 kbps." />
+        <string id="PolicyOverrideForBandwidth.Info" value="A Group Policy setting was used to override the fast/slow link detection." />
+        <string id="ThreeGInterfaceType.Info" value="The network connection is using a WWAN device for connectivity." />
+        <string id="NetworkInformation.Warning" value="Group Policy bandwidth estimation failed. Group Policy processing will continue. Assuming %6 link." />
+        <string id="NetworkInformationEx.Info" value="The Group Policy processing mode is %1." />
+        <string id="NextPolicyRefresh.Info" value="Next policy processing for %1 will be attempted in %2 %3." />
+        <string id="AppliedGPOListInformation.Info" value="List of applicable Group Policy objects: %n%n%1" />
+        <string id="DeniedGPOListInformation.Info" value="The following Group Policy objects were not applicable because they were filtered out : %n%n%1" />
+        <string id="UserTypeMap.User" value="User" />
+        <string id="UserTypeMap.Computer" value="Computer" />
+        <string id="Info.RetrieveDCUsingCachedInfo" value="Retrieving Domain Controller details." />
+        <string id="Info.RetrieveDCNameForcedDiscovery" value="Forcing re-discovery of Domain Controller details." />
+        <string id="Info.NetworkChange" value="Network state change detected." />
+        <string id="NextPolicyApplication.Seconds" value="seconds" />
+        <string id="NextPolicyApplication.Minutes" value="minutes" />
+        <string id="GPMachStartupWait.Info" value="Group Policy waited for %3 milliseconds for the network subsystem at computer boot." />
+        <string id="GPMachStartupWait.Warning" value="Group Policy wait for network subsystem failed at computer boot. Group Policy processing will continue." />
+        <string id="GPNoPolicyInDSRepairMode.Warning" value="Group Policy cannot be applied because the computer has been booted in Directory Services Restore Mode." />
+        <string id="GPNlaSvcNotStarted.Warning" value="Group Policy dependency (%1) did not start. As a result, network related features of Group Policy such as bandwidth estimation and response to network changes will not work." />
+        <string id="NetworkBandwidth.Info" value="Estimated network bandwidth on one of the connections: %1 kbps." />
+        <string id="Error.AccessCheckError" value="Access check based on security descriptor failed." />
+        <string id="Info.StartupScriptNotVisible" value="Startup scripts are not visible. Startup scripts are visible only when startup scripts are configured to run synchronously." />
+        <string id="Error.InvalidSessionError" value="Failed to get the active console session." />
+        <string id="WinlogonNotification.Info" value="Group Policy received the notification %1 from Winlogon for session %2." />
+        <string id="SCMNotification.Info" value="Group Policy received %1 notification from Service Control Manager." />
+        <string id="Error.RefreshAccessCheckError" value="Group Policy refresh access check failed." />
+        <string id="Error.NotifyAccessCheckError" value="Group Policy notify access check failed." />
+        <string id="Error.ConsoleNotifyAccessCheckError" value="Group Policy notify access check for console session failed." />
+        <string id="Info.GPMachPolicyDenyUsers" value="Policy to deny users from refreshing computer policy is set." />
+        <string id="DCDiscovery.Start" value="Group Policy is trying to discover the Domain Controller information." />
+        <string id="DCDiscovery.EndSuccess" value="Group Policy successfully discovered the Domain Controller in %1 milliseconds." />
+        <string id="DCDiscovery.EndFailure" value="Group Policy failed to discover the Domain Controller details in %1 milliseconds." />
+        <string id="GetApplicableGPOs.Start" value="Group Policy receiving applicable GPOs from the domain controller." />
+        <string id="GetApplicableGPOs.EndSuccess" value="Group Policy successfully got applicable GPOs from the domain controller." />
+        <string id="GetApplicableGPOs.EndFailure" value="Group Policy could not get applicable GPOs from the domain controller." />
+        <string id="Info.SlowLink" value="slow" />
+        <string id="Info.FastLink" value="fast" />
+        <string id="Info.RetrieveUserNameStart" value="Attempting to retrieve the account information." />
+        <string id="Info.RetrieveUserNameEnd" value="Retrieved account information." />
+        <string id="Info.RetrieveUserNameRetry" value="Retrying to retrieve account information." />
+        <string id="Info.GetUserNameAPICallStart" value="Making system call to get account information." />
+        <string id="Info.GetUserNameAPICallEnd" value="The system call to get account information completed." />
+        <string id="Info.NoSiteNameWarning" value="Computer determined to be not in a site." />
+        <string id="Info.LDAPAPICallStart" value="Making LDAP calls to connect and bind to Active Directory." />
+        <string id="Info.LDAPAPICallEnd" value="The LDAP call to connect and bind to Active Directory completed." />
+        <string id="Info.FileAccessApiCallStart" value="Making system calls to access specified file." />
+        <string id="Info.FileAccessApiCallEnd" value="The system calls to access specified file completed." />
+        <string id="Info.NlaRefreshQueryFailure" value="Bandwidth estimation failure: Failed to refresh network data associated with query." />
+        <string id="Info.NlaQueryNetSignaturesFailure" value="Bandwidth estimation failure: Failed to enumerate network signatures associated with query." />
+        <string id="Info.NlaGetIntranetCapabilityFailure" value="Bandwidth estimation failure: Failed to query Intranet capability." />
+        <string id="Info.NlaQueryNetDataFailure" value="Bandwidth estimation failure: Failed to inspect result of NLA query." />
+        <string id="Info.RegisterForNotificationFailure" value="Failed to register for connectivity notification." />
+        <string id="Info.QuerySecurityPackageInfoFailure" value="Failed to query information about security package." />
+        <string id="Info.AcquireCredentialsHandleFailure" value="Failed to acquire handle to preexisting credentials of security principal." />
+        <string id="Info.InitializeSecurityContextFailure" value="Failed to initiate security context." />
+        <string id="Info.AcceptSecurityContextFailure" value="Failed to establish security context." />
+        <string id="Info.QuerySecurityContextTokenFailure" value="Failed to obtain access token for security context." />
+        <string id="Info.ServiceConfigInitialization" value="Initializing and reading current service configuration for the Group Policy Client service." />
+        <string id="Info.ServiceConfigValidate" value="Checking for Group Policy client extensions that are not part of the system." />
+        <string id="Info.ServiceConfigUpdateRequired" value="Service configuration must be updated to standalone due to the presence of a Group Policy client extension that is not part of the operating system." />
+        <string id="Info.ServiceConfigUpdateNotRequired" value="Service configuration update to standalone is not required and will be skipped." />
+        <string id="Info.ServiceConfigUpdateAttempted" value="Attempting to update service configuration to standalone." />
+        <string id="Info.ServiceConfigUpdateResult" value="Service configuration update to standalone was attempted due to the presence of Group Policy client extension %1 that is not part of the operating system and completed with status %3." />
+        <string id="Info.ServiceConfigValidateCompleted" value="Finished checking for non-system extensions." />
+        <string id="Info.ServiceStateInitialization" value="Initializing service instance state to detect previous instances of the service." />
+        <string id="Info.SLAPIAccessErrorDomainIncapableSystem" value="Failed to determine the Group Policy properties of the installed system. Only a subset of Group Policy functionality will be available." />
+        <string id="Info.SLAPIAccessErrorWaitForNetwork" value="Failed to determine the Group Policy properties of the installed system. Group Policy will wait for the network at startup and logon." />
+        <string id="Info.SLAPIAccessErrorNetworkTimeout" value="Failed to determine the Group Policy properties of the installed system. Group Policy will wait for the network at startup and logon for a maximum of 120 seconds." />
+        <string id="ServiceStateExtensionFailureFound" value="An unfinished invocation of the Group Policy Client Side Extension %1 from a previous instance of the Group Policy Service was detected.  This may indicate that the extension caused the Group Policy Client Service to terminate unexpectedly." />
+        <string id="EXTENSION_EXECUTION_DENIED" value="The Group Policy Client Side Extension %3 may have caused the Group Policy Service to terminate unexpectedly. To prevent further failures in the Group Policy Service, this extension has been temporarily disabled until after the next system restart. Group Policy settings managed by this extension may no longer be enforced until the system is restarted. The vendor of this extension should be contacted if this issue recurs." />
+        <string id="Info.ServiceStatePreviousInstanceFound" value="A previous instance of the Group Policy Client Service was detected." />
+        <string id="InfoOpnEvent.InformationalInfoWithString" value="%1 Parameter: %2" />
+        <string id="ErrorOpnEvent.ErrorInfoWithString" value="Error: %1 Parameter: %3 : Error code %2." />
+        <string id="WarningOpnEvent.WarningInfoWithString" value="Warning: %1 Parameter: %3 : Warning code %2." />
+        <string id="Info.ServiceConfigShared" value="The Group Policy Client service is currently configured as a shared service." />
+        <string id="Info.ServiceConfigStandalone" value="The Group Policy Client service is currently configured as a standalone service." />
+        <string id="CSE_REQUIRES_SYNC" value="The Group Policy Client Side Extension %8 was unable to apply one or more settings because the changes must be processed before system startup or user logon. The system will wait for Group Policy processing to finish completely before the next startup or logon for this user, and this may result in slow startup and boot performance." />
+        <string id="GPMachStartupDACorpNetWait.Info" value="Group Policy waited for %3 milliseconds for the Direct Access CorpNet connectivity at computer boot." />
+        <string id="GPMachStartupDACorpNetWait.Warning" value="Group Policy wait for Direct Access CorpNet connectivity failed at computer boot. Group Policy processing will continue." />
+        <string id="Info.GPSvcGetGPOsAbortOnLogOff" value="Group Policy Service aborted due to computer shutdown or user logoff." />
+        <string id="NonGPSysvolFileLocked.Warning" value="A non group policy SYSVOL file is locked. This may prevent synchronizing important Group Policy files between domain controllers." />
+        <string id="GPSysvolLockedFileClosed.Warning" value="A group policy file in SYSVOL is locked. This may prevent synchronizing important Group Policy files between domain controllers. Forcefully closed it." />
+        <string id="GPSysvolLockedFileCannotClose.Warning" value="A group policy file in SYSVOL is locked. This may prevent synchronizing important Group Policy files between domain controllers. Failed to forcefully close it." />
+        <string id="GP_UNC_PATH_WARNING" value="This machine is configured to retrieve Group Policy files from a file share in an insecure way.%n%nUNC Path: %1%nMutual Authentication Enforced: %2%nIntegrity Enforced: %3%n%nGuidance: The UNC path contains logon scripts and/or files that control system security policies. Microsoft recommends configuring Windows to require both mutual authentication and integrity when accessing files on this UNC path.%n%nFor details on configuring Windows machines to require additional security when accessing specific UNC paths, visit http://support.microsoft.com/kb/3000483." />
+      </stringTable>
+    </resources>
+  </localization>
+</assembly>

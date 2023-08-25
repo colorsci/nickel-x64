@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-Userenv" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <dependency discoverable="no" resourceType="Resources">
+    <dependentAssembly>
+      <assemblyIdentity name="Microsoft-Windows-Userenv.Resources" version="10.0.22621.1" processorArchitecture="amd64" language="*" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </dependentAssembly>
+  </dependency>
+  <file name="userenv.dll" destinationPath="$(runtime.system32)\" sourceName="userenv.dll" importPath="$(build.nttree)\" sourcePath=".\">
+    <signatureInfo>
+      <signatureDescriptor PETrust="true" pageHash="true" />
+    </signatureInfo>
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>7HqnoVkikDolz5J8F/o/axLa2GeNEEzxdGUsX/Xy0SU=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <registryKeys>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\ProfileNotification" />
+    <registryKey keyName="HKEY_CLASSES_ROOT\AppID\{E10F6C3A-F1AE-4adc-AA9D-2FE65525666E}">
+      <registryValue name="" valueType="REG_SZ" value="Profile Notification Host" />
+      <registryValue name="DllSurrogate" valueType="REG_SZ" value="" />
+      <securityDescriptor name="WRP_KEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{E10F6C3A-F1AE-4ADC-AA9D-2FE65525666E}">
+      <registryValue name="" valueType="REG_SZ" value="PSIProfileNotify" />
+      <securityDescriptor name="WRP_KEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{E10F6C3A-F1AE-4ADC-AA9D-2FE65525666E}\InProcServer32">
+      <registryValue name="" valueType="REG_EXPAND_SZ" value="%systemroot%\system32\USERENV.dll" />
+      <registryValue name="ThreadingModel" valueType="REG_SZ" value="Both" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{E10F6C3A-F1AE-4ADC-AA9D-2FE65525666E}">
+      <registryValue name="" valueType="REG_SZ" value="IProfileNotify" />
+      <securityDescriptor name="WRP_KEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{E10F6C3A-F1AE-4ADC-AA9D-2FE65525666E}\NumMethods">
+      <registryValue name="" valueType="REG_SZ" value="6" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{E10F6C3A-F1AE-4ADC-AA9D-2FE65525666E}\ProxyStubClsid32">
+      <registryValue name="" valueType="REG_SZ" value="{E10F6C3A-F1AE-4ADC-AA9D-2FE65525666E}" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion\Winlogon\UserDefaults">
+      <registryValue name="ExcludeProfileDirs" valueType="REG_SZ" value="AppData\Local;AppData\LocalLow;$Recycle.Bin;OneDrive;Work Folders" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion\Winlogon">
+      <registryValue name="PreCreateKnownFolders" valueType="REG_SZ" value="{A520A1A4-1780-4FF6-BD18-167343C5AF16}" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\System\CurrentControlSet\Services\EventLog\Application\Userenv">
+      <registryValue name="EventMessageFile" valueType="REG_EXPAND_SZ" value="%SystemRoot%\System32\userenv.dll" />
+      <registryValue name="TypesSupported" valueType="REG_DWORD" value="0x00000007" />
+      <registryValue name="ProviderGuid" valueType="REG_SZ" value="{DB00DFB6-29F9-4A9C-9B3B-1F4F9E7D9770}" />
+    </registryKey>
+  </registryKeys>
+  <instrumentation>
+    <events xmlns="http://schemas.microsoft.com/win/2004/08/events" xmlns:win="http://manifests.microsoft.com/win/2004/08/windows/events">
+      <provider guid="{DB00DFB6-29F9-4A9C-9B3B-1F4F9E7D9770}" message="$(string.eventProviderName)" messageFileName="%SystemRoot%\System32\userenv.dll" name="Microsoft-Windows-User Profiles General" resourceFileName="%SystemRoot%\System32\userenv.dll" symbol="S_Microsoft_Windows_Userenv">
+        <channels>
+          <importChannel chid="Application" name="Application" />
+          <importChannel chid="opnChannel" name="Microsoft-Windows-User Profile Service/Operational" />
+          <importChannel chid="ProfSvc" name="Microsoft-Windows-User Profile Service/Diagnostic" />
+        </channels>
+      </provider>
+      <cmi />
+    </events>
+  </instrumentation>
+  <memberships>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories" version="1.0.0.0" publicKeyToken="365143bb27e7ac8b" typeName="BootRecovery" />
+    </categoryMembership>
+  </memberships>
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string id="displayName" value="Userenv" />
+        <string id="description" value="This component is for userenv.dll" />
+        <string id="eventProviderName" value="Microsoft-Windows-User Profile General" />
+        <string id="event_0x000005DF" value="Windows cannot set security on your registry. %n%n DETAIL - %1" />
+        <string id="event_0x000005E5" value="Windows cannot copy file %1 to location %2. This error may be caused by network problems or insufficient security rights. %n%n DETAIL - %3" />
+        <string id="event_0x000005FE" value="There are too many profile copy errors. Refer to the previous events for details. Windows will not log any additional copy errors for this copy process. %n%n" />
+        <string id="event_0x00000640" value="Windows cannot copy profile from %1 to %2, you do not have enough disk space.%n%n" />
+        <string id="event_0x00000641" value="Windows cannot copy profile from %1 to %2, you have exceeded the profile quota.%n%n" />
+        <string id="EVENT_RUP_CRITICAL_FILE_COPY_INFO" value="File %1 of size %2 kilobytes copied from %3 to %4 in %5 seconds." />
+        <string id="EVENT_RUP_NTUSER_TIMESTAMP_CONFLICT" value="%1 which has timestamp %2 was not copied to %3 which has timestamp %4 since it is older than the file it would be overwriting." />
+        <string id="EVENT_RUP_TIMESTAMP_CONFLICT" value="%1 which has timestamp %2 was not copied to %3 which has timestamp %4 since it is older than the file it would be overwriting." />
+      </stringTable>
+    </resources>
+  </localization>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="WRP_KEY_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;CI;GA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;CI;GR;;;SY)(A;CI;GR;;;BA)(A;CI;GR;;;BU)(A;CI;GR;;;S-1-15-2-1)(A;CI;GR;;;S-1-15-3-1024-1065365936-1281604716-3511738428-1654721687-432734479-3232135806-4053264122-3456934681)" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" description="Default SDDL for Windows Resource Protected file" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+</assembly>

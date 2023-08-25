@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-Network-Security-IKE" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <memberships>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories.Services" version="10.0.22621.1" publicKeyToken="31bf3856ad364e35" typeName="Service" />
+      <categoryInstance subcategory="IKEEXT">
+        <serviceData name="IKEEXT" displayName="@%SystemRoot%\system32\ikeext.dll,-501" errorControl="normal" start="demand" type="win32ShareProcess" description="@%SystemRoot%\system32\ikeext.dll,-502" dependOnService="BFE,nsi" imagePath="%systemroot%\system32\svchost.exe -k netsvcs -p" objectName="LocalSystem" requiredPrivileges="SeAuditPrivilege,SeImpersonatePrivilege,SeTcbPrivilege,SeDebugPrivilege" sidType="unrestricted">
+          <failureActions resetPeriod="86400">
+            <actions>
+              <action delay="120000" type="restartService" />
+              <action delay="300000" type="restartService" />
+              <action delay="0" type="none" />
+            </actions>
+          </failureActions>
+          <serviceTrigger action="start" subtype="FIREWALL_PORT_OPEN" type="FirewallPortEvent">
+            <triggerData type="multistring" value="500;UDP;%windir%\system32\svchost.exe;IKEEXT" />
+          </serviceTrigger>
+        </serviceData>
+      </categoryInstance>
+    </categoryMembership>
+  </memberships>
+</assembly>

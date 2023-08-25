@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-AllJoyn-Router" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <dependency discoverable="no" resourceType="Resources">
+    <dependentAssembly dependencyType="prerequisite">
+      <assemblyIdentity name="Microsoft-Windows-AllJoyn-Router.Resources" version="10.0.22621.1" processorArchitecture="amd64" language="*" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </dependentAssembly>
+  </dependency>
+  <file name="AJRouter.dll" destinationPath="$(runtime.system32)\" sourceName="AJRouter.dll" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>WkA7zRY2ldU/+1mkPOjH2pl9fKQ6H0zzg7ZrXyW1zkg=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <memberships>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories.Services" version="10.0.22621.1" publicKeyToken="31bf3856ad364e35" typeName="Service" />
+      <categoryInstance subcategory="AJRouter">
+        <serviceData name="AJRouter" displayName="@%SystemRoot%\system32\AJRouter.dll,-2" errorControl="normal" start="demand" type="win32ShareProcess" description="@%SystemRoot%\system32\AJRouter.dll,-1" imagePath="%SystemRoot%\system32\svchost.exe -k LocalServiceNetworkRestricted -p" objectName="NT AUTHORITY\LocalService" sidType="unrestricted">
+          <serviceTrigger action="start" subtype="NAMED_PIPE_EVENT" type="NetworkEndpointEvent">
+            <triggerData type="string" value="ProtectedPrefix\LocalService\MSAJPipe" />
+          </serviceTrigger>
+          <failureActions resetPeriod="86400">
+            <actions>
+              <action delay="3000" type="restartService" />
+              <action delay="3000" type="restartService" />
+              <action delay="0" type="none" />
+            </actions>
+          </failureActions>
+          <securityDescriptor name="AJRouterSecurity" />
+        </serviceData>
+      </categoryInstance>
+    </categoryMembership>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories" version="1.0.0.0" publicKeyToken="365143bb27e7ac8b" typeName="SvcHost" />
+      <categoryInstance subcategory="LocalServiceNetworkRestricted">
+        <serviceGroup position="last" serviceName="AJRouter" />
+      </categoryInstance>
+    </categoryMembership>
+  </memberships>
+  <registryKeys>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\System\CurrentControlset\Services\AJRouter\Parameters">
+      <registryValue name="ServiceDll" valueType="REG_EXPAND_SZ" value="%SystemRoot%\System32\AJRouter.dll" />
+      <registryValue name="ServiceDllUnloadOnStop" valueType="REG_DWORD" value="0x00000001" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\SharedAccess\Parameters\FirewallPolicy\RestrictedServices\Static\System">
+      <registryValue name="Microsoft-Windows-AllJoyn-Router-Allow-In-TCP" valueType="REG_SZ" value="v2.0|Action=Allow|Active=TRUE|Dir=In|Protocol=6|LPort=9955|Profile=Domain|Profile=Private|Profile=Public|App=%SystemRoot%\System32\svchost.exe|Svc=AJRouter|Name=Allow inbound TCP traffic to AJRouter|" />
+      <registryValue name="Microsoft-Windows-AllJoyn-Router-Allow-Out-TCP" valueType="REG_SZ" value="v2.0|Action=Allow|Active=TRUE|Dir=Out|Protocol=6|Profile=Domain|Profile=Private|Profile=Public|App=%SystemRoot%\System32\svchost.exe|Svc=AJRouter|Name=Allow outbound TCP traffic from AJRouter|" />
+      <registryValue name="Microsoft-Windows-AllJoyn-Router-Allow-In-UDP" valueType="REG_SZ" value="v2.0|Action=Allow|Active=TRUE|Dir=In|Protocol=17|Profile=Domain|Profile=Private|Profile=Public|App=%SystemRoot%\System32\svchost.exe|Svc=AJRouter|Name=Allow inbound UDP traffic to AJRouter|" />
+      <registryValue name="Microsoft-Windows-AllJoyn-Router-Allow-Out-UDP" valueType="REG_SZ" value="v2.0|Action=Allow|Active=TRUE|Dir=Out|Protocol=17|Profile=Domain|Profile=Private|Profile=Public|App=%SystemRoot%\System32\svchost.exe|Svc=AJRouter|Name=Allow outbound UDP traffic from AJRouter|" />
+      <registryValue name="Microsoft-Windows-AllJoyn-Router-Block-In-AllElse" valueType="REG_SZ" value="v2.0|Action=Block|Active=TRUE|Dir=In|App=%SystemRoot%\System32\svchost.exe|Svc=AJRouter|Name=Block any other inbound traffic to AJRouter|" />
+      <registryValue name="Microsoft-Windows-AllJoyn-Router-Block-Out-AllElse" valueType="REG_SZ" value="v2.0|Action=Block|Active=TRUE|Dir=Out|App=%SystemRoot%\System32\svchost.exe|Svc=AJRouter|Name=Block any other outbound traffic from AJRouter|" />
+    </registryKey>
+  </registryKeys>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="AJRouterSecurity" sddl="D:(A;;CCLCSWRPWPDTLOCRRC;;;SY)(A;;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;BA)(A;;CCLCSWLOCRRC;;;IU)(A;;CCLCSWLOCRRC;;;SU)(A;;CR;;;AU)S:(AU;FA;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;WD)" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_REGKEY_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;CI;GA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;CI;GR;;;SY)(A;CI;GR;;;BA)(A;CI;GR;;;BU)(A;CI;GR;;;S-1-15-2-1)(A;CI;GR;;;S-1-15-3-1024-1065365936-1281604716-3511738428-1654721687-432734479-3232135806-4053264122-3456934681)" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" description="Default SDDL for Windows Resource Protected file" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+</assembly>

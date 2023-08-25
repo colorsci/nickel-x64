@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved." xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <assemblyIdentity name="Microsoft-Windows-PerformanceCounterInfrastructureNonExecutable" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <registryKeys>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Perflib">
+      <registryValue name="Base Index" valueType="REG_DWORD" value="0x00000737" />
+      <registryValue name="Supports Metadata" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="Version" valueType="REG_DWORD" value="0x00010001" />
+      <securityDescriptor name="WRP_KEY_PERFLIB_SDDL" />
+    </registryKey>
+  </registryKeys>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="WRP_KEY_PERFLIB_SDDL" sddl="D:P(A;CI;GR;;;IU)(A;CI;GA;;;BA)(A;CI;GA;;;SY)(A;CI;GA;;;CO)(A;CI;GR;;;LS)(A;CI;GR;;;NS)(A;CI;GR;;;LU)(A;CI;GR;;;MU)" operationHint="replace" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+  <asmv3:configuration xmlns:asmv3="urn:schemas-microsoft-com:asm.v3" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State">
+    <asmv3:configurationSchema>
+      <xsd:schema xmlns="Microsoft-Windows-PerformanceCounterInfrastructureNonExecutable" targetNamespace="Microsoft-Windows-PerformanceCounterInfrastructureNonExecutable">
+        <xsd:element default="1846" name="LastCounter" type="xsd:unsignedInt" wcm:handler="regkey('HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Perflib')" wcm:legacyName="Last Counter" wcm:legacyType="REG_DWORD" wcm:scope="allUsers" wcm:visible="false" />
+        <xsd:element default="1847" name="LastHelp" type="xsd:unsignedInt" wcm:handler="regkey('HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Perflib')" wcm:legacyName="Last Help" wcm:legacyType="REG_DWORD" wcm:scope="allUsers" wcm:visible="false" />
+      </xsd:schema>
+    </asmv3:configurationSchema>
+    <asmv3:metadata />
+  </asmv3:configuration>
+  <migration ignoreConfigurationSection="Yes" settingsVersion="1">
+    <migXml xmlns="">
+      <rules context="System">
+        <include>
+          <objectSet>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Perflib [Last Counter]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Perflib [Last Help]</pattern>
+          </objectSet>
+        </include>
+        <merge script="MigXmlHelper.DestinationPriority()">
+          <objectSet>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Perflib [Last Counter]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Perflib [Last Help]</pattern>
+          </objectSet>
+        </merge>
+        <excludeAttributes attributes="Security">
+          <objectSet>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Perflib</pattern>
+          </objectSet>
+        </excludeAttributes>
+      </rules>
+    </migXml>
+    <supportedComponents>
+      <supportedComponent>
+        <assemblyIdentity name="_" version="1.0.0.0" />
+        <supportedComponentIdentity buildType="release" language="neutral" name="Microsoft-Windows-PerformanceCounterInfrastructureNonExecutable" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" settingsVersionRange="0-1" versionScope="nonSxS" xmlns="urn:schemas-microsoft-com:asm.v3" />
+        <migXml xmlns="">
+          <rules context="System">
+            <merge>
+              <objectSet script="MigXmlHelper.DestinationPriority()">
+                <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Perflib [Last Counter]</pattern>
+                <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Perflib [Last Help]</pattern>
+              </objectSet>
+            </merge>
+          </rules>
+        </migXml>
+      </supportedComponent>
+    </supportedComponents>
+  </migration>
+</assembly>

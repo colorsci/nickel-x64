@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved." xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <assemblyIdentity name="Microsoft-Windows-EventLog" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <dependency discoverable="no" resourceType="Resources">
+    <dependentAssembly>
+      <assemblyIdentity name="Microsoft-Windows-EventLog.Resources" version="10.0.22621.1" processorArchitecture="amd64" language="*" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </dependentAssembly>
+  </dependency>
+  <file name="wevtsvc.dll" destinationPath="$(runtime.system32)\" sourceName="wevtsvc.dll" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>3po73lSHFm/lu57ppkv25rIBN8VNbco1SHO24wJRo98=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <memberships>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories.Services" version="10.0.22621.1" publicKeyToken="31bf3856ad364e35" typeName="Service" />
+      <categoryInstance>
+        <serviceData name="Eventlog" displayName="@%SystemRoot%\system32\wevtsvc.dll,-200" errorControl="normal" start="auto" type="win32ShareProcess" description="@%SystemRoot%\system32\wevtsvc.dll,-201" failureActionsFlag="true" group="Event Log" imagePath="%SystemRoot%\System32\svchost.exe -k LocalServiceNetworkRestricted -p" objectName="NT AUTHORITY\LocalService" requiredPrivileges="SeChangeNotifyPrivilege,SeImpersonatePrivilege,SeAuditPrivilege" sidType="unrestricted" startAfterInstall="synchronous">
+          <failureActions resetPeriod="86400">
+            <actions>
+              <action delay="60000" type="restartService" />
+              <action delay="120000" type="restartService" />
+              <action type="none" />
+            </actions>
+          </failureActions>
+          <securityDescriptor name="WinEVT-SERVICE-Security" />
+        </serviceData>
+      </categoryInstance>
+    </categoryMembership>
+  </memberships>
+  <registryKeys>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\System\CurrentControlSet\Services\Eventlog\Parameters">
+      <registryValue name="ServiceDLL" valueType="REG_EXPAND_SZ" value="%SystemRoot%\System32\wevtsvc.dll" />
+      <registryValue name="ServiceDllUnloadOnStop" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="ServiceMain" valueType="REG_SZ" value="ServiceMain" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Eventlog">
+      <registryValue name="PlugPlayServiceType" valueType="REG_DWORD" value="0x00000003" />
+      <securityDescriptor name="WinEVT-REG-EVENTLOG-Security" offline="true" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\WMI\Autologger\EventLog-Security">
+      <registryValue name="BufferSize" valueType="REG_DWORD" value="0x00000040" />
+      <registryValue name="ClockType" valueType="REG_DWORD" value="0x00000002" />
+      <registryValue name="Start" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="MinimumBuffers" valueType="REG_DWORD" value="0x00000000" />
+      <registryValue name="MaximumBuffers" valueType="REG_DWORD" value="0x00000010" />
+      <registryValue name="FlushTimer" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="LogFileMode" valueType="REG_DWORD" value="0x180001c0" />
+      <registryValue name="Guid" valueType="REG_SZ" value="{0e66e20b-b802-ba6a-9272-31199d0ed295}" />
+      <registryValue name="OwningChannel" valueType="REG_SZ" value="Security" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\SharedAccess\Parameters\FirewallPolicy\RestrictedServices\Static\System">
+      <registryValue name="Eventlog-1" valueType="REG_SZ" value="V2.0|Action=Allow|Dir=In|LPort=RPC|Protocol=6|App=%SystemRoot%\system32\svchost.exe|Svc=EventLog|Name=Allow RPC/TCP traffic to EventLog|" />
+      <registryValue name="Eventlog-2" valueType="REG_SZ" value="V2.0|Action=Block|Dir=In|App=%SystemRoot%\system32\svchost.exe|Svc=EventLog|Name=Block any traffic to EventLog|" />
+      <registryValue name="Eventlog-3" valueType="REG_SZ" value="V2.0|Action=Block|Dir=Out|App=%SystemRoot%\system32\svchost.exe|Svc=EventLog|Name=Block any traffic from EventLog|" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Virtualization\HvSocket\WildcardDescriptors">
+      <registryValue name="E97910D9-55BB-455E-9170-114FDFCE763D" valueType="REG_SZ" value="D:P(A;;FA;;;S-1-5-80-880578595-1860270145-482643319-2788375705-1540778122)" />
+    </registryKey>
+  </registryKeys>
+  <configuration xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State">
+    <configurationSchema>
+      <xsd:schema xmlns="Microsoft-Windows-EventLog" targetNamespace="Microsoft-Windows-EventLog">
+        <xsd:complexType name="SecurityLogType">
+          <xsd:sequence>
+            <xsd:element default="%SystemRoot%\System32\winevt\Logs\Security.evtx" name="File" type="xsd:string" wcm:legacyType="REG_EXPAND_SZ" />
+            <xsd:element default="20971520" name="MaxSize" type="xsd:unsignedInt" wcm:legacyType="REG_DWORD" />
+            <xsd:element default="0" name="Retention" type="xsd:unsignedInt" wcm:legacyType="REG_DWORD" />
+          </xsd:sequence>
+        </xsd:complexType>
+        <xsd:complexType name="SystemLogType">
+          <xsd:sequence>
+            <xsd:element default="%SystemRoot%\system32\winevt\Logs\System.evtx" name="File" type="xsd:string" wcm:legacyType="REG_EXPAND_SZ" />
+            <xsd:element default="20971520" name="MaxSize" type="xsd:unsignedInt" wcm:legacyType="REG_DWORD" />
+            <xsd:element default="0" name="Retention" type="xsd:unsignedInt" wcm:legacyType="REG_DWORD" />
+          </xsd:sequence>
+        </xsd:complexType>
+        <xsd:complexType name="ApplicationLogType">
+          <xsd:sequence>
+            <xsd:element default="%SystemRoot%\system32\winevt\Logs\Application.evtx" name="File" type="xsd:string" wcm:legacyType="REG_EXPAND_SZ" />
+            <xsd:element default="20971520" name="MaxSize" type="xsd:unsignedInt" wcm:legacyType="REG_DWORD" />
+            <xsd:element default="0" name="Retention" type="xsd:unsignedInt" wcm:legacyType="REG_DWORD" />
+          </xsd:sequence>
+        </xsd:complexType>
+        <xsd:element name="SecurityLog" type="SecurityLogType" wcm:description="Security" wcm:displayName="Security" wcm:handler="regkey(&quot;HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Eventlog&quot;)" wcm:legacyName="Security" wcm:scope="allUsers" />
+        <xsd:element name="SystemLog" type="SystemLogType" wcm:description="System" wcm:displayName="System" wcm:handler="regkey(&quot;HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Eventlog&quot;)" wcm:legacyName="System" wcm:scope="allUsers" />
+        <xsd:element name="ApplicationLog" type="ApplicationLogType" wcm:description="Application" wcm:displayName="Application" wcm:handler="regkey(&quot;HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Eventlog&quot;)" wcm:legacyName="Application" wcm:scope="allUsers" />
+      </xsd:schema>
+    </configurationSchema>
+  </configuration>
+  <instrumentation>
+    <events xmlns="http://schemas.microsoft.com/win/2004/08/events">
+      <provider guid="{fc65ddd8-d6ef-4962-83d5-6e5cfe9ce148}" message="$(string.Publisher.Name)" messageFileName="%SystemRoot%\System32\wevtsvc.dll" name="Microsoft-Windows-Eventlog" resourceFileName="%SystemRoot%\System32\wevtsvc.dll" symbol="EVENTLOG">
+        <channels>
+          <importChannel chid="ChSystem" name="System" />
+          <importChannel chid="ChSecurity" name="Security" />
+          <channel chid="ChSetup" enabled="true" isolation="Application" message="$(string.Channel.Setup)" name="Setup" type="Operational" />
+          <channel chid="ChDebug" isolation="System" message="$(string.Channel.Debug)" name="Microsoft-Windows-EventLog/Debug" type="Debug">
+            <publishing>
+              <level>5</level>
+              <keywords>0xFFFFFFFF</keywords>
+              <controlGuid>{B0CA1D82-539D-4FB0-944B-1620C6E86231}</controlGuid>
+            </publishing>
+          </channel>
+          <channel chid="ChAnalytic" isolation="System" message="$(string.Channel.Analytic)" name="Microsoft-Windows-EventLog/Analytic" type="Analytic" />
+        </channels>
+      </provider>
+      <cmi />
+    </events>
+    <counters xmlns="http://schemas.microsoft.com/win/2005/12/counters" schemaVersion="2.0">
+      <provider applicationIdentity="%SystemRoot%\System32\wevtsvc.dll" callback="custom" providerGuid="{2A32A3F9-EE0C-40FF-8A75-E1E747D15B1F}" providerType="userMode" symbol="EventLogCounterProvider">
+        <counterSet description="Event Log" descriptionID="100" guid="{D11168C5-9F29-43BC-9269-0548637A62B0}" instances="single" name="Event Log" nameID="102" symbol="EventLogCounterSet" uri="Microsoft.Windows.EventLog.PerfCounters">
+          <counter defaultScale="0" description="Enabled Channels" descriptionID="104" detailLevel="standard" id="1" name="Enabled Channels" nameID="106" symbol="PERFCOUNTER_ENABLEDCHANNELS" type="perf_counter_rawcount" uri="Microsoft.Windows.EventLog.PerfCounters.Counter1">
+            <counterAttributes>
+              <counterAttribute name="reference" />
+            </counterAttributes>
+          </counter>
+          <counter defaultScale="0" description="WEVT RPC calls/sec" descriptionID="108" detailLevel="standard" id="2" name="WEVT RPC calls/sec" nameID="110" symbol="PERFCOUNTER_WEVTRPCPERSEC" type="perf_counter_bulk_count" uri="Microsoft.Windows.EventLog.PerfCounters.Counter2">
+            <counterAttributes>
+              <counterAttribute name="reference" />
+            </counterAttributes>
+          </counter>
+          <counter defaultScale="0" description="Events/sec" descriptionID="120" detailLevel="standard" id="3" name="Events/sec" nameID="122" symbol="PERFCOUNTER_EVENTSPERSEC" type="perf_counter_bulk_count" uri="Microsoft.Windows.EventLog.PerfCounters.Counter3">
+            <counterAttributes>
+              <counterAttribute name="reference" />
+            </counterAttributes>
+          </counter>
+          <counter defaultScale="0" description="ELF RPC calls/sec" descriptionID="112" detailLevel="standard" id="4" name="ELF RPC calls/sec" nameID="114" symbol="PERFCOUNTER_ELFRPCPERSEC" type="perf_counter_bulk_count" uri="Microsoft.Windows.EventLog.PerfCounters.Counter4">
+            <counterAttributes>
+              <counterAttribute name="reference" />
+            </counterAttributes>
+          </counter>
+          <counter defaultScale="0" description="Active subscriptions" descriptionID="116" detailLevel="standard" id="5" name="Active subscriptions" nameID="118" symbol="PERFCOUNTER_SUBCOUNT" type="perf_counter_rawcount" uri="Microsoft.Windows.EventLog.PerfCounters.Counter5">
+            <counterAttributes>
+              <counterAttribute name="reference" />
+            </counterAttributes>
+          </counter>
+          <counter defaultScale="0" description="Event filter operations/sec" descriptionID="124" detailLevel="standard" id="6" name="Event filter operations/sec" nameID="126" symbol="PERFCOUNTER_MATCHES" type="perf_counter_bulk_count" uri="Microsoft.Windows.EventLog.PerfCounters.Counter6">
+            <counterAttributes>
+              <counterAttribute name="reference" />
+            </counterAttributes>
+          </counter>
+        </counterSet>
+        <counterSet description="Event Log Subscriptions" descriptionID="300" guid="{13C399ED-C261-45A3-8530-CD6BB2ED13AF}" instances="multiple" name="Event Log Subscriptions" nameID="302" symbol="EventLogSubscriptionsCounterSet" uri="Microsoft.Windows.EventLog.Subscription.PerfCounters">
+          <counter defaultScale="0" description="Events/sec" descriptionID="320" detailLevel="standard" id="7" name="Events/sec" nameID="322" symbol="PERFCOUNTER_SUB_EVENTSPERSEC" type="perf_counter_bulk_count" uri="Microsoft.Windows.EventLog.PerfCounters.Counter7">
+            <counterAttributes>
+              <counterAttribute name="reference" />
+            </counterAttributes>
+          </counter>
+          <counter defaultScale="0" description="Event filter operations/sec" descriptionID="324" detailLevel="standard" id="8" name="Event filter operations/sec" nameID="326" symbol="PERFCOUNTER_SUB_MATCHES" type="perf_counter_bulk_count" uri="Microsoft.Windows.EventLog.PerfCounters.Counter8">
+            <counterAttributes>
+              <counterAttribute name="reference" />
+            </counterAttributes>
+          </counter>
+        </counterSet>
+      </provider>
+    </counters>
+  </instrumentation>
+  <memberships>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories" version="1.0.0.0" publicKeyToken="365143bb27e7ac8b" typeName="BootRecovery" />
+    </categoryMembership>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories" version="1.0.0.0" publicKeyToken="365143bb27e7ac8b" typeName="SvcHost" />
+      <categoryInstance subcategory="LocalServiceNetworkRestricted">
+        <serviceGroup position="last" serviceName="eventlog" />
+      </categoryInstance>
+    </categoryMembership>
+  </memberships>
+  <directories>
+    <directory destinationPath="$(runtime.system32)\winevt">
+      <securityDescriptor name="WinEVT-FS-Security" offline="true" />
+    </directory>
+    <directory destinationPath="$(runtime.system32)\winevt\TraceFormat" />
+  </directories>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="WinEVT-FS-Security" sddl="D:P(A;CIOI;DTFRFWFX;;;S-1-5-80-880578595-1860270145-482643319-2788375705-1540778122)(A;CIOI;FA;;;SY)(A;CIOI;FA;;;BA)(A;CI;FR;;;AU)" operationHint="replace" />
+          <securityDescriptorDefinition name="WinEVT-REG-EVENTLOG-Security" sddl="O:BAG:SYD:P(A;CI;GR;;;AU)(A;CI;GR;;;SO)(A;CI;GA;;;BA)(A;CI;GA;;;SY)" operationHint="replace" />
+          <securityDescriptorDefinition name="WinEVT-REG-EVENTLOG-SECURITY-AUTOLOGGER-Security" sddl="O:BAG:SYD:P(A;CI;GR;;;AU)(A;CI;GR;;;SO)(A;CI;GR;;;BA)(A;CI;GA;;;SY)(A;CI;GR;;;S-1-5-80-880578595-1860270145-482643319-2788375705-1540778122)S:AR(AU;OICISAFA;DCLCSDWDWO;;;WD)" operationHint="replace" />
+          <securityDescriptorDefinition name="WinEVT-SERVICE-Security" sddl="D:(A;;CCLCSWLOCRRC;;;AU)(A;;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;BA)(A;;CCLCSWRPWPDTLOCRRC;;;SY)(A;;LCLO;;;S-1-15-2-1)S:AR(AU;SA;DCRPWPDTCRSDWDWO;;;WD)(AU;FA;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;WD)" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" description="Default SDDL for Windows Resource Protected file" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+  <imaging>
+    <sysprepInformation>
+      <sysprepProvider stage="cleanup">
+        <sysprepOrder order="0x0400" />
+        <sysprepModule methodName="EvtIntSysprepCleanup" moduleName="$(runtime.system32)\wevtapi.dll" />
+      </sysprepProvider>
+    </sysprepInformation>
+  </imaging>
+</assembly>

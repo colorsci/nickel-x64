@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="OpenSSH-Common-Components-Onecore" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <migration scope="Upgrade" settingsVersion="1">
+    <migXml xmlns="">
+      <rules context="System">
+        <include>
+          <objectSet>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\ssh-agent [Start]</pattern>
+          </objectSet>
+        </include>
+      </rules>
+    </migXml>
+    <supportedComponents>
+      <supportedComponent>
+        <assemblyIdentity name="_" version="1.0.0.0" />
+        <supportedComponentIdentity language="neutral" name="OpenSSH-Common-Components-Onecore" processorArchitecture="*" settingsVersionRange="1" xmlns="urn:schemas-microsoft-com:asm.v3" />
+      </supportedComponent>
+    </supportedComponents>
+  </migration>
+  <directories>
+    <directory destinationPath="$(runtime.system32)\OpenSSH" owner="true">
+      <securityDescriptor name="WRP_PARENT_DIR_DEFAULT_SDDL" />
+    </directory>
+    <directory destinationPath="$(runtime.programData)\ssh" owner="true">
+      <securityDescriptor name="PRGDATA_SSH_DIR_SDDL" />
+    </directory>
+  </directories>
+  <file name="scp.exe" destinationPath="$(runtime.System32)\OpenSSH\" sourceName="scp.exe" importPath="$(build.nttree)\openssh\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>1dy/xeCZz1Tfh5UBBJPA/Opo2Jo2jBEmWqQ4h7gl1ms=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <file name="ssh-add.exe" destinationPath="$(runtime.System32)\OpenSSH\" sourceName="ssh-add.exe" importPath="$(build.nttree)\openssh\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>EOAA+Jd9DihuZ3yfp4cPxIhwdBzaEKRnEpaclwTZ4gc=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <file name="ssh-agent.exe" destinationPath="$(runtime.System32)\OpenSSH\" sourceName="ssh-agent.exe" importPath="$(build.nttree)\openssh\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>i+i73IirATc3uanYbMzb5r0Xb7LYPlOjPJCah2l+SLI=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <file name="ssh-keygen.exe" destinationPath="$(runtime.System32)\OpenSSH\" sourceName="ssh-keygen.exe" importPath="$(build.nttree)\openssh\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>R4H3imMUNvckkO5e1sqGXRIxOn2QQ/dWSuFTNNCg+PY=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <registryKeys>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\Software\OpenSSH">
+      <securityDescriptor name="SSH_REGKEY_WRITE_ADMIN_SYSTEM_READ_AUTHORIZEDUSER_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\Software\OpenSSH\Agent">
+      <securityDescriptor name="SSH_AGENT_REGKEY_WRITE_ADMIN_SYSTEM_SDDL" />
+    </registryKey>
+  </registryKeys>
+  <instrumentation xmlns:trace="http://schemas.microsoft.com/win/2004/08/events/trace" xmlns:win="http://manifests.microsoft.com/win/2004/08/windows/events" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <events>
+      <provider guid="{C4B57D35-0636-4BC3-A262-370F249F9802}" messageFileName="%windir%\system32\openssh\ssh-agent.exe" name="OpenSSH" resourceFileName="%windir%\system32\openssh\ssh-agent.exe" symbol="OpenSSH">
+        <channels>
+          <channel chid="OpenSSH/Admin" enabled="true" name="OpenSSH/Admin" symbol="OpenSSH_Admin" type="Admin" />
+          <channel chid="OpenSSH/Operational" enabled="true" name="OpenSSH/Operational" symbol="OpenSSH_Operational" type="Operational" />
+          <channel access="O:BAG:BAD:(A;;0x2;;;BU)(A;;0x2;;;S-1-15-2-1)(A;;0x2;;;S-1-15-3-1024-3153509613-960666767-3724611135-2725662640-12138253-543910227-1950414635-4190290187)(A;;0xf0007;;;SY)(A;;0x7;;;BA)(A;;0x7;;;SO)(A;;0x3;;;IU)(A;;0x3;;;SU)(A;;0x3;;;S-1-5-3)(A;;0x3;;;S-1-5-33)(A;;0x1;;;S-1-5-32-573)" chid="OpenSSH/Debug" enabled="false" isolation="Custom" name="OpenSSH/Debug" symbol="OpenSSH_Debug" type="Debug" />
+        </channels>
+      </provider>
+      <cmi xmlns="http://schemas.microsoft.com/win/2004/08/events" />
+    </events>
+  </instrumentation>
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string id="level.Warning" value="Warning" />
+        <string id="level.Verbose" value="Verbose" />
+        <string id="level.Informational" value="Information" />
+        <string id="level.Error" value="Error" />
+        <string id="level.Critical" value="Critical" />
+        <string id="OpenSSH.level.Debug.message" value="Debug" />
+        <string id="OpenSSH.event.message" value="%1: %2" />
+      </stringTable>
+    </resources>
+  </localization>
+  <memberships>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories.Services" version="10.0.22621.1" publicKeyToken="31bf3856ad364e35" typeName="Service" />
+      <categoryInstance subcategory="SSH-Agent">
+        <serviceData name="ssh-agent" displayName="OpenSSH Authentication Agent" errorControl="normal" start="disabled" type="win32OwnProcess" description="Agent to hold private keys used for public key authentication." imagePath="%SystemRoot%\System32\OpenSSH\ssh-agent.exe" objectName="LocalSystem" requiredPrivileges="SeImpersonatePrivilege">
+          <securityDescriptor name="SSH_AGENT_SERVICE_SDDL" />
+        </serviceData>
+      </categoryInstance>
+    </categoryMembership>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories" version="1.0.0.0" publicKeyToken="365143bb27e7ac8b" typeName="Environment" />
+      <categoryInstance subcategory="path">
+        <path name="%SYSTEMROOT%\System32\OpenSSH\" position="last" />
+      </categoryInstance>
+    </categoryMembership>
+  </memberships>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="SSH_AGENT_SERVICE_SDDL" sddl="D:(A;;CCLCSWRPWPDTLOCRRC;;;SY)(A;;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;BA)(A;;CCLCSWLOCRRC;;;IU)(A;;CCLCSWLOCRRC;;;SU)(A;;RP;;;AU)" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_PARENT_DIR_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;CI;GA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;0x1301bf;;;SY)(A;IOCIOI;GA;;;SY)(A;;0x1301bf;;;BA)(A;IOCIOI;GA;;;BA)(A;CIOI;GRGX;;;BU)(A;OICIIO;GA;;;CO)(A;CIOI;GRGX;;;S-1-15-2-1)(A;CIOI;GRGX;;;S-1-15-2-2)" operationHint="replace" />
+          <securityDescriptorDefinition name="PRGDATA_SSH_DIR_SDDL" sddl="O:BAD:PAI(A;OICI;FA;;;SY)(A;OICI;FA;;;BA)(A;OICI;0x1200a9;;;AU)" operationHint="replace" />
+          <securityDescriptorDefinition name="SSH_REGKEY_WRITE_ADMIN_SYSTEM_READ_AUTHORIZEDUSER_SDDL" sddl="D:PAI(A;OICI;KA;;;SY)(A;OICI;KA;;;BA)(A;OICI;KR;;;AU)" operationHint="replace" />
+          <securityDescriptorDefinition name="SSH_AGENT_REGKEY_WRITE_ADMIN_SYSTEM_SDDL" sddl="D:PAI(A;OICI;KA;;;SY)(A;OICI;KA;;;BA)" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" description="Default SDDL for Windows Resource Protected file" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+</assembly>

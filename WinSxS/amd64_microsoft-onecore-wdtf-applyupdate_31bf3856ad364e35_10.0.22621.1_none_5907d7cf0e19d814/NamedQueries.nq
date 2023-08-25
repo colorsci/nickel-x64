@@ -1,0 +1,202 @@
+////////////////////////////////////////////////////////////////////////////////
+//
+// This section defines some aggregate relations in the 'device' namespace
+//
+////////////////////////////////////////////////////////////////////////////////
+[device:>device::RELATIONS]
+
+//
+// define '-or-self' versions of our relations
+//
+ancestor-or-self:   ancestor/ OR self/
+descendant-or-self: descendant/ OR self/
+volume-or-self:     volume/ OR self/
+disk-or-self:       disk/ OR self/
+child-or-self:      child/ OR self/
+parent-or-self:     parent/ OR self/
+removal-or-self:    removal/ OR self/
+
+above-or-self: above/ OR self/
+below-or-self: below/ OR self/
+
+above: disk-or-self/ancestor/ OR ancestor-or-self/disk/
+below: descendant/volume-or-self/ OR volume/descendant-or-self/
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////
+//
+// This section defines any relations that cross from the device namespace
+// to the system namespace. Any queries past these tokens will be 
+// interpreted from the 'system' namespace
+//
+////////////////////////////////////////////////////////////////////////////////
+[device:>system::RELATIONS]
+system: system-0/
+remotesystem: system-1/
+
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////
+//
+// This section defines a set of attributes that are defined by aggregating
+// other attributes
+//
+////////////////////////////////////////////////////////////////////////////////
+[device::ATTRIBUTES]
+
+//
+// The following attributes can resolve to multiple values
+//
+
+Filters: UpperClassFilters AND UpperFilters AND LowerClassFilters AND LowerFilters
+DriverNames: service AND filters
+
+FiltersBinaryNames: UpperClassFiltersBinaryNames AND UpperFiltersBinaryNames AND LowerClassFiltersBinaryNames AND LowerFiltersBinaryNames
+
+//
+// The following attributes will resolve to the first value found (from left to right)
+//
+
+DisplayName: FriendlyName OR Description OR DeviceID
+
+
+// Left for backwards compatibility
+TestRelated: self/ OR volume/ OR Descendant/(self/ OR volume/)
+
+////////////////////////////////////////////////////////////////////////////////
+//
+// This section defines a set of attributes that are always eval'd to resolve
+// a VARIANT_TRUE/VARIANT_FALSE result. (except in GetRelations, because it 
+// doesn't matter)
+//
+////////////////////////////////////////////////////////////////////////////////
+[device::BOOLEANS]
+
+
+
+//
+// Device 
+//
+
+IsDevice: IsPhantom=False AND Class!=LegacyDriver AND Class!=VolumeSnapshot AND parent/service!=swenum AND parent/service!=umbus AND DriverBinaryNames AND Windows::IsKernelDebugDevice=False
+
+//
+// The following are provided just for simple inverted versions of
+// other booleans
+//
+IsAttached:IsPhantom=False
+
+
+//
+// The following are flags built from the status keyword
+//
+IsRootEnumerated:   status&0x00000001   // DN_ROOT_ENUMERATED - Was enumerated by ROOT
+IsStarted:          status&0x00000008   // DN_STARTED         - Is currently configured
+IsManual:           status&0x00000010   // DN_MANUAL          - Manually installed
+IsRebootNeeded:     status&0x00000100   // DN_NEED_RESTART    - System needs to be restarted for this Devnode to work properly
+IsFiltered:         status&0x00000800   // DN_FILTERED        - Is filtered
+IsMoved:            status&0x00001000   // DN_MOVED           - Has been moved
+IsDisableable:      status&0x00002000   // DN_DISABLEABLE     - Can be disabled
+IsRemovable:        status&0x00004000   // DN_REMOVABLE       - Can be removed
+IsRemovePending:    status&0x00040000   // DN_WILL_BE_REMOVED - DevInst is being removed
+
+// Other potential status flags:
+//    status&0x00000002   // DN_DRIVER_LOADED   - Has Register_Device_Driver
+//    status&0x00000004   // DN_ENUM_LOADED     - Has Register_Enumerator
+//    status&0x00000020   // DN_NEED_TO_ENUM    - May need reenumeration
+//    status&0x00000040   // DN_NOT_FIRST_TIME  - Has received a config
+//    status&0x00000080   // DN_HARDWARE_ENUM   - Enum generates hardware ID
+//    status&0x00000200   // DN_HAS_MARK        - Not CM_Create_DevInst lately
+//    status&0x00000400   // DN_HAS_PROBLEM     - Need device installer
+//    status&0x00008000   // DN_PRIVATE_PROBLEM - Has a private problem
+//    status&0x00010000   // DN_MF_PARENT       - Multi function parent
+//    status&0x00020000   // DN_MF_CHILD        - Multi function child
+
+
+//
+// The following are flags built from the ProblemCode keyword
+//
+IsDisabled:       ProblemCode=0x00000016    // CM_PROB_DISABLED
+IsFailedStart:    ProblemCode=0x0000000A    // CM_PROB_FAILED_START
+IsFailedInstall:  ProblemCode=0x0000001C    // CM_PROB_FAILED_INSTALL
+
+// Other potential ProblemCodes
+//    ProblemCode=0x00000001    // CM_PROB_NOT_CONFIGURED
+//    ProblemCode=0x00000002    // CM_PROB_DEVLOADER_FAILED
+//    ProblemCode=0x00000003    // CM_PROB_OUT_OF_MEMORY
+//    ProblemCode=0x00000004    // CM_PROB_ENTRY_IS_WRONG_TYPE
+//    ProblemCode=0x00000005    // CM_PROB_LACKED_ARBITRATOR
+//    ProblemCode=0x00000006    // CM_PROB_BOOT_CONFIG_CONFLICT
+//    ProblemCode=0x00000007    // CM_PROB_FAILED_FILTER
+//    ProblemCode=0x00000008    // CM_PROB_DEVLOADER_NOT_FOUND
+//    ProblemCode=0x00000009    // CM_PROB_INVALID_DATA
+//    ProblemCode=0x0000000A    // CM_PROB_FAILED_START
+//    ProblemCode=0x0000000B    // CM_PROB_LIAR                       
+//    ProblemCode=0x0000000C    // CM_PROB_NORMAL_CONFLICT            
+//    ProblemCode=0x0000000D    // CM_PROB_NOT_VERIFIED               
+//    ProblemCode=0x0000000E    // CM_PROB_NEED_RESTART               
+//    ProblemCode=0x0000000F    // CM_PROB_REENUMERATION              
+//    ProblemCode=0x00000010    // CM_PROB_PARTIAL_LOG_CONF           
+//    ProblemCode=0x00000011    // CM_PROB_UNKNOWN_RESOURCE           
+//    ProblemCode=0x00000012    // CM_PROB_REINSTALL                  
+//    ProblemCode=0x00000013    // CM_PROB_REGISTRY                   
+//    ProblemCode=0x00000014    // CM_PROB_VXDLDR                     
+//    ProblemCode=0x00000015    // CM_PROB_WILL_BE_REMOVED            
+//    ProblemCode=0x00000017    // CM_PROB_DEVLOADER_NOT_READY        
+//    ProblemCode=0x00000018    // CM_PROB_DEVICE_NOT_THERE           
+//    ProblemCode=0x00000019    // CM_PROB_MOVED                      
+//    ProblemCode=0x0000001A    // CM_PROB_TOO_EARLY                  
+//    ProblemCode=0x0000001B    // CM_PROB_NO_VALID_LOG_CONF          
+//    ProblemCode=0x0000001D    // CM_PROB_HARDWARE_DISABLED          
+//    ProblemCode=0x0000001E    // CM_PROB_CANT_SHARE_IRQ             
+//    ProblemCode=0x0000001F    // CM_PROB_FAILED_ADD                 
+//    ProblemCode=0x00000020    // CM_PROB_DISABLED_SERVICE           
+//    ProblemCode=0x00000021    // CM_PROB_TRANSLATION_FAILED         
+//    ProblemCode=0x00000022    // CM_PROB_NO_SOFTCONFIG              
+//    ProblemCode=0x00000023    // CM_PROB_BIOS_TABLE                 
+//    ProblemCode=0x00000024    // CM_PROB_IRQ_TRANSLATION_FAILED     
+//    ProblemCode=0x00000025    // CM_PROB_FAILED_DRIVER_ENTRY        
+//    ProblemCode=0x00000026    // CM_PROB_DRIVER_FAILED_PRIOR_UNLOAD 
+//    ProblemCode=0x00000027    // CM_PROB_DRIVER_FAILED_LOAD         
+//    ProblemCode=0x00000028    // CM_PROB_DRIVER_SERVICE_KEY_INVALID 
+//    ProblemCode=0x00000029    // CM_PROB_LEGACY_SERVICE_NO_DEVICES  
+//    ProblemCode=0x0000002A    // CM_PROB_DUPLICATE_DEVICE           
+//    ProblemCode=0x0000002B    // CM_PROB_FAILED_POST_START          
+//    ProblemCode=0x0000002C    // CM_PROB_HALTED
+//    ProblemCode=0x0000002D    // CM_PROB_PHANTOM
+//    ProblemCode=0x0000002E    // CM_PROB_SYSTEM_SHUTDOWN
+//    ProblemCode=0x0000002F    // CM_PROB_HELD_FOR_EJECT
+//    ProblemCode=0x00000030    // CM_PROB_DRIVER_BLOCKED
+//    ProblemCode=0x00000031    // CM_PROB_REGISTRY_TOO_LARGE
+//    ProblemCode=0x00000032    // CM_PROB_SETPROPERTIES_FAILED
+
+
+//
+// The following are flags built from the ConfigFlags keyword
+//
+IsReinstallNeeded: ConfigFlags&0x00000020    // CONFIGFLAG_REINSTALL              // Redo install
+IsFailedInstall:   ConfigFlags&0x00000040    // CONFIGFLAG_FAILEDINSTALL          // Failed the install
+
+// Other potential ConfigFlags
+//    status&0x00000001    // CONFIGFLAG_DISABLED               // Set if disabled
+//    status&0x00000002    // CONFIGFLAG_REMOVED                // Set if a present hardware enum device deleted
+//    status&0x00000004    // CONFIGFLAG_MANUAL_INSTALL         // Set if the devnode was manually installed
+//    status&0x00000008    // CONFIGFLAG_IGNORE_BOOT_LC         // Set if skip the boot config
+//    status&0x00000010    // CONFIGFLAG_NET_BOOT               // Load this devnode when in net boot
+//    status&0x00000080    // CONFIGFLAG_CANTSTOPACHILD         // Can't stop/remove a single child
+//    status&0x00000100    // CONFIGFLAG_OKREMOVEROM            // Can remove even if rom.
+//    status&0x00000200    // CONFIGFLAG_NOREMOVEEXIT           // Don't remove at exit.
+//    status&0x00000400    // CONFIGFLAG_FINISH_INSTALL         // Complete install for devnode running 'raw'
+//    status&0x00000800    // CONFIGFLAG_NEEDS_FORCED_CONFIG    // This devnode requires a forced config
+//    status&0x00001000    // CONFIGFLAG_NETBOOT_CARD           // This is the remote boot network card
+//    status&0x00002000    // CONFIGFLAG_PARTIAL_LOG_CONF       // This device has a partial logconfig
+//    status&0x00004000    // CONFIGFLAG_SUPPRESS_SURPRISE      // Set if unsafe removals should be ignored
+//    status&0x00008000    // CONFIGFLAG_VERIFY_HARDWARE        // Set if hardware should be tested for logo failures
+//    status&0x00010000    // CONFIGFLAG_FINISHINSTALL_UI       // Show the finish install wizard pages for the installed device.
+//    status&0x00020000    // CONFIGFLAG_FINISHINSTALL_ACTION   // Call installer with DIF_FINISHINSTALL_ACTION in client context.
+
+

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-Setup-Events" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <file name="setupetw.dll" destinationPath="$(runtime.system32)\" sourceName="setupetw.dll" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>LUeBkcgcd3cEVFbZN39uRwDoMqBOozBp9B7/GPUS1z0=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <registryKeys>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\WMI\AutoLogger\Microsoft-Windows-Setup\{B9DA9FE6-AE5F-4f3e-B2FA-8E623C11DC75}">
+      <registryValue name="Enabled" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="EnableLevel" valueType="REG_DWORD" value="0x00000004" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\WMI\AutoLogger\Microsoft-Windows-Setup\{A615ACB9-D5A4-4738-B561-1DF301D207F8}">
+      <registryValue name="Enabled" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="EnableLevel" valueType="REG_DWORD" value="0x00000004" />
+    </registryKey>
+  </registryKeys>
+  <instrumentation xmlns:ms="http://manifests.microsoft.com/win/2004/08/windows/events" xmlns:win="http://manifests.microsoft.com/win/2004/08/windows/events" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <events xmlns="http://schemas.microsoft.com/win/2004/08/events">
+      <provider guid="{B9DA9FE6-AE5F-4f3e-B2FA-8E623C11DC75}" message="$(string.Deplorch.ProviderMessage)" messageFileName="%SystemRoot%\system32\setupetw.dll" name="Microsoft-Windows-Deplorch" resourceFileName="%SystemRoot%\system32\setupetw.dll" symbol="Microsoft_Windows_Deplorch">
+        <channels>
+          <channel chid="chaDeplorchAnalytic" name="Microsoft-Windows-Deplorch/Analytic" type="Analytic" />
+          <importChannel chid="chaSetup" name="Setup" />
+        </channels>
+      </provider>
+      <provider guid="{A615ACB9-D5A4-4738-B561-1DF301D207F8}" message="$(string.SetupQueue.ProviderMessage)" messageFileName="%SystemRoot%\system32\setupetw.dll" name="Microsoft-Windows-SetupQueue" resourceFileName="%SystemRoot%\system32\setupetw.dll" symbol="Microsoft_Windows_SetupQueue">
+        <channels>
+          <channel chid="chaSetupQueueAnalytic" name="Microsoft-Windows-SetupQueue/Analytic" type="Analytic" />
+          <importChannel chid="chaSetup" name="Setup" />
+        </channels>
+      </provider>
+      <provider guid="{530FB9B9-C515-4472-9313-FB346F9255E3}" message="$(string.SetupPlatform.ProviderMessage)" messageFileName="%SystemRoot%\system32\setupetw.dll" name="Microsoft-Windows-SetupPlatform" resourceFileName="%SystemRoot%\system32\setupetw.dll" symbol="Microsoft_Windows_SetupPlatform">
+        <channels>
+          <channel chid="chaSetupPlatformAnalytic" name="Microsoft-Windows-SetupPlatform/Analytic" type="Analytic" />
+          <importChannel chid="chaSetup" name="Setup" />
+          <importChannel chid="System" name="System" />
+        </channels>
+      </provider>
+      <provider guid="{41862974-DA3B-4F0B-97D5-BB29FBB9B71E}" message="$(string.OneCoreSetup.ProviderMessage)" messageFileName="%SystemRoot%\system32\setupetw.dll" name="Microsoft-OneCore-OnlineSetup" resourceFileName="%SystemRoot%\system32\setupetw.dll" symbol="Microsoft_OneCore_OnlineSetup">
+        <channels>
+          <channel chid="chaOneCoreSetupAnalytic" name="Microsoft-OneCore-Setup/Analytic" type="Analytic" />
+          <importChannel chid="chaSetup" name="Setup" />
+        </channels>
+      </provider>
+      <cmi />
+    </events>
+  </instrumentation>
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string id="Performance.KeywordMessage" value="Performance" />
+        <string id="Diagnostic.KeywordMessage" value="Diagnostic" />
+        <string id="Deplorch.ProviderMessage" value="Microsoft-Windows-Deplorch" />
+        <string id="SetupQueue.ProviderMessage" value="Microsoft-Windows-SetupQueue" />
+        <string id="SetupPlatform.ProviderMessage" value="Microsoft-Windows-SetupPlatform" />
+        <string id="OneCoreSetup.ProviderMessage" value="Microsoft-OneCore-OnlineSetup" />
+        <string id="StartSystemServices.TaskMessage" value="Start System Services" />
+        <string id="StartSystemServices.StartMessage" value="Starting system services." />
+        <string id="StartSystemServices.StopMessage" value="Finished starting system services with status %1." />
+        <string id="CommandExecQueueRun.TaskMessage" value="Execute command queue entry" />
+        <string id="CommandExecQueueRun.StartMessage" value="Executing command queue entry &quot;%1&quot;." />
+        <string id="CommandExecQueueRun.StopMessage.Executed" value="Command queue entry exited with status %1." />
+        <string id="CommandExecQueueRun.StopMessage.FailedToExecute" value="Failed to launch command queue entry with status %1." />
+        <string id="OperationRun.TaskMessage" value="Run operation" />
+        <string id="OperationRun.StartMessage" value="Start operation: %1, %2" />
+        <string id="OperationRun.StopMessage" value="Stop operation: %1, %2" />
+        <string id="OnlineGather.TaskMessage" value="Online gather" />
+        <string id="OnlineGatherRun.StartMessage" value="Online gather starts: %1, %2" />
+        <string id="OnlineGatherRun.StopMessage" value="Online gather stops: %1, %2" />
+        <string id="OfflineGather.TaskMessage" value="Offline gather" />
+        <string id="OfflineGatherRun.StartMessage" value="Offline gather starts" />
+        <string id="OfflineGatherRun.StopMessage" value="Offline gather stops" />
+        <string id="TaskInstallWindows.TaskMessage" value="Install Windows Task" />
+        <string id="EventSetupInformation.Message" value="New Setup information" />
+        <string id="RunOneCoreSetup.TaskMessage" value="Run Setup Specialization" />
+        <string id="RunOneCoreSetup.StartMessage" value="Setup.exe is running with command line &quot;%1&quot;." />
+        <string id="RunOneCoreSetup.StopMessage" value="Setup.exe exiting with status %1." />
+        <string id="OneCoreSetupProcessUnattend.TaskMessage" value="Setup Process Unattend" />
+        <string id="OneCoreSetupProcessUnattend.StartMessage" value="Executing unattend settings pass &quot;%1&quot;." />
+        <string id="OneCoreSetupProcessUnattend.StopMessageExecuted" value="Finished executing unattend pass with status %1." />
+        <string id="OneCoreSetupProcessUnattend.StopMessageFailedToExecute" value="Failed to execute unattend pass with status %1." />
+        <string id="OneCoreSetupProcessUnattend.UsingFile" value="Using unattend file &quot;%2&quot; for pass &quot;%1&quot;." />
+      </stringTable>
+    </resources>
+  </localization>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" description="Default SDDL for Windows Resource Protected file" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+</assembly>

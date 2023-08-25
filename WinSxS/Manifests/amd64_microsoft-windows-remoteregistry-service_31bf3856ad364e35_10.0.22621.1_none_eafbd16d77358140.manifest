@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved." xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <assemblyIdentity name="Microsoft-Windows-RemoteRegistry-Service" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <dependency discoverable="no" resourceType="Resources">
+    <dependentAssembly dependencyType="prerequisite">
+      <assemblyIdentity name="Microsoft-Windows-RemoteRegistry-Service.Resources" version="10.0.22621.1" processorArchitecture="amd64" language="*" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+    </dependentAssembly>
+  </dependency>
+  <registryKeys>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\RemoteRegistry\Parameters">
+      <registryValue name="ServiceDllUnloadOnStop" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="ServiceDll" valueType="REG_EXPAND_SZ" value="%SystemRoot%\system32\regsvc.dll" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\SecurePipeServers\winreg">
+      <registryValue name="Description" valueType="REG_SZ" value="Registry Server" />
+      <securityDescriptor name="regsvc-reg" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\SecurePipeServers\winreg\AllowedPaths">
+      <registryValue name="Machine" valueType="REG_MULTI_SZ" value="&quot;System\CurrentControlSet\Control\Print\Printers&quot;,&quot;System\CurrentControlSet\Services\Eventlog&quot;,&quot;Software\Microsoft\OLAP Server&quot;,&quot;Software\Microsoft\Windows NT\CurrentVersion\Print&quot;,&quot;Software\Microsoft\Windows NT\CurrentVersion\Windows&quot;,&quot;System\CurrentControlSet\Control\ContentIndex&quot;,&quot;System\CurrentControlSet\Control\Terminal Server&quot;,&quot;System\CurrentControlSet\Control\Terminal Server\UserConfig&quot;,&quot;System\CurrentControlSet\Control\Terminal Server\DefaultUserConfiguration&quot;,&quot;Software\Microsoft\Windows NT\CurrentVersion\Perflib&quot;,&quot;System\CurrentControlSet\Services\SysmonLog&quot;" />
+      <securityDescriptor name="regsvc-reg" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\SecurePipeServers\winreg\AllowedExactPaths">
+      <registryValue name="Machine" valueType="REG_MULTI_SZ" value="&quot;System\CurrentControlSet\Control\ProductOptions&quot;,&quot;System\CurrentControlSet\Control\Server Applications&quot;,&quot;Software\Microsoft\Windows NT\CurrentVersion&quot;" />
+      <securityDescriptor name="regsvc-reg" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion\RemoteRegistry">
+      <registryValue name="DisableIdleStop" valueType="REG_DWORD" value="0x00000000" />
+      <securityDescriptor name="regsvc-reg" />
+    </registryKey>
+  </registryKeys>
+  <file name="regsvc.dll" destinationPath="$(runtime.system32)\" sourceName="regsvc.dll" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>W2XFSfkLco5qXaf+bs8ZodPpjieVmBlkH6CDRhjNUaQ=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <memberships>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories.Services" version="10.0.22621.1" publicKeyToken="31bf3856ad364e35" typeName="Service" />
+      <categoryInstance subcategory="RemoteRegistry">
+        <serviceData name="RemoteRegistry" displayName="@regsvc.dll,-1" errorControl="normal" start="disabled" type="win32ShareProcess" description="@regsvc.dll,-2" dependOnService="RPCSS" imagePath="%SystemRoot%\system32\svchost.exe -k localService -p" objectName="NT AUTHORITY\LocalService" requiredPrivileges="SeCreateGlobalPrivilege,SeImpersonatePrivilege" sidType="unrestricted">
+          <serviceTrigger action="start" subtype="NAMED_PIPE_EVENT" type="NetworkEndpointEvent">
+            <triggerData type="string" value="winreg" />
+          </serviceTrigger>
+          <failureActions resetPeriod="86400">
+            <actions>
+              <action delay="60000" type="restartService" />
+              <action delay="60000" type="restartService" />
+              <action delay="0" type="none" />
+            </actions>
+          </failureActions>
+        </serviceData>
+      </categoryInstance>
+    </categoryMembership>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories" version="1.0.0.0" publicKeyToken="365143bb27e7ac8b" typeName="SvcHost" />
+      <categoryInstance subcategory="LocalService">
+        <serviceGroup position="last" serviceName="RemoteRegistry" />
+      </categoryInstance>
+    </categoryMembership>
+  </memberships>
+  <asmv3:configuration xmlns:asmv3="urn:schemas-microsoft-com:asm.v3" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State">
+    <asmv3:configurationSchema>
+      <xsd:schema xmlns="Microsoft-Windows-RemoteRegistry-Service" targetNamespace="Microsoft-Windows-RemoteRegistry-Service">
+        <xsd:simpleType name="ServiceStartType" wcm:description="Service Start Type Override">
+          <xsd:restriction base="xsd:integer">
+            <xsd:enumeration value="2" />
+            <xsd:enumeration value="3" />
+            <xsd:enumeration value="4" />
+          </xsd:restriction>
+        </xsd:simpleType>
+        <xsd:element default="4" name="RemoteRegistryStartType" type="ServiceStartType" wcm:description="Service Start Type" wcm:displayName="Service Start Type" wcm:handler="regkey('HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\RemoteRegistry')" wcm:legacyName="Start" wcm:legacyType="REG_DWORD" wcm:passes="offlineServicing" wcm:scope="allUsers" />
+      </xsd:schema>
+    </asmv3:configurationSchema>
+    <asmv3:metadata />
+  </asmv3:configuration>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="regsvc-reg" sddl="D:P(A;CI;GA;;;BA)(A;;GR;;;BO)(A;CI;GR;;;LS)" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" description="Default SDDL for Windows Resource Protected file" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string id="displayName" value="Remote Registry Service" />
+        <string id="description" value="Enables remote users to modify registry settings on this computer. If this service is stopped, the registry can be modified only by users on this computer. If this service is disabled, any services that explicitly depend on it will fail to start." />
+        <string id="displayName1" value="Remote Registry" />
+        <string id="description1" value="Enables remote users to modify registry settings on this computer. If this service is stopped, the registry can be modified only by users on this computer. If this service is disabled, any services that explicitly depend on it will fail to start." />
+        <string id="displayName2" value="Remote Registry Service Registry Key" />
+        <string id="description2" value="Remote Registry Service Registry Key Security" />
+      </stringTable>
+    </resources>
+  </localization>
+</assembly>

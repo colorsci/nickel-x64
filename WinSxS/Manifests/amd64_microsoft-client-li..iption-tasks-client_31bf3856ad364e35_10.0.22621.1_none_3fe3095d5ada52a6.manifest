@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Client-License-Platform-Upgrade-Subscription-Tasks-Client" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <taskScheduler>
+    <Task xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task">
+      <RegistrationInfo>
+        <Author>$(@%SystemRoot%\system32\ClipRenew.exe,-100)</Author>
+        <Description>$(@%SystemRoot%\system32\ClipRenew.exe,-102)</Description>
+        <Source>$(@%SystemRoot%\system32\ClipRenew.exe,-103)</Source>
+        <Date>2016-01-01T00:00:00</Date>
+        <URI>\Microsoft\Windows\Subscription\LicenseAcquisition</URI>
+      </RegistrationInfo>
+      <Triggers>
+        <CalendarTrigger>
+          <StartBoundary>2016-01-01T00:00:00Z</StartBoundary>
+          <Enabled>true</Enabled>
+          <RandomDelay>PT8H</RandomDelay>
+          <ScheduleByDay>
+            <DaysInterval>1</DaysInterval>
+          </ScheduleByDay>
+        </CalendarTrigger>
+        <RegistrationTrigger>
+          <Enabled>true</Enabled>
+        </RegistrationTrigger>
+        <WnfStateChangeTrigger>
+          <StateName>7518bca33e06830d</StateName>
+          <Enabled>true</Enabled>
+        </WnfStateChangeTrigger>
+      </Triggers>
+      <Principals>
+        <Principal id="InteractiveUser">
+          <GroupId>S-1-5-4</GroupId>
+          <RunLevel>HighestAvailable</RunLevel>
+        </Principal>
+      </Principals>
+      <Settings>
+        <MultipleInstancesPolicy>Queue</MultipleInstancesPolicy>
+        <DisallowStartIfOnBatteries>false</DisallowStartIfOnBatteries>
+        <StopIfGoingOnBatteries>false</StopIfGoingOnBatteries>
+        <AllowHardTerminate>false</AllowHardTerminate>
+        <StartWhenAvailable>true</StartWhenAvailable>
+        <RunOnlyIfNetworkAvailable>true</RunOnlyIfNetworkAvailable>
+        <AllowStartOnDemand>true</AllowStartOnDemand>
+        <Enabled>false</Enabled>
+        <Hidden>true</Hidden>
+        <RunOnlyIfIdle>false</RunOnlyIfIdle>
+        <DisallowStartOnRemoteAppSession>false</DisallowStartOnRemoteAppSession>
+        <UseUnifiedSchedulingEngine>true</UseUnifiedSchedulingEngine>
+        <WakeToRun>false</WakeToRun>
+        <ExecutionTimeLimit>PT0S</ExecutionTimeLimit>
+        <Priority>7</Priority>
+      </Settings>
+      <Actions Context="InteractiveUser">
+        <Exec>
+          <Command>%SystemRoot%\system32\ClipRenew.exe</Command>
+        </Exec>
+      </Actions>
+    </Task>
+    <Task xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task">
+      <RegistrationInfo>
+        <Author>$(@%SystemRoot%\system32\ClipRenew.exe,-100)</Author>
+        <Description>$(@%SystemRoot%\system32\ClipRenew.exe,-101)</Description>
+        <Source>$(@%SystemRoot%\system32\ClipRenew.exe,-103)</Source>
+        <Date>2016-01-01T00:00:00</Date>
+        <URI>\Microsoft\Windows\Subscription\EnableLicenseAcquisition</URI>
+      </RegistrationInfo>
+      <Triggers>
+        <EventTrigger>
+          <Enabled>true</Enabled>
+          <Subscription>&lt;QueryList&gt;&lt;Query Id="0" Path="Microsoft-Windows-User Device Registration/Admin"&gt;&lt;Select Path="Microsoft-Windows-User Device Registration/Admin"&gt;*[System[Provider[@Name='Microsoft-Windows-User Device Registration'] and EventID=105]]&lt;/Select&gt;&lt;/Query&gt;&lt;/QueryList&gt;</Subscription>
+        </EventTrigger>
+        <EventTrigger>
+          <Enabled>true</Enabled>
+          <Subscription>&lt;QueryList&gt;&lt;Query Id="0" Path="Application"&gt;&lt;Select Path="Application"&gt;*[System[Provider[@Name='Microsoft-Windows-Security-SPP'] and EventID=1061]]&lt;/Select&gt;&lt;/Query&gt;&lt;/QueryList&gt;</Subscription>
+        </EventTrigger>
+        <WnfStateChangeTrigger>
+          <StateName>7524bca33e06830d</StateName>
+          <Data>01</Data>
+          <Enabled>true</Enabled>
+        </WnfStateChangeTrigger>
+      </Triggers>
+      <Principals>
+        <Principal id="LocalSystem">
+          <RunLevel>HighestAvailable</RunLevel>
+          <UserId>S-1-5-18</UserId>
+        </Principal>
+      </Principals>
+      <Settings>
+        <MultipleInstancesPolicy>Queue</MultipleInstancesPolicy>
+        <DisallowStartIfOnBatteries>false</DisallowStartIfOnBatteries>
+        <StopIfGoingOnBatteries>false</StopIfGoingOnBatteries>
+        <AllowHardTerminate>false</AllowHardTerminate>
+        <StartWhenAvailable>true</StartWhenAvailable>
+        <RunOnlyIfNetworkAvailable>false</RunOnlyIfNetworkAvailable>
+        <AllowStartOnDemand>true</AllowStartOnDemand>
+        <Enabled>true</Enabled>
+        <Hidden>true</Hidden>
+        <RunOnlyIfIdle>false</RunOnlyIfIdle>
+        <DisallowStartOnRemoteAppSession>false</DisallowStartOnRemoteAppSession>
+        <UseUnifiedSchedulingEngine>true</UseUnifiedSchedulingEngine>
+        <WakeToRun>false</WakeToRun>
+        <ExecutionTimeLimit>PT0S</ExecutionTimeLimit>
+        <Priority>7</Priority>
+        <RestartOnFailure>
+          <Interval>PT1M</Interval>
+          <Count>5</Count>
+        </RestartOnFailure>
+      </Settings>
+      <Actions Context="LocalSystem">
+        <Exec>
+          <Command>%SystemRoot%\system32\ClipRenew.exe</Command>
+          <Arguments>-e</Arguments>
+        </Exec>
+      </Actions>
+    </Task>
+  </taskScheduler>
+</assembly>

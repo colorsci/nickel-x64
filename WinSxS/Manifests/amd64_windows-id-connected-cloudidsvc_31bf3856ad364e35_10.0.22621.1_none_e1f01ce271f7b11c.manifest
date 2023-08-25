@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Windows-ID-Connected-CloudIdSvc" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <dependency discoverable="no" resourceType="Resources">
+    <dependentAssembly dependencyType="prerequisite">
+      <assemblyIdentity name="Windows-ID-Connected-CloudIdSvc.Resources" version="10.0.22621.1" processorArchitecture="amd64" language="*" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </dependentAssembly>
+  </dependency>
+  <file name="cloudidsvc.dll" destinationPath="$(runtime.system32)\" sourceName="cloudidsvc.dll" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>9toG3I4JJVHdefNdqXHWltSkY+gE89StXqGEetEB8/4=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <instrumentation>
+    <events xmlns="http://schemas.microsoft.com/win/2004/08/events">
+      <provider guid="{4053fada-178b-5aa8-746b-7cf8538b5118}" messageFileName="%SystemRoot%\system32\cloudidsvc.dll" name="Microsoft-Windows-TenantRestrictions" resourceFileName="%SystemRoot%\system32\cloudidsvc.dll" symbol="Microsoft_Windows_TenantRestrictions">
+        <channels>
+          <channel access="O:BAG:SYD:(A;;0x7;;;SY)(A;;0x7;;;BA)(A;;0x7;;;LA)" chid="OperationalChannel" enabled="true" isolation="Application" message="$(string.Channel.Operational)" name="Microsoft-Windows-TenantRestrictions/Operational" type="Operational" />
+        </channels>
+      </provider>
+      <cmi />
+    </events>
+  </instrumentation>
+  <memberships>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories.Services" version="10.0.22621.1" publicKeyToken="31bf3856ad364e35" typeName="Service" />
+      <categoryInstance subcategory="cloudidsvc">
+        <serviceData name="cloudidsvc" displayName="@%SystemRoot%\system32\cloudidsvc.dll,-100" errorControl="normal" start="demand" type="win32OwnProcess" description="@%SystemRoot%\system32\cloudidsvc.dll,-101" imagePath="%SystemRoot%\system32\svchost.exe -k CloudIdServiceGroup -p" objectName="NT AUTHORITY\NetworkService" sidType="unrestricted">
+          <failureActions resetPeriod="86400">
+            <actions>
+              <action delay="0" type="restartService" />
+              <action delay="0" type="restartService" />
+              <action delay="0" type="none" />
+            </actions>
+          </failureActions>
+          <securityDescriptor name="CloudIdServiceSD" />
+        </serviceData>
+      </categoryInstance>
+    </categoryMembership>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories" version="1.0.0.0" publicKeyToken="365143bb27e7ac8b" typeName="SvcHost" />
+      <categoryInstance subcategory="CloudIdServiceGroup">
+        <serviceGroup position="last" serviceName="cloudidsvc" />
+      </categoryInstance>
+    </categoryMembership>
+  </memberships>
+  <firewallRule Action="Allow" Active="TRUE" Binary="%SystemRoot%\system32\svchost.exe" Desc="@%SystemRoot%\system32\firewallapi.dll,-60503" Dir="Out" InternalName="CloudIdSvc-Allow-HTTPS-Out-TCP" Name="@%SystemRoot%\system32\firewallapi.dll,-60502" Protocol="TCP" RPort="443" group="@%SystemRoot%\system32\firewallapi.dll,-60501" svc="cloudidsvc" />
+  <registryKeys>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\cloudidsvc\Parameters">
+      <registryValue name="ServiceDll" valueType="REG_EXPAND_SZ" value="%SystemRoot%\system32\cloudidsvc.dll" />
+      <registryValue name="ServiceDllUnloadOnStop" valueType="REG_DWORD" value="0x00000001" />
+      <securityDescriptor name="WRP_KEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\TenantRestrictions">
+      <securityDescriptor name="TenantRestrictions_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\TenantRestrictions\TenantRestrictionsList">
+      <registryValue name="Hostnames" valueType="REG_MULTI_SZ" value="&quot;login.live.com&quot;,&quot;login.microsoft.com&quot;,&quot;login.microsoftonline.com&quot;,&quot;login.windows.net&quot;,&quot;login.microsoftonline.us&quot;,&quot;login.microsoftonline.de&quot;,&quot;login.chinacloudapi.cn&quot;" />
+      <registryValue name="SubdomainSupportedHostnames" valueType="REG_MULTI_SZ" value="&quot;.live.com&quot;,&quot;.microsoft.com&quot;,&quot;.office.com&quot;" />
+      <registryValue name="IpRanges" valueType="REG_MULTI_SZ" value="" />
+      <securityDescriptor name="TenantRestrictions_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\SharedAccess\Parameters\FirewallPolicy\RestrictedServices\Static\System">
+      <registryValue name="cloudidsvc-block-in" valueType="REG_SZ" value="V2.31|Action=Block|Dir=in|App=%SystemRoot%\System32\svchost.exe|Svc=cloudidsvc|Name=Block inbound traffic to cloudidsvc|" />
+      <registryValue name="cloudidsvc-block-out" valueType="REG_SZ" value="V2.31|Action=Block|Dir=out|App=%SystemRoot%\System32\svchost.exe|Svc=cloudidsvc|Name=Block outbound traffic from cloudidsvc|" />
+      <registryValue name="cloudidsvc-allow-HTTP" valueType="REG_SZ" value="V2.31|Action=Allow|Dir=out|App=%SystemRoot%\System32\svchost.exe|Svc=cloudidsvc|Protocol=6|Rport=443|Name=Allow HTTP traffic from cloudidsvc|" />
+    </registryKey>
+  </registryKeys>
+  <migration scope="Upgrade" settingsVersion="0">
+    <migXml xmlns="">
+      <rules context="system">
+        <include>
+          <objectSet>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\cloudidsvc\State\* [*]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Windows\TenantRestrictions\TenantRestrictionsList\* [*]</pattern>
+          </objectSet>
+        </include>
+      </rules>
+    </migXml>
+    <supportedComponents>
+      <supportedComponent>
+        <assemblyIdentity name="_" version="1.0.0.0" />
+        <supportedComponentIdentity language="neutral" name="Windows-ID-Connected-CloudIdSvc" processorArchitecture="*" settingsVersionRange="0" xmlns="urn:schemas-microsoft-com:asm.v3" />
+      </supportedComponent>
+    </supportedComponents>
+  </migration>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="WRP_KEY_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;CI;GA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;CI;GR;;;SY)(A;CI;GR;;;BA)(A;CI;GR;;;BU)(A;CI;GR;;;S-1-15-2-1)(A;CI;GR;;;S-1-15-3-1024-1065365936-1281604716-3511738428-1654721687-432734479-3232135806-4053264122-3456934681)" operationHint="replace" />
+          <securityDescriptorDefinition name="CloudIdServiceSD" sddl="D:(A;;CCLCSWRPWPDTLOCRRC;;;SY)(A;;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;BA)(A;;CCLCSWLORCRP;;;AU)(A;;CCLCSWLORCRP;;;AC)(A;;CCLCSWLORCRP;;;S-1-15-3-1024-1065365936-1281604716-3511738428-1654721687-432734479-3232135806-4053264122-3456934681)" operationHint="replace" />
+          <securityDescriptorDefinition name="TenantRestrictions_SDDL" sddl="D:PAI(A;CI;KA;;;CO)(A;CI;KA;;;S-1-5-80-2119957892-4152124429-3625998117-4006912763-1737903618)(A;CI;KA;;;SY)(A;CI;KA;;;BA)(A;CI;KR;;;AU)(A;CI;KR;;;AC)(A;CI;KR;;;S-1-15-3-1024-1065365936-1281604716-3511738428-1654721687-432734479-3232135806-4053264122-3456934681)" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" description="Default SDDL for Windows Resource Protected file" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+</assembly>

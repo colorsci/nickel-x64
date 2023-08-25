@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved." xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <assemblyIdentity name="Microsoft-Windows-SNMP-Agent-Service" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <dependency discoverable="no" resourceType="Resources">
+    <dependentAssembly dependencyType="prerequisite">
+      <assemblyIdentity name="Microsoft-Windows-SNMP-Agent-Service.Resources" version="10.0.22621.1" processorArchitecture="amd64" language="*" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </dependentAssembly>
+  </dependency>
+  <file name="snmp.exe" destinationPath="$(runtime.system32)\" sourceName="snmp.exe" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>xuSMcq419eIU/Vjvh8rH+ZNWkxsz8deFxBXTROUeok8=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <memberships>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories.Services" version="10.0.22621.1" publicKeyToken="31bf3856ad364e35" typeName="Service" />
+      <categoryInstance subcategory="SNMP">
+        <serviceData name="SNMP" displayName="@firewallapi.dll,-50303" errorControl="normal" start="auto" type="win32OwnProcess" description="@firewallapi.dll,-50304" imagePath="%SystemRoot%\System32\snmp.exe" objectName="LocalSystem" requiredPrivileges="SeChangeNotifyPrivilege,SeSecurityPrivilege,SeDebugPrivilege" sidType="unrestricted" startAfterInstall="synchronous">
+          <failureActions resetPeriod="86400">
+            <actions>
+              <action delay="60000" type="restartService" />
+              <action delay="60000" type="restartService" />
+              <action delay="0" type="none" />
+            </actions>
+          </failureActions>
+        </serviceData>
+      </categoryInstance>
+    </categoryMembership>
+  </memberships>
+  <registryKeys>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Eventlog\System\SNMP">
+      <registryValue name="EventMessageFile" valueType="REG_EXPAND_SZ" value="%SystemRoot%\System32\snmp.exe" />
+      <registryValue name="TypesSupported" valueType="REG_DWORD" value="0x00000007" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\SNMP\Parameters\ExtensionAgents" />
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\SharedAccess\Parameters\FirewallPolicy\RestrictedServices\Static\System">
+      <registryValue name="SNMP-1" valueType="REG_SZ" value="V2.0|Action=Allow|Dir=In|Protocol=17|App=%SystemRoot%\system32\snmp.exe|Svc=SNMP|Name=Allow inbound UDP traffic to SNMP service|" />
+      <registryValue name="SNMP-2" valueType="REG_SZ" value="V2.0|Action=Allow|Dir=Out|Protocol=17|App=%SystemRoot%\system32\snmp.exe|Svc=SNMP|Name=Allow outbound UDP traffic from SNMP service|" />
+      <registryValue name="SNMP-3" valueType="REG_SZ" value="V2.0|Action=Block|Dir=In|App=%SystemRoot%\system32\snmp.exe|Svc=SNMP|Name=Outbound rule for the SNMP Service to allow SNMP traffic.|" />
+      <registryValue name="SNMP-4" valueType="REG_SZ" value="V2.0|Action=Block|Dir=Out|App=%SystemRoot%\system32\snmp.exe|Svc=SNMP|Name=Block any other inbound traffic to SNMP service|" />
+    </registryKey>
+  </registryKeys>
+  <firewallRule Action="Allow" Active="TRUE" Binary="%SystemRoot%\system32\snmp.exe" Desc="@firewallapi.dll,-50310" Dir="In" LPort="161" Name="@firewallapi.dll,-50308" Profile="Private, Public" Protocol="17" RA4="LocalSubnet" RA6="LocalSubnet" Svc="SNMP" group="@firewallapi.dll,-50303" internalName="SNMP-In-UDP" />
+  <firewallRule Action="Allow" Active="TRUE" Binary="%SystemRoot%\system32\snmp.exe" Desc="@firewallapi.dll,-50311" Dir="Out" Name="@firewallapi.dll,-50309" Profile="Private, Public" Protocol="17" RA4="LocalSubnet" RA6="LocalSubnet" RPort="161" Svc="SNMP" group="@firewallapi.dll,-50303" internalName="SNMP-Out-UDP" />
+  <firewallRule Action="Allow" Active="TRUE" Binary="%SystemRoot%\system32\snmp.exe" Desc="@firewallapi.dll,-50310" Dir="In" LPort="161" Name="@firewallapi.dll,-50308" Profile="Domain" Protocol="17" Svc="SNMP" group="@firewallapi.dll,-50303" internalName="SNMP-In-UDP-NoScope" />
+  <firewallRule Action="Allow" Active="TRUE" Binary="%SystemRoot%\system32\snmp.exe" Desc="@firewallapi.dll,-50311" Dir="Out" Name="@firewallapi.dll,-50309" Profile="Domain" Protocol="17" RPort="161" Svc="SNMP" group="@firewallapi.dll,-50303" internalName="SNMP-Out-UDP-NoScope" />
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="Full Control for Local Administrators users only" sddl="D:(A;;GA;;;BA)" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" description="Default SDDL for Windows Resource Protected file" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+  <asmv3:configuration xmlns:asmv3="urn:schemas-microsoft-com:asm.v3" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State">
+    <asmv3:configurationSchema>
+      <xsd:schema xmlns="Microsoft-Windows-SNMP-Agent-Service" targetNamespace="Microsoft-Windows-SNMP-Agent-Service">
+        <xsd:simpleType name="CommunityRightsType">
+          <xsd:restriction base="xsd:integer">
+            <xsd:enumeration value="1" />
+            <xsd:enumeration value="2" />
+            <xsd:enumeration value="4" />
+            <xsd:enumeration value="8" />
+            <xsd:enumeration value="16" />
+          </xsd:restriction>
+        </xsd:simpleType>
+        <xsd:complexType name="PermittedManagersType">
+          <xsd:sequence>
+            <xsd:element default="localhost" name="A1" type="xsd:string" wcm:legacyName="1" wcm:legacyType="REG_SZ" />
+          </xsd:sequence>
+        </xsd:complexType>
+        <xsd:complexType name="RFC1156AgentType">
+          <xsd:sequence>
+            <xsd:element default="" name="sysContact" type="xsd:string" wcm:legacyType="REG_SZ" />
+            <xsd:element default="" name="sysLocation" type="xsd:string" wcm:legacyType="REG_SZ" />
+            <xsd:element default="76" name="sysServices" type="xsd:unsignedInt" wcm:legacyType="REG_DWORD" />
+          </xsd:sequence>
+        </xsd:complexType>
+        <xsd:complexType name="TrapConfigurationElementType">
+          <xsd:sequence>
+            <xsd:element name="Community_Name" type="xsd:string" />
+            <xsd:element name="Traps" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+        <xsd:complexType name="TrapConfigurationType">
+          <xsd:sequence>
+            <xsd:element maxOccurs="unbounded" name="TrapConfigurationItems" type="TrapConfigurationElementType" wcm:key="Community_Name" />
+          </xsd:sequence>
+        </xsd:complexType>
+        <xsd:complexType name="ValidCommunitiesType">
+          <xsd:sequence>
+            <xsd:element maxOccurs="unbounded" name="ValidCommunity" type="CommunityRightsType" />
+          </xsd:sequence>
+        </xsd:complexType>
+        <xsd:element default="true" name="EnableAuthenticationTraps" type="xsd:boolean" wcm:dataOnly="true" wcm:handler="regkey('HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\SNMP\Parameters')" wcm:legacyType="REG_DWORD" wcm:migrate="yes" wcm:passes="generalize specialize" wcm:scope="allUsers" wcm:visible="true" />
+        <xsd:element default="16" name="NameResolutionRetries" type="xsd:unsignedInt" wcm:handler="regkey('HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\SNMP\Parameters')" wcm:legacyType="REG_DWORD" wcm:scope="allUsers" />
+        <xsd:element name="PermittedManagers" type="PermittedManagersType" wcm:accessControl="Full Control for Local Administrators users only" wcm:dataOnly="true" wcm:handler="regkey('HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\SNMP\Parameters')" wcm:migrate="yes" wcm:passes="generalize specialize" wcm:scope="allUsers" wcm:visible="true" />
+        <xsd:element name="RFC1156Agent" type="RFC1156AgentType" wcm:dataOnly="true" wcm:handler="regkey('HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\SNMP\Parameters')" wcm:migrate="yes" wcm:passes="generalize specialize" wcm:scope="allUsers" wcm:visible="true" />
+        <xsd:element name="ValidCommunities" type="ValidCommunitiesType" wcm:accessControl="Full Control for Local Administrators users only" wcm:dataOnly="true" wcm:handler="regkey('HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\SNMP\Parameters')" wcm:migrate="yes" wcm:passes="generalize specialize" wcm:scope="allUsers" wcm:visible="true" />
+        <xsd:element name="TrapConfiguration" type="TrapConfigurationType" wcm:dataOnly="true" wcm:handler="regkey('HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\SNMP\Parameters')" wcm:migrate="yes" wcm:passes="generalize specialize" wcm:scope="allUsers" wcm:visible="true" />
+      </xsd:schema>
+    </asmv3:configurationSchema>
+    <asmv3:metadata />
+  </asmv3:configuration>
+  <migration settingsVersion="0">
+    <migXml xmlns="">
+      <rules context="System">
+        <detects>
+          <detect>
+            <condition>MigXmlHelper.DoesObjectExist("Registry", "HKLM\SYSTEM\CurrentControlSet\Services\SNMP")</condition>
+          </detect>
+        </detects>
+      </rules>
+    </migXml>
+    <supportedComponents>
+      <supportedComponent>
+        <assemblyIdentity name="_" version="1.0.0.0" />
+        <supportedComponentIdentity buildType="release" language="neutral" name="Microsoft-Windows-SNMP-Agent-Service" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" settingsVersionRange="0" versionScope="nonSxS" xmlns="urn:schemas-microsoft-com:asm.v3" />
+      </supportedComponent>
+    </supportedComponents>
+  </migration>
+  <instrumentation xmlns:win="http://manifests.microsoft.com/win/2004/08/windows/events">
+    <events xmlns="http://schemas.microsoft.com/win/2004/08/events">
+      <provider guid="{76661966-7798-48C4-AFC5-67BAA2E9A3FD}" messageFileName="%systemroot%\system32\snmp.exe" name="Microsoft-Windows-SNMP-Agent-Service" resourceFileName="%systemroot%\system32\snmp.exe" symbol="S_Microsoft_Windows_SNMP_Agent_Service" />
+      <cmi />
+    </events>
+  </instrumentation>
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string id="description1" value="Enables Simple Network Management Protocol (SNMP) requests to be processed by this computer. If this service is stopped, the computer will be unable to process SNMP requests. If this service is disabled, any services that explicitly depend on it will fail to start." />
+        <string id="displayName2" value="Full Control for Local Administrators users only" />
+        <string id="description" value="The SNMP Agent service receives the SNMP requests from the network, decodes them, and then dispatches them to the appropriate SNMP Extension agent. The service is also responsible for sending traps on behalf of SNMP Extension agents, it forwards trap messages to the appropriate configured management systems." />
+        <string id="description2" value="Full Control for Local Administrators users only" />
+        <string id="displayName" value="SNMP AGENT SERVICE" />
+        <string id="displayName1" value="SNMP Service" />
+        <string id="event_0x40FF03E9" value="The SNMP Service has started successfully." />
+        <string id="event_0x40FF03EB" value="The SNMP Service has stopped successfully." />
+        <string id="event_0x40FF03EC" value="The SNMP Service configuration has been updated successfully." />
+        <string id="event_0x80FF044C" value="The SNMP Service is ignoring the manager %1 because its name could not be resolved." />
+        <string id="event_0x80FF044D" value="The SNMP Service is ignoring extension agent key %1 because it is missing or misconfigured." />
+        <string id="event_0x80FF044E" value="The SNMP Service is ignoring extension agent dll %1 because it is missing or misconfigured." />
+        <string id="event_0x80FF044F" value="The SNMP Service has reset the registry parameter sysObjectID to a default value. This is caused either by an invalid type or by an invalid string format of the registry value." />
+        <string id="event_0x80FF0450" value="The SNMP Service is unable to adjust privileges in the process's access token. This error has been ignored." />
+        <string id="event_0xC0FF05DC" value="The SNMP Service encountered an error while accessing the registry key %1." />
+        <string id="event_0xC0FF05DD" value="The SNMP Service encountered an error while setting up the incoming transports.\n The %1 transport has been dropped out." />
+        <string id="event_0xC0FF05DE" value="The SNMP Service encountered an error while registering for registry notifications.\n Changes in the service's configuration will not be considered." />
+        <string id="event_0x40FF07CF" value="%1" />
+      </stringTable>
+    </resources>
+  </localization>
+</assembly>

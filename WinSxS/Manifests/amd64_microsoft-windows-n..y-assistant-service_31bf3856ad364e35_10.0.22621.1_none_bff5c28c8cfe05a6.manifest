@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-Network-Connectivity-Assistant-Service" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <dependency discoverable="no" resourceType="Resources">
+    <dependentAssembly dependencyType="prerequisite">
+      <assemblyIdentity name="Microsoft-Windows-Network-Connectivity-Assistant-Service.Resources" version="10.0.22621.1" processorArchitecture="amd64" language="*" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+    </dependentAssembly>
+  </dependency>
+  <file name="NcaSvc.dll" destinationPath="$(runtime.system32)\" sourceName="NcaSvc.dll" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>ZDHM/ivh0Blby64CbIRxl+jWJFpghnWPH05eHBLuu80=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <registryKeys>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\System\CurrentControlSet\Services\NcaSvc\Parameters">
+      <registryValue name="ServiceDll" valueType="REG_EXPAND_SZ" value="%SystemRoot%\System32\ncasvc.dll" />
+      <registryValue name="ServiceDllUnloadOnStop" valueType="REG_DWORD" value="0x00000001" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\System\CurrentControlSet\Services\NcaSvc" />
+  </registryKeys>
+  <memberships>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories.Services" version="10.0.22621.1" publicKeyToken="31bf3856ad364e35" typeName="Service" />
+      <categoryInstance>
+        <serviceData name="NcaSvc" displayName="@%SystemRoot%\system32\ncasvc.dll,-3009" errorControl="normal" start="demand" type="win32ShareProcess" description="@%SystemRoot%\system32\ncasvc.dll,-3008" dependOnService="BFE,dnscache,NSI,iphlpsvc" imagePath="%SystemRoot%\System32\svchost.exe -k NetSvcs -p" objectName="LocalSystem" requiredPrivileges="SeCreateGlobalPrivilege,SeImpersonatePrivilege,SeAuditPrivilege" sidType="unrestricted">
+          <failureActions resetPeriod="86400">
+            <actions>
+              <action delay="120000" type="restartService" />
+              <action delay="300000" type="restartService" />
+              <action delay="0" type="none" />
+            </actions>
+          </failureActions>
+          <serviceTrigger action="start" subtype="MACHINE_POLICY_PRESENT" type="GroupPolicyChange" />
+          <serviceTrigger action="start" subtype="DOMAIN_JOIN" type="DomainAvailability" />
+          <serviceTrigger action="stop" subtype="DOMAIN_LEAVE" type="DomainAvailability" />
+          <securityDescriptor name="NcaSvcSddl" />
+        </serviceData>
+      </categoryInstance>
+    </categoryMembership>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories" version="1.0.0.0" publicKeyToken="365143bb27e7ac8b" typeName="SvcHost" />
+      <categoryInstance subcategory="netsvcs">
+        <serviceGroup position="last" serviceName="NcaSvc" />
+      </categoryInstance>
+    </categoryMembership>
+  </memberships>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_REGKEY_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;CI;GA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;CI;GR;;;SY)(A;CI;GR;;;BA)(A;CI;GR;;;BU)(A;CI;GR;;;S-1-15-2-1)(A;CI;GR;;;S-1-15-3-1024-1065365936-1281604716-3511738428-1654721687-432734479-3232135806-4053264122-3456934681)" operationHint="replace" />
+          <securityDescriptorDefinition name="NcaSvcSddl" sddl="D:(A;;CCLCSWRPWPDTLOCRRC;;;SY)(A;;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;BA)(A;;CCLCSWLOCRRC;;;IU)(A;;CCLCSWLOCRRC;;;SU)S:(AU;FA;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;WD)" operationHint="replace" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+  <instrumentation>
+    <events xmlns="http://schemas.microsoft.com/win/2004/08/events" xmlns:win="http://manifests.microsoft.com/win/2004/08/windows/events" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <provider guid="{126DED58-A28D-4113-8E7A-59D7444B2AF1}" message="$(string.NCASVC_ETW.Message)" messageFileName="%windir%\system32\ncasvc.dll" name="Microsoft-Windows-Ncasvc" parameterFileName="%windir%\system32\ncasvc.dll" resourceFileName="%windir%\system32\ncasvc.dll" symbol="MS_NCASVC_ETW_PROVIDER_ID">
+        <channels>
+          <channel chid="NcasvcTrace" enabled="false" name="Microsoft-Windows-Ncasvc/Operational" symbol="NCASVC_ETW_CHANNEL" type="Operational" />
+        </channels>
+      </provider>
+      <cmi />
+    </events>
+  </instrumentation>
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string id="NCASVC_ETW.Message" value="Microsoft-Windows-Ncasvc" />
+        <string id="EVENT_NCASVC_ETW_STATUS_CHANGED.Message" value="NCA service status changed. New Status: (%1)." />
+        <string id="EVENT_NCASVC_ETW_DAP_STATE_CHANGED.Message" value="NCA status update. New Status: (%1, %2)." />
+        <string id="EVENT_NCASVC_ETW_API_ACTIVITY_START.Message" value="NCA API Activity Start, function: (%1)." />
+        <string id="EVENT_NCASVC_ETW_API_ACTIVITY_END.Message" value="NCA API Activity End, function: (%1), error: (%2)." />
+        <string id="EVENT_NCASVC_ETW_EVCOLL_UPDATE.Message" value="NCA Evidence Collector Update, evcoll: (%1), old: (%2), new: (%3). User:(%4)" />
+        <string id="EVENT_NCASVC_ETW_PROBE_START.Message" value="NCA Probe Start, type: (%1), resource: (%2)" />
+        <string id="EVENT_NCASVC_ETW_PROBE_END.Message" value="NCA Probe End, type: (%1), resource: (%2), result: (%3)" />
+        <string id="EVENT_NCASVC_ETW_PROBE_CALLBACK.Message" value="NCA Probe Callback, type: (%1), code: (%2), error: (%3)" />
+        <string id="EVENT_NCASVC_ETW_CONFIG_UPDATE_START.Message" value="NCA %1 Configuration Update started." />
+        <string id="EVENT_NCASVC_ETW_CONFIG_UPDATE_END.Message" value="NCA %1 Configuration Update complete." />
+        <string id="EVENT_NCASVC_ETW_MODULE_INITIALIZE_START.Message" value="NCA Module %1 Initialization started." />
+        <string id="EVENT_NCASVC_ETW_MODULE_INITIALIZE_END.Message" value="NCA Module %1 Initialization complete with error %2." />
+        <string id="EVENT_NCASVC_ETW_MODULE_SHUTDOWN_START.Message" value="NCA Module %1 Shutdown started." />
+        <string id="EVENT_NCASVC_ETW_MODULE_SHUTDOWN_END.Message" value="NCA Module %1 Shutdown complete." />
+        <string id="EVENT_NCASVC_ETW_TRIGGER.Message" value="NCA Trigger %1. Details: (%2)." />
+        <string id="EVENT_NCASVC_ETW_PERFTRACK.Message" value="NCA PerfTrack Scenario Event. MachineId: %1, SessionId: %2, DeploymentId: %3, StopState: %4." />
+        <string id="NCASVC_ETW_DAP_STATE_CHANGED_Status_ValueMap.1.Message" value="Connected Locally" />
+        <string id="NCASVC_ETW_DAP_STATE_CHANGED_Status_ValueMap.2.Message" value="Connected Remotely" />
+        <string id="NCASVC_ETW_DAP_STATE_CHANGED_Status_ValueMap.3.Message" value="Actionable Error" />
+        <string id="NCASVC_ETW_DAP_STATE_CHANGED_Status_ValueMap.4.Message" value="Error" />
+        <string id="NCASVC_ETW_DAP_STATE_CHANGED_Substatus_ValueMap.1.Message" value="None" />
+        <string id="NCASVC_ETW_DAP_STATE_CHANGED_Substatus_ValueMap.2.Message" value="Unhealthy" />
+        <string id="NCASVC_ETW_DAP_STATE_CHANGED_Substatus_ValueMap.3.Message" value="Strong Authorization Credentials Needed" />
+        <string id="NCASVC_ETW_DAP_STATE_CHANGED_Substatus_ValueMap.4.Message" value="Local Names Preferred" />
+        <string id="NCASVC_ETW_DAP_STATE_CHANGED_Substatus_ValueMap.5.Message" value="No DirectAccess Policy" />
+        <string id="NCASVC_ETW_DAP_STATE_CHANGED_Substatus_ValueMap.6.Message" value="Internet Connectivity Down" />
+        <string id="NCASVC_ETW_DAP_STATE_CHANGED_Substatus_ValueMap.7.Message" value="DA Server Down" />
+        <string id="NCASVC_ETW_DAP_STATE_CHANGED_Substatus_ValueMap.8.Message" value="Infra Tunnel Down" />
+        <string id="NCASVC_ETW_DAP_STATE_CHANGED_Substatus_ValueMap.9.Message" value="Corp Auth Down" />
+        <string id="NCASVC_ETW_DAP_STATE_CHANGED_Substatus_ValueMap.10.Message" value="Corp Connectivity Down" />
+        <string id="NCASVC_ETW_DAP_STATE_CHANGED_Substatus_ValueMap.11.Message" value="Corp Resources Down" />
+        <string id="NCASVC_ETW_DAP_STATE_CHANGED_Substatus_ValueMap.12.Message" value="No NCA Proper Config" />
+        <string id="NCASVC_ETW_DAP_STATE_CHANGED_Substatus_ValueMap.13.Message" value="Proxy Config Needed" />
+        <string id="NCASVC_ETW_DAP_STATE_CHANGED_Substatus_ValueMap.14.Message" value="Proxy Creds Needed" />
+        <string id="NCASVC_ETW_DAP_STATE_CHANGED_Substatus_ValueMap.15.Message" value="IPHTTPs Cert Needed" />
+        <string id="NCASVC_ETW_DAP_STATE_CHANGED_Substatus_ValueMap.16.Message" value="IPv6 Disabled" />
+        <string id="NCASVC_ETW_DAP_STATE_CHANGED_Substatus_ValueMap.17.Message" value="Firewall Down" />
+        <string id="NCASVC_ETW_EVCOLL_UPDATE_EvColl_ValueMap.1.Message" value="NCA_EVCOLLECTOR_PROBES" />
+        <string id="NCASVC_ETW_EVCOLL_UPDATE_EvColl_ValueMap.2.Message" value="NCA_EVCOLLECTOR_PROBES_PING" />
+        <string id="NCASVC_ETW_EVCOLL_UPDATE_EvColl_ValueMap.3.Message" value="NCA_EVCOLLECTOR_NAME_PREF_LOCAL" />
+        <string id="NCASVC_ETW_EVCOLL_UPDATE_EvColl_ValueMap.4.Message" value="NCA_EVCOLLECTOR_INSIDE" />
+        <string id="NCASVC_ETW_EVCOLL_UPDATE_EvColl_ValueMap.5.Message" value="NCA_EVCOLLECTOR_SMARTCARD_NEEDED" />
+        <string id="NCASVC_ETW_EVCOLL_UPDATE_EvColl_ValueMap.6.Message" value="NCA_EVCOLLECTOR_UNHEALHTY" />
+        <string id="NCASVC_ETW_EVCOLL_UPDATE_EvColl_ValueMap.7.Message" value="NCA_EVCOLLECTOR_INET_CONNECTIVITY" />
+        <string id="NCASVC_ETW_EVCOLL_UPDATE_EvColl_ValueMap.8.Message" value="NCA_EVCOLLECTOR_CORP_CONNECTIVITY" />
+        <string id="NCASVC_ETW_EVCOLL_UPDATE_EvColl_ValueMap.9.Message" value="NCA_EVCOLLECTOR_RESOLVE_NAMES" />
+        <string id="NCASVC_ETW_EVCOLL_UPDATE_EvColl_ValueMap.10.Message" value="NCA_EVCOLLECTOR_TEREDO_DOWN" />
+        <string id="NCASVC_ETW_EVCOLL_UPDATE_EvColl_ValueMap.11.Message" value="NCA_EVCOLLECTOR_IPHTTPS_DOWN" />
+        <string id="NCASVC_ETW_EVCOLL_UPDATE_EvColl_ValueMap.12.Message" value="NCA_EVCOLLECTOR_IPHTTPS_PROXY_CONFIG_NEEDED" />
+        <string id="NCASVC_ETW_EVCOLL_UPDATE_EvColl_ValueMap.13.Message" value="NCA_EVCOLLECTOR_IPHTTPS_PROXY_CREDS_NEEDED" />
+        <string id="NCASVC_ETW_EVCOLL_UPDATE_EvColl_ValueMap.14.Message" value="NCA_EVCOLLECTOR_IPHTTPS_CERT_NEEDED" />
+        <string id="NCASVC_ETW_EVCOLL_UPDATE_EvColl_ValueMap.15.Message" value="NCA_EVCOLLECTOR_NATIVEV6_DOWN" />
+        <string id="NCASVC_ETW_EVCOLL_UPDATE_EvColl_ValueMap.16.Message" value="NCA_EVCOLLECTOR_IPV6_DISABLED" />
+        <string id="NCASVC_ETW_EVCOLL_UPDATE_EvColl_ValueMap.17.Message" value="NCA_EVCOLLECTOR_DTE_EXISTS" />
+        <string id="NCASVC_ETW_EVCOLL_UPDATE_EvColl_ValueMap.18.Message" value="NCA_EVCOLLECTOR_PING_DTE" />
+        <string id="NCASVC_ETW_EVCOLL_UPDATE_EvColl_ValueMap.19.Message" value="NCA_EVCOLLECTOR_DTE_SAS" />
+        <string id="NCASVC_ETW_EVCOLL_UPDATE_EvColl_ValueMap.20.Message" value="NCA_EVCOLLECTOR_PASSIVE_TEST" />
+        <string id="NCASVC_ETW_EVCOLL_UPDATE_EvColl_ValueMap.21.Message" value="NCA_EVCOLLECTOR_NCA_PROPERLY_CONF" />
+        <string id="NCASVC_ETW_EVCOLL_UPDATE_EvColl_ValueMap.22.Message" value="NCA_EVCOLLECTOR_FORCE_TUNNELING_ENABLED" />
+        <string id="NCASVC_ETW_EVCOLL_UPDATE_EvColl_ValueMap.23.Message" value="NCA_EVCOLLECTOR_FIREWALL_DOWN" />
+        <string id="NCASVC_ETW_EVCOLL_UPDATE_EvColl_ValueMap.24.Message" value="NCA_EVCOLLECTOR_USER_IDLE" />
+        <string id="NCASVC_ETW_PROBE_ProbeType_ValueMap.1.Message" value="UDP" />
+        <string id="NCASVC_ETW_PROBE_ProbeType_ValueMap.2.Message" value="PING" />
+        <string id="NCASVC_ETW_PROBE_ProbeType_ValueMap.3.Message" value="HTTP" />
+        <string id="NCASVC_ETW_PROBE_ProbeType_ValueMap.4.Message" value="FILE" />
+        <string id="NCASVC_ETW_PROBE_ProbeResult_ValueMap.0.Message" value="FAIL" />
+        <string id="NCASVC_ETW_PROBE_ProbeResult_ValueMap.1.Message" value="RESOLVE_NAME" />
+        <string id="NCASVC_ETW_PROBE_ProbeResult_ValueMap.2.Message" value="SUCCESS" />
+      </stringTable>
+    </resources>
+  </localization>
+</assembly>

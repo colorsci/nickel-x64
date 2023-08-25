@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PowerShellMetadata xmlns="http://schemas.microsoft.com/cmdlets-over-objects/2009/11">
+  <Class ClassName="ROOT/microsoft/ipam/MSFT_IPAM_AddressSpace" ClassVersion="1.0.0">
+    <Version>1.0.0</Version>
+    <DefaultNoun>IpamAddressSpace</DefaultNoun>
+    <InstanceCmdlets>
+
+      <GetCmdletParameters>
+        <QueryableProperties>
+          <Property PropertyName="Name">
+            <Type PSType="string" />
+            <RegularQuery AllowGlobbing="true">
+              <CmdletParameterMetadata PSName="Name" Position="1" IsMandatory="true" ValueFromPipelineByPropertyName="true" CmdletParameterSets="ByName" />
+            </RegularQuery>
+          </Property>
+        </QueryableProperties>
+      </GetCmdletParameters>
+
+      <GetCmdlet>
+        <CmdletMetadata Verb="Get" />
+        <!-- We override GetCmdletParameters for Get cmdlet to allow invocation of Get without any parameters
+             (Name parameter is no longer mandatory;-->
+        <GetCmdletParameters>
+          <QueryableProperties>
+            <Property PropertyName="Name">
+              <Type PSType="string" />
+              <RegularQuery AllowGlobbing="true">
+                <CmdletParameterMetadata PSName="Name" Position="1" IsMandatory="false" ValueFromPipelineByPropertyName="true" CmdletParameterSets="ByName">
+                  <ValidateNotNull />
+                  <ValidateNotNullOrEmpty />
+                </CmdletParameterMetadata>
+              </RegularQuery>
+            </Property>
+
+            <Property PropertyName="Type">
+              <Type PSType="Ipam.AddressSpaceType" />
+              <RegularQuery AllowGlobbing="false">
+                <CmdletParameterMetadata PSName="Type" Position="2" IsMandatory="false"  CmdletParameterSets="ByName" >
+                  <ValidateNotNull />
+                  <ValidateNotNullOrEmpty />
+                </CmdletParameterMetadata>
+              </RegularQuery>
+            </Property>
+
+            <Property PropertyName="AssociatedProviderAddressSpace">
+              <Type PSType="string" />
+              <RegularQuery AllowGlobbing="false">
+                <CmdletParameterMetadata PSName="MappingToProviderAddressSpace" Aliases="PA" IsMandatory="true" CmdletParameterSets="ByMapping" >
+                  <ValidateNotNull />
+                  <ValidateNotNullOrEmpty />
+                </CmdletParameterMetadata>
+              </RegularQuery>
+            </Property>
+
+          </QueryableProperties>
+        </GetCmdletParameters>
+      </GetCmdlet>
+
+      <Cmdlet>
+        <CmdletMetadata Verb="Set" ConfirmImpact="Medium" />
+        <Method MethodName="cim:ModifyInstance">
+        <Parameters>
+          <!---ProviderAddressSpace<switch>
+          -Name<String>
+          [-NewName<String>]
+          [-Owner<String>]
+          [-Description<String>]
+          [-AddCustomConfiguration<IDicationary>]
+          [-RemoveCustomConfiguration<IDicationary>]-->
+          <!---CustomerAddressSpace<switch>
+          -Name<String>
+          [-NewName<String>]
+          [-ProviderAddressSpace<string>]
+          [-Tenant<string>]
+          [-VmNetwork<String>]
+          [-IsolationMethod<String>]{enum: NVGRE, IPRewrite}
+          [-Owner<String>]
+          [-Description<String>]
+          [-AddCustomConfiguration<IDicationary>]
+          [-RemoveCustomConfiguration<IDicationary>]-->
+          <Parameter ParameterName="cim:operationOption:NewName">
+            <Type PSType="System.String" />
+            <CmdletParameterMetadata PSName="NewName" ValueFromPipelineByPropertyName="false" >
+              <ValidateNotNull />
+              <ValidateNotNullOrEmpty />
+            </CmdletParameterMetadata>
+          </Parameter>
+
+          <Parameter ParameterName="Owner">
+            <Type PSType="System.String" />
+            <CmdletParameterMetadata ValueFromPipelineByPropertyName="true" >
+            </CmdletParameterMetadata>
+          </Parameter>
+
+          <Parameter ParameterName="Description">
+            <Type PSType="System.String" />
+            <CmdletParameterMetadata ValueFromPipelineByPropertyName="true" >
+            </CmdletParameterMetadata>
+          </Parameter>
+
+          <Parameter ParameterName="CustomConfiguration">
+            <Type PSType="System.String" />
+            <CmdletParameterMetadata PSName="AddCustomConfiguration" ValueFromPipelineByPropertyName="true" >
+            </CmdletParameterMetadata>
+          </Parameter>
+          
+          <Parameter ParameterName="cim:operationOption:RemoveCustomConfiguration">
+            <Type PSType="System.String" />
+            <CmdletParameterMetadata PSName="RemoveCustomConfiguration" ValueFromPipelineByPropertyName="false" >
+            </CmdletParameterMetadata>
+          </Parameter>
+
+          <Parameter ParameterName="AssociatedProviderAddressSpace">
+            <Type PSType="System.String" />
+            <CmdletParameterMetadata Aliases="PA" ValueFromPipelineByPropertyName="true" >
+            </CmdletParameterMetadata>
+          </Parameter>
+
+          <Parameter ParameterName="Tenant">
+            <Type PSType="System.String" />
+            <CmdletParameterMetadata ValueFromPipelineByPropertyName="true" >
+            </CmdletParameterMetadata>
+          </Parameter>
+
+          <Parameter ParameterName="VmNetwork">
+            <Type PSType="System.String" />
+            <CmdletParameterMetadata ValueFromPipelineByPropertyName="true" >
+            </CmdletParameterMetadata>
+          </Parameter>
+
+          <Parameter ParameterName="IsolationMethod">
+            <Type PSType="System.String" />
+            <CmdletParameterMetadata ValueFromPipelineByPropertyName="true" >
+            </CmdletParameterMetadata>
+          </Parameter>
+
+        </Parameters>
+        </Method>
+      </Cmdlet>
+
+      <Cmdlet>
+        <CmdletMetadata Verb="Remove" ConfirmImpact="Medium" />
+        <Method MethodName="cim:DeleteInstance">
+        <Parameters>
+          <Parameter ParameterName="cim:operationOption:Force">
+            <Type PSType="System.Management.Automation.SwitchParameter" />
+            <CmdletParameterMetadata PSName="Force">
+            </CmdletParameterMetadata>
+          </Parameter>
+        </Parameters>
+        </Method>
+      </Cmdlet>
+
+    </InstanceCmdlets>
+
+    <StaticCmdlets>
+      <!-- This section defines Add-IpamAddressSpace cmdlet that wraps the intrinsic CreateInstance method -->
+      <Cmdlet>
+        <CmdletMetadata Verb="Add" DefaultCmdletParameterSet="ProviderAddressSpace" ConfirmImpact="Medium" />
+        <Method MethodName="AddProviderAddressSpace" CmdletParameterSet="ProviderAddressSpace">
+          <Parameters>
+            <!---Name<String>
+            -ProviderAddressSpace<switch>
+            [-Owner<String>]
+            [-Description<String>]
+            [-CustomConfiguration<IDictionary>]
+            -->
+            <Parameter ParameterName="Name">
+              <Type PSType="System.String" />
+              <CmdletParameterMetadata IsMandatory="true" ValueFromPipelineByPropertyName="true">
+                <ValidateNotNull />
+                <ValidateNotNullOrEmpty />
+              </CmdletParameterMetadata>
+            </Parameter>
+
+            <Parameter ParameterName="cim:operationOption:ProviderAddressSpace">
+              <Type PSType="System.Management.Automation.SwitchParameter" />
+              <CmdletParameterMetadata PSName="ProviderAddressSpace" Aliases="PA" IsMandatory="true">
+                <ValidateNotNull />
+                <ValidateNotNullOrEmpty />
+              </CmdletParameterMetadata>
+            </Parameter>
+
+            <Parameter ParameterName="Owner">
+              <Type PSType="System.String" />
+              <CmdletParameterMetadata ValueFromPipelineByPropertyName="true">
+              </CmdletParameterMetadata>
+            </Parameter>
+
+            <Parameter ParameterName="Description">
+              <Type PSType="System.String" />
+              <CmdletParameterMetadata ValueFromPipelineByPropertyName="true">
+              </CmdletParameterMetadata>
+            </Parameter>
+
+            <Parameter ParameterName="CustomConfiguration">
+              <Type PSType="System.String" />
+              <CmdletParameterMetadata PSName="CustomConfiguration" ValueFromPipelineByPropertyName="true">
+              </CmdletParameterMetadata>
+            </Parameter>
+
+            <Parameter ParameterName="cim:operationOption:PassThru">
+              <Type PSType="System.Management.Automation.SwitchParameter" />
+              <CmdletParameterMetadata PSName="PassThru">
+              </CmdletParameterMetadata>
+            </Parameter>
+
+            <Parameter ParameterName="output">
+              <Type PSType="Microsoft.Management.Infrastructure.CimInstance" ETSType="Microsoft.Management.Infrastructure.CimInstance#root/microsoft/ipam/MSFT_IPAM_AddressSpace" />
+              <CmdletOutputMetadata />
+            </Parameter>
+
+          </Parameters>
+        </Method>
+
+        <Method MethodName="AddCustomerAddressSpace" CmdletParameterSet="CustomerAddressSpace">
+          <Parameters>
+            <!---Name<String>
+            -CustomerAddressSpace<switch>
+            -AssociatedProviderAddressSpace<string>
+            -IsolationMethod<String>
+            [-Tenant<string>]
+            [-VmNetwork<String>]
+            [-Owner<String>]
+            [-Description<String>]
+            [-CustomConfiguration<IDictionary>]
+            -->
+            <Parameter ParameterName="Name">
+              <Type PSType="System.String" />
+              <CmdletParameterMetadata IsMandatory="true" ValueFromPipelineByPropertyName="true">
+                <ValidateNotNull />
+                <ValidateNotNullOrEmpty />
+              </CmdletParameterMetadata>
+            </Parameter>
+
+            <Parameter ParameterName="cim:operationOption:CustomerAddressSpace">
+              <Type PSType="System.Management.Automation.SwitchParameter" />
+              <CmdletParameterMetadata PSName="CustomerAddressSpace" Aliases="CA" IsMandatory="true">
+                <ValidateNotNull />
+                <ValidateNotNullOrEmpty />
+              </CmdletParameterMetadata>
+            </Parameter>
+
+            <Parameter ParameterName="AssociatedProviderAddressSpace">
+              <Type PSType="System.String" />
+              <CmdletParameterMetadata IsMandatory="true" ValueFromPipelineByPropertyName="true">
+                <ValidateNotNull />
+                <ValidateNotNullOrEmpty />
+              </CmdletParameterMetadata>
+            </Parameter>
+
+            <Parameter ParameterName="Tenant">
+              <Type PSType="System.String" />
+              <CmdletParameterMetadata ValueFromPipelineByPropertyName="true">
+              </CmdletParameterMetadata>
+            </Parameter>
+
+            <Parameter ParameterName="VmNetwork">
+              <Type PSType="System.String" />
+              <CmdletParameterMetadata ValueFromPipelineByPropertyName="true">
+              </CmdletParameterMetadata>
+            </Parameter>
+
+            <Parameter ParameterName="IsolationMethod">
+              <Type PSType="System.String" />
+              <CmdletParameterMetadata IsMandatory="true" ValueFromPipelineByPropertyName="true">
+                <ValidateNotNull />
+                <ValidateNotNullOrEmpty />
+              </CmdletParameterMetadata>
+            </Parameter>
+
+            <Parameter ParameterName="Owner">
+              <Type PSType="System.String" />
+              <CmdletParameterMetadata ValueFromPipelineByPropertyName="true">
+              </CmdletParameterMetadata>
+            </Parameter>
+
+            <Parameter ParameterName="Description">
+              <Type PSType="System.String" />
+              <CmdletParameterMetadata ValueFromPipelineByPropertyName="true">
+              </CmdletParameterMetadata>
+            </Parameter>
+
+            <Parameter ParameterName="CustomConfiguration">
+              <Type PSType="System.String" />
+              <CmdletParameterMetadata PSName="CustomConfiguration" ValueFromPipelineByPropertyName="true">
+              </CmdletParameterMetadata>
+            </Parameter>
+
+            <Parameter ParameterName="cim:operationOption:Force">
+              <Type PSType="System.Management.Automation.SwitchParameter" />
+              <CmdletParameterMetadata PSName="Force">
+              </CmdletParameterMetadata>
+            </Parameter>
+
+            <Parameter ParameterName="cim:operationOption:PassThru">
+              <Type PSType="System.Management.Automation.SwitchParameter" />
+              <CmdletParameterMetadata PSName="PassThru">
+              </CmdletParameterMetadata>
+            </Parameter>
+
+            <Parameter ParameterName="output">
+              <Type PSType="Microsoft.Management.Infrastructure.CimInstance" ETSType="Microsoft.Management.Infrastructure.CimInstance#root/microsoft/ipam/MSFT_IPAM_AddressSpace" />
+              <CmdletOutputMetadata />
+            </Parameter>
+
+          </Parameters>
+        </Method>
+      </Cmdlet>
+    </StaticCmdlets>
+  </Class>
+
+  <Enums>
+    <Enum EnumName="Ipam.AddressSpaceType" UnderlyingType="UInt16">
+      <Value Name="ProviderAddressSpace" Value="0" />
+      <Value Name="CustomerAddressSpace" Value="1" />
+    </Enum>
+
+    <Enum EnumName="Ipam.Utilization" UnderlyingType="UInt16">
+      <Value Name="None" Value="0" />
+      <Value Name="Under" Value="1" />
+      <Value Name="Optimal" Value="2" />
+      <Value Name="Over" Value="3" />
+    </Enum>
+  </Enums>
+</PowerShellMetadata>

@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-Wlansvc" version="10.0.22621.1" processorArchitecture="wow64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <migration scope="Upgrade,MigWiz,USMT" settingsVersion="0">
+    <supportedComponents>
+      <supportedComponent>
+        <assemblyIdentity name="_" version="1.0.0.0" />
+        <supportedComponentIdentity buildType="release" language="neutral" name="Microsoft-Windows-Wlansvc" processorArchitecture="*" publicKeyToken="31bf3856ad364e35" settingsVersionRange="0" versionScope="nonSxS" xmlns="urn:schemas-microsoft-com:asm.v3" />
+        <migXml xmlns="">
+          <rules context="User">
+            <include>
+              <objectSet>
+                <pattern type="Registry">HKCU\Software\Microsoft\Wlansvc\UserData\Profiles\* [*]</pattern>
+              </objectSet>
+            </include>
+          </rules>
+          <rules context="System">
+            <destinationCleanup>
+              <objectSet>
+                <pattern type="Registry">HKLM\Software\Microsoft\Wlansvc\MigrationData\* [*]</pattern>
+                <pattern type="File">%CSIDL_COMMON_APPDATA%\Microsoft\Wlansvc\MigrationData\* [*]</pattern>
+              </objectSet>
+            </destinationCleanup>
+            <locationModify script="MigXmlHelper.RelativeMove('HKLM\Software\Microsoft\Wlansvc','HKLM\Software\Microsoft\WLANSVC\MigrationData\Migration\WLANSVC')">
+              <objectSet>
+                <pattern type="Registry">HKLM\Software\Microsoft\Wlansvc\* [*]</pattern>
+              </objectSet>
+            </locationModify>
+            <locationModify script="MigXmlHelper.RelativeMove('HKLM\Software\Microsoft\Wlansvc [ShowDeniedNetworks]','HKLM\Software\Microsoft\WLANSVC [ShowDeniedNetworks]')">
+              <objectSet>
+                <pattern type="Registry">HKLM\Software\Microsoft\Wlansvc [ShowDeniedNetworks]</pattern>
+              </objectSet>
+            </locationModify>
+            <locationModify script="MigXmlHelper.RelativeMove('HKLM\Software\Microsoft\Wlansvc [GlobalParameters]','HKLM\Software\Microsoft\WLANSVC [GlobalParameters]')">
+              <objectSet>
+                <pattern type="Registry">HKLM\Software\Microsoft\Wlansvc [GlobalParameters]</pattern>
+              </objectSet>
+            </locationModify>
+            <locationModify script="MigXmlHelper.RelativeMove('HKLM\Software\Microsoft\Wlansvc\DisableBackgroundScanOptimization','HKLM\Software\Microsoft\WLANSVC\DisableBackgroundScanOptimization')">
+              <objectSet>
+                <pattern type="Registry">HKLM\Software\Microsoft\Wlansvc\DisableBackgroundScanOptimization [*]</pattern>
+              </objectSet>
+            </locationModify>
+            <locationModify script="MigXmlHelper.RelativeMove('HKLM\SOFTWARE\Policies\Microsoft\Windows\Wireless\GPTWirelessPolicy','HKLM\Software\Microsoft\WLANSVC\MigrationData\Migration\GPTWirelessPolicy')">
+              <objectSet>
+                <pattern type="Registry">HKLM\SOFTWARE\Policies\Microsoft\Windows\Wireless\GPTWirelessPolicy\* [*]</pattern>
+              </objectSet>
+            </locationModify>
+            <locationModify script="MigXmlHelper.RelativeMove('HKLM\SOFTWARE\Microsoft\Wlansvc\GroupPolicy\Profiles','HKLM\Software\Microsoft\WLANSVC\MigrationData\Migration\GroupPolicy\Profiles')">
+              <objectSet>
+                <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Wlansvc\GroupPolicy\Profiles\* [*]</pattern>
+              </objectSet>
+            </locationModify>
+            <locationModify script="MigXmlHelper.RelativeMove('%CSIDL_COMMON_APPDATA%\Microsoft\Wlansvc\Profiles','%CSIDL_COMMON_APPDATA%\Microsoft\Wlansvc\MigrationData\Profiles')">
+              <objectSet>
+                <pattern type="File">%CSIDL_COMMON_APPDATA%\Microsoft\Wlansvc\Profiles\* [*]</pattern>
+              </objectSet>
+            </locationModify>
+            <locationModify script="MigXmlHelper.RelativeMove('%WINDIR%\wlansvc\policies','%CSIDL_COMMON_APPDATA%\Microsoft\Wlansvc\MigrationData\Policies')">
+              <objectSet>
+                <pattern type="File">%WINDIR%\wlansvc\policies\* [*]</pattern>
+              </objectSet>
+            </locationModify>
+            <exclude>
+              <objectSet>
+                <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\Wlansvc [Start]</pattern>
+              </objectSet>
+            </exclude>
+            <merge script="MigXmlHelper.SourcePriority()">
+              <objectSet>
+                <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WLANSVC\Parameters\WlanAPIPermissions [*]</pattern>
+                <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WLANSVC\Parameters\HostedNetworkSettings [*]</pattern>
+                <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WLANSVC\Parameters\OneXAuthenticator [*]</pattern>
+                <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WLANSVC\Parameters\WFDProvPlugin [*]</pattern>
+                <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WLANSVC\Parameters\SecondarySta [*]</pattern>
+                <pattern type="Registry">HKLM\Software\Microsoft\Wlansvc [ShowDeniedNetworks]</pattern>
+                <pattern type="Registry">HKLM\Software\Microsoft\Wlansvc [GlobalParameters]</pattern>
+                <pattern type="Registry">HKLM\Software\Microsoft\Wlansvc\DisableBackgroundScanOptimization [*]</pattern>
+              </objectSet>
+            </merge>
+          </rules>
+        </migXml>
+      </supportedComponent>
+    </supportedComponents>
+    <migXml xmlns="">
+      <rules context="User">
+        <include>
+          <objectSet>
+            <pattern type="Registry">HKCU\Software\Microsoft\Wlansvc\UserData\Profiles\* [*]</pattern>
+          </objectSet>
+        </include>
+      </rules>
+      <rules context="System">
+        <include>
+          <objectSet>
+            <pattern type="Registry">HKLM\Software\Microsoft\Wlansvc\* [*]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Policies\Microsoft\Windows\Wireless\GPTWirelessPolicy\* [*]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Wlansvc\GroupPolicy\* [*]</pattern>
+            <pattern type="File">%CSIDL_COMMON_APPDATA%\Microsoft\Wlansvc\Profiles\* [*]</pattern>
+            <pattern type="File">%WINDIR%\wlansvc\policies\* [*]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WLANSVC\Parameters\WlanAPIPermissions [*]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WLANSVC\Parameters\HostedNetworkSettings [*]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WLANSVC\Parameters\OneXAuthenticator [*]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WLANSVC\Parameters\WFDProvPlugin [*]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WLANSVC\Parameters\SecondarySta [*]</pattern>
+          </objectSet>
+        </include>
+        <exclude>
+          <objectSet>
+            <pattern type="Registry">HKLM\Software\Microsoft\Wlansvc\MigrationData\* [*]</pattern>
+          </objectSet>
+        </exclude>
+        <destinationCleanup>
+          <objectSet>
+            <pattern type="Registry">HKLM\Software\Microsoft\Wlansvc\MigrationData\* [*]</pattern>
+            <pattern type="File">%CSIDL_COMMON_APPDATA%\Microsoft\Wlansvc\MigrationData\* [*]</pattern>
+          </objectSet>
+        </destinationCleanup>
+        <locationModify script="MigXmlHelper.RelativeMove('HKLM\Software\Microsoft\Wlansvc','HKLM\Software\Microsoft\WLANSVC\MigrationData\Migration\WLANSVC\')">
+          <objectSet>
+            <pattern type="Registry">HKLM\Software\Microsoft\Wlansvc\* [*]</pattern>
+          </objectSet>
+        </locationModify>
+        <locationModify script="MigXmlHelper.RelativeMove('HKLM\Software\Microsoft\Wlansvc [ShowDeniedNetworks]','HKLM\Software\Microsoft\WLANSVC [ShowDeniedNetworks]')">
+          <objectSet>
+            <pattern type="Registry">HKLM\Software\Microsoft\Wlansvc [ShowDeniedNetworks]</pattern>
+          </objectSet>
+        </locationModify>
+        <locationModify script="MigXmlHelper.RelativeMove('HKLM\Software\Microsoft\Wlansvc\DisableBackgroundScanOptimization','HKLM\Software\Microsoft\WLANSVC\DisableBackgroundScanOptimization')">
+          <objectSet>
+            <pattern type="Registry">HKLM\Software\Microsoft\Wlansvc\DisableBackgroundScanOptimization [*]</pattern>
+          </objectSet>
+        </locationModify>
+        <locationModify script="MigXmlHelper.RelativeMove('HKLM\SOFTWARE\Policies\Microsoft\Windows\Wireless\GPTWirelessPolicy','HKLM\Software\Microsoft\WLANSVC\MigrationData\Migration\GPTWirelessPolicy')">
+          <objectSet>
+            <pattern type="Registry">HKLM\SOFTWARE\Policies\Microsoft\Windows\Wireless\GPTWirelessPolicy\* [*]</pattern>
+          </objectSet>
+        </locationModify>
+        <locationModify script="MigXmlHelper.RelativeMove('HKLM\SOFTWARE\Microsoft\Wlansvc\GroupPolicy\Profiles','HKLM\Software\Microsoft\WLANSVC\MigrationData\Migration\GroupPolicy\Profiles')">
+          <objectSet>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Wlansvc\GroupPolicy\Profiles\* [*]</pattern>
+          </objectSet>
+        </locationModify>
+        <locationModify script="MigXmlHelper.RelativeMove('%CSIDL_COMMON_APPDATA%\Microsoft\Wlansvc\Profiles','%CSIDL_COMMON_APPDATA%\Microsoft\Wlansvc\MigrationData\Profiles')">
+          <objectSet>
+            <pattern type="File">%CSIDL_COMMON_APPDATA%\Microsoft\Wlansvc\Profiles\* [*]</pattern>
+          </objectSet>
+        </locationModify>
+        <locationModify script="MigXmlHelper.RelativeMove('%WINDIR%\wlansvc\policies','%CSIDL_COMMON_APPDATA%\Microsoft\Wlansvc\MigrationData\Policies')">
+          <objectSet>
+            <pattern type="File">%WINDIR%\wlansvc\policies\* [*]</pattern>
+          </objectSet>
+        </locationModify>
+        <merge script="MigXmlHelper.SourcePriority()">
+          <objectSet>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WLANSVC\Parameters\WlanAPIPermissions [*]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WLANSVC\Parameters\HostedNetworkSettings [*]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WLANSVC\Parameters\OneXAuthenticator [*]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WLANSVC\Parameters\WFDProvPlugin [*]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WLANSVC\Parameters\SecondarySta [*]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Wlansvc [ShowDeniedNetworks]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Wlansvc\DisableBackgroundScanOptimization [*]</pattern>
+          </objectSet>
+        </merge>
+        <processing when="apply-success">
+          <script>MigXmlHelper.SyncSCM("wlansvc")</script>
+        </processing>
+      </rules>
+      <rules context="System">
+        <detects>
+          <detect>
+            <condition>MigXmlHelper.IsUpgrade()</condition>
+          </detect>
+          <detect>
+            <condition>MigXmlHelper.DoesStringContentEqual("Registry","HKLM\SYSTEM\CurrentControlSet\Services\Wlansvc [Start]","0x00000002")</condition>
+          </detect>
+        </detects>
+        <processing when="apply-success">
+          <script>MigXmlHelper.SendServiceControlCode("wlansvc", "128")</script>
+        </processing>
+      </rules>
+      <rules context="System">
+        <addObjects>
+          <conditions>
+            <condition>MigXmlHelper.IsUpgrade()</condition>
+          </conditions>
+          <object>
+            <location type="Registry">HKLM\Software\Microsoft\Wlansvc [IsUpgrade]</location>
+            <attributes>DWORD</attributes>
+            <bytes>01000000</bytes>
+          </object>
+        </addObjects>
+      </rules>"
+    </migXml>
+    <machineSpecific>
+      <migXml xmlns="">
+        <rules Context="System">
+          <include>
+            <objectSet>
+              <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WlanSvc\Parameters\WFD [DefaultGO*]</pattern>
+            </objectSet>
+          </include>
+        </rules>
+      </migXml>
+    </machineSpecific>
+    <migrationDisplayID>Network_and_Internet\Networking_Connections</migrationDisplayID>
+  </migration>
+</assembly>

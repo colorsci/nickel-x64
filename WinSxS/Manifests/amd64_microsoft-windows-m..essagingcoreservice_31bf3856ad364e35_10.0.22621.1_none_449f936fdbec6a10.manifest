@@ -1,0 +1,635 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved." xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <assemblyIdentity name="Microsoft-Windows-msmq-messagingcoreservice" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <imaging>
+    <sysprepInformation>
+      <sysprepProvider stage="generalize">
+        <sysprepOrder order="0x2800" />
+        <sysprepModule methodName="SysprepDeleteQmId" moduleName="$(runtime.system32)\mqcmiplugin.dll" />
+      </sysprepProvider>
+    </sysprepInformation>
+  </imaging>
+  <file name="mqsvc.exe" destinationPath="$(runtime.system32)\" sourceName="mqsvc.exe" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>XtDGxuV1NrFLl7XLbZQ9XnrKMC1LzrpHWFPcyO8kKbA=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <file name="mqbkup.exe" destinationPath="$(runtime.system32)\" sourceName="mqbkup.exe" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>5EjSMK2ljUbh9wy3LJ7sD3rdlJZAjGRCKRroDfuUf9o=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <directories>
+    <directory destinationPath="$(runtime.system32)\msmq">
+      <securityDescriptor name="MSMQStorageFolderACL" />
+    </directory>
+    <directory destinationPath="$(runtime.system32)\msmq\storage">
+      <securityDescriptor name="MSMQStorageFolderACL" />
+    </directory>
+    <directory destinationPath="$(runtime.system32)\msmq\storage\lqs">
+      <securityDescriptor name="MSMQStorageFolderACL" />
+    </directory>
+    <directory destinationPath="$(runtime.system32)\msmq\Mapping">
+      <securityDescriptor name="MSMQMappingFolderACL" />
+    </directory>
+  </directories>
+  <memberships>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories.Services" version="10.0.22621.1" publicKeyToken="31bf3856ad364e35" typeName="Service" />
+      <categoryInstance subcategory="MSMQ">
+        <serviceData name="MSMQ" displayName="@mqutil.dll,-6102" errorControl="normal" start="demand" type="win32OwnProcess" description="@mqutil.dll,-6104" dependOnService="mqac,rpcss,eventlog" imagePath="%systemroot%\system32\mqsvc.exe" objectName="NT Authority\NetworkService" requiredPrivileges="SeChangeNotifyPrivilege,SeCreateGlobalPrivilege,SeImpersonatePrivilege,SeAuditPrivilege" sidType="unrestricted">
+          <failureActions resetPeriod="900">
+            <actions>
+              <action delay="120000" type="restartService" />
+              <action delay="0" type="none" />
+              <action delay="0" type="none" />
+            </actions>
+          </failureActions>
+        </serviceData>
+      </categoryInstance>
+    </categoryMembership>
+  </memberships>
+  <firewallRule action="allow" active="true" binary="%systemroot%\system32\mqsvc.exe" desc="@%systemroot%\system32\firewallapi.dll,-11189" dir="in" group="@%systemroot%\system32\firewallapi.dll,-11199" internalName="MSMQ-In-TCP" name="@%systemroot%\system32\firewallapi.dll,-11189" protocol="TCP" />
+  <firewallRule action="allow" active="true" binary="%systemroot%\system32\mqsvc.exe" desc="@%systemroot%\system32\firewallapi.dll,-11190" dir="out" group="@%systemroot%\system32\firewallapi.dll,-11199" internalName="MSMQ-Out-TCP" name="@%systemroot%\system32\firewallapi.dll,-11190" protocol="TCP" />
+  <firewallRule action="allow" active="true" binary="%systemroot%\system32\mqsvc.exe" desc="@%systemroot%\system32\firewallapi.dll,-11191" dir="in" group="@%systemroot%\system32\firewallapi.dll,-11199" internalName="MSMQ-In-UDP" name="@%systemroot%\system32\firewallapi.dll,-11191" protocol="UDP" />
+  <firewallRule action="allow" active="true" binary="%systemroot%\system32\mqsvc.exe" desc="@%systemroot%\system32\firewallapi.dll,-11192" dir="out" group="@%systemroot%\system32\firewallapi.dll,-11199" internalName="MSMQ-Out-UDP" name="@%systemroot%\system32\firewallapi.dll,-11192" protocol="UDP" />
+  <registryKeys>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\SharedAccess\Parameters\FirewallPolicy\RestrictedServices\Static\System">
+      <registryValue name="MSMQ-Core-Block-In" valueType="REG_SZ" value="V2.0|Action=Block|Dir=In|App=%SystemRoot%\System32\mqsvc.exe|Name=MessageQueuing-BlockOthers-Inbound|Desc=Block any inbound traffic other than specified|" />
+      <registryValue name="MSMQ-Core-Block-Out" valueType="REG_SZ" value="V2.0|Action=Block|Dir=Out|App=%SystemRoot%\System32\mqsvc.exe|Name=MessageQueuing-BlockOthers-Outbound|Desc=Block any outbound traffic other than specified|" />
+      <registryValue name="MSMQ-Core-Allow-TCP-In" valueType="REG_SZ" value="V2.0|Action=Allow|Dir=In|Protocol=6|App=%SystemRoot%\System32\mqsvc.exe|Name=MessageQueuing-TCP-Inbound|Desc=Allow inbound Message Queuing traffic over TCP|" />
+      <registryValue name="MSMQ-Core-Allow-TCP-Out" valueType="REG_SZ" value="V2.0|Action=Allow|Dir=Out|Protocol=6|App=%SystemRoot%\System32\mqsvc.exe|Name=MessageQueuing-TCP-Outbound|Desc=Allow outbound Message Queuing traffic over TCP|" />
+      <registryValue name="MSMQ-Core-Allow-UDP-In" valueType="REG_SZ" value="V2.0|Action=Allow|Dir=In|Protocol=17|App=%SystemRoot%\System32\mqsvc.exe|Name=MessageQueuing-UDP-Inbound|Desc=Allow inbound Message Queuing traffic over UDP|" />
+      <registryValue name="MSMQ-Core-Allow-UDP-Out" valueType="REG_SZ" value="V2.0|Action=Allow|Dir=Out|Protocol=17|App=%SystemRoot%\System32\mqsvc.exe|Name=MessageQueuing-UDP-Outbound|Desc=Allow outbound Message Queuing traffic over UDP|" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Eventlog\Application\MSMQ">
+      <registryValue name="EventMessageFile" valueType="REG_EXPAND_SZ" value="%systemroot%\system32\mqutil.dll" />
+      <registryValue name="TypesSupported" valueType="REG_DWORD" value="0x00000007" />
+      <registryValue name="ProviderGuid" valueType="REG_SZ" value="{ce18af71-5efd-4f5a-9bd5-635e34632f69}" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\MSMQ\Setup">
+      <registryValue name="msmq_Core" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="msmq_LocalStorage" valueType="REG_DWORD" value="0x00000001" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\MSMQ" perUserVirtualization="Disable">
+      <securityDescriptor name="MSMQRegistryACL" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\MSMQ\Parameters">
+      <registryValue name="CurrentBuild" valueType="REG_SZ" value="10.0.22621" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\MSMQ\Parameters\MachineCache" />
+  </registryKeys>
+  <MsmqWorkgroupOnlineInstall xmlns="urn:schemas-microsoft-com:msmq.v1" />
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="MSMQStorageFolderACL" sddl="D:P(A;OI;FA;;;BA)(A;OI;FA;;;S-1-5-80-1694861609-1836653051-2345663429-2402906894-2169225637)" operationHint="replace" />
+          <securityDescriptorDefinition name="MSMQMappingFolderACL" sddl="D:P(A;OI;FA;;;BA)(A;OI;FA;;;S-1-5-80-1694861609-1836653051-2345663429-2402906894-2169225637)" operationHint="replace" />
+          <securityDescriptorDefinition name="MSMQRegistryACL" sddl="D:AI(A;CI;KA;;;S-1-5-80-1694861609-1836653051-2345663429-2402906894-2169225637)" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_REGKEY_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;CI;GA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;CI;GR;;;SY)(A;CI;GR;;;BA)(A;CI;GR;;;BU)(A;CI;GR;;;S-1-15-2-1)(A;CI;GR;;;S-1-15-3-1024-1065365936-1281604716-3511738428-1654721687-432734479-3232135806-4053264122-3456934681)" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" description="Default SDDL for Windows Resource Protected file" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+  <instrumentation>
+    <events xmlns="http://schemas.microsoft.com/win/2004/08/events" xmlns:win="http://manifests.microsoft.com/win/2004/08/windows/events" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <provider guid="{ce18af71-5efd-4f5a-9bd5-635e34632f69}" message="$(string.Publisher.MSMQ)" messageFileName="%SystemRoot%\system32\mqutil.dll" name="Microsoft-Windows-MSMQ" resourceFileName="%SystemRoot%\system32\mqutil.dll" symbol="MSMQ_E2E">
+        <channels>
+          <importChannel chid="GlobalApplicationEvents" name="Application" />
+          <channel chid="msmq/end2end" isolation="System" message="$(string.Channel.MSMQ_E2E)" name="Microsoft-Windows-MSMQ/End2End" symbol="MSMQ_END2END_OPERATIONAL" type="Operational">MSMQ End to End Operational Trace Channel</channel>
+        </channels>
+      </provider>
+      <provider guid="{2787cc62-2654-4227-9b35-b53f838507ae}" message="$(string.Publisher.MSMQTriggers)" messageFileName="%SystemRoot%\system32\mqutil.dll" name="Microsoft-Windows-MSMQTriggers" resourceFileName="%SystemRoot%\system32\mqutil.dll" symbol="S_Microsoft_Windows_MSMQTriggers" />
+      <cmi />
+    </events>
+    <counters xmlns="http://schemas.microsoft.com/win/2005/12/counters" schemaVersion="2.0">
+      <provider applicationIdentity="mqutil.dll" callback="custom" providerGuid="{01aec754-e244-4c90-afb1-ca0049f712d5}" providerName="msmq" providerType="userMode" symbol="msmq">
+        <counterSet description="Statistics for the Message Queuing service on the selected computer." descriptionID="3" guid="{6ba780bb-97bb-42c8-83d8-f542bd808e28}" instances="single" name="MSMQ Service" nameID="1" symbol="MSMQ_Service" uri="Microsoft.Windows.System.PerfCounters.MSMQService">
+          <counter defaultScale="1" description="The rate at which incoming Message Queuing messages are placed in queues on the selected computer by the Message Queuing service." descriptionID="7" detailLevel="standard" id="1" name="Incoming Messages/sec" nameID="5" type="perf_counter_bulk_count" uri="Microsoft.Windows.System.PerfCounters.MSMQService.IncomingMessages/sec">
+            <counterAttributes>
+              <counterAttribute name="reference" />
+            </counterAttributes>
+          </counter>
+          <counter defaultScale="1" description="The number of open incoming multicast sessions involving the selected computer." descriptionID="11" detailLevel="standard" id="2" name="Incoming Multicast Sessions" nameID="9" type="perf_counter_large_rawcount" uri="Microsoft.Windows.System.PerfCounters.MSMQService.IncomingMulticastSessions">
+            <counterAttributes>
+              <counterAttribute name="reference" />
+            </counterAttributes>
+          </counter>
+          <counter defaultScale="1" description="The number of open IP sessions involving the selected computer." descriptionID="15" detailLevel="standard" id="3" name="IP Sessions" nameID="13" type="perf_counter_large_rawcount" uri="Microsoft.Windows.System.PerfCounters.MSMQService.IPSessions">
+            <counterAttributes>
+              <counterAttribute name="reference" />
+            </counterAttributes>
+          </counter>
+          <counter defaultScale="1" description="The total number of incoming Message Queuing messages placed in queues on the selected computer by the Message Queuing service." descriptionID="19" detailLevel="standard" id="4" name="MSMQ Incoming Messages" nameID="17" type="perf_counter_large_rawcount" uri="Microsoft.Windows.System.PerfCounters.MSMQService.MSMQIncomingMessages">
+            <counterAttributes>
+              <counterAttribute name="reference" />
+            </counterAttributes>
+          </counter>
+          <counter defaultScale="1" description="The total number of outgoing Message Queuing messages sent from the selected computer by the Message Queuing service." descriptionID="23" detailLevel="standard" id="5" name="MSMQ Outgoing Messages" nameID="21" type="perf_counter_large_rawcount" uri="Microsoft.Windows.System.PerfCounters.MSMQService.MSMQOutgoingMessages">
+            <counterAttributes>
+              <counterAttribute name="reference" />
+            </counterAttributes>
+          </counter>
+          <counter defaultScale="1" description="The number of open outgoing HTTP sessions involving the selected computer." descriptionID="27" detailLevel="standard" id="6" name="Outgoing HTTP Sessions" nameID="25" type="perf_counter_large_rawcount" uri="Microsoft.Windows.System.PerfCounters.MSMQService.OutgoingHTTPSessions">
+            <counterAttributes>
+              <counterAttribute name="reference" />
+            </counterAttributes>
+          </counter>
+          <counter defaultScale="1" description="The rate at which outgoing Message Queuing messages are sent from the selected computer by the Message Queuing service." descriptionID="31" detailLevel="standard" id="7" name="Outgoing Messages/sec" nameID="29" type="perf_counter_bulk_count" uri="Microsoft.Windows.System.PerfCounters.MSMQService.OutgoingMessages/sec">
+            <counterAttributes>
+              <counterAttribute name="reference" />
+            </counterAttributes>
+          </counter>
+          <counter defaultScale="1" description="The number of open outgoing multicast sessions involving the selected computer." descriptionID="35" detailLevel="standard" id="8" name="Outgoing Multicast Sessions" nameID="33" type="perf_counter_large_rawcount" uri="Microsoft.Windows.System.PerfCounters.MSMQService.OutgoingMulticastSessions">
+            <counterAttributes>
+              <counterAttribute name="reference" />
+            </counterAttributes>
+          </counter>
+          <counter defaultScale="1" description="The total number of open network sessions involving the selected computer." descriptionID="39" detailLevel="standard" id="9" name="Sessions" nameID="37" type="perf_counter_large_rawcount" uri="Microsoft.Windows.System.PerfCounters.MSMQService.Sessions">
+            <counterAttributes>
+              <counterAttribute name="reference" />
+            </counterAttributes>
+          </counter>
+          <counter defaultScale="1" description="The total number of bytes in all Message Queuing messages residing in active queues on the selected computer." descriptionID="43" detailLevel="standard" id="10" name="Total bytes in all queues" nameID="41" type="perf_counter_large_rawcount" uri="Microsoft.Windows.System.PerfCounters.MSMQService.Totalbytesinallqueues">
+            <counterAttributes>
+              <counterAttribute name="reference" />
+            </counterAttributes>
+          </counter>
+          <counter defaultScale="1" description="The total number of Message Queuing messages residing in active queues on the selected computer." descriptionID="47" detailLevel="standard" id="11" name="Total messages in all queues" nameID="45" type="perf_counter_large_rawcount" uri="Microsoft.Windows.System.PerfCounters.MSMQService.Totalmessagesinallqueues">
+            <counterAttributes>
+              <counterAttribute name="reference" />
+            </counterAttributes>
+          </counter>
+        </counterSet>
+        <counterSet description="Message statistics for the selected Message Queuing queue" descriptionID="51" guid="{b134e5f6-07be-4341-8536-1975b01afac7}" instances="multiple" name="MSMQ Queue" nameID="49" symbol="MSMQ_Queue" uri="Microsoft.Windows.System.PerfCounters.MSMQQueue">
+          <counter defaultScale="1" description="The total number of bytes in all Message Queuing messages that currently reside in the selected journal. For the Computer Queues instance, this counter represents the computer journal." descriptionID="55" detailLevel="standard" id="1" name="Bytes in Journal Queue" nameID="53" type="perf_counter_large_rawcount" uri="Microsoft.Windows.System.PerfCounters.MSMQQueue.BytesinJournalQueue">
+            <counterAttributes>
+              <counterAttribute name="reference" />
+            </counterAttributes>
+          </counter>
+          <counter defaultScale="1" description="The total number of bytes in all Message Queuing messages that currently reside in the selected queue. For the Computer Queues instance, this counter represents the dead-letter queue." descriptionID="59" detailLevel="standard" id="2" name="Bytes in Queue" nameID="57" type="perf_counter_large_rawcount" uri="Microsoft.Windows.System.PerfCounters.MSMQQueue.BytesinQueue">
+            <counterAttributes>
+              <counterAttribute name="reference" />
+            </counterAttributes>
+          </counter>
+          <counter defaultScale="1" description="The total number of Message Queuing messages that currently reside in the selected journal. For the Computer Queues instance, this counter represents the computer journal." descriptionID="63" detailLevel="standard" id="3" name="Messages in Journal Queue" nameID="61" type="perf_counter_large_rawcount" uri="Microsoft.Windows.System.PerfCounters.MSMQQueue.MessagesinJournalQueue">
+            <counterAttributes>
+              <counterAttribute name="reference" />
+            </counterAttributes>
+          </counter>
+          <counter defaultScale="1" description="The total number of Message Queuing messages that currently reside in the selected queue. For the Computer Queues instance, this counter represents the dead-letter queue." descriptionID="67" detailLevel="standard" id="4" name="Messages in Queue" nameID="65" type="perf_counter_large_rawcount" uri="Microsoft.Windows.System.PerfCounters.MSMQQueue.MessagesinQueue">
+            <counterAttributes>
+              <counterAttribute name="reference" />
+            </counterAttributes>
+          </counter>
+        </counterSet>
+        <counterSet description="Statistics about active sessions between computers running Message Queuing" descriptionID="71" guid="{d19fff16-11b2-4817-a70a-87a8340b37e7}" instances="multiple" name="MSMQ Session" nameID="69" symbol="MSMQ_Session" uri="Microsoft.Windows.System.PerfCounters.MSMQSession">
+          <counter defaultScale="1" description="The rate at which Message Queuing messages are arriving at the computer in the selected session." descriptionID="75" detailLevel="standard" id="1" name="Incoming Messages/sec" nameID="73" type="perf_counter_bulk_count" uri="Microsoft.Windows.System.PerfCounters.MSMQSession.IncomingMessages/sec">
+            <counterAttributes>
+              <counterAttribute name="reference" />
+            </counterAttributes>
+          </counter>
+          <counter defaultScale="1" description="The rate at which Message Queuing messages are being sent from the computer in the selected session." descriptionID="79" detailLevel="standard" id="2" name="Outgoing Messages/sec" nameID="77" type="perf_counter_bulk_count" uri="Microsoft.Windows.System.PerfCounters.MSMQSession.OutgoingMessages/sec">
+            <counterAttributes>
+              <counterAttribute name="reference" />
+            </counterAttributes>
+          </counter>
+          <counter defaultScale="1" description="The rate at which bytes are arriving at the computer in the selected session. Only bytes in Message Queuing messages are counted." descriptionID="83" detailLevel="standard" id="3" name="Incoming Bytes/sec" nameID="81" type="perf_counter_bulk_count" uri="Microsoft.Windows.System.PerfCounters.MSMQSession.IncomingBytes/sec">
+            <counterAttributes>
+              <counterAttribute name="reference" />
+            </counterAttributes>
+          </counter>
+          <counter defaultScale="1" description="The rate at which bytes are being sent from the computer in the selected session. Only bytes in Message Queuing messages are counted." descriptionID="87" detailLevel="standard" id="4" name="Outgoing Bytes/sec" nameID="85" type="perf_counter_bulk_count" uri="Microsoft.Windows.System.PerfCounters.MSMQSession.OutgoingBytes/sec">
+            <counterAttributes>
+              <counterAttribute name="reference" />
+            </counterAttributes>
+          </counter>
+          <counter defaultScale="1" description="The total number of Message Queuing messages that arrived at the computer in the selected session." descriptionID="91" detailLevel="standard" id="5" name="Incoming Messages" nameID="89" type="perf_counter_large_rawcount" uri="Microsoft.Windows.System.PerfCounters.MSMQSession.IncomingMessages">
+            <counterAttributes>
+              <counterAttribute name="reference" />
+            </counterAttributes>
+          </counter>
+          <counter defaultScale="1" description="The total number of Message Queuing messages that were sent from the computer in the selected session." descriptionID="95" detailLevel="standard" id="6" name="Outgoing Messages" nameID="93" type="perf_counter_large_rawcount" uri="Microsoft.Windows.System.PerfCounters.MSMQSession.OutgoingMessages">
+            <counterAttributes>
+              <counterAttribute name="reference" />
+            </counterAttributes>
+          </counter>
+          <counter defaultScale="1" description="The total number of bytes that arrived at the computer in the selected session. Only bytes in Message Queuing messages are counted." descriptionID="99" detailLevel="standard" id="7" name="Incoming Bytes" nameID="97" type="perf_counter_large_rawcount" uri="Microsoft.Windows.System.PerfCounters.MSMQSession.IncomingBytes">
+            <counterAttributes>
+              <counterAttribute name="reference" />
+            </counterAttributes>
+          </counter>
+          <counter defaultScale="1" description="The total number of bytes that were sent from the computer in the selected session. Only bytes in Message Queuing messages are counted." descriptionID="103" detailLevel="standard" id="8" name="Outgoing Bytes" nameID="101" type="perf_counter_large_rawcount" uri="Microsoft.Windows.System.PerfCounters.MSMQSession.OutgoingBytes">
+            <counterAttributes>
+              <counterAttribute name="reference" />
+            </counterAttributes>
+          </counter>
+        </counterSet>
+        <counterSet description="Statistics about incoming HTTP Message Queuing messages." descriptionID="107" guid="{652f57ba-543d-4766-8495-df037589e519}" instances="single" name="MSMQ Incoming HTTP Traffic" nameID="105" symbol="MSMQ_Incoming_HTTP_Traffic" uri="Microsoft.Windows.System.PerfCounters.MSMQIncomingHTTPTraffic">
+          <counter defaultScale="1" description="The rate at which HTTP Message Queuing messages are arriving at the computer." descriptionID="111" detailLevel="standard" id="1" name="Incoming HTTP Messages/sec" nameID="109" type="perf_counter_bulk_count" uri="Microsoft.Windows.System.PerfCounters.MSMQIncomingHTTPTraffic.IncomingHTTPMessages/sec">
+            <counterAttributes>
+              <counterAttribute name="reference" />
+            </counterAttributes>
+          </counter>
+          <counter defaultScale="1" description="The rate at which message bytes are arriving at the computer in the incoming HTTP connection." descriptionID="115" detailLevel="standard" id="2" name="Incoming HTTP Bytes/sec" nameID="113" type="perf_counter_bulk_count" uri="Microsoft.Windows.System.PerfCounters.MSMQIncomingHTTPTraffic.IncomingHTTPBytes/sec">
+            <counterAttributes>
+              <counterAttribute name="reference" />
+            </counterAttributes>
+          </counter>
+          <counter defaultScale="1" description="The total number of HTTP Message Queuing messages that arrived at the computer." descriptionID="119" detailLevel="standard" id="3" name="Incoming HTTP Messages" nameID="117" type="perf_counter_large_rawcount" uri="Microsoft.Windows.System.PerfCounters.MSMQIncomingHTTPTraffic.IncomingHTTPMessages">
+            <counterAttributes>
+              <counterAttribute name="reference" />
+            </counterAttributes>
+          </counter>
+          <counter defaultScale="1" description="The total number of message bytes that arrived at the computer in the incoming HTTP connection." descriptionID="123" detailLevel="standard" id="4" name="Incoming HTTP Bytes" nameID="121" type="perf_counter_large_rawcount" uri="Microsoft.Windows.System.PerfCounters.MSMQIncomingHTTPTraffic.IncomingHTTPBytes">
+            <counterAttributes>
+              <counterAttribute name="reference" />
+            </counterAttributes>
+          </counter>
+        </counterSet>
+        <counterSet description="Statistics about active HTTP sessions between this computer and other computers running Message Queuing." descriptionID="127" guid="{30a50aee-214c-4835-aa6a-66b55fdccb86}" instances="multiple" name="MSMQ Outgoing HTTP Session" nameID="125" symbol="MSMQ_Outgoing_HTTP_Session" uri="Microsoft.Windows.System.PerfCounters.MSMQOutgoingHTTPSession">
+          <counter defaultScale="1" description="The rate at which Message Queuing messages are being sent from the computer in the selected outgoing HTTP session." descriptionID="131" detailLevel="standard" id="1" name="Outgoing HTTP Messages/sec" nameID="129" type="perf_counter_bulk_count" uri="Microsoft.Windows.System.PerfCounters.MSMQOutgoingHTTPSession.OutgoingHTTPMessages/sec">
+            <counterAttributes>
+              <counterAttribute name="reference" />
+            </counterAttributes>
+          </counter>
+          <counter defaultScale="1" description="The rate at which message bytes are being sent from the computer in the selected outgoing HTTP session." descriptionID="135" detailLevel="standard" id="2" name="Outgoing HTTP Bytes/sec" nameID="133" type="perf_counter_bulk_count" uri="Microsoft.Windows.System.PerfCounters.MSMQOutgoingHTTPSession.OutgoingHTTPBytes/sec">
+            <counterAttributes>
+              <counterAttribute name="reference" />
+            </counterAttributes>
+          </counter>
+          <counter defaultScale="1" description="The total number of Message Queuing messages that were sent from the computer in the selected outgoing HTTP session." descriptionID="139" detailLevel="standard" id="3" name="Outgoing HTTP Messages" nameID="137" type="perf_counter_large_rawcount" uri="Microsoft.Windows.System.PerfCounters.MSMQOutgoingHTTPSession.OutgoingHTTPMessages">
+            <counterAttributes>
+              <counterAttribute name="reference" />
+            </counterAttributes>
+          </counter>
+          <counter defaultScale="1" description="The total number of message bytes that were sent from the computer in the selected outgoing HTTP session." descriptionID="143" detailLevel="standard" id="4" name="Outgoing HTTP Bytes" nameID="141" type="perf_counter_large_rawcount" uri="Microsoft.Windows.System.PerfCounters.MSMQOutgoingHTTPSession.OutgoingHTTPBytes">
+            <counterAttributes>
+              <counterAttribute name="reference" />
+            </counterAttributes>
+          </counter>
+        </counterSet>
+        <counterSet description="Statistics about active outgoing multicast sessions." descriptionID="147" guid="{a99bfb0b-f5d5-4b7a-80ca-689ffff76828}" instances="multiple" name="MSMQ Outgoing Multicast Session" nameID="145" symbol="MSMQ_Outgoing_Multicast_Session" uri="Microsoft.Windows.System.PerfCounters.MSMQOutgoingMulticastSession">
+          <counter defaultScale="1" description="The rate at which Message Queuing messages are being sent from the computer in the selected session." descriptionID="151" detailLevel="standard" id="1" name="Outgoing Multicast Messages/sec" nameID="149" type="perf_counter_bulk_count" uri="Microsoft.Windows.System.PerfCounters.MSMQOutgoingMulticastSession.OutgoingMulticastMessages/sec">
+            <counterAttributes>
+              <counterAttribute name="reference" />
+            </counterAttributes>
+          </counter>
+          <counter defaultScale="1" description="The rate at which message bytes are being sent from the computer in the selected session." descriptionID="155" detailLevel="standard" id="2" name="Outgoing Multicast Bytes/sec" nameID="153" type="perf_counter_bulk_count" uri="Microsoft.Windows.System.PerfCounters.MSMQOutgoingMulticastSession.OutgoingMulticastBytes/sec">
+            <counterAttributes>
+              <counterAttribute name="reference" />
+            </counterAttributes>
+          </counter>
+          <counter defaultScale="1" description="The total number of Message Queuing messages that were sent from the computer in the selected session." descriptionID="159" detailLevel="standard" id="3" name="Outgoing Multicast Messages" nameID="157" type="perf_counter_large_rawcount" uri="Microsoft.Windows.System.PerfCounters.MSMQOutgoingMulticastSession.OutgoingMulticastMessages">
+            <counterAttributes>
+              <counterAttribute name="reference" />
+            </counterAttributes>
+          </counter>
+          <counter defaultScale="1" description="The total number of message bytes that were sent from the computer in the selected session." descriptionID="163" detailLevel="standard" id="4" name="Outgoing Multicast Bytes" nameID="161" type="perf_counter_large_rawcount" uri="Microsoft.Windows.System.PerfCounters.MSMQOutgoingMulticastSession.OutgoingMulticastBytes">
+            <counterAttributes>
+              <counterAttribute name="reference" />
+            </counterAttributes>
+          </counter>
+        </counterSet>
+        <counterSet description="Statistics about active incoming multicast sessions." descriptionID="167" guid="{3534673c-5d50-4246-bf60-cacc166c2d28}" instances="multiple" name="MSMQ Incoming Multicast Session" nameID="165" symbol="MSMQ_Incoming_Multicast_Session" uri="Microsoft.Windows.System.PerfCounters.MSMQIncomingMulticastSession">
+          <counter defaultScale="1" description="The rate at which Message Queuing messages are arriving at the computer in the selected session." descriptionID="171" detailLevel="standard" id="1" name="Incoming Multicast Messages/sec" nameID="169" type="perf_counter_bulk_count" uri="Microsoft.Windows.System.PerfCounters.MSMQIncomingMulticastSession.IncomingMulticastMessages/sec">
+            <counterAttributes>
+              <counterAttribute name="reference" />
+            </counterAttributes>
+          </counter>
+          <counter defaultScale="1" description="The rate at which message bytes are arriving at the computer in the selected session." descriptionID="175" detailLevel="standard" id="2" name="Incoming Multicast Bytes/sec" nameID="173" type="perf_counter_bulk_count" uri="Microsoft.Windows.System.PerfCounters.MSMQIncomingMulticastSession.IncomingMulticastBytes/sec">
+            <counterAttributes>
+              <counterAttribute name="reference" />
+            </counterAttributes>
+          </counter>
+          <counter defaultScale="1" description="The total number of Message Queuing messages that arrived at the computer in the selected session." descriptionID="179" detailLevel="standard" id="3" name="Incoming Multicast Messages" nameID="177" type="perf_counter_large_rawcount" uri="Microsoft.Windows.System.PerfCounters.MSMQIncomingMulticastSession.IncomingMulticastMessages">
+            <counterAttributes>
+              <counterAttribute name="reference" />
+            </counterAttributes>
+          </counter>
+          <counter defaultScale="1" description="The total number of message bytes that arrived at the computer in the selected session." descriptionID="183" detailLevel="standard" id="4" name="Incoming Multicast Bytes" nameID="181" type="perf_counter_large_rawcount" uri="Microsoft.Windows.System.PerfCounters.MSMQIncomingMulticastSession.IncomingMulticastBytes">
+            <counterAttributes>
+              <counterAttribute name="reference" />
+            </counterAttributes>
+          </counter>
+        </counterSet>
+      </provider>
+    </counters>
+  </instrumentation>
+  <asmv3:configuration xmlns:asmv3="urn:schemas-microsoft-com:asm.v3" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State">
+    <asmv3:configurationSchema>
+      <xsd:schema xmlns="Microsoft-Windows-msmq-messagingcoreservice" targetNamespace="Microsoft-Windows-msmq-messagingcoreservice">
+        <xsd:element default="%SystemRoot%\System32\msmq\storage" name="StoreReliablePath" type="xsd:string" wcm:description="StoreReliablePath" wcm:displayName="StoreReliablePath" wcm:handler="regkey('HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\MSMQ\Parameters\Setup\StoragePaths')" wcm:legacyType="REG_EXPAND_SZ" wcm:scope="allUsers" wcm:subScope="machineIndependent" />
+        <xsd:element default="%SystemRoot%\System32\msmq\storage" name="StoreXactLogPath" type="xsd:string" wcm:description="StoreXactLogPath" wcm:displayName="StoreXactLogPath" wcm:handler="regkey('HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\MSMQ\Parameters\Setup\StoragePaths')" wcm:legacyType="REG_EXPAND_SZ" wcm:scope="allUsers" wcm:subScope="machineIndependent" />
+        <xsd:element default="%SystemRoot%\System32\msmq\storage" name="StoreLogPath" type="xsd:string" wcm:description="StoreLogPath" wcm:displayName="StoreLogPath" wcm:handler="regkey('HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\MSMQ\Parameters\Setup\StoragePaths')" wcm:legacyType="REG_EXPAND_SZ" wcm:scope="allUsers" wcm:subScope="machineIndependent" />
+        <xsd:element default="%SystemRoot%\System32\msmq\storage" name="StorePersistentPath" type="xsd:string" wcm:description="StorePersistentPath" wcm:displayName="StorePersistentPath" wcm:handler="regkey('HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\MSMQ\Parameters\Setup\StoragePaths')" wcm:legacyType="REG_EXPAND_SZ" wcm:scope="allUsers" wcm:subScope="machineIndependent" />
+        <xsd:element default="%SystemRoot%\System32\msmq" name="MSMQRootPath" type="xsd:string" wcm:description="MSMQRootPath" wcm:displayName="MSMQRootPath" wcm:handler="regkey('HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\MSMQ\Parameters\Setup\StoragePaths')" wcm:legacyType="REG_EXPAND_SZ" wcm:scope="allUsers" wcm:subScope="machineIndependent" />
+        <xsd:element default="%SystemRoot%\System32\msmq\storage" name="StoreJournalPath" type="xsd:string" wcm:description="Store Journal Path" wcm:displayName="StoreJournalPath" wcm:handler="regkey('HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\MSMQ\Parameters\Setup\StoragePaths')" wcm:legacyType="REG_EXPAND_SZ" wcm:scope="allUsers" wcm:subScope="machineIndependent" />
+        <xsd:element default="false" name="DenyOldRemoteRead" type="xsd:boolean" wcm:description="DenyOldRemoteRead" wcm:displayName="DenyOldRemoteRead" wcm:handler="regkey('HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\MSMQ\Parameters')" wcm:migrate="yes" wcm:scope="allUsers" wcm:subScope="machineIndependent" />
+        <xsd:element default="2" name="DSEnvironment" type="xsd:integer" wcm:handler="regkey('HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\MSMQ\Parameters')" wcm:legacyType="REG_DWORD" wcm:scope="allUsers" wcm:subScope="machineIndependent" />
+        <xsd:element default="1" name="SetupStatus" type="xsd:integer" wcm:handler="regkey('HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\MSMQ\Parameters')" wcm:legacyType="REG_DWORD" wcm:scope="allUsers" wcm:subScope="machineIndependent" />
+        <xsd:element default="1" name="Workgroup" type="xsd:integer" wcm:handler="regkey('HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\MSMQ\Parameters')" wcm:legacyType="REG_DWORD" wcm:scope="allUsers" wcm:subScope="machineIndependent" />
+        <xsd:element default="0" name="MQS" type="xsd:integer" wcm:handler="regkey('HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\MSMQ\Parameters\MachineCache')" wcm:legacyType="REG_DWORD" wcm:scope="allUsers" wcm:subScope="machineIndependent" />
+        <xsd:element default="0" name="MQS_DepClients" type="xsd:integer" wcm:handler="regkey('HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\MSMQ\Parameters\MachineCache')" wcm:legacyType="REG_DWORD" wcm:scope="allUsers" wcm:subScope="machineIndependent" />
+        <xsd:element default="0" name="MQS_Routing" type="xsd:integer" wcm:handler="regkey('HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\MSMQ\Parameters\MachineCache')" wcm:legacyType="REG_DWORD" wcm:scope="allUsers" wcm:subScope="machineIndependent" />
+      </xsd:schema>
+    </asmv3:configurationSchema>
+  </asmv3:configuration>
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string id="event_EVENT_ERROR_QM_READ_REGISTRY" value="The Message Queuing service cannot start. The registry value '\HKLM\SOFTWARE\Microsoft\MSMQ\Parameters\%3' cannot be retrieved from the local Windows Registry. Error %1: %2" />
+        <string id="event_EVENT_ERROR_QM_WRITE_REGISTRY" value="The Message Queuing service cannot start. The registry value '\HKLM\SOFTWARE\Microsoft\MSMQ\Parameters\%3' cannot be written to the local Windows Registry. Error %1: %2" />
+        <string id="event_EVENT_ERROR_INCONSISTENT_QM_ID" value="The Message Queuing service is not online with Active Directory Domain Services. The MSMQ Configuration object (msmq) ID stored in the registry value '\HKLM\SOFTWARE\Microsoft\MSMQ\Parameters\MachineCache\QMId' was found under the computer name '%1' in Active Directory Domain Services. Please relocate this MSMQ Configuration object under the local computer name in Active Directory Domain Services. The service attempts to locate a matching MSMQ Configuration object every few minutes." />
+        <string id="event_EVENT_ERROR_VALIDATE_MACHINE_PROPS" value="The Message Queuing service is not online with Active Directory Domain Services, since the service properties cannot be retrieved or set. The service will attempt to retrieve and set its properties in a few minutes. Error %1: %2" />
+        <string id="event_EVENT_ERROR_QM_SYSTEM_QUEUE_INIT" value="The Message Queuing service cannot start. The internal private queue '%3' cannot be initialized. If the problem persists, reinstall Message Queuing. Error %1: %2" />
+        <string id="event_EVENT_ERROR_QM_RECOVERY" value="The Message Queuing service cannot start. The message store cannot be reloaded. Error %1: %2" />
+        <string id="event_EVENT_WARN_QM_PERF_INIT_FAILED" value="The Message Queuing serivce performance counter data are not available. The performance counter module failed to initialize. Please run 'lodctr.exe mqperf.ini' from the command console and restart the service, or contact Microsoft support. Error %1: %2" />
+        <string id="event_EVENT_INFO_MSMQ_SERVICE_STARTED" value="The Message Queuing service started." />
+        <string id="event_EVENT_ERROR_DS_INIT_FAILED" value="The Message Queuing service cannot start. The Active Directory Domain Services interface cannot be initialized. Error %1: %2" />
+        <string id="event_EVENT_WARN_RESTORE_FAILED_QUEUE_NOT_FOUND" value="The Message Queuing service deleted message '%1'. The message cannot be restored because the queue '%2' does not exist." />
+        <string id="event_EVENT_WARN_QM_CANNOT_GENERATE_AUDITS" value="The Message Queuing service has insufficient privileges to create audit log messages." />
+        <string id="event_EVENT_WARN_MQDS_CANNOT_GENERATE_AUDITS" value="The Message Queuing down-level client support service has insufficient privileges to create audit log messages." />
+        <string id="event_EVENT_ERROR_CANNOT_CONNECT_MSDTC" value="The Message Queuing service cannot start. A connection with the Distributed Transaction Coordinator cannot be established. Error %1: %2" />
+        <string id="event_EVENT_ERROR_RECOGNITION_SERVER_FAILED" value="The server cannot support the automatic recognition of sites and connected networks for down-level clients.  The problem might be caused by Active Directory Domain Services replication delay. Please restart MQDS service after replication completed." />
+        <string id="event_EVENT_ERROR_QM_INIT_INSEQ_FILE" value="The incoming sequences checkpoint file failed to initialize. The file MQInSeqs.lg1 or MQInSeqs.lg2 in the Msmq\Storage folder is corrupted or absent. Error %1: %2" />
+        <string id="event_EVENT_WARN_QM_FAILED_RPC_TCPIP" value="The Message Queuing service cannot communicate with other computers, because the RPC interface cannot use the TCP/IP protocol. Error %1: %2" />
+        <string id="event_EVENT_INFO_QM_ONLINE_WITH_DS" value="The Message Queuing service is online with Active Directory Domain Services and fully operational." />
+        <string id="event_EVENT_ERROR_QM_FAILED_RPC_LOCAL" value="The Message Queuing service cannot start. The local RPC interface cannot be initialized. Error %1: %2" />
+        <string id="event_EVENT_ERROR_QM_INIT_TRANS_FILE" value="The transactions checkpoint file failed to initialize. The file MQTrans.lg1 or MQTrans.lg2 in the Msmq\Storage folder are corrupted or absent. Error %1: %2" />
+        <string id="event_EVENT_ERROR_DS_SERVER_LIST_EMPTY" value="The list of Message Queuing servers with directory service functionality in the Windows registry is empty." />
+        <string id="event_EVENT_ERROR_CANT_INIT_LOGGER" value="The logger files cannot be initialized. The file QMLog in the Msmq\Storage folder is corrupted or absent. Error %1: %2" />
+        <string id="event_EVENT_ERROR_RECOVER_CHECKPOINT" value="The Message Queuing service cannot start. The checkpoint files cannot be recovered. To start the Message Queuing service without losing consistency, you must correct or recover corrupted checkpoint and log files. To start the service for emergency use (with a potential loss of data consistency), delete the files QMLog, MQTrans.lg1, MQTrans.lg2, MQInSeqs.lg1, and MQInSeqs.lg2 from the Msmq\Storage folder and add the DWORD registry key HKLM\Software\Microsoft\MSMQ\Parameters\LogDataCreated with a value of 0. Error %1: %2" />
+        <string id="event_EVENT_ERROR_RECOVER_LOG" value="The Message Queuing service cannot start. The log file cannot be recovered. To start the Message Queuing service without losing consistency, you must correct or recover corrupted checkpoint and log files. To start the service for emergency use (with a potential loss of data consistency), delete the files QMLog, MQTrans.lg1, MQTrans.lg2, MQInSeqs.lg1, and MQInSeqs.lg2 from the Msmq\Storage folder and add the DWORD registry key HKLM\Software\Microsoft\MSMQ\Parameters\LogDataCreated with a value of 0. Error %1: %2" />
+        <string id="event_EVENT_ERROR_QM_FAILED_RESTORE_PACKET" value="The Message Queuing service cannot start. The message file '%3' and the log file '%4' cannot be reloaded. Error %1: %2" />
+        <string id="event_EVENT_ERROR_QM_INCONSISTENT_QUEUE_STATUS" value="The Message Queuing service cannot start because a queue is in an inconsistent state. For more information, see Microsoft Knowledge Base article 827493 at support.microsoft.com." />
+        <string id="event_AC_CREATE_MESSAGE_FILE_FAILED" value="The message file '%1' cannot be created. There is insufficient disk space or memory." />
+        <string id="event_AC_CREATE_MESSAGE_FILE_SUCCEDDED" value="The message file '%1' was successfully created." />
+        <string id="event_SERVER_NO_MORE_CALS" value="The Client Access License (CAL) limit was reached. This server is unable to serve more clients. This may lead to messaging performance degradation. See the Windows documentation for information on how to increase your client license limit. This event is logged no more than once per %1 seconds." />
+        <string id="event_POST_DEL_WRITE_REQUEST" value="Since an MSMQ 1.0 primary site controller owns the queue, you must manually delete the queue from the MSMQ 1.0 site (use MSMQ Explorer running on an applicable the site controller)." />
+        <string id="event_CreateDirectory_ERR" value="The Message Queuing folder cannot be created." />
+        <string id="event_ReadRegistry_ERR" value="The Message Queuing registry values cannot be read (the registry is probably corrupted)." />
+        <string id="event_CreateMsmqConfig_ERR" value="Message Queuing was unable to create the msmq (MSMQ Configuration) object in Active Directory Domain Services. Error %1: %2" />
+        <string id="event_LoadMqupgrd_ERR" value="Message Queuing was unable to load Mqupgrd.dll. Error %1: %2" />
+        <string id="event_GetAdrsCreateObj_ERR" value="Message Queuing was unable to find the address of MqCreateMsmqObj in Mqupgrd.dll. Error %1: %2" />
+        <string id="event_CreateMsmqObj_ERR" value="Message Queuing Setup cannot be completed." />
+        <string id="event_GetMsmqConfig_ERR" value="The Message Queuing service was unable to obtain the properties of the msmq (MSMQ Configuration) object from Active Directory Domain Services. This may be caused by an Active Directory Domain Services replication delay. Please wait several minutes and then restart the Message Queuing service. Error %1: %2" />
+        <string id="event_NOT_TRUSTED_FOR_DELEGATION" value="This domain controller is not trusted for delegation. Therefore, the Message Queuing server cannot run. See Help and Support Center for information about how to enable the &quot;This computer is trusted for delegation&quot; property." />
+        <string id="event_CANNOT_DETERMINE_TRUSTED_FOR_DELEGATION" value="The Message Queuing server cannot determine if the local domain controller is trusted for delegation. This may indicate a serious problem. For more information, see Help and Support Center." />
+        <string id="event_JoinMsmqDomain_ERR" value="The Message Queuing service failed to join the computer's domain '%3'. Error %1: %2" />
+        <string id="event_JoinMsmqDomain_SUCCESS" value="The Message Queuing service successfully joined the computer's domain '%1'." />
+        <string id="event_LeaveMsmqDomain_SUCCESS" value="Message Queuing left the domain and is now operating in workgroup mode." />
+        <string id="event_MoveMsmqDomain_ERR" value="Message Queuing objects cannot move automatically between domains (%1). You must either run the MoveTree utility or first uninstall Message Queuing and then reinstall it in the new domain." />
+        <string id="event_MsmqMoveDomain_OK" value="Message Queuing successfully moved to the %1 domain." />
+        <string id="event_MsmqNeedMoveTree_OK" value="The computer belongs to the %1 domain. It is recommended that you use the MoveTree utility to move the msmq (MSMQ Configuration) object of this computer from the %2 domain (its previous domain) to the current domain." />
+        <string id="event_NOT_SURE_I_AM_A_GC" value="Message Queuing detected a problem with the local domain controller. Until the problem is resolved, Message Queuing will function unpredictably. Using Event Viewer, inspect the directory service, File Replication Service, and system logs to help identify the problem." />
+        <string id="event_RS_WITHOUT_ADDRESSES" value="This server was unable to resolve the IP addresses of other routing servers. Please check that all computers are registered in DNS." />
+        <string id="event_SET_QUEUE_PROPS_FAIL_COUND_NOT_COPY" value="The properties of the queue %3 cannot be set. Copying the queue file %4 to the temporary file %5 returned error %1: %2" />
+        <string id="event_SET_QUEUE_PROPS_FAIL_COUND_NOT_REPLACE" value="The properties of the queue %3 cannot be set. Replacing the queue file %4 with the temporary file %5 returned error %1: %2" />
+        <string id="event_FAIL_MSDTC_TMDOWN" value="The Microsoft Distributed Transaction Coordinator (DTC) failed. The Message Queuing service cannot continue. Please restart the DTC and the Message Queuing service." />
+        <string id="event_DS_ADDRESS_NOT_RESOLVED" value="There is an inconsistency between the actual network addresses and the addresses that are listed on other Message Queuing servers for this computer. If this computer belongs to an MSMQ 1.0 site, you should use MSMQ Explorer on the local primary site controller (PSC) to manually update the addresses listed for this computer." />
+        <string id="event_ADS_COMPUTER_OBJECT_NOT_FOUND_ERR" value="The computer object for this computer was not found in Active Directory Domain Services, possibly because of Active Directory Domain Services replication delays." />
+        <string id="event_SERVICE_START_ERROR_LOW_RESOURCES" value="The service cannot start due to insufficient disk space or memory." />
+        <string id="event_SERVICE_START_ERROR_CONNECT_AC" value="The service cannot start due to its failure to connect to its device driver." />
+        <string id="event_MQDS_DCUNPROMO_UPDATE_FAIL" value="The Message Queuing directory service failed to update the directory service flag in Active Directory Domain Services at the end of the domain controller demotion process." />
+        <string id="event_MQDS_DCPROMO_UPDATE_FAIL" value="The Message Queuing directory service failed to update the directory service flag in Active Directory Domain Services during the domain controller promotion process." />
+        <string id="event_MQDS_WORKGROUP_MODE" value="Obsolete, kept for backward compatibility" />
+        <string id="event_MQDS_NOT_RUN_AS_LOCAL_SYSTEM" value="The Message Queuing directory service is not running as a local system. To get the directory service functionality, you need to run as a local system." />
+        <string id="event_EVENT_WARN_MQDS_NOT_DC" value="Message Queuing Down-level Client Support cannot start. This service can operate only on a domain controller. The service can be disabled by using Computer Management to change its startup type in the Properties dialog box from Automatic to Manual or Disabled." />
+        <string id="event_EVENT_ERROR_INIT_MULTICAST" value="A multicast listener initialization failed. The file '%3' may be corrupted. Error %1: %2" />
+        <string id="event_QUEUE_ALIAS_DIR_MONITORING_WIN32_ERROR" value="The Message Queuing service stopped monitoring the mapping folder %3. Error %1: %2" />
+        <string id="event_QUEUE_ALIAS_WIN32_FILE_ERROR" value="The mapping file %3 was ignored. Its content cannot be read. Error %1: %2" />
+        <string id="event_QUEUE_ALIAS_DUPLICATE_MAPPING_WARNING" value="The mapping of the URL %1 to the queue %2 was ignored. This URL is already mapped to another queue." />
+        <string id="event_QUEUE_ALIAS_INVALID_MAPPING_FILE" value="The mapping file %1 was ignored because it was improperly formatted." />
+        <string id="event_EVENT_INFO_MQDS_SERVICE_STARTED" value="Message Queuing Down-level Client Support started." />
+        <string id="event_MULTICAST_BIND_ERROR" value="The queue cannot listen/bind to the multicast address %3!S!. Error %1: %2" />
+        <string id="event_QUEUE_ALIAS_INVALID_QUEUE_NAME" value="The mapping of the URL %1 to the queue %2 is ignored. This queue name is not a valid URL-style queue name." />
+        <string id="event_EVENT_MQDS_GC_NEEDED" value="Message Queuing Down-level Client Support failed to create the MSMQ Configuration (msmq) object with a given GUID for computer %1. Creating MSMQ Configuration objects with given GUIDs may be required for Message Queuing clients during the setup of Windows NT 4.0 or Windows 9x computers and when a Windows 2000 computer joins a Windows Server 2003 (or later) domain. By default, an Active Directory Domain Services forest does not support adding an object with a supplied GUID. You can solve this problem by upgrading Message Queuing on the client computer to a version that does not require creating an object with a given GUID. There are also alternative solutions." />
+        <string id="event_QM_SERVICE_STOPPED" value="The Message Queuing service stopped." />
+        <string id="event_EVENT_JOIN_DOMAIN_OBJECT_EXIST" value="The Message Queuing service will not join the %1 domain. An MSMQ Configuration (msmq) object exists in the new domain with an ID differing from the service ID. Please delete the MSMQ Configuration object in the new domain, restart the Message Queuing service, and log on again." />
+        <string id="event_EVENT_NO_SITE_RESOLUTION" value="The sites where the computer resides cannot be resolved. Check that the subnets in your network are configured correctly in Active Directory Domain Services and that each site is configured with the appropriate subnet." />
+        <string id="event_EVENT_ERROR_JOIN_NT4_DOMAIN" value="The Message Queuing service cannot join the '%1' Windows NT 4.0 domain. The Active Directory Domain Services Integration subcomponent was therefore removed." />
+        <string id="event_EVENT_INFO_LOCKDOWN" value="Message Queuing is operating in Hardened mode." />
+        <string id="event_EVENT_ERROR_QM_NOT_CLUSTER_AWARE" value="The Message Queuing service resource cannot bind to the cluster IP address. This prevents the Message Queuing resource from coming online on this node. One possible reason is that the Message Queuing service running on the physical node was started before the computer became a member of the server cluster. As a result, the Message Queuing service running on the physical node listens on all IP addresses of the computer and prevents the Message Queuing resource from listening on the cluster IP address. To solve this problem, restart the Message Queuing service on the physical node. Error %1: %2" />
+        <string id="event_EVENT_ERROR_ROUTING_SERVER_LEAVE_DOMAIN" value="The local computer is a Message Queuing routing server that formerly belonged to the '%1' domain and is now operating in workgroup mode. Other Message Queuing clients still regard this computer as a routing server and will try to route messages through this computer. To solve this problem, you need to manually delete the Message Queuing objects for this computer in Active Directory Domain Services. Please delete the following two objects: 1) The msmq object under the computer object of this computer in the Computers container in the Active Directory Users and Computers snap-in: 'CN=msmq,CN=%2,CN=computers,DC=%1,DC=...' 2) The MSMQ Settings object under the server object for this computer in the Active Directory Sites and Services snap-in: 'CN=MSMQ Settings,CN=%2,CN=Servers,CN=&lt;SiteName&gt;,CN=Sites,CN=Configuration,DC=...' You also need to uninstall Routing Support and Down-level Client Support by using Server Role Manager." />
+        <string id="event_EVENT_ERROR_IP_BIND_FAILED" value="Message Queuing failed to bind to port 1801. The port may already be bound to another process. Make sure that the port is free and try to start Message Queuing again. If this problem arises during setup, you must free the port and run setup again." />
+        <string id="event_EVENT_WARN_PING_BIND_FAILED" value="Message Queuing cannot bind to UDP port 3527. Message Queuing's internal ping mechanism uses this port to establish network connections. Another process may be using this port. Message Queuing can continue to operate without using this port, but connection times will not be optimal. To optimize the establishment of connections, free this port and restart Message Queuing." />
+        <string id="event_EVENT_INFO_MQDS_WEAKEN_SECURITY" value="The MsmqServices object is configured with weakened security to support MSMQ 1.0 clients. With weakened security, the Message Queuing Down-level Client Support service will use its own rights (under the LocalSystem account on a domain controller) to view object properties, but it will not bypass the security restrictions on creating Message Queuing objects and setting their properties." />
+        <string id="event_EVENT_INFO_MQDS_DEFAULT_SECURITY" value="The MsmqServices object is configured with default security. MSMQ 1.0 clients will not be able to query Active Directory Domain Services in this configuration." />
+        <string id="event_EVENT_ERROR_MQDS_MIXED_MODE" value="Message Queuing Down-level Client Support cannot operate in mixed mode. Mixed mode is a transient mode in which Message Queuing deployment is in the middle of migration from MQIS (for MSMQ 1.0) to Active Directory Domain Services. In this mode, some sites are still Windows NT 4.0 sites and are mastered by the PEC and PSCs. Mixed mode might require creating/deleting/updating objects that belong to Windows NT 4.0 sites. These operations are not supported by Message Queuing Down-level Client Support. After completing the migration of all Windows NT 4.0 sites to Active Directory Domain Services (migration of the PEC and all PSCs in Windows NT 4.0 sites), Message Queuing will no longer be in mixed mode." />
+        <string id="event_EVENT_USE_RC2_LEN40" value="Message Queuing will use an encryption key with an effective length of 40 bits when sending messages encrypted with the RC2 encryption algorithm. To restore strong encryption, remove the registry value HKLM\Software\Microsoft\MSMQ\Parameters\Security\SendEnhRC2With40." />
+        <string id="event_EVENT_INFO_MULTICAST_SENDING_IP_NOT_DEFINED" value="Message Queuing found multiple IP addresses for the local computer. Message Queuing will use the default IP address determined by the PGM driver for multicast messages. To use a different IP address, set the \HKLM\Software\Microsoft\MSMQ\Parameters\%1 registry value to one of the following valid IP addresses: %2!S!." />
+        <string id="event_EVENT_ERROR_ACCESS_DENIED_TO_GROUP_MEMBERSHIPS" value="The Message Queuing service rejects incoming messages when it is unable to check whether the sender is allowed access to the queue for sending messages. In this case, the queue affected is %1, but note that an event might not be issued every time this problem occurs.%n To perform this access check, Message Queuing needs access to the TokenGroupsGlobalAndUniversal attribute of the sender's user object. Only users with domain administration permissions can add members to the Windows Authorization Access Group, which is allowed access to the TokenGroupsGlobalAndUniversal attribute, in one of two ways:%n 1) For best security practice, add only the computer accounts that need access to the TokenGroupsGlobalAndUniversal attribute to the Windows Authorization Access Group. The domain administrator will repeat this operation for other Message Queuing computers that require the permission, manually adding the relevant accounts to the Windows Authorization Access Group.%n 2) As a less secure practice, add the Authenticated Users group to the Windows Authorization Access group. This grants every authenticated user, including the Message Queuing service on any computer, access to the TokenGroupsGlobalAndUniversal attribute for all users, and requires no further manual administration." />
+        <string id="event_CLIENT_NO_MORE_CONNECTIONS" value="Message Queuing cannot establish new connections to this computer because connection limit was reached.  There are too many computers attempting to send messages to or receive from this computer. This event is logged at most once per %1 seconds. To change this setting, set \HKLM\Software\Microsoft\MSMQ\Parameters\Event2181 registry value to desired time in seconds." />
+        <string id="event_QUEUE_STORAGE_QUOTA_EXCEEDED" value="Storage quota exceeded for MSMQ queue %1. No more messages can be stored in the queue.  You can increase a queue's storage quota by editing queue properties in Computer Management console. This event is logged at most once per %2 seconds. To change this setting, set \HKLM\Software\Microsoft\MSMQ\Parameters\Event2182 registry value to desired time in seconds." />
+        <string id="event_MACHINE_STORAGE_QUOTA_EXCEEDED" value="Machine MSMQ storage quota was exceeded or there is insufficient disk space. No more messages can be stored in user queues.  You can increase Message Queuing storage quota or purge unneeded messages by using Computer Management console. This event is logged at most once per %1 seconds. To change this setting, set \HKLM\Software\Microsoft\MSMQ\Parameters\Event2183 registry value to desired time in seconds." />
+        <string id="event_EVENT_MQCONN_NAME_RESOLUTION_FAILURE" value="Message Queuing could not resolve the name '%1' to an IP address. Try to ping the recipient computer, and check this computer's DNS settings.  This event is logged at most once per %2 seconds. To change this setting, set \HKLM\Software\Microsoft\MSMQ\Parameters\Event2184 registry value to desired time in seconds." />
+        <string id="event_EVENT_MQCONN_SOCKET_FAILURE" value="A socket operation failed with error %1. Next hop address is %2!S!. Message Queuing cannot send the message now, but it will retry to send the message. This event is logged at most once per %3 seconds. To change this setting, set \HKLM\Software\Microsoft\MSMQ\Parameters\Event2185 registry value to desired time in seconds." />
+        <string id="event_EVENT_MQCONN_LIMIT_REACHED" value="Message Queuing could not establish connection to %1, because the connection limit for this computer was reached. There too many computers trying to send to or receive messages from this computer. This event is logged at most once per %2 seconds. To change this setting, set \HKLM\Software\Microsoft\MSMQ\Parameters\Event2186 registry value to desired time in seconds." />
+        <string id="event_EVENT_MQCONN_REFUSED_BY_OTHER_SIDE" value="Message Queuing could not establish connection to %1, because connection was refused by the recipient computer.  It is possible that Client Access Licenses (CALs) are exhausted (if the recipient is a Windows Server), or connection limit has been reached (if the recipient is a Windows workstation). This event is logged at most once per %2 seconds. To change this setting, set \HKLM\Software\Microsoft\MSMQ\Parameters\Event2187 registry value to desired time in seconds." />
+        <string id="event_EVENT_MQCONN_ROUTING_FAILURE" value="Message Queuing could not access Active Directory Domain Services and failed to compute routing path for messages sent to queue %3. Messages will wait in the outgoing queue until connection with Active Directory Domain Services is restored.  This event is logged at most once per %4 seconds. To change this setting, set \HKLM\Software\Microsoft\MSMQ\Parameters\Event2188 registry value to desired time in seconds. Error %1: %2" />
+        <string id="event_EVENT_MQCONN_OUT_OF_MEMORY" value="Message Queuing failed to send a message due to low memory. Message Queuing will retry to send the message. This event is logged at most once per %1 seconds. To change this setting, set \HKLM\Software\Microsoft\MSMQ\Parameters\Event2189 registry value to desired time in seconds." />
+        <string id="event_EVENT_MQCONN_GENERIC_SSL_NEGOTIATION_FAILURE" value="Message Queuing could not complete SSL negotiation with the remote computer. It is possible that the server certificate is not properly installed, or that remote computer is not listening on port 443 (SSL). This event is logged at most once per %1 seconds. To change this setting, set \HKLM\Software\Microsoft\MSMQ\Parameters\Event2190 registry value to desired time in seconds." />
+        <string id="event_EVENT_MQCONN_SERVER_CERTIFICATE_DISALLOWED" value="Message Queuing could not validate server certificate in HTTPS scenario because the certificate was found in disallowed store. This means the certificate cannot be trusted. This event is logged at most once per %1 seconds. To change this setting, set \HKLM\Software\Microsoft\MSMQ\Parameters\Event2191 registry value to desired time in seconds." />
+        <string id="event_EVENT_MQCONN_SERVER_CERTIFICATE_INVALID_TRUST_CHAIN" value="Message Queuing could not establish SSL connection with the recipient computer because a trust chain from the server certificate to a trusted Certificate Authority certificate could not be established. This event is logged at most once per %3 seconds. To change this setting, set \HKLM\Software\Microsoft\MSMQ\Parameters\Event2192 registry value to desired time in seconds. Error %1: %2" />
+        <string id="event_EVENT_MQCONN_SERVER_CERTIFICATE_CN_NO_MATCH" value="Message Queuing could not establish SSL connection with the recipient computer because the computer name specified in the HTTP queue format name does not match the name of the recipient server certificate. This event is logged at most once per %1 seconds. To change this setting, set \HKLM\Software\Microsoft\MSMQ\Parameters\Event2193 registry value to desired time in seconds." />
+        <string id="event_EVENT_WARN_QM_FAILED_SELECT_TCP_IP" value="The Message Queuing service cannot communicate with other computers, because the select API for socket failed. Error %1: %2" />
+        <string id="event_EVENT_WARN_UNAUTHENTICATED_MESSAGE_REJECTED" value="Message Queuing could not authenticate a message sent to queue %1. The message was rejected because the queue only accepts authenticated messages. It is possible that sender did not sign the message, or signed it with a self-signed certificate. A negative arrival acknowledgement will be sent if requested by the sender. This event is logged at most once per %2 seconds. To change this setting, set \HKLM\Software\Microsoft\MSMQ\Parameters\Event2195 registry value to desired time in seconds." />
+        <string id="event_EVENT_WARN_FAILED_VERIFY_MESSAGE_SIGNATURE" value="Message Queuing failed to verify digital signature of a message sent to queue %1. The message was rejected. A negative arrival acknowledgement will be sent if requested by the sender. This event is logged at most once per %2 seconds. To change this setting, set \HKLM\Software\Microsoft\MSMQ\Parameters\Event2196 registry value to desired time in seconds." />
+        <string id="event_EVENT_WARN_IPv6_NOT_SUPPORTED" value="Message Queuing failed to listen on the IPv6 protocol. Messages will not be accepted on IPv6.  If you want Message Queuing to accept messages on IPv6 protocol, please verify that the IPv6 protocol is installed and operational (Restarting the machine is required). Error %1: %2" />
+        <string id="event_EVENT_WARN_IPv4_NOT_SUPPORTED" value="Message Queuing failed to listen on the IPv4 protocol. Messages will not be accepted on IPv4.  If you want Message Queuing to accept messages on IPv4 protocol, please verify that the IPv4 protocol is installed and operational (Restarting the machine is required). Error %1: %2" />
+        <string id="event_EVENT_ERROR_IP_NOT_SUPPORTED" value="Message Queuing Service failed to listen on both IPv4 and IPv6 protocol. Messages will not be accepted from the network through TCP/IP protocols.  Messages addressed to this machine using TCP/IP protocols will not arrive but will accumulate in sender's outgoing queues.   Please fix the TCP/IP protocols issue and restart the computer." />
+        <string id="event_EVENT_WARN_LOW_PAGED_POOL" value="Message Queuing will not be able to accept messages temporarily because system paged pool is low. During this period, machine quota will be set to 0. No manual intervention is required at this stage. Once memory utilization has normalized, Message Queuing will automatically resume accepting messages." />
+        <string id="event_EVENT_WARN_LOW_COMMIT" value="Message Queuing will not be able to accept messages temporarily because system commit is low. During this period, machine quota will be set to 0. No manual intervention is required at this stage. Once memory utilization has normalized, Message Queuing will automatically resume accepting messages." />
+        <string id="event_EVENT_INFO_NORMAL_MEMORY" value="Message Queuing is resuming accepting messages because the system memory usage has normalized." />
+        <string id="event_EVENT_WARN_ILLEGAL_DEADLETTER_QUEUE" value="The message could not be moved to deadletter queue %3. Check that queue exists and users have permissions to send. The message was moved to the system transactional dead letter queue. This event is logged at most once per %4 seconds. To change this setting, set \HKLM\Software\Microsoft\MSMQ\Parameters\Event2253 registry value to desired time in seconds. Error %1: %2" />
+        <string id="event_EVENT_WARN_DEADLETTER_QUEUE_AUTHENTICATED" value="The message could not be moved to deadletter queue %1. The deadletter queue is authenticated and the authenticity of the message could not be verified. The message will be moved to the system transactional dead letter queue. This event is logged at most once per %2 seconds. To change this setting, set \HKLM\Software\Microsoft\MSMQ\Parameters\Event2254 registry value to desired time in seconds." />
+        <string id="event_EVENT_WARN_DEADLETTER_QUEUE_ENCRYPTED" value="The message could not be moved to deadletter queue %1. Deadletter queues should not require privacy of messages. The message will be moved to the system transactional dead letter queue. This event is logged at most once per %2 seconds. To change this setting, set \HKLM\Software\Microsoft\MSMQ\Parameters\Event2255 registry value to desired time in seconds." />
+        <string id="event_EVENT_WARN_DEADLETTER_QUEUE_NOT_TRANSACTIONAL" value="The message could not be moved to deadletter queue %1. The deadletter queue needs to be transactional. The message will be moved to the system transactional dead letter queue. This event is logged at most once per %2 seconds. To change this setting, set \HKLM\Software\Microsoft\MSMQ\Parameters\Event2256 registry value to desired time in seconds." />
+        <string id="event_MSMQ_TRIGGER_INITIALIZED" value="Message Queuing Triggers started successfully." />
+        <string id="event_MSMQ_TRIGGER_INIT_TIMEOUT" value="Message Queuing Triggers initialization failed to complete in the configured timeout.." />
+        <string id="event_MSMQ_TRIGGER_INIT_FAILED" value="Message Queuing Triggers initialization failed. Error %1: %2" />
+        <string id="event_MSMQ_TRIGGER_MQGENTR_CREATE_INSTANCE_FAILED" value="Message Queuing Triggers failed to create an instance of the Triggers Transactional object. As a result, no transactional retrieval triggers can be invoked. Mqgentr.dll may not be registered or may not exist in the %SystemRoot%\System32 folder. Error %1: %2" />
+        <string id="event_MSMQ_TRIGGER_FAIL_RETREIVE_TRIGGER_INFORMATION" value="The trigger information cannot be retrieved from the trigger store in registry. At least one trigger is nonfunctional." />
+        <string id="event_MSMQ_TRIGGER_FAIL_RETREIVE_ATTACHED_RULE_INFORMATION" value="The information for the attached rule cannot be retrieved from the trigger store for trigger %1 (Trigger Name: %2). The trigger is nonfunctional." />
+        <string id="event_MSMQ_TRIGGER_OPEN_QUEUE_FAILED" value="Opening the queue %3 for peeking at or retrieving messages failed. Local users may not have been granted the Peek Message or Receive Message permission for this queue. The trigger %4 is nonfunctional. Error %1: %2" />
+        <string id="event_MSMQ_TRIGGER_OPEN_NOTIFICATION_QUEUE_FAILED" value="Opening an internal queue needed by the Triggers service failed. The account under which the Triggers service is running may not have permissions to open this queue, or the queue may have been deleted. To solve this problem, uninstall and reinstall the Triggers service. Error %1: %2" />
+        <string id="event_MSMQ_TRIGGER_RULE_HANDLE_CREATION_FAILED" value="An instance of a rule handler for the rule %3 with the ID %4 was not created. The rule cannot be evaluated and executed. The MSMQTriggerObjects.MSMQRuleHandler class may not be registered, or your System folder does not contain mqtrig.dll. Error %1: %2" />
+        <string id="event_MSMQ_TRIGGER_RULE_PARSING_FAILED" value="The action or a condition parameter for the rule %3 with the ID %4 was not parsed. The rule cannot be evaluated and executed. You can remove the rule entry from the Triggers registry and recreate it using local computer management. Error %1: %2" />
+        <string id="event_MSMQ_TRIGGER_RULE_INVOCATION_FAILED" value="The action defined by the rule %3 with the ID %4 was not invoked. The COM object may not be registered, or the executable file may not exist in your path. Error %1: %2" />
+        <string id="event_MSMQ_TRIGGER_TRANSACTIONAL_INVOCATION_FAILED" value="Rule evaluation or execution failed for the transactional trigger %3 with the ID %4. A rule condition or action parameter may be invalid, or the COM object invoked may not be registered correctly. Error %1: %2" />
+        <string id="event_MSMQ_TRIGGER_STOPPED" value="Message Queuing Triggers service stopped." />
+        <string id="event_MSMQ_TRIGGER_QUEUE_NOT_FOUND" value="The queue %1 was not found. It may have been deleted. The trigger %2 associated with this queue is nonfunctional. Please use Computer Management to remove this trigger." />
+        <string id="event_REQUIRED_TRIGGER_DEPENDENCIES_ERR" value="At least one of the required dependencies was not found. Please verify that MSMQ Triggers resources are dependent on Message Queue resources." />
+        <string id="event_REGISTRY_UPDATE_ERR" value="Unable to update EventLog information in registry for '%1'." />
+        <string id="event_MSMQ_TRIGGER_COMPLUS_REGISTRATION_FAILED" value="The Triggers transactional component could not be registered in COM+. Error %1: %2" />
+        <string id="event_MSMQ_TRIGGER_RETRIEVE_DOWNLEVL_QUEUE_FAILED" value="Retrieving messages from a queue located on a remote pre-Windows XP computer is not supported. All triggers associated with the queue %1 are nonfunctional." />
+        <string id="event_MSMQ_TRIGGER_RULE_INVOCATION_SUCCESS" value="The parameters of the rule %1 with the ID %2 are now valid. The rule was evaluated successfully, and the action defined by it was executed." />
+        <string id="event_MSMQ_TRIGGER_TRANSACTIONAL_INVOCATION_SUCCESS" value="The rules attached to the trigger %1 with the ID %2 are now valid. All the rules were evaluated successfully, and the actions defined by them were executed." />
+        <string id="event_EVENT_INFO_TRIGGER_ACCOUNT_CHANGED" value="The Triggers service has been set to run under the Network Service account, but this setting will take effect only after the Triggers service is restarted.  If you want the Triggers service to continue to run under the Local Service account (the default for the previous version of Triggers), modify the logon settings  for the Triggers service in Computer Management." />
+        <string id="event_EVENT_ERROR_MSMQ_CLUSTER_BIND_IP_NOT_EXIST" value="The IP address %1!S! specified in the \HKLM\Software\Microsoft\MSMQ\Parameters\%2 registry value is not a valid IP address for this computer. The Message Queuing service will use the IP address %3!S! instead. Please remove this registry value or set it to one of the following valid IP addresses: %4!S!." />
+        <string id="event_EVENT_INFO_MSMQ_CLUSTER_NO_BIND_IP_IN_REGISTRY" value="Message Queuing will use the IP address %1!S!. To use a different IP address, set the \HKLM\Software\Microsoft\MSMQ\Parameters\%2 registry value to one of the following valid IP addresses: %3!S!." />
+        <string id="event_EVENT_WARN_TRIGGER_ACCOUNT_CANNOT_BE_CHANGED" value="The change for the Triggers service to run under the Network Service account will not take effect as long as the &quot;Allow service to interact with desktop&quot; check box is selected.  To allow this change to take effect, clear the &quot;Allow service to interact with desktop&quot; check box on the Log On page of the Properties dialog box for Message Queuing Triggers in Computer Management and restart the service." />
+        <string id="event_MSMQ_WRITER_INIT_FAILED" value="The MSMQ VSS Writer object cannot be created. Error %1: %2." />
+        <string id="event_MSMQ_WRITER_START_FAILED" value="The MSMQ VSS Writer failed to register with the VSS. Please make sure that the VSS is running. Error %1: %2." />
+        <string id="event_MSMQ_WRITER_IDENTIFY_FAILED" value="The MSMQ VSS Writer failed to identify itself. Error %1: %2." />
+        <string id="event_MSMQ_WRITER_BACKUP_FAILED" value="Backup failed during event %3. Error %1: %2." />
+        <string id="event_MSMQ_WRITER_RESTORE_FAILED" value="Restore failed during event %3. Error %1: %2. This can happen if the restore directories under the MSMQ root directory cannot be created, or the restore root directory cannot be written in registry." />
+        <string id="event_MSMQ_WRITER_RESTORE_HANDLE_FAILED" value="The MSMQ VSS Writer failed to handle the restore located at '%3'. Error %1: %2." />
+        <string id="event_MSMQ_WRITER_BACKUP_COMPLETED" value="A backup (components: %1) was completed successfully." />
+        <string id="event_MSMQ_WRITER_RESTORE_COMPLETED" value="A restore was completed successfully." />
+        <string id="event_MSMQ_WRITER_RESTORE_HANDLE_COMPLETED" value="The restore located at '%1' was handled successfully. Restored components are %2." />
+        <string id="event_MSMQ_WRITER_DISABLED" value="The MSMQ VSS Writer is disabled through the registry setting. Backup and restore support is not available. To enable the writer, please delete registry value DisableMsmqVSSWriter or set it to 0." />
+        <string id="event_MSMQ_WRITER_INVALID_RESTORE" value="The restore located at '%1' is invalid. Invalid components are %2. Please verify all required files are present in the correct directory." />
+        <string id="description10" value="Provides a messaging infrastructure and development tool for creating distributed messaging applications for Windows-based networks and programs. If this service is stopped, distributed messages will be unavailable. If this service is disabled, any services that explicitly depend on it will fail to start." />
+        <string id="displayName9" value="CurrentBuild" />
+        <string id="displayName2" value="Message Queuing" />
+        <string id="displayName" value="MSMQ Messaging service" />
+        <string id="description" value="Support message queue service" />
+        <string id="displayName90" value="CurrentBuild" />
+        <string id="displayName40" value="DenyOldRemoteRead" />
+        <string id="description41" value="DenyOldRemoteRead" />
+        <string id="displayName52" value="MSMQRootPath" />
+        <string id="description53" value="MSMQRootPath" />
+        <string id="displayName56" value="StoreLogPath" />
+        <string id="description57" value="StoreLogPath" />
+        <string id="displayName58" value="StorePersistentPath" />
+        <string id="description59" value="StorePersistentPath" />
+        <string id="displayName60" value="StoreReliablePath" />
+        <string id="description61" value="StoreReliablePath" />
+        <string id="displayName62" value="StoreXactLogPath" />
+        <string id="description63" value="StoreXactLogPath" />
+        <string id="displayName36" value="StoreJournalPath" />
+        <string id="description37" value="Store Journal Path" />
+        <string id="displayName38" value="WRP_FILE_DEFAULT_SDDL" />
+        <string id="description39" value="Default SDDL for Windows Resource Protected file" />
+        <string id="event.INCOMING_QM2QM.messsage" value="Message came over network" />
+        <string id="event.OUTGOING_QM2QM.messsage" value="Message sent over network" />
+        <string id="event.RECEIVED_FROM_QUEUE.messsage" value="Message received" />
+        <string id="event.PUT_INTO_QUEUE.messsage" value="Message with ID %1\%2 was put into queue %3" />
+        <string id="event.SENT_TO_QUEUE.messsage" value="Message with ID %1\%2 was sent to queue %3" />
+        <string id="keyword.msmqe2emessage.messsage" value="Tracking MSMQ Messages" />
+        <string id="Publisher.MSMQ" value="Microsoft-Windows-MSMQ" />
+        <string id="Publisher.MSMQTriggers" value="Microsoft-Windows-MSMQTriggers" />
+        <string id="Channel.MSMQ_E2E" value="Microsoft-Windows-MSMQ/End2End" />
+      </stringTable>
+    </resources>
+  </localization>
+  <migration settingsVersion="0">
+    <machineSpecific>
+      <migXml xmlns="">
+        <plugin classId="{ebe40fc9-925b-4f97-9ca1-f905a52b1c3c}" file="%windir%\system32\mqmigplugin.dll" />
+        <environment context="System">
+          <variable name="varStoreReliablePath">
+            <script>MigXmlHelper.GetStringContent("Registry","HKLM\Software\Microsoft\MSMQ\Parameters [StoreReliablePath]")</script>
+          </variable>
+          <variable name="varStoreXactLogPath">
+            <script>MigXmlHelper.GetStringContent("Registry","HKLM\Software\Microsoft\MSMQ\Parameters [StoreXactLogPath]")</script>
+          </variable>
+          <variable name="varStoreLogPath">
+            <script>MigXmlHelper.GetStringContent("Registry","HKLM\Software\Microsoft\MSMQ\Parameters [StoreLogPath]")</script>
+          </variable>
+          <variable name="varStorePersistentPath">
+            <script>MigXmlHelper.GetStringContent("Registry","HKLM\Software\Microsoft\MSMQ\Parameters [StorePersistentPath]")</script>
+          </variable>
+          <variable name="varStoreJournalPath">
+            <script>MigXmlHelper.GetStringContent("Registry","HKLM\Software\Microsoft\MSMQ\Parameters [StoreJournalPath]")</script>
+          </variable>
+          <variable name="varMsmqRootPath">
+            <script>MigXmlHelper.GetStringContent("Registry","HKLM\Software\Microsoft\MSMQ\Parameters [MsmqRootPath]")</script>
+          </variable>
+        </environment>
+        <rules context="System">
+          <include>
+            <objectSet>
+              <pattern type="File">%varStoreReliablePath%[*.mq]</pattern>
+              <pattern type="File">%varStorePersistentPath%[*.mq]</pattern>
+              <pattern type="File">%varStoreXactLogPath%[*.lg*]</pattern>
+              <pattern type="File">%varStoreLogPath%[*.mq]</pattern>
+              <pattern type="File">%varStoreJournalPath%[*.mq]</pattern>
+              <pattern type="File">%varMsmqRootPath%\storage\lqs[*]</pattern>
+              <pattern type="File">%varMsmqRootPath%\storage\[QMLog]</pattern>
+            </objectSet>
+            <objectSet>
+              <pattern type="Registry">HKLM\SOFTWARE\Microsoft\MSMQ\Parameters\* [*]</pattern>
+              <pattern type="Registry">HKLM\SOFTWARE\Microsoft\MSMQ\Setup\* [*]</pattern>
+            </objectSet>
+          </include>
+          <exclude>
+            <objectSet>
+              <pattern type="Registry">HKLM\Software\Microsoft\MSMQ\Parameters\CertificationAuthorities\* [*]</pattern>
+              <pattern type="Registry">HKLM\Software\Microsoft\MSMQ\Parameters\MachineCache[StaticMQISServer]</pattern>
+              <pattern type="Registry">HKLM\Software\Microsoft\MSMQ\Parameters\MachineCache[ForcedDSServer]</pattern>
+              <pattern type="Registry">HKLM\Software\Microsoft\MSMQ\Parameters\MachineCache[PerThreadDSServer]</pattern>
+              <pattern type="Registry">HKLM\Software\Microsoft\MSMQ\Parameters\OCMsetup</pattern>
+              <pattern type="Registry">HKLM\Software\Microsoft\MSMQ\Parameters\setup[AlwaysWithoutDS]</pattern>
+            </objectSet>
+          </exclude>
+          <merge script="MigXmlHelper.SourcePriority()">
+            <objectSet>
+              <pattern type="Registry">HKLM\SOFTWARE\Microsoft\MSMQ\Parameters\* [*]</pattern>
+              <pattern type="Registry">HKLM\SOFTWARE\Microsoft\MSMQ\Setup\* [*]</pattern>
+            </objectSet>
+          </merge>
+          <contentModify script="MigXmlHelper.SetValueByTable('0,1,2,3', '2,2,2,2')">
+            <objectSet>
+              <pattern type="Registry">HKLM\SOFTWARE\Microsoft\MSMQ\Parameters[SetupStatus]</pattern>
+            </objectSet>
+          </contentModify>
+          <merge script="MigXmlHelper.DestinationPriority()">
+            <objectSet>
+              <pattern type="Registry">HKLM\SOFTWARE\Microsoft\MSMQ\Parameters[CurrentBuild]</pattern>
+              <pattern type="Registry">HKLM\SOFTWARE\Microsoft\MSMQ\Parameters[OSType]</pattern>
+            </objectSet>
+          </merge>
+        </rules>
+      </migXml>
+    </machineSpecific>
+    <supportedComponents>
+      <supportedComponent>
+        <assemblyIdentity name="_" version="1.0.0.0" />
+        <supportedComponentIdentity buildType="release" language="neutral" name="Microsoft-Windows-msmq-messagingcoreservice" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" settingsVersionRange="0" versionScope="nonSxS" xmlns="urn:schemas-microsoft-com:asm.v3" />
+      </supportedComponent>
+      <supportedComponent>
+        <assemblyIdentity name="_" version="1.0.0.0" />
+        <supportedComponentIdentity language="*" name="Microsoft-Windows-msmq-messagingcoreservice-DL" processorArchitecture="*" settingsVersionRange="0" xmlns="urn:schemas-microsoft-com:asm.v3" />
+        <machineSpecific>
+          <migXml xmlns="">
+            <rules context="System">
+              <merge script="MigXmlHelper.SourcePriority()">
+                <objectSet>
+                  <pattern type="Registry">HKLM\SOFTWARE\Microsoft\MSMQ\Parameters\* [*]</pattern>
+                  <pattern type="Registry">HKLM\SOFTWARE\Microsoft\MSMQ\Setup\* [*]</pattern>
+                </objectSet>
+              </merge>
+              <contentModify script="MigXmlHelper.SetValueByTable('0,1,2,3', '2,2,2,2')">
+                <objectSet>
+                  <pattern type="Registry">HKLM\SOFTWARE\Microsoft\MSMQ\Parameters[SetupStatus]</pattern>
+                </objectSet>
+              </contentModify>
+              <merge script="MigXmlHelper.DestinationPriority()">
+                <objectSet>
+                  <pattern type="Registry">HKLM\SOFTWARE\Microsoft\MSMQ\Parameters[CurrentBuild]</pattern>
+                  <pattern type="Registry">HKLM\SOFTWARE\Microsoft\MSMQ\Parameters[OSType]</pattern>
+                </objectSet>
+              </merge>
+            </rules>
+          </migXml>
+        </machineSpecific>
+      </supportedComponent>
+    </supportedComponents>
+  </migration>
+</assembly>

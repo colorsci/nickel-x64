@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-Dusm" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <dependency discoverable="no" resourceType="Resources">
+    <dependentAssembly dependencyType="prerequisite">
+      <assemblyIdentity name="Microsoft-Windows-Dusm.Resources" version="10.0.22621.1" processorArchitecture="amd64" language="*" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </dependentAssembly>
+  </dependency>
+  <file name="dusmsvc.dll" destinationPath="$(runtime.system32)\" sourceName="dusmsvc.dll" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>6sxeAnmftUFvwTMrEAUrLdJ7Abt+8U4893EeNjmRofE=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <file name="dusmtask.exe" destinationPath="$(runtime.system32)\" sourceName="dusmtask.exe" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>U0FvNfgCKaWEpkW0VekvUYrqb+ZXvIwX2z6oL+70lPA=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <memberships>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories.Services" version="10.0.22621.1" publicKeyToken="31bf3856ad364e35" typeName="Service" />
+      <categoryInstance>
+        <serviceData name="DusmSvc" displayName="@%SystemRoot%\System32\dusmsvc.dll,-1" errorControl="normal" start="auto" type="win32OwnProcess" description="@%SystemRoot%\System32\dusmsvc.dll,-2" dependOnService="RpcSs" group="TDI" imagePath="%SystemRoot%\System32\svchost.exe -k LocalServiceNetworkRestricted -p" objectName="NT Authority\LocalService" sidType="unrestricted">
+          <failureActions resetPeriod="86400">
+            <actions>
+              <action delay="300000" type="restartService" />
+              <action delay="0" type="none" />
+            </actions>
+          </failureActions>
+        </serviceData>
+      </categoryInstance>
+    </categoryMembership>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories" version="1.0.0.0" publicKeyToken="365143bb27e7ac8b" typeName="SvcHost" />
+      <categoryInstance subcategory="LocalServiceNetworkRestricted">
+        <serviceGroup position="last" serviceName="DusmSvc" />
+      </categoryInstance>
+    </categoryMembership>
+  </memberships>
+  <taskScheduler>
+    <Task xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task">
+      <RegistrationInfo>
+        <URI>\Microsoft\Windows\DUSM\dusmtask</URI>
+        <SecurityDescriptor>D:(A;;FA;;;SY)(A;;FA;;;BA)(A;;FA;;;S-1-5-80-4155767994-3874329934-3800885181-2130851812-726865888)(A;;FRFX;;;AU)(A;;FRFX;;;BU)(A;;FRFX;;;IU)</SecurityDescriptor>
+      </RegistrationInfo>
+      <Triggers>
+        <WnfStateChangeTrigger>
+          <StateName>7508bca3291b950c</StateName>
+        </WnfStateChangeTrigger>
+      </Triggers>
+      <Principals>
+        <Principal id="Users">
+          <GroupId>S-1-5-4</GroupId>
+        </Principal>
+      </Principals>
+      <Settings>
+        <Enabled>true</Enabled>
+        <MultipleInstancesPolicy>Queue</MultipleInstancesPolicy>
+        <DisallowStartIfOnBatteries>false</DisallowStartIfOnBatteries>
+        <StopIfGoingOnBatteries>false</StopIfGoingOnBatteries>
+        <RunOnlyIfIdle>false</RunOnlyIfIdle>
+        <WakeToRun>false</WakeToRun>
+        <RunOnlyIfNetworkAvailable>false</RunOnlyIfNetworkAvailable>
+        <UseUnifiedSchedulingEngine>true</UseUnifiedSchedulingEngine>
+        <IdleSettings>
+          <StopOnIdleEnd>false</StopOnIdleEnd>
+          <RestartOnIdle>false</RestartOnIdle>
+        </IdleSettings>
+      </Settings>
+      <Actions Context="Users">
+        <Exec>
+          <Command>%SystemRoot%\System32\dusmtask.exe</Command>
+        </Exec>
+      </Actions>
+    </Task>
+  </taskScheduler>
+  <registryKeys>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\DusmSvc\Parameters">
+      <registryValue name="ServiceDll" valueType="REG_EXPAND_SZ" value="%SystemRoot%\System32\dusmsvc.dll" />
+      <registryValue name="ServiceDllUnloadOnStop" valueType="REG_DWORD" value="0x00000001" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\DusmSvc">
+      <overridable name="Start" scope="Microsoft" type="REG_DWORD" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\DusmSvc">
+      <securityDescriptor name="AllowDusmSvcWrite" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\DusmSvc\Profiles" />
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\DusmSvc\Settings" />
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\WcmSvc\SubscriptionManager">
+      <registryValue name="SubMgrVersion" valueType="REG_DWORD" value="0x00000001" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\WcmSvc\SubscriptionManager\AllowList">
+      <registryValue name="ZMediaQueueSvc" valueType="REG_SZ" value="@\Windows\System32\DataSmartRes.dll,-1012" />
+      <registryValue name="{3DA8A0C1-F7E5-47C0-A680-BE8FD013F747}" valueType="REG_SZ" value="" />
+      <registryValue name="{20BF77A0-19C7-4DAA-8DB5-BC3DFDFA44AC}" valueType="REG_SZ" value="" />
+      <registryValue name="{063773E7-F26F-4A92-81F0-AA71A1161E30}" valueType="REG_SZ" value="" />
+      <registryValue name="{5F28C179-2780-41DF-B966-27807B8DE02C}" valueType="REG_SZ" value="" />
+      <registryValue name="{5B04B775-356B-4AA0-AAF8-6491FFEA5666}" valueType="REG_SZ" value="" />
+      <registryValue name="{5B04B775-356B-4AA0-AAF8-6491FFEA568C}" valueType="REG_SZ" value="" />
+      <registryValue name="{5B04B775-356B-4AA0-AAF8-6491FFEA5685}" valueType="REG_SZ" value="" />
+      <registryValue name="{5B04B775-356B-4AA0-AAF8-6491FFEA5687}" valueType="REG_SZ" value="" />
+      <registryValue name="{5B04B775-356B-4AA0-AAF8-6491FFEA5689}" valueType="REG_SZ" value="" />
+      <registryValue name="{5B04B775-356B-4AA0-AAF8-6491FFEA5629}" valueType="REG_SZ" value="@\Windows\System32\DusmSvc.dll,-301" />
+      <registryValue name="{73C73CDD-4DEA-462C-BD83-FA983056A4EF}" valueType="REG_SZ" value="@\Windows\System32\DusmSvc.dll,-302" />
+      <registryValue name="MosHost" valueType="REG_SZ" value="@\Windows\System32\DataSmartRes.dll,-10128" />
+      <registryValue name="{5B04B775-356B-4AA0-AAF8-6491FFEA5640}" valueType="REG_SZ" value="" />
+      <registryValue name="settingsynchost.exe" valueType="REG_SZ" value="@{c:\windows\system32\Bmr2SettingMonitorRes.pri?ms-resource://Bmr2SettingMonitorRes/Resources/3}" />
+      <registryValue name="UserDataSvc" valueType="REG_SZ" value="@\Windows\System32\MessagingDataModel2.dll,-110" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\WcmSvc\SubscriptionManager\AppsExcludedFromCellular">
+      <registryValue name="5B04B775-356B-4AA0-AAF8-6491FFEA5900_0000000000000" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="DHCP" valueType="REG_DWORD" value="0x00000001" />
+    </registryKey>
+  </registryKeys>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="AllowDusmSvcWrite" sddl="D:(A;CI;GA;;;S-1-5-80-4071458001-3563271761-1846288968-3700919931-3809667977)" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" description="Default SDDL for Windows Resource Protected file" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+</assembly>

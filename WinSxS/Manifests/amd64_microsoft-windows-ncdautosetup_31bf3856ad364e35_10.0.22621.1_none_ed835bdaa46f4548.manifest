@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-NcdAutoSetup" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <dependency discoverable="no" resourceType="Resources">
+    <dependentAssembly dependencyType="prerequisite">
+      <assemblyIdentity name="Microsoft-Windows-NcdAutoSetup.Resources" version="10.0.22621.1" processorArchitecture="amd64" language="*" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </dependentAssembly>
+  </dependency>
+  <file name="NcdAutoSetup.dll" destinationPath="$(runtime.system32)\" sourceName="NcdAutoSetup.dll" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>wM6biObmDmuUBvKwTYdx17K8v7zBxXK978TKTB2cuPM=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <memberships>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories.Services" version="10.0.22621.1" publicKeyToken="31bf3856ad364e35" typeName="Service" />
+      <categoryInstance>
+        <serviceData name="NcdAutoSetup" displayName="@%SystemRoot%\system32\NcdAutoSetup.dll,-100" errorControl="normal" start="demand" type="win32ShareProcess" description="@%SystemRoot%\system32\NcdAutoSetup.dll,-101" dependOnService="netprofm" imagePath="%SystemRoot%\System32\svchost.exe -k LocalServiceNoNetwork -p" objectName="NT AUTHORITY\LocalService" requiredPrivileges="SeChangeNotifyPrivilege" sidType="restricted">
+          <failureActions resetPeriod="86400">
+            <actions>
+              <action delay="120000" type="restartService" />
+              <action delay="300000" type="restartService" />
+              <action delay="0" type="none" />
+            </actions>
+          </failureActions>
+          <serviceTrigger action="start" subtype="{FBCFAC3F-8460-419F-8E48-1F0B49CDB85E}" type="Custom">
+            <triggerData type="string" value="PROFILE_CHANGED_TO_PRIVATE" />
+          </serviceTrigger>
+        </serviceData>
+      </categoryInstance>
+    </categoryMembership>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories" version="1.0.0.0" publicKeyToken="365143bb27e7ac8b" typeName="SvcHost" />
+      <categoryInstance subcategory="LocalServiceNoNetwork">
+        <serviceGroup position="last" serviceName="NcdAutoSetup" />
+      </categoryInstance>
+    </categoryMembership>
+  </memberships>
+  <imaging>
+    <sysprepInformation>
+      <sysprepProvider stage="generalize">
+        <sysprepOrder order="0x0700" />
+        <sysprepModule methodName="NcdAutoSetup_Generalize" moduleName="$(runtime.system32)\NcdAutoSetup.dll" />
+      </sysprepProvider>
+    </sysprepInformation>
+  </imaging>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="NCD_AUTO_SETUP_SDDL" sddl="D:P(A;CI;GA;;;BA)(A;CI;CCDCLCSWRPSDRC;;;S-1-5-80-639065985-1709096039-2702309040-2770678766-2981280942)(A;CI;GR;;;BU)" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" description="Default SDDL for Windows Resource Protected file" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+  <registryKeys>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\NcdAutoSetup\Parameters">
+      <registryValue name="ServiceDll" valueType="REG_EXPAND_SZ" value="%SystemRoot%\System32\NcdAutoSetup.dll" />
+      <registryValue name="ServiceMain" valueType="REG_SZ" value="SvchostMain" />
+      <registryValue name="ServiceDllUnloadOnStop" valueType="REG_DWORD" value="0x00000001" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\NcdAutoSetup">
+      <securityDescriptor name="NCD_AUTO_SETUP_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\NcdAutoSetup\DeviceSetting\SkipList">
+      <securityDescriptor name="NCD_AUTO_SETUP_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\NcdAutoSetup\NetworkSetting">
+      <securityDescriptor name="NCD_AUTO_SETUP_SDDL" />
+    </registryKey>
+  </registryKeys>
+  <instrumentation xmlns:ut="http://manifests.microsoft.com/win/2004/08/windows/networkevents" xmlns:win="http://manifests.microsoft.com/win/2004/08/windows/events" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <events xmlns="http://schemas.microsoft.com/win/2004/08/events">
+      <provider guid="{EC23F986-AE2D-4269-B52F-4E20765C1A94}" message="$(string.EventProviderName)" messageFileName="%windir%\system32\NcdAutoSetup.dll" name="Microsoft-Windows-NcdAutoSetup" resourceFileName="%windir%\system32\NcdAutoSetup.dll" symbol="NCDAUTOSETUP_PROVIDER">
+        <channels>
+          <channel chid="cOperational" enabled="true" message="$(string.OperationalChannel.Name)" name="Microsoft-Windows-NcdAutoSetup/Operational" type="Operational" />
+          <channel chid="cAnalytic" enabled="false" message="$(string.DiagnosticChannel.Name)" name="Microsoft-Windows-NcdAutoSetup/Diagnostic" type="Analytic" />
+        </channels>
+      </provider>
+      <cmi />
+    </events>
+  </instrumentation>
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string id="description" value="Manifest for NcdAutoSetup.dll" />
+        <string id="displayName" value="NcdAutoSetup.dll" />
+        <string id="EventProviderName" value="Microsoft-Windows-NcdAutoSetup" />
+        <string id="OperationalChannel.Name" value="Microsoft-Windows-NcdAutoSetup/Operational" />
+        <string id="DiagnosticChannel.Name" value="Microsoft-Windows-NcdAutoSetup/Diagnostic" />
+        <string id="taskDeviceQualified" value="Device Qualified" />
+        <string id="taskDeviceDisqualified" value="Device Disqualified" />
+        <string id="taskNetworkQualified" value="Network Qualified" />
+        <string id="taskNetworkDisqualified" value="Network Disqualified" />
+        <string id="evtDeviceQualified" value="Network connected device (Name: %1; Model %2) got qualified for automatic setup" />
+        <string id="evtDeviceAssociationFailure" value="Network connected device (Name: %1; Model %2) got disqualified for automatic setup due to an unexpected error (%3)" />
+        <string id="evtDeviceSkipped" value="Network connected device (Name: %1; Model %2) got disqualified for automatic setup because it was manually removed earlier" />
+        <string id="evtDeviceCategoryDisqualified" value="Network connected device (Name: %1; Model %2) got disqualified for automatic setup because its device category is disqualified" />
+        <string id="evtDeviceCategoryPropertyMissingDisqualified" value="Network connected device (Name: %1; Model %2) got disqualified for automatic setup because its device category property is missing" />
+        <string id="evtDeviceIpAddressPropertyMissingDisqualified" value="Network connected device (Name: %1; Model %2) got disqualified for automatic setup because its device IP address property is missing" />
+        <string id="evtDeviceFriendlyNamePropertyMissingDisqualified" value="Network connected device (Model %1) got disqualified for automatic setup because its device friendly name property is missing" />
+        <string id="evtDevicePnpxIdPropertyMissingDisqualified" value="Network connected device (Name: %1; Model %2) got disqualified for automatic setup because its device PnP-X Id property is missing" />
+        <string id="evtNetworkQualified" value="Network (%1) got qualified for automatic setup of network connected devices" />
+        <string id="evtNetworkCategoryDisqualified" value="Network (%1) got disqualified for automatic setup of network connected devices because its network category is disqualified" />
+        <string id="evtNetworkSizeDisqualified" value="Network (%1) got disqualified for automatic setup of network connected devices because its network size is disqualified" />
+        <string id="evtNetworkDiscoveryDisqualified" value="Network (%1) got disqualified for automatic setup of network connected devices because network discovery is turned off" />
+        <string id="evtNetworkMaskDisqualified" value="Network (%1) got disqualified for automatic setup of network connected devices because %2 bits are used for its mask" />
+      </stringTable>
+    </resources>
+  </localization>
+</assembly>

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved." xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <assemblyIdentity name="Microsoft-Windows-UsbCeip" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <dependency discoverable="no" resourceType="Resources">
+    <dependentAssembly dependencyType="prerequisite">
+      <assemblyIdentity name="Microsoft-Windows-UsbCeip.Resources" version="10.0.22621.1" processorArchitecture="amd64" language="*" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+    </dependentAssembly>
+  </dependency>
+  <file name="usbceip.dll" destinationPath="$(runtime.system32)\" sourceName="usbceip.dll" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>ideAOkX2YletQx/lMB3L0Rulhp3DA3sfmXCjZhqYoOc=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <taskScheduler>
+    <Task xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task" version="1.4">
+      <RegistrationInfo>
+        <Source>$(@%SystemRoot%\system32\usbceip.dll,-601)</Source>
+        <Author>$(@%SystemRoot%\system32\usbceip.dll,-600)</Author>
+        <Description>$(@%SystemRoot%\system32\usbceip.dll,-602)</Description>
+        <URI>Microsoft\Windows\Customer Experience Improvement Program\UsbCeip</URI>
+        <SecurityDescriptor>D:(A;OICI;FA;;;BA)(A;OICI;FA;;;SY)(A;OICI;GRGX;;;AU)(A;OICI;SD;;;S-1-5-87-1060603329-121822201-3452730971-4292368946-61207722)(A;;FRFX;;;LS)</SecurityDescriptor>
+        <Version>1.0</Version>
+      </RegistrationInfo>
+      <Settings>
+        <AllowStartOnDemand>true</AllowStartOnDemand>
+        <MultipleInstancesPolicy>IgnoreNew</MultipleInstancesPolicy>
+        <DisallowStartIfOnBatteries>true</DisallowStartIfOnBatteries>
+        <StopIfGoingOnBatteries>true</StopIfGoingOnBatteries>
+        <Enabled>true</Enabled>
+        <Hidden>true</Hidden>
+        <RunOnlyIfIdle>false</RunOnlyIfIdle>
+        <UseUnifiedSchedulingEngine>true</UseUnifiedSchedulingEngine>
+        <StartWhenAvailable>true</StartWhenAvailable>
+        <MaintenanceSettings>
+          <Period>P7D</Period>
+          <Exclusive>false</Exclusive>
+        </MaintenanceSettings>
+      </Settings>
+      <Principals>
+        <Principal id="LocalSystem">
+          <UserId>S-1-5-18</UserId>
+          <RunLevel>LeastPrivilege</RunLevel>
+        </Principal>
+      </Principals>
+      <Actions Context="LocalSystem">
+        <ComHandler>
+          <ClassId>{c27f6b1d-fe0b-45e4-9257-38799fa69bc8}</ClassId>
+          <Data>SYSTEM</Data>
+        </ComHandler>
+      </Actions>
+    </Task>
+  </taskScheduler>
+  <registryKeys>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{c27f6b1d-fe0b-45e4-9257-38799fa69bc8}">
+      <registryValue name="" valueType="REG_SZ" value="UsbCeip" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{c27f6b1d-fe0b-45e4-9257-38799fa69bc8}\InprocServer32">
+      <registryValue name="" valueType="REG_EXPAND_SZ" value="%SystemRoot%\System32\usbceip.dll" />
+      <registryValue name="ThreadingModel" valueType="REG_SZ" value="both" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\system\currentcontrolset\control\usb\ceip" />
+  </registryKeys>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_REGKEY_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;CI;GA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;CI;GR;;;SY)(A;CI;GR;;;BA)(A;CI;GR;;;BU)(A;CI;GR;;;S-1-15-2-1)(A;CI;GR;;;S-1-15-3-1024-1065365936-1281604716-3511738428-1654721687-432734479-3232135806-4053264122-3456934681)" operationHint="replace" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+  <asmv3:configuration xmlns:asmv3="urn:schemas-microsoft-com:asm.v3" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State">
+    <asmv3:configurationSchema>
+      <xsd:schema xmlns="Microsoft-Windows-UsbCeip" targetNamespace="Microsoft-Windows-UsbCeip" />
+    </asmv3:configurationSchema>
+  </asmv3:configuration>
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string id="componentDisplayName" value="Windows Customer Experience Improvement Program for USB" />
+        <string id="componentDescription" value="Windows Customer Experience Improvement Program for USB" />
+      </stringTable>
+    </resources>
+  </localization>
+</assembly>

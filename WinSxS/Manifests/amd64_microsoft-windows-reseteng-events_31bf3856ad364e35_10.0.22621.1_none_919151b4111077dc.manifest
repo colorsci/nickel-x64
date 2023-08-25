@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-ResetEng-Events" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string id="eventProviderName" value="Microsoft-Windows-ResetEng" />
+        <string id="Event.PBRSuccess" value="The system has been successfully reset." />
+        <string id="Event.PBRFailure" value="Attempt to reset the system has failed. Changes to the system have been undone." />
+        <string id="Event.PBRWatchFailure" value="Attempt to watch for errors while resetting the system has failed. Failures to reset the system may not be reported." />
+      </stringTable>
+    </resources>
+  </localization>
+  <instrumentation xmlns:win="http://manifests.microsoft.com/win/2004/08/windows/events" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <events xmlns="http://schemas.microsoft.com/win/2004/08/events">
+      <provider guid="{A4445C76-ED85-C8A3-02C1-532A38614A9E}" message="$(string.eventProviderName)" messageFileName="%windir%\system32\reseteng.dll" name="Microsoft-Windows-ResetEng" resourceFileName="%windir%\system32\reseteng.dll" symbol="RESETENG">
+        <channels>
+          <importChannel chid="systemch" name="System" />
+        </channels>
+      </provider>
+      <provider guid="{7FA514B5-A023-4B62-A6AB-2946A483E065}" messageFileName="%windir%\system32\reseteng.dll" name="Microsoft-Windows-ResetEng-Trace" resourceFileName="%windir%\system32\reseteng.dll" symbol="RESETENG_TRACE">
+        <channels>
+          <channel chid="infoch" name="Microsoft-Windows-ResetEng-Trace/Diagnostic" type="Analytic" />
+        </channels>
+      </provider>
+      <cmi />
+    </events>
+  </instrumentation>
+</assembly>

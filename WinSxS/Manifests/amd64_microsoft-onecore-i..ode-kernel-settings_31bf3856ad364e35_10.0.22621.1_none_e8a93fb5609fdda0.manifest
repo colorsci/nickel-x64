@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-OneCore-IsolatedUserMode-Kernel-Settings" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="VELOCITY_ALL_ACCESS" sddl="O:BAG:SYD:P(A;CI;GA;;;BA)(A;CI;GA;;;SY)(A;CI;GA;;;S-1-5-80-3232712927-1625117661-2590453128-1738570065-3637376297)" operationHint="replace" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+  <registryKeys>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\DeviceGuard">
+      <registryValue name="RequireMicrosoftSignedBootChain" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="CachedDrtmAuthIndex" valueType="REG_DWORD" value="0x00000000" />
+    </registryKey>
+  </registryKeys>
+  <memberships>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories" version="1.0.0.0" publicKeyToken="365143bb27e7ac8b" typeName="BootCritical" />
+    </categoryMembership>
+  </memberships>
+  <migration settingsVersion="5">
+    <machineSpecific>
+      <migXml xmlns="">
+        <rules context="System">
+          <include>
+            <objectSet>
+              <pattern type="Registry">HKLM\SOFTWARE\Policies\Microsoft\Windows\DeviceGuard\* [*]</pattern>
+              <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Control\DeviceGuard\* [*]</pattern>
+            </objectSet>
+          </include>
+          <exclude>
+            <objectSet>
+              <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Control\DeviceGuard [Unlocked]</pattern>
+              <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Control\DeviceGuard\VelocityScenarios\*[*]</pattern>
+              <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Control\DeviceGuard\850BSP\*[*]</pattern>
+              <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Control\DeviceGuard\Scenarios\HypervisorEnforcedCodeIntegrity [EnabledBootId]</pattern>
+            </objectSet>
+          </exclude>
+        </rules>
+      </migXml>
+    </machineSpecific>
+    <supportedComponents>
+      <supportedComponent>
+        <assemblyIdentity name="_" version="1.0.0.0" />
+        <supportedComponentIdentity language="neutral" name="Microsoft-OneCore-IsolatedUserMode-Kernel-Settings" processorArchitecture="*" settingsVersionRange="2-5" xmlns="urn:schemas-microsoft-com:asm.v3" />
+        <machineSpecific>
+          <migXml xmlns="">
+            <rules context="System">
+              <exclude>
+                <objectSet>
+                  <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Control\DeviceGuard\VelocityScenarios\*[*]</pattern>
+                  <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Control\DeviceGuard\850BSP\*[*]</pattern>
+                  <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Control\DeviceGuard\Scenarios\HypervisorEnforcedCodeIntegrity [EnabledBootId]</pattern>
+                </objectSet>
+              </exclude>
+            </rules>
+          </migXml>
+        </machineSpecific>
+      </supportedComponent>
+      <supportedComponent>
+        <assemblyIdentity name="_" version="1.0.0.0" />
+        <supportedComponentIdentity language="neutral" name="Microsoft-Windows-DeviceGuard-GPEXT" processorArchitecture="*" settingsVersionRange="0-2" xmlns="urn:schemas-microsoft-com:asm.v3" />
+        <machineSpecific>
+          <migXml xmlns="">
+            <rules context="System">
+              <exclude>
+                <objectSet>
+                  <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Control\DeviceGuard\VelocityScenarios\*[*]</pattern>
+                  <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Control\DeviceGuard\850BSP\*[*]</pattern>
+                </objectSet>
+              </exclude>
+              <locationModify script="MigXmlHelper.RelativeMove('HKLM\SYSTEM\CurrentControlSet\Control\DeviceGuard [HypervisorEnforcedCodeIntegrity]','HKLM\SYSTEM\CurrentControlSet\Control\DeviceGuard\Scenarios\HypervisorEnforcedCodeIntegrity [Enabled]')">
+                <objectSet>
+                  <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Control\DeviceGuard [HypervisorEnforcedCodeIntegrity]</pattern>
+                </objectSet>
+              </locationModify>
+            </rules>
+          </migXml>
+        </machineSpecific>
+      </supportedComponent>
+    </supportedComponents>
+  </migration>
+</assembly>

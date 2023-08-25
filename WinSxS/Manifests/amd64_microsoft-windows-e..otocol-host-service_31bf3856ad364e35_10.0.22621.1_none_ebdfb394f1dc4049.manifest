@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-Extensible-Authentication-Protocol-Host-Service" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <dependency discoverable="no" resourceType="Resources">
+    <dependentAssembly dependencyType="prerequisite">
+      <assemblyIdentity name="Microsoft-Windows-Extensible-Authentication-Protocol-Host-Service.Resources" version="10.0.22621.1" processorArchitecture="amd64" language="*" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+    </dependentAssembly>
+  </dependency>
+  <file name="eapsvc.dll" destinationPath="$(runtime.system32)\" sourceName="" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>Pjw/DKT28R+jvAMz2cdDib7TcNjxuF+A+g+drxzg+UI=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <file name="Eap3Host.exe" destinationPath="$(runtime.system32)\" sourceName="" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>7zDLtty9pRZSOyGGR143UoIgdUZJ2/lP5NXwatdNuWI=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <memberships>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories.Services" version="10.0.22621.1" publicKeyToken="31bf3856ad364e35" typeName="Service" />
+      <categoryInstance>
+        <serviceData name="EapHost" displayName="@%systemroot%\system32\eapsvc.dll,-1" errorControl="normal" start="demand" type="win32ShareProcess" description="@%systemroot%\system32\eapsvc.dll,-2" dependOnService="RPCSS,KeyIso" imagePath="%SystemRoot%\System32\svchost.exe -k netsvcs -p" objectName="localSystem" requiredPrivileges="SeTcbPrivilege,SeDebugPrivilege,SeImpersonatePrivilege" sidType="unrestricted">
+          <failureActions resetPeriod="86400">
+            <actions>
+              <action delay="120000" type="restartService" />
+              <action delay="120000" type="restartService" />
+              <action delay="0" type="none" />
+            </actions>
+          </failureActions>
+        </serviceData>
+      </categoryInstance>
+    </categoryMembership>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories" version="1.0.0.0" publicKeyToken="365143bb27e7ac8b" typeName="SvcHost" />
+      <categoryInstance subcategory="netsvcs">
+        <serviceGroup position="last" serviceName="EapHost" />
+      </categoryInstance>
+    </categoryMembership>
+  </memberships>
+  <migration scope="Upgrade,MigWiz,USMT" settingsVersion="0">
+    <migXml xmlns="">
+      <rules context="System">
+        <include>
+          <objectSet>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\EapHost\Methods\* [*]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\EapHost\Configuration\ [IdentityEncodingFormat]</pattern>
+          </objectSet>
+        </include>
+        <exclude>
+          <objectSet>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\EapHost\Methods\311\254\14122\1 [*]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\EapHost\Methods\311\21\WLANProfileCreationUXAuth\* [*]</pattern>
+          </objectSet>
+        </exclude>
+        <merge script="MigXmlHelper.SourcePriority()">
+          <objectSet>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\EapHost\Configuration\ [IdentityEncodingFormat]</pattern>
+          </objectSet>
+        </merge>
+      </rules>
+    </migXml>
+    <supportedComponents>
+      <supportedComponent>
+        <assemblyIdentity name="_" version="1.0.0.0" />
+        <supportedComponentIdentity buildType="release" language="neutral" name="Microsoft-Windows-Extensible-Authentication-Protocol-Host-Service" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" settingsVersionRange="0" versionScope="nonSxS" xmlns="urn:schemas-microsoft-com:asm.v3" />
+        <migXml xmlns="">
+          <rules context="System">
+            <exclude>
+              <objectSet>
+                <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\EapHost\Methods\311\254\14122\1 [*]</pattern>
+                <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\EapHost\Methods\311\21\WLANProfileCreationUXAuth\* [*]</pattern>
+              </objectSet>
+            </exclude>
+            <merge script="MigXmlHelper.SourcePriority()">
+              <objectSet>
+                <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\EapHost\Configuration\ [IdentityEncodingFormat]</pattern>
+              </objectSet>
+            </merge>
+          </rules>
+        </migXml>
+      </supportedComponent>
+    </supportedComponents>
+  </migration>
+  <registryKeys>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\System\CurrentControlset\Services\EapHost">
+      <securityDescriptor name="EapHostServiceSecurity" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\System\CurrentControlset\Services\EapHost\Methods\311">
+      <registryValue name="Name" valueType="REG_SZ" value="Microsoft" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\EapHost\Parameters">
+      <registryValue name="ServiceDll" valueType="REG_EXPAND_SZ" value="%SystemRoot%\System32\eapsvc.dll" />
+      <registryValue name="ServiceDllUnloadOnStop" valueType="REG_DWORD" value="0x00000001" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\EapHost\Parameters\EapProvPlugin">
+      <registryValue name="" valueType="REG_EXPAND_SZ" value="%SystemRoot%\System32\eapprovp.dll" />
+      <registryValue name="DllEntryPoint" valueType="REG_SZ" value="EapProvPlugGetInfo" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\AppID\{7B130458-E09C-4823-A8AF-2583DCD9AEC7}">
+      <registryValue name="" valueType="REG_SZ" value="EapThirdPartyDllHost" />
+      <registryValue name="DllSurrogate" valueType="REG_EXPAND_SZ" value="%SystemRoot%\System32\Eap3Host.exe" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+  </registryKeys>
+  <directories>
+    <directory destinationPath="$(runtime.windows)\schemas\EAPHost\" owner="true">
+      <securityDescriptor name="WRP_DIR_DEFAULT_SDDL" />
+    </directory>
+  </directories>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="EapHostServiceSecurity" sddl="D:ARAI(A;OICI;CCDCRCKRKW;;;BA)(A;OICI;RCKR;;;S-1-5-80-3578261754-285310837-913589462-2834155770-667502746)(A;OICI;RCKR;;;IU)(A;OICI;CCDCRCKRKW;;;LA)" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_REGKEY_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;CI;GA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;CI;GR;;;SY)(A;CI;GR;;;BA)(A;CI;GR;;;BU)(A;CI;GR;;;S-1-15-2-1)(A;CI;GR;;;S-1-15-3-1024-1065365936-1281604716-3511738428-1654721687-432734479-3232135806-4053264122-3456934681)" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_DIR_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;CIOI;GA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;CIOI;GRGX;;;SY)(A;CIOI;GRGX;;;BA)(A;CIOI;GRGX;;;BU)(A;CIOI;GRGX;;;S-1-15-2-1)(A;CIOI;GRGX;;;S-1-15-2-2)S:(AU;FASA;SDWDWOFW;;;WD)" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" description="Default SDDL for Windows Resource Protected file" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+  <instrumentation xmlns:win="http://manifests.microsoft.com/win/2004/08/windows/events" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <events xmlns="http://schemas.microsoft.com/win/2004/08/events">
+      <provider guid="{6eb8db94-fe96-443f-a366-5fe0cee7fb1c}" message="$(string.EventProviderName)" messageFileName="%systemroot%\system32\eapsvc.dll" name="Microsoft-Windows-EapHost" parameterFileName="%systemroot%\system32\eapsvc.dll" resourceFileName="%systemroot%\system32\eapsvc.dll" symbol="eaphost">
+        <channels>
+          <importChannel chid="c1" name="Application" />
+          <channel chid="c2" enabled="true" message="$(string.OperationalChannel.Name)" name="Microsoft-Windows-EapHost/Operational" type="Operational" />
+          <channel chid="c3" message="$(string.AnalyticChannel.Name)" name="Microsoft-Windows-EapHost/Analytic" type="Analytic" />
+          <channel chid="c4" message="$(string.DebugChannel.Name)" name="Microsoft-Windows-EapHost/Debug" type="Debug" />
+        </channels>
+      </provider>
+      <cmi />
+    </events>
+    <counters xmlns="http://schemas.microsoft.com/win/2005/12/counters" />
+  </instrumentation>
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string id="EventProviderName" value="Microsoft-Windows-EapHost" />
+        <string id="OperationalChannel.Name" value="Microsoft-Windows-EapHost/Operational" />
+        <string id="AnalyticChannel.Name" value="Microsoft-Windows-EapHost/Analytic" />
+        <string id="DebugChannel.Name" value="Microsoft-Windows-EapHost/Debug" />
+        <string id="AuthTask.Name" value="Authenticator" />
+        <string id="PeerTask.Name" value="Peer" />
+        <string id="CommonTask.Name" value="Common" />
+        <string id="Reg.Message" value="Registry" />
+        <string id="COM.Message" value="COM" />
+        <string id="Performance" value="Performance" />
+        <string id="RegKeyOpenError" value="Method not registered or method's registry data could not be accessed. Unable to open registry key %1, error code %2" />
+        <string id="RegKeyQueryError" value="Method not registered or method's registry data could not be accessed. Query registry (%1) failed for method: TypeId=%2, AuthorId=%3, VendorId=%4, VendorType=%5" />
+        <string id="RegKeyValidationError" value="Method not registered or method's registry data could not be accessed. Validation failed for key (%1), Method Info: Type Id=%2, AuthorId=%3, vendorId=%4, vendorType=%5" />
+        <string id="FriendlyNameCLSIDError" value="Method not registered or method's registry data could not be accessed. LoadConfig: FriendlyName, ConfigCLSID both are empty" />
+        <string id="ComReInitError" value="Unable to Initialize COM library. An instance of EapHostAuthenticatorInvokeConfigUI() is already running. CoInitializeEx returned S_FALSE." />
+        <string id="CoInitExError" value="Unable to Initialize COM library. The wrong concurrency model was specified for EapHostAuthenticatorInvokeConfigUI(). COM Error: RPC_E_CHANGED_MODE." />
+        <string id="ComInitError" value="Unable to Initialize COM library for EapHostAuthenticatorInitialize(). %n Error Description: %1" />
+        <string id="InvalidEAPPacket" value="Unable to parse malformed EAP packet" />
+        <string id="InvalidEAPAttribute" value="Invalid eatInnerEapMethodType returned by the EAP method. Attribute has incorrect format (%1)" />
+        <string id="UnsupportedAPIError" value="Method does not support EapMethodAuthenticatorUpdateInnerMethodParams() API, but UpdateInnerMethodParams() called" />
+        <string id="LoadConfigError" value="Method not registered or registry value error: Function Name=LoadConfig, ArgumentName=%1" />
+        <string id="ReceivedPacketEvent" value="Session(%1), state(%2), receive packet id(%3), length(%4)" />
+        <string id="SendPacketEvent" value="send packet id(%1), length(%2)" />
+        <string id="PeerResponse" value="Client's response: NAK=%1, Accept=%2" />
+        <string id="NoPrefMethod" value="No preferred methods list provided by Peer" />
+        <string id="EapNegFailed" value="Negotiation failed. No available EAP methods" />
+        <string id="EapNegFailed1" value="Negotiation failed. Proposed methods list from peer is invalid" />
+        <string id="EapNegFailed2" value="Negotiation failed. Requested EAP methods not available" />
+        <string id="SoHRespFound" value="SoH response found" />
+        <string id="GetSoHResp" value="NAP exchange required, get SoH response from network policy server" />
+        <string id="MethodStandAloneError" value="Method does not support stand-alone mode. Skipping EapMethod TypeId=%1, AuthorId=%2" />
+        <string id="PPPInvalidPacketError" value="Unable to parse malformed EAP packet. ERROR_PPP_INVALID_PACKET returned" />
+        <string id="NakResponse" value="NAK Response: Method (VenId(%2), VenType(%3), Type(%1))  present" />
+        <string id="AuthenticatorExceededEap3HostProcessCntEvent" value="Exceeded the maximum number(32) of Third Party EapHost processes. Discarding the current eap session." />
+        <string id="RegOpenFailure" value="EAP methods not registered or registry data could not be accessed; Failed to open registry %1, Error Code: %2" />
+        <string id="TypeIDFailure" value="EAP methods not registered or registry data could not be accessed; Failed to open method registry %2\\%1. Skip this type ID" />
+        <string id="AuthorIDFailure" value="EAP methods not registered or registry data could not be accessed; Failed to open method registry %1. Skip this author ID" />
+        <string id="VendorTypeFailure" value="EAP methods not registered or registry data could not be accessed; Failed to open method registry %1\\254\\%2\\%3. Skip this vendor type" />
+        <string id="VendorIDFailure" value="EAP methods not registered or registry data could not be accessed; Failed to open method registry %1\\254\\%2. Skip this vendor ID" />
+        <string id="MethodAddFailed" value="Skipping: Unable to add EAP method. Friendly name not present. TypeId(%1), AuthorId(%2), VendorId(%3), VendorType(%4)" />
+        <string id="LibLoadFailed" value="EAPHost failed to load. LoadLibraryW(%1) failed %2" />
+        <string id="MethodNotFound" value="Could not find the requested EapMethod: TypeId(%1), AuthorId(%2), VendorId(%3), VendorType(%4)" />
+        <string id="XMLNodeFailedEvent" value="XML configuration problem; Failed to get EapMethodType node %n. Error Description: %1" />
+        <string id="XMLDataMismatchError" value="XML configuration problem; Data Type mismatch for %1" />
+        <string id="XMLConfigError" value="XML configuration problem; Bad method: TypeId(%1), AuthorId(%2), VendorId(%3), VendorType(%4)" />
+        <string id="OutOfMemory" value="Could not load method. Out of memory" />
+        <string id="NewMethodFailure" value="Unable to add new method after re-initialization" />
+        <string id="EapExceptionEvent" value="EAP Exception caught: authorId(%1), type(%2), vendorId(%3), vendorType(%4), error(%5)" />
+        <string id="ExceptionEvent" value="Exception caught: authorId(%1), type(%2), vendorId(%3), vendorType(%4), error(%5)" />
+        <string id="MUIReadFailed" value="Error %1, reading EAP method friendly name(muiRead). Friendly name retrieved from registry" />
+        <string id="ReInitMethodList" value="EAP method not found, re-initializing the library manager's EapMethodList data" />
+        <string id="MethodFoundEvent" value="New method found after re-initializing EapMethodList data" />
+        <string id="MethodAdditionEvent" value="New EAP method added to EapMethodList: TypeId=%1, AuthorId=%2, VendorId=%3, VendorType=%4" />
+        <string id="PeerMethodRegAccessFailure" value="Eap method friendly name can not be verified or %1 path could not be accessed; Error: type(%2), authId(%3), vendorId(%4), vendorType(%5)" />
+        <string id="PeerPathNameValidationFailure" value="Skipping: %1 validation failed. Error: typeId=%2, authorId=%3, vendorId=%4, vendorType=%5" />
+        <string id="PeerCOMMemAllocError" value="CoTaskMemAlloc() failed for SoH. SoH not saved." />
+        <string id="PeerCOMInitializationFailure" value="Could not initialize COM library in service control manager notification thread" />
+        <string id="PeerNotifySoHChangeException" value="SoH change failed. EapQec::NotifySoHChange caught exception for %1: 0x%2" />
+        <string id="PeerConfigSchemaInvalid" value="ConfigSchema validation failed. Error  %1" />
+        <string id="PeerInvalidThread" value="EapQec Listening thread handle is NULL" />
+        <string id="PeerSessionRequestForActiveSession" value="Session(%1, %2) in use" />
+        <string id="PeerFunctionNotSupported" value="EAP method does not support %1." />
+        <string id="PeerXMLConfigProblemRootElementAccessFailure" value="XML configuration problem;  Failed to find root element." />
+        <string id="PeerXMLConfigProblemInvalidParameterPassed" value="XML configuration problem;  Invalid parameter passed." />
+        <string id="PeerRegKeyValidationSuccess" value="Registry key validation successful." />
+        <string id="PeerNotNAPAware" value="Client not NAP enabled. SoH change failed." />
+        <string id="PeerSoHResponseFailure" value="No SoH response received for %1" />
+        <string id="PeerSoHChangeSuccess" value="Notify SoH change succeeded." />
+        <string id="PeerSoHChangeFailure" value="Notify SoH change failed with interface: %1." />
+        <string id="PeerUserAccountAuthFailure" value="Session(%1): Received EAP-Failure after Identity exchange:  There is likely a problem with the authenticating user's account." />
+        <string id="PeerUserEntersCredentials" value="User Entered Credentials." />
+        <string id="PeerUserUsesSavedCredentials" value="User Uses Saved Credentials." />
+        <string id="SessionStateAuthenticating" value="EAP session is completing during the authentication phase." />
+        <string id="PeerClientServerDontSupportSameMethod" value="Session(%1): Received EAP-Failure after EAP-Nak negotiation:  The client &amp; server are not configured to support the same EAP methods. (Server offered EAP type %2; Client sent a Nak, and requested EAP type %3.)" />
+        <string id="PeerFunctionNotSupportedInfo" value="Method does not implement %1" />
+        <string id="PeerCOMAPIFailure" value="COM API %1 Failed.%n Error Description : %2" />
+        <string id="PeerBeginThreadFailure" value="_beginthreadex failed.%n Error Description : %1" />
+        <string id="PeerXMLInvalidWithError" value="Invalid XML document. Failed to selectSingleNode.%n Error Description : %1" />
+        <string id="PeerHandleOpenFailure" value="Unable to open %1 handle.%n Error Description : %2" />
+        <string id="ExceededEap3HostProcessCntEvent" value="Exceeded the maximum number(32) of Third Party EapHost processes. Running the current eap session in short lived Eap3Host process." />
+        <string id="PeerGetResultFailure" value="EapHostPeerGetResult returned a failure.%nEap Method Friendly Name: %2%nReason code: %1%nRoot Cause String: %3%nRepair String: %4" />
+        <string id="debugInfoEvent" value="%1" />
+        <string id="debugErrorEvent" value="%1" />
+        <string id="displayName0" value="EapHost Service SDDL" />
+        <string id="description1" value="SDDL for EapHost service registry key" />
+      </stringTable>
+    </resources>
+  </localization>
+</assembly>

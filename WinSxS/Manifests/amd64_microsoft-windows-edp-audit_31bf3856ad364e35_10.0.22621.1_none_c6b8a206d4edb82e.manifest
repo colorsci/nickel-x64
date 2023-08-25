@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-EDP-Audit" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <file name="edpauditapi.dll" destinationPath="$(runtime.system32)\" sourceName="edpauditapi.dll" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>IfbE4pfrMBhuXTQNOhTPU3JRgB8o0n16jWayIc5nWzw=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <directories>
+    <directory destinationPath="$(runtime.windows)\security\EDP">
+      <securityDescriptor name="WRP_PARENT_DIR_DEFAULT_SDDL" />
+    </directory>
+    <directory destinationPath="$(runtime.windows)\security\EDP\Logs" attributes="hidden system">
+      <securityDescriptor name="WRP_PARENT_DIR_DEFAULT_SDDL" />
+    </directory>
+  </directories>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="WRP_PARENT_DIR_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;CI;GA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;0x1301bf;;;SY)(A;IOCIOI;GA;;;SY)(A;;0x1301bf;;;BA)(A;IOCIOI;GA;;;BA)(A;CIOI;GRGX;;;BU)(A;OICIIO;GA;;;CO)(A;CIOI;GRGX;;;S-1-15-2-1)(A;CIOI;GRGX;;;S-1-15-2-2)" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" description="Default SDDL for Windows Resource Protected file" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+  <instrumentation xmlns:win="http://manifests.microsoft.com/win/2004/08/windows/events" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <events xmlns="http://schemas.microsoft.com/win/2004/08/events">
+      <provider guid="{287d59b6-79ba-4741-a08b-2fedeede6435}" message="$(string.EdpAudit.ProviderName.TCB)" messageFileName="%SystemRoot%\System32\edpauditapi.dll" name="Microsoft-Windows-EDP-Audit-TCB" resourceFileName="%SystemRoot%\System32\edpauditapi.dll" symbol="EdpAuditProviderTcb">
+        <channels>
+          <channel chid="EDP-Audit-Channel-TCB" enabled="true" message="$(string.EdpAudit.ChannelName.TCB)" name="Microsoft-Windows-EDP-Audit-TCB/Admin" type="Admin" />
+        </channels>
+      </provider>
+      <provider guid="{50f99b2d-96d2-421f-be4c-222c4140da9f}" message="$(string.EdpAudit.ProviderName.Regular)" messageFileName="%SystemRoot%\System32\edpauditapi.dll" name="Microsoft-Windows-EDP-Audit-Regular" resourceFileName="%SystemRoot%\System32\edpauditapi.dll" symbol="EdpAuditProviderRegular">
+        <channels>
+          <channel chid="EDP-Audit-Channel-Regular" enabled="true" message="$(string.EdpAudit.ChannelName.Regular)" name="Microsoft-Windows-EDP-Audit-Regular/Admin" type="Admin" />
+        </channels>
+      </provider>
+      <provider guid="{9803DAA0-81BA-483A-986C-F0E395B9F8D1}" message="$(string.EdpAudit.ProviderName.AppLearning)" messageFileName="%SystemRoot%\System32\edpauditapi.dll" name="Microsoft-Windows-EDP-AppLearning" resourceFileName="%SystemRoot%\System32\edpauditapi.dll" symbol="EdpAuditProviderAppLearning">
+        <channels>
+          <channel chid="EDP-Audit-Channel-App-Learning" enabled="true" message="$(string.EdpAudit.ChannelName.AppLearning)" name="Microsoft-Windows-EDP-Application-Learning/Admin" type="Admin" />
+        </channels>
+      </provider>
+      <cmi />
+    </events>
+  </instrumentation>
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string id="EdpAudit.ProviderName.TCB" value="Microsoft Windows Information Protection Audit TCB Provider" />
+        <string id="EdpAudit.ProviderName.Regular" value="Microsoft Windows Information Protection Audit Regular Provider" />
+        <string id="EdpAudit.ProviderName.AppLearning" value="Microsoft Windows Information Protection Application Learning Events Provider" />
+        <string id="EdpAudit.ChannelName.TCB" value="Microsoft Windows Information Protection Audit TCB Channel" />
+        <string id="EdpAudit.ChannelName.Regular" value="Microsoft Windows Information Protection Audit Regular Channel" />
+        <string id="EdpAudit.ChannelName.AppLearning" value="Microsoft Windows Information Protection Application Learning Log Channel" />
+        <string id="EdpAudit.KeywordName.ProtectionRemoved" value="Windows Information Protection Audit Protection Removed Keyword" />
+        <string id="EdpAudit.KeywordName.DataCopied" value="Windows Information Protection Audit Data Copied Keyword" />
+        <string id="EdpAudit.KeywordName.ApplicationGenerated" value="Windows Information Protection Audit Application Generated Keyword" />
+        <string id="EdpAudit.KeywordName.AppLearning" value="Windows Information Protection Audit Application Learning Log Keyword" />
+        <string id="EdpAudit.KeywordName.SitesLearning" value="Windows Information Protection Audit Sites Learning Log Keyword" />
+        <string id="EdpAudit.Map.SystemGenerated" value="System Operation" />
+        <string id="EdpAudit.Map.FileDecrypt" value="Decrypt Enterprise File" />
+        <string id="EdpAudit.Map.CopyToLocation" value="Copy Enterprise File" />
+        <string id="EdpAudit.Map.SendToRecipient" value="Send Enterprise File" />
+        <string id="EdpAudit.Map.Other" value="Other" />
+        <string id="EdpAudit.Map.FileRead" value="Read Enterprise File" />
+        <string id="EdpAudit.Map.NetworkAccess" value="Access Enterprise Network" />
+        <string id="EdpAudit.Map.AppIdType.unknown" value="Unknown" />
+        <string id="EdpAudit.Map.AppIdType.appfqbn" value="Application Id" />
+        <string id="EdpAudit.Map.AppIdType.apppath" value="Application path" />
+        <string id="EdpAudit.Map.AppIdType.apphash" value="Application hash Id" />
+        <string id="EdpAudit.EventMessage.101" value="Enterprise %4 tag has been removed (%2) from the file: %5" />
+        <string id="EdpAudit.EventMessage.201" value="%8 has been copied (%2) from %5 (tagged as %4) to %7 (tagged as %6)" />
+        <string id="EdpAudit.EventMessage.301" value="%3 has been changed from %5 (tagged as %6) to %7 (tagged as %8) in %9" />
+        <string id="EdpAudit.EventMessage.401" value="An application tried to access enterprise resources" />
+        <string id="EdpAudit.EventMessage.402" value="An enterprise resource was shared to a website" />
+      </stringTable>
+    </resources>
+  </localization>
+</assembly>

@@ -1,0 +1,522 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved." xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <assemblyIdentity name="Microsoft-Windows-Bits-Client-Extras" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <dependency discoverable="no" resourceType="Resources">
+    <dependentAssembly dependencyType="prerequisite">
+      <assemblyIdentity name="Microsoft-Windows-Bits-Client.Resources" version="10.0.22621.1" processorArchitecture="amd64" language="*" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </dependentAssembly>
+  </dependency>
+  <file name="qmgr.mof" destinationPath="$(runtime.wbem)\" sourceName="qmgr.mof" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>sX/O36i+GdfjcgSoQH+oiC82cCoPX1T53ZUTSRhvZVE=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <mof name="$(runtime.wbem)\qmgr.mof" />
+  <asmv3:configuration xmlns:asmv3="urn:schemas-microsoft-com:asm.v3" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State">
+    <asmv3:configurationSchema>
+      <xsd:schema xmlns="Microsoft-Windows-Bits-Client" targetNamespace="Microsoft-Windows-Bits-Client">
+        <xsd:element default="600" name="JobMinimumRetryDelay" type="xsd:unsignedInt" wcm:description="Time in seconds before retries after failed transfer attempts." wcm:displayName="Minimum retry delay" wcm:handler="regkey('HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\BITS')" wcm:scope="allUsers" />
+        <xsd:element default="1209600" name="JobNoProgressTimeout" type="xsd:unsignedInt" wcm:description="Time in seconds before a transient error becomes a fatal error." wcm:displayName="No progress timeout" wcm:handler="regkey('HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\BITS')" wcm:scope="allUsers" />
+        <xsd:element default="120" name="LogFileMinMemory" type="xsd:unsignedInt" wcm:description="Minimum required physical RAM before the log will be enabled." wcm:displayName="Log minimum memory" wcm:handler="regkey('HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\BITS')" wcm:scope="allUsers" />
+        <xsd:element default="1" name="LogFileSize" type="xsd:unsignedInt" wcm:description="Maximum size of the log file in MB." wcm:displayName="Log file size" wcm:handler="regkey('HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\BITS')" wcm:scope="allUsers" />
+        <xsd:element default="300" name="TimeQuantaLength" type="xsd:unsignedInt" wcm:description="Time in seconds before BITS switches to a new background job." wcm:displayName="Time quantum length" wcm:handler="regkey('HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\BITS')" wcm:scope="allUsers" />
+        <xsd:element default="7776000" name="JobInactivityTimeout" type="xsd:unsignedInt" wcm:description="Timeout in seconds before an orphaned job is discarded" wcm:displayName="Job inactivity timeout" wcm:handler="regkey('HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\BITS')" wcm:scope="allUsers" />
+        <xsd:element default="0" name="LogFileFlags" type="xsd:unsignedInt" wcm:description="Flags that control which items should be logged." wcm:displayName="Log file flags" wcm:handler="regkey('HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\BITS')" wcm:scope="allUsers" />
+        <xsd:element default="2" name="UseLmCompat" type="xsd:unsignedInt" wcm:description="1 if the lmcompatibilitylevel should be used from the registry, otherwise 0." wcm:displayName="Use lmcompatibilitylevel from registry" wcm:handler="regkey('HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\BITS')" wcm:scope="allUsers" />
+        <xsd:element default="5" name="MaximumForegroundCacheRetries" type="xsd:unsignedInt" wcm:description="number of times a foreground job attempts to read the current block from Branch Cache when a flash-crowd situation is detected" wcm:displayName="Branch Cache retry count for foreground jobs" wcm:handler="regkey('HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\BITS')" wcm:scope="allUsers" />
+        <xsd:element default="15" name="MaximumBackgroundCacheRetries" type="xsd:unsignedInt" wcm:description="number of times a background job attempts to read the current block from Branch Cache when a flash-crowd situation is detected" wcm:displayName="Branch Cache retry count for background jobs" wcm:handler="regkey('HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\BITS')" wcm:scope="allUsers" />
+        <xsd:element default="1000" name="CacheRetryIntervalMsec" type="xsd:unsignedInt" wcm:description="interval between attempts to read the current block from Branch Cache when a flash-crowd situation is detected" wcm:displayName="Branch Cache polling interval" wcm:handler="regkey('HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\BITS')" wcm:scope="allUsers" />
+      </xsd:schema>
+    </asmv3:configurationSchema>
+    <asmv3:metadata />
+  </asmv3:configuration>
+  <instrumentation>
+    <events xmlns="http://schemas.microsoft.com/win/2004/08/events" xmlns:win="http://manifests.microsoft.com/win/2004/08/windows/events" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <messageTable>
+        <message message="$(string.ErrorCode.BG_S_ERROR_CONTEXT_NONE)" symbol="BG_S_ERROR_CONTEXT_NONE" value="0x00200006" />
+        <message message="$(string.ErrorCode.BG_S_PARTIAL_COMPLETE)" symbol="BG_S_PARTIAL_COMPLETE" value="0x00200017" />
+        <message message="$(string.ErrorCode.BG_S_UNABLE_TO_DELETE_FILES)" symbol="BG_S_UNABLE_TO_DELETE_FILES" value="0x0020001A" />
+        <message message="$(string.ErrorCode.BG_S_PROXY_CHANGED)" symbol="BG_S_PROXY_CHANGED" value="0x0020002A" />
+        <message message="$(string.ErrorCode.BG_E_HTTP_ERROR_100)" symbol="BG_E_HTTP_ERROR_100" value="0x80190064" />
+        <message message="$(string.ErrorCode.BG_E_HTTP_ERROR_101)" symbol="BG_E_HTTP_ERROR_101" value="0x80190065" />
+        <message message="$(string.ErrorCode.BG_E_HTTP_ERROR_200)" symbol="BG_E_HTTP_ERROR_200" value="0x801900C8" />
+        <message message="$(string.ErrorCode.BG_E_HTTP_ERROR_201)" symbol="BG_E_HTTP_ERROR_201" value="0x801900C9" />
+        <message message="$(string.ErrorCode.BG_E_HTTP_ERROR_202)" symbol="BG_E_HTTP_ERROR_202" value="0x801900CA" />
+        <message message="$(string.ErrorCode.BG_E_HTTP_ERROR_203)" symbol="BG_E_HTTP_ERROR_203" value="0x801900CB" />
+        <message message="$(string.ErrorCode.BG_E_HTTP_ERROR_204)" symbol="BG_E_HTTP_ERROR_204" value="0x801900CC" />
+        <message message="$(string.ErrorCode.BG_E_HTTP_ERROR_205)" symbol="BG_E_HTTP_ERROR_205" value="0x801900CD" />
+        <message message="$(string.ErrorCode.BG_E_HTTP_ERROR_206)" symbol="BG_E_HTTP_ERROR_206" value="0x801900CE" />
+        <message message="$(string.ErrorCode.BG_E_HTTP_ERROR_300)" symbol="BG_E_HTTP_ERROR_300" value="0x8019012C" />
+        <message message="$(string.ErrorCode.BG_E_HTTP_ERROR_301)" symbol="BG_E_HTTP_ERROR_301" value="0x8019012D" />
+        <message message="$(string.ErrorCode.BG_E_HTTP_ERROR_302)" symbol="BG_E_HTTP_ERROR_302" value="0x8019012E" />
+        <message message="$(string.ErrorCode.BG_E_HTTP_ERROR_303)" symbol="BG_E_HTTP_ERROR_303" value="0x8019012F" />
+        <message message="$(string.ErrorCode.BG_E_HTTP_ERROR_304)" symbol="BG_E_HTTP_ERROR_304" value="0x80190130" />
+        <message message="$(string.ErrorCode.BG_E_HTTP_ERROR_305)" symbol="BG_E_HTTP_ERROR_305" value="0x80190131" />
+        <message message="$(string.ErrorCode.BG_E_HTTP_ERROR_307)" symbol="BG_E_HTTP_ERROR_307" value="0x80190133" />
+        <message message="$(string.ErrorCode.BG_E_HTTP_ERROR_400)" symbol="BG_E_HTTP_ERROR_400" value="0x80190190" />
+        <message message="$(string.ErrorCode.BG_E_HTTP_ERROR_401)" symbol="BG_E_HTTP_ERROR_401" value="0x80190191" />
+        <message message="$(string.ErrorCode.BG_E_HTTP_ERROR_402)" symbol="BG_E_HTTP_ERROR_402" value="0x80190192" />
+        <message message="$(string.ErrorCode.BG_E_HTTP_ERROR_403)" symbol="BG_E_HTTP_ERROR_403" value="0x80190193" />
+        <message message="$(string.ErrorCode.BG_E_HTTP_ERROR_404)" symbol="BG_E_HTTP_ERROR_404" value="0x80190194" />
+        <message message="$(string.ErrorCode.BG_E_HTTP_ERROR_405)" symbol="BG_E_HTTP_ERROR_405" value="0x80190195" />
+        <message message="$(string.ErrorCode.BG_E_HTTP_ERROR_406)" symbol="BG_E_HTTP_ERROR_406" value="0x80190196" />
+        <message message="$(string.ErrorCode.BG_E_HTTP_ERROR_407)" symbol="BG_E_HTTP_ERROR_407" value="0x80190197" />
+        <message message="$(string.ErrorCode.BG_E_HTTP_ERROR_408)" symbol="BG_E_HTTP_ERROR_408" value="0x80190198" />
+        <message message="$(string.ErrorCode.BG_E_HTTP_ERROR_409)" symbol="BG_E_HTTP_ERROR_409" value="0x80190199" />
+        <message message="$(string.ErrorCode.BG_E_HTTP_ERROR_410)" symbol="BG_E_HTTP_ERROR_410" value="0x8019019A" />
+        <message message="$(string.ErrorCode.BG_E_HTTP_ERROR_411)" symbol="BG_E_HTTP_ERROR_411" value="0x8019019B" />
+        <message message="$(string.ErrorCode.BG_E_HTTP_ERROR_412)" symbol="BG_E_HTTP_ERROR_412" value="0x8019019C" />
+        <message message="$(string.ErrorCode.BG_E_HTTP_ERROR_413)" symbol="BG_E_HTTP_ERROR_413" value="0x8019019D" />
+        <message message="$(string.ErrorCode.BG_E_HTTP_ERROR_414)" symbol="BG_E_HTTP_ERROR_414" value="0x8019019E" />
+        <message message="$(string.ErrorCode.BG_E_HTTP_ERROR_415)" symbol="BG_E_HTTP_ERROR_415" value="0x8019019F" />
+        <message message="$(string.ErrorCode.BG_E_HTTP_ERROR_416)" symbol="BG_E_HTTP_ERROR_416" value="0x801901A0" />
+        <message message="$(string.ErrorCode.BG_E_HTTP_ERROR_417)" symbol="BG_E_HTTP_ERROR_417" value="0x801901A1" />
+        <message message="$(string.ErrorCode.BG_E_HTTP_ERROR_449)" symbol="BG_E_HTTP_ERROR_449" value="0x801901C1" />
+        <message message="$(string.ErrorCode.BG_E_HTTP_ERROR_500)" symbol="BG_E_HTTP_ERROR_500" value="0x801901F4" />
+        <message message="$(string.ErrorCode.BG_E_HTTP_ERROR_501)" symbol="BG_E_HTTP_ERROR_501" value="0x801901F5" />
+        <message message="$(string.ErrorCode.BG_E_HTTP_ERROR_502)" symbol="BG_E_HTTP_ERROR_502" value="0x801901F6" />
+        <message message="$(string.ErrorCode.BG_E_HTTP_ERROR_503)" symbol="BG_E_HTTP_ERROR_503" value="0x801901F7" />
+        <message message="$(string.ErrorCode.BG_E_HTTP_ERROR_504)" symbol="BG_E_HTTP_ERROR_504" value="0x801901F8" />
+        <message message="$(string.ErrorCode.BG_E_HTTP_ERROR_505)" symbol="BG_E_HTTP_ERROR_505" value="0x801901F9" />
+        <message message="$(string.ErrorCode.BG_E_NOT_FOUND)" symbol="BG_E_NOT_FOUND" value="0x80200001" />
+        <message message="$(string.ErrorCode.BG_E_INVALID_STATE)" symbol="BG_E_INVALID_STATE" value="0x80200002" />
+        <message message="$(string.ErrorCode.BG_E_EMPTY)" symbol="BG_E_EMPTY" value="0x80200003" />
+        <message message="$(string.ErrorCode.BG_E_FILE_NOT_AVAILABLE)" symbol="BG_E_FILE_NOT_AVAILABLE" value="0x80200004" />
+        <message message="$(string.ErrorCode.BG_E_PROTOCOL_NOT_AVAILABLE)" symbol="BG_E_PROTOCOL_NOT_AVAILABLE" value="0x80200005" />
+        <message message="$(string.ErrorCode.BG_E_ERROR_CONTEXT_UNKNOWN)" symbol="BG_E_ERROR_CONTEXT_UNKNOWN" value="0x80200007" />
+        <message message="$(string.ErrorCode.BG_E_ERROR_CONTEXT_GENERAL_QUEUE_MANAGER)" symbol="BG_E_ERROR_CONTEXT_GENERAL_QUEUE_MANAGER" value="0x80200008" />
+        <message message="$(string.ErrorCode.BG_E_ERROR_CONTEXT_LOCAL_FILE)" symbol="BG_E_ERROR_CONTEXT_LOCAL_FILE" value="0x80200009" />
+        <message message="$(string.ErrorCode.BG_E_ERROR_CONTEXT_REMOTE_FILE)" symbol="BG_E_ERROR_CONTEXT_REMOTE_FILE" value="0x8020000A" />
+        <message message="$(string.ErrorCode.BG_E_ERROR_CONTEXT_GENERAL_TRANSPORT)" symbol="BG_E_ERROR_CONTEXT_GENERAL_TRANSPORT" value="0x8020000B" />
+        <message message="$(string.ErrorCode.BG_E_ERROR_CONTEXT_QUEUE_MANAGER_NOTIFICATION)" symbol="BG_E_ERROR_CONTEXT_QUEUE_MANAGER_NOTIFICATION" value="0x8020000C" />
+        <message message="$(string.ErrorCode.BG_E_DESTINATION_LOCKED)" symbol="BG_E_DESTINATION_LOCKED" value="0x8020000D" />
+        <message message="$(string.ErrorCode.BG_E_VOLUME_CHANGED)" symbol="BG_E_VOLUME_CHANGED" value="0x8020000E" />
+        <message message="$(string.ErrorCode.BG_E_ERROR_INFORMATION_UNAVAILABLE)" symbol="BG_E_ERROR_INFORMATION_UNAVAILABLE" value="0x8020000F" />
+        <message message="$(string.ErrorCode.BG_E_NETWORK_DISCONNECTED)" symbol="BG_E_NETWORK_DISCONNECTED" value="0x80200010" />
+        <message message="$(string.ErrorCode.BG_E_MISSING_FILE_SIZE)" symbol="BG_E_MISSING_FILE_SIZE" value="0x80200011" />
+        <message message="$(string.ErrorCode.BG_E_INSUFFICIENT_HTTP_SUPPORT)" symbol="BG_E_INSUFFICIENT_HTTP_SUPPORT" value="0x80200012" />
+        <message message="$(string.ErrorCode.BG_E_INSUFFICIENT_RANGE_SUPPORT)" symbol="BG_E_INSUFFICIENT_RANGE_SUPPORT" value="0x80200013" />
+        <message message="$(string.ErrorCode.BG_E_REMOTE_NOT_SUPPORTED)" symbol="BG_E_REMOTE_NOT_SUPPORTED" value="0x80200014" />
+        <message message="$(string.ErrorCode.BG_E_NEW_OWNER_DIFF_MAPPING)" symbol="BG_E_NEW_OWNER_DIFF_MAPPING" value="0x80200015" />
+        <message message="$(string.ErrorCode.BG_E_NEW_OWNER_NO_FILE_ACCESS)" symbol="BG_E_NEW_OWNER_NO_FILE_ACCESS" value="0x80200016" />
+        <message message="$(string.ErrorCode.BG_E_PROXY_LIST_TOO_LARGE)" symbol="BG_E_PROXY_LIST_TOO_LARGE" value="0x80200018" />
+        <message message="$(string.ErrorCode.BG_E_PROXY_BYPASS_LIST_TOO_LARGE)" symbol="BG_E_PROXY_BYPASS_LIST_TOO_LARGE" value="0x80200019" />
+        <message message="$(string.ErrorCode.BG_E_INVALID_SERVER_RESPONSE)" symbol="BG_E_INVALID_SERVER_RESPONSE" value="0x8020001B" />
+        <message message="$(string.ErrorCode.BG_E_TOO_MANY_FILES)" symbol="BG_E_TOO_MANY_FILES" value="0x8020001C" />
+        <message message="$(string.ErrorCode.BG_E_LOCAL_FILE_CHANGED)" symbol="BG_E_LOCAL_FILE_CHANGED" value="0x8020001D" />
+        <message message="$(string.ErrorCode.BG_E_ERROR_CONTEXT_REMOTE_APPLICATION)" symbol="BG_E_ERROR_CONTEXT_REMOTE_APPLICATION" value="0x8020001E" />
+        <message message="$(string.ErrorCode.BG_E_SESSION_NOT_FOUND)" symbol="BG_E_SESSION_NOT_FOUND" value="0x8020001F" />
+        <message message="$(string.ErrorCode.BG_E_TOO_LARGE)" symbol="BG_E_TOO_LARGE" value="0x80200020" />
+        <message message="$(string.ErrorCode.BG_E_STRING_TOO_LONG)" symbol="BG_E_STRING_TOO_LONG" value="0x80200021" />
+        <message message="$(string.ErrorCode.BG_E_CLIENT_SERVER_PROTOCOL_MISMATCH)" symbol="BG_E_CLIENT_SERVER_PROTOCOL_MISMATCH" value="0x80200022" />
+        <message message="$(string.ErrorCode.BG_E_SERVER_EXECUTE_ENABLE)" symbol="BG_E_SERVER_EXECUTE_ENABLE" value="0x80200023" />
+        <message message="$(string.ErrorCode.BG_E_NO_PROGRESS)" symbol="BG_E_NO_PROGRESS" value="0x80200024" />
+        <message message="$(string.ErrorCode.BG_E_USERNAME_TOO_LARGE)" symbol="BG_E_USERNAME_TOO_LARGE" value="0x80200025" />
+        <message message="$(string.ErrorCode.BG_E_PASSWORD_TOO_LARGE)" symbol="BG_E_PASSWORD_TOO_LARGE" value="0x80200026" />
+        <message message="$(string.ErrorCode.BG_E_INVALID_AUTH_TARGET)" symbol="BG_E_INVALID_AUTH_TARGET" value="0x80200027" />
+        <message message="$(string.ErrorCode.BG_E_INVALID_AUTH_SCHEME)" symbol="BG_E_INVALID_AUTH_SCHEME" value="0x80200028" />
+        <message message="$(string.ErrorCode.BG_E_FILE_NOT_FOUND)" symbol="BG_E_FILE_NOT_FOUND" value="0x80200029" />
+        <message message="$(string.ErrorCode.BG_E_INVALID_RANGE)" symbol="BG_E_INVALID_RANGE" value="0x8020002B" />
+        <message message="$(string.ErrorCode.BG_E_OVERLAPPING_RANGES)" symbol="BG_E_OVERLAPPING_RANGES" value="0x8020002C" />
+        <message message="$(string.ErrorCode.BG_E_CONNECT_FAILURE)" symbol="BG_E_CONNECT_FAILURE" value="0x8020002D" />
+        <message message="$(string.ErrorCode.BG_E_CONNECTION_CLOSED)" symbol="BG_E_CONNECTION_CLOSED" value="0x8020002E" />
+        <message message="$(string.ErrorCode.BG_E_BLOCKED_BY_POLICY)" symbol="BG_E_BLOCKED_BY_POLICY" value="0x8020003E" />
+        <message message="$(string.ErrorCode.BG_E_INVALID_PROXY_INFO)" symbol="BG_E_INVALID_PROXY_INFO" value="0x8020003F" />
+        <message message="$(string.ErrorCode.BG_E_INVALID_CREDENTIALS)" symbol="BG_E_INVALID_CREDENTIALS" value="0x80200040" />
+        <message message="$(string.ErrorCode.BG_E_INVALID_HASH_ALGORITHM)" symbol="BG_E_INVALID_HASH_ALGORITHM" value="0x80200041" />
+        <message message="$(string.ErrorCode.BG_E_RECORD_DELETED)" symbol="BG_E_RECORD_DELETED" value="0x80200042" />
+        <message message="$(string.ErrorCode.BG_E_COMMIT_IN_PROGRESS)" symbol="BG_E_COMMIT_IN_PROGRESS" value="0x80200043" />
+        <message message="$(string.ErrorCode.BG_E_DISCOVERY_IN_PROGRESS)" symbol="BG_E_DISCOVERY_IN_PROGRESS" value="0x80200044" />
+        <message message="$(string.ErrorCode.BG_E_UPNP_ERROR)" symbol="BG_E_UPNP_ERROR" value="0x80200045" />
+        <message message="$(string.ErrorCode.BG_E_TEST_OPTION_BLOCKED_DOWNLOAD)" symbol="BG_E_TEST_OPTION_BLOCKED_DOWNLOAD" value="0x80200046" />
+        <message message="$(string.ErrorCode.BG_E_PEERCACHING_DISABLED)" symbol="BG_E_PEERCACHING_DISABLED" value="0x80200047" />
+        <message message="$(string.ErrorCode.BG_E_BUSYCACHERECORD)" symbol="BG_E_BUSYCACHERECORD" value="0x80200048" />
+        <message message="$(string.ErrorCode.BG_E_TOO_MANY_JOBS_PER_USER)" symbol="BG_E_TOO_MANY_JOBS_PER_USER" value="0x80200049" />
+        <message message="$(string.ErrorCode.BG_E_TOO_MANY_JOBS_PER_MACHINE)" symbol="BG_E_TOO_MANY_JOBS_PER_MACHINE" value="0x80200050" />
+        <message message="$(string.ErrorCode.BG_E_TOO_MANY_FILES_IN_JOB)" symbol="BG_E_TOO_MANY_FILES_IN_JOB" value="0x80200051" />
+        <message message="$(string.ErrorCode.BG_E_TOO_MANY_RANGES_IN_FILE)" symbol="BG_E_TOO_MANY_RANGES_IN_FILE" value="0x80200052" />
+        <message message="$(string.ErrorCode.BG_E_VALIDATION_FAILED)" symbol="BG_E_VALIDATION_FAILED" value="0x80200053" />
+        <message message="$(string.ErrorCode.BG_E_MAXDOWNLOAD_TIMEOUT)" symbol="BG_E_MAXDOWNLOAD_TIMEOUT" value="0x80200054" />
+        <message message="$(string.ErrorCode.BG_S_OVERRIDDEN_BY_POLICY)" symbol="BG_S_OVERRIDDEN_BY_POLICY" value="0x00200055" />
+        <message message="$(string.ErrorCode.BG_E_TOKEN_REQUIRED)" symbol="BG_E_TOKEN_REQUIRED" value="0x80200056" />
+        <message message="$(string.ErrorCode.BG_E_UNKNOWN_PROPERTY_ID)" symbol="BG_E_UNKNOWN_PROPERTY_ID" value="0x80200057" />
+        <message message="$(string.ErrorCode.BG_E_READ_ONLY_PROPERTY)" symbol="BG_E_READ_ONLY_PROPERTY" value="0x80200058" />
+        <message message="$(string.ErrorCode.BG_E_BLOCKED_BY_COST_TRANSFER_POLICY)" symbol="BG_E_BLOCKED_BY_COST_TRANSFER_POLICY" value="0x80200059" />
+        <message message="$(string.ErrorCode.BG_E_PROPERTY_SUPPORTED_FOR_DOWNLOAD_JOBS_ONLY)" symbol="BG_E_PROPERTY_SUPPORTED_FOR_DOWNLOAD_JOBS_ONLY" value="0x80200060" />
+        <message message="$(string.ErrorCode.BG_E_READ_ONLY_PROPERTY_AFTER_ADDFILE)" symbol="BG_E_READ_ONLY_PROPERTY_AFTER_ADDFILE" value="0x80200061" />
+        <message message="$(string.ErrorCode.BG_E_READ_ONLY_PROPERTY_AFTER_RESUME)" symbol="BG_E_READ_ONLY_PROPERTY_AFTER_RESUME" value="0x80200062" />
+        <message message="$(string.ErrorCode.BG_E_MAX_DOWNLOAD_SIZE_INVALID_VALUE)" symbol="BG_E_MAX_DOWNLOAD_SIZE_INVALID_VALUE" value="0x80200063" />
+        <message message="$(string.ErrorCode.BG_E_MAX_DOWNLOAD_SIZE_LIMIT_REACHED)" symbol="BG_E_MAX_DOWNLOAD_SIZE_LIMIT_REACHED" value="0x80200064" />
+        <message message="$(string.ErrorCode.BG_E_STANDBY_MODE)" symbol="BG_E_STANDBY_MODE" value="0x80200065" />
+        <message message="$(string.ErrorCode.BG_E_USE_STORED_CREDENTIALS_NOT_SUPPORTED)" symbol="BG_E_USE_STORED_CREDENTIALS_NOT_SUPPORTED" value="0x80200066" />
+        <message message="$(string.ErrorCode.BG_E_BLOCKED_BY_BATTERY_POLICY)" symbol="BG_E_BLOCKED_BY_BATTERY_POLICY" value="0x80200067" />
+        <message message="$(string.ErrorCode.BG_E_BLOCKED_BY_BATTERY_SAVER)" symbol="BG_E_BLOCKED_BY_BATTERY_SAVER" value="0x80200068" />
+        <message message="$(string.ErrorCode.BG_E_WATCHDOG_TIMEOUT)" symbol="BG_E_WATCHDOG_TIMEOUT" value="0x80200069" />
+        <message message="$(string.ErrorCode.BG_E_APP_PACKAGE_NOT_FOUND)" symbol="BG_E_APP_PACKAGE_NOT_FOUND" value="0x8020006A" />
+        <message message="$(string.ErrorCode.BG_E_APP_PACKAGE_SCENARIO_NOT_SUPPORTED)" symbol="BG_E_APP_PACKAGE_SCENARIO_NOT_SUPPORTED" value="0x8020006B" />
+        <message message="$(string.ErrorCode.BG_E_DATABASE_CORRUPT)" symbol="BG_E_DATABASE_CORRUPT" value="0x8020006C" />
+        <message message="$(string.ErrorCode.BG_E_RANDOM_ACCESS_NOT_SUPPORTED)" symbol="BG_E_RANDOM_ACCESS_NOT_SUPPORTED" value="0x8020006D" />
+        <message message="$(string.ErrorCode.BG_E_BLOCKED_BY_BACKGROUND_ACCESS_POLICY)" symbol="BG_E_BLOCKED_BY_BACKGROUND_ACCESS_POLICY" value="0x8020006E" />
+        <message message="$(string.ErrorCode.BG_E_BLOCKED_BY_GAME_MODE)" symbol="BG_E_BLOCKED_BY_GAME_MODE" value="0x8020006F" />
+        <message message="$(string.ErrorCode.BG_E_BLOCKED_BY_SYSTEM_POLICY)" symbol="BG_E_BLOCKED_BY_SYSTEM_POLICY" value="0x80200070" />
+        <message message="$(string.ErrorCode.BG_E_NOT_SUPPORTED_WITH_CUSTOM_HTTP_METHOD)" symbol="BG_E_NOT_SUPPORTED_WITH_CUSTOM_HTTP_METHOD" value="0x80200071" />
+        <message message="$(string.ErrorCode.BG_E_UNSUPPORTED_JOB_CONFIGURATION)" symbol="BG_E_UNSUPPORTED_JOB_CONFIGURATION" value="0x80200072" />
+        <message message="$(string.ErrorCode.BG_E_REMOTE_FILE_CHANGED)" symbol="BG_E_REMOTE_FILE_CHANGED" value="0x80200073" />
+        <message message="$(string.ErrorCode.BG_E_SERVER_CERT_VALIDATION_INTERFACE_REQUIRED)" symbol="BG_E_SERVER_CERT_VALIDATION_INTERFACE_REQUIRED" value="0x80200074" />
+        <message message="$(string.ErrorCode.BG_E_READ_ONLY_WHEN_JOB_ACTIVE)" symbol="BG_E_READ_ONLY_WHEN_JOB_ACTIVE" value="0x80200075" />
+        <message message="$(string.ErrorCode.BG_E_ERROR_CONTEXT_SERVER_CERTIFICATE_CALLBACK)" symbol="BG_E_ERROR_CONTEXT_SERVER_CERTIFICATE_CALLBACK" value="0x80200076" />
+      </messageTable>
+      <provider guid="{EF1CC15B-46C1-414E-BB95-E76B077BD51E}" message="$(string.Event.ProviderName)" messageFileName="%systemroot%\system32\qmgr.dll" name="Microsoft-Windows-Bits-Client" parameterFileName="%systemroot%\system32\qmgr.dll" resourceFileName="%systemroot%\system32\qmgr.dll" symbol="MICROSOFT_WINDOWS_BITS">
+        <channels>
+          <importChannel chid="Admin" name="System" />
+          <channel chid="Operations" enabled="true" isolation="System" message="$(string.Event.OperationalChannelName)" name="Microsoft-Windows-Bits-Client/Operational" symbol="BITS_CHANNEL" type="Operational">
+            <logging>
+              <retention>false</retention>
+            </logging>
+          </channel>
+          <channel chid="Analytic" enabled="false" isolation="Custom" message="$(string.Event.AnalyticChannelName)" name="Microsoft-Windows-Bits-Client/Analytic" symbol="BITS_ANALYTIC" type="Operational">
+            <logging>
+              <retention>false</retention>
+            </logging>
+          </channel>
+        </channels>
+      </provider>
+      <cmi />
+    </events>
+  </instrumentation>
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string id="Event.BITS_EV_JOB_CANCELLED" value="The administrator %4 canceled job &quot;%2&quot; on behalf of %3.  The job ID was %1." />
+        <string id="Event.BITS_EV_FILE_DELETION_FAILED" value="While canceling job &quot;%2&quot;, BITS was unable to remove some temporary files. To recover disk space, delete the files listed below.  The job ID was %1.  %3" />
+        <string id="Event.BITS_EV_FILE_DELETION_FAILED_MORE" value="While canceling job &quot;%2&quot;, BITS was unable to remove some temporary files. To recover disk space, delete the temporary files. Note: Due to space limitations, not all files are listed.  Check for additional files of the form BITxxx.TMP in the same directory.  The job ID was %1.  %3" />
+        <string id="Event.BITS_EV_JOB_PROPERTY_CHANGE" value="The administrator %3 modified the %4 property of job &quot;%2&quot;.  The job ID was %1." />
+        <string id="Event.BITS_EV_JOB_TAKE_OWNERSHIP" value="The administrator %4 took ownership of job &quot;%2&quot; from %3.  The job ID was %1." />
+        <string id="Event.BITS_EV_JOB_SCAVENGED" value="Job &quot;%2&quot; owned by %3 was canceled after being inactive for more than %4 days.  The job ID was %1." />
+        <string id="Event.BITS_EV_JOB_NOTIFICATION_FAILURE" value="Job &quot;%2&quot; owned by %3 failed to notify its associated application.  BITS will retry in %4 minutes.  The job ID was %1." />
+        <string id="Event.BITS_EV_STATE_FILE_CORRUPT" value="The BITS job list is not in a recognized format.  It may have been created by a different version of BITS.  The job list has been cleared." />
+        <string id="Event.BITS_EV_FAILED_TO_START" value="The BITS service failed to start.  Error %1." />
+        <string id="Event.BITS_EV_FATAL_IGD_ERROR" value="BITS has encountered an error communicating with an Internet Gateway Device.  Please check that the device is functioning properly. BITS will not attempt to use this device until the next system reboot. Error code: %1." />
+        <string id="Event.BITS_EV_PEERCACHING_PORT" value="BITS Peer-caching protocol" />
+        <string id="Event.BITS_EV_WSD_PORT" value="Web Services-Discovery protocol" />
+        <string id="Event.EVT_FIREWALL_RULE_FAILED" value="Error %3 occurred when BITS tried to change the state of firewall rule &quot;%1&quot; to %2.  Restarting the BITS service may correct the problem." />
+        <string id="Event.EVT_JOB_LIMIT_POLICY_MISMATCH" value="The Per-user job limit (%2) specified through Group Policy must be less than or equal to Per-computer job Limit (%3).  To correct the problem, modify BITS Group Policy settings and restart the BITS service." />
+        <string id="Event.EVT_EXCEEDED_JOBLIMIT_PER_USER" value="A new BITS job could not be created. The current job count for the user %1 (%2) is equal to or greater than the job limit (%3) specified through group policy.  To correct the problem, complete or cancel the BITS jobs that haven't made progress by looking at the error, and restart the BITS service. If this error recurs, contact your system administrator and increate the per-user and per-computer Group Policy job limits." />
+        <string id="Event.EVT_EXCEEDED_JOBLIMIT_PER_MACHINE" value="A new BITS job could not be created. The current job count for this computer (%2) is equal to or greater than the per-computer job limit (%3) specified through Group Policy.  To correct the problem, complete or cancel the BITS jobs that haven't made progress by looking at the error and restarting the BITS service. If this error recurs, contact your system administrator and increase the per-computer Group Policy job limits." />
+        <string id="Event.EVT_EXCEEDED_FILELIMIT_PER_JOB" value="BITS could not add file(s) to %1 job. The file count for %1 job (%2) has exceeded the per-job file limit (%3) specified through Group Policy.  To correct the problem, increase the Computer’s per-job file limit Group Policy settings and restart the BITS service." />
+        <string id="Event.EVT_EXCEEDED_RANGELIMIT_PER_FILE" value="BITS could not add ranges to %1 file. The range count for %1 file (%2) has exceeded the per-file range limit (%3) specified through group policy.  To correct the problem, increase the per-file range limit Group Policy setting and restart the BITS service." />
+        <string id="ErrorCode.BG_S_ERROR_CONTEXT_NONE" value="There is no additional error context available." />
+        <string id="ErrorCode.BG_S_PARTIAL_COMPLETE" value="BITS has deleted some of the transferred files because they were incomplete." />
+        <string id="ErrorCode.BG_S_UNABLE_TO_DELETE_FILES" value="BITS was unable to delete some temporary files. Check the system event log for the complete list of files that could not be deleted." />
+        <string id="ErrorCode.BG_S_PROXY_CHANGED" value="The proxy server was changed." />
+        <string id="ErrorCode.BG_E_HTTP_ERROR_100" value="HTTP status 100: The request can be continued." />
+        <string id="ErrorCode.BG_E_HTTP_ERROR_101" value="HTTP status 101: The server switched protocols in an upgrade header." />
+        <string id="ErrorCode.BG_E_HTTP_ERROR_200" value="HTTP status 200: The server's response was not valid. The server was not following the defined protocol. Resume the job, and then Background Intelligent Transfer Service (BITS) will try again." />
+        <string id="ErrorCode.BG_E_HTTP_ERROR_201" value="HTTP status 201: The request was fulfilled and resulted in the creation of a new resource." />
+        <string id="ErrorCode.BG_E_HTTP_ERROR_202" value="HTTP status 202: The request was accepted for processing, but the processing has not been completed yet." />
+        <string id="ErrorCode.BG_E_HTTP_ERROR_203" value="HTTP status 203: The returned metadata in the entity-header is not the definitive set available from the server of origin." />
+        <string id="ErrorCode.BG_E_HTTP_ERROR_204" value="HTTP status 204: The server has fulfilled the request, but there is no new information to send back." />
+        <string id="ErrorCode.BG_E_HTTP_ERROR_205" value="HTTP status 205: The server's response was not valid. The server was not following the defined protocol. Resume the job, and then Background Intelligent Transfer Service (BITS) will try again." />
+        <string id="ErrorCode.BG_E_HTTP_ERROR_206" value="HTTP status 206: The server fulfilled the partial GET request for the resource." />
+        <string id="ErrorCode.BG_E_HTTP_ERROR_300" value="HTTP status 300: The server could not return the requested data." />
+        <string id="ErrorCode.BG_E_HTTP_ERROR_301" value="HTTP status 301: The requested resource was assigned to a new permanent Uniform Resource Identifier (URI), and any future references to this resource should use one of the returned URIs." />
+        <string id="ErrorCode.BG_E_HTTP_ERROR_302" value="HTTP status 302: The requested resource was assigned a different Uniform Resource Identifier (URI). This change is temporary." />
+        <string id="ErrorCode.BG_E_HTTP_ERROR_303" value="HTTP status 303: The response to the request is under a different Uniform Resource Identifier (URI) and must be retrieved using a GET method on that resource." />
+        <string id="ErrorCode.BG_E_HTTP_ERROR_304" value="HTTP status 304: The server's response was not valid. The server was not following the defined protocol. Resume the job, and then Background Intelligent Transfer Service (BITS) will try again." />
+        <string id="ErrorCode.BG_E_HTTP_ERROR_305" value="HTTP status 305: The requested resource must be accessed through the proxy given by the location field." />
+        <string id="ErrorCode.BG_E_HTTP_ERROR_307" value="HTTP status 307: The URL has been temporarily relocated. Try again later." />
+        <string id="ErrorCode.BG_E_HTTP_ERROR_400" value="HTTP status 400: The server cannot process the request because the syntax is not valid." />
+        <string id="ErrorCode.BG_E_HTTP_ERROR_401" value="HTTP status 401: The requested resource requires user authentication." />
+        <string id="ErrorCode.BG_E_HTTP_ERROR_402" value="HTTP status 402: The server's response was not valid. The server was not following the defined protocol. Resume the job, and then Background Intelligent Transfer Service (BITS) will try again." />
+        <string id="ErrorCode.BG_E_HTTP_ERROR_403" value="HTTP status 403: The client does not have sufficient access rights to the requested server object." />
+        <string id="ErrorCode.BG_E_HTTP_ERROR_404" value="HTTP status 404: The requested URL does not exist on the server." />
+        <string id="ErrorCode.BG_E_HTTP_ERROR_405" value="HTTP status 405: The method used is not allowed." />
+        <string id="ErrorCode.BG_E_HTTP_ERROR_406" value="HTTP status 406: No responses acceptable to the client were found." />
+        <string id="ErrorCode.BG_E_HTTP_ERROR_407" value="HTTP status 407: Proxy authentication is required." />
+        <string id="ErrorCode.BG_E_HTTP_ERROR_408" value="HTTP status 408: The server timed out waiting for the request." />
+        <string id="ErrorCode.BG_E_HTTP_ERROR_409" value="HTTP status 409: The request could not be completed because of a conflict with the current state of the resource. The user should resubmit the request with more information." />
+        <string id="ErrorCode.BG_E_HTTP_ERROR_410" value="HTTP status 410: The requested resource is not currently available at the server, and no forwarding address is known." />
+        <string id="ErrorCode.BG_E_HTTP_ERROR_411" value="HTTP status 411: The server cannot accept the request without a defined content length." />
+        <string id="ErrorCode.BG_E_HTTP_ERROR_412" value="HTTP status 412: The precondition given in one or more of the request header fields evaluated to false when it was tested on the server." />
+        <string id="ErrorCode.BG_E_HTTP_ERROR_413" value="HTTP status 413: The server cannot process the request because the request entity is too large." />
+        <string id="ErrorCode.BG_E_HTTP_ERROR_414" value="HTTP status 414: The server cannot process the request because the request Uniform Resource Identifier (URI) is longer than the server can interpret." />
+        <string id="ErrorCode.BG_E_HTTP_ERROR_415" value="HTTP status 415: The server's response was not valid. The server was not following the defined protocol. Resume the job, and then Background Intelligent Transfer Service (BITS) will try again." />
+        <string id="ErrorCode.BG_E_HTTP_ERROR_416" value="HTTP status 416: The server could not satisfy the range request." />
+        <string id="ErrorCode.BG_E_HTTP_ERROR_417" value="HTTP status 417: The server could not meet the expectation given in an Expect request-header field." />
+        <string id="ErrorCode.BG_E_HTTP_ERROR_449" value="HTTP status 449: The server's response was not valid. The server was not following the defined protocol. Resume the job, and then Background Intelligent Transfer Service (BITS) will try again." />
+        <string id="ErrorCode.BG_E_HTTP_ERROR_500" value="HTTP status 500: An unexpected condition prevented the server from fulfilling the request." />
+        <string id="ErrorCode.BG_E_HTTP_ERROR_501" value="HTTP status 501: The server does not support the functionality required to fulfill the request." />
+        <string id="ErrorCode.BG_E_HTTP_ERROR_502" value="HTTP status 502: The server, while acting as a gateway or proxy to fulfill the request, received an invalid response from the upstream server it accessed." />
+        <string id="ErrorCode.BG_E_HTTP_ERROR_503" value="HTTP status 503: The service is temporarily overloaded." />
+        <string id="ErrorCode.BG_E_HTTP_ERROR_504" value="HTTP status 504: The request was timed out waiting for a gateway." />
+        <string id="ErrorCode.BG_E_HTTP_ERROR_505" value="HTTP status 505: The server does not support the HTTP protocol version that was used in the request ErrorCode." />
+        <string id="ErrorCode.BG_E_NOT_FOUND" value="The requested job was not found." />
+        <string id="ErrorCode.BG_E_INVALID_STATE" value="The requested action is not allowed in the current job state. The job is read-only. The job may have been canceled or completed transferring." />
+        <string id="ErrorCode.BG_E_EMPTY" value="There are no files attached to this job. Attach files to the job, and then try again." />
+        <string id="ErrorCode.BG_E_FILE_NOT_AVAILABLE" value="No file is available because no URL generated an error code." />
+        <string id="ErrorCode.BG_E_PROTOCOL_NOT_AVAILABLE" value="No protocol is available because no URL generated an error code." />
+        <string id="ErrorCode.BG_E_ERROR_CONTEXT_UNKNOWN" value="The error occurred in an unknown location." />
+        <string id="ErrorCode.BG_E_ERROR_CONTEXT_GENERAL_QUEUE_MANAGER" value="The error occurred in the Background Intelligent Transfer Service (BITS) queue manager." />
+        <string id="ErrorCode.BG_E_ERROR_CONTEXT_LOCAL_FILE" value="The error occurred while the local file was being processed. Verify that the file is not in use, and retry." />
+        <string id="ErrorCode.BG_E_ERROR_CONTEXT_REMOTE_FILE" value="The error occurred while the remote file was being processed." />
+        <string id="ErrorCode.BG_E_ERROR_CONTEXT_GENERAL_TRANSPORT" value="The error occurred in the transport layer. The client could not connect to the server." />
+        <string id="ErrorCode.BG_E_ERROR_CONTEXT_QUEUE_MANAGER_NOTIFICATION" value="The error occurred while the notification callback was being processed. Background Intelligent Transfer Service (BITS) will try again later." />
+        <string id="ErrorCode.BG_E_DESTINATION_LOCKED" value="The destination file system volume is not available. Verify that another program, such as CheckDisk, is not running, which would lock the volume. When the volume is available, Background Intelligent Transfer Service (BITS) will try again." />
+        <string id="ErrorCode.BG_E_VOLUME_CHANGED" value="The destination volume has changed. If the disk is removable, it might have been replaced with a different disk. Reinsert the original disk and resume the job." />
+        <string id="ErrorCode.BG_E_ERROR_INFORMATION_UNAVAILABLE" value="No error information is available." />
+        <string id="ErrorCode.BG_E_NETWORK_DISCONNECTED" value="There are currently no active network connections. Background Intelligent Transfer Service (BITS) will try again when an adapter is connected." />
+        <string id="ErrorCode.BG_E_MISSING_FILE_SIZE" value="The server did not return the file size. The URL might point to dynamic content. The Content-Length header is not available in the server's HTTP reply." />
+        <string id="ErrorCode.BG_E_INSUFFICIENT_HTTP_SUPPORT" value="The server does not support HTTP 1.1." />
+        <string id="ErrorCode.BG_E_INSUFFICIENT_RANGE_SUPPORT" value="The server does not support the necessary HTTP protocol. Background Intelligent Transfer Service (BITS) requires that the server support the Range protocol header." />
+        <string id="ErrorCode.BG_E_REMOTE_NOT_SUPPORTED" value="Background Intelligent Transfer Service (BITS) can only be used remotely from within the context of a Remote PowerShell session." />
+        <string id="ErrorCode.BG_E_NEW_OWNER_DIFF_MAPPING" value="The drive mapping for the job is different for the current owner than for the previous owner. Use a UNC path instead." />
+        <string id="ErrorCode.BG_E_NEW_OWNER_NO_FILE_ACCESS" value="The new owner has insufficient access to the local files for the job. The new owner might not have permissions to access the job files. Verify that the new owner has sufficient permissions, and then try again." />
+        <string id="ErrorCode.BG_E_PROXY_LIST_TOO_LARGE" value="The HTTP proxy list cannot be longer than 32,000 characters. Try again with a shorter proxy list." />
+        <string id="ErrorCode.BG_E_PROXY_BYPASS_LIST_TOO_LARGE" value="The HTTP proxy bypass list cannot be longer than 32,000 characters. Try again with a shorter bypass proxy list." />
+        <string id="ErrorCode.BG_E_INVALID_SERVER_RESPONSE" value="The server's response was not valid. The server was not following the defined protocol. Resume the job, and then Background Intelligent Transfer Service (BITS) will try again." />
+        <string id="ErrorCode.BG_E_TOO_MANY_FILES" value="No more files can be added to this job." />
+        <string id="ErrorCode.BG_E_LOCAL_FILE_CHANGED" value="The local file was changed during the transfer. Recreate the job, and then try to transfer it again." />
+        <string id="ErrorCode.BG_E_ERROR_CONTEXT_REMOTE_APPLICATION" value="The program on the remote server reported the ErrorCode." />
+        <string id="ErrorCode.BG_E_SESSION_NOT_FOUND" value="The specified session could not be found on the server. Background Intelligent Transfer Service (BITS) will try again." />
+        <string id="ErrorCode.BG_E_TOO_LARGE" value="The job is too large for the server to accept. This job might exceed a job size limit set by the server administrator. Reduce the size of the job, and then try again." />
+        <string id="ErrorCode.BG_E_STRING_TOO_LONG" value="The specified string is too long." />
+        <string id="ErrorCode.BG_E_CLIENT_SERVER_PROTOCOL_MISMATCH" value="The client and server versions of Background Intelligent Transfer Service (BITS) are incompatible." />
+        <string id="ErrorCode.BG_E_SERVER_EXECUTE_ENABLE" value="Execute permissions are enabled on the Internet Information Services (IIS) virtual directory associated with the remote file specified in the job. To upload files to the virtual directory, disable execute permissions on the virtual directory." />
+        <string id="ErrorCode.BG_E_NO_PROGRESS" value="The job is not making progress.  The server may be misconfigured.  Background Intelligent Transfer Service (BITS) will try again later." />
+        <string id="ErrorCode.BG_E_USERNAME_TOO_LARGE" value="The user name cannot be longer than 300 characters. Try again with a shorter name." />
+        <string id="ErrorCode.BG_E_PASSWORD_TOO_LARGE" value="The password cannot be longer than 65536 characters. Try again with a shorter password." />
+        <string id="ErrorCode.BG_E_INVALID_AUTH_TARGET" value="The authentication target specified in the credentials is not defined." />
+        <string id="ErrorCode.BG_E_INVALID_AUTH_SCHEME" value="The authentication scheme specified in the credentials is not defined." />
+        <string id="ErrorCode.BG_E_FILE_NOT_FOUND" value="The specified file name does not match any of the files in the job." />
+        <string id="ErrorCode.BG_E_INVALID_RANGE" value="The requested byte range extends beyond the end of the web page.  Use byte ranges that are wholly within the page." />
+        <string id="ErrorCode.BG_E_OVERLAPPING_RANGES" value="The list of byte ranges contains some overlapping ranges, which are not supported." />
+        <string id="ErrorCode.BG_E_CONNECT_FAILURE" value="A connection could not be established." />
+        <string id="ErrorCode.BG_E_CONNECTION_CLOSED" value="The connection was closed prematurely." />
+        <string id="ErrorCode.BG_E_BLOCKED_BY_POLICY" value="Group Policy settings prevent background jobs from running at this time." />
+        <string id="ErrorCode.BG_E_INVALID_PROXY_INFO" value="The supplied proxy server or bypass list is invalid." />
+        <string id="ErrorCode.BG_E_INVALID_CREDENTIALS" value="The format of the supplied security credentials is invalid." />
+        <string id="ErrorCode.BG_E_INVALID_HASH_ALGORITHM" value="The application chose an unsupported hashing algorithm." />
+        <string id="ErrorCode.BG_E_RECORD_DELETED" value="The chosen peer-cache record has been deleted.  The attempt to update it has been abandoned." />
+        <string id="ErrorCode.BG_E_COMMIT_IN_PROGRESS" value="Another application thread is already updating the peer-cache record." />
+        <string id="ErrorCode.BG_E_DISCOVERY_IN_PROGRESS" value="The system is already searching for peers.  Retry the operation after a few seconds." />
+        <string id="ErrorCode.BG_E_UPNP_ERROR" value="A Universal Plug and Play (UPnP) error has occurred.  Please check your Internet Gateway Device." />
+        <string id="ErrorCode.BG_E_TEST_OPTION_BLOCKED_DOWNLOAD" value="The test option is blocking the download after the search completed." />
+        <string id="ErrorCode.BG_E_PEERCACHING_DISABLED" value="Peer-caching is disabled." />
+        <string id="ErrorCode.BG_E_BUSYCACHERECORD" value="The peer-cache record is in use and cannot be deleted at this time. Try again later." />
+        <string id="ErrorCode.BG_E_TOO_MANY_JOBS_PER_USER" value="The job count for the current user has exceeded the per-user job limit." />
+        <string id="ErrorCode.BG_E_TOO_MANY_JOBS_PER_MACHINE" value="The job count for the current computer has exceeded the per-computer job limit." />
+        <string id="ErrorCode.BG_E_TOO_MANY_FILES_IN_JOB" value="The file count for the current job has exceeded the per-job file limit." />
+        <string id="ErrorCode.BG_E_TOO_MANY_RANGES_IN_FILE" value="The range count for the current file has exceeded the per-file range limit." />
+        <string id="event.EVT_DOWNLOAD_RANGES.message" value="The file ranges associated with a transfer attempt" />
+        <string id="event.EVT_STOP_DOWNLOAD_ERROR.message" value="BITS stopped transferring the %2 transfer job that is associated with the %4 URL. The status code is %6." />
+        <string id="event.EVT_STOP_DOWNLOAD_INFO.message" value="BITS stopped transferring the %2 transfer job that is associated with the %4 URL. The status code is %6." />
+        <string id="event.EVT_START_DOWNLOAD.message" value="BITS started the %2 transfer job that is associated with the %4 URL." />
+        <string id="event.EVT_INVALID_SEARCH_RESPONSE.message" value="The peer's response to a search was invalid." />
+        <string id="event.EVT_SEARCH_REQUEST_RECORD_FOUND.message" value="The peer's record %2 matched the request." />
+        <string id="event.EVT_SEARCH_REQUEST_ERROR.message" value="A search request transaction encountered an error." />
+        <string id="event.EVT_STOP_SEARCH_REQUEST_INFO.message" value="A search request has completed." />
+        <string id="event.EVT_STOP_SEARCH_REQUEST_ERROR.message" value="A search request has completed unsuccessfully." />
+        <string id="event.EVT_START_SEARCH_REQUEST.message" value="A search request is being sent." />
+        <string id="event.EVT_STOP_SEARCH.message" value="A peer search ended." />
+        <string id="event.EVT_START_SEARCH.message" value="A peer search for an URL has begun." />
+        <string id="event.EVT_REJECT_PROBE.message" value="The server received a peer inquiry but rejected it." />
+        <string id="event.EVT_REPLY_TO_PROBE.message" value="BITS has replied to a client's inquiry for peer servers." />
+        <string id="event.EVT_NEIGHBOR_LIST_CLEARED.message" value="An application cleared the peer list." />
+        <string id="event.EVT_RESTORE_NEIGHBOR.message" value="A cached peer was restored from disk." />
+        <string id="event.EVT_DELETE_NEIGHBOR.message" value="A peer was removed from the peer list." />
+        <string id="event.EVT_UPDATE_NEIGHBOR.message" value="A peer was updated." />
+        <string id="event.EVT_ADD_NEIGHBOR.message" value="A new peer was added." />
+        <string id="event.EVT_REJECT_SERVER.message" value="The peer list rejected an incoming server announcement. This event is generated if the request is not valid, not if the server is merely in a different Windows domain." />
+        <string id="event.EVT_PEER_POLICY_UPDATE.message" value="BITS has read the policy parameters for peer-caching." />
+        <string id="event.EVT_SEND_PROBE.message" value="BITS has sent an inquiry for peer servers." />
+        <string id="event.EVT_LISTEN_FOR_SERVERS_START.message" value="BITS started listening for peer-server announcements." />
+        <string id="event.EVT_LISTEN_FOR_SERVERS_STOP.message" value="BITS stopped listening for peer-server announcements." />
+        <string id="event.EVT_LISTEN_FOR_SERVERS_FAILED.message" value="BITS was not able to listen for peer-server announcements.  The error code was %1.  BITS jobs on this machine will not be able to use peer-caching.  To fix this problem, try stopping the BITS service and restarting it." />
+        <string id="event.EVT_LISTEN_FOR_CLIENTS_START.message" value="BITS started listening for peer-client requests." />
+        <string id="event.EVT_LISTEN_FOR_CLIENTS_STOP.message" value="BITS stopped listening for peer-client requests." />
+        <string id="event.EVT_LISTEN_FOR_CLIENTS_FAILED.message" value="BITS was not able to listen for peer-client requests.  The error code was %1.  BITS jobs from other machines will not be able to use this machine as a peer server.  To fix this problem, try stopping the BITS service and restarting it." />
+        <string id="event.EVT_JOB_RESUMED.message" value="BITS job &quot;%2&quot; with ID %1 has been resumed." />
+        <string id="event.EVT_JOB_SUSPENDED.message" value="BITS job &quot;%2&quot; with ID %1 has been suspended." />
+        <string id="task.AuthExchangeRequest.message" value="a particular auth-exchange request" />
+        <string id="task.ContentSearchRequest.message" value="a particular request within a peer search" />
+        <string id="task.ContentSearch.message" value="a peer search for a particular URL" />
+        <string id="task.DiscoveryClientListen.message" value="listen via WS-Discovery for server announcements" />
+        <string id="task.DiscoveryServerListen.message" value="peer neighbor list (server) - listening for clients" />
+        <string id="opcode.RejectPacket.message" value="denying or ignoring an incoming packet" />
+        <string id="opcode.AcceptPacket.message" value="replying to an incoming request" />
+        <string id="event.EVT_SERVER_SEARCH_REQUEST_START.message" value="BITS received a peer-cache request from a client at address %1." />
+        <string id="event.EVT_SERVER_SEARCH_REQUEST_CRITERIA.message" value="The client's search request is for &quot;%1&quot; with timestamp %2." />
+        <string id="event.EVT_SERVER_SEARCH_REQUEST_RECORD_FOUND.message" value="The cache found a matching cache record with ID %1." />
+        <string id="event.EVT_SERVER_SEARCH_REQUEST_EXCEPTION.message" value="While processing the client's request, BITS encountered error %1." />
+        <string id="event.EVT_SERVER_SEARCH_REQUEST_HTTP_STATUS.message" value="BITS rejected the client's request with HTTP status %1." />
+        <string id="event.EVT_SERVER_SEARCH_REQUEST_STOP.message" value="BITS has finished processing the client request." />
+        <string id="event.EVT_SERVER_SEARCH_REQUEST_TRANSFER.message" value="The request includes the client's event-log activity ID." />
+        <string id="event.EVT_PEER_CACHE_ADDRESSES.message" value="BITS updated the set of IP addresses used for peer-caching." />
+        <string id="event.EVT_CLIENT_DISCOVERY_START.message" value="BITS search for peer-servers has started." />
+        <string id="ErrorCode.BG_E_VALIDATION_FAILED" value="The application requested data from a web site, but the response was invalid.                               Using Event Viewer, check the log 'Application Logs \ Microsoft \ Windows \ Bits-client \ Operational' for more details." />
+        <string id="event.EVT_APP_CONTENT_VALIDATION_FAILED.message" value="The BITS job named &quot;%1&quot; belonging to user %2 received inconsistent data while downloading. The URL was &quot;%3&quot;. The transfer will continue using a different server.  If the problem occurs often, an administrator should scan the peer server for viruses or corruption in its hard drive." />
+        <string id="event.EVT_PEER_CACHE_CORRUPT.message" value="BITS has encountered %1 error while reading the peer-cache information. BITS will now attempt to delete and re-create the peer-cache." />
+        <string id="event.EVT_PEER_CACHE_DELETE_SUCCESS.message" value="BITS has successfully deleted the peer-cache. All the files cached until this point have been removed. The peer-cache will be re-created again as needed for handling the future requests." />
+        <string id="event.EVT_PEERCACHING_ENABLE_SUCCESS.message" value="BITS has successfully enabled peer-client and/or peer-server related components." />
+        <string id="event.EVT_PEERCACHING_ENABLE_FAILURE.message" value="BITS has encountered %1 error while starting one or more peer-client or peer-server components." />
+        <string id="ErrorCode.BG_E_MAXDOWNLOAD_TIMEOUT" value="BITS timed out while downloading the job. The download did not complete within the maximum download time set for the job." />
+        <string id="event.EVT_GROUP_POLICY_ACCESS.message" value="BITS accessed group policy value %1 : %2." />
+        <string id="event.EVT_GROUP_POLICY_DEFAULT.message" value="BITS defaulted group policy value %1 : %2." />
+        <string id="displayName10" value="Minimum retry delay" />
+        <string id="displayName11" value="No progress timeout" />
+        <string id="displayName12" value="Log minimum memory" />
+        <string id="displayName13" value="Log file size" />
+        <string id="displayName14" value="Time quantum length" />
+        <string id="displayName15" value="Job inactivity timeout" />
+        <string id="displayName16" value="Log file flags" />
+        <string id="displayName17" value="Use lmcompatibilitylevel from registry" />
+        <string id="description11" value="Time in seconds before retries after failed transfer attempts." />
+        <string id="description12" value="Time in seconds before a transient error becomes a fatal error." />
+        <string id="description13" value="Minimum required physical RAM before the log will be enabled." />
+        <string id="description14" value="Maximum size of the log file in MB." />
+        <string id="description15" value="Time in seconds before BITS switches to a new background job." />
+        <string id="description16" value="Timeout in seconds before an orphaned job is discarded" />
+        <string id="description17" value="Flags that control which items should be logged." />
+        <string id="description18" value="1 if the lmcompatibilitylevel should be used from the registry, otherwise 0." />
+        <string id="event.EVT_PROXY_FAILURE.message" value="The BITS job named &quot;%1&quot; was unable to contact any HTTP proxy server in its proxy list.  This may indicate a problem with the proxy servers or with the client's network configuration.  An administrator should verify whether the proxy list is correct.  BITS will periodically try to transfer the job.  The HTTP proxy list is &quot;%6&quot;.  The proxy-bypass list is &quot;%7&quot;." />
+        <string id="event.EVT_PROXY_ERROR.message" value="While transferring %1, BITS encountered error %2 using %3 as the HTTP proxy server.  This may indicate a problem with the proxy server or with the client's network configuration.  If this error occurs frequently, then an administrator should investigate. Details: {Job: %4}, {owner: %5}, {jobid: %6}, {URL: %1}, {xferId: %7}, {proxyServerList: %8}, {hr: %2}." />
+        <string id="event.EVT_INCORRECT_HTTP_REPLY.message" value="While transferring %1, BITS encountered error %7 using %6 as the HTTP proxy server.  The web server or proxy server does not support an HTTP feature required by BITS.  This problem can only be corrected by the administrator of the web server or proxy server.  Details: {job: %1}, {owner: %2}, {jobId: %3}, {url: %4}, {xferId: %5}, {proxyServer: %6}, {hr: %7}, {urlContentLength: %8}, {urlHttpVersion: %9}, {urlRange: %10}" />
+        <string id="event.EVT_STARTUP_COMPLETE.message" value="The BITS service has started successfully." />
+        <string id="event.EVT_STARTUP_DELAYED.message" value="The BITS service has started successfully, but it was delayed long enough that there may be a problem. For more information on the delay, enable the analytic log for BITS, then stop and restart the BITS service." />
+        <string id="event.EVT_WRONG_ACCOUNT.message" value="The BITS service is configured to run as %1. BITS works correctly only when configured to run as the system account." />
+        <string id="event.EVT_SERVICE_FAILED.message" value="The BITS service has detected an exception, Function: %1, Line: %2 Error code: %3." />
+        <string id="event.EVT_JOB_CREATION.message" value="The BITS service created a new job: %1, with owner %2" />
+        <string id="event.EVT_JOB_COMPLETION.message" value="The transfer job is complete.%nUser: %1%nTransfer job: %2%nJob ID: %3%nOwner: %4%nFile count: %5" />
+        <string id="event.EVT_JOB_CANCEL.message" value="Job cancelled. User: %1, job: %2, jobID: %3, owner: %4, filecount: %5" />
+        <string id="event.EVT_JOB_TRANSFER_POLICY_ON_COSTED_NETWORK_MISMATCH.message" value="Job cannot be transferred because job transfer cost policy preventing it. job: %1, jobID: %2, filecount: %3, jobs transfer policy: %4, global transfer policy: %5." />
+        <string id="event.EVT_NETWORK_COST_CHANGED.message" value="The cost state has changed.  NLM reports the following: %nCost: %1%n Usage: %2 MB%n Cap: %3 MB%n Throttled: %4%n Overcap: %5%n Roaming: %6%n%nThe resultant BITS Cost state is : %7." />
+        <string id="event.EVT_AUTHCHALLENGE_OK.message" value="The BITS service provided job credentials in response to the %4 authentication challenge from the %1 server for the %2 transfer job that is associated with the following URL: %3.%nThe credentials for the %5 user were accepted." />
+        <string id="event.EVT_AUTHCHALLENGE_FAILED.message" value="The BITS service provided job credentials in response to the %4 authentication challenge from the %1 server for the %2 transfer job that is associated with the following URL: %3.%n The credentials for the %5 user were rejected." />
+        <string id="event.EVT_READ_STATEFILE.message" value="The BITS service loaded the job list from disk." />
+        <string id="event.EVT_CMDLINE_NOTIFICATION_FAILURE.message" value="The BITS job %1 is configured to launch %3 after transfer of %2. The notification program returned error %4, BITS will continue to launch the program periodically until it succeeds." />
+        <string id="event.EVT_CMDLINE_NOTIFICATION_FAILED.message" value="The BITS job %1 is configured to launch %3 after transfer of %2. The service failed to launch the program with error %4, BITS will continue trying to launch the program periodically until it succeeds." />
+        <string id="event.EVT_WRITE_STATEFILE.message" value="It took %1 seconds to write a change file to the BITS job list. If this is excessive, the number of BITS jobs may be larger than this machine can handle quickly." />
+        <string id="event.EVT_PEERCACHING_STARTUP_COMPLETE.message" value="The peer-cache client startup phase of startup has completed." />
+        <string id="event.EVT_SERVICE_SHUTDOWN_STARTING.message" value="The service is shutting down." />
+        <string id="event.EVT_SERVICE_SHUTDOWN_COMPLETE.message" value="The service shutdown is complete." />
+        <string id="event.EVT_SERVICE_SHUTDOWN_DELAYED.message" value="The BITS service shut down successfully, but it was delayed for %1 seconds. This might cause delays when you turn off your computer. For more information on the delay, enable the analytic log for BITS, then stop and restart the BITS service." />
+        <string id="event.EVT_BANDWIDTH_PROFILE_MISCONFIGURED.message" value="A bandwidth profile is not configured correctly. The value of a Group Policy setting is missing or is not within the allowed range. Make sure that you configure the Group Policy settings correctly, and then try again." />
+        <string id="event.EVT_BANDWIDTH_SLOT_CHANGED.message" value="A bandwidth slot transition occurred." />
+        <string id="event.EVT_NO_PEERS_FOUND.message" value="The BITS peer cache was unable to find any peers in the network." />
+        <string id="event.EVT_PEER_INIT_FAILURE.message" value="The initialization of the peer helper modules failed with the following error:  %1." />
+        <string id="event.EVT_PEER_TRANSFER_FAILURE.message" value="The BITS peer transfer with the %1 ID for the %2 transfer job resulted in the following error: %4." />
+        <string id="event.EVT_STARTUP_PHASE1.message" value="The service is generating its common global data." />
+        <string id="event.EVT_STARTUP_PHASE2.message" value="The service is reading its group policy settings." />
+        <string id="event.EVT_STARTUP_PHASE3.message" value="The service is creating its performance counters." />
+        <string id="event.EVT_STARTUP_PHASE4.message" value="The service is searching for gateway devices." />
+        <string id="event.EVT_STARTUP_PHASE5.message" value="The service is starting the peer-caching client." />
+        <string id="event.EVT_STARTUP_PHASE6.message" value="The service is starting the peer-caching server." />
+        <string id="event.EVT_STARTUP_PHASE7.message" value="The service is reading the job list from the disk." />
+        <string id="event.EVT_STARTUP_PHASE8.message" value="The service is updating its list of active network connections." />
+        <string id="event.EVT_STARTUP_PHASE9.message" value="The service is updating its list of logged-in users." />
+        <string id="event.EVT_STARTUP_PHASE10.message" value="The service is creating the Volume Shadow Copy writer." />
+        <string id="event.EVT_STARTUP_PHASE11.message" value="The service is registering its COM objects." />
+        <string id="ErrorCode.BG_S_OVERRIDDEN_BY_POLICY" value="The configuration preferences were saved successfully, but one or more of them are overridden by Group Policy." />
+        <string id="Event.ProviderName" value="Microsoft-Windows-Bits-Client" />
+        <string id="Event.OperationalChannelName" value="Microsoft-Windows-Bits-Client/Operational" />
+        <string id="Event.AnalyticChannelName" value="Microsoft-Windows-Bits-Client/Analytic" />
+        <string id="ErrorCode.BG_E_TOKEN_REQUIRED" value="The job is configured to use a different security token for some operations, but the token is not currently available.  The application must provide a token and then resume the job." />
+        <string id="event.EVT_AUTHCHALLENGE_OK_V_0.message" value="The BITS service provided job credentials in response to an authentication challenge from the %1 server for the %2 transfer job that is associated with the following URL: %3.%nThe credentials were accepted." />
+        <string id="event.EVT_AUTHCHALLENGE_FAILED_V_0.message" value="The BITS service provided job credentials in response to an authentication challenge from %1 for job %2, url %3. The credentials were rejected." />
+        <string id="event.EVT_JOB_CREATION_V_1.message" value="The BITS service created a new job.%nTransfer job: %1%nJob ID: %2%nOwner: %3" />
+        <string id="event.EVT_JOB_CREATION_V_2.message" value="The BITS service created a new job.%nTransfer job: %1%nJob ID: %2%nOwner: %3%nProcess Path: %4%nProcess ID: %5" />
+        <string id="ErrorCode.BG_E_UNKNOWN_PROPERTY_ID" value="SetProperty() or GetProperty() called with an unknown property ID." />
+        <string id="ErrorCode.BG_E_READ_ONLY_PROPERTY" value="Unable to call SetProperty() on a read-only property." />
+        <string id="Event.BITS_EV_INTERFACE_NOT_IMPLEMENTED" value="The Network List Manager Cost Interface is not available on this system. (This is expected on Windows Server.)  BITS will not consider Transfer Policy when scheduling jobs." />
+        <string id="Event.BITS_EV_NLM_NO_NETWORK" value="The Network List Manager Cost Interface is reporting no network connectivity. BITS will try to retrieve the network state again at a later time." />
+        <string id="ErrorCode.BG_E_BLOCKED_BY_COST_TRANSFER_POLICY" value="The job's cost transfer policy settings prevent the job from transferring at this time." />
+        <string id="ErrorCode.BG_E_PROPERTY_SUPPORTED_FOR_DOWNLOAD_JOBS_ONLY" value="The property is supported for download jobs only." />
+        <string id="ErrorCode.BG_E_READ_ONLY_PROPERTY_AFTER_ADDFILE" value="The property cannot be changed after adding a file to job." />
+        <string id="ErrorCode.BG_E_READ_ONLY_PROPERTY_AFTER_RESUME" value="The property cannot be changed after Resuming the job." />
+        <string id="ErrorCode.BG_E_MAX_DOWNLOAD_SIZE_INVALID_VALUE" value="The value provided for BITS_JOB_PROPERTY_MAX_DOWNLOAD_SIZE property is invalid. Please provide value between 1 and UINT64_MAX." />
+        <string id="ErrorCode.BG_E_MAX_DOWNLOAD_SIZE_LIMIT_REACHED" value="BITS cannot continue downloading the job. The download reached the maximum download size limit set on the job." />
+        <string id="Event.BITS_COST_STATE_UNRESTRICTED" value="BITS_COST_STATE_UNRESTRICTED" />
+        <string id="Event.BITS_COST_STATE_CAPPED_USAGE_UNKNOWN" value="BITS_COST_STATE_CAPPED_USAGE_UNKNOWN" />
+        <string id="Event.BITS_COST_STATE_BELOW_CAP" value="BITS_COST_STATE_BELOW_CAP" />
+        <string id="Event.BITS_COST_STATE_NEAR_CAP" value="BITS_COST_STATE_NEAR_CAP" />
+        <string id="Event.BITS_COST_STATE_OVERCAP_CHARGED" value="BITS_COST_STATE_OVERCAP_CHARGED" />
+        <string id="Event.BITS_COST_STATE_OVERCAP_THROTTLED" value="BITS_COST_STATE_OVERCAP_THROTTLED" />
+        <string id="Event.BITS_COST_STATE_USAGE_BASED" value="BITS_COST_STATE_USAGE_BASED" />
+        <string id="Event.BITS_COST_STATE_ROAMING" value="BITS_COST_STATE_ROAMING" />
+        <string id="Event.NLM_COST_UNKNOWN" value="NLM_COST_UNKNOWN" />
+        <string id="Event.NLM_COST_UNRESTRICTED" value="NLM_COST_UNRESTRICTED" />
+        <string id="Event.NLM_COST_FIXED" value="NLM_COST_FIXED" />
+        <string id="Event.NLM_COST_VARIABLE" value="NLM_COST_VARIABLE" />
+        <string id="YES_STRING_DISPLAY" value="Yes" />
+        <string id="NO_STRING_DISPLAY" value="No" />
+        <string id="Event.EVT_HTTP_HEAD_NOT_IMPLEMENTED.message" value="The URL &quot;%2&quot; in BITS job &quot;%1&quot; does not support the HTTP HEAD verb, which is required for BITS bandwidth throttling. The URL will be downloaded without throttling." />
+        <string id="Event.EVT_HTTP_CONTENT_LENGTH_NOT_IMPLEMENTED.message" value="The URL &quot;%2&quot; in BITS job &quot;%1&quot; does not support the HTTP Content-Length header, which is required for BITS bandwidth throttling. The URL will be downloaded without throttling." />
+        <string id="displaynameMaximumForegroundCacheRetries" value="Branch Cache retry count for foreground jobs" />
+        <string id="descriptionMaximumForegroundCacheRetries" value="number of times a foreground job attempts to read the current block from Branch Cache when a flash-crowd situation is detected" />
+        <string id="displaynameMaximumBackgroundCacheRetries" value="Branch Cache retry count for background jobs" />
+        <string id="descriptionMaximumBackgroundCacheRetries" value="number of times a background job attempts to read the current block from Branch Cache when a flash-crowd situation is detected" />
+        <string id="displaynameCacheRetryIntervalMsec" value="Branch Cache polling interval" />
+        <string id="descriptionCacheRetryIntervalMsec" value="interval between attempts to read the current block from Branch Cache when a flash-crowd situation is detected" />
+        <string id="Event.EVT_FLASH_CROWD_DETECTED.message" value="A flash-Crowd situation is detected for the URL &quot;%2&quot; in BITS job &quot;%1&quot;." />
+        <string id="Event.EVT_HIGHPERF_PROPERTY_CHANGED.message" value="High performance property for BITS job &quot;%1&quot; with ID &quot;%2&quot; %3." />
+        <string id="ENABLED_STRING_DISPLAY" value="Enabled" />
+        <string id="DISABLED_STRING_DISPLAY" value="Disabled" />
+        <string id="Event.EVT_HTTP_CONTENT_RANGE_NOT_IMPLEMENTED.message" value="The URL &quot;%2&quot; in BITS job &quot;%1&quot; does not support the HTTP Content-Range header, which is required for BITS bandwidth throttling. The URL will be downloaded without throttling." />
+        <string id="Event.EVT_JOB_ERROR_STATE.message" value="BITS job &quot;%2&quot; with ID &quot;%1&quot; encountered an error %3. %4" />
+        <string id="ErrorCode.BG_E_STANDBY_MODE" value="The transfer was paused because the computer is in power-saving mode. The transfer will resume when the computer wakes up." />
+        <string id="ErrorCode.BG_E_USE_STORED_CREDENTIALS_NOT_SUPPORTED" value="The value provided for BITS_JOB_PROPERTY_USE_STORED_CREDENTIALS property is invalid. The property is only supported for Proxy (BG_AUTH_TARGET_PROXY) targets." />
+        <string id="ErrorCode.BG_E_BLOCKED_BY_BATTERY_POLICY" value="The job's BITS_JOB_PROPERTY_POWER_FLAGS settings prevent the job from transferring while the device is on battery power. The transfer will resume when the system reconnects to A/C power." />
+        <string id="ErrorCode.BG_E_BLOCKED_BY_BATTERY_SAVER" value="Battery Saver mode is preventing the job from transferring. The transfer will resume when the system exits Battery Saver mode or reconnects to A/C power. If this job represents foreground work that should proceed even in Battery Saver mode, use priority BG_JOB_PRIORITY_FOREGROUND." />
+        <string id="ErrorCode.BG_E_WATCHDOG_TIMEOUT" value="An operation did not complete within the expected time interval." />
+        <string id="ErrorCode.BG_E_APP_PACKAGE_NOT_FOUND" value="An app package matching the job owner or COM caller was not found." />
+        <string id="ErrorCode.BG_E_APP_PACKAGE_SCENARIO_NOT_SUPPORTED" value="BITS usage by app packages cannot be supported on this device because one or more dependencies are missing." />
+        <string id="ErrorCode.BG_E_DATABASE_CORRUPT" value="BITS persistent state corruption was detected. The necessary steps will be taken to fix this issue once BITS is restarted. BITS will now shutdown." />
+        <string id="ErrorCode.BG_E_RANDOM_ACCESS_NOT_SUPPORTED" value="BITS IBackgroundCopyFile6 methods are not supported in SMB, dynamic content, multirange, upload, or upload-reply transfers." />
+        <string id="ErrorCode.BG_E_BLOCKED_BY_BACKGROUND_ACCESS_POLICY" value="The background access settings of the job's owner app prevent the job from transferring at this time." />
+        <string id="ErrorCode.BG_E_BLOCKED_BY_GAME_MODE" value="The job was paused because there is an active Game Mode recipient that isn't the job's owner. The job will resume once the Game Mode recipient loses input focus or is closed." />
+        <string id="ErrorCode.BG_E_BLOCKED_BY_SYSTEM_POLICY" value="The job was paused due to system resource constraints. The job will automatically resume once system conditions change." />
+        <string id="ErrorCode.BG_E_NOT_SUPPORTED_WITH_CUSTOM_HTTP_METHOD" value="The requested action is not supported by jobs configured with a custom HTTP method." />
+        <string id="ErrorCode.BG_E_UNSUPPORTED_JOB_CONFIGURATION" value="The current job configuration is not compatible with the requested action." />
+        <string id="ErrorCode.BG_E_REMOTE_FILE_CHANGED" value="The remote file was changed during the transfer. If this is expected, call Resume on the job to initiate a retry." />
+        <string id="ErrorCode.BG_E_SERVER_CERT_VALIDATION_INTERFACE_REQUIRED" value="The job is configured to raise a certificate validation callback, but the callback object is not currently available. The job owner must provide a new callback object and then resume the job." />
+        <string id="ErrorCode.BG_E_READ_ONLY_WHEN_JOB_ACTIVE" value="This method should only be called when the job is in a paused state (SUSPENDED/ERROR/TRANSFERRED)." />
+        <string id="ErrorCode.BG_E_ERROR_CONTEXT_SERVER_CERTIFICATE_CALLBACK" value="The error occurred while the user-provided server certificate validation callback was being processed." />
+        <string id="Event.EVT_SYSTEM_EVENT_DETECTED.message" value="BITS service has detected a '%1' system event" />
+        <string id="NotifiableSystemEvent.LowPowerEpochChange" value="Low Power Epoch Change" />
+        <string id="NotifiableSystemEvent.GroupPolicyChange" value="Group Policy Change" />
+        <string id="NotifiableSystemEvent.TimeChange" value="Time Change" />
+        <string id="NotifiableSystemEvent.TerminalServicesSessionChange" value="Terminal Services Session Change" />
+        <string id="NotifiableSystemEvent.NetworkStateChange" value="Network State Change" />
+        <string id="NotifiableSystemEvent.NetworkCostChange" value="Network Cost Change" />
+        <string id="NotifiableSystemEvent.PowerSourceChange" value="Power Source Change" />
+        <string id="NotifiableSystemEvent.BatterySaverModeChange" value="Battery Saver Mode Change" />
+        <string id="NotifiableSystemEvent.NonCellularConnectedChange" value="Non-Cellular Connection Presence Change" />
+        <string id="NotifiableSystemEvent.RemotePowerShellSessionChange" value="Remote PowerShell Session Change" />
+        <string id="NotifiableSystemEvent.DeviceStateChange" value="Device State Change" />
+        <string id="NotifiableSystemEvent.InterruptiveUIStateChange" value="App Focus Change" />
+        <string id="NotifiableSystemEvent.BackgroundCellularDataChange" value="Background Cellular Data Restrictions Change" />
+        <string id="NotifiableSystemEvent.BackgroundAccessChange" value="Background Access Settings Change" />
+        <string id="NotifiableSystemEvent.GameModeChange" value="Game Mode State Change" />
+        <string id="NotifiableSystemEvent.SmePolicyStateChange" value="System Policy State Change" />
+        <string id="event.EVT_JOB_BLOCKED_BY_POLICY.message" value="Job is not currently transferring because one of its transfer policies conflicts with current system state. job: %1, jobID: %2, filecount: %3, block reason: %4." />
+        <string id="NotifiableSystemEvent.MDMPolicyChange" value="MDM Policy Change" />
+        <string id="NotifiableSystemEvent.CellularConnectedChange" value="Cellular Connection Presence Change" />
+        <string id="event.EVT_NOTIFY_CMD_LINE.message" value="Command-line command set for job %1 with owner %2. Program: %3 Args: %4." />
+      </stringTable>
+    </resources>
+  </localization>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" description="Default SDDL for Windows Resource Protected file" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+</assembly>

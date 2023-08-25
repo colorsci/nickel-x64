@@ -1,0 +1,317 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved." xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <assemblyIdentity name="Microsoft-Windows-Setup" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <configuration xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State">
+    <configurationSchema>
+      <xsd:schema xmlns="Setup-Settings" targetNamespace="Setup-Settings">
+        <xsd:simpleType name="PathType">
+          <xsd:restriction base="xsd:string">
+            <xsd:maxLength value="259" />
+          </xsd:restriction>
+        </xsd:simpleType>
+        <xsd:simpleType name="WillShowUIType">
+          <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="Always" />
+            <xsd:enumeration value="OnError" />
+            <xsd:enumeration value="Never" />
+          </xsd:restriction>
+        </xsd:simpleType>
+        <xsd:simpleType name="WillShowUIOnErrorNeverType">
+          <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="OnError" />
+            <xsd:enumeration value="Never" />
+          </xsd:restriction>
+        </xsd:simpleType>
+        <xsd:complexType name="CredentialsType">
+          <xsd:sequence>
+            <xsd:element name="Domain" type="xsd:string" />
+            <xsd:element name="Username" type="xsd:string" />
+            <xsd:element name="Password" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+        <xsd:simpleType name="OrderType">
+          <xsd:restriction base="xsd:integer">
+            <xsd:minInclusive value="1" />
+            <xsd:maxInclusive value="500" />
+          </xsd:restriction>
+        </xsd:simpleType>
+        <xsd:simpleType name="ComputerNameType">
+          <xsd:restriction base="xsd:string">
+            <xsd:maxLength value="15" />
+          </xsd:restriction>
+        </xsd:simpleType>
+        <xsd:element name="ComputerName" type="ComputerNameType" wcm:dataOnly="false" wcm:handler="null()" wcm:passes="windowsPE" />
+        <xsd:complexType name="ComplianceCheckType">
+          <xsd:sequence>
+            <xsd:element maxOccurs="1" minOccurs="1" name="DisplayReport" type="WillShowUIOnErrorNeverType" />
+          </xsd:sequence>
+        </xsd:complexType>
+        <xsd:element name="ComplianceCheck" type="ComplianceCheckType" wcm:dataOnly="false" wcm:handler="null()" wcm:passes="windowsPE" wcm:visible="true" />
+        <xsd:simpleType name="LetterType">
+          <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="C" />
+            <xsd:enumeration value="D" />
+            <xsd:enumeration value="E" />
+            <xsd:enumeration value="F" />
+            <xsd:enumeration value="G" />
+            <xsd:enumeration value="H" />
+            <xsd:enumeration value="I" />
+            <xsd:enumeration value="J" />
+            <xsd:enumeration value="K" />
+            <xsd:enumeration value="L" />
+            <xsd:enumeration value="M" />
+            <xsd:enumeration value="N" />
+            <xsd:enumeration value="O" />
+            <xsd:enumeration value="P" />
+            <xsd:enumeration value="Q" />
+            <xsd:enumeration value="R" />
+            <xsd:enumeration value="S" />
+            <xsd:enumeration value="T" />
+            <xsd:enumeration value="U" />
+            <xsd:enumeration value="V" />
+            <xsd:enumeration value="W" />
+            <xsd:enumeration value="X" />
+            <xsd:enumeration value="Y" />
+            <xsd:enumeration value="Z" />
+          </xsd:restriction>
+        </xsd:simpleType>
+        <xsd:simpleType name="PartitionType">
+          <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="Primary" />
+            <xsd:enumeration value="EFI" />
+            <xsd:enumeration value="Extended" />
+            <xsd:enumeration value="Logical" />
+            <xsd:enumeration value="MSR" />
+          </xsd:restriction>
+        </xsd:simpleType>
+        <xsd:simpleType name="FormatType">
+          <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="NTFS" />
+            <xsd:enumeration value="FAT32" />
+          </xsd:restriction>
+        </xsd:simpleType>
+        <xsd:complexType name="ModifyPartitionType">
+          <xsd:sequence>
+            <xsd:element maxOccurs="1" minOccurs="1" name="Order" type="OrderType" />
+            <xsd:element maxOccurs="1" minOccurs="1" name="PartitionID" type="xsd:positiveInteger" />
+            <xsd:element maxOccurs="1" minOccurs="0" name="Label" type="xsd:string" />
+            <xsd:element maxOccurs="1" minOccurs="0" name="Letter" type="LetterType" />
+            <xsd:element maxOccurs="1" minOccurs="0" name="Format" type="FormatType" />
+            <xsd:element maxOccurs="1" minOccurs="0" name="Extend" type="xsd:boolean" />
+            <xsd:element maxOccurs="1" minOccurs="0" name="Active" type="xsd:boolean" />
+            <xsd:element maxOccurs="1" minOccurs="0" name="TypeID" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+        <xsd:complexType name="ModifyPartitionsType">
+          <xsd:sequence>
+            <xsd:element maxOccurs="unbounded" minOccurs="1" name="ModifyPartition" type="ModifyPartitionType" wcm:key="Order" />
+          </xsd:sequence>
+        </xsd:complexType>
+        <xsd:complexType name="CreatePartitionType">
+          <xsd:sequence>
+            <xsd:element maxOccurs="1" minOccurs="1" name="Order" type="OrderType" />
+            <xsd:element maxOccurs="1" minOccurs="1" name="Type" type="PartitionType" />
+            <xsd:element name="Size" type="xsd:positiveInteger" />
+            <xsd:element default="false" name="Extend" type="xsd:boolean" />
+          </xsd:sequence>
+        </xsd:complexType>
+        <xsd:complexType name="CreatePartitionsType">
+          <xsd:sequence>
+            <xsd:element maxOccurs="unbounded" minOccurs="1" name="CreatePartition" type="CreatePartitionType" wcm:key="Order" />
+          </xsd:sequence>
+        </xsd:complexType>
+        <xsd:complexType name="DiskType">
+          <xsd:sequence>
+            <xsd:element maxOccurs="1" minOccurs="1" name="DiskID" type="xsd:nonNegativeInteger" />
+            <xsd:element maxOccurs="1" minOccurs="1" name="WillWipeDisk" type="xsd:boolean" />
+            <xsd:element maxOccurs="1" minOccurs="0" name="CreatePartitions" type="CreatePartitionsType" />
+            <xsd:element maxOccurs="1" minOccurs="0" name="ModifyPartitions" type="ModifyPartitionsType" />
+          </xsd:sequence>
+        </xsd:complexType>
+        <xsd:complexType name="DiskConfigurationType">
+          <xsd:sequence>
+            <xsd:element maxOccurs="1" minOccurs="1" name="WillShowUI" type="WillShowUIType" />
+            <xsd:element maxOccurs="1" minOccurs="0" name="DisableEncryptedDiskProvisioning" type="xsd:boolean" wcm:dataOnly="false" wcm:handler="null()" wcm:passes="windowsPE" wcm:visible="true" />
+            <xsd:element maxOccurs="unbounded" minOccurs="1" name="Disk" type="DiskType" wcm:key="DiskID" />
+          </xsd:sequence>
+        </xsd:complexType>
+        <xsd:element name="DiskConfiguration" type="DiskConfigurationType" wcm:dataOnly="false" wcm:handler="null()" wcm:passes="windowsPE" wcm:visible="true" />
+        <xsd:complexType name="DisplayType">
+          <xsd:sequence>
+            <xsd:element name="HorizontalResolution" type="xsd:positiveInteger" />
+            <xsd:element name="VerticalResolution" type="xsd:positiveInteger" />
+            <xsd:element name="ColorDepth" type="xsd:positiveInteger" />
+            <xsd:element name="RefreshRate" type="xsd:positiveInteger" />
+          </xsd:sequence>
+        </xsd:complexType>
+        <xsd:element name="Display" type="DisplayType" wcm:dataOnly="false" wcm:handler="null()" wcm:passes="windowsPE" wcm:visible="true" />
+        <xsd:element name="EnableFirewall" type="xsd:boolean" wcm:dataOnly="false" wcm:handler="null()" wcm:passes="windowsPE" wcm:visible="true" />
+        <xsd:element name="EnableNetwork" type="xsd:boolean" wcm:dataOnly="false" wcm:handler="null()" wcm:passes="windowsPE" wcm:visible="true" />
+        <xsd:complexType name="InstallToType">
+          <xsd:sequence>
+            <xsd:element maxOccurs="1" minOccurs="1" name="DiskID" type="xsd:nonNegativeInteger" />
+            <xsd:element maxOccurs="1" minOccurs="1" name="PartitionID" type="xsd:positiveInteger" />
+          </xsd:sequence>
+        </xsd:complexType>
+        <xsd:complexType name="MetaDataType">
+          <xsd:sequence>
+            <xsd:element maxOccurs="1" minOccurs="1" name="Key" type="xsd:string" />
+            <xsd:element maxOccurs="1" minOccurs="1" name="Value" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+        <xsd:complexType name="InstallFromType">
+          <xsd:sequence>
+            <xsd:element maxOccurs="1" minOccurs="1" name="Path" type="PathType" />
+            <xsd:element maxOccurs="1" minOccurs="0" name="Credentials" type="CredentialsType" />
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="MetaData" type="MetaDataType" wcm:key="Key" />
+          </xsd:sequence>
+        </xsd:complexType>
+        <xsd:complexType name="OSImageType">
+          <xsd:sequence>
+            <xsd:element maxOccurs="1" minOccurs="1" name="WillShowUI" type="WillShowUIType" />
+            <xsd:element maxOccurs="1" minOccurs="0" name="InstallFrom" type="InstallFromType" />
+            <xsd:element maxOccurs="1" minOccurs="0" name="InstallTo" type="InstallToType" />
+            <xsd:element maxOccurs="1" minOccurs="0" name="InstallToAvailablePartition" type="xsd:boolean" />
+            <xsd:element maxOccurs="1" minOccurs="0" name="WIMBootFrom" type="InstallToType" wcm:visible="false" />
+            <xsd:element default="false" maxOccurs="1" minOccurs="0" name="Compact" type="xsd:boolean" />
+          </xsd:sequence>
+        </xsd:complexType>
+        <xsd:complexType name="DataImageType">
+          <xsd:sequence>
+            <xsd:element maxOccurs="1" minOccurs="1" name="Order" type="OrderType" />
+            <xsd:element maxOccurs="1" minOccurs="1" name="InstallTo" type="InstallToType" />
+            <xsd:element maxOccurs="1" minOccurs="1" name="InstallFrom" type="InstallFromType" />
+          </xsd:sequence>
+        </xsd:complexType>
+        <xsd:complexType name="ImageInstallType">
+          <xsd:sequence>
+            <xsd:element maxOccurs="1" minOccurs="0" name="OSImage" type="OSImageType" />
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="DataImage" type="DataImageType" wcm:key="Order" />
+          </xsd:sequence>
+        </xsd:complexType>
+        <xsd:element name="ImageInstall" type="ImageInstallType" wcm:dataOnly="false" wcm:handler="null()" wcm:passes="windowsPE" wcm:visible="true" />
+        <xsd:element name="LogPath" type="PathType" wcm:dataOnly="false" wcm:handler="null()" wcm:passes="windowsPE" wcm:visible="true" />
+        <xsd:complexType name="PageFileType">
+          <xsd:sequence>
+            <xsd:element name="Path" type="PathType" />
+            <xsd:element maxOccurs="1" minOccurs="0" name="Size" type="xsd:nonNegativeInteger" />
+          </xsd:sequence>
+        </xsd:complexType>
+        <xsd:element name="PageFile" type="PageFileType" wcm:dataOnly="false" wcm:handler="null()" wcm:passes="windowsPE" wcm:visible="true" />
+        <xsd:element name="UseConfigurationSet" type="xsd:boolean" wcm:dataOnly="false" wcm:handler="null()" wcm:passes="windowsPE" wcm:visible="true" />
+        <xsd:simpleType name="RestartActionType">
+          <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="Restart" />
+            <xsd:enumeration value="Shutdown" />
+          </xsd:restriction>
+        </xsd:simpleType>
+        <xsd:element name="Restart" type="RestartActionType" wcm:dataOnly="false" wcm:handler="null()" wcm:passes="windowsPE" wcm:visible="true" />
+        <xsd:simpleType name="DescriptionType">
+          <xsd:restriction base="xsd:string">
+            <xsd:maxLength value="250" />
+          </xsd:restriction>
+        </xsd:simpleType>
+        <xsd:complexType name="RunAsynchronousCommandType">
+          <xsd:sequence>
+            <xsd:element maxOccurs="1" minOccurs="1" name="Order" type="OrderType" />
+            <xsd:element maxOccurs="1" minOccurs="1" name="Path" type="PathType" />
+            <xsd:element name="Description" type="DescriptionType" />
+            <xsd:element maxOccurs="1" minOccurs="0" name="Credentials" type="CredentialsType" />
+          </xsd:sequence>
+        </xsd:complexType>
+        <xsd:complexType name="RunAsynchronousType">
+          <xsd:sequence>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="RunAsynchronousCommand" type="RunAsynchronousCommandType" wcm:key="Order" />
+          </xsd:sequence>
+        </xsd:complexType>
+        <xsd:complexType name="RunSynchronousCommandType">
+          <xsd:sequence>
+            <xsd:element maxOccurs="1" minOccurs="1" name="Order" type="OrderType" />
+            <xsd:element maxOccurs="1" minOccurs="1" name="Path" type="PathType" />
+            <xsd:element name="Description" type="DescriptionType" />
+            <xsd:element maxOccurs="1" minOccurs="0" name="Credentials" type="CredentialsType" />
+          </xsd:sequence>
+        </xsd:complexType>
+        <xsd:complexType name="RunSynchronousType">
+          <xsd:sequence>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="RunSynchronousCommand" type="RunSynchronousCommandType" wcm:key="Order" />
+          </xsd:sequence>
+        </xsd:complexType>
+        <xsd:element name="RunAsynchronous" type="RunAsynchronousType" wcm:dataOnly="false" wcm:handler="null()" wcm:passes="windowsPE" wcm:visible="true" />
+        <xsd:element name="RunSynchronous" type="RunSynchronousType" wcm:dataOnly="false" wcm:handler="null()" wcm:passes="windowsPE" wcm:visible="true" />
+        <xsd:simpleType name="KeyType">
+          <xsd:restriction base="xsd:string">
+            <xsd:maxLength value="29" />
+          </xsd:restriction>
+        </xsd:simpleType>
+        <xsd:complexType name="ProductKeyType">
+          <xsd:sequence>
+            <xsd:element maxOccurs="1" minOccurs="0" name="Key" type="KeyType" />
+            <xsd:element name="WillShowUI" type="WillShowUIType" />
+          </xsd:sequence>
+        </xsd:complexType>
+        <xsd:simpleType name="UserDataNameType">
+          <xsd:restriction base="xsd:string">
+            <xsd:maxLength value="63" />
+          </xsd:restriction>
+        </xsd:simpleType>
+        <xsd:complexType name="UserDataType">
+          <xsd:sequence>
+            <xsd:element maxOccurs="1" minOccurs="1" name="AcceptEula" type="xsd:boolean" />
+            <xsd:element name="FullName" type="UserDataNameType" />
+            <xsd:element name="Organization" type="UserDataNameType" />
+            <xsd:element maxOccurs="1" minOccurs="1" name="ProductKey" type="ProductKeyType" />
+          </xsd:sequence>
+        </xsd:complexType>
+        <xsd:element name="UserData" type="UserDataType" wcm:dataOnly="false" wcm:handler="null()" wcm:passes="windowsPE" wcm:visible="true" />
+        <xsd:complexType name="DynamicUpdateType">
+          <xsd:sequence>
+            <xsd:element default="false" maxOccurs="1" minOccurs="0" name="Enable" type="xsd:boolean" />
+            <xsd:element default="OnError" maxOccurs="1" minOccurs="0" name="WillShowUI" type="WillShowUIType" />
+          </xsd:sequence>
+        </xsd:complexType>
+        <xsd:element name="DynamicUpdate" type="DynamicUpdateType" wcm:dataOnly="false" wcm:handler="null()" wcm:passes="windowsPE" wcm:visible="true" />
+        <xsd:complexType name="DiagnosticsType">
+          <xsd:sequence>
+            <xsd:element default="false" maxOccurs="1" minOccurs="0" name="OptIn" type="xsd:boolean" />
+          </xsd:sequence>
+        </xsd:complexType>
+        <xsd:element name="Diagnostics" type="DiagnosticsType" wcm:dataOnly="false" wcm:description="The element contains the setting for Diagnostics Opt-in." wcm:displayName="Diagnostics Opt-in Setting" wcm:handler="null()" wcm:passes="windowsPE" wcm:visible="true" />
+        <xsd:complexType name="UpgradeDataType">
+          <xsd:sequence>
+            <xsd:element default="false" maxOccurs="1" minOccurs="1" name="Upgrade" type="xsd:boolean" />
+            <xsd:element default="OnError" maxOccurs="1" minOccurs="0" name="WillShowUI" type="WillShowUIType" />
+          </xsd:sequence>
+        </xsd:complexType>
+        <xsd:element name="UpgradeData" type="UpgradeDataType" wcm:dataOnly="false" wcm:description="Specifies if the installation type is upgrade over an existing OS." wcm:displayName="OS Upgrade Setting" wcm:handler="null()" wcm:passes="windowsPE" wcm:visible="true" />
+        <xsd:complexType name="LoginType">
+          <xsd:sequence>
+            <xsd:element default="OnError" maxOccurs="1" minOccurs="0" name="WillShowUI" type="WillShowUIType" />
+            <xsd:element maxOccurs="1" minOccurs="0" name="Credentials" type="CredentialsType" />
+          </xsd:sequence>
+        </xsd:complexType>
+        <xsd:complexType name="InstallImageType">
+          <xsd:sequence>
+            <xsd:element maxOccurs="1" minOccurs="1" name="ImageName" type="xsd:string" />
+            <xsd:element maxOccurs="1" minOccurs="1" name="ImageGroup" type="xsd:string" />
+            <xsd:element maxOccurs="1" minOccurs="0" name="Filename" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+        <xsd:complexType name="ImageSelectionType">
+          <xsd:sequence>
+            <xsd:element default="OnError" maxOccurs="1" minOccurs="0" name="WillShowUI" type="WillShowUIType" />
+            <xsd:element maxOccurs="1" minOccurs="1" name="InstallImage" type="InstallImageType" />
+            <xsd:element maxOccurs="1" minOccurs="1" name="InstallTo" type="InstallToType" />
+          </xsd:sequence>
+        </xsd:complexType>
+        <xsd:complexType name="WindowsDeploymentServicesType">
+          <xsd:sequence>
+            <xsd:element maxOccurs="1" minOccurs="0" name="Login" type="LoginType" />
+            <xsd:element maxOccurs="1" minOccurs="0" name="ImageSelection" type="ImageSelectionType" />
+          </xsd:sequence>
+        </xsd:complexType>
+        <xsd:element name="WindowsDeploymentServices" type="WindowsDeploymentServicesType" wcm:dataOnly="false" wcm:handler="null()" wcm:passes="windowsPE" wcm:visible="true" />
+      </xsd:schema>
+    </configurationSchema>
+  </configuration>
+</assembly>

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="HyperV-VmTpm" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <dependency discoverable="no" resourceType="Resources">
+    <dependentAssembly>
+      <assemblyIdentity name="HyperV-VmTpm.Resources" version="10.0.22621.1" processorArchitecture="amd64" language="*" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+    </dependentAssembly>
+  </dependency>
+  <file name="vmtpm.dll" destinationPath="$(runtime.System32)\" sourceName="vmtpm.dll" importPath="$(build.nttree)\vm\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>YgYFSRamTVho+gY+gwwjZyoGOpNP8tuSwT1hfitoZA8=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <registryKeys>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{736E6AA9-A3F8-49C0-9550-A963214D259A}">
+      <registryValue name="" valueType="REG_SZ" value="VTpmVdev" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{736E6AA9-A3F8-49C0-9550-A963214D259A}\InprocServer32">
+      <registryValue name="" valueType="REG_SZ" value="$(runtime.System32)\vmtpm.dll" />
+      <registryValue name="ThreadingModel" valueType="REG_SZ" value="Free" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{736E6AA9-A3F8-49C0-9550-A963214D259A}\ProgID">
+      <registryValue name="" valueType="REG_SZ" value="VTpmVdev.1" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{736E6AA9-A3F8-49C0-9550-A963214D259A}\VersionIndependentProgID">
+      <registryValue name="" valueType="REG_SZ" value="VTpmVdev" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\VTpmVdev">
+      <registryValue name="" valueType="REG_SZ" value="VTpmVdev" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\VTpmVdev\CurVer">
+      <registryValue name="" valueType="REG_SZ" value="VTpmVdev.1" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\VTpmVdev.1">
+      <registryValue name="" valueType="REG_SZ" value="VTpmVdev.1" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\VTpmVdev.1\CLSID">
+      <registryValue name="" valueType="REG_SZ" value="{736E6AA9-A3F8-49C0-9550-A963214D259A}" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+  </registryKeys>
+  <instrumentation>
+    <events xmlns="http://schemas.microsoft.com/win/2004/08/events" xmlns:win="http://manifests.microsoft.com/win/2004/08/windows/events" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <provider guid="{13eae551-76ca-4ddc-b974-d3a0f8d44a03}" message="$(string.HyperVTpmProvider)" messageFileName="%systemroot%\system32\vmtpm.dll" name="Microsoft-Windows-Hyper-V-Tpm" parameterFileName="%systemroot%\system32\wbem\wmiutils.dll;%systemroot%\system32\ntdll.dll" resourceFileName="%systemroot%\system32\vmtpm.dll" symbol="MSWVMWORKER">
+        <channels>
+          <importChannel chid="VMC_WORKER_ADMIN" name="Microsoft-Windows-Hyper-V-Worker-Admin" />
+          <importChannel chid="VMC_WORKER_ANALYTIC" name="Microsoft-Windows-Hyper-V-Worker-Analytic" />
+        </channels>
+      </provider>
+      <cmi />
+    </events>
+  </instrumentation>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_REGKEY_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;CI;GA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;CI;GR;;;SY)(A;CI;GR;;;BA)(A;CI;GR;;;BU)(A;CI;GR;;;S-1-15-2-1)(A;CI;GR;;;S-1-15-3-1024-1065365936-1281604716-3511738428-1654721687-432734479-3232135806-4053264122-3456934681)" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_DIRECTORY_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;CI;GA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;0x1301bf;;;SY)(A;IOCIOI;GA;;;SY)(A;;0x1301bf;;;BA)(A;IOCIOI;GA;;;BA)(A;CIOI;GRGX;;;BU)(A;OICIIO;GA;;;CO)(A;CIOI;GRGX;;;S-1-15-2-1)(A;CIOI;GRGX;;;S-1-15-2-2)" operationHint="replace" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string id="HyperVTpmProvider" value="Microsoft-Windows-Hyper-V-Tpm" />
+        <string id="MSWVM_GENERIC_TRACE.EventMessage" value="[Virtual machine %3] %1" />
+        <string id="MSVM_VDEV_MAJOR_VERSION_MISMATCH.EventMessage" value="The virtual machine %1 cannot load device %3 because there are no mutually supported protocol versions. The server version is %4 and the client version is %5 (Virtual machine ID %2)." />
+        <string id="MSVM_VDEV_MAJOR_VERSION_MISMATCH_SUMMARY.EventMessage" value="The device %3 cannot be loaded because there are no mutually support protocol versions between the server and client." />
+      </stringTable>
+    </resources>
+  </localization>
+</assembly>

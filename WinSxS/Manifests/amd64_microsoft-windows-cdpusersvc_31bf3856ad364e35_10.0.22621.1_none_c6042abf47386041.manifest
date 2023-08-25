@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-CDPUserSvc" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSXS" />
+  <file name="cdpusersvc.dll" destinationPath="$(runtime.system32)\" sourceName="cdpusersvc.dll" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>LywqmstPTZ3754SH22psDVuB7zlruk34kN9DcldY+1g=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <dependency discoverable="no" resourceType="Resources">
+    <dependentAssembly dependencyType="prerequisite">
+      <assemblyIdentity name="Microsoft-Windows-CDPUserSvc.Resources" version="10.0.22621.1" processorArchitecture="amd64" language="*" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+    </dependentAssembly>
+  </dependency>
+  <memberships>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories.Services" version="10.0.22621.1" publicKeyToken="31bf3856ad364e35" typeName="Service" />
+      <categoryInstance subcategory="CDPUser">
+        <serviceData name="CDPUserSvc" displayName="@%SystemRoot%\system32\cdpusersvc.dll,-100" errorControl="normal" start="auto" type="win32UserShareProcess" description="@%SystemRoot%\system32\cdpusersvc.dll,-101" imagePath="%SystemRoot%\system32\svchost.exe -k UnistackSvcGroup" objectName="LocalSystem" requiredPrivileges="SeImpersonatePrivilege" sidType="unrestricted">
+          <failureActions resetPeriod="86400">
+            <actions>
+              <action delay="3000" type="restartService" />
+              <action delay="3000" type="restartService" />
+              <action delay="0" type="none" />
+            </actions>
+          </failureActions>
+          <securityDescriptor name="CDPUserSvcSecurity" />
+        </serviceData>
+      </categoryInstance>
+    </categoryMembership>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories" version="1.0.0.0" publicKeyToken="365143bb27e7ac8b" typeName="SvcHost" />
+      <categoryInstance subcategory="UnistackSvcGroup">
+        <serviceGroup position="last" serviceName="CDPUserSvc" />
+      </categoryInstance>
+    </categoryMembership>
+  </memberships>
+  <registryKeys>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\System\CurrentControlset\Services\CDPUserSvc">
+      <registryValue name="UserServiceFlags" valueType="REG_DWORD" value="0x00000003" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\System\CurrentControlset\Services\CDPUserSvc\Parameters">
+      <registryValue name="ServiceDll" valueType="REG_EXPAND_SZ" value="%SystemRoot%\System32\CDPUserSvc.dll" />
+      <registryValue name="ServiceDllUnloadOnStop" valueType="REG_DWORD" value="0x00000001" />
+    </registryKey>
+    <registryKey keyName="HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\SmartGlass">
+      <registryValue name="UserAuthPolicy" valueType="REG_DWORD" value="0x00000001" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\AppId\{F72671A9-012C-4725-9D2F-2A4D32D65169}">
+      <registryValue name="AppIDFlags" valueType="REG_DWORD" value="0x00000208" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+      <registryValue name="AccessPermission" valueType="REG_BINARY" value="010014801801000024010000140000003000000002001c000100000011001400040000000101000000000010001000000200e80007000000000014000300000001010000000000051200000000001400230000000101000000000005040000000000180023000000010200000000000f02000000010000000000280003000000010600000000000550000000ad3ca7cc73b3031ea048cf5266df4b69a04a8386000028000300000001060000000000055000000090541e4ba214ef2f89f2297b702169fe408a1c840000280003000000010600000000000550000000cb5a9214f96622ef279c82b6d32825687e0906db0000280003000000010600000000000550000000a994b8384fb0283f0beb2aa79f5369b380c0413001010000000000050a00000001020000000000052000000021020000" />
+      <registryValue name="LaunchPermission" valueType="REG_BINARY" value="010014801801000024010000140000003000000002001c000100000011001400040000000101000000000010001000000200e80007000000000014000b000000010100000000000512000000000014006b000000010100000000000504000000000018006b000000010200000000000f0200000001000000000028000b000000010600000000000550000000ad3ca7cc73b3031ea048cf5266df4b69a04a8386000028000b00000001060000000000055000000090541e4ba214ef2f89f2297b702169fe408a1c84000028000b000000010600000000000550000000cb5a9214f96622ef279c82b6d32825687e0906db000028000b000000010600000000000550000000a994b8384fb0283f0beb2aa79f5369b380c0413001010000000000050a00000001020000000000052000000021020000" />
+      <registryValue name="RunAs" valueType="REG_SZ" value="Interactive User" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{049D54B5-E524-41B2-BD4D-34F7A0EFC31D}">
+      <registryValue name="ActivateOnHostFlags" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="" valueType="REG_SZ" value="CDPComAccountProvider" />
+      <registryValue name="AppID" valueType="REG_SZ" value="{F72671A9-012C-4725-9D2F-2A4D32D65169}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{8E240CF7-3017-494D-877D-7D19548A3142}">
+      <registryValue name="ActivateOnHostFlags" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="" valueType="REG_SZ" value="CDPComActivityStore" />
+      <registryValue name="AppID" valueType="REG_SZ" value="{F72671A9-012C-4725-9D2F-2A4D32D65169}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{F83E1FE0-BE37-4462-A7E9-EC05D25A9BD4}">
+      <registryValue name="ActivateOnHostFlags" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="" valueType="REG_SZ" value="CDPComActivityStoreInfoWatcher" />
+      <registryValue name="AppID" valueType="REG_SZ" value="{F72671A9-012C-4725-9D2F-2A4D32D65169}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{37987DB6-9D85-4381-8D7D-3189661223D1}">
+      <registryValue name="ActivateOnHostFlags" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="" valueType="REG_SZ" value="CDPComActivityStoreReader" />
+      <registryValue name="AppID" valueType="REG_SZ" value="{F72671A9-012C-4725-9D2F-2A4D32D65169}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{CB378271-9E64-4EE1-ABF2-A5EC8512F352}">
+      <registryValue name="ActivateOnHostFlags" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="" valueType="REG_SZ" value="CDPComAppControlHandler" />
+      <registryValue name="AppID" valueType="REG_SZ" value="{F72671A9-012C-4725-9D2F-2A4D32D65169}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{96274226-3195-4CDE-B0A0-0F6256C7A65A}">
+      <registryValue name="ActivateOnHostFlags" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="" valueType="REG_SZ" value="CDPComNearShareBroker" />
+      <registryValue name="AppID" valueType="REG_SZ" value="{F72671A9-012C-4725-9D2F-2A4D32D65169}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{19003D25-EAB6-47D7-A4E6-D29D893AE4E2}">
+      <registryValue name="ActivateOnHostFlags" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="" valueType="REG_SZ" value="CDPComRemoteTextHandler" />
+      <registryValue name="AppID" valueType="REG_SZ" value="{F72671A9-012C-4725-9D2F-2A4D32D65169}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{81D61DA9-B415-4E65-B414-FD948A406B36}">
+      <registryValue name="ActivateOnHostFlags" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="" valueType="REG_SZ" value="CDPComAppRegistrationManager" />
+      <registryValue name="AppID" valueType="REG_SZ" value="{F72671A9-012C-4725-9D2F-2A4D32D65169}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{EB887A2B-2DAB-437E-9B80-A726333391F0}">
+      <registryValue name="ActivateOnHostFlags" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="" valueType="REG_SZ" value="CDPComResourcePolicyBroker" />
+      <registryValue name="AppID" valueType="REG_SZ" value="{F72671A9-012C-4725-9D2F-2A4D32D65169}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{F4A8539E-015A-4F13-AE49-E78C1D9DA236}">
+      <registryValue name="ActivateOnHostFlags" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="" valueType="REG_SZ" value="CDPComMediaHandler" />
+      <registryValue name="AppID" valueType="REG_SZ" value="{F72671A9-012C-4725-9D2F-2A4D32D65169}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{D678F3F8-D615-409C-A96C-D3F29A18F2CF}">
+      <registryValue name="ActivateOnHostFlags" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="" valueType="REG_SZ" value="CDPComRetrieveResourceModel" />
+      <registryValue name="AppID" valueType="REG_SZ" value="{F72671A9-012C-4725-9D2F-2A4D32D65169}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{A86FEFD8-BAFB-4DCB-AAA0-A9B6A5A44032}">
+      <registryValue name="ActivateOnHostFlags" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="" valueType="REG_SZ" value="CDPComTouchHandler" />
+      <registryValue name="AppID" valueType="REG_SZ" value="{F72671A9-012C-4725-9D2F-2A4D32D65169}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{AC36A05C-FB95-4C7A-868C-A43CC8D2D926}">
+      <registryValue name="ActivateOnHostFlags" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="" valueType="REG_SZ" value="CDPComUserActivitySettings" />
+      <registryValue name="AppID" valueType="REG_SZ" value="{F72671A9-012C-4725-9D2F-2A4D32D65169}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{BFA84069-369A-426A-B8A7-43346676B9A2}">
+      <registryValue name="ActivateOnHostFlags" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="" valueType="REG_SZ" value="CDPComUserSettingsProvider" />
+      <registryValue name="AppID" valueType="REG_SZ" value="{F72671A9-012C-4725-9D2F-2A4D32D65169}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{CC56090A-6CB2-4579-B606-C1BA9B57273A}">
+      <registryValue name="ActivateOnHostFlags" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="" valueType="REG_SZ" value="CDPComStrongAuthenticationHelper" />
+      <registryValue name="AppID" valueType="REG_SZ" value="{F72671A9-012C-4725-9D2F-2A4D32D65169}" />
+    </registryKey>
+  </registryKeys>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="CDPUserSvcSecurity" sddl="D:(A;;CCLCSWRPWPDTLOCRRC;;;SY)(A;;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;BA)(A;;CCLCSWLOCRRC;;;IU)(A;;CCLCSWLOCRRC;;;SU)(A;;CR;;;AU)S:(AU;FA;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;WD)" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_REGKEY_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;CI;GA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;CI;GR;;;SY)(A;CI;GR;;;BA)(A;CI;GR;;;BU)(A;CI;GR;;;S-1-15-2-1)(A;CI;GR;;;S-1-15-3-1024-1065365936-1281604716-3511738428-1654721687-432734479-3232135806-4053264122-3456934681)" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" description="Default SDDL for Windows Resource Protected file" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+</assembly>

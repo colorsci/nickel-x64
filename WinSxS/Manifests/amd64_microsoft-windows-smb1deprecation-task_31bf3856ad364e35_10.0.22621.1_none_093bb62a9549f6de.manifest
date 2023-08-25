@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-SMB1Deprecation-Task" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <taskScheduler>
+    <Task xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task">
+      <RegistrationInfo>
+        <SecurityDescriptor>D:(A;;FA;;;BA)(A;;FA;;;SY)</SecurityDescriptor>
+        <URI>\Microsoft\Windows\SMB\UninstallSMB1ClientTask</URI>
+      </RegistrationInfo>
+      <Triggers>
+        <WnfStateChangeTrigger>
+          <StateName>7508bca33f0a9441</StateName>
+        </WnfStateChangeTrigger>
+      </Triggers>
+      <Principals>
+        <Principal id="LocalSystem">
+          <RunLevel>HighestAvailable</RunLevel>
+          <GroupId>S-1-5-18</GroupId>
+        </Principal>
+      </Principals>
+      <Settings>
+        <MultipleInstancesPolicy>IgnoreNew</MultipleInstancesPolicy>
+        <DisallowStartIfOnBatteries>false</DisallowStartIfOnBatteries>
+        <StopIfGoingOnBatteries>false</StopIfGoingOnBatteries>
+        <AllowHardTerminate>false</AllowHardTerminate>
+        <StartWhenAvailable>false</StartWhenAvailable>
+        <RunOnlyIfNetworkAvailable>false</RunOnlyIfNetworkAvailable>
+        <AllowStartOnDemand>true</AllowStartOnDemand>
+        <Enabled>true</Enabled>
+        <Hidden>false</Hidden>
+        <RunOnlyIfIdle>false</RunOnlyIfIdle>
+        <DisallowStartOnRemoteAppSession>false</DisallowStartOnRemoteAppSession>
+        <UseUnifiedSchedulingEngine>true</UseUnifiedSchedulingEngine>
+        <WakeToRun>false</WakeToRun>
+        <ExecutionTimeLimit>PT0S</ExecutionTimeLimit>
+        <Priority>7</Priority>
+      </Settings>
+      <Actions Context="LocalSystem">
+        <Exec>
+          <Command>%windir%\system32\WindowsPowerShell\v1.0\powershell.exe</Command>
+          <Arguments>-ExecutionPolicy Unrestricted -NonInteractive -NoProfile -WindowStyle Hidden "&amp; %windir%\system32\WindowsPowerShell\v1.0\Modules\SmbShare\DisableUnusedSmb1.ps1 -Scenario Client"</Arguments>
+        </Exec>
+      </Actions>
+    </Task>
+    <Task xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task">
+      <RegistrationInfo>
+        <SecurityDescriptor>D:(A;;FA;;;BA)(A;;FA;;;SY)</SecurityDescriptor>
+        <URI>\Microsoft\Windows\SMB\UninstallSMB1ServerTask</URI>
+      </RegistrationInfo>
+      <Triggers>
+        <WnfStateChangeTrigger>
+          <StateName>7510bca33e1c9041</StateName>
+        </WnfStateChangeTrigger>
+      </Triggers>
+      <Principals>
+        <Principal id="LocalSystem">
+          <RunLevel>HighestAvailable</RunLevel>
+          <GroupId>S-1-5-18</GroupId>
+        </Principal>
+      </Principals>
+      <Settings>
+        <MultipleInstancesPolicy>IgnoreNew</MultipleInstancesPolicy>
+        <DisallowStartIfOnBatteries>false</DisallowStartIfOnBatteries>
+        <StopIfGoingOnBatteries>false</StopIfGoingOnBatteries>
+        <AllowHardTerminate>false</AllowHardTerminate>
+        <StartWhenAvailable>false</StartWhenAvailable>
+        <RunOnlyIfNetworkAvailable>false</RunOnlyIfNetworkAvailable>
+        <AllowStartOnDemand>true</AllowStartOnDemand>
+        <Enabled>true</Enabled>
+        <Hidden>false</Hidden>
+        <RunOnlyIfIdle>false</RunOnlyIfIdle>
+        <DisallowStartOnRemoteAppSession>false</DisallowStartOnRemoteAppSession>
+        <UseUnifiedSchedulingEngine>true</UseUnifiedSchedulingEngine>
+        <WakeToRun>false</WakeToRun>
+        <ExecutionTimeLimit>PT0S</ExecutionTimeLimit>
+        <Priority>7</Priority>
+      </Settings>
+      <Actions Context="LocalSystem">
+        <Exec>
+          <Command>%windir%\system32\WindowsPowerShell\v1.0\powershell.exe</Command>
+          <Arguments>-ExecutionPolicy Unrestricted -NonInteractive -NoProfile -WindowStyle Hidden "&amp; %windir%\system32\WindowsPowerShell\v1.0\Modules\SmbShare\DisableUnusedSmb1.ps1 -Scenario Server"</Arguments>
+        </Exec>
+      </Actions>
+    </Task>
+  </taskScheduler>
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string id="displayName4" value="WRP_FILE_DEFAULT_SDDL" />
+        <string id="description5" value="Default SDDL for Windows Resource Protected file" />
+      </stringTable>
+    </resources>
+  </localization>
+</assembly>

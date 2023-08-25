@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-OneCore-TetheringService-LocalService" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <memberships>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories.Services" version="10.0.22621.1" publicKeyToken="31bf3856ad364e35" typeName="Service" />
+      <categoryInstance>
+        <serviceData name="icssvc" displayName="@%SystemRoot%\System32\tetheringservice.dll,-4097" errorControl="normal" start="demand" type="win32ShareProcess" description="@%SystemRoot%\System32\tetheringservice.dll,-4098" dependOnService="RpcSs,wcmsvc" group="TDI" imagePath="%SystemRoot%\system32\svchost.exe -k LocalServiceNetworkRestricted -p" objectName="NT Authority\LocalService" requiredPrivileges="SeChangeNotifyPrivilege,SeImpersonatePrivilege" sidType="unrestricted">
+          <failureActions resetPeriod="86400">
+            <actions>
+              <action delay="120000" type="restartService" />
+              <action delay="300000" type="restartService" />
+              <action delay="0" type="none" />
+            </actions>
+          </failureActions>
+          <serviceTrigger action="start" subtype="RPC_INTERFACE_EVENT" type="NetworkEndpointEvent">
+            <triggerData type="string" value="E00C29A5-0F62-4D84-B7F0-D2387E41ED18" />
+          </serviceTrigger>
+          <serviceTrigger action="start" subtype="WNF_STATE_CHANGE" type="WnfStateEvent">
+            <triggerData type="binary" value="3508bca33e069441" />
+          </serviceTrigger>
+          <securityDescriptor name="TETHERING_SVC_SDDL" />
+        </serviceData>
+      </categoryInstance>
+    </categoryMembership>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories" version="1.0.0.0" publicKeyToken="365143bb27e7ac8b" typeName="SvcHost" />
+      <categoryInstance subcategory="LocalServiceNetworkRestricted">
+        <serviceGroup position="last" serviceName="icssvc" />
+      </categoryInstance>
+    </categoryMembership>
+  </memberships>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="TETHERING_SVC_SDDL" sddl="D:(A;;CCLCSWRPWPDTLOCRRC;;;SY)(A;;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;BA)(A;;CCLCSWLOCRRC;;;IU)(A;;CCLCSWLOCRRC;;;SU)(A;;LCRP;;;WD)(A;;CCLCSWLOCRRCRP;;;S-1-15-2-155514346-2573954481-755741238-1654018636-1233331829-3075935687-2861478708)(A;;CCLCSWLOCRRCRP;;;S-1-15-2-1121366727-2517420131-1100342901-1044639592-4216533239-371662368-2140263060)(A;;CCLCSWLOCRRCRP;;;S-1-15-2-2543942650-389403887-2808249486-612059083-208952635-835677591-2189227231)(A;;CCLCSWLOCRRCRP;;;S-1-15-2-3801529221-2855318152-1555692692-2306892612-2338533892-3542301781-2904385964)" operationHint="replace" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+</assembly>

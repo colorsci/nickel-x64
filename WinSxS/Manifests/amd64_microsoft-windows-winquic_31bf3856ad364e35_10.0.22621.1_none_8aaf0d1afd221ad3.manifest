@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-WinQuic" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <file name="msquic.sys" destinationPath="$(runtime.drivers)\" sourceName="msquic.sys" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>XY8bvCaQcG4mQx8Efqc4ipD/MotojIL21bRDJpzl5zc=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <memberships>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories.Services" version="10.0.22621.1" publicKeyToken="31bf3856ad364e35" typeName="Service" />
+      <categoryInstance subcategory="MsQuic">
+        <serviceData name="MsQuic" displayName="@%SystemRoot%\system32\drivers\msquic.sys,-200" errorControl="normal" start="demand" type="kernelDriver" description="@%SystemRoot%\system32\drivers\msquic.sys,-201" group="Network" imagePath="system32\drivers\msquic.sys">
+          <securityDescriptor name="MsQuicServiceACL" />
+        </serviceData>
+      </categoryInstance>
+    </categoryMembership>
+  </memberships>
+  <registryKeys>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\SafeBoot\Network\MsQuic">
+      <registryValue name="" valueType="REG_SZ" value="Driver" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\MsQuic\Parameters\Apps" />
+  </registryKeys>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="MsQuicServiceACL" sddl="D:(A;;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;SY)(A;;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;BA)(A;;CCLCSWLORCRP;;;IU)(A;;CCLCSWLORCRP;;;SU)(A;;CCLCSWLORCRP;;;S-1-5-3)S:(AU;FA;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;WD)" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" description="Default SDDL for Windows Resource Protected file" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+  <instrumentation>
+    <counters xmlns="http://schemas.microsoft.com/win/2005/12/counters" schemaVersion="2.0">
+      <provider applicationIdentity="%SystemRoot%\system32\drivers\tcpip.sys" callback="custom" providerGuid="{aa01ec53-6481-4977-97e2-bd25ac87c508}" providerName="QuicCounters" providerType="kernelMode">
+        <counterSet description="This counter set measures various QUIC activity for performance diagnositcs." descriptionID="503" guid="{292b0e56-530b-45c4-9063-6a492ec5a05a}" instances="single" name="QUIC Performance Diagnostics" nameID="501" symbol="QuicCounters" uri="Microsoft.Windows.System.PerfCounters.QUIC.QuicCounters">
+          <structs>
+            <struct name="QuicCounters" type="QUIC_PERF_COUNTERS" />
+          </structs>
+          <counter description="Total number of created QUIC connections" descriptionID="553" detailLevel="standard" field="EightBytes" id="0" name="QUIC Connections Created" nameID="551" struct="QuicCounters" type="perf_counter_large_rawcount" uri="Microsoft.Windows.System.PerfCounters.QUIC.QuicCounters.ConnectionsCreated" />
+          <counter description="Rate of created QUIC connections" descriptionID="557" detailLevel="standard" field="FourBytes" id="1" name="QUIC Connections Created/sec" nameID="555" struct="QuicCounters" type="perf_counter_counter" uri="Microsoft.Windows.System.PerfCounters.QUIC.QuicCounters.ConnectionsCreatedRate" />
+          <counter description="Total number of failed handshake QUIC connections" descriptionID="561" detailLevel="standard" field="EightBytes" id="2" name="QUIC Handshakes Failed" nameID="559" struct="QuicCounters" type="perf_counter_large_rawcount" uri="Microsoft.Windows.System.PerfCounters.QUIC.QuicCounters.ConnectionHandshakeFails" />
+          <counter description="Rate of failed handshake QUIC connections" descriptionID="565" detailLevel="standard" field="FourBytes" id="3" name="QUIC Handshakes Failed/sec" nameID="563" struct="QuicCounters" type="perf_counter_counter" uri="Microsoft.Windows.System.PerfCounters.QUIC.QuicCounters.ConnectionHandshakeFailsRate" />
+          <counter description="Total number of QUIC connections rejected by an application" descriptionID="569" detailLevel="standard" field="EightBytes" id="4" name="QUIC Connections Rejected" nameID="567" struct="QuicCounters" type="perf_counter_large_rawcount" uri="Microsoft.Windows.System.PerfCounters.QUIC.QuicCounters.ConnectionsRejected" />
+          <counter description="Rate of QUIC connections rejected by an application" descriptionID="573" detailLevel="standard" field="FourBytes" id="5" name="QUIC Connections Rejected/sec" nameID="571" struct="QuicCounters" type="perf_counter_counter" uri="Microsoft.Windows.System.PerfCounters.QUIC.QuicCounters.ConnectionsRejectedRate" />
+          <counter description="Total number of QUIC connections resumed" descriptionID="577" detailLevel="standard" field="EightBytes" id="6" name="QUIC Connections Resumed" nameID="575" struct="QuicCounters" type="perf_counter_large_rawcount" uri="Microsoft.Windows.System.PerfCounters.QUIC.QuicCounters.ConnectionsResumed" />
+          <counter description="Rate of QUIC connections resumed" descriptionID="581" detailLevel="standard" field="FourBytes" id="7" name="QUIC Connections Resumed/sec" nameID="579" struct="QuicCounters" type="perf_counter_counter" uri="Microsoft.Windows.System.PerfCounters.QUIC.QuicCounters.ConnectionsResumedRate" />
+          <counter description="Current number of active QUIC connections" descriptionID="585" detailLevel="standard" field="EightBytes" id="8" name="QUIC Connections Active" nameID="583" struct="QuicCounters" type="perf_counter_large_rawcount" uri="Microsoft.Windows.System.PerfCounters.QUIC.QuicCounters.ConnectionsActive" />
+          <counter description="Current number of connected QUIC connections" descriptionID="589" detailLevel="standard" field="EightBytes" id="9" name="QUIC Connections Connected" nameID="587" struct="QuicCounters" type="perf_counter_large_rawcount" uri="Microsoft.Windows.System.PerfCounters.QUIC.QuicCounters.ConnectionsConnected" />
+          <counter description="Total number of QUIC connections shutdown with a protocol error" descriptionID="593" detailLevel="standard" field="EightBytes" id="10" name="QUIC Connections Protocol Error" nameID="591" struct="QuicCounters" type="perf_counter_large_rawcount" uri="Microsoft.Windows.System.PerfCounters.QUIC.QuicCounters.ConnectionsProtocolError" />
+          <counter description="Rate of QUIC connections shutdown with a protocol error" descriptionID="597" detailLevel="standard" field="FourBytes" id="11" name="QUIC Connections Protocol Errors/sec" nameID="595" struct="QuicCounters" type="perf_counter_counter" uri="Microsoft.Windows.System.PerfCounters.QUIC.QuicCounters.ConnectionsProtocolErrorRate" />
+          <counter description="Total number of QUIC connection attempts with no matching ALPN" descriptionID="601" detailLevel="standard" field="EightBytes" id="12" name="QUIC Connections No ALPN" nameID="599" struct="QuicCounters" type="perf_counter_large_rawcount" uri="Microsoft.Windows.System.PerfCounters.QUIC.QuicCounters.ConnectionsNoALPN" />
+          <counter description="Rate of QUIC connection attempts with no matching ALPN" descriptionID="605" detailLevel="standard" field="FourBytes" id="13" name="QUIC Connections No ALPNs/sec" nameID="603" struct="QuicCounters" type="perf_counter_counter" uri="Microsoft.Windows.System.PerfCounters.QUIC.QuicCounters.ConnectionsNoALPNRate" />
+          <counter description="Current number of active QUIC streams" descriptionID="609" detailLevel="standard" field="EightBytes" id="14" name="QUIC Streams Active" nameID="607" struct="QuicCounters" type="perf_counter_large_rawcount" uri="Microsoft.Windows.System.PerfCounters.QUIC.QuicCounters.StreamsActive" />
+          <counter description="Rate of QUIC packets suspected lost" descriptionID="613" detailLevel="standard" field="FourBytes" id="15" name="QUIC Packets Suspected Lost/sec" nameID="611" struct="QuicCounters" type="perf_counter_counter" uri="Microsoft.Windows.System.PerfCounters.QUIC.QuicCounters.SuspectedLost" />
+          <counter description="Rate of QUIC packets dropped" descriptionID="617" detailLevel="standard" field="FourBytes" id="16" name="QUIC Packets Dropped/sec" nameID="615" struct="QuicCounters" type="perf_counter_counter" uri="Microsoft.Windows.System.PerfCounters.QUIC.QuicCounters.PacketsDropped" />
+          <counter description="Rate of QUIC packets failing decryption" descriptionID="621" detailLevel="standard" field="FourBytes" id="17" name="QUIC Packet Decryption Failures/sec" nameID="619" struct="QuicCounters" type="perf_counter_counter" uri="Microsoft.Windows.System.PerfCounters.QUIC.QuicCounters.DecryptionFailure" />
+          <counter description="Rate of QUIC UDP Datagrams Received" descriptionID="625" detailLevel="standard" field="FourBytes" id="18" name="QUIC UDP Datagrams Received/sec" nameID="623" struct="QuicCounters" type="perf_counter_counter" uri="Microsoft.Windows.System.PerfCounters.QUIC.QuicCounters.UdpReceived" />
+          <counter description="Rate of QUIC UDP Datagrams Sent" descriptionID="629" detailLevel="standard" field="FourBytes" id="19" name="QUIC UDP Datagrams Sent/sec" nameID="627" struct="QuicCounters" type="perf_counter_counter" uri="Microsoft.Windows.System.PerfCounters.QUIC.QuicCounters.UdpSent" />
+          <counter description="Rate of QUIC UDP Payload Bytes Received" descriptionID="633" detailLevel="standard" field="FourBytes" id="20" name="QUIC UDP Payload Bytes Received/sec" nameID="631" struct="QuicCounters" type="perf_counter_counter" uri="Microsoft.Windows.System.PerfCounters.QUIC.QuicCounters.UdpPayloadBytesReceived" />
+          <counter description="Rate of QUIC UDP Payload Bytes Sent" descriptionID="637" detailLevel="standard" field="FourBytes" id="21" name="QUIC UDP Payload Bytes Sent/sec" nameID="635" struct="QuicCounters" type="perf_counter_counter" uri="Microsoft.Windows.System.PerfCounters.QUIC.QuicCounters.UdpPayloadBytesSent" />
+          <counter description="Rate of QUIC UDP Receive Events" descriptionID="641" detailLevel="standard" field="FourBytes" id="22" name="QUIC UDP Receive Events/sec" nameID="639" struct="QuicCounters" type="perf_counter_counter" uri="Microsoft.Windows.System.PerfCounters.QUIC.QuicCounters.UdpRecvEvents" />
+          <counter description="Rate of QUIC UDP Send Calls" descriptionID="645" detailLevel="standard" field="FourBytes" id="23" name="QUIC UDP Send Calls/sec" nameID="643" struct="QuicCounters" type="perf_counter_counter" uri="Microsoft.Windows.System.PerfCounters.QUIC.QuicCounters.UdpSendCalls" />
+          <counter description="Rate QUIC App Sent Bytes" descriptionID="649" detailLevel="standard" field="FourBytes" id="24" name="QUIC App Sent Bytes/sec" nameID="647" struct="QuicCounters" type="perf_counter_counter" uri="Microsoft.Windows.System.PerfCounters.QUIC.QuicCounters.AppSentBytes" />
+          <counter description="Rate QUIC App Received Bytes" descriptionID="653" detailLevel="standard" field="FourBytes" id="25" name="QUIC App Received Bytes/sec" nameID="651" struct="QuicCounters" type="perf_counter_counter" uri="Microsoft.Windows.System.PerfCounters.QUIC.QuicCounters.AppReceivedBytes" />
+          <counter description="Current QUIC connection queue length" descriptionID="657" detailLevel="standard" field="EightBytes" id="26" name="QUIC Connections Queued" nameID="655" struct="QuicCounters" type="perf_counter_large_rawcount" uri="Microsoft.Windows.System.PerfCounters.QUIC.QuicCounters.ConnectionsQueued" />
+          <counter description="Current QUIC connection operation queue length" descriptionID="661" detailLevel="standard" field="EightBytes" id="27" name="QUIC Connection Operations Queued" nameID="659" struct="QuicCounters" type="perf_counter_large_rawcount" uri="Microsoft.Windows.System.PerfCounters.QUIC.QuicCounters.ConnectionsOperQueued" />
+          <counter description="Rate of QUIC connection operations queued" descriptionID="665" detailLevel="standard" field="FourBytes" id="28" name="QUIC Connection Operations Queued/sec" nameID="663" struct="QuicCounters" type="perf_counter_counter" uri="Microsoft.Windows.System.PerfCounters.QUIC.QuicCounters.TotalConnectionOperQueued" />
+          <counter description="Rate of QUIC connection operations completed" descriptionID="669" detailLevel="standard" field="FourBytes" id="29" name="QUIC Connection Operations Completed/sec" nameID="667" struct="QuicCounters" type="perf_counter_counter" uri="Microsoft.Windows.System.PerfCounters.QUIC.QuicCounters.TotalConnectionOperCompleted" />
+          <counter description="Current QUIC worker operation queue length" descriptionID="673" detailLevel="standard" field="EightBytes" id="30" name="QUIC Worker Operations Queued" nameID="671" struct="QuicCounters" type="perf_counter_large_rawcount" uri="Microsoft.Windows.System.PerfCounters.QUIC.QuicCounters.WorkerOperationsQueued" />
+          <counter description="Rate of QUIC worker operations queued" descriptionID="679" detailLevel="standard" field="FourBytes" id="31" name="QUIC Worker Operations Queued/sec" nameID="675" struct="QuicCounters" type="perf_counter_counter" uri="Microsoft.Windows.System.PerfCounters.QUIC.QuicCounters.TotalWorkerOperationsQueued" />
+          <counter description="Rate of QUIC worker operations completed" descriptionID="683" detailLevel="standard" field="FourBytes" id="32" name="QUIC Worker Operations/sec" nameID="681" struct="QuicCounters" type="perf_counter_counter" uri="Microsoft.Windows.System.PerfCounters.QUIC.QuicCounters.TotalWorkerOperationsCompleted" />
+        </counterSet>
+      </provider>
+    </counters>
+    <events xmlns="http://schemas.microsoft.com/win/2004/08/events">
+      <provider guid="{ff15e657-4f26-570e-88ab-0796b258d11c}" messageFileName="%WinDir%\system32\drivers\msquic.sys" name="Microsoft-Quic" resourceFileName="%WinDir%\system32\drivers\msquic.sys" symbol="MICROSOFT_MSQUIC_PROVIDER" />
+      <cmi />
+    </events>
+  </instrumentation>
+</assembly>

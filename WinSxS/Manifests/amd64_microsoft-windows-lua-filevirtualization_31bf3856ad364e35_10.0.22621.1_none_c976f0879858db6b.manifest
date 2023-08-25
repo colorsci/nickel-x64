@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-LUA-FileVirtualization" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <dependency discoverable="no" resourceType="Resources">
+    <dependentAssembly dependencyType="prerequisite">
+      <assemblyIdentity name="Microsoft-Windows-LUA-FileVirtualization.Resources" version="10.0.22621.1" processorArchitecture="amd64" language="*" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+    </dependentAssembly>
+  </dependency>
+  <file name="luafv.sys" destinationPath="$(runtime.drivers)\" sourceName="luafv.sys" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>mH/hETvxRvr8WZI+3oIYLtoInVgPRKDc3jJKpdzleW8=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <memberships>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories" version="1.0.0.0" publicKeyToken="365143bb27e7ac8b" typeName="BootCritical" />
+    </categoryMembership>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories.Services" version="10.0.22621.1" publicKeyToken="31bf3856ad364e35" typeName="Service" />
+      <categoryInstance>
+        <serviceData name="luafv" displayName="@%systemroot%\system32\drivers\luafv.sys,-100" errorControl="normal" start="auto" type="fileSystemDriver" description="@%systemroot%\system32\drivers\luafv.sys,-101" dependOnService="FltMgr" group="FSFilter Virtualization" imagePath="\SystemRoot\system32\drivers\luafv.sys" />
+      </categoryInstance>
+    </categoryMembership>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories" version="1.0.0.0" publicKeyToken="365143bb27e7ac8b" typeName="BootRecovery" />
+    </categoryMembership>
+  </memberships>
+  <instrumentation xmlns:win="http://manifests.microsoft.com/win/2004/08/windows/events">
+    <events xmlns="http://schemas.microsoft.com/win/2004/08/events">
+      <provider guid="{c02afc2b-e24e-4449-ad76-bcc2c2575ead}" message="$(string.eventProviderName)" messageFileName="%SystemRoot%\system32\drivers\luafv.sys" name="Microsoft-Windows-UAC-FileVirtualization" resourceFileName="%SystemRoot%\system32\drivers\luafv.sys" symbol="LuafvEventProviderId">
+        <channels>
+          <channel access="O:BAG:SYD:(A;;0x5;;;BA)" chid="Operational" enabled="true" isolation="System" message="$(string.eventChannelName)" name="Microsoft-Windows-UAC-FileVirtualization/Operational" type="Operational">
+            <logging>
+              <maxSize>1048576</maxSize>
+            </logging>
+          </channel>
+        </channels>
+      </provider>
+      <cmi />
+    </events>
+  </instrumentation>
+  <registryKeys>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\luafv\Instances">
+      <registryValue name="DefaultInstance" valueType="REG_SZ" value="luafv" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\luafv\Instances\luafv">
+      <registryValue name="Altitude" valueType="REG_SZ" value="135000" />
+      <registryValue name="Flags" valueType="REG_DWORD" value="0x00000000" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\luafv\Parameters">
+      <registryValue name="ProgramData" valueType="REG_SZ" value="$(runtime.programData)" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\System\CurrentControlset\Services\luafv">
+      <registryValue name="SupportedFeatures" valueType="REG_DWORD" value="0x0000000f" />
+    </registryKey>
+  </registryKeys>
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string id="displayName" value="UAC File Virtualization" />
+        <string id="wrpDisplayName" value="WRP_FILE_DEFAULT_SDDL" />
+        <string id="wrpDescription" value="Default SDDL for Windows Resource Protected file" />
+        <string id="eventProviderName" value="Microsoft-Windows-UAC-FileVirtualization" />
+        <string id="eventChannelName" value="Microsoft-Windows-UAC-FileVirtualization/Operational" />
+        <string id="queryVirtualizationFailed" value="Failed to query the virtualization mode." />
+        <string id="queryRelatedFileObjectFailed" value="Failed to query the related file object." />
+        <string id="queryStoreFileFailed" value="Failed to query virtual store file information." />
+        <string id="selectFileFailed" value="Failed to select which file to create." />
+        <string id="createStreamHandleContextFailed" value="Failed to create a stream handle context." />
+        <string id="setStreamHandleContextFailed" value="Failed to set the stream handle context." />
+        <string id="adminAccessCheckFailed" value="Failed to perform the administrator access check." />
+        <string id="operationCancelled" value="Cancelled the operation due to insufficient resources." />
+        <string id="prepareDelayedFailed" value="Failed to prepare for delayed virtualization." />
+        <string id="performDelayedFailed" value="Failed to perform delayed virtualization." />
+        <string id="delayedSwitchFailed" value="Failed to switch one or more delayed file objects." />
+        <string id="instanceSetupFailed" value="Failed to set up the instance for a volume." />
+        <string id="queryDirectoryFailed" value="Failed to perform the merged directory query." />
+        <string id="queryInformationFailed" value="Failed to query information for the file object." />
+        <string id="filterRegistrationFailed" value="Failed to register with Filter Manager." />
+        <string id="readSettingsFailed" value="Failed to read the settings." />
+        <string id="readFileListFailed" value="Failed to read the file list." />
+        <string id="initializeSecurityFailed" value="Failed to initialize security." />
+        <string id="startFilteringFailed" value="Failed to start filtering." />
+        <string id="createVirtualPathFailed" value="Failed to create the virtual file path." />
+        <string id="copyFileFailed" value="Failed to copy the file into the virtual store." />
+        <string id="isTargetWRPFailed" value="Failed to check target file for WRP protection." />
+        <string id="virtualFileCreated" value="Virtual file &quot;%5&quot; created." />
+        <string id="virtualFileRenamed" value="Virtual file &quot;%5&quot; renamed to &quot;%9&quot;" />
+        <string id="virtualFileDeleted" value="Virtual delete of file &quot;%5&quot; requested." />
+        <string id="fileExclusion" value="Operation on file &quot;%5&quot; excluded from virtualization." />
+        <string id="delayedOnly" value="Delayed virtual file &quot;%5&quot; not virtualized." />
+        <string id="wrpAccessDenied" value="Access was denied on WRP file &quot;%5&quot;" />
+        <string id="deleteFileAccessDenied" value="Access was denied to delete file &quot;%5&quot;" />
+        <string id="kernelCallerFlag" value="Kernel caller" />
+        <string id="impersonatedCallerFlag" value="Impersonated caller" />
+        <string id="directoryFileFlag" value="Directory file" />
+        <string id="nonDirectoryFileFlag" value="Non-directory file" />
+        <string id="delayedVirtualizationFlag" value="Delayed virtualization" />
+        <string id="oplockRequestedFlag" value="Oplock requested" />
+        <string id="openTargetDirectoryFlag" value="Opened target directory" />
+        <string id="copiedGlobalFlag" value="Copied global file" />
+        <string id="virtualRenameSourceFlag" value="Source file was virtual" />
+        <string id="virtualRenameTargetFlag" value="Target file was virtual" />
+        <string id="kernelCallerExclusion" value="Kernel caller exclusion" />
+        <string id="impersonatedCallerExclusion" value="Impersonated caller exclusion" />
+        <string id="openByFileIdExclusion" value="Open by file ID exclusion" />
+        <string id="directDeviceOpenExclusion" value="Direct device open exclusion" />
+        <string id="fileListExclusion" value="File location exclusion" />
+        <string id="adminAccessDeniedExclusion" value="Admin access denied exclusion" />
+        <string id="alternateStreamExclusion" value="Alternate data stream exclusion" />
+        <string id="accessMaskExclusion" value="Access mask exclusion" />
+        <string id="fileTypeMismatchExclusion" value="File type mismatch exclusion" />
+        <string id="readonlyExclusion" value="Readonly exclusion" />
+        <string id="nameExtensionExclusion" value="File name extension exclusion" />
+        <string id="virtualStoreExclusion" value="Virtual store exclusion" />
+        <string id="reparsePointExclusion" value="Reparse point exclusion" />
+        <string id="encryptedExclusion" value="Encrypted exclusion" />
+        <string id="directoryMoveExclusion" value="Directory move exclusion" />
+      </stringTable>
+    </resources>
+  </localization>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" description="Default SDDL for Windows Resource Protected file" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+</assembly>

@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-WOF-Tasks" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <dependency discoverable="no" resourceType="Resources">
+    <dependentAssembly dependencyType="prerequisite">
+      <assemblyIdentity name="Microsoft-Windows-WOF-Tasks.Resources" version="10.0.22621.1" processorArchitecture="amd64" language="*" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+    </dependentAssembly>
+  </dependency>
+  <file name="WofTasks.dll" destinationPath="$(runtime.system32)\" sourceName="WofTasks.dll" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>No7P2X6srwxOd7vbloYiEzGb4s+86BXe4EnfUnbCxcw=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <registryKeys>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{B7BFFB5A-EFA8-4D8C-BBDE-C8D5FAAF54A1}">
+      <registryValue name="" valueType="REG_SZ" value="WOF Task Handler" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{B7BFFB5A-EFA8-4D8C-BBDE-C8D5FAAF54A1}\InprocServer32">
+      <registryValue name="" valueType="REG_EXPAND_SZ" value="%systemroot%\system32\WofTasks.dll" />
+      <registryValue name="ThreadingModel" valueType="REG_SZ" value="Both" />
+    </registryKey>
+  </registryKeys>
+  <taskScheduler>
+    <Task xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task">
+      <RegistrationInfo>
+        <URI>Microsoft\Windows\WOF\WIM-Hash-Management</URI>
+        <Author>$(@%SystemRoot%\system32\WofTasks.dll,-600)</Author>
+        <Source>$(@%SystemRoot%\system32\WofTasks.dll,-601)</Source>
+        <Description>$(@%SystemRoot%\system32\WofTasks.dll,-602)</Description>
+        <SecurityDescriptor>O:BAG:BAD:P(A;;FA;;;BA)(A;;FA;;;SY)</SecurityDescriptor>
+      </RegistrationInfo>
+      <Triggers>
+        <WnfStateChangeTrigger>
+          <StateName>7518bca32b188341</StateName>
+          <Data>01</Data>
+          <DataOffset>0</DataOffset>
+        </WnfStateChangeTrigger>
+        <WnfStateChangeTrigger>
+          <StateName>7528bca32b188341</StateName>
+          <Data>03</Data>
+          <DataOffset>0</DataOffset>
+        </WnfStateChangeTrigger>
+      </Triggers>
+      <Principals>
+        <Principal id="LocalSystem">
+          <UserId>S-1-5-18</UserId>
+        </Principal>
+      </Principals>
+      <Settings>
+        <MultipleInstancesPolicy>Queue</MultipleInstancesPolicy>
+        <DisallowStartIfOnBatteries>true</DisallowStartIfOnBatteries>
+        <StopIfGoingOnBatteries>true</StopIfGoingOnBatteries>
+        <AllowStartOnDemand>true</AllowStartOnDemand>
+        <Enabled>true</Enabled>
+        <Hidden>false</Hidden>
+        <RunOnlyIfIdle>false</RunOnlyIfIdle>
+        <UseUnifiedSchedulingEngine>true</UseUnifiedSchedulingEngine>
+      </Settings>
+      <Actions Context="LocalSystem">
+        <ComHandler>
+          <ClassId>{B7BFFB5A-EFA8-4D8C-BBDE-C8D5FAAF54A1}</ClassId>
+          <Data>WimHashManagement</Data>
+        </ComHandler>
+      </Actions>
+    </Task>
+  </taskScheduler>
+  <taskScheduler>
+    <Task xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task">
+      <RegistrationInfo>
+        <URI>Microsoft\Windows\WOF\WIM-Hash-Validation</URI>
+        <Author>$(@%SystemRoot%\system32\WofTasks.dll,-600)</Author>
+        <Source>$(@%SystemRoot%\system32\WofTasks.dll,-601)</Source>
+        <Description>$(@%SystemRoot%\system32\WofTasks.dll,-602)</Description>
+        <SecurityDescriptor>O:BAG:BAD:P(A;;FA;;;BA)(A;;FA;;;SY)</SecurityDescriptor>
+      </RegistrationInfo>
+      <Principals>
+        <Principal id="LocalSystem">
+          <UserId>S-1-5-18</UserId>
+        </Principal>
+      </Principals>
+      <Settings>
+        <UseUnifiedSchedulingEngine>true</UseUnifiedSchedulingEngine>
+        <MultipleInstancesPolicy>IgnoreNew</MultipleInstancesPolicy>
+        <DisallowStartIfOnBatteries>true</DisallowStartIfOnBatteries>
+        <StopIfGoingOnBatteries>true</StopIfGoingOnBatteries>
+        <AllowStartOnDemand>true</AllowStartOnDemand>
+        <StartWhenAvailable>true</StartWhenAvailable>
+        <Enabled>true</Enabled>
+        <Hidden>false</Hidden>
+        <RunOnlyIfIdle>false</RunOnlyIfIdle>
+        <MaintenanceSettings>
+          <Period>P1D</Period>
+        </MaintenanceSettings>
+      </Settings>
+      <Actions Context="LocalSystem">
+        <ComHandler>
+          <ClassId>{B7BFFB5A-EFA8-4D8C-BBDE-C8D5FAAF54A1}</ClassId>
+          <Data>WimHashValidation</Data>
+        </ComHandler>
+      </Actions>
+    </Task>
+  </taskScheduler>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="WRP_REGKEY_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;CI;GA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;CI;GR;;;SY)(A;CI;GR;;;BA)(A;CI;GR;;;BU)(A;CI;GR;;;S-1-15-2-1)(A;CI;GR;;;S-1-15-3-1024-1065365936-1281604716-3511738428-1654721687-432734479-3232135806-4053264122-3456934681)" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" description="Default SDDL for Windows Resource Protected file" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+</assembly>

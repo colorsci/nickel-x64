@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-Defrag-ScheduleClient" version="10.0.22621.1" processorArchitecture="wow64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <taskScheduler>
+    <Task xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task">
+      <RegistrationInfo>
+        <Source>$(@%systemroot%\system32\defragsvc.dll,-800)</Source>
+        <Author>$(@%systemroot%\system32\defragsvc.dll,-801)</Author>
+        <Description>$(@%systemroot%\system32\defragsvc.dll,-802)</Description>
+        <URI>Microsoft\Windows\Defrag\ScheduledDefrag</URI>
+        <SecurityDescriptor>D:AI(A;;FA;;;BA)(A;;FA;;;SY)(A;;FRFX;;;LS)(A;;FR;;;AU)</SecurityDescriptor>
+      </RegistrationInfo>
+      <Triggers />
+      <Settings>
+        <Enabled>true</Enabled>
+        <UseUnifiedSchedulingEngine>true</UseUnifiedSchedulingEngine>
+        <MaintenanceSettings>
+          <Period>P1D</Period>
+          <Deadline>P1M</Deadline>
+          <Exclusive>false</Exclusive>
+        </MaintenanceSettings>
+        <AllowStartOnDemand>true</AllowStartOnDemand>
+        <MultipleInstancesPolicy>IgnoreNew</MultipleInstancesPolicy>
+        <DisallowStartIfOnBatteries>true</DisallowStartIfOnBatteries>
+        <StopIfGoingOnBatteries>true</StopIfGoingOnBatteries>
+        <StartWhenAvailable>true</StartWhenAvailable>
+        <RunOnlyIfIdle>false</RunOnlyIfIdle>
+        <WakeToRun>false</WakeToRun>
+        <AllowHardTerminate>true</AllowHardTerminate>
+        <RunOnlyIfNetworkAvailable>false</RunOnlyIfNetworkAvailable>
+        <Hidden>false</Hidden>
+      </Settings>
+      <Principals>
+        <Principal id="LocalSystem">
+          <UserId>S-1-5-18</UserId>
+          <RunLevel>HighestAvailable</RunLevel>
+        </Principal>
+      </Principals>
+      <Actions Context="LocalSystem">
+        <Exec>
+          <Command>%windir%\system32\defrag.exe</Command>
+          <Arguments>-c -h -o -$</Arguments>
+        </Exec>
+      </Actions>
+    </Task>
+  </taskScheduler>
+</assembly>

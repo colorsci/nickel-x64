@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-CoreSystem-SmsRouter" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <dependency discoverable="no" resourceType="Resources">
+    <dependentAssembly dependencyType="prerequisite">
+      <assemblyIdentity name="Microsoft-Windows-CoreSystem-SmsRouter.Resources" version="10.0.22621.1" processorArchitecture="amd64" language="*" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+    </dependentAssembly>
+  </dependency>
+  <file name="SmsRouterSvc.dll" destinationPath="$(runtime.system32)\" sourceName="SmsRouterSvc.dll" importPath="$(build.nttree)\" sourcePath=".\">
+    <signatureInfo>
+      <signatureDescriptor PETrust="true" />
+    </signatureInfo>
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>ww+e84Mmnvoe4HFnSYhylNpfmNeZWZvKNtgL+iIbxfI=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <file name="wsplib.dll" destinationPath="$(runtime.system32)\" sourceName="wsplib.dll" importPath="$(build.nttree)\" sourcePath=".\">
+    <signatureInfo>
+      <signatureDescriptor PETrust="true" />
+    </signatureInfo>
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>UFyduJzV6R81zK0HpJmla4X0buVCDvghG9JvFMmgHrs=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <directories>
+    <directory destinationPath="$(runtime.programdata)\Microsoft\SmsRouter" owner="true" attributes="notContentIndexed">
+      <securityDescriptor name="ALLOW_LOCALSYSTEM_TRUSTEDINSTALLER_AND_SMSROUTER_WRITE" />
+    </directory>
+  </directories>
+  <registryKeys>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\Software\Microsoft\Cellular\Sms\Router">
+      <securityDescriptor name="ALLOW_LOCALSYSTEM_TRUSTEDINSTALLER_AND_SMSROUTER_WRITE" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\SmsRouter\State">
+      <securityDescriptor name="ALLOW_LOCALSYSTEM_TRUSTEDINSTALLER_AND_SMSROUTER_WRITE" />
+    </registryKey>
+  </registryKeys>
+  <migration scope="Upgrade" settingsVersion="1">
+    <migXml xmlns="">
+      <rules context="System">
+        <include>
+          <objectSet>
+            <pattern type="Registry">HKLM\Software\Microsoft\Cellular\Sms\Router\* [*]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\SmsRouter\State\* [*]</pattern>
+            <pattern type="File">%programdata%\Microsoft\SmsRouter\* [*]</pattern>
+          </objectSet>
+        </include>
+        <locationModify script="MigXmlHelper.RelativeMove('HKLM\Software\Microsoft\Cellular\Sms\Router','HKLM\SYSTEM\CurrentControlSet\Services\SmsRouter\State')">
+          <objectSet>
+            <pattern type="Registry">HKLM\Software\Microsoft\Cellular\Sms\Router\* [*]</pattern>
+          </objectSet>
+        </locationModify>
+        <merge script="MigXmlHelper.SourcePriority()">
+          <objectSet>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\SmsRouter\State\* [*]</pattern>
+          </objectSet>
+        </merge>
+      </rules>
+    </migXml>
+    <supportedComponents>
+      <supportedComponent>
+        <assemblyIdentity name="_" version="1.0.0.0" />
+        <supportedComponentIdentity language="neutral" name="Microsoft-Windows-CoreSystem-SmsRouter" processorArchitecture="*" settingsVersionRange="0-1" xmlns="urn:schemas-microsoft-com:asm.v3" />
+      </supportedComponent>
+    </supportedComponents>
+  </migration>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="WRP_REGKEY_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;CI;GA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;CI;GR;;;SY)(A;CI;GR;;;BA)(A;CI;GR;;;BU)(A;CI;GR;;;S-1-15-2-1)(A;CI;GR;;;S-1-15-3-1024-1065365936-1281604716-3511738428-1654721687-432734479-3232135806-4053264122-3456934681)" operationHint="replace" />
+          <securityDescriptorDefinition name="ALLOW_LOCALSYSTEM_TRUSTEDINSTALLER_AND_SMSROUTER_WRITE" sddl="D:PAI(A;CIOI;GAKACCCR;;;S-1-5-80-2950457502-2299174248-3328245479-1326271200-3113355612)(A;CIOI;GAKACCCR;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;CIOI;GAKACCCR;;;BA)(A;CIOI;GAKACCCR;;;SY)(A;CIOI;GR;;;LS)" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" description="Default SDDL for Windows Resource Protected file" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+  <instrumentation xmlns:ut="http://manifests.microsoft.com/win/2004/08/windows/networkevents" xmlns:win="http://manifests.microsoft.com/win/2004/08/windows/events" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <events xmlns="http://schemas.microsoft.com/win/2004/08/events">
+      <provider guid="{A9C11050-9E93-4fa4-8FE0-7C4750A345B2}" message="$(string.EventProviderName)" messageFileName="%SystemRoot%\System32\SmsRouterSvc.dll" name="Microsoft-Windows-CoreSystem-SmsRouter" resourceFileName="%SystemRoot%\System32\SmsRouterSvc.dll" symbol="Microsoft_Windows_CoreSystem_SmsRouter">
+        <channels>
+          <channel chid="cOperational" enabled="true" message="$(string.SmsRouterOperationalChannel)" name="Microsoft-Windows-CoreSystem-SmsRouter-Events/Operational" type="Operational" />
+          <channel chid="cDebug" message="$(string.SmsRouterDebugChannel)" name="Microsoft-Windows-CoreSystem-SmsRouter-Events/Debug" type="Debug" />
+        </channels>
+      </provider>
+      <cmi />
+    </events>
+  </instrumentation>
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string id="EventProviderName" value="Microsoft-Windows-CoreSystem-SmsRouter" />
+        <string id="Keyword.Error" value="Error" />
+        <string id="Keyword.Performance" value="Performance" />
+        <string id="Keyword.Information" value="Information" />
+        <string id="Keyword.Trace" value="Trace" />
+        <string id="SmsRouterOperationalChannel" value="SmsRouter Operational Channel" />
+        <string id="Event.SmsRouterStart" value="[SmsRouter] SmsRouter is started" />
+        <string id="Event.SmsRouterStop" value="[SmsRouter] SmsRouter is stoped" />
+        <string id="Event.SmsRouterError" value="[SmsRouter::%1:%2] Error %3: %4" />
+        <string id="Event.SmsRouterInfo" value="[SmsRouter::%1:%2] %3" />
+        <string id="Event.SmsBrokerStart" value="[SmsRouter] SmsBroker is started" />
+        <string id="Event.SmsBrokerStop" value="[SmsRouter] SmsBroker is stoped" />
+        <string id="SmsRouterDebugChannel" value="SmsRouter Debug Channel" />
+        <string id="Event.SMSTextReceivedEvent" value="The SMSRouter received a Text message." />
+        <string id="Event.SMSOperatorReceivedEvent" value="The SMSRouter received a SMS Operator Notification message." />
+        <string id="Event.UssdReceivedEvent" value="The SMSRouter received a USSD Operator Notification message." />
+        <string id="Event.SMSClass0TextReceivedEvent" value="The SMSRouter received a class zero message." />
+        <string id="event.ErrorPublishingSEB" value="Error publishing background notification to system event broker.%nError is %1: %2" />
+        <string id="event.ErrorReadingWNFName" value="No WNF state name found for this device.%nError is %1: %2" />
+        <string id="event.ErrorGetNetworkAccountDetails" value="Error getting network account details from device node.%nError is %1: %2" />
+        <string id="event.ErrorDecodeMessage" value="Error - Could not decode SMS message.%nError is %1: %2" />
+      </stringTable>
+    </resources>
+  </localization>
+</assembly>

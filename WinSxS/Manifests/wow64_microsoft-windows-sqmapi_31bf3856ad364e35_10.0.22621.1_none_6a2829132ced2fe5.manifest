@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved." xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <assemblyIdentity name="Microsoft-Windows-SQMApi" version="10.0.22621.1" processorArchitecture="wow64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <file name="sqmapi.dll" destinationPath="$(runtime.system32)\" sourceName="sqmapi.dll" importPath="$(build.nttree)\" sourcePath=".\">
+    <signatureInfo>
+      <signatureDescriptor PETrust="true" />
+    </signatureInfo>
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>UiiVx/AmcX50qo2Gei2clN963dBfwplzMDfkdItG2pI=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <registryKeys>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\SQMClient" perUserVirtualization="Disable" />
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\SQMClient\CommonUploader" perUserVirtualization="Disable">
+      <securityDescriptor name="WRP_REGKEY_WRITE_ADMIN_SYSTEM_LOCALSERVICE_READ_USER_ALL_APPLICATION_PACKAGES" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\SQMClient\CommonUploader\Paths" perUserVirtualization="Disable">
+      <securityDescriptor name="WRP_REGKEY_WRITE_ADMIN_SYSTEM_LOCALSERVICE_ADDKEY_USER" />
+    </registryKey>
+  </registryKeys>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="WRP_REGKEY_WRITE_ADMIN_SYSTEM_LOCALSERVICE_READ_USER_ALL_APPLICATION_PACKAGES" sddl="D:P(A;OICI;KA;;;BA)(A;OICI;KA;;;SY)(A;OICI;KA;;;LS)(A;OICI;KR;;;BU)(A;OICI;KR;;;S-1-15-2-1)" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_REGKEY_WRITE_ADMIN_SYSTEM_LOCALSERVICE_ADDKEY_USER" sddl="D:P(A;OICI;KA;;;BA)(A;OICI;KA;;;SY)(A;OICI;KA;;;LS)(A;OICI;CCLCSWRPRC;;;BU)" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" description="Default SDDL for Windows Resource Protected file" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+  <configuration xmlns:sqm="http://www.microsoft.com/SQM/SQMClient" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State">
+    <configurationSchema>
+      <xsd:schema attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://www.microsoft.com/SQM/SQMClient">
+        <xsd:element default="1" name="CEIPEnabled" type="xsd:unsignedInt" wcm:dataOnly="false" wcm:description="CEIPEnabled indicates whether the Windows® Customer Experience Improvement Program (CEIP) is enabled." wcm:displayName="CEIPEnabled" wcm:handler="regkey('HKLM\Software\Microsoft\Windows NT\CurrentVersion\UnattendSettings\SQMClient')" wcm:passes="specialize" wcm:scope="allUsers" wcm:visible="true" />
+      </xsd:schema>
+    </configurationSchema>
+    <metadata />
+  </configuration>
+  <migration ignoreConfigurationSection="Yes" scope="Upgrade,MigWiz,USMT" settingsVersion="1">
+    <migXml xmlns="">
+      <rules context="system">
+        <include>
+          <objectSet>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\SQMClient\$ [StudyId]</pattern>
+          </objectSet>
+        </include>
+      </rules>
+    </migXml>
+    <supportedComponents>
+      <supportedComponent>
+        <assemblyIdentity name="_" version="1.0.0.0" />
+        <supportedComponentIdentity buildType="release" language="neutral" name="Microsoft-Windows-SQMApi" processorArchitecture="*" publicKeyToken="31bf3856ad364e35" settingsVersionRange="1" versionScope="nonSxS" xmlns="urn:schemas-microsoft-com:asm.v3" />
+      </supportedComponent>
+    </supportedComponents>
+    <migrationDisplayID>Additional_Options\Windows_Core_Settings</migrationDisplayID>
+  </migration>
+  <imaging>
+    <sysprepInformation>
+      <sysprepProvider stage="generalize">
+        <sysprepOrder order="0x0400" />
+        <sysprepModule methodName="SqmSysprepGeneralize" moduleName="sqmapi.dll" />
+      </sysprepProvider>
+      <sysprepProvider stage="cleanup">
+        <sysprepOrder order="0x0300" />
+        <sysprepModule methodName="SqmSysprepCleanup" moduleName="sqmapi.dll" />
+      </sysprepProvider>
+    </sysprepInformation>
+  </imaging>
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string id="description" value="Manifest for sqmapi.dll" />
+        <string id="displayName" value="sqmapi.dll" />
+      </stringTable>
+    </resources>
+  </localization>
+</assembly>

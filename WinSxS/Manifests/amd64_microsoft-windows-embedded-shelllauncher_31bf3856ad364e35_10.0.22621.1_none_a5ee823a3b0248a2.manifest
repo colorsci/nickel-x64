@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved." xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <assemblyIdentity name="Microsoft-Windows-Embedded-ShellLauncher" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <dependency discoverable="no" resourceType="Resources">
+    <dependentAssembly>
+      <assemblyIdentity name="Microsoft-Windows-Embedded-ShellLauncher.Resources" version="10.0.22621.1" processorArchitecture="amd64" language="*" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+    </dependentAssembly>
+  </dependency>
+  <configuration xmlns:app="eshellSchema" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State">
+    <configurationSchema>
+      <xsd:schema attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="eshellSchema">
+        <xsd:simpleType name="ActionValueType" wcm:description="Define the action value type and range">
+          <xsd:restriction base="xsd:integer">
+            <xsd:enumeration value="0" />
+            <xsd:enumeration value="1" />
+            <xsd:enumeration value="2" />
+            <xsd:enumeration value="3" />
+          </xsd:restriction>
+        </xsd:simpleType>
+        <xsd:complexType name="CodeActionType">
+          <xsd:sequence>
+            <xsd:element maxOccurs="1" minOccurs="1" name="ReturnCode" type="xsd:string" />
+            <xsd:element maxOccurs="1" minOccurs="1" name="Action" type="app:ActionValueType" />
+          </xsd:sequence>
+        </xsd:complexType>
+        <xsd:complexType name="CustomReturnCodeActionType">
+          <xsd:sequence>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="CodeAction" type="app:CodeActionType" wcm:key="ReturnCode" />
+          </xsd:sequence>
+        </xsd:complexType>
+        <xsd:complexType name="UserType">
+          <xsd:sequence>
+            <xsd:element maxOccurs="1" minOccurs="1" name="Key" type="xsd:positiveInteger" wcm:description="Provide a unique key for each UserSetting" />
+            <xsd:element maxOccurs="1" minOccurs="1" name="AccountName" type="xsd:string" />
+            <xsd:element maxOccurs="1" minOccurs="1" name="Domain" type="xsd:string" />
+            <xsd:element maxOccurs="1" minOccurs="1" name="Shell" type="xsd:string" />
+            <xsd:element maxOccurs="1" minOccurs="0" name="DefaultReturnCodeAction" type="app:ActionValueType" />
+            <xsd:element maxOccurs="1" minOccurs="0" name="CustomReturnCodeAction" type="app:CustomReturnCodeActionType" />
+          </xsd:sequence>
+        </xsd:complexType>
+        <xsd:complexType name="UserSettingsType">
+          <xsd:sequence>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="User" type="app:UserType" wcm:key="Key" />
+          </xsd:sequence>
+        </xsd:complexType>
+        <xsd:element default="cmd.exe" name="Shell" type="xsd:string" wcm:dataOnly="false" wcm:description="If nothing is specified, the value will be default to cmd.exe." wcm:displayName="Shell" wcm:handler="regkey('HKLM\Software\Microsoft\Windows NT\CurrentVersion\UnattendSettings\Shell Launcher')" wcm:legacyName="Shell" wcm:legacyType="REG_SZ" wcm:passes="oobeSystem" wcm:scope="allUsers" wcm:visible="true" />
+        <xsd:element default="0" name="DefaultReturnCodeAction" type="app:ActionValueType" wcm:dataOnly="false" wcm:description="Action for custom shell return code that is not specified for the logon user." wcm:displayName="DefaultReturnCodeAction" wcm:handler="regkey('HKLM\Software\Microsoft\Windows NT\CurrentVersion\UnattendSettings\Shell Launcher')" wcm:legacyName="DefaultReturnCodeAction" wcm:legacyType="REG_DWORD" wcm:passes="oobeSystem" wcm:scope="allUsers" wcm:visible="true" />
+        <xsd:element name="UserSettings" type="app:UserSettingsType" wcm:dataOnly="false" wcm:description="custome shell settings per user." wcm:displayName="UserSettings" wcm:handler="regkey('HKLM\Software\Microsoft\Windows NT\CurrentVersion\UnattendSettings\Shell Launcher')" wcm:passes="oobeSystem" wcm:scope="allUsers" wcm:visible="true" />
+      </xsd:schema>
+    </configurationSchema>
+  </configuration>
+  <file name="eshell.exe" destinationPath="$(runtime.system32)\" sourceName="eshell.exe" importPath="$(build.nttree)\EmbeddedRunTime\ShLaunch\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>otrleSMCOcVfiJGcqNsfO60vpQF+OUntifi3bQEn+uc=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <file name="ShellLauncherConfig.dll" destinationPath="$(runtime.system32)\" sourceName="ShellLauncherConfig.dll" importPath="$(build.nttree)\EmbeddedRunTime\ShLaunch\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>EZ9Bft8Xcr+S6z/x+ZiBvrtxZYtIca6WtlDizQFQhAY=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <file name="ShellLauncherConfig.exe" destinationPath="$(runtime.system32)\" sourceName="ShellLauncherConfig.exe" importPath="$(build.nttree)\EmbeddedRunTime\ShLaunch\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>DlK3SnwBRpdvv9Y33eLE6k0bZD3wfikf6bN/fD5YG4M=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <file name="WESL_ShellLauncher.dll" destinationPath="$(runtime.system32)\wbem\" sourceName="WESL_ShellLauncher.dll" importPath="$(build.nttree)\EmbeddedRuntime\ShLaunch\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>dTnzs3b1tIb3HpF9EvEyjy9Bx6WpXzBJKlsQkD/GJ9Q=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <file name="WESL_ShellLauncher.mof" destinationPath="$(runtime.system32)\wbem\" sourceName="WESL_ShellLauncher.mof" importPath="$(build.nttree)\EmbeddedRuntime\ShLaunch\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>cxtf7lfzDeVM2HkyFBUzPBAyO/dkSzGpzLKubiNvzC8=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <file name="WESL_ShellLauncher_uninstall.mof" destinationPath="$(runtime.system32)\wbem\" sourceName="WESL_ShellLauncher_uninstall.mof" importPath="$(build.nttree)\EmbeddedRuntime\ShLaunch\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>TdN0W5B/1+19+oIVQAXDW5j8PHRBhBi31Ovc71pMCPw=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <file name="ShellLauncherRepository.dll" destinationPath="$(runtime.system32)\" sourceName="ShellLauncherRepository.dll" importPath="$(build.nttree)\EmbeddedRunTime\ShLaunch\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>xH0NzdVQo0hJwPTF66aesj3H7aBzJc4HMFKMkuzZpOo=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <registryKeys>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\Software\Microsoft\WindowsRuntime\ActivatableClassId\Windows.Internal.Shell.ShellLauncher.ShellLauncherExperience">
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+      <registryValue name="TrustLevel" valueType="REG_DWORD" value="0x00000000" />
+      <registryValue name="ActivationType" valueType="REG_DWORD" value="0x00000000" />
+      <registryValue name="DllPath" valueType="REG_SZ" value="$(runtime.system32)\ShellLauncherRepository.dll" />
+      <registryValue name="Threading" valueType="REG_DWORD" value="0x00000000" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\Software\Microsoft\WindowsRuntime\ActivatableClassId\Windows.Internal.ShellLauncher.ShellLauncherRepository">
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+      <registryValue name="TrustLevel" valueType="REG_DWORD" value="0x00000000" />
+      <registryValue name="ActivationType" valueType="REG_DWORD" value="0x00000000" />
+      <registryValue name="DllPath" valueType="REG_SZ" value="$(runtime.system32)\ShellLauncherRepository.dll" />
+      <registryValue name="Threading" valueType="REG_DWORD" value="0x00000000" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\Software\Microsoft\WindowsRuntime\ActivatableClassId\Windows.Internal.Shell.ShellLauncher.ShellLauncherManager">
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+      <registryValue name="TrustLevel" valueType="REG_DWORD" value="0x00000000" />
+      <registryValue name="ActivationType" valueType="REG_DWORD" value="0x00000000" />
+      <registryValue name="DllPath" valueType="REG_SZ" value="$(runtime.system32)\ShellLauncherRepository.dll" />
+      <registryValue name="Threading" valueType="REG_DWORD" value="0x00000000" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{AE06DE64-7ED8-47E6-8A29-B9AE19539973}\">
+      <registryValue name="" valueType="REG_SZ" value="Microsoft Windows ShellLauncher's wmi Provider" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{AE06DE64-7ED8-47E6-8A29-B9AE19539973}\InprocServer32\">
+      <registryValue name="" valueType="REG_EXPAND_SZ" value="%systemroot%\system32\wbem\WESL_ShellLauncher.dll" />
+      <registryValue name="ThreadingModel" valueType="REG_SZ" value="Both" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\Software\Microsoft\Windows Embedded" />
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\services\RegFilter\Parameters\MonitoredKeys\ShLauncher">
+      <registryValue name="ClassKey" valueType="REG_SZ" value="HKLM" />
+      <registryValue name="FileNameForSaving" valueType="REG_SZ" value="ShLauncher.RGF" />
+      <registryValue name="RelativeKeyName" valueType="REG_SZ" value="Software\Microsoft\Windows Embedded\Shell Launcher" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon\AlternateShells\AvailableShells">
+      <registryValue name="60000" valueType="REG_SZ" value="explorer.exe" />
+    </registryKey>
+  </registryKeys>
+  <mof name="$(runtime.system32)\wbem\WESL_ShellLauncher.mof" uninstallmof="$(runtime.system32)\wbem\WESL_ShellLauncher_uninstall.mof" />
+  <unattendActions>
+    <unattendAction arguments="/specialize" executableName="$(runtime.system32)\ShellLauncherConfig.exe" passes="oobeSystem" />
+  </unattendActions>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_REGKEY_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;CI;GA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;CI;GR;;;SY)(A;CI;GR;;;BA)(A;CI;GR;;;BU)(A;CI;GR;;;S-1-15-2-1)(A;CI;GR;;;S-1-15-3-1024-1065365936-1281604716-3511738428-1654721687-432734479-3232135806-4053264122-3456934681)" operationHint="replace" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+  <migration settingsVersion="1">
+    <migXml xmlns="">
+      <rules context="System">
+        <include>
+          <objectSet>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows Embedded\Shell Launcher\* [*]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon [Shell]</pattern>
+          </objectSet>
+        </include>
+      </rules>
+    </migXml>
+    <supportedComponents>
+      <supportedComponent>
+        <assemblyIdentity name="_" version="1.0.0.0" />
+        <supportedComponentIdentity language="neutral" name="Microsoft-Windows-Embedded-ShellLauncher" processorArchitecture="*" settingsVersionRange="1" xmlns="urn:schemas-microsoft-com:asm.v3" />
+      </supportedComponent>
+    </supportedComponents>
+  </migration>
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string id="componentDisplayName" value="Shell Launcher" />
+        <string id="componentDescription" value="Shell Launcher processes Run/RunOnce/RunOnceEx keys and launch user specified custom shell, which is cmd.exe by default" />
+      </stringTable>
+    </resources>
+  </localization>
+</assembly>

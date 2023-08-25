@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved." xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <assemblyIdentity name="Microsoft-Windows-WMI-Core-reg-folder-settings" version="10.0.22621.1" processorArchitecture="wow64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <configuration xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State">
+    <configurationSchema>
+      <xsd:schema targetNamespace="Microsoft-Windows-WMI-Core-reg-folder-settings">
+        <xsd:element default="0" name="DefaultSecuredHost" type="xsd:integer" wcm:accessControl="wbem-reg" wcm:description="Enable Securing Hosting Model for all providers" wcm:displayName="DefaultSecuredHost" wcm:handler="regkey('HKEY_LOCAL_MACHINE\Software\Microsoft\WBEM\CIMOM')" wcm:legacyName="DefaultSecuredHost" wcm:scope="allUsers" />
+        <xsd:element default="0" name="AllowAnonymousCallback" type="xsd:integer" wcm:accessControl="wbem-reg" wcm:description="Enable Securing Hosting Model for all providers" wcm:displayName="AllowAnonymousCallback" wcm:handler="regkey('HKEY_LOCAL_MACHINE\Software\Microsoft\WBEM\CIMOM')" wcm:legacyName="AllowAnonymousCallback" wcm:scope="allUsers" />
+        <xsd:element default="1" name="Performance_Refresh" type="xsd:integer" wcm:accessControl="wbem-reg" wcm:description="Performance Refresh" wcm:displayName="Performance Refresh" wcm:handler="regkey('HKEY_LOCAL_MACHINE\Software\Microsoft\WBEM\PROVIDERS\Performance')" wcm:legacyName="Performance Refresh" wcm:scope="allUsers" />
+        <xsd:element default="0" name="Performance_Refreshed" type="xsd:integer" wcm:accessControl="wbem-reg" wcm:description="Performance Refreshed" wcm:displayName="Performance Refreshed" wcm:handler="regkey('HKEY_LOCAL_MACHINE\Software\Microsoft\WBEM\PROVIDERS\Performance')" wcm:legacyName="Performance Refreshed" wcm:scope="allUsers" />
+        <xsd:element default="2" name="MinimumBuffers" type="xsd:integer" wcm:description="MinimumBuffers" wcm:displayName="MinimumBuffers" wcm:handler="regkey('HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\WBEM\Tracing\WMI')" wcm:scope="allUsers" />
+        <xsd:element default="%systemroot%\system32\wbem\Logs\WMITracing.log" name="LogFile" type="xsd:string" wcm:description="LogFile" wcm:displayName="LogFile" wcm:handler="regkey('HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\WBEM\Tracing\WMI')" wcm:legacyType="REG_EXPAND_SZ" wcm:scope="allUsers" />
+        <xsd:element default="1" name="ConfigValueEssToBeInitialized" type="xsd:integer" wcm:accessControl="wbem-reg" wcm:description="ConfigValueEssToBeInitialized" wcm:displayName="ConfigValueEssToBeInitialized" wcm:handler="regkey('HKEY_LOCAL_MACHINE\Software\Microsoft\WBEM\CIMOM')" wcm:scope="allUsers" />
+        <xsd:element default="0" name="Logging" type="xsd:string" wcm:accessControl="wbem-reg" wcm:description="Logging" wcm:displayName="Logging" wcm:handler="regkey('HKEY_LOCAL_MACHINE\Software\Microsoft\WBEM\CIMOM')" wcm:legacyType="REG_SZ" wcm:scope="allUsers" />
+        <xsd:element default="0" name="Autorecover_MOFs_timestamp" type="xsd:string" wcm:accessControl="wbem-reg" wcm:description="Autorecover MOFs timestamp" wcm:displayName="Autorecover MOFs timestamp" wcm:handler="regkey('HKEY_LOCAL_MACHINE\Software\Microsoft\WBEM\CIMOM')" wcm:legacyName="Autorecover MOFs timestamp" wcm:scope="allUsers" />
+      </xsd:schema>
+    </configurationSchema>
+  </configuration>
+  <directories>
+    <directory destinationPath="$(runtime.system32)\wbem">
+      <securityDescriptor name="WRP_PARENT_DIR_DEFAULT_SDDL" />
+    </directory>
+    <directory destinationPath="$(runtime.system32)\wbem\xml">
+      <securityDescriptor name="WRP_PARENT_DIR_DEFAULT_SDDL" />
+    </directory>
+    <directory destinationPath="$(runtime.system32)\wbem\Logs">
+      <securityDescriptor name="wbemDir-log" />
+    </directory>
+    <directory destinationPath="$(runtime.system32)\wbem\AutoRecover">
+      <securityDescriptor name="wbemDir-rep" />
+    </directory>
+    <directory destinationPath="$(runtime.system32)\wbem\Repository">
+      <securityDescriptor name="wbemDir-rep" />
+    </directory>
+  </directories>
+  <registryKeys>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\WBEM">
+      <registryValue name="Installation Directory" valueType="REG_EXPAND_SZ" value="%SystemRoot%\system32\WBEM" />
+      <registryValue name="BUILD" valueType="REG_SZ" value="22621.1" />
+      <registryValue name="MOF Self-Install Directory" valueType="REG_EXPAND_SZ" value="%SystemRoot%\system32\WBEM\MOF" />
+      <overridable name="MOF Self-Install Directory" scope="Microsoft" type="REG_EXPAND_SZ" />
+      <securityDescriptor name="wbem-reg" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\Software\Microsoft\WBEM\CIMOM\">
+      <registryValue name="Logging Directory" valueType="REG_EXPAND_SZ" value="%systemroot%\system32\wbem\Logs\" />
+      <overridable name="Logging Directory" scope="Microsoft" type="REG_EXPAND_SZ" />
+      <registryValue name="Repository Directory" valueType="REG_EXPAND_SZ" value="%systemroot%\system32\wbem\repository" />
+      <overridable name="Repository Directory" scope="Microsoft" type="REG_EXPAND_SZ" />
+      <registryValue name="Working Directory" valueType="REG_EXPAND_SZ" value="%systemroot%\system32\wbem" />
+      <overridable name="Working Directory" scope="Microsoft" type="REG_EXPAND_SZ" />
+      <registryValue name="SetupDate" valueType="REG_SZ" value="" />
+      <registryValue name="SetupTime" valueType="REG_SZ" value="" />
+      <registryValue name="Unchecked Task Count" valueType="REG_DWORD" value="0x000000FA" />
+      <registryValue name="Autorecover MOFs" valueType="REG_MULTI_SZ" value="" />
+      <registryValue name="ADAPDelay" valueType="REG_DWORD" value="0x000000F0" />
+      <registryValue name="NumWriteIdCheck" valueType="REG_DWORD" value="0x0000000A" />
+      <registryValue name="Default Repository Driver" valueType="REG_SZ" value="{7998dc37-d3fe-487c-a60a-7701fcc70cc6}" />
+      <registryValue name="EnableEvents" valueType="REG_SZ" value="1" />
+      <registryValue name="TimeOutMs" valueType="REG_SZ" value="20000" />
+      <registryValue name="MOF Self-Install Directory" valueType="REG_EXPAND_SZ" value="%SystemRoot%\system32\WBEM\MOF" />
+      <overridable name="MOF Self-Install Directory" scope="Microsoft" type="REG_EXPAND_SZ" />
+      <registryValue name="ConfigValueCoreDatabaseDirty" valueType="REG_DWORD" value="0x00000000" />
+      <registryValue name="ConfigValueEssNeedsLoading" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="ConfigValueCoreNeedBackupCheck" valueType="REG_DWORD" value="0x00000000" />
+      <registryValue name="ConfigValueCoreFsrepVersion" valueType="REG_DWORD" value="0x00000006" />
+      <registryValue name="WMISetup" valueType="REG_SZ" value="0" />
+      <securityDescriptor name="wbem-reg" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\Software\Microsoft\WBEM\CIMOM\SecuredHostProviders\">
+      <securityDescriptor name="wbem-reg" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\Software\Microsoft\WBEM\CIMOM\CompatibleHostProviders\">
+      <securityDescriptor name="wbem-reg" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\WBEM\Tracing" />
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\WBEM\Tracing\WMI">
+      <overridable name="LogFile" scope="Microsoft" type="REG_EXPAND_SZ" />
+      <registryValue name="SessionEnabled" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="Level" valueType="REG_DWORD" value="0x00000000" />
+      <registryValue name="AreaFlags" valueType="REG_DWORD" value="0xFFFFFFFF" />
+      <registryValue name="Session" valueType="REG_SZ" value="WMI_Trace_Session" />
+      <registryValue name="BufferSize" valueType="REG_DWORD" value="0x00000004" />
+      <registryValue name="MaximumBuffers" valueType="REG_DWORD" value="0x00000018" />
+      <registryValue name="MaximumFileSize" valueType="REG_DWORD" value="0x00000004" />
+      <registryValue name="LogFileMode" valueType="REG_DWORD" value="0x10000022" />
+      <registryValue name="FlushTimer" valueType="REG_DWORD" value="0x00000000" />
+      <registryValue name="AgeLimit" valueType="REG_DWORD" value="0x00000000" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\WBEM\ESS">
+      <securityDescriptor name="wbem-reg" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\WBEM\Transports">
+      <securityDescriptor name="wbem-reg-ns" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\WBEM\Scripting">
+      <securityDescriptor name="wbem-reg" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\WBEM\xml\">
+      <securityDescriptor name="wbem-reg" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\WBEM\TextSource\">
+      <securityDescriptor name="wbem-reg" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\Software\Microsoft\WBEM\PROVIDERS\">
+      <securityDescriptor name="wbem-reg" />
+    </registryKey>
+  </registryKeys>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="WRP_PARENT_DIR_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;CI;GA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;0x1301bf;;;SY)(A;IOCIOI;GA;;;SY)(A;;0x1301bf;;;BA)(A;IOCIOI;GA;;;BA)(A;CIOI;GRGX;;;BU)(A;OICIIO;GA;;;CO)(A;CIOI;GRGX;;;S-1-15-2-1)(A;CIOI;GRGX;;;S-1-15-2-2)" operationHint="replace" />
+          <securityDescriptorDefinition name="wbem-reg" sddl="D:P(A;CIOI;GRGX;;;BU)(A;CIOI;GA;;;BA)(A;CIOI;GA;;;SY)(A;CIOI;GA;;;CO)" operationHint="replace" />
+          <securityDescriptorDefinition name="wbem-reg-ns" sddl="D:P(A;CIOI;GRGX;;;BU)(A;CIOI;CCDCLCSWRPSDRC;;;NS)(A;CIOI;GA;;;BA)(A;CIOI;GA;;;SY)(A;CIOI;GA;;;CO)" operationHint="replace" />
+          <securityDescriptorDefinition name="wbemDir-rep" sddl="D:P(A;CIOI;GRGX;;;BU)(A;CIOI;GR;;;NS)(A;CIOI;GRGW;;;BO)(A;CIOI;GA;;;BA)(A;CIOI;GA;;;SY)(A;CIOIIO;RC;;;S-1-3-4)" operationHint="replace" />
+          <securityDescriptorDefinition name="wbemDir-log" sddl="D:P(A;CIOI;GRGX;;;BU)(A;CIOI;GRGWDCSD;;;NS)(A;CIOI;GRGW;;;BO)(A;CIOI;GA;;;BA)(A;CIOI;GA;;;SY)(A;CIOIIO;RC;;;S-1-3-4)" operationHint="replace" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string id="description1" value="security descriptor for the contents of %systemroot%\system32\wbem" />
+        <string id="description" value="Directory and registry settings for WMI" />
+        <string id="displayName" value="WMI Directory and Registries" />
+        <string id="displayName1" value="wbemDirectory" />
+        <string id="displayName2" value="wbem registry runtime" />
+        <string id="description2" value="security descriptor for the WMI registry" />
+        <string id="displayName5" value="wbem Registry Key" />
+        <string id="description5" value="wbem Registry Key Security" />
+        <string id="displayName3" value="wbemlogDirectory" />
+        <string id="description3" value="security descriptor for the contents of %systemroot%\system32\wbem\logs" />
+        <string id="displayName4" value="wbemRepDirectory" />
+        <string id="description4" value="security descriptor for the contents of %systemroot%\system32\wbem\Repository" />
+      </stringTable>
+    </resources>
+  </localization>
+</assembly>

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved." xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <assemblyIdentity name="Microsoft-Windows-DeviceAccess" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <dependency discoverable="no" resourceType="resources">
+    <dependentAssembly>
+      <assemblyIdentity name="Microsoft-Windows-DeviceAccess.Resources" version="10.0.22621.1" processorArchitecture="amd64" language="*" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+    </dependentAssembly>
+  </dependency>
+  <file name="AppPrivacy.admx" destinationPath="$(runtime.windows)\PolicyDefinitions\" sourceName="AppPrivacy.admx" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>/fSmn/yC7TCUJUQVykU3/GyPBw+8Rktb+n6u/kedp2g=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <asmv3:configuration xmlns:asmv3="urn:schemas-microsoft-com:asm.v3" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State">
+    <asmv3:configurationSchema>
+      <xsd:schema xmlns="Microsoft-Windows-DeviceAccess" targetNamespace="Microsoft-Windows-DeviceAccess">
+        <xsd:element default="" name="SetRegionSpecificPrivacyAccessPolicy" type="xsd:string" wcm:dataOnly="true" wcm:description="d__os_obj_amd64fre_temp_b63b53960c8f36474c49426bd0dbf4c0_ubxejgcaei_microsoft-windows-deviceaccess.man.temp1.missingResource.description_ActivePolicyCode" wcm:displayName="d__os_obj_amd64fre_temp_b63b53960c8f36474c49426bd0dbf4c0_ubxejgcaei_microsoft-windows-deviceaccess.man.temp1.missingResource.displayName_ActivePolicyCode" wcm:handler="regkey('HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\DeviceAccess')" wcm:legacyName="ActivePolicyCode" wcm:passes="specialize" wcm:scope="allUsers" wcm:visible="true" />
+      </xsd:schema>
+    </asmv3:configurationSchema>
+    <asmv3:metadata />
+  </asmv3:configuration>
+  <migration settingsVersion="3">
+    <migXml xmlns="">
+      <rules context="system">
+        <include>
+          <objectSet>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\DeviceAccess [ActivePolicyCode]</pattern>
+          </objectSet>
+        </include>
+      </rules>
+      <rules context="user">
+        <include>
+          <objectSet>
+            <pattern type="Registry">HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\DeviceAccess\* [*]</pattern>
+          </objectSet>
+        </include>
+        <excludeAttributes attributes="Security">
+          <objectSet>
+            <pattern type="Registry">HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\DeviceAccess\*</pattern>
+          </objectSet>
+        </excludeAttributes>
+        <exclude>
+          <objectSet>
+            <pattern type="Registry">HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\DeviceCapabilities\* [*]</pattern>
+          </objectSet>
+        </exclude>
+      </rules>
+    </migXml>
+    <supportedComponents>
+      <supportedComponent>
+        <assemblyIdentity name="_" version="1.0.0.0" />
+        <supportedComponentIdentity language="neutral" name="Microsoft-Windows-DeviceAccess" processorArchitecture="*" settingsVersionRange="0-3" xmlns="urn:schemas-microsoft-com:asm.v3" />
+      </supportedComponent>
+    </supportedComponents>
+  </migration>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" description="Default SDDL for Windows Resource Protected file" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+</assembly>

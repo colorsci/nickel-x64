@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved." xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <assemblyIdentity name="Microsoft-Windows-KDSClient-Interop" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <registryKeys>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\HgsClient" />
+  </registryKeys>
+  <asmv2:configuration xmlns:asmv2="urn:schemas-microsoft-com:asm.v3" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State">
+    <asmv2:configurationSchema>
+      <xsd:schema xmlns="Microsoft-Windows-KDSClient-Interop" targetNamespace="Microsoft-Windows-KDSClient-Interop">
+        <xsd:element default="Local" name="Mode" type="xsd:string" wcm:displayName="Mode" wcm:handler="regkey('HKLM\SOFTWARE\Microsoft\HgsClient')" wcm:legacyType="REG_SZ" wcm:scope="allUsers" />
+      </xsd:schema>
+    </asmv2:configurationSchema>
+    <asmv2:metadata />
+  </asmv2:configuration>
+  <migration settingsVersion="0">
+    <machineSpecific>
+      <migXml xmlns="">
+        <rules context="System">
+          <include>
+            <objectSet>
+              <pattern type="Registry">HKLM\SOFTWARE\Microsoft\HgsClient\* [*]</pattern>
+            </objectSet>
+          </include>
+          <merge script="MigXmlHelper.SourcePriority()">
+            <objectSet>
+              <pattern type="Registry">HKLM\SOFTWARE\Microsoft\HgsClient\* [*]</pattern>
+            </objectSet>
+          </merge>
+        </rules>
+      </migXml>
+    </machineSpecific>
+    <supportedComponents>
+      <supportedComponent>
+        <assemblyIdentity name="_" version="1.0.0.0" />
+        <supportedComponentIdentity buildType="release" language="*" name="Microsoft-Windows-KDSClient-Interop" processorArchitecture="*" publicKeyToken="31bf3856ad364e35" settingsVersionRange="0" versionScope="nonSxS" xmlns="urn:schemas-microsoft-com:asm.v3" />
+        <machineSpecific>
+          <migXml xmlns="">
+            <rules context="System">
+              <merge script="MigXmlHelper.SourcePriority()">
+                <objectSet>
+                  <pattern type="Registry">HKLM\SOFTWARE\Microsoft\HgsClient\* [*]</pattern>
+                </objectSet>
+              </merge>
+            </rules>
+          </migXml>
+        </machineSpecific>
+      </supportedComponent>
+    </supportedComponents>
+  </migration>
+</assembly>

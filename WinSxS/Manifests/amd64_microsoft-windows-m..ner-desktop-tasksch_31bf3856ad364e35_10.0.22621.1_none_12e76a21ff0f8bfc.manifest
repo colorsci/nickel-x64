@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-Mitigation-Scanner-Desktop-TaskSch" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <taskScheduler>
+    <Task xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task">
+      <RegistrationInfo>
+        <Author>$(@%systemRoot%\system32\mitigationclient.dll,-200)</Author>
+        <Source>$(@%systemRoot%\system32\mitigationclient.dll,-103)</Source>
+        <Description>$(@%systemRoot%\system32\mitigationclient.dll,-201)</Description>
+        <URI>\Microsoft\Windows\Diagnosis\RecommendedTroubleshootingScanner</URI>
+      </RegistrationInfo>
+      <Triggers>
+        <WnfStateChangeTrigger>
+          <StateName>7518bca33a019502</StateName>
+        </WnfStateChangeTrigger>
+        <WnfStateChangeTrigger>
+          <StateName>7508bca33f1a9502</StateName>
+        </WnfStateChangeTrigger>
+        <WnfStateChangeTrigger>
+          <Enabled>true</Enabled>
+          <StateName>7510bca33f1a9502</StateName>
+        </WnfStateChangeTrigger>
+        <BootTrigger>
+          <Enabled>false</Enabled>
+          <Delay>PT10M</Delay>
+        </BootTrigger>
+      </Triggers>
+      <Principals>
+        <Principal id="LocalSystem">
+          <UserId>S-1-5-18</UserId>
+          <RunLevel>HighestAvailable</RunLevel>
+        </Principal>
+      </Principals>
+      <Settings>
+        <AllowStartOnDemand>true</AllowStartOnDemand>
+        <DisallowStartIfOnBatteries>false</DisallowStartIfOnBatteries>
+        <Enabled>true</Enabled>
+        <MultipleInstancesPolicy>IgnoreNew</MultipleInstancesPolicy>
+        <ExecutionTimeLimit>PT30M</ExecutionTimeLimit>
+        <RunOnlyIfIdle>false</RunOnlyIfIdle>
+        <RunOnlyIfNetworkAvailable>true</RunOnlyIfNetworkAvailable>
+        <StartWhenAvailable>true</StartWhenAvailable>
+        <StopIfGoingOnBatteries>false</StopIfGoingOnBatteries>
+        <UseUnifiedSchedulingEngine>true</UseUnifiedSchedulingEngine>
+        <WakeToRun>false</WakeToRun>
+        <RestartOnFailure>
+          <Interval>PT24H</Interval>
+          <Count>2</Count>
+        </RestartOnFailure>
+      </Settings>
+      <Actions Context="LocalSystem">
+        <ComHandler>
+          <ClassId>{AD08DCC2-4E35-4486-9D49-547CBD30942D}</ClassId>
+        </ComHandler>
+      </Actions>
+    </Task>
+  </taskScheduler>
+</assembly>

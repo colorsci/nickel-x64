@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-msmq-http" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <MsmqHttpOnlineInstall xmlns="urn:schemas-microsoft-com:msmq.v1" />
+  <registryKeys>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\MSMQ\Setup">
+      <registryValue name="msmq_HTTPSupport" valueType="REG_DWORD" value="0x00000001" />
+    </registryKey>
+  </registryKeys>
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string id="description" value="Allow receiving MSMQ messages through HTTP transport" />
+        <string id="displayName" value="MSMQ Http Transport" />
+      </stringTable>
+    </resources>
+  </localization>
+  <migration settingsVersion="0">
+    <migXml xmlns="">
+      <plugin classId="{3107f3af-3aae-4eba-aba4-4a57f5a29c86}" file="%windir%\system32\mqmigplugin.dll" />
+      <rules context="System">
+        <include>
+          <objectSet>
+            <pattern type="File">%windir%\system32\msmq\web</pattern>
+          </objectSet>
+        </include>
+      </rules>
+    </migXml>
+    <supportedComponents>
+      <supportedComponent>
+        <assemblyIdentity name="_" version="1.0.0.0" />
+        <supportedComponentIdentity buildType="release" language="neutral" name="Microsoft-Windows-msmq-http" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" settingsVersionRange="0" versionScope="nonSxS" xmlns="urn:schemas-microsoft-com:asm.v3" />
+      </supportedComponent>
+      <supportedComponent>
+        <assemblyIdentity name="_" version="1.0.0.0" />
+        <supportedComponentIdentity language="*" name="Microsoft-Windows-msmq-http-DL" processorArchitecture="*" settingsVersionRange="0" xmlns="urn:schemas-microsoft-com:asm.v3" />
+      </supportedComponent>
+    </supportedComponents>
+  </migration>
+</assembly>

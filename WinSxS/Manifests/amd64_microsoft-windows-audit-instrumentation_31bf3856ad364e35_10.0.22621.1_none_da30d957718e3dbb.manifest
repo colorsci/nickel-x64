@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-Audit-Instrumentation" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <registryKeys>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\WMI\AutoLogger\Microsoft-Windows-Setup\{75EBC33E-0936-4a55-9D26-5F298F3180BF}">
+      <registryValue name="Enabled" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="EnableLevel" valueType="REG_DWORD" value="0x00000004" />
+    </registryKey>
+  </registryKeys>
+  <instrumentation xmlns:win="http://manifests.microsoft.com/win/2004/08/windows/events" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <events xmlns="http://schemas.microsoft.com/win/2004/08/events">
+      <provider guid="{75EBC33E-0936-4a55-9D26-5F298F3180BF}" message="$(string.Audit.ProviderMessage)" messageFileName="%SystemRoot%\system32\oobe\audit.exe" name="Microsoft-Windows-Audit" resourceFileName="%SystemRoot%\system32\oobe\audit.exe" symbol="Microsoft_Windows_Audit">
+        <channels>
+          <channel chid="chaAuditAnalytic" name="Microsoft-Windows-Audit/Analytic" type="Analytic" />
+          <importChannel chid="chaSetup" name="Setup" />
+        </channels>
+      </provider>
+      <cmi />
+    </events>
+  </instrumentation>
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string id="Performance.KeywordMessage" value="Performance" />
+        <string id="Diagnostic.KeywordMessage" value="Diagnostic" />
+        <string id="Audit.ProviderMessage" value="Microsoft-Windows-Audit" />
+        <string id="RunAudit.TaskMessage" value="Run Audit" />
+        <string id="RunAudit.StartMessage" value="Audit.exe launched with command line &quot;%1&quot;." />
+        <string id="RunAudit.StopMessage" value="Audit.exe exiting with status %1." />
+        <string id="AuditProcessUnattend.TaskMessage" value="Audit Process Unattend" />
+        <string id="AuditProcessUnattend.StartMessage" value="Executing unattend settings pass &quot;%1&quot;." />
+        <string id="AuditProcessUnattend.StopMessageExecuted" value="Finished executing unattend pass with status %1." />
+        <string id="AuditProcessUnattend.StopMessageFailedToExecute" value="Failed to execute unattend pass with status %1." />
+        <string id="AuditProcessUnattend.UsingFile" value="Using unattend file &quot;%2&quot; for pass &quot;%1&quot;." />
+      </stringTable>
+    </resources>
+  </localization>
+</assembly>

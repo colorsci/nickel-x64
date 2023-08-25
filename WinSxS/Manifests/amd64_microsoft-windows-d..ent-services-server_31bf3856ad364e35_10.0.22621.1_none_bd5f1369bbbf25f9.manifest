@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved." xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <assemblyIdentity name="Microsoft-Windows-Deployment-Services-Server" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <dependency discoverable="no" resourceType="Resources">
+    <dependentAssembly dependencyType="prerequisite">
+      <assemblyIdentity name="Microsoft-Windows-Deployment-Services-Server.Resources" version="10.0.22621.1" processorArchitecture="amd64" language="*" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+    </dependentAssembly>
+  </dependency>
+  <file name="reminst.inf" destinationPath="$(runtime.system32)\" sourceName="reminst.inf" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>icpol4MctJoB358PMmCPHBA3DJgU5ZHkFc8GJTUBreY=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <file name="boot.sdi" destinationPath="$(runtime.system32)\RemInst\boot\" sourceName="boot.sdi" importPath="$(build.nttree)\onecorebase\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>zSwAzgJ2h85Ki9yWfyaoq4L2Ucm+zXA2WLooLsSXAr0=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <file name="wdssrv.dll" destinationPath="$(runtime.system32)\" sourceName="wdssrv.dll" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>eaTAeyhy5nPvZkrtMRpYqItTvnXopLE5BQK+eyj10S0=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <file name="wdsprfctr.h" destinationPath="$(runtime.inf)\WDSServer\" sourceName="wdsprfctr.h" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>RJjLy6Inxd4QCSGj2d6ELxRgd0nxMRONr8uajxkznCU=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <file name="wdsprfctr.ini" destinationPath="$(runtime.inf)\WDSServer\0000\" sourceName="wdsprfctr.ini" importPath="$(build.nttree)\perfINI_LN\" sourcePath=".\">
+    <lodctr />
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>Fg4+Dets4LYHQGzbXIFaVyrbL5ORnwjUepdICgZQOFw=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <memberships>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories.Services" version="10.0.22621.1" publicKeyToken="31bf3856ad364e35" typeName="Service" />
+      <categoryInstance>
+        <serviceData name="WDSServer" displayName="@%systemroot%\system32\wdssrv.dll,-201" errorControl="normal" start="demand" type="win32ShareProcess" description="@%systemroot%\system32\wdssrv.dll,-202" dependOnService="Tcpip,LanmanServer,AFD" imagePath="%systemroot%\system32\svchost.exe -k WDSServer" objectName="localsystem" requiredPrivileges="SeAuditPrivilege,SeImpersonatePrivilege,SeCreateGlobalPrivilege,SeChangeNotifyPrivilege,SeRestorePrivilege,SeBackupPrivilege,SeSecurityPrivilege" sidType="unrestricted">
+          <failureActions resetPeriod="300">
+            <actions>
+              <action delay="120000" type="restartService" />
+              <action delay="600000" type="restartService" />
+              <action delay="0" type="none" />
+            </actions>
+          </failureActions>
+        </serviceData>
+      </categoryInstance>
+    </categoryMembership>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories" version="1.0.0.0" publicKeyToken="365143bb27e7ac8b" typeName="SvcHost" />
+      <categoryInstance subcategory="WDSServer">
+        <serviceGroup position="last" serviceName="WDSServer" />
+      </categoryInstance>
+    </categoryMembership>
+  </memberships>
+  <registryKeys>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Eventlog\Application\WDSServer">
+      <registryValue name="EventMessageFile" valueType="REG_EXPAND_SZ" value="%systemroot%\system32\wdssrv.dll" />
+      <registryValue name="TypesSupported" valueType="REG_DWORD" value="0x00000007" />
+      <registryValue name="CategoryMessageFile" valueType="REG_EXPAND_SZ" value="%systemroot%\system32\wdssrv.dll" />
+      <registryValue name="CategoryCount" valueType="REG_DWORD" value="0x00000001" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\WDS">
+      <registryValue name="FileUpdateComplete" valueType="REG_DWORD" value="0x00000000" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\WDSServer\Parameters">
+      <registryValue name="ServiceDll" valueType="REG_EXPAND_SZ" value="%systemroot%\system32\wdssrv.dll" />
+      <registryValue name="ServiceDllUnloadOnStop" valueType="REG_DWORD" value="0x00000001" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion\Svchost\WDSServer" />
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\WDSServer\Performance">
+      <registryValue name="Library" valueType="REG_EXPAND_SZ" value="%systemroot%\system32\wdssrv.dll" />
+      <registryValue name="Open" valueType="REG_SZ" value="OpenPerfCounters" />
+      <registryValue name="Close" valueType="REG_SZ" value="ClosePerfCounters" />
+      <registryValue name="Collect" valueType="REG_SZ" value="CollectPerfCounters" />
+    </registryKey>
+  </registryKeys>
+  <directories>
+    <directory destinationPath="$(runtime.inf)\WDSServer\" owner="true">
+      <securityDescriptor name="WRP_PARENT_DIR_DEFAULT_SDDL" />
+    </directory>
+    <directory destinationPath="$(runtime.inf)\WDSServer\0000\" owner="true">
+      <securityDescriptor name="WRP_PARENT_DIR_DEFAULT_SDDL" />
+    </directory>
+    <directory destinationPath="$(runtime.system32)\RemInst\" owner="true">
+      <securityDescriptor name="WRP_DIR_DEFAULT_SDDL" />
+    </directory>
+  </directories>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="WRP_PARENT_DIR_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;CI;GA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;0x1301bf;;;SY)(A;IOCIOI;GA;;;SY)(A;;0x1301bf;;;BA)(A;IOCIOI;GA;;;BA)(A;CIOI;GRGX;;;BU)(A;OICIIO;GA;;;CO)(A;CIOI;GRGX;;;S-1-15-2-1)(A;CIOI;GRGX;;;S-1-15-2-2)" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_DIR_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;CIOI;GA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;CIOI;GRGX;;;SY)(A;CIOI;GRGX;;;BA)(A;CIOI;GRGX;;;BU)(A;CIOI;GRGX;;;S-1-15-2-1)(A;CIOI;GRGX;;;S-1-15-2-2)S:(AU;FASA;SDWDWOFW;;;WD)" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" description="Default SDDL for Windows Resource Protected file" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+  <migration settingsVersion="0">
+    <migXml xmlns="">
+      <rules context="System">
+        <processing when="apply-success">
+          <script>MigXmlHelper.SyncSCM ("WDSServer")</script>
+        </processing>
+      </rules>
+    </migXml>
+    <migXml xmlns="">
+      <detects>
+        <detect>
+          <condition>MigXmlHelper.DoesObjectExist("Registry", "HKLM\SYSTEM\CurrentControlSet\Services\WDSServer")</condition>
+        </detect>
+      </detects>
+      <rules context="System">
+        <include>
+          <objectSet>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WDSServer\Parameters [McStartAddr]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WDSServer\Parameters [McEndAddr]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrnetControlSet\Services\WDSServer\Parameters [McStartAddr6]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrnetControlSet\Services\WDSServer\Parameters [McEndAddr6]</pattern>
+          </objectSet>
+        </include>
+      </rules>
+    </migXml>
+    <supportedComponents>
+      <supportedComponent>
+        <assemblyIdentity name="_" version="1.0.0.0" />
+        <supportedComponentIdentity buildType="release" language="neutral" name="Microsoft-Windows-Deployment-Services-Server" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" settingsVersionRange="0" versionScope="nonSxS" xmlns="urn:schemas-microsoft-com:asm.v3" />
+        <migXml xmlns="">
+          <rules context="System">
+            <processing when="apply-success">
+              <script>MigXmlHelper.SyncSCM ("WDSServer")</script>
+            </processing>
+            <include>
+              <objectSet>
+                <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WDSServer\Parameters [McStartAddr]</pattern>
+                <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WDSServer\Parameters [McEndAddr]</pattern>
+                <pattern type="Registry">HKLM\SYSTEM\CurrnetControlSet\Services\WDSServer\Parameters [McStartAddr6]</pattern>
+                <pattern type="Registry">HKLM\SYSTEM\CurrnetControlSet\Services\WDSServer\Parameters [McEndAddr6]</pattern>
+              </objectSet>
+            </include>
+            <contentModify script="MigXmlHelper.StringReplace('239.0.0.1', '239.192.0.2')">
+              <objectSet>
+                <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WDSServer\Parameters [McStartAddr]</pattern>
+              </objectSet>
+            </contentModify>
+            <contentModify script="MigXmlHelper.StringReplace('239.0.0.254', '239.192.0.254')">
+              <objectSet>
+                <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WDSServer\Parameters [McEndAddr]</pattern>
+              </objectSet>
+            </contentModify>
+            <contentModify script="MigXmlHelper.StringReplace('FF15::1', 'FF15::1:1')">
+              <objectSet>
+                <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WDSServer\Parameters [McStartAddr6]</pattern>
+              </objectSet>
+            </contentModify>
+            <contentModify script="MigXmlHelper.StringReplace('FF15::FF', 'FF15::1:FF')">
+              <objectSet>
+                <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WDSServer\Parameters [McEndAddr6]</pattern>
+              </objectSet>
+            </contentModify>
+          </rules>
+        </migXml>
+      </supportedComponent>
+    </supportedComponents>
+  </migration>
+  <asmv3:configuration xmlns:asmv3="urn:schemas-microsoft-com:asm.v3" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State">
+    <asmv3:configurationSchema>
+      <xsd:schema xmlns="Microsoft-Windows-Deployment-Services-Server" targetNamespace="Microsoft-Windows-Deployment-Services-Server">
+        <xsd:simpleType name="ServiceStartType" wcm:description="Service Start Type [Auto, Demand, etc]">
+          <xsd:restriction base="xsd:integer">
+            <xsd:enumeration value="2" />
+            <xsd:enumeration value="3" />
+            <xsd:enumeration value="4" />
+          </xsd:restriction>
+        </xsd:simpleType>
+        <xsd:element default="3" name="ServiceStart" type="ServiceStartType" wcm:description="Service Start Type. 2 is AutoStart, 3 is DemandStart, and 4 is Disabled" wcm:displayName="Service Start" wcm:handler="regkey('HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\WDSServer')" wcm:legacyName="Start" wcm:legacyType="REG_DWORD" wcm:migrate="yes" wcm:scope="allUsers" />
+        <xsd:element default="0" name="SetupComplete" type="xsd:unsignedInt" wcm:description="SetupComplete" wcm:displayName="SetupComplete" wcm:handler="regkey('HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\WDS')" wcm:legacyType="REG_DWORD" wcm:migrate="yes" wcm:scope="allUsers" />
+        <xsd:element name="DirectoryServicesEnabled" type="xsd:unsignedInt" wcm:description="DirectorySerivcesEnabled" wcm:displayName="DirectoryServicesEnabled" wcm:handler="regkey('HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\WDS')" wcm:legacyType="REG_DWORD" wcm:migrate="yes" wcm:scope="allUsers" />
+        <xsd:element default="1" name="EnableDhcpFixup" type="xsd:unsignedInt" wcm:description="EnableDhcpFixup" wcm:displayName="EnableDhcpFixup" wcm:handler="regkey('HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\WDS')" wcm:legacyType="REG_DWORD" wcm:migrate="yes" wcm:scope="allUsers" />
+        <xsd:element default="1" name="UpdateBootPrograms" type="xsd:unsignedInt" wcm:description="UpdateBootPrograms" wcm:displayName="UpdateBootPrograms" wcm:handler="regkey('HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\WDS')" wcm:legacyType="REG_DWORD" wcm:migrate="yes" wcm:scope="allUsers" />
+        <xsd:element default="3" name="TransportProtocols" type="xsd:unsignedInt" wcm:description="TransportProtocols" wcm:displayName="TransportProtocols" wcm:handler="regkey('HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\WDS')" wcm:legacyType="REG_DWORD" wcm:migrate="yes" wcm:scope="allUsers" />
+        <xsd:element default="900" name="UpdateTime" type="xsd:unsignedInt" wcm:description="UpdateTime" wcm:displayName="UpdateTime" wcm:handler="regkey('HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\WDSServer\Parameters')" wcm:legacyType="REG_DWORD" wcm:migrate="yes" wcm:scope="allUsers" />
+        <xsd:element default="0" name="UseMADCAP" type="xsd:unsignedInt" wcm:description="UseMADCAP" wcm:displayName="UseMADCAP" wcm:handler="regkey('HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\WDSServer\Parameters')" wcm:legacyType="REG_DWORD" wcm:migrate="yes" wcm:scope="allUsers" />
+        <xsd:element default="239.192.0.2" name="McStartAddr" type="xsd:string" wcm:description="McStartAddr" wcm:displayName="McStartAddr" wcm:handler="regkey('HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\WDSServer\Parameters')" wcm:legacyType="REG_SZ" wcm:migrate="yes" wcm:scope="allUsers" />
+        <xsd:element default="239.192.0.254" name="McEndAddr" type="xsd:string" wcm:description="McEndAddr" wcm:displayName="McEndAddr" wcm:handler="regkey('HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\WDSServer\Parameters')" wcm:legacyType="REG_SZ" wcm:migrate="yes" wcm:scope="allUsers" />
+        <xsd:element default="FF15::1:1" name="McStartAddr6" type="xsd:string" wcm:description="McStartAddr6" wcm:displayName="McStartAddr6" wcm:handler="regkey('HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\WDSServer\Parameters')" wcm:legacyType="REG_SZ" wcm:migrate="yes" wcm:scope="allUsers" />
+        <xsd:element default="FF15::1:FF" name="McEndAddr6" type="xsd:string" wcm:description="McEndAddr6" wcm:displayName="McEndAddr6" wcm:handler="regkey('HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\WDSServer\Parameters')" wcm:legacyType="REG_SZ" wcm:migrate="yes" wcm:scope="allUsers" />
+        <xsd:element default="0" name="UdpPortPolicy" type="xsd:unsignedInt" wcm:description="UdpPortPolicy" wcm:displayName="UdpPortPolicy" wcm:handler="regkey('HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\WDSServer\Parameters')" wcm:legacyType="REG_DWORD" wcm:migrate="yes" wcm:scope="allUsers" />
+        <xsd:element default="64001" name="UdpStartPort" type="xsd:unsignedInt" wcm:description="UdpStartPort" wcm:displayName="UdpStartPort" wcm:handler="regkey('HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\WDSServer\Parameters')" wcm:legacyType="REG_DWORD" wcm:migrate="yes" wcm:scope="allUsers" />
+        <xsd:element default="65000" name="UdpEndPort" type="xsd:unsignedInt" wcm:description="UdpEndPort" wcm:displayName="UdpEndPort" wcm:handler="regkey('HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\WDSServer\Parameters')" wcm:legacyType="REG_DWORD" wcm:migrate="yes" wcm:scope="allUsers" />
+        <xsd:element default="5040" name="RpcPort" type="xsd:unsignedInt" wcm:description="RpcPort" wcm:displayName="RpcPort" wcm:handler="regkey('HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\WDSServer\Parameters')" wcm:legacyType="REG_DWORD" wcm:migrate="yes" wcm:scope="allUsers" />
+        <xsd:element default="0" name="SharedPorts" type="xsd:unsignedInt" wcm:description="SharedPorts" wcm:displayName="SharedPorts" wcm:handler="regkey('HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\WDSServer\Parameters')" wcm:legacyType="REG_DWORD" wcm:migrate="yes" wcm:scope="allUsers" />
+        <xsd:element name="ServerDuid" type="xsd:hexBinary" wcm:description="ServerDUID" wcm:displayName="ServerDUID" wcm:handler="regkey('HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\WDSServer\Parameters')" wcm:legacyName="ServerDuid" wcm:legacyType="REG_BINARY" wcm:migrate="yes" wcm:scope="allUsers" />
+        <xsd:element name="ParseKnownDUIDs" type="xsd:unsignedInt" wcm:description="ParseKnownDUIDs" wcm:displayName="ParseKnownDUIDs" wcm:handler="regkey('HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\WDSServer\Parameters')" wcm:legacyName="ParseKnownDUIDs" wcm:legacyType="REG_DWORD" wcm:migrate="yes" wcm:scope="allUsers" />
+      </xsd:schema>
+    </asmv3:configurationSchema>
+  </asmv3:configuration>
+  <firewallRule action="allow" active="true" binary="%systemroot%\system32\svchost.exe" desc="@firewallapi.dll,-38204" dir="in" group="@firewallapi.dll,-38201" internalName="WDS-RPCSS-In-TCP" lport="RPC-EPMAP" name="@firewallapi.dll,-38203" protocol="6" svc="RPCSS" />
+  <firewallRule action="allow" active="true" binary="%systemroot%\system32\svchost.exe" desc="@firewallapi.dll,-38206" dir="in" group="@firewallapi.dll,-38201" internalName="WDS-RPC-In-TCP" lport="RPC" name="@firewallapi.dll,-38205" protocol="6" svc="WdsServer" />
+  <firewallRule action="allow" active="true" binary="%systemroot%\system32\svchost.exe" desc="@firewallapi.dll,-38208" dir="in" group="@firewallapi.dll,-38201" internalName="WDS-WdsServer-In-UDP" name="@firewallapi.dll,-38207" protocol="17" svc="WdsServer" />
+  <firewallRule action="allow" active="true" binary="System" desc="@firewallapi.dll,-38210" dir="in" group="@firewallapi.dll,-38201" internalName="WDS-NP-In-TCP" lport="445" name="@firewallapi.dll,-38209" protocol="6" />
+  <firewallGroupActivation action="Enable" name="@firewallapi.dll,-29502" />
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string id="displayName6" value="SetupComplete" />
+        <string id="description7" value="SetupComplete" />
+        <string id="description20" value="RpcPort" />
+        <string id="displayName21" value="RpcPort" />
+        <string id="ServiceStartType_Desc" value="Service Start Type [Auto, Demand, etc]" />
+        <string id="ServiceStart_DisplayName" value="Service Start" />
+        <string id="ServiceStart_Desc" value="Service Start Type. 2 is AutoStart, 3 is DemandStart, and 4 is Disabled" />
+        <string id="description24" value="SharedPorts" />
+        <string id="displayName25" value="SharedPorts" />
+        <string id="description26" value="UpdateTime" />
+        <string id="displayName27" value="UpdateTime" />
+        <string id="description28" value="EnableDhcpFixup" />
+        <string id="displayName29" value="EnableDhcpFixup" />
+        <string id="displayName30" value="TransportProtocols" />
+        <string id="description31" value="TransportProtocols" />
+        <string id="displayName100" value="UseMADCAP" />
+        <string id="description100" value="UseMADCAP" />
+        <string id="displayName101" value="McStartAddr" />
+        <string id="description101" value="McStartAddr" />
+        <string id="displayName102" value="McEndAddr" />
+        <string id="description102" value="McEndAddr" />
+        <string id="displayName103" value="UdpStartPort" />
+        <string id="description103" value="UdpStartPort" />
+        <string id="displayName104" value="UdpEndPort" />
+        <string id="description104" value="UdpEndPort" />
+        <string id="displayName105" value="McStartAddr6" />
+        <string id="description105" value="McStartAddr6" />
+        <string id="displayName106" value="McEndAddr6" />
+        <string id="description106" value="McEndAddr6" />
+        <string id="displayName107" value="UpdateBootPrograms" />
+        <string id="description107" value="UpdateBootPrograms" />
+        <string id="displayName108" value="UdpPortPolicy" />
+        <string id="description108" value="UdpPortPolicy" />
+        <string id="displayName200" value="DirectoryServicesEnabled" />
+        <string id="description200" value="DirectorySerivcesEnabled" />
+        <string id="displayName201" value="ServerDUID" />
+        <string id="description201" value="ServerDUID" />
+        <string id="displayName202" value="ParseKnownDUIDs" />
+        <string id="description202" value="ParseKnownDUIDs" />
+      </stringTable>
+    </resources>
+  </localization>
+</assembly>

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-Crypto-DPAPI-Events" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <registryKeys>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\EventLog\Application\Microsoft-Windows-Crypto-DPAPI">
+      <registryValue name="providerGuid" valueType="REG_SZ" value="{89fe8f40-cdce-464e-8217-15ef97d4c7c3}" />
+    </registryKey>
+  </registryKeys>
+  <instrumentation xmlns:win="http://manifests.microsoft.com/win/2004/08/windows/events" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <events xmlns="http://schemas.microsoft.com/win/2004/08/events">
+      <provider guid="{89fe8f40-cdce-464e-8217-15ef97d4c7c3}" message="$(string.SystemDPAPIProviderName)" messageFileName="%SystemRoot%\System32\dpapisrv.dll" name="Microsoft-Windows-Crypto-DPAPI" resourceFileName="%SystemRoot%\System32\dpapisrv.dll" symbol="ETW_LOG_DPAPI_PROVIDER">
+        <channels>
+          <channel chid="Operational" enabled="true" isolation="System" message="$(string.Channel.Operational)" name="Microsoft-Windows-Crypto-DPAPI/Operational" symbol="OperationalChannel" type="Operational" />
+          <channel chid="BackUpKeySvc" enabled="true" isolation="System" message="$(string.Channel.BackUpKeySvc)" name="Microsoft-Windows-Crypto-DPAPI/BackUpKeySvc" symbol="BackUpKeySvcChannel" type="Operational" />
+          <channel chid="Debug" enabled="false" isolation="System" message="$(string.Channel.Debug)" name="Microsoft-Windows-Crypto-DPAPI/Debug" symbol="DebugChannel" type="Operational" />
+        </channels>
+      </provider>
+      <cmi />
+    </events>
+  </instrumentation>
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string id="Channel.Operational" value="Microsoft-Windows-Crypto-DPAPI/Operational" />
+        <string id="Channel.Debug" value="Microsoft-Windows-Crypto-DPAPI/Debug" />
+        <string id="Channel.BackUpKeySvc" value="Microsoft-Windows-Crypto-DPAPI/BackUpKeySvc" />
+        <string id="BackUpServiceOperation.TaskMessage" value="BackUp Service Operation" />
+        <string id="MasterKeyOperation.TaskMessage" value="Master Key Operation" />
+        <string id="CredKeyOperation.TaskMessage" value="Credential Key Operation" />
+        <string id="DataProtectionOperation.TaskMessage" value="Data Protection Operation" />
+        <string id="CredHistOperation.TaskMessage" value="Credential History File Operation" />
+        <string id="DiagnosticFileCheck.TaskMessage" value="Diagnostic File Check" />
+        <string id="ETW_TASK_BACKUPSERVICE_OPERATION.KeywordMessage" value="BackUp Service Operation" />
+        <string id="ETW_TASK_MASTERKEY_OPERATION.KeywordMessage" value="Master Key Operation" />
+        <string id="ETW_TASK_CREDKEY_OPERATION.KeywordMessage" value="Credential Key Operation" />
+        <string id="ETW_TASK_DATAPROTECTION_OPERATION.KeywordMessage" value="Data Protection Operation" />
+        <string id="ETW_TASK_CREDHIST_OPERATION.KeywordMessage" value="Credential History File Operation" />
+        <string id="ETW_TASK_DIAGNOSTICFILE_CHECK.KeywordMessage" value="Diagnostic File Check" />
+        <string id="SystemDPAPIProviderName" value="Microsoft-Windows-Crypto-DPAPI" />
+        <string id="DPAPIReasonForFailure.0.Message" value="Unknown" />
+        <string id="DPAPIReasonForFailure.1.Message" value="Version check failed" />
+        <string id="DPAPIReasonForFailure.2.Message" value="MAC check failed" />
+        <string id="DPAPIReasonForFailure.3.Message" value="Input buffer size check failed" />
+        <string id="DPAPIReasonForFailure.4.Message" value="Access check failed" />
+        <string id="DPAPIReasonForFailure.5.Message" value="Password required, but UI is forbidden" />
+        <string id="DPAPIReasonForFailure.6.Message" value="Could not get the master key" />
+        <string id="BACKUPKEYSVC_STARTED" value="DPAPI BackUp service started" />
+        <string id="BACKUPKEYSVC_STOPPED" value="DPAPI BackUp service stopped" />
+        <string id="BACKUPKEYSVC_SETUP_FAILED" value="DPAPI BackUp service setup of preferred backup keys failed.%n %t%1%n %tError code: %2%n" />
+        <string id="SYSTEM_CREDENTIALS_LSASS_CREATION_FAILED" value="System credentials creation in LSASS failed. %n%n %tStatus:%t%1%n " />
+        <string id="MASTERKEY_FILE_OPEN_IN_STORAGE_FAILED" value="DPAPI Master key file open failed.%n%n %tFileName:%t%1%n %tAccess:%t%2%n" />
+        <string id="MASTERKEY_ENCRYPTION_FAILED" value="Master key encryption in memory failed" />
+        <string id="MASTERKEY_DECRYPTION_FAILED" value="Master key decryption in memory failed" />
+        <string id="MASTERKEY_LOG_SUCCEEDED" value="Master key's record successfully logged to Diagnostic file.%n%n %tGUID:%t%1%n %tEncryptCredID:%t%2%n %tEncryptCredKey:%t%3%n" />
+        <string id="MASTERKEY_LOG_FAILED" value="Master key's record failed to log to Diagnostic file.%n%n %tGUID:%t%1%n" />
+        <string id="MASTERKEY_MISSING" value="Master Key decryption failed but a record of this key can be found in the Diagnostic file.%n%n %tGUID:%t%1%n" />
+        <string id="MASTERKEY_NOT_FOUND" value="Master Key decryption failed because no record of this key can be found in the Diagnostic file.%n%n %tGUID:%t%1%n" />
+        <string id="MASTERKEY_CRED_MISMATCH" value="Master Key decryption failed because the encryption cred mismatches the decryption cred.%n%n %tGUID:%t%1%n %tEncryptCredID:%t%2%n %tEncryptCredKey:%t%3%n %tDecryptCredID:%t%4%n %tDecryptCredKey:%t%5%n" />
+        <string id="MASTERKEY_CRED_MATCH" value="Master Key decryption failed but the encryption cred matches the decryption cred.%n%n %tGUID:%t%1%n %tEncryptCredID:%t%2%n %tEncryptCredKey:%t%3%n %tDecryptCredID:%t%4%n %tDecryptCredKey:%t%5%n" />
+        <string id="DPAPI_MASTER_KEY_CREATED" value="DPAPI created Master key.%n%n %tGUID:%t%1%n %tUser Storage Area:%t%2%n" />
+        <string id="DIAGNOSTICFILE_RECEIVED_NULL_CRED_KEY" value="Diagnostic File operation received a NULL credential key.%n" />
+        <string id="DPAPI_MASTER_KEY_DELETED" value="DPAPI deleted Master key.%n%n %tGUID:%t%1%n %tUser Storage Area:%t%2%n" />
+        <string id="DPAPI_MASTER_KEY_SYNCHRONIZATION_FAILED" value="Synchronization of Master keys failed. %n%n %tCredential Key Identifier:%t%1%n %tUser Name:%t%2%n %tUser Sid:%t%3%n" />
+        <string id="DPAPI_PROTECT_FAILED" value="DPAPI Protect failed .%n%n %tStatus:%t%1%n %tReasonForFailure:%t%2%n" />
+        <string id="DPAPI_UNPROTECT_FAILED" value="DPAPI Unprotect failed .%n%n %tStatus:%t%1%n %tReasonForFailure:%t%2%n" />
+        <string id="DPAPI_MASTER_KEY_INACCESIBLE" value="Master key access failed.%n%n %tGUID:%t%t%t%1%n %tSuccess:%t%t%t%2%n %tLast error:%t%t%3%n %tMaster key disposition:%t%3%n" />
+        <string id="DPAPI_PASSWORD_CHANGE_TRIGGERED" value="Password Change triggered.%n%n %tStatus:%t%1%n" />
+        <string id="DPAPI_MASTER_KEY_SYNCH" value="Synchronization of Master keys triggered." />
+        <string id="DPAPI_CRED_KEY_CREATED" value="DPAPI found credential key.%n%n %tCredential Key Identifier:%t%1%n %tUser Name:%t%2%n %tUser Sid:%t%3%n" />
+        <string id="DPAPI_CRED_KEY_NOT_CREATED" value="Credential key does not exist." />
+        <string id="CREDHIST_DECRYPTION_FAILED" value="CredHist file decryption failed" />
+        <string id="DPAPIDefInformation.0.Message" value="DPAPIDefInformationMessage" />
+        <string id="DPAPIDefInformation.TaskMessage" value="DPAPIDefInformationTaskMessage" />
+        <string id="ETW_TASK_DEF_INFORMATION.KeywordMessage" value="DPAPIDefInformationKeywordMessage" />
+        <string id="DPAPIDefInformationEvent" value="DPAPIDefInformationEvent" />
+        <string id="DPAPIRC4FallbackEvent" value="DPAPI tried to backup its master key.%nFallback backup is enabled." />
+        <string id="ETW_TASK_RC4_FALLBACK.KeywordMessage" value="DPAPIRC4FallbackKeywordMessage" />
+        <string id="DPAPIRC4Fallback.TaskMessage" value="DPAPI Master Key Backup" />
+        <string id="DPAPIMasterKeyBackupEvent" value="DPAPI tried to backup its master key.%nFallback backup is disabled." />
+        <string id="ETW_TASK_MASTER_KEY_BACKUP.KeywordMessage" value="DPAPIMasterKeyBackupKeywordMessage" />
+        <string id="DPAPIMasterKeyBackup.TaskMessage" value="DPAPI Master Key Backup" />
+      </stringTable>
+    </resources>
+  </localization>
+</assembly>

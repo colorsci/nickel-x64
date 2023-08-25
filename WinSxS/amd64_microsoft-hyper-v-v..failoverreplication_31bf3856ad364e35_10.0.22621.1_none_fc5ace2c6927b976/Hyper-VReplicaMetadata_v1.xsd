@@ -1,0 +1,425 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+  <xs:simpleType name="GUID">
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="HistoryLimit">
+    <xs:restriction base="xs:integer">
+      <xs:minInclusive value="0"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="file">
+    <xs:annotation>
+      <xs:documentation>Represents each file that makes up the virtual disk chain</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ordering_hint">
+          <xs:complexType>
+            <xs:simpleContent>
+              <xs:extension base="xs:integer">
+                <xs:attribute name="type" type="xs:string" use="required" />
+              </xs:extension>
+            </xs:simpleContent>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="name">
+          <xs:complexType>
+            <xs:simpleContent>
+              <xs:extension base="xs:string">
+                <xs:attribute name="type" type="xs:string" use="required" />
+              </xs:extension>
+            </xs:simpleContent>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="virtual_disk">
+    <xs:annotation>
+      <xs:documentation>Represents each virtual disk attached to the virtual machine</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="instance_id">
+          <xs:complexType>
+            <xs:simpleContent>
+              <xs:extension base="xs:string">
+                <xs:attribute name="type" type="xs:string" use="required" />
+              </xs:extension>
+            </xs:simpleContent>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="file_count">
+          <xs:complexType>
+            <xs:simpleContent>
+              <xs:extension base="xs:integer">
+                <xs:attribute name="type" type="xs:string" use="required" />
+              </xs:extension>
+            </xs:simpleContent>
+          </xs:complexType>
+        </xs:element>
+        <xs:element ref="file" maxOccurs="unbounded"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="kvp">
+    <xs:annotation>
+      <xs:documentation>Represents kvp items that are being replicated.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="enabled">
+          <xs:complexType>
+            <xs:simpleContent>
+              <xs:extension base="xs:boolean">
+                <xs:attribute name="type" type="xs:string" use="required" />
+              </xs:extension>
+            </xs:simpleContent>
+          </xs:complexType>
+        </xs:element>
+        <xs:element ref="host_only_kvp_item" minOccurs="0" maxOccurs="128" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="host_only_kvp_item">
+    <xs:annotation>
+      <xs:documentation>Represents each host only KVP item for the virtual machine</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="object_text">
+          <xs:complexType>
+            <xs:simpleContent>
+              <xs:extension base="xs:string">
+                <xs:attribute name="type" type="xs:string" use="required" />
+              </xs:extension>
+            </xs:simpleContent>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="efi_time">
+    <xs:annotation>
+      <xs:documentation>Represents time in EFI format</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="year">
+          <xs:complexType>
+            <xs:simpleContent>
+              <xs:extension base="xs:integer">
+                <xs:attribute name="type" type="xs:string" use="required" />
+              </xs:extension>
+            </xs:simpleContent>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="month">
+          <xs:complexType>
+            <xs:simpleContent>
+              <xs:extension base="xs:integer">
+                <xs:attribute name="type" type="xs:string" use="required" />
+              </xs:extension>
+            </xs:simpleContent>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="day">
+          <xs:complexType>
+            <xs:simpleContent>
+              <xs:extension base="xs:integer">
+                <xs:attribute name="type" type="xs:string" use="required" />
+              </xs:extension>
+            </xs:simpleContent>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="hour">
+          <xs:complexType>
+            <xs:simpleContent>
+              <xs:extension base="xs:integer">
+                <xs:attribute name="type" type="xs:string" use="required" />
+              </xs:extension>
+            </xs:simpleContent>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="minute">
+          <xs:complexType>
+            <xs:simpleContent>
+              <xs:extension base="xs:integer">
+                <xs:attribute name="type" type="xs:string" use="required" />
+              </xs:extension>
+            </xs:simpleContent>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="second">
+          <xs:complexType>
+            <xs:simpleContent>
+              <xs:extension base="xs:integer">
+                <xs:attribute name="type" type="xs:string" use="required" />
+              </xs:extension>
+            </xs:simpleContent>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="nanosecond">
+          <xs:complexType>
+            <xs:simpleContent>
+              <xs:extension base="xs:integer">
+                <xs:attribute name="type" type="xs:string" use="required" />
+              </xs:extension>
+            </xs:simpleContent>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="timezone">
+          <xs:complexType>
+            <xs:simpleContent>
+              <xs:extension base="xs:integer">
+                <xs:attribute name="type" type="xs:string" use="required" />
+              </xs:extension>
+            </xs:simpleContent>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="daylight">
+          <xs:complexType>
+            <xs:simpleContent>
+              <xs:extension base="xs:integer">
+                <xs:attribute name="type" type="xs:string" use="required" />
+              </xs:extension>
+            </xs:simpleContent>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="nvram_variable">
+    <xs:annotation>
+      <xs:documentation>Represents a NVRAM variable for the virtual machine</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="name">
+          <xs:complexType>
+            <xs:simpleContent>
+              <xs:extension base="xs:string">
+                <xs:attribute name="type" type="xs:string" use="required" />
+              </xs:extension>
+            </xs:simpleContent>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="vendor_guid">
+          <xs:complexType>
+            <xs:simpleContent>
+              <xs:extension base="GUID">
+                <xs:attribute name="type" type="xs:string" use="required" />
+              </xs:extension>
+            </xs:simpleContent>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="attributes">
+          <xs:complexType>
+            <xs:simpleContent>
+              <xs:extension base="xs:integer">
+                <xs:attribute name="type" type="xs:string" use="required" />
+              </xs:extension>
+            </xs:simpleContent>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="value">
+          <xs:complexType>
+            <xs:simpleContent>
+              <xs:extension base="xs:string">
+                <xs:attribute name="type" type="xs:string" use="required" />
+              </xs:extension>
+            </xs:simpleContent>
+          </xs:complexType>
+        </xs:element>
+        <xs:element ref="efi_time" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="nvram">
+    <xs:annotation>
+      <xs:documentation>Represents NVRAM contents that are being replicated</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="enabled">
+          <xs:complexType>
+            <xs:simpleContent>
+              <xs:extension base="xs:boolean">
+                <xs:attribute name="type" type="xs:string" use="required" />
+              </xs:extension>
+            </xs:simpleContent>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="secure_boot" minOccurs="0">
+          <xs:complexType>
+            <xs:simpleContent>
+              <xs:extension base="xs:boolean">
+                <xs:attribute name="type" type="xs:string" use="required" />
+              </xs:extension>
+            </xs:simpleContent>
+          </xs:complexType>
+        </xs:element>
+        <xs:element ref="nvram_variable" minOccurs="0" maxOccurs="unbounded" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="hyper-v_replica">
+    <xs:annotation>
+      <xs:documentation>Hyper-V replica metadata format for initial replication and delta transfers</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="metadata_version">
+          <xs:complexType>
+            <xs:simpleContent>
+              <xs:extension base="xs:integer">
+                <xs:attribute name="type" type="xs:string" use="required" />
+              </xs:extension>
+            </xs:simpleContent>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="snapshot_history_limit">
+          <xs:complexType>
+            <xs:simpleContent>
+              <xs:extension base="HistoryLimit">
+                <xs:attribute name="type" type="xs:string" use="required" />
+              </xs:extension>
+            </xs:simpleContent>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="replication_interval" minOccurs="0">
+          <xs:complexType>
+            <xs:simpleContent>
+              <xs:extension base="xs:unsignedInt">
+                <xs:attribute name="type" type="xs:string" use="required" />
+              </xs:extension>
+            </xs:simpleContent>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="replication_copy" minOccurs="0">
+          <xs:complexType>
+            <xs:simpleContent>
+              <xs:extension base="xs:unsignedInt">
+                <xs:attribute name="type" type="xs:string" use="required" />
+              </xs:extension>
+            </xs:simpleContent>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="transfer_id">
+          <xs:complexType>
+            <xs:simpleContent>
+              <xs:extension base="GUID">
+                <xs:attribute name="type" type="xs:string" use="required" />
+              </xs:extension>
+            </xs:simpleContent>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="last_transfer_id">
+          <xs:complexType>
+            <xs:simpleContent>
+              <xs:extension base="GUID">
+                <xs:attribute name="type" type="xs:string" use="required" />
+              </xs:extension>
+            </xs:simpleContent>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="virtual_machine_id">
+          <xs:complexType>
+            <xs:simpleContent>
+              <xs:extension base="GUID">
+                <xs:attribute name="type" type="xs:string" use="required" />
+              </xs:extension>
+            </xs:simpleContent>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="initial_replica">
+          <xs:complexType>
+            <xs:simpleContent>
+              <xs:extension base="xs:boolean">
+                <xs:attribute name="type" type="xs:string" use="required" />
+              </xs:extension>
+            </xs:simpleContent>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="disk_update" minOccurs="0">
+          <xs:complexType>
+            <xs:simpleContent>
+              <xs:extension base="xs:boolean">
+                <xs:attribute name="type" type="xs:string" use="required" />
+              </xs:extension>
+            </xs:simpleContent>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="group_transfer_id" minOccurs="0">
+          <xs:complexType>
+            <xs:simpleContent>
+              <xs:extension base="GUID">
+                <xs:attribute name="type" type="xs:string" use="required" />
+              </xs:extension>
+            </xs:simpleContent>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="planned_failover_replica">
+          <xs:complexType>
+            <xs:simpleContent>
+              <xs:extension base="xs:boolean">
+                <xs:attribute name="type" type="xs:string" use="required" />
+              </xs:extension>
+            </xs:simpleContent>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="vss_snapshot_set_id">
+          <xs:complexType>
+            <xs:simpleContent>
+              <xs:extension base="GUID">
+                <xs:attribute name="type" type="xs:string" use="required" />
+              </xs:extension>
+            </xs:simpleContent>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="delta_time">
+          <xs:complexType>
+            <xs:simpleContent>
+              <xs:extension base="xs:unsignedLong">
+                <xs:attribute name="type" type="xs:string" use="required" />
+              </xs:extension>
+            </xs:simpleContent>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="delta_transfer_time" minOccurs="0">
+          <xs:complexType>
+            <xs:simpleContent>
+              <xs:extension base="xs:unsignedLong">
+                <xs:attribute name="type" type="xs:string" use="required" />
+              </xs:extension>
+            </xs:simpleContent>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="replication_id" minOccurs="0">
+          <xs:complexType>
+            <xs:simpleContent>
+              <xs:extension base="GUID">
+                <xs:attribute name="type" type="xs:string" use="required" />
+              </xs:extension>
+            </xs:simpleContent>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="frsd" minOccurs="0">
+          <xs:complexType>
+            <xs:simpleContent>
+              <xs:extension base="xs:string">
+                <xs:attribute name="type" type="xs:string" use="required" />
+              </xs:extension>
+            </xs:simpleContent>
+          </xs:complexType>
+        </xs:element>
+        <xs:element ref="kvp" />
+        <xs:element ref="nvram" minOccurs="0" />
+        <xs:element ref="virtual_disk" maxOccurs="unbounded" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

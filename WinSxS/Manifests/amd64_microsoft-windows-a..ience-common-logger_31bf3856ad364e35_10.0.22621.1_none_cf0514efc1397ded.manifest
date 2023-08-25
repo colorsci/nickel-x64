@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-Application-Experience-Common-Logger" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <dependency discoverable="no" resourceType="Resources">
+    <dependentAssembly dependencyType="prerequisite">
+      <assemblyIdentity name="Microsoft-Windows-Application-Experience-Common-Logger.Resources" version="10.0.22621.1" processorArchitecture="amd64" language="*" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+    </dependentAssembly>
+  </dependency>
+  <file name="aeevts.dll" destinationPath="$(runtime.system32)\" sourceName="aeevts.dll" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>cjHTOKlqYQBTNcWJrfwlJGcK47C5BN/Ms+4gjO91KbU=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <instrumentation xmlns:ms="http://manifests.microsoft.com/win/2004/08/windows/events" xmlns:win="http://manifests.microsoft.com/win/2004/08/windows/events" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <events xmlns="http://schemas.microsoft.com/win/2004/08/events">
+      <provider guid="{EEF54E71-0661-422d-9A98-82FD4940B820}" message="$(string.eventProviderName)" messageFileName="%SystemRoot%\system32\aeevts.dll" name="Microsoft-Windows-Application-Experience" parameterFileName="%SystemRoot%\system32\aeevts.dll" resourceFileName="%SystemRoot%\system32\aeevts.dll" symbol="AE_LOG">
+        <channels>
+          <channel chid="AE_DEBUG" enabled="false" message="$(string.channel.AE.Debug)" name="Microsoft-Windows-Application-Experience/Compatibility-Infrastructure-Debug" type="Debug" />
+          <channel chid="AE_PCA_ANALYTIC" enabled="false" isolation="Application" message="$(string.channel.PCA.Analytic)" name="Microsoft-Windows-Application-Experience/Program-Compatibility-Assistant/Analytic" type="Analytic" />
+          <channel chid="AE_PCA_TRACE" enabled="false" isolation="Application" message="$(string.channel.PCA.Debug)" name="Microsoft-Windows-Application-Experience/Program-Compatibility-Assistant/Trace" type="Debug" />
+          <channel chid="AE_PCA_OPERATIONAL" enabled="true" isolation="Application" message="$(string.channel.PCA.Operational)" name="Microsoft-Windows-Application-Experience/Program-Compatibility-Assistant" type="Operational" />
+          <channel chid="AE_TELEMETRY" enabled="true" isolation="Application" message="$(string.channel.Program-Telemetry.Operational)" name="Microsoft-Windows-Application-Experience/Program-Telemetry" type="Operational" />
+          <channel chid="AE_INVENTORY" enabled="true" isolation="Application" message="$(string.channel.Program-Inventory.Operational)" name="Microsoft-Windows-Application-Experience/Program-Inventory" type="Operational" />
+          <channel chid="AE_PSR" enabled="true" isolation="Application" message="$(string.channel.Steps-Recorder.Operational)" name="Microsoft-Windows-Application-Experience/Steps-Recorder" type="Operational" />
+          <channel chid="AE_TROUBLESHOOTER" enabled="true" isolation="Application" message="$(string.channel.Program-Compatibility-Troubleshooter.Operational)" name="Microsoft-Windows-Application-Experience/Program-Compatibility-Troubleshooter" type="Operational" />
+        </channels>
+      </provider>
+      <cmi />
+    </events>
+  </instrumentation>
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string id="event_DEBUG_EVENT" value="Message: %1" />
+        <string id="event_PCA_TRACE_EVENT" value="Chain: %1, Process: %2, Type: %3%nComponent: %4%nMessage: %5" />
+        <string id="event_PCA_IGNORE_REGISTRY_SETTING" value="The Program Compatibility Assistant was requested to monitor %1, but ignored the request because the application is excluded in the registry." />
+        <string id="event_PCA_IGNORE_EXTENSION" value="The Program Compatibility Assistant was requested to monitor %1, but ignored the request because of the extension of the executable." />
+        <string id="event_PCA_IGNORE_FUSION_MANIFEST" value="The Program Compatibility Assistant was requested to monitor %1, but ignored the request because the executable has a UAC manifest." />
+        <string id="event_PCA_IGNORE_ALREADY_SHIMMED" value="The Program Compatibility Assistant was requested to monitor %1, but ignored the request because the application has a compatibility fix applied to it." />
+        <string id="event_PCA_IGNORE_MSI_BASED_INSTALLER" value="The Program Compatibility Assistant was requested to monitor %1, but ignored the request because the application depends on the Windows Installer service (MSI)." />
+        <string id="event_PCA_HELPED_USER_EVENT" value="The Program Compatibility Assistant was invoked to correct a compatibility problem. Information about the application is below.%n%nApplication name: %1%nApplication version: %2%nExecutable path: %3%nScenario ID: %4%nUser action: %5%nUser action ID: %6%nCompatibility layer: %7%nFileID: %8%nProgramID: %9" />
+        <string id="event_PCA_TRIED_TO_HELP" value="The Program Compatibility Assistant was invoked to correct a compatibility problem. Information about the application is below.%n%nApplication name: %1%nApplication version: %2%nExecutable path: %3%nScenarios code: %4%nDeprecated Components: %5%nUser action ID: %6%nCompatibility layers recommended: %7%nFileID: %8%nProgramID: %9" />
+        <string id="event_PCA_LAYER_EXISTS" value="The Program Compatibility Assistant was not invoked because the application has been already handled previously. Information about the application is below.%n%nApplication name: %1%nApplication version: %2%nExecutable path: %3%nScenario ID: %4%nUser action: %5%nCompatibility layer: %6" />
+        <string id="event_PCA_APP_EXECUTED_CORRECTLY" value="The Program Compatibility Assistant was not invoked as the application executed correctly. Information about the application is below.%n%nApplication name: %1%nApplication version: %2%nExecutable path: %3%nScenario ID: %4%nUser action: %5%nCompatibility layer: %6" />
+        <string id="event_PCA_IGNORE_DISABLED_VIA_GROUP_POLICY" value="The Program Compatibility Assistant was requested to monitor %1, but ignored the request because the PCA is disabled by group policy." />
+        <string id="event_PCA_IGNORE_EXISTING_JOB_OBJECT" value="The Program Compatibility Assistant was requested to monitor %1, but ignored the request because the application already exists within a job object." />
+        <string id="event_PCA_IGNORE_NATIVE_64BIT_IMAGE" value="The Program Compatibility Assistant was requested to monitor %1, but ignored the request because the application is a 64-bit application." />
+        <string id="event_PCA_IGNORE_NETWORK_PATH" value="The Program Compatibility Assistant was requested to monitor %1, but ignored the request because the application is on a network path." />
+        <string id="event_PCA_IGNORE_SHIM_INFRA_DISABLED" value="The Program Compatibility Assistant was requested to monitor %1, but ignored the request because the application compatibility infrastructure is disabled." />
+        <string id="event_PCA_IGNORE_WRP" value="The Program Compatibility Assistant was requested to monitor %1, but ignored the request because the application is protected by Windows Resource Protection." />
+        <string id="event_PCA_IGNORE_EXCLUSION_DB" value="The Program Compatibility Assistant was requested to monitor %1, but ignored the request because the application has been excluded from the PCA by Microsoft." />
+        <string id="event_PCA_IGNORE_SWITCHBACK_MANIFEST" value="The Program Compatibility Assistant was requested to monitor %1, but ignored the request because the executable has a current SwitchBack context." />
+        <string id="event_PCA_IGNORE_UAC_MANIFESTED_APP" value="The Program Compatibility Assistant was requested to monitor %1, but ignored the request because the executable has a UAC manifest." />
+        <string id="event_PCA_ADDED_TO_QUARANTINE" value="The Program Compatibility Assistant has added %1 to quarantine." />
+        <string id="event_PCA_REMOVED_FROM_QUARANTINE" value="The Program Compatibility Assistant has removed %1 from quarantine." />
+        <string id="event_PCA_DM_TAG_PROCESS_FAILED" value="The Program Compatibility Assistant attempted to connect an event for process ID %1, but the Program Compatibility Assistant service was unable to locate the process." />
+        <string id="event_COMPATIBILITY_FIX" value="Compatibility fix applied to %5.%nFix information: %6, %3, %4." />
+        <string id="event_COMPATIBILITY_MSI" value="Compatibility fix applied to %7.%nFix information: %8, %3, %4." />
+        <string id="event_COMPATIBILITY_FIX_PCA" value="PCA was informed about fix %2 applied to process." />
+        <string id="event_PCA_LOG_DIALOG_RESPONSE" value="PCA dialog button response %2." />
+        <string id="event_PCA_DETECTOR_SHIM_SHORT_RUN_TIME" value="Detector shim: SHORT_RUN_TIME." />
+        <string id="event_PCA_DETECTOR_SHIM_ACCESS_DENIED" value="Detector shim: ACCESS_DENIED." />
+        <string id="event_PCA_DETECTOR_SHIM_BLACK_SCREEN" value="Detector shim: BLACK_SCREEN." />
+        <string id="event_PCA_DETECTOR_SHIM_WIN32_EXCEPTION" value="Detector shim: WIN32_EXCEPTION: %3." />
+        <string id="event_PCA_DETECTOR_SHIM_GLOBAL_OBJECT" value="Detector shim: GLOBAL_OBJECT." />
+        <string id="event_PCA_DETECTOR_SHIM_PRIVILEGE_CHECK" value="Detector shim: PRIVILEGE_CHECK." />
+        <string id="event_PCA_DETECTOR_SHIM_MESSAGE_BOX_VERSION" value="Detector shim: MESSAGE_BOX_VERSION." />
+        <string id="event_PCA_DETECTOR_SHIM_MESSAGE_BOX_PRIVILEGE" value="Detector shim: MESSAGE_BOX_PRIVILEGE." />
+        <string id="event_PCA_DETECTOR_SHIM_MESSAGE_BOX_ERROR_ICON" value="Detector shim: MESSAGE_BOX_ERROR_ICON." />
+        <string id="event_PCA_DETECTOR_SHIM_REG_EXPAND_SZ" value="Detector shim: REG_EXPAND_SZ." />
+        <string id="event_PCA_DETECTOR_SHIM_DWM_8AND16_MODE" value="Detector shim: DWM_8AND16_MODE." />
+        <string id="event_PCA_DETECTOR_SHIM_KERNEL_DRIVER" value="Detector shim: KERNEL_DRIVER." />
+        <string id="event_AE_PCA_DX_SHIM_APPLIED_HIGHDPIAWARE_EVENT" value="DirectX detection: HighDPIAware." />
+        <string id="event_AE_PCA_DX_SHIM_APPLIED_MAXIMIZEDWINDOWEDMODE_EVENT" value="DirectX detection: MaximizedWindowedMode." />
+        <string id="event_AE_PCA_DX_SHIM_APPLIED_ADAPTWINDOWTODISPLAYMODE_EVENT" value="DirectX detection: AdaptWindowToDisplayMode." />
+        <string id="event_AE_PCA_AMI_REFRESH_STORE" value="PCA was requested to refresh the program cache." />
+        <string id="event_AE_PCA_AMI_REFRESH_COMPLETE" value="PCA was informed that the program cache was refreshed." />
+        <string id="event_AE_PCA_AMI_ADD_ORPHAN_FILE" value="PCA was requested to add a file to the orphan cache." />
+        <string id="event_AE_PCA_SIUF_QUESTION_ASKED" value="PCA triggered SIUF question was asked." />
+        <string id="event_AE_PCA_SIUF_QUESTION_ANSWER" value="PCA triggered SIUF question was answered." />
+        <string id="event_UAR_SESSIONINFO" value="An instance of the Steps Recorder ran with the following information:%n%nStartTime: %1%nStopTime: %2%nAction Count: %3%nMissed Action Count: %4%nOutput file location: %5" />
+        <string id="event_UAR_SESSIONERROR" value="An instance of the Steps Recorder terminated with the following error code: %1" />
+        <string id="event_PDU_SESSIONINFO" value="An instance of Program Data Updater (PDU) ran with the following information: StartTime: %1, StopTime: %2, ExitCode: %3, Number of new programs: %4, Number of removed programs: %5, Number of updated programs: %6, Number of installed programs: %7, Number of new orphan files: %8, Number of new add-ons: %9, Number of removed add-ons: %10, Number of updated add-ons: %11, Number of installed add-ons: %12, Number of new installations: %13" />
+        <string id="event_PDU_AMI_UPDATE_FAILURE" value="AMI cache update failure.%n%nFile path: %1%nFile ID: %2%nProgram ID: %3%nError Code: %4%n" />
+        <string id="event_AIT_RUN_FAILED" value="The Application Impact Telemetry (AIT) Agent terminated with the following error code: %1" />
+        <string id="event_AIT_DISABLED" value="The Application Impact Telemetry (AIT) Agent is not running because AIT is disabled." />
+        <string id="event_AIT_ALREADY_RUNNING" value="The Application Impact Telemetry (AIT) Agent is stopping because another instance is already running." />
+        <string id="event_AIT_PARSE_COMMAND_LINE_ERROR" value="The Application Impact Telemetry (AIT) Agent was unable to parse the command-line options with error code: %1." />
+        <string id="event_AIT_PROCESS_LOGS_ERROR" value="The Application Impact Telemetry (AIT) Agent was unable to process the logs files with error code: %1." />
+        <string id="event_AIT_CANT_START_SQM_SESSION" value="The Application Impact Telemetry (AIT) Agent was unable to start application impact SQM with error code: %1." />
+        <string id="event_SBT_CANT_START_GENERIC_SQM_SESSION" value="The Application Impact Telemetry (AIT) Agent was unable to start system telemetry with error code: %1." />
+        <string id="event_AIT_CANT_LOG_FEATURE_USE_DATA" value="The Application Impact Telemetry (AIT) Agent was unable to log application impact data to SQM with error code: %1." />
+        <string id="event_SBT_CANT_LOG_FEATURE_USE_DATA" value="The Application Impact Telemetry (AIT) Agent was unable to log system telemetry data to SQM with error code: %1." />
+        <string id="event_AIT_STATIC_SESSION_INFO" value="The Application Impact Telemetry (AIT) Static Analysis tool ran with the following results:%n%nStart time: %7%nStop time: %8%nRuntime: %9%nExit code: %3%nType of analysis: %4%nNumber of files analyzed: %5%nNumber of files failed: %6%nAnalysis command: %10%nProgram ID: %11" />
+        <string id="event_AECACHE_DEBUG_MESSAGE" value="%1" />
+        <string id="event_QUIRKS_DEBUG_EVENT" value="%3" />
+        <string id="event_PCW_HELPED_USER_EVENT" value="The Program Compatibility Troubleshooter was invoked to correct a compatibility problem. Information about the application is below.%n%nApplication name: %1%nApplication version: %2%nExecutable path: %3%nScenario ID: %4%nResult: %5%nResult ID: %6%nCompatibility layer: %7%nFileID: %8%nProgramID: %9" />
+        <string id="event_PCW_COS_INFO_EVENT" value="The Program Compatibility Troubleshooter queried the Compatibility Online Service for information about an application. Results are below.%n%nApplication name: %1%nApplication version: %2%nExecutable path: %3%nRecommended layer: %4%nURL: %5%nCompatibility status: %6%nFileID: %7%nProgramID: %8" />
+        <string id="event_PCW_GENOME_INFO_EVENT" value="The Program Compatibility Troubleshooter queried the application genome for information about an application. Results are below.%n%nApplication name: %1%nApplication version: %2%nExecutable path: %3%nRecommended layer: %4%nVista+: %5%nFileID: %6%nProgramID: %7" />
+        <string id="event_PCW_DEBUG_EVENT" value="Program Compatibility Troubleshooter debug event:%n%1%n%2" />
+        <string id="eventProviderName" value="Microsoft-Windows-Application-Experience" />
+        <string id="channel.AE.Debug" value="Microsoft-Windows-Application-Experience/Compatibility-Infrastructure-Debug" />
+        <string id="channel.PCA.Operational" value="Microsoft-Windows-Application-Experience/Program-Compatibility-Assistant" />
+        <string id="channel.PCA.Analytic" value="Microsoft-Windows-Application-Experience/Program-Compatibility-Assistant/Analytic" />
+        <string id="channel.PCA.Debug" value="Microsoft-Windows-Application-Experience/Program-Compatibility-Assistant/Trace" />
+        <string id="channel.Program-Telemetry.Operational" value="Microsoft-Windows-Application-Experience/Program-Telemetry" />
+        <string id="channel.Program-Inventory.Operational" value="Microsoft-Windows-Application-Experience/Program-Inventory" />
+        <string id="channel.Steps-Recorder.Operational" value="Microsoft-Windows-Application-Experience/Steps-Recorder" />
+        <string id="channel.Program-Compatibility-Troubleshooter.Operational" value="Microsoft-Windows-Application-Experience/Program-Compatibility-Troubleshooter" />
+        <string id="event_INSTALLER_CANCEL_EVENT" value="Installer cancel click detected." />
+        <string id="event_INSTALLSHIELD_DETECTED_EVENT" value="InstallerShield detected." />
+        <string id="event_INSTALL_FILE_EVENT" value="File installed." />
+        <string id="event_NEW_ARP_KEY_EVENT" value="New arp key." />
+      </stringTable>
+    </resources>
+  </localization>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" description="Default SDDL for Windows Resource Protected file" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+</assembly>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-RestartManager-Events" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string id="RmProviderName" value="Microsoft-Windows-RestartManager" />
+        <string id="RmOpChName" value="Microsoft-Windows-RestartManager/Operational" />
+        <string id="StartSessMsg" value="Starting session %1 - %2." />
+        <string id="EndSessMsg" value="Ending session %1 started %2." />
+        <string id="ShutdownAppMsg" value="Shutting down application or service '%3'." />
+        <string id="RestartAppMsg" value="Restarting application or service '%3'." />
+        <string id="RestartMachineMsg" value="Machine restart is required." />
+        <string id="ShutdownAppFailMsg" value="Application or service '%3' could not be shut down." />
+        <string id="RestartAppFailMsg" value="Application or service '%3' could not be restarted." />
+        <string id="RegisterMsg" value="Registering %2 file(s), %3 process(es), %4 service(s)." />
+        <string id="SvcTagFailMsg" value="Service tagging failed to find target service in process %2." />
+        <string id="UnsupRestartMsg" value="Application '%3' (pid %2) cannot be restarted - %9." />
+        <string id="RmInternalError" value="Restart Manager encountered an internal error." />
+        <string id="RM_UNSUP_RESTART_REASON_MAP.0" value="Unknown" />
+        <string id="RM_UNSUP_RESTART_REASON_MAP.1" value="Application SID does not match Conductor SID." />
+        <string id="RM_APP_TYPE_MAP.0" value="Unknown App" />
+        <string id="RM_APP_TYPE_MAP.1" value="Window App" />
+        <string id="RM_APP_TYPE_MAP.2" value="OtherWindow App" />
+        <string id="RM_APP_TYPE_MAP.3" value="Service" />
+        <string id="RM_APP_TYPE_MAP.4" value="Explorer" />
+        <string id="RM_APP_TYPE_MAP.5" value="Console App" />
+        <string id="RM_APP_TYPE_MAP.1000" value="Critical App" />
+        <string id="RM_STATUS_MAP.x1" value="RmStatusRunning" />
+        <string id="RM_STATUS_MAP.x2" value="RmStatusStopped" />
+        <string id="RM_STATUS_MAP.x4" value="RmStatusStoppedOther" />
+        <string id="RM_STATUS_MAP.x8" value="RmStatusRestarted" />
+        <string id="RM_STATUS_MAP.x10" value="RmStatusErrorOnStop" />
+        <string id="RM_STATUS_MAP.x20" value="RmStatusErrorOnRestart" />
+        <string id="RM_STATUS_MAP.x40" value="RmStatusShutdownMasked" />
+        <string id="RM_STATUS_MAP.x80" value="RmStatusRestartMasked" />
+        <string id="RM_REBOOT_MAP.x0" value="RmRebootReasonNone" />
+        <string id="RM_REBOOT_MAP.x1" value="RmRebootReasonPermissionDenied" />
+        <string id="RM_REBOOT_MAP.x2" value="RmRebootReasonSessionMismatch" />
+        <string id="RM_REBOOT_MAP.x4" value="RmRebootReasonCriticalProcess" />
+        <string id="RM_REBOOT_MAP.x8" value="RmRebootReasonService" />
+        <string id="RM_REBOOT_MAP.x10" value="RmRebootReasonDetectedSelf" />
+      </stringTable>
+    </resources>
+  </localization>
+  <instrumentation xmlns:win="http://manifests.microsoft.com/win/2004/08/windows/events" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <events xmlns="http://schemas.microsoft.com/win/2004/08/events">
+      <provider guid="{0888e5ef-9b98-4695-979d-e92ce4247224}" message="$(string.RmProviderName)" messageFileName="%SystemRoot%\System32\RstrtMgr.dll" name="Microsoft-Windows-RestartManager" resourceFileName="%SystemRoot%\System32\RstrtMgr.dll" symbol="RM_PROVIDER">
+        <channels>
+          <importChannel chid="AppCh" name="Application" />
+          <channel chid="OpCh" enabled="true" isolation="Application" message="$(string.RmOpChName)" name="Microsoft-Windows-RestartManager/Operational" symbol="RM_CH_OP" type="Operational">
+            <logging>
+              <autoBackup>false</autoBackup>
+              <retention>false</retention>
+              <maxSize>1000000</maxSize>
+            </logging>
+          </channel>
+        </channels>
+      </provider>
+      <cmi />
+    </events>
+  </instrumentation>
+</assembly>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved." xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <assemblyIdentity name="Microsoft-Windows-Embedded-EmbeddedLogon" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <configuration xmlns:app="EmbeddedLogonSchema" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State">
+    <configurationSchema>
+      <xsd:schema xmlns="Microsoft-Windows-Embedded-EmbeddedLogon" targetNamespace="Microsoft-Windows-Embedded-EmbeddedLogon">
+        <xsd:element default="0" name="BrandingNeutral" type="xsd:int" wcm:dataOnly="false" wcm:description="Bit-based setting for disabling UI anchors on logon screen." wcm:displayName="Disable UI anchors on logon screen" wcm:handler="regkey('HKLM\Software\Microsoft\Windows Embedded\EmbeddedLogon')" wcm:legacyType="REG_DWORD" wcm:passes="offlineServicing specialize" wcm:scope="allUsers" wcm:visible="true" />
+        <xsd:element default="0" name="AnimationDisabled" type="xsd:int" wcm:dataOnly="false" wcm:description="Boolean setting for disabling animation on logon screen." wcm:displayName="Disable transition animations on the logon screen." wcm:handler="regkey('HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Authentication\LogonUI')" wcm:legacyType="REG_DWORD" wcm:passes="offlineServicing specialize" wcm:scope="allUsers" wcm:visible="true" />
+        <xsd:element default="0" name="NoLockScreen" type="xsd:int" wcm:dataOnly="false" wcm:description="Boolean setting for disabling lock screen." wcm:displayName="Disable the Lock Screen." wcm:handler="regkey('HKLM\Software\Policies\Microsoft\Windows\Personalization')" wcm:legacyType="REG_DWORD" wcm:passes="offlineServicing specialize" wcm:scope="allUsers" wcm:visible="true" />
+        <xsd:element default="0" name="UIVerbosityLevel" type="xsd:int" wcm:dataOnly="false" wcm:description="Integer setting for Windows logon status display." wcm:displayName="Message levels for displaying status during Windows logon." wcm:handler="regkey('HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon')" wcm:legacyType="REG_DWORD" wcm:passes="offlineServicing specialize" wcm:scope="allUsers" wcm:visible="true" />
+        <xsd:element default="0" name="HideAutoLogonUI" type="xsd:int" wcm:dataOnly="false" wcm:description="Boolean setting for disabling AutoLogon UI." wcm:displayName="Disable AutoLogon UI." wcm:handler="regkey('HKLM\Software\Microsoft\Windows Embedded\EmbeddedLogon')" wcm:legacyType="REG_DWORD" wcm:passes="offlineServicing specialize" wcm:scope="allUsers" wcm:visible="true" />
+        <xsd:element default="1" name="HideFirstLogonAnimation" type="xsd:int" wcm:dataOnly="false" wcm:description="Boolean setting for disabling First Logon Animation." wcm:displayName="Disable First Logon Animation." wcm:handler="regkey('HKLM\Software\Microsoft\Windows Embedded\EmbeddedLogon')" wcm:legacyType="REG_DWORD" wcm:passes="offlineServicing specialize" wcm:scope="allUsers" wcm:visible="true" />
+      </xsd:schema>
+    </configurationSchema>
+  </configuration>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_REGKEY_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;CI;GA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;CI;GR;;;SY)(A;CI;GR;;;BA)(A;CI;GR;;;BU)(A;CI;GR;;;S-1-15-2-1)(A;CI;GR;;;S-1-15-3-1024-1065365936-1281604716-3511738428-1654721687-432734479-3232135806-4053264122-3456934681)" operationHint="replace" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+  <migration settingsVersion="1">
+    <migXml xmlns="">
+      <rules context="System">
+        <include>
+          <objectSet>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows Embedded\EmbeddedLogon\* [*]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Authentication\LogonUI [AnimationDisabled]</pattern>
+            <pattern type="Registry">HKLM\Software\Policies\Microsoft\Windows\Personalization [NoLockScreen]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon [UIVerbosityLevel]</pattern>
+          </objectSet>
+        </include>
+      </rules>
+    </migXml>
+    <supportedComponents>
+      <supportedComponent>
+        <assemblyIdentity name="_" version="1.0.0.0" />
+        <supportedComponentIdentity language="neutral" name="Microsoft-Windows-Embedded-EmbeddedLogon" processorArchitecture="*" settingsVersionRange="1" xmlns="urn:schemas-microsoft-com:asm.v3" />
+      </supportedComponent>
+    </supportedComponents>
+  </migration>
+</assembly>

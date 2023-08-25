@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="HyperV-VmDynMem" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <dependency discoverable="no" resourceType="Resources">
+    <dependentAssembly>
+      <assemblyIdentity name="HyperV-VmDynMem.resources" version="10.0.22621.1" processorArchitecture="amd64" language="*" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+    </dependentAssembly>
+  </dependency>
+  <file name="vmdynmem.dll" destinationPath="$(runtime.System32)\" sourceName="vmdynmem.dll" importPath="$(build.nttree)\vm\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>vchuHBbTCYeyQ1LhSlpHCbgtOua6lot0rzve1U/Zc3s=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <registryKeys>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{E3C82929-EDB4-475e-85A4-29AAA2A30C2D}">
+      <registryValue name="" valueType="REG_SZ" value="DynMemVDev" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{E3C82929-EDB4-475e-85A4-29AAA2A30C2D}\InprocServer32">
+      <registryValue name="" valueType="REG_SZ" value="$(runtime.System32)\vmdynmem.dll" />
+      <registryValue name="ThreadingModel" valueType="REG_SZ" value="Free" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{E3C82929-EDB4-475e-85A4-29AAA2A30C2D}\ProgID">
+      <registryValue name="" valueType="REG_SZ" value="DynMemVDev.1" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{E3C82929-EDB4-475e-85A4-29AAA2A30C2D}\VersionIndependentProgID">
+      <registryValue name="" valueType="REG_SZ" value="DynMemVDev" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\DynMemVDev">
+      <registryValue name="" valueType="REG_SZ" value="DynMemVDev" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\DynMemVDev\CurVer">
+      <registryValue name="" valueType="REG_SZ" value="DynMemVDev.1" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\DynMemVDev.1">
+      <registryValue name="" valueType="REG_SZ" value="DynMemVDev.1" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\DynMemVDev.1\CLSID">
+      <registryValue name="" valueType="REG_SZ" value="{E3C82929-EDB4-475e-85A4-29AAA2A30C2D}" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Virtualization\VirtualDevices\E3C82929-EDB4-475e-85A4-29AAA2A30C2D">
+      <registryValue name="Interfaces" valueType="REG_MULTI_SZ" value="&quot;7F2D6C5B-34C5-4ECA-A216-859249AFF423&quot;" />
+    </registryKey>
+  </registryKeys>
+  <instrumentation>
+    <events xmlns="http://schemas.microsoft.com/win/2004/08/events" xmlns:win="http://manifests.microsoft.com/win/2004/08/windows/events" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <provider guid="{B1D080A6-F3A5-42F6-B6F1-B9FD86C088DA}" message="$(string.HyperVDynMemProvider)" messageFileName="%systemroot%\system32\vmdynmem.dll" name="Microsoft-Windows-Hyper-V-DynMem" resourceFileName="%systemroot%\system32\vmdynmem.dll" symbol="MSWVMDynMem">
+        <channels>
+          <importChannel chid="VMC_WORKER_ADMIN" name="Microsoft-Windows-Hyper-V-Worker-Admin" />
+          <importChannel chid="VMC_WORKER_ANALYTIC" name="Microsoft-Windows-Hyper-V-Worker-Analytic" />
+        </channels>
+      </provider>
+      <cmi />
+    </events>
+  </instrumentation>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_REGKEY_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;CI;GA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;CI;GR;;;SY)(A;CI;GR;;;BA)(A;CI;GR;;;BU)(A;CI;GR;;;S-1-15-2-1)(A;CI;GR;;;S-1-15-3-1024-1065365936-1281604716-3511738428-1654721687-432734479-3232135806-4053264122-3456934681)" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_DIRECTORY_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;CI;GA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;0x1301bf;;;SY)(A;IOCIOI;GA;;;SY)(A;;0x1301bf;;;BA)(A;IOCIOI;GA;;;BA)(A;CIOI;GRGX;;;BU)(A;OICIIO;GA;;;CO)(A;CIOI;GRGX;;;S-1-15-2-1)(A;CIOI;GRGX;;;S-1-15-2-2)" operationHint="replace" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string id="HyperVDynMemProvider" value="Microsoft-Windows-Hyper-V-DynMem" />
+        <string id="MSWVM_GENERIC_TRACE.EventMessage" value="[Virtual machine %3] %1" />
+        <string id="IID_IMemoryOperations" value="7F2D6C5B-34C5-4ECA-A216-859249AFF423" />
+        <string id="IID_IVmbusServices" value="ECE3F556-F87F-4120-9E37-AAA55E5E0CA9" />
+        <string id="VMT_DM_OPERATION_MEMORY_RESERVE.TaskMessage" value="Dynamic memory - reserve memory" />
+        <string id="VMT_DM_OPERATION_MEMORY_COMMIT.TaskMessage" value="Dynamic memory - commit memory" />
+        <string id="VMT_DM_OPERATION_MEMORY_DECOMMIT.TaskMessage" value="Dynamic memory - de-commit memory" />
+        <string id="VMT_DM_OPERATION_GUEST_HOTADD.TaskMessage" value="Dynamic memory - hot add" />
+        <string id="VMT_DM_OPERATION_GUEST_UNBALLOON.TaskMessage" value="Dynamic memory - un-balloon" />
+        <string id="VMT_DM_OPERATION_GUEST_BALLOON.TaskMessage" value="Dynamic memory - balloon" />
+        <string id="VMT_DM_OPERATION_HOTADDUNDO.TaskMessage" value="Dynamic memory - hot add undo" />
+        <string id="VMT_DM_OPERATION_MEMORY_RELEASE.TaskMessage" value="Dynamic memory - release" />
+        <string id="VMT_DM_OPERATION_BACK_PAGES.TaskMessage" value="Dynamic memory - back pages" />
+        <string id="VMT_DM_OPERATION_GUEST_GREEDY_BALLOON.TaskMessage" value="Dynamic memory - greedy balloooning" />
+        <string id="VMWP_PERF_DM_OPERATION_MEMORY_RESERVE_START.EventMessage" value="Started reserving memory. Reserving %2 pages. (Virtual machine ID %1)" />
+        <string id="VMWP_PERF_DM_OPERATION_MEMORY_RESERVE_STOP.EventMessage" value="Operation reserve memory completed, %3 pages were reserved, time %2 s. (Virtual machine ID %1)" />
+        <string id="VMWP_PERF_DM_OPERATION_MEMORY_COMMIT_START.EventMessage" value="Started committing memory. Committing %2 pages. (Virtual machine ID %1)" />
+        <string id="VMWP_PERF_DM_OPERATION_MEMORY_COMMIT_STOP.EventMessage" value="Operation committing memory completed, %3 pages were committed, time %2 s. (Virtual machine ID %1)" />
+        <string id="VMWP_PERF_DM_OPERATION_MEMORY_DECOMMIT_START.EventMessage" value="Started de-committing memory. De-committing %2 pages. (Virtual machine ID %1)" />
+        <string id="VMWP_PERF_DM_OPERATION_MEMORY_DECOMMIT_STOP.EventMessage" value="Operation de-committing memory completed, %3 pages were de-committed, time %2 s. (Virtual machine ID %1)" />
+        <string id="VMWP_PERF_DM_OPERATION_GUEST_HOTADD_START.EventMessage" value="Started hot adding memory (GUEST). Hot adding %2 pages. (Virtual machine ID %1)" />
+        <string id="VMWP_PERF_DM_OPERATION_GUEST_HOTADD_STOP.EventMessage" value="Operation hot adding memory completed (GUEST), %3 pages were hot added, time %2 s. (Virtual machine ID %1)" />
+        <string id="VMWP_PERF_DM_OPERATION_GUEST_UNBALLOON_START.EventMessage" value="Started un-ballooning memory (GUEST). Un-ballooning %2 pages. (Virtual machine ID %1)" />
+        <string id="VMWP_PERF_DM_OPERATION_GUEST_UNBALLOON_STOP.EventMessage" value="Operation un-ballooning memory completed (GUEST), %3 pages were un-ballooned, time %2 s. (Virtual machine ID %1)" />
+        <string id="VMWP_PERF_DM_OPERATION_GUEST_BALLOON_START.EventMessage" value="Started ballooning memory (GUEST). Ballooning %2 pages. (Virtual machine ID %1)" />
+        <string id="VMWP_PERF_DM_OPERATION_GUEST_BALLOON_STOP.EventMessage" value="Operation ballooning memory completed (GUEST), %3 pages were ballooned, time %2 s. (Virtual machine ID %1)" />
+        <string id="VMWP_PERF_DM_OPERATION_HOTADDUNDO_START.EventMessage" value="Started hot add undo memory. Undoing %2 pages. (Virtual machine ID %1)" />
+        <string id="VMWP_PERF_DM_OPERATION_HOTADDUNDO_STOP.EventMessage" value="Operation hot add undo memory completed, %3 pages were processed, time %2 s. (Virtual machine ID %1)" />
+        <string id="VMWP_PERF_DM_OPERATION_MEMORY_RELEASE_START.EventMessage" value="Started releasing memory. Releasing %2 pages. (Virtual machine ID %1)" />
+        <string id="VMWP_PERF_DM_OPERATION_MEMORY_RELEASE_STOP.EventMessage" value="Operation release memory completed, %3 pages were released, time %2 s. (Virtual machine ID %1)" />
+        <string id="VMWP_PERF_DM_OPERATION_BACK_PAGES_START.EventMessage" value="Started backing pages. Backing %2 pages. (Virtual machine ID %1)" />
+        <string id="VMWP_PERF_DM_OPERATION_BACK_PAGES_STOP.EventMessage" value="Operation backing pages completed, %3 pages were backed, time %2 s. (Virtual machine ID %1)" />
+        <string id="VMWP_PERF_DM_OPERATION_GUEST_GREEDY_BALLOON_START.EventMessage" value="Started greedy ballooning memory (GUEST). Ballooning %2 pages. (Virtual machine ID %1)" />
+        <string id="VMWP_PERF_DM_OPERATION_GUEST_GREEDY_BALLOON_STOP.EventMessage" value="Operation greedy ballooning memory completed (GUEST), %3 pages were ballooned, time %2 s. (Virtual machine ID %1)" />
+        <string id="VMK_HYPERV_PERF.KeywordMessage" value="Hyper-V performance traces" />
+        <string id="VMK_HYPERV_PERF_OUTER.KeywordMessage" value="Hyper-V performance traces (outer operations)" />
+        <string id="VMK_HYPERV_PERF_INNER.KeywordMessage" value="Hyper-V performance traces (inner operations)" />
+        <string id="VMK_HYPERV_PERF_VERBOSE.KeywordMessage" value="Hyper-V performance traces (verbose)" />
+        <string id="MSVMB_VSC_PROTOCOL_ERROR.EventMessage" value="'%1' device %3 experienced a protocol error indicative of a deep system problem. (Virtual machine ID %2)" />
+        <string id="MSVMB_VSC_PROTOCOL_ERROR_SUMMARY.EventMessage" value="Device %3 experienced a protocol error indicative of a deep system problem." />
+        <string id="DMVDEV_GUEST_MISCONFIGURATION_ERROR.EventMessage" value="VM '%1' (Virtual machine ID %2) is misconfigured with more physical RAM pages than it can access. Numer of inaccessible pages: %3." />
+        <string id="DMVDEV_GUEST_MISCONFIGURATION_ERROR_SUMMARY.EventMessage" value="VM '%1' (Virtual machine ID %2) is misconfigured." />
+        <string id="MSVMB_BAD_RESTORE.EventMessage" value="'%1' device %3 found bad data on restoring. (Virtual machine ID %2)" />
+        <string id="MSVMB_BAD_RESTORE_SUMMARY.EventMessage" value="Device %3 found bad data on restoring." />
+        <string id="DMVDEV_GUESTHIBERNATION_ERROR.EventMessage" value="VM '%1' (Virtual machine ID %2) is misconfigured to allow guest hibernation along with dynamic memory." />
+        <string id="DMVDEV_GUESTHIBERNATION_ERROR_SUMMARY.EventMessage" value="VM '%1' (Virtual machine ID %2) is misconfigured to allow guest hibernation along with dynamic memory." />
+      </stringTable>
+    </resources>
+  </localization>
+</assembly>

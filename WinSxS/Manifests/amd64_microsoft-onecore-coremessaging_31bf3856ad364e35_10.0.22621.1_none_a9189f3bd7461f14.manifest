@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved." xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <assemblyIdentity name="Microsoft-OneCore-CoreMessaging" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <memberships>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories.Services" version="10.0.22621.1" publicKeyToken="31bf3856ad364e35" typeName="Service" />
+      <categoryInstance>
+        <serviceData name="CoreMessagingRegistrar" displayName="@%SystemRoot%\system32\coremessaging.dll,-1" errorControl="normal" start="auto" type="win32ShareProcess" description="@%SystemRoot%\system32\coremessaging.dll,-2" dependOnService="rpcss" imagePath="%SystemRoot%\system32\svchost.exe -k LocalServiceNoNetwork -p" objectName="NT AUTHORITY\LocalService" sidType="restricted">
+          <securityDescriptor name="CoreMessagingRegistrarServiceSecurity" />
+          <failureActions resetPeriod="0">
+            <actions>
+              <action delay="30000" type="rebootMachine" />
+            </actions>
+          </failureActions>
+        </serviceData>
+      </categoryInstance>
+    </categoryMembership>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories" version="1.0.0.0" publicKeyToken="365143bb27e7ac8b" typeName="SvcHost" />
+      <categoryInstance subcategory="LocalServiceNoNetwork">
+        <serviceGroup position="last" serviceName="CoreMessagingRegistrar" />
+      </categoryInstance>
+    </categoryMembership>
+  </memberships>
+  <asmv3:configuration xmlns:asmv3="urn:schemas-microsoft-com:asm.v3" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State">
+    <asmv3:configurationSchema>
+      <xsd:schema xmlns="Microsoft-Windows-OneCore-CoreUI-Service" targetNamespace="Microsoft-Windows-OneCore-CoreUI-Service">
+        <xsd:simpleType name="ServiceStartType" wcm:description="Service Start Type Override">
+          <xsd:restriction base="xsd:integer">
+            <xsd:enumeration value="2" />
+            <xsd:enumeration value="3" />
+          </xsd:restriction>
+        </xsd:simpleType>
+        <xsd:element default="2" name="CoreUIStartType" type="ServiceStartType" wcm:description="Service Start Type" wcm:displayName="Service Start Type" wcm:handler="regkey('HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\CoreMessagingRegistrar')" wcm:legacyName="Start" wcm:legacyType="REG_DWORD" wcm:passes="offlineServicing" wcm:scope="allUsers" />
+      </xsd:schema>
+    </asmv3:configurationSchema>
+  </asmv3:configuration>
+  <registryKeys>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\System\CurrentControlSet\Services\CoreMessagingRegistrar\Parameters">
+      <registryValue name="ServiceDll" valueType="REG_EXPAND_SZ" value="%SystemRoot%\system32\coremessaging.dll" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\System\CurrentControlSet\Services\CoreMessagingRegistrar">
+      <registryValue name="FailureActionsOnNonCrashFailures" valueType="REG_DWORD" value="0x00000001" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\Setup\AllowStart\CoreMessagingRegistrar" />
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\WindowsRuntime\ActivatableClassId\Windows.System.DispatcherQueue">
+      <registryValue name="ActivationType" valueType="REG_DWORD" value="0x00000000" />
+      <registryValue name="CLSID" valueType="REG_SZ" value="{A2BCF28F-2C7C-4785-8B25-B269115E6937}" />
+      <registryValue name="DllPath" valueType="REG_SZ" value="$(runtime.system32)\CoreMessaging.dll" />
+      <registryValue name="Threading" valueType="REG_DWORD" value="0x00000000" />
+      <registryValue name="TrustLevel" valueType="REG_DWORD" value="0x00000000" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\WindowsRuntime\CLSID\{A2BCF28F-2C7C-4785-8B25-B269115E6937}">
+      <registryValue name="ActivatableClassId" valueType="REG_SZ" value="Windows.System.DispatcherQueue" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\WindowsRuntime\ActivatableClassId\Windows.System.DispatcherQueueController">
+      <registryValue name="ActivationType" valueType="REG_DWORD" value="0x00000000" />
+      <registryValue name="CLSID" valueType="REG_SZ" value="{622D8E54-C715-45F4-B26B-000A8A7CBF03}" />
+      <registryValue name="DllPath" valueType="REG_SZ" value="$(runtime.system32)\CoreMessaging.dll" />
+      <registryValue name="Threading" valueType="REG_DWORD" value="0x00000000" />
+      <registryValue name="TrustLevel" valueType="REG_DWORD" value="0x00000000" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\WindowsRuntime\CLSID\{622D8E54-C715-45F4-B26B-000A8A7CBF03}">
+      <registryValue name="ActivatableClassId" valueType="REG_SZ" value="Windows.System.DispatcherQueueController" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\Software\Microsoft\SecurityManager\TransientObjects\%5C%5C.%5CRpc%5CWM_WindowManagerRPC%5CServer">
+      <registryValue name="SecurityDescriptor" valueType="REG_BINARY" value="0100049000000000000000000000000014000000020070000400000000001400FFFF1F1101010000000000030000000000001400FFFF1F1101010000000000051200000000001800FFFF1F110102000000000005200000002002000000002800FFFF1F110106000000000005500000007658DD3C2717426FE43DD24A0DC9153CFBD0EA94" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\Software\Microsoft\SecurityManager\TransientObjects\%5C%5C.%5CAlpcPort%5CWM_RegistrarServer">
+      <registryValue name="SecurityDescriptor" valueType="REG_BINARY" value="01000480000000000000000000000000140000000200F4000800000000001400FFFF1F110101000000000003000000000000140000000080010100000000000504000000000014000000008001010000000000050B00000000001400FFFF1F1101010000000000051200000000001800FFFF1F11010200000000000520000000200200000000340000000080010900000000000520000000CE4A9359B9CF0B7575C0F29BB2B4C298D446DDF9027A87EC14651177D6E996550000180000000080010200000000000F02000000010000000000380000000080010A00000000000F0300000000040000CE4A9359B9CF0B7575C0F29BB2B4C298D446DDF9027A87EC14651177D6E99655" />
+    </registryKey>
+  </registryKeys>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="CoreMessagingRegistrarServiceSecurity" sddl="O:SYG:SYD:(A;;CCLCSWRPWPDTLOCRRC;;;SY)(A;;CCLCSWRPWPDTLOCRRC;;;BA)(A;;CCLCSWRPLOCRRC;;;SU)(A;;CCLCSWRPLOCRRC;;;IU)(A;;CCLCSWRPLOCRRC;;;AC)" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_REGKEY_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;CI;GA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;CI;GR;;;SY)(A;CI;GR;;;BA)(A;CI;GR;;;BU)(A;CI;GR;;;S-1-15-2-1)(A;CI;GR;;;S-1-15-3-1024-1065365936-1281604716-3511738428-1654721687-432734479-3232135806-4053264122-3456934681)" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" description="Default SDDL for Windows Resource Protected file" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+  <file name="CoreMessaging.dll" destinationPath="$(runtime.system32)\" sourceName="CoreMessaging.dll" importPath="$(build.nttree)\mincore\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>vy64YFukJA5R6E/05o4tOGvNzLFK1nMK8DXM3lHhPvo=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+</assembly>

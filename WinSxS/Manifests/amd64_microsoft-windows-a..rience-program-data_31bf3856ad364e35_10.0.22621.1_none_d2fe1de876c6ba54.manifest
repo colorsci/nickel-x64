@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-Application-Experience-Program-Data" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <dependency discoverable="no" resourceType="Resources">
+    <dependentAssembly dependencyType="prerequisite">
+      <assemblyIdentity name="Microsoft-Windows-Application-Experience-Program-Data.Resources" version="10.0.22621.1" processorArchitecture="amd64" language="*" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+    </dependentAssembly>
+  </dependency>
+  <file name="invagent.dll" destinationPath="$(runtime.system32)\" sourceName="invagent.dll" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>SGpk/FpyNYy1K/fp/+yJL8b6pHZgru+F7nop/zG5GSs=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <file name="win32appinventorycsp.dll" destinationPath="$(runtime.system32)\" sourceName="win32appinventorycsp.dll" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>opJqkIOdOvVtbdErPj53NrK/dqEkmkPUD43Z7G8CAOo=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <file name="aeinv.mof" destinationPath="$(runtime.wbem)\" sourceName="aeinv.mof" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>TfMl4rRdW5CbhggVkEMIPkbe4fOmK264Yio9RhZeSiU=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <registryKeys>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{f4ba59cc-2506-45ae-84c8-78ea8d7f9b3e}\">
+      <registryValue name="" valueType="REG_SZ" value="Compat Inventory WMI provider" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{f4ba59cc-2506-45ae-84c8-78ea8d7f9b3e}\InprocServer32\">
+      <registryValue name="" valueType="REG_EXPAND_SZ" value="$(runtime.system32)\invagent.dll" />
+      <registryValue name="ThreadingModel" valueType="REG_SZ" value="Both" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\TelemetryController\InvAgent">
+      <registryValue name="Binary" valueType="REG_SZ" value="invagent.dll" />
+      <registryValue name="Command" valueType="REG_SZ" value="RunUpdate" />
+      <registryValue name="Maintenance" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="Oobe" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="Network" valueType="REG_DWORD" value="0x00000001" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{B4463941-6512-4B2D-A54E-107DD721B4E1}\InprocServer32">
+      <registryValue name="" valueType="REG_EXPAND_SZ" value="%systemroot%\system32\Win32AppInventoryCSP.dll" />
+      <registryValue name="ThreadingModel" valueType="REG_SZ" value="free" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Provisioning\CSPs\.\Vendor\MSFT\Win32AppInventory">
+      <registryValue name="" valueType="REG_SZ" value="{B4463941-6512-4B2D-A54E-107DD721B4E1}" />
+    </registryKey>
+  </registryKeys>
+  <mof name="$(runtime.wbem)\aeinv.mof" />
+  <taskScheduler>
+    <Task xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task" version="1.4">
+      <RegistrationInfo>
+        <Version>1.0</Version>
+        <URI>\Microsoft\Windows\Application Experience\ProgramDataUpdater</URI>
+        <SecurityDescriptor>D:(A;;GA;;;BA)(A;;GA;;;SY)(A;;FRFX;;;LS)</SecurityDescriptor>
+        <Source>$(@%SystemRoot%\system32\invagent.dll,-701)</Source>
+        <Author>$(@%SystemRoot%\system32\invagent.dll,-701)</Author>
+        <Description>$(@%SystemRoot%\system32\invagent.dll,-702)</Description>
+      </RegistrationInfo>
+      <Triggers>
+        <TimeTrigger>
+          <StartBoundary>2001-01-01T00:00:00</StartBoundary>
+          <EndBoundary>2001-01-01T00:00:00</EndBoundary>
+          <Enabled>true</Enabled>
+        </TimeTrigger>
+      </Triggers>
+      <Settings>
+        <DeleteExpiredTaskAfter>PT0S</DeleteExpiredTaskAfter>
+        <UseUnifiedSchedulingEngine>true</UseUnifiedSchedulingEngine>
+      </Settings>
+      <Principals>
+        <Principal id="LocalSystem">
+          <UserId>S-1-5-18</UserId>
+        </Principal>
+      </Principals>
+      <Actions Context="LocalSystem">
+        <Exec>
+          <Command>cmd</Command>
+        </Exec>
+      </Actions>
+    </Task>
+  </taskScheduler>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="WRP_REGKEY_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;CI;GA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;CI;GR;;;SY)(A;CI;GR;;;BA)(A;CI;GR;;;BU)(A;CI;GR;;;S-1-15-2-1)(A;CI;GR;;;S-1-15-3-1024-1065365936-1281604716-3511738428-1654721687-432734479-3232135806-4053264122-3456934681)" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" description="Default SDDL for Windows Resource Protected file" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+</assembly>

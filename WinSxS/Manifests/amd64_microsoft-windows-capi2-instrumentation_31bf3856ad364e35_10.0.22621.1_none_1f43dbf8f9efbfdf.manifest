@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-CAPI2-instrumentation" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <registryKeys>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\EventLog\Application\Microsoft-Windows-CAPI2">
+      <registryValue name="providerGuid" valueType="REG_SZ" value="{5bbca4a8-b209-48dc-a8c7-b23d3e5216fb}" />
+    </registryKey>
+  </registryKeys>
+  <instrumentation xmlns:win="http://manifests.microsoft.com/win/2004/08/windows/events" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <events xmlns="http://schemas.microsoft.com/win/2004/08/events">
+      <provider guid="{5bbca4a8-b209-48dc-a8c7-b23d3e5216fb}" message="$(string.MSServicingProviderName)" messageFileName="%SystemRoot%\System32\crypt32.dll" name="Microsoft-Windows-CAPI2" resourceFileName="%SystemRoot%\System32\crypt32.dll" symbol="CAPI2_PROVIDER">
+        <channels>
+          <importChannel chid="Application" name="Application" />
+          <channel access="O:BAG:SYD:(A;;0x7;;;BA)(A;;0x2;;;AU)" chid="OpCh" message="$(string.OperationalChannel.Name)" name="Microsoft-Windows-CAPI2/Operational" type="Operational" />
+          <channel chid="CatDBCh" enabled="false" isolation="System" message="$(string.CatDBDebugChannel.Name)" name="Microsoft-Windows-CAPI2/Catalog Database Debug" type="Debug" />
+        </channels>
+      </provider>
+      <cmi />
+    </events>
+  </instrumentation>
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string id="ROOT_AUTO_UPDATE_INFORMATIONAL" value="Successful auto update of third-party root certificate:: Subject: &lt;%1&gt; Sha1 thumbprint: &lt;%2&gt;." />
+        <string id="ROOT_LIST_AUTO_UPDATE_URL_RETRIEVAL_INFORMATIONAL" value="Successful auto update retrieval of third-party root list cab from: &lt;%1&gt;." />
+        <string id="ROOT_LIST_AUTO_UPDATE_URL_RETRIEVAL_ERROR" value="Failed auto update retrieval of third-party root list cab from: &lt;%1&gt; with error: %2." />
+        <string id="ROOT_CERT_AUTO_UPDATE_URL_RETRIEVAL_INFORMATIONAL" value="Successful auto update retrieval of third-party root certificate from: &lt;%1&gt;." />
+        <string id="ROOT_CERT_AUTO_UPDATE_URL_RETRIEVAL_ERROR" value="Failed auto update retrieval of third-party root certificate from: &lt;%1&gt; with error: %2." />
+        <string id="CRYPT32_EVENT_LOG_THRESHOLD_WARNING" value="Reached crypt32 threshold of %1 events and will suspend logging for %2 minutes." />
+        <string id="ROOT_SEQUENCE_NUMBER_AUTO_UPDATE_URL_RETRIEVAL_INFORMATIONAL" value="Successful auto update retrieval of third-party root list sequence number from: &lt;%1&gt;." />
+        <string id="ROOT_SEQUENCE_NUMBER_AUTO_UPDATE_URL_RETRIEVAL_ERROR" value="Failed auto update retrieval of third-party root list sequence number from: &lt;%1&gt; with error: %2." />
+        <string id="UNTRUSTED_ROOT_INFORMATIONAL" value="Untrusted root certificate:: Subject: &lt;%1&gt; Sha1 thumbprint: &lt;%2&gt;." />
+        <string id="PARTIAL_CHAIN_INFORMATIONAL" value="Partial Chain:: Issuer: &lt;%1&gt; Subject Sha1 thumbprint: &lt;%2&gt;." />
+        <string id="ROOT_LIST_AUTO_UPDATE_EXTRACT_ERROR" value="Failed extract of third-party root list from auto update cab at: &lt;%1&gt; with error: %2." />
+        <string id="ROOT_AUTO_DELETE_INFORMATIONAL" value="Successful auto delete of third-party root certificate:: Subject: &lt;%1&gt; Sha1 thumbprint: &lt;%2&gt;." />
+        <string id="ROOT_AUTO_PROPERTY_UPDATE_INFORMATIONAL" value="Successful auto property update of third-party root certificate:: Subject: &lt;%1&gt; Sha1 thumbprint: &lt;%2&gt;." />
+        <string id="ROOT_LIST_AUTO_UPDATE_ADD_ERROR" value="Failed to add certificate to Third-Party Root Certification Authorities store with error: %2" />
+        <string id="ROOT_LIST_AUTO_UPDATE_INFORMATIONAL" value="Successful auto update of third-party root list with effective date: %1." />
+        <string id="DISALLOWED_LIST_AUTO_UPDATE_INFORMATIONAL" value="Successful auto update of disallowed certificate list with effective date: %1." />
+        <string id="PIN_RULES_AUTO_UPDATE_INFORMATIONAL" value="Successful auto update of pin rules with effective date: %1." />
+        <string id="MISMATCH_PIN_RULES_ERROR" value="Server: %1 has unexpected certificates under trusted authority: &lt;%2&gt; with thumbprint: %3.%n%nMismatch of pin rules for domain: %4 with effective date: %5 and sequence number: %6.%n%nCertificates saved to: &lt;%7&gt;." />
+        <string id="ADD_HPKP_RULE_INFORMATIONAL" value="Added public key pinning rule for domain: %1 with header thumbprint: %2.%n%nHeader value: %3." />
+        <string id="MISMATCH_HPKP_ERROR" value="Server: %1 has unexpected certificates under trusted authority: &lt;%2&gt; with thumbprint: %3.%n%nMismatch of public key pinning rule for domain: %4 added on date: %5 with header thumbprint: %6.%n%nCertificates saved to: &lt;%7&gt;." />
+        <string id="MIXED_HPKP_WARNING" value="Server: %1 has unexpected certificates under trusted authority: &lt;%2&gt; with thumbprint: %3.%n%nMismatch of public key pinning rule for domain: %4 added on date: %5 with header thumbprint: %6.%n%nCertificates saved to: &lt;%7&gt;.%n%nHowever, also matched domain: %8 added on date: %9 with header thumbprint: %10." />
+        <string id="CRYPTNET_CRL_PRE_FETCH_UPDATE_INFORMATIONAL" value="Successful pre-fetch of certificate revocation list from: &lt;%1&gt;." />
+        <string id="CRYPTNET_CRL_PRE_FETCH_ERROR" value="Failed pre-fetch of certificate revocation list from: &lt;%1&gt; with error: %2." />
+        <string id="CERTIFICATE_PUBLIC_KEY_PARAMETER_POISONING" value="Certificate signature verify failed. Detected public key parameter poisoning. %n%nAdditional Information: %1." />
+        <string id="LDAP_URL_HAS_CONTROL_CHARACTERS" value="LDAP CryptRetrieveObjectByUrlW failed. Detected URL with control characters. %n%nAdditional Information: %1. %n%nError Code: %2." />
+        <string id="PFX_MAX_AUTHSAFES_EXCEEDED_ERROR" value="PFX operation failed as AuthSafes count doesn't lie in expected range. Maximum permissible value: %1. Erroneous value: %2." />
+        <string id="PFX_MAX_ITERATION_COUNT_EXCEEDED_ERROR" value="PFX operation failed as Iteration count doesn't lie in expected range. Maximum permissible value: %1. Erroneous value: %2." />
+        <string id="PFX_MAX_SAFEBAGS_COUNT_EXCEEDED_ERROR" value="PFX operation failed as SafeBags count doesn't lie in expected range. Maximum permissible value: %1. Erroneous value: %2." />
+        <string id="CATDB_INIT_ERROR" value="The Cryptographic Services service failed to initialize the Catalog Database. The error was: %1 : %2." />
+        <string id="CATDB_JET_INIT_ERROR" value="The Cryptographic Services service failed to initialize the Catalog Database. The ESENT error was: %1." />
+        <string id="SYSTEMWRITER_INIT_FAILURE" value="The Cryptographic Services service failed to initialize the VSS backup &quot;System Writer&quot; object.%1." />
+        <string id="SYSTEMWRITER_ONIDENTITY_FAILURE" value="Cryptographic Services failed while processing the OnIdentity() call in the System Writer Object.%1." />
+        <string id="PathValidation.KeywordMessage" value="Path Validation" />
+        <string id="PathDiscovery.KeywordMessage" value="Path Discovery" />
+        <string id="Revocation.KeywordMessage" value="Revocation" />
+        <string id="Cache.KeywordMessage" value="Cache" />
+        <string id="Retrieval.KeywordMessage" value="Retrieval" />
+        <string id="AutoRootUpdate.KeywordMessage" value="Automatic Root Update" />
+        <string id="WinVerifyTrust.KeywordMessage" value="Trust Verification" />
+        <string id="PrivateKey.KeywordMessage" value="Private Key" />
+        <string id="CertificateStore.KeywordMessage" value="Certificate Store" />
+        <string id="CertificateDetails.KeywordMessage" value="Certificate Details" />
+        <string id="Catalog.KeywordMessage" value="Catalog" />
+        <string id="CertGetCertificateChain.TaskMessage" value="Build Chain" />
+        <string id="CertAIAUrlRetrievalCache.TaskMessage" value="Retrieve Issuer Certificate from Cache" />
+        <string id="CertAIAUrlRetrievalWire.TaskMessage" value="Retrieve Issuer Certificate from Network" />
+        <string id="CertRejectAIAUrlRetrieval.TaskMessage" value="Inhibit Issuer Certificate Retrieval" />
+        <string id="CertAutoRootUrlRetrievalCache.TaskMessage" value="Retrieve Third-Party Root Certificate from Cache" />
+        <string id="CertAutoRootUrlRetrievalWire.TaskMessage" value="Retrieve Third-Party Root Certificate from Network" />
+        <string id="CertCrossCertUrlRetrievalCache.TaskMessage" value="Retrieve Cross Certificate from Cache" />
+        <string id="CertCrossCertUrlRetrievalWire.TaskMessage" value="Retrieve Cross Certificate from Network" />
+        <string id="CertVerifyCertificateChainPolicy.TaskMessage" value="Verify Chain Policy" />
+        <string id="CertVerifyRevocation.TaskMessage" value="Verify Revocation" />
+        <string id="CertRejectedRevocationInfo.TaskMessage" value="Reject Revocation Information" />
+        <string id="CryptRetrieveObjectByUrlCache.TaskMessage" value="Retrieve Object from Cache" />
+        <string id="CryptRetrieveObjectByUrlWire.TaskMessage" value="Retrieve Object from Network" />
+        <string id="CertOpenStore.TaskMessage" value="Open Store" />
+        <string id="CryptAcquireCertificatePrivateKey.TaskMessage" value="Acquire Certificate Private Key" />
+        <string id="CryptSignCertificate.TaskMessage" value="Sign Certificate" />
+        <string id="WinVerifyTrust.TaskMessage" value="Verify Trust" />
+        <string id="CryptCATAdminEnumCatalogFromHash.TaskMessage" value="Find Security Catalog for File" />
+        <string id="X509Objects.TaskMessage" value="X509 Objects" />
+        <string id="CatDBAddCatalog.TaskMessage" value="Add a Security Catalog to the Catalog Database" />
+        <string id="CatDBRemoveCatalog.TaskMessage" value="Remove a Security Catalog from the Catalog Database" />
+        <string id="CatDBSyncCatalog.TaskMessage" value="Sync a Security Catalog with the Catalog Database" />
+        <string id="CatDBRebuildDatabase.TaskMessage" value="Rebuild a subsystem of the Catalog Database" />
+        <string id="CatDBEnumCatalogFromHash.TaskMessage" value="Search for Security Catalogs in the Catalog Database that contain the hash" />
+        <string id="DefaultCAPI2.EventMessage" value="For more details for this event, please refer to the &quot;Details&quot; section" />
+        <string id="CatDBAddCatalogStart.EventMessage" value="The catalog file %2 is being added to subsystem %1." />
+        <string id="CatDBAddCatalogStop.EventMessage" value="Addition of the catalog file completed. Status %1." />
+        <string id="CatDBRemoveCatalogStart.EventMessage" value="The catalog file %2 is being removed from the subsystem %1." />
+        <string id="CatDBRemoveCatalogStop.EventMessage" value="Removal of the catalog file completed. Status %1." />
+        <string id="CatDBSyncCatalogStart.EventMessage" value="The catalog file %2 is being synced to the subsystem %1." />
+        <string id="CatDBSyncCatalogStop.EventMessage" value="Sync of the catalog file completed. Status %1." />
+        <string id="CatDBRebuildDatabaseStart.EventMessage" value="The Catalog Database is being rebuilt for subsystem %1." />
+        <string id="CatDBRebuildDatabaseStop.EventMessage" value="Rebuild of the Catalog Database for the chosen subsystem has completed. Status %1." />
+        <string id="CatDBEnumCatalogFromHashStart.EventMessage" value="A hash of type %2, length %3 and value %4 is being searched for in subsystem %1." />
+        <string id="CatDBEnumCatalogFromHashStop.EventMessage" value="The hash search completed and was found in %2 catalogs. Status %1." />
+        <string id="CatDBSyncSubsystemStart.EventMessage" value="Sync of subsystem %1 has started." />
+        <string id="CatDBSyncSubsystemStop.EventMessage" value="Sync of the subsystem completed. Status %1." />
+        <string id="MSServicingProviderName" value="Microsoft-Windows-CAPI2" />
+        <string id="displayName" value="Crypt32 Instrumentation" />
+        <string id="description" value="Crypt32 Crimson Instrumentation" />
+        <string id="OperationalChannel.Name" value="Microsoft-Windows-CAPI2/Operational" />
+        <string id="CatDBDebugChannel.Name" value="Microsoft-Windows-CAPI2/Catalog Database Debug" />
+      </stringTable>
+    </resources>
+  </localization>
+</assembly>

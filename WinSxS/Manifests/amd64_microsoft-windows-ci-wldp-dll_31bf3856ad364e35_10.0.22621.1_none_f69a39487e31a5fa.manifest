@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-ci-wldp-dll" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <dependency discoverable="no" resourceType="resources">
+    <dependentAssembly>
+      <assemblyIdentity name="Microsoft-Windows-wldp.Resources" version="10.0.22621.1" processorArchitecture="amd64" language="*" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </dependentAssembly>
+  </dependency>
+  <file name="wldp.dll" destinationPath="$(runtime.system32)\" sourceName="wldp.dll" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>n0+fieEDWxHgKH16Mx1Ju04sONX+hNG1s2V0BJrVXIk=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <instrumentation xmlns:win="http://manifests.microsoft.com/win/2004/08/windows/events" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <events xmlns="http://schemas.microsoft.com/win/2004/08/events">
+      <provider guid="{f3f53c76-b06d-4f15-b412-61164a0d2b73}" message="$(string.MSServicingProviderName)" messageFileName="%SystemRoot%\system32\wldp.dll" name="Microsoft-Windows-VerifyHardwareSecurity" resourceFileName="%SystemRoot%\system32\wldp.dll" symbol="SBChecksProviderId">
+        <channels>
+          <channel chid="Operational" enabled="false" message="$(string.operationalChannelName)" name="Microsoft-Windows-VerifyHardwareSecurity/Operational" type="Operational" />
+          <channel chid="Admin" enabled="true" message="$(string.adminChannelName)" name="Microsoft-Windows-VerifyHardwareSecurity/Admin" type="Admin" />
+        </channels>
+      </provider>
+      <cmi />
+    </events>
+  </instrumentation>
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string id="MSServicingProviderName" value="Microsoft-Windows-VerifyHardwareSecurity" />
+        <string id="adminChannelName" value="Microsoft-Windows-VerifyHardwareSecurity/Admin" />
+        <string id="operationalChannelName" value="Microsoft-Windows-VerifyHardwareSecurity/Operational" />
+        <string id="reportCheck" value="Hardware Security Check: %1" />
+        <string id="checksMap.secureBootEnabled" value="Checking if secureboot is enabled" />
+        <string id="checksMap.certs" value="Checking if any known test certificates/keys are present in EFI db" />
+        <string id="checksMap.secureBootPolicy" value="Checking if secureboot policy is not production" />
+        <string id="securebootEnabledFailedCheck" value="SecureBoot is currently disabled. Please enable SecureBoot through the system firmware." />
+        <string id="securebootEnabledFailedToCheck" value="Failed to check if secureboot is enabled. Status: %1" />
+        <string id="certsFailedCheck" value="PreRelease/Test cert found in SecureBoot database. Please re-provision SecureBoot to not include %1 in variable %2 of EFI database. Certificate Thumbprint = %3" />
+        <string id="certsFailedToCheck" value="Failed to check for PreRelease/Test certificates found in SecureBoot DB. Status: %1" />
+        <string id="securebootPolicyFailedCheck" value="A non-production SecureBoot Policy was detected. Remove Debug/PreRelease policy through the system firmware." />
+        <string id="securebootPolicyFailedToCheck" value="Failed to check for non-production SecureBoot Policy. Status: %1" />
+        <string id="HostLockdownPolicyCheck" value="Host provider %1 is trying to load %2 to invoke its %3 API. %2 has an OriginalFilename or InternalName of %4." />
+        <string id="HostLockdownPolicyCheckFailed" value="Host provider %1 is trying to load %2 to invoke its %3 API. %2 has an OriginalFilename or InternalName of %4. NtQuerySecurityPolicy failed with error code %5." />
+        <string id="HostLockdownCheckBlocked" value="Host provider %1 is trying to load %2 to invoke its %3 API. %2 has an OriginalFilename or InternalName of %4. It is blocked by host lockdown security policy." />
+        <string id="HostLockdownCheckResource" value="Host provider %1 is trying to load %2 to invoke its %3 API. Failed to find the OriginalFilename or InternalName from resource with error code %4." />
+        <string id="HostLockdownCheckAllowed" value="Host provider %1 is trying to load %2 to invoke  its %3 API. %2 has an OriginalFilename or InternalName of %4. The invoking is allowed because UMCI or host lockdown policy is not enabled." />
+        <string id="HostLockdownCheckAuditAllowed" value="Host provider %1 is trying to load %2 to invoke its %3 API. %2 has an OriginalFilename or InternalName of %4. The invoking is allowed because of the audit mode of the host lockdown security policy." />
+      </stringTable>
+    </resources>
+  </localization>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" description="Default SDDL for Windows Resource Protected file" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+</assembly>

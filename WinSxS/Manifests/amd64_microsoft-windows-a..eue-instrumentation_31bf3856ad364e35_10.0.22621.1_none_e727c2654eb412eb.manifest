@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-ActionQueue-Instrumentation" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <registryKeys>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\WMI\AutoLogger\Microsoft-Windows-Setup\{0DD4D48E-2BBF-452f-A7EC-BA3DBA8407AE}">
+      <registryValue name="Enabled" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="EnableLevel" valueType="REG_DWORD" value="0x00000004" />
+    </registryKey>
+  </registryKeys>
+  <instrumentation xmlns:ms="http://manifests.microsoft.com/win/2004/08/windows/events" xmlns:win="http://manifests.microsoft.com/win/2004/08/windows/events" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <events xmlns="http://schemas.microsoft.com/win/2004/08/events">
+      <provider guid="{0DD4D48E-2BBF-452f-A7EC-BA3DBA8407AE}" message="$(string.ActionQueue.ProviderMessage)" messageFileName="%SystemRoot%\system32\actionqueue.dll" name="Microsoft-Windows-ActionQueue" resourceFileName="%SystemRoot%\system32\actionqueue.dll" symbol="Microsoft_Windows_ActionQueue">
+        <channels>
+          <channel chid="chaActionQueueAnalytic" name="Microsoft-Windows-ActionQueue/Analytic" type="Analytic" />
+          <importChannel chid="chaSetup" name="Setup" />
+        </channels>
+      </provider>
+      <cmi />
+    </events>
+  </instrumentation>
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string id="Performance.KeywordMessage" value="Performance" />
+        <string id="ActionQueue.ProviderMessage" value="Microsoft-Windows-ActionQueue" />
+        <string id="ProcessActionQueue.TaskMessage" value="Process Action Queue" />
+        <string id="ProcessActionQueue.StartMessage" value="Processing Action Queue &quot;%1&quot;." />
+        <string id="ProcessActionQueue.StopMessage" value="Finished processing Action Queue with status %1." />
+        <string id="ExecuteCommand.TaskMessage" value="Execute Command" />
+        <string id="ExecuteCommand.StartMessage" value="Executing &quot;%1&quot; with arguments &quot;%2&quot; for component &quot;%3&quot; in unattend pass &quot;%4&quot;." />
+        <string id="ExecuteCommand.StopMessage" value="Command completed with status %1." />
+      </stringTable>
+    </resources>
+  </localization>
+</assembly>

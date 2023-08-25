@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="NetFx-WCF-TcpActivation-Registration" version="3.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="NetTcpActivatorSddl" sddl="D:(A;;CCLCSWRPWPDTLOCRRC;;;SY)(A;;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;BA)(A;;CCLCSWLOCRRC;;;AU)(A;;LCRP;;;IU)(A;;LCRP;;;SU)" operationHint="replace" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+  <memberships>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories.Services" version="10.0.22621.1" publicKeyToken="31bf3856ad364e35" typeName="Service" />
+      <categoryInstance>
+        <serviceData name="NetTcpActivator" displayName="@%systemroot%\Microsoft.NET\Framework64\v3.0\Windows Communication Foundation\ServiceModelInstallRC.dll,-8199" errorControl="normal" start="disabled" type="win32ShareProcess" description="@%systemroot%\Microsoft.NET\Framework64\v3.0\Windows Communication Foundation\ServiceModelInstallRC.dll,-8198" dependOnService="was,NetTcpPortSharing" imagePath="%systemroot%\Microsoft.NET\Framework64\v3.0\Windows Communication Foundation\SMSvcHost.exe" objectName="NT AUTHORITY\LocalService" requiredPrivileges="SeCreateGlobalPrivilege" sidType="restricted">
+          <failureActions resetPeriod="900">
+            <actions>
+              <action delay="120000" type="restartService" />
+              <action delay="300000" type="restartService" />
+              <action delay="0" type="none" />
+            </actions>
+          </failureActions>
+          <securityDescriptor name="NetTcpActivatorSddl" />
+        </serviceData>
+      </categoryInstance>
+    </categoryMembership>
+  </memberships>
+  <firewallRule action="allow" active="true" binary="%systemroot%\Microsoft.NET\Framework64\v3.0\Windows Communication Foundation\SMSvcHost.exe" desc="@%systemroot%\system32\FirewallAPI.dll,-54004" dir="in" group="@%systemroot%\system32\FirewallAPI.dll,-54005" internalName="WCF-NetTcpActivator-In-TCP-64bit" lport="808" name="@%systemroot%\system32\FirewallAPI.dll,-54001" protocol="6" svc="NetTcpActivator" />
+  <serviceModelReg component="TcpActivation" frameworkVersion="3.0.4506" />
+</assembly>

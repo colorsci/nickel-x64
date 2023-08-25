@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-EFS-Service" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <dependency discoverable="no" resourceType="Resources">
+    <dependentAssembly dependencyType="prerequisite">
+      <assemblyIdentity name="Microsoft-Windows-EFS-Service.Resources" version="10.0.22621.1" processorArchitecture="amd64" language="*" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+    </dependentAssembly>
+  </dependency>
+  <file name="efssvc.dll" destinationPath="$(runtime.system32)\" sourceName="efssvc.dll" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>U/cFBJoxM51ZPrctUXt6mat+tRyG+r+1Ue5rW4LARDU=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <memberships>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories.Services" version="10.0.22621.1" publicKeyToken="31bf3856ad364e35" typeName="Service" />
+      <categoryInstance>
+        <serviceData name="EFS" displayName="@%SystemRoot%\system32\efssvc.dll,-100" errorControl="normal" start="demand" type="win32ShareProcess" description="@%SystemRoot%\system32\efssvc.dll,-101" dependOnService="RPCSS" imagePath="%SystemRoot%\System32\lsass.exe" objectName="LocalSystem" requiredPrivileges="SeImpersonatePrivilege,SeTcbPrivilege,SeIncreaseQuotaPrivilege,SeAssignPrimaryTokenPrivilege,SeAuditPrivilege">
+          <securityDescriptor name="EfsSvcSddl" />
+          <serviceTrigger action="start" subtype="WNF_STATE_CHANGE" type="WnfStateEvent">
+            <triggerData type="binary" value="7508bca328089541" />
+          </serviceTrigger>
+          <serviceTrigger action="start" subtype="WNF_STATE_CHANGE" type="WnfStateEvent">
+            <triggerData type="binary" value="7588bca328009213" />
+          </serviceTrigger>
+          <serviceTrigger action="start" subtype="RPC_INTERFACE_EVENT" type="NetworkEndpointEvent">
+            <triggerData type="string" value="df1941c5-fe89-4e79-bf10-463657acf44d" />
+          </serviceTrigger>
+          <serviceTrigger action="start" subtype="RPC_INTERFACE_EVENT" type="NetworkEndpointEvent">
+            <triggerData type="string" value="04EEB297-CBF4-466b-8A2A-BFD6A2F10BBA" />
+          </serviceTrigger>
+        </serviceData>
+      </categoryInstance>
+    </categoryMembership>
+  </memberships>
+  <registryKeys>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\System\CurrentControlSet\Services\EFS\Parameters">
+      <registryValue name="ServiceDll" valueType="REG_EXPAND_SZ" value="%SystemRoot%\system32\efssvc.dll" />
+      <registryValue name="EdpCredLibProxy" valueType="REG_SZ" value="feclient.dll" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\EFS\EdpCredentials" />
+    <registryKey keyName="HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\Cryptography\Providers\Windows Client Key Protection Provider">
+      <registryValue name="SessionLockProtectorProxy" valueType="REG_SZ" value="feclient.dll" />
+    </registryKey>
+  </registryKeys>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_REGKEY_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;CI;GA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;CI;GR;;;SY)(A;CI;GR;;;BA)(A;CI;GR;;;BU)(A;CI;GR;;;S-1-15-2-1)(A;CI;GR;;;S-1-15-3-1024-1065365936-1281604716-3511738428-1654721687-432734479-3232135806-4053264122-3456934681)" operationHint="replace" />
+          <securityDescriptorDefinition name="EfsSvcSddl" sddl="D:(A;;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;SY)(A;;CCDCLCSWWPLOCRRCRP;;;BA)(A;;CCLCSWLOCRRCRP;;;IU)(A;;CCLCSWLOCRRCRP;;;SU)(A;;LCRP;;;AU)(A;;LCRP;;;S-1-15-2-1)S:(AU;SAFA;DCSDWDWO;;;WD)" operationHint="replace" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string id="EfsProviderName" value="Microsoft-Windows-EFS-Service" />
+      </stringTable>
+    </resources>
+  </localization>
+</assembly>

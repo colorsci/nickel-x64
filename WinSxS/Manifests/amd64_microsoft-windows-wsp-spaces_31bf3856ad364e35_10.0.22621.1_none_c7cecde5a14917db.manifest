@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-WSP-Spaces" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <dependency discoverable="no" resourceType="Resources">
+    <dependentAssembly>
+      <assemblyIdentity name="Microsoft-Windows-WSP-Spaces.Resources" version="10.0.22621.1" processorArchitecture="amd64" language="*" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </dependentAssembly>
+  </dependency>
+  <file name="mispace.dll" destinationPath="$(runtime.system32)\" sourceName="mispace.dll" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>JeJ5zGgbGp3f6fZtTb1wYOfTVrX+NMeTPS9Nqn9nSFQ=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <file name="smphost.dll" destinationPath="$(runtime.system32)\" sourceName="smphost.dll" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>iznhiEYfHDlKrBgxUoZXW9MDqrE5tp+WWU3AADj6xuM=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <file name="mispace.mof" destinationPath="$(runtime.wbem)\" sourceName="mispace.mof" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>NakQad9tDoGMEuXGyqsGPBbeUJzvdvWNEoXx2YfZTzk=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <file name="mispace_uninstall.mof" destinationPath="$(runtime.wbem)\" sourceName="mispace_uninstall.mof" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>2yvRw2CKpkR/zNqp9tJ15tdrrs5gJMu36cFPcqG7OeQ=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <mof name="$(runtime.wbem)\mispace.mof" uninstallmof="$(runtime.wbem)\mispace_uninstall.mof" />
+  <memberships>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories.Services" version="10.0.22621.1" publicKeyToken="31bf3856ad364e35" typeName="Service" />
+      <categoryInstance subcategory="smphost">
+        <serviceData name="smphost" displayName="@%SystemRoot%\System32\smphost.dll,-102" errorControl="normal" start="demand" type="win32OwnProcess" description="@%SystemRoot%\System32\smphost.dll,-101" dependOnService="RPCSS" imagePath="%SystemRoot%\System32\svchost.exe -k smphost" objectName="NT AUTHORITY\NetworkService" sidType="unrestricted">
+          <securityDescriptor name="ALLOW_AU_START_SERVICE_SDDL" />
+        </serviceData>
+      </categoryInstance>
+    </categoryMembership>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories" version="1.0.0.0" publicKeyToken="365143bb27e7ac8b" typeName="SvcHost" />
+      <categoryInstance subcategory="smphost">
+        <serviceGroup position="last" serviceName="smphost" />
+      </categoryInstance>
+    </categoryMembership>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories" version="1.0.0.0" publicKeyToken="365143bb27e7ac8b" typeName="SingleInstanceFiles" />
+    </categoryMembership>
+  </memberships>
+  <registryKeys>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\smphost\Parameters">
+      <registryValue name="ServiceDll" valueType="REG_EXPAND_SZ" value="%Systemroot%\System32\smphost.dll" />
+      <registryValue name="ServiceDllUnloadOnStop" valueType="REG_DWORD" value="0x00000001" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\StorageManagement\SpacesSMP\ConnectedSubsystems\{00000000-0000-0000-0000-000000000000}">
+      <registryValue name="CacheEnabled" valueType="REG_DWORD" value="0x00000000" />
+      <securityDescriptor name="ALLOW_3RD_PARTY_WRITE" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\StorageManagement\SpacesSMP\LocalSubsystem">
+      <securityDescriptor name="ALLOW_3RD_PARTY_WRITE" />
+    </registryKey>
+  </registryKeys>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="WRP_REGKEY_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;CI;GA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;CI;GR;;;SY)(A;CI;GR;;;BA)(A;CI;GR;;;BU)(A;CI;GR;;;S-1-15-2-1)(A;CI;GR;;;S-1-15-3-1024-1065365936-1281604716-3511738428-1654721687-432734479-3232135806-4053264122-3456934681)" operationHint="replace" />
+          <securityDescriptorDefinition name="ALLOW_3RD_PARTY_WRITE" sddl="O:BAG:SYD:P(A;CI;GR;;;BU)(A;CI;GA;;;BA)(A;CI;GA;;;SY)(A;CI;GA;;;CO)" operationHint="replace" />
+          <securityDescriptorDefinition name="ALLOW_AU_START_SERVICE_SDDL" sddl="D:(A;;CCLCSWRPWPDTLOCRRC;;;SY)(A;;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;BA)(A;;CCLCRP;;;AU)(A;;CCLCSWLOCRRC;;;IU)(A;;CCLCSWLOCRRC;;;SU)(A;;CCLCSWLOCRRC;;;S-1-5-32-582)S:(AU;FA;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;WD)" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" description="Default SDDL for Windows Resource Protected file" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+  <instrumentation xmlns:win="http://manifests.microsoft.com/win/2004/08/windows/events" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <counters xmlns="http://schemas.microsoft.com/win/2005/12/counters" schemaVersion="2.0">
+      <provider applicationIdentity="%SystemRoot%\system32\mispace.dll" providerGuid="{cb44ecb6-d88a-4b33-a39c-d6a9c03142a9}" providerType="userMode" symbol="WspSpacesProvider">
+        <counterSet description="The Storage Management WSP Spaces Runtime performance object consists of counters that show information about Storage Management WSP Spaces provider runtimes." descriptionID="200" guid="{4e590c2e-2ad3-4138-8f61-4b08771dbbc8}" instances="multiple" name="Storage Management WSP Spaces Runtime" nameID="100" symbol="RuntimeCounterSet" uri="Microsoft.Windows.StorageManagement.WSP.Spaces.Runtime">
+          <counter defaultScale="1" description="The number of control dispatches elapsing between 0ms to 4ms." descriptionID="2000" detailLevel="advanced" id="0" name="Runtime Count 4ms" nameID="1000" type="perf_counter_rawcount" uri="Microsoft.Windows.StorageManagement.WSP.Spaces.RuntimeCount4ms" />
+          <counter defaultScale="1" description="The number of control dispatches elapsing between 4ms to 16ms." descriptionID="2010" detailLevel="advanced" id="1" name="Runtime Count 16ms" nameID="1010" type="perf_counter_rawcount" uri="Microsoft.Windows.StorageManagement.WSP.Spaces.RuntimeCount16ms" />
+          <counter defaultScale="1" description="The number of control dispatches elapsing between 16ms to 64ms." descriptionID="2020" detailLevel="advanced" id="2" name="Runtime Count 64ms" nameID="1020" type="perf_counter_rawcount" uri="Microsoft.Windows.StorageManagement.WSP.Spaces.RuntimeCount64ms" />
+          <counter defaultScale="1" description="The number of control dispatches elapsing between 64ms to 256ms." descriptionID="2030" detailLevel="advanced" id="3" name="Runtime Count 256ms" nameID="1030" type="perf_counter_rawcount" uri="Microsoft.Windows.StorageManagement.WSP.Spaces.RuntimeCount256ms" />
+          <counter defaultScale="1" description="The number of control dispatches elapsing between 256ms to 1s." descriptionID="2040" detailLevel="advanced" id="4" name="Runtime Count 1s" nameID="1040" type="perf_counter_rawcount" uri="Microsoft.Windows.StorageManagement.WSP.Spaces.RuntimeCount1s" />
+          <counter defaultScale="1" description="The number of control dispatches elapsing between 1s to 4s." descriptionID="2050" detailLevel="advanced" id="5" name="Runtime Count 4s" nameID="1050" type="perf_counter_rawcount" uri="Microsoft.Windows.StorageManagement.WSP.Spaces.RuntimeCount4s" />
+          <counter defaultScale="1" description="The number of control dispatches elapsing between 4s to 16s." descriptionID="2060" detailLevel="advanced" id="6" name="Runtime Count 16s" nameID="1060" type="perf_counter_rawcount" uri="Microsoft.Windows.StorageManagement.WSP.Spaces.RuntimeCount16s" />
+          <counter defaultScale="1" description="The number of control dispatches elapsing between 16s to 1min." descriptionID="2070" detailLevel="advanced" id="7" name="Runtime Count 1min" nameID="1070" type="perf_counter_rawcount" uri="Microsoft.Windows.StorageManagement.WSP.Spaces.RuntimeCount1min" />
+          <counter defaultScale="1" description="The number of control dispatches elapsing more than 1min." descriptionID="2080" detailLevel="advanced" id="8" name="Runtime Count Infinite" nameID="1080" type="perf_counter_rawcount" uri="Microsoft.Windows.StorageManagement.WSP.Spaces.RuntimeCountInfinite" />
+        </counterSet>
+      </provider>
+    </counters>
+    <events xmlns="http://schemas.microsoft.com/win/2004/08/events">
+      <provider guid="{88C09888-118D-48FC-8863-E1C6D39CA4DF}" message="$(string.Provider.Name)" messageFileName="mispace.dll" name="Microsoft-Windows-StorageManagement-WSP-Spaces" resourceFileName="mispace.dll" symbol="LOG_PROVIDER_GUID">
+        <channels>
+          <importChannel chid="OpChannel" name="Microsoft-Windows-StorageManagement/Operational" symbol="CHANNEL_BASE_OPERATIONAL" />
+        </channels>
+      </provider>
+      <provider guid="{595F33EA-D4AF-4F4D-B4DD-9DACDD17FC6E}" message="$(string.Provider.SMPHostName)" messageFileName="smphost.dll" name="Microsoft-Windows-StorageManagement-WSP-Host" resourceFileName="smphost.dll" symbol="LOG_SMPHOSTPROVIDER_GUID">
+        <channels>
+          <importChannel chid="OpChannel" name="Microsoft-Windows-StorageManagement/Operational" symbol="CHANNEL_BASE_OPERATIONAL" />
+          <importChannel chid="DbgChannel" name="Microsoft-Windows-StorageManagement/Debug" symbol="CHANNEL_BASE_DEBUG" />
+        </channels>
+      </provider>
+      <provider guid="{93db76c2-63ab-5de1-88b3-c068686675b8}" messageFileName="mispace.dll" name="Microsoft-Windows-StorageManagement-PartUtil" resourceFileName="mispace.dll" symbol="PartUtilProvider">
+        <channels>
+          <channel chid="Operational" enabled="true" isolation="System" name="Microsoft-Windows-StorageManagement-PartUtil/Operational" type="Operational" />
+        </channels>
+      </provider>
+      <cmi />
+    </events>
+  </instrumentation>
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string id="Provider.Name" value="Microsoft-Windows-StorageManagement-WSP-Spaces" />
+        <string id="REMOTE_LAUNCH_FAILED" value="The Windows Storage Provider could not start the remote storage subsystem.             %nStorage Subsystem ID: %1             %nStorage Subsystem URI: %2             %nUsername: %3             %nError Code: %4             %nError String: %5             %n%nEnsure that the remote storage subsystem is online and connected to the network.             %nCheck if the user attempting to connect to the subsystem has the necessary permissions." />
+        <string id="CLUSTER_DISCONNECTED" value="The Windows Storage Provider has lost its connection to the cluster.             %nError Code: %1" />
+        <string id="CLUSTER_CONNECTED" value="The Windows Storage Provider has established a connection to the cluster." />
+        <string id="Provider.SMPHostName" value="Microsoft-Windows-StorageManagement-WSP-Host" />
+        <string id="LoadPhases.LoadDll" value="Loading DLL" />
+        <string id="LoadPhases.Find_SetShutdownCallback" value="Find SetShutdownCallback" />
+        <string id="LoadPhases.Find_SmpUnload" value="Find SmpUnload" />
+        <string id="LoadPhases.Find_PreShutdown" value="Find PreShutdown" />
+        <string id="LoadPhases.Find_MI_Main" value="Find MI_Main" />
+        <string id="LoadPhases.NewHostedProvider" value="Launch Hosted Provider" />
+        <string id="PROVIDER_LOAD_FAILED" value="A Windows Storage Provider failed to load.             %nProvider: %1             %nProvider DLL: %2             %nError Code: %3             %nLoad Phase: %4             %n%nThis failure is indicative of a bad installation, or a missing or corrupt DLL." />
+        <string id="PROVIDER_LOAD_SUCCEEDED" value="A Windows Storage Provider was loaded successfully.             %nProvider: %1             %nProvider DLL: %2" />
+        <string id="SMPHOST_SHUTDOWN_INITIATED" value="Shutdown has been initiated for the Windows Storage Provider host service." />
+        <string id="SMPHOST_SHUTDOWN_COMPLETED" value="Shutdown for the Windows Storage Provider host service has been completed." />
+        <string id="MISPACE_METHOD_EXIT_ERROR" value="An error occurred during method execution.             %nClass: %1             %nMethod: %2             %nObjectId: %3             %nError Code: %4" />
+        <string id="MISPACE_SOFT_ERROR" value="An error was posted by the Windows Storage Provider during the course of an operation.             %nMessage: %1" />
+        <string id="MISPACE_JOB_EXCEPTION" value="An error occurred during storage job execution.             %nJob Name: %1             %nError Code: %2" />
+        <string id="MISPACE_GET_INSTANCE_EXIT_ERROR" value="An error occurred during a get instance operation.             %nClass: %1             %nObjectId: %2             %nError Code: %3" />
+        <string id="MISPACE_ENUMERATE_EXIT_ERROR" value="An error occurred during object enumeration.             %nClass: %1             %nError Code: %2" />
+        <string id="MISPACE_METHOD_EXIT_ERROR_MIRESULT" value="An error occurred during method execution.             %nClass: %1             %nMethod: %2             %nObjectId: %3             %nMI_Result: %4" />
+        <string id="DIAGNOSTIC_ERROR" value="An error occurred while trying to perform a diagnostic operation.             %nComputer name: %1             %nError Code: %2             %nSecondary Error: %3" />
+        <string id="MISPACE_LOADED" value="The Windows Storage Spaces and Disk provider was loaded.             %nLoad time (milliseconds): %1             %nMiresult: %2" />
+        <string id="CLUSTER_STATE_INITIALIZATION_SUCCEEDED" value="Cluster state initialization succeeded.             %nCluster name: %1" />
+        <string id="ClusterStateInitializationPhases.OpenCluster" value="Open connection to cluster" />
+        <string id="ClusterStateInitializationPhases.GetClusterFQDN" value="Get cluster FQDN" />
+        <string id="ClusterStateInitializationPhases.GetComputerName" value="Get computer name" />
+        <string id="ClusterStateInitializationPhases.OpenClusterNode" value="Open handle to local cluster node" />
+        <string id="ClusterStateInitializationPhases.GetClusterNodeId" value="Get local cluster node ID" />
+        <string id="ClusterStateInitializationPhases.Read_AutoClusteringEnabled" value="Read cluster registry key SpacesSubSystemAutomaticClusteringEnabled" />
+        <string id="ClusterStateInitializationPhases.Read_VDRepairQueueDepth" value="Read cluster registry key RepairQueueDepth" />
+        <string id="ClusterStateInitializationPhases.Read_FDAwarenessDefault" value="Read cluster registry key FDAwarenessDefault" />
+        <string id="ClusterStateInitializationPhases.Read_S2DEnabled" value="Read cluster registry key S2DEnabled" />
+        <string id="ClusterStateInitializationPhases.LoadMessagePipe" value="Load cluster message pipe" />
+        <string id="ClusterStateInitializationPhases.LoadClusterApi" value="Load cluster APIs" />
+        <string id="ClusterStateInitializationPhases.EnumerateClusterNodes" value="Enumerate cluster nodes" />
+        <string id="CLUSTER_STATE_INITIALIZATION_FAILED" value="Cluster state initialization failed.             %nCluster Name: %1             %nInitialization Phase: %2             %nHRESULT: %3" />
+        <string id="ClusterNodeStates.Unknown" value="Unknown" />
+        <string id="ClusterNodeStates.Up" value="Up" />
+        <string id="ClusterNodeStates.Down" value="Down" />
+        <string id="ClusterNodeStates.Joining" value="Joining" />
+        <string id="ClusterNodeStates.Paused" value="Paused" />
+        <string id="CLUSTER_NODE_ARRIVED" value="Cluster node arrived.             %nNode: %1             %nNode State: %2" />
+        <string id="CLUSTER_NODE_DELETED" value="Cluster node %1 was deleted." />
+        <string id="CLUSTER_NODE_ONLINE" value="Cluster node %1 came online." />
+        <string id="CLUSTER_NODE_OFFLINE" value="Cluster node %1 went offline." />
+        <string id="DELAYED_TARGET_CONTROL_CODE_RESPONSE" value="It took longer than usual for this target node to respond to the following control code.             %nControl Code: %1 (%2)             %nResponse time (milliseconds): %3" />
+        <string id="DELAYED_INITIATOR_CONTROL_CODE_COMPLETION" value="It took longer than usual for this initiator node to complete the following control code.             %nControl Code: %1 (%2)             %nComplete time (milliseconds): %3" />
+        <string id="CLUSTER_PARTIAL_BROADCAST_RESPONSE" value="One or more nodes did not respond to the cluster broadcast.             %nControl Code: %1 (%2)             %nNodes: %3             %nUnresponsive Nodes: %4" />
+        <string id="UNMAPPED_ERROR" value="An unmapped error was encountered.             %nFunction: %1             %nHResult: %2             %nMI_Result: %3" />
+        <string id="TARGET_CONTROL_CODE_HANG" value="It is taking longer than usual for this target node to respond to the following control code.             %nControl Code: %1 (%2)" />
+        <string id="INITIATOR_CONTROL_CODE_HANG" value="It is taking longer than usual for this initiator node to complete the following control code.             %nControl Code: %1 (%2)" />
+        <string id="PROVIDER_INITIALIZATION_SUCCEEDED" value="Successfully initialized the Storage Management Provider.             %nFunction: %1             %nDuration (milliseconds): %2" />
+        <string id="PROVIDER_INITIALIZATION_FAILED" value="Failed to initialize the Storage Management Provider.             %nFunction: %1             %nCallee: %2             %nMI_Result: %3" />
+        <string id="PROVIDER_CLEANUP_SUCCEEDED" value="Successfully cleaned up the Storage Management Provider.             %nFunction: %1             %nDuration (milliseconds): %2" />
+        <string id="PROVIDER_CLEANUP_FAILED" value="Failed to clean up the Storage Management Provider.             %nFunction: %1             %nCallee: %2             %nMI_Result: %3" />
+        <string id="SPACES_API_EX_INITIALIZATION_SUCCEEDED" value="Successfully initialized Extended Storage Spaces API.             %nFunction: %1             %nDuration (milliseconds): %2" />
+        <string id="SPACES_API_EX_INITIALIZATION_FAILED" value="Failed to initialize Extended Storage Spaces API.             %nFunction: %1             %nCallee: %2             %nError: %3" />
+        <string id="SPACES_API_EX_CLEANUP_SUCCEEDED" value="Successfully cleaned up Extended Storage Spaces API.             %nFunction: %1             %nDuration (milliseconds): %2" />
+        <string id="SPACES_API_EX_CLEANUP_FAILED" value="Failed to clean up Extended Storage Spaces API.             %nFunction: %1             %nCallee: %2             %nError: %3" />
+        <string id="Map.Mbr" value="MBR" />
+        <string id="Map.Gpt" value="GPT" />
+        <string id="Map.Raw" value="RAW" />
+        <string id="GetDiskPropertiesFailed.EventMessage" value="Failed to get disk properties.             %nFunction: %1             %nDisk Number: %2             %nCallee: %3             %nHResult: %4" />
+        <string id="OnlineDiskSucceeded.EventMessage" value="The disk was onlined successfully.             %nFunction: %1             %nDisk Path: %2             %nDuration: %3 us" />
+        <string id="OnlineDiskFailed.EventMessage" value="Failed to online the disk.             %nFunction: %1             %nDisk Path: %2             %nCallee: %3             %nHResult: %4" />
+        <string id="OfflineDiskSucceeded.EventMessage" value="The disk was offlined successfully.             %nFunction: %1             %nDisk Path: %2             %nDuration: %3 us" />
+        <string id="OfflineDiskFailed.EventMessage" value="Failed to offline the disk.             %nFunction: %1             %nDisk Path: %2             %nCallee: %3             %nHResult: %4" />
+        <string id="SetDiskReadOnlySucceeded.EventMessage" value="The disk was set to read-only successfully.             %nFunction: %1             %nDisk Path: %2             %nDuration: %3 us" />
+        <string id="SetDiskReadOnlyFailed.EventMessage" value="Failed to set the disk read-only.             %nFunction: %1             %nDisk Path: %2             %nCallee: %3             %nHResult: %4" />
+        <string id="SetDiskReadWriteSucceeded.EventMessage" value="The disk was set to read-write successfully.             %nFunction: %1             %nDisk Path: %2             %nDuration: %3 us" />
+        <string id="SetDiskReadWriteFailed.EventMessage" value="Failed to set the disk read-write.             %nFunction: %1             %nDisk Path: %2             %nCallee: %3             %nHResult: %4" />
+        <string id="InitializeDiskSucceeded.EventMessage" value="The disk was initialized successfully.             %nFunction: %1             %nDisk Number: %2             %nPartition Style: %3             %nDuration: %4 us" />
+        <string id="InitializeDiskFailed.EventMessage" value="Failed to initialize the disk.             %nFunction: %1             %nDisk Number: %2             %nPartition Style: %3             %nCallee: %4             %nHResult: %5" />
+        <string id="CleanDiskSucceeded.EventMessage" value="The disk was cleaned successfully.             %nFunction: %1             %nDisk Number: %2             %nDuration: %3 us" />
+        <string id="CleanDiskFailed.EventMessage" value="Failed to clean the disk.             %nFunction: %1             %nDisk Number: %2             %nCallee: %3             %nHResult: %4" />
+        <string id="GetPartitionPropertiesFailed.EventMessage" value="Failed to get partition properties.             %nFunction: %1             %nDisk Number: %2             %nPartition Number: %3             %nCallee: %4             %nHResult: %5" />
+        <string id="CreatePartitionSucceeded.EventMessage" value="The partition was created successfully.             %nFunction: %1             %nDisk Number: %2             %nOffset: %3             %nSize : %4             %nAlignment: %5             %nPartition Style: %6             %nMbrPartitionType: %7             %nMbrBootIndicator: %8             %nGptPartitionType: %9             %nGptPartitionId: %10             %nGptAttributes: %11             %nGptName: %12             %nDuration: %13 us" />
+        <string id="CreatePartitionFailed.EventMessage" value="Failed to create the partition.             %nFunction: %1             %nDisk Number: %2             %nOffset: %3             %nSize : %4             %nAlignment: %5             %nPartition Style: %6             %nMbrPartitionType: %7             %nMbrBootIndicator: %8             %nGptPartitionType: %9             %nGptPartitionId: %10             %nGptAttributes: %11             %nGptName: %12             %nCallee: %13             %nHResult: %14" />
+        <string id="DeletePartitionSucceeded.EventMessage" value="The partition was deleted successfully.             %nFunction: %1             %nDisk Number: %2             %nPartition Number: %3             %nDuration: %4 us" />
+        <string id="DeletePartitionFailed.EventMessage" value="Failed to delete the partition.             %nFunction: %1             %nDisk Number: %2             %nPartition Number: %3             %nCallee: %4             %nHResult: %5" />
+        <string id="GetPartitionAccessPathsFailed.EventMessage" value="Failed to get partition access paths.                    %nFunction: %1                    %nDisk Number: %2                    %nPartition Number: %3                    %nCallee: %4                    %nHResult: %5" />
+      </stringTable>
+    </resources>
+  </localization>
+</assembly>

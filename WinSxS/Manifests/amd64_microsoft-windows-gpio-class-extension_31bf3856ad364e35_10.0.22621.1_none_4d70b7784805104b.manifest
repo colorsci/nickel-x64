@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-GPIO-Class-Extension" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <file name="msgpioclx.sys" destinationPath="$(runtime.drivers)\" sourceName="msgpioclx.sys" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>2LOyNHQjWTFQxyZgAPPqR2qDD51GoaKHrs9riHX0B4o=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <registryKeys>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Wdf\Kmdf\GPIOClx\Versions\1\1">
+      <registryValue name="Service" valueType="REG_SZ" value="GPIOClx0101" />
+    </registryKey>
+  </registryKeys>
+  <instrumentation xmlns:gpio="http://manifests.microsoft.com/windows/GPIO" xmlns:win="http://manifests.microsoft.com/win/2004/08/windows/events" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <events xmlns="http://schemas.microsoft.com/win/2004/08/events">
+      <provider guid="{55AB77F6-FA04-43EF-AF45-688FBF500482}" message="$(string.EventProvider.Name)" messageFileName="%SystemRoot%\system32\drivers\msgpioclx.sys" name="Microsoft-Windows-GPIO-ClassExtension" resourceFileName="%SystemRoot%\system32\drivers\msgpioclx.sys" symbol="GPIO_PROVIDER">
+        <channels>
+          <channel chid="GpioClxChannel" enabled="false" isolation="System" message="$(string.AnalyticChannel.Name)" name="Microsoft-Windows-GPIO-ClassExtension/Analytic" symbol="GPIOCLX_ANALYTIC_CHANNEL" type="Analytic" />
+          <importChannel chid="systemChannel" name="System" />
+        </channels>
+      </provider>
+      <cmi />
+    </events>
+  </instrumentation>
+  <memberships>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories.Services" version="10.0.22621.1" publicKeyToken="31bf3856ad364e35" typeName="Service" />
+      <categoryInstance subcategory="msgpioclx">
+        <serviceData name="GPIOClx0101" displayName="Microsoft GPIO Class Extension Driver" errorControl="critical" start="demand" type="kernelDriver" dependOnService="acpiex" group="System Bus Extender" imagePath="System32\Drivers\msgpioclx.sys" tag="7" />
+      </categoryInstance>
+    </categoryMembership>
+  </memberships>
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string id="EventProvider.Name" value="Microsoft-Windows-GPIO-ClassExtension" />
+        <string id="AnalyticChannel.Name" value="Analytic" />
+        <string id="Task.Interrupt" value="GPIO bank interrupt flow through MSGPIOCLX" />
+        <string id="displayName" value="Microsoft GPIO Class Extension Driver" />
+        <string id="description" value="Support files for GPIO Class Extension infrastructure" />
+      </stringTable>
+    </resources>
+  </localization>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" description="Default SDDL for Windows Resource Protected file" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+</assembly>

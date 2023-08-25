@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-PeerDistSvc-Client" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <memberships>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories" version="1.0.0.0" publicKeyToken="365143bb27e7ac8b" typeName="SvcHost" />
+      <categoryInstance subcategory="PeerDist">
+        <serviceGroup position="last" serviceName="PeerDistSvc" />
+      </categoryInstance>
+    </categoryMembership>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories.Services" version="10.0.22621.1" publicKeyToken="31bf3856ad364e35" typeName="Service" />
+      <categoryInstance subcategory="PeerDistSvc">
+        <serviceData name="PeerDistSvc" displayName="@%SystemRoot%\system32\peerdistsvc.dll,-9000" errorControl="normal" start="demand" type="win32ShareProcess" description="@%SystemRoot%\system32\peerdistsvc.dll,-9001" dependOnService="http" imagePath="%SystemRoot%\System32\svchost.exe -k PeerDist" objectName="NT AUTHORITY\NetworkService" requiredPrivileges="SeChangeNotifyPrivilege,SeCreateGlobalPrivilege,SeImpersonatePrivilege,SeAuditPrivilege" sidType="unrestricted">
+          <failureActions resetPeriod="86400">
+            <actions>
+              <action delay="300000" type="restartService" />
+              <action delay="300000" type="restartService" />
+              <action delay="0" type="none" />
+            </actions>
+          </failureActions>
+          <securityDescriptor name="PeerDist_service_SD" />
+        </serviceData>
+      </categoryInstance>
+    </categoryMembership>
+  </memberships>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="PeerDist_service_SD" sddl="O:SYG:SYD:(A;;GA;;;SY)(A;;GA;;;BA)(A;;CCLCSWLOCRRCRPWPDT;;;SO)(A;;GRRP;;;IU)(A;;GRRP;;;RD)(A;;GRRP;;;SU)(A;;GRRP;;;BU)(A;;LCRPLO;;;S-1-15-2-1)S:(AU;FA;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;WD)" operationHint="replace" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+</assembly>

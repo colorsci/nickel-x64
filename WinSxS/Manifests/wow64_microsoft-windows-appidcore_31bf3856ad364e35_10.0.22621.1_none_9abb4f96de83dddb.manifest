@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-AppIDCore" version="10.0.22621.1" processorArchitecture="wow64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <migration settingsVersion="1">
+    <machineSpecific>
+      <migXml xmlns="">
+        <environment>
+          <variable name="AppLockerDir">
+            <text>%windir%\system32\AppLocker</text>
+          </variable>
+          <variable name="CurCtrlSetReg">
+            <text>HKLM\System\CurrentControlSet</text>
+          </variable>
+        </environment>
+        <rules context="System">
+          <include>
+            <objectSet>
+              <pattern type="File">%AppLockerDir%\* [*]</pattern>
+              <pattern type="Registry">%CurCtrlSetReg%\Control\AppID\Configuration\* [*]</pattern>
+              <pattern type="Registry">%CurCtrlSetReg%\Control\AppID\ [DisableExeLinkedTokenLookup]</pattern>
+              <pattern type="Registry">%CurCtrlSetReg%\Services\appid\ [Start]</pattern>
+              <pattern type="Registry">%CurCtrlSetReg%\Services\applockerfltr\ [Start]</pattern>
+              <pattern type="Registry">%CurCtrlSetReg%\Services\appidsvc\ [Start]</pattern>
+            </objectSet>
+          </include>
+          <exclude>
+            <objectSet>
+              <pattern type="File">%AppLockerDir% [AppCache.dat]</pattern>
+            </objectSet>
+          </exclude>
+        </rules>
+      </migXml>
+    </machineSpecific>
+    <supportedComponents>
+      <supportedComponent>
+        <assemblyIdentity name="_" version="1.0.0.0" />
+        <supportedComponentIdentity language="neutral" name="Microsoft-Windows-AppIDCore" processorArchitecture="*" settingsVersionRange="1" xmlns="urn:schemas-microsoft-com:asm.v3" />
+      </supportedComponent>
+    </supportedComponents>
+  </migration>
+  <file name="srpapi.dll" destinationPath="$(runtime.system32)\" sourceName="srpapi.dll" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>nuAbfKXZjfr7RfHFQnhaSy0wP0Ggg7nPMFP8ORnKu8M=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <file name="AppLockerCSP.dll" destinationPath="$(runtime.system32)\" sourceName="AppLockerCSP.dll" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>X1hYYiUIdtG4TuzPyMbs/rxo2AuPu8erAs+q+kRPACA=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <file name="appidtel.exe" destinationPath="$(runtime.system32)\" sourceName="appidtel.exe" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>I3N4ytrACW+4c9UYzBtn0Co5UrAJI+bf8emviycA/lg=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <memberships>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories" version="1.0.0.0" publicKeyToken="365143bb27e7ac8b" typeName="BootRecovery" />
+    </categoryMembership>
+  </memberships>
+  <directories>
+    <directory destinationPath="$(runtime.system32)\AppLocker">
+      <securityDescriptor name="APPID_SERVICE_ALL_ACCESS_DIRECTORY" />
+    </directory>
+  </directories>
+  <taskScheduler>
+    <Task xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task">
+      <RegistrationInfo>
+        <Date>2015-02-09T10:54:13.9629482</Date>
+        <Author>$(@%SystemRoot%\system32\ApplockerCsp.dll,-100)</Author>
+        <Source>$(@%SystemRoot%\system32\ApplockerCsp.dll,-101)</Source>
+        <Description>$(@%SystemRoot%\system32\ApplockerCsp.dll,-102)</Description>
+        <URI>Microsoft\Windows\AppID\EDP Policy Manager</URI>
+        <SecurityDescriptor>D:P(A;;FA;;;BA)(A;;FA;;;SY)(A;;FA;;;S-1-5-87-2978287140-3787137133-1749738600-1988163579-2060695581)</SecurityDescriptor>
+      </RegistrationInfo>
+      <Triggers>
+        <WnfStateChangeTrigger>
+          <StateName>7588bca328009213</StateName>
+        </WnfStateChangeTrigger>
+        <WnfStateChangeTrigger>
+          <StateName>75e0bca328009213</StateName>
+        </WnfStateChangeTrigger>
+      </Triggers>
+      <Principals>
+        <Principal id="LocalService">
+          <UserId>S-1-5-19</UserId>
+        </Principal>
+      </Principals>
+      <Settings>
+        <MultipleInstancesPolicy>IgnoreNew</MultipleInstancesPolicy>
+        <DisallowStartIfOnBatteries>false</DisallowStartIfOnBatteries>
+        <StopIfGoingOnBatteries>false</StopIfGoingOnBatteries>
+        <AllowHardTerminate>false</AllowHardTerminate>
+        <StartWhenAvailable>false</StartWhenAvailable>
+        <RunOnlyIfNetworkAvailable>false</RunOnlyIfNetworkAvailable>
+        <IdleSettings>
+          <StopOnIdleEnd>true</StopOnIdleEnd>
+          <RestartOnIdle>false</RestartOnIdle>
+        </IdleSettings>
+        <AllowStartOnDemand>true</AllowStartOnDemand>
+        <Enabled>true</Enabled>
+        <Hidden>false</Hidden>
+        <RunOnlyIfIdle>false</RunOnlyIfIdle>
+        <DisallowStartOnRemoteAppSession>false</DisallowStartOnRemoteAppSession>
+        <UseUnifiedSchedulingEngine>true</UseUnifiedSchedulingEngine>
+        <WakeToRun>false</WakeToRun>
+        <ExecutionTimeLimit>PT0S</ExecutionTimeLimit>
+        <Priority>7</Priority>
+      </Settings>
+      <Actions Context="LocalService">
+        <ComHandler>
+          <ClassId>{deca92e0-af85-439e-9204-86679978da08}</ClassId>
+          <Data>EdpPolicyManager</Data>
+        </ComHandler>
+      </Actions>
+    </Task>
+  </taskScheduler>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="APPID_SERVICE_ALL_ACCESS_AND_BU_READ_ACCESS" sddl="O:BAG:SYD:P(A;CI;GR;;;BU)(A;CI;GA;;;BA)(A;CI;GA;;;SY)(A;CI;GA;;;LS)(A;CI;GA;;;S-1-5-80-2078495744-2416903469-4072184685-3943858305-976987417)(A;CI;GR;;;S-1-15-2-1)" operationHint="replace" />
+          <securityDescriptorDefinition name="APPID_SERVICE_BU_READ_ACCESS" sddl="O:BAG:SYD:P(A;CI;GR;;;BU)(A;CI;GA;;;BA)(A;CI;GA;;;SY)(A;CI;GRGX;;;LS)(A;CI;GRGX;;;S-1-5-80-2078495744-2416903469-4072184685-3943858305-976987417)(A;CI;GR;;;S-1-15-2-1)" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_REGKEY_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;CI;GA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;CI;GR;;;SY)(A;CI;GR;;;BA)(A;CI;GR;;;BU)(A;CI;GR;;;S-1-15-2-1)(A;CI;GR;;;S-1-15-3-1024-1065365936-1281604716-3511738428-1654721687-432734479-3232135806-4053264122-3456934681)" operationHint="replace" />
+          <securityDescriptorDefinition name="APPID_SERVICE_ALL_ACCESS_DIRECTORY" sddl="D:AI(A;CIOI;GA;;;LS)" operationHint="replace" />
+          <securityDescriptorDefinition name="APPID_SERVICE_ALL_ACCESS" sddl="O:BAG:SYD:P(A;CI;GA;;;BA)(A;CI;GA;;;SY)(A;CI;GA;;;LS)(A;CI;GA;;;S-1-5-80-2078495744-2416903469-4072184685-3943858305-976987417)" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" description="Default SDDL for Windows Resource Protected file" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+</assembly>

@@ -1,0 +1,781 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved." xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <assemblyIdentity name="Microsoft-Windows-Printing-Spooler-Core" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <dependency discoverable="no" resourceType="Resources">
+    <dependentAssembly dependencyType="prerequisite">
+      <assemblyIdentity name="Microsoft-Windows-Printing-Spooler-Core.Resources" version="10.0.22621.1" processorArchitecture="amd64" language="*" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </dependentAssembly>
+  </dependency>
+  <file name="spoolsv.exe" destinationPath="$(runtime.system32)\" sourceName="spoolsv.exe" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>IV2Bw1j9thAjuE9QtbhAP9WZS0lvwQ+vNzx1BtUHVR0=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <file name="splwow64.exe" destinationPath="$(runtime.windows)\" sourceName="splwow64.exe" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>EAxWOAPwnKmTf7FniPJ5q7bUYnAVgfeDGJewksjUYSs=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <directories>
+    <directory destinationPath="$(runtime.system32)\spool" />
+    <directory destinationPath="$(runtime.system32)\spool\drivers">
+      <securityDescriptor name="DriversDirectorySecurity" />
+    </directory>
+    <directory destinationPath="$(runtime.system32)\spool\drivers\x64" />
+    <directory destinationPath="$(runtime.system32)\spool\drivers\x64\3" />
+    <directory destinationPath="$(runtime.system32)\spool\PRINTERS">
+      <securityDescriptor name="SpoolDirectorySecurity" />
+    </directory>
+    <directory destinationPath="$(runtime.system32)\spool\SERVERS">
+      <securityDescriptor name="SpoolDirectorySecurity" />
+    </directory>
+    <directory destinationPath="$(runtime.system32)\spool\prtprocs" />
+  </directories>
+  <memberships>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories.Services" version="10.0.22621.1" publicKeyToken="31bf3856ad364e35" typeName="Service" />
+      <categoryInstance subcategory="Spooler">
+        <serviceData name="Spooler" displayName="@%systemroot%\system32\spoolsv.exe,-1" errorControl="normal" start="auto" type="win32OwnInteractiveProcess" description="@%systemroot%\system32\spoolsv.exe,-2" dependOnService="RPCSS,http" group="SpoolerGroup" imagePath="%SystemRoot%\System32\spoolsv.exe" objectName="LocalSystem" requiredPrivileges="SeTcbPrivilege,SeImpersonatePrivilege,SeAuditPrivilege,SeChangeNotifyPrivilege,SeAssignPrimaryTokenPrivilege,SeLoadDriverPrivilege" sidType="unrestricted" startAfterInstall="synchronous">
+          <failureActions resetPeriod="3600">
+            <actions>
+              <action delay="5000" type="restartService" />
+              <action delay="5000" type="restartService" />
+              <action delay="0" type="none" />
+            </actions>
+          </failureActions>
+          <securityDescriptor name="SpoolerSecurity" />
+        </serviceData>
+      </categoryInstance>
+    </categoryMembership>
+  </memberships>
+  <registryKeys>
+    <registryKey keyName="HKEY_CLASSES_ROOT\AppID\{f735e733-d681-4aef-83c1-7ec82cac5ecc}">
+      <registryValue name="AccessPermission" valueType="REG_BINARY" value="0100048084000000940000000000000014000000020070000400000000002800030000000106000000000005500000001290b215be67843709d3151d13d30a3dfbcf7104000014000700000001010000000000050a00000000001400030000000101000000000005120000000000180007000000010200000000000520000000200200000102000000000005200000002002000001020000000000052000000020020000" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\AppID\spoolsv.exe">
+      <registryValue name="AppID" valueType="REG_SZ" value="{f735e733-d681-4aef-83c1-7ec82cac5ecc}" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Print">
+      <registryValue name="MajorVersion" valueType="REG_DWORD" value="0x00000002" />
+      <registryValue name="MinorVersion" valueType="REG_DWORD" value="0x00000000" />
+      <registryValue name="PriorityClass" valueType="REG_DWORD" value="0x00000000" />
+      <registryValue name="ThrowDriverException" valueType="REG_DWORD" value="0x00000001" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Print\Environments\Windows 4.0">
+      <registryValue name="Directory" valueType="REG_SZ" value="WIN40" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Print\Environments\Windows 4.0\Drivers" />
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Print\Environments\Windows 4.0\Print Processors" />
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Print\Environments\Windows IA64">
+      <registryValue name="Directory" valueType="REG_SZ" value="IA64" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Print\Environments\Windows IA64\Drivers" />
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Print\Environments\Windows IA64\Drivers\Version-3">
+      <registryValue name="Directory" valueType="REG_SZ" value="3" />
+      <registryValue name="MajorVersion" valueType="REG_DWORD" value="0x00000003" />
+      <registryValue name="MinorVersion" valueType="REG_DWORD" value="0x00000000" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Print\Environments\Windows IA64\Print Processors" />
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Print\Environments\Windows NT x86">
+      <registryValue name="Directory" valueType="REG_SZ" value="W32X86" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Print\Environments\Windows NT x86\Drivers" />
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Print\Environments\Windows NT x86\Drivers\Version-3">
+      <registryValue name="Directory" valueType="REG_SZ" value="3" />
+      <registryValue name="MajorVersion" valueType="REG_DWORD" value="0x00000003" />
+      <registryValue name="MinorVersion" valueType="REG_DWORD" value="0x00000000" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Print\Environments\Windows NT x86\Print Processors" />
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Print\Environments\Windows x64">
+      <registryValue name="Directory" valueType="REG_SZ" value="x64" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Print\Environments\Windows x64\Drivers" />
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Print\Environments\Windows x64\Drivers\Version-4">
+      <registryValue name="Directory" valueType="REG_SZ" value="4" />
+      <registryValue name="MajorVersion" valueType="REG_DWORD" value="0x00000004" />
+      <registryValue name="MinorVersion" valueType="REG_DWORD" value="0x00000000" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Print\Environments\Windows x64\Drivers\Version-3">
+      <registryValue name="Directory" valueType="REG_SZ" value="3" />
+      <registryValue name="MajorVersion" valueType="REG_DWORD" value="0x00000003" />
+      <registryValue name="MinorVersion" valueType="REG_DWORD" value="0x00000000" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Print\Environments\Windows x64\Print Processors" />
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Print\Environments\Windows x64\Print Processors\winprint">
+      <registryValue name="Driver" valueType="REG_SZ" value="winprint.dll" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Print\Environments\Windows ARM64">
+      <registryValue name="Directory" valueType="REG_SZ" value="ARM64" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Print\Environments\Windows ARM64\Drivers" />
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Print\Environments\Windows ARM64\Drivers\Version-4">
+      <registryValue name="Directory" valueType="REG_SZ" value="4" />
+      <registryValue name="MajorVersion" valueType="REG_DWORD" value="0x00000004" />
+      <registryValue name="MinorVersion" valueType="REG_DWORD" value="0x00000000" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Print\Environments\Windows ARM64\Print Processors" />
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Print\Environments\Windows ARM64\Print Processors\winprint" />
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\IniFileMapping\win.ini">
+      <registryValue name="PrinterPorts" valueType="REG_SZ" value="USR:Software\Microsoft\Windows NT\CurrentVersion\PrinterPorts" />
+      <registryValue name="Devices" valueType="REG_SZ" value="USR:Software\Microsoft\Windows NT\CurrentVersion\Devices" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\IniFileMapping\win.ini\Windows">
+      <registryValue name="" valueType="REG_SZ" value="USR:Software\Microsoft\Windows NT\CurrentVersion\Windows" />
+      <registryValue name="Spooler" valueType="REG_SZ" value="#SYS:Microsoft\Windows NT\CurrentVersion\Windows" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\System\CurrentControlSet\Services\EventLog\System\Print">
+      <registryValue name="EventMessageFile" valueType="REG_EXPAND_SZ" value="%SystemRoot%\System32\ntprint.dll" />
+      <registryValue name="TypesSupported" valueType="REG_DWORD" value="0x00000007" />
+      <registryValue name="providerGuid" valueType="REG_SZ" value="{747EF6FD-E535-4d16-B510-42C90F6873A1}" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Print" />
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Print\V4 Connections" />
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Print\Printers" />
+    <registryKey keyName="HKEY_LOCAL_MACHINE\Software\Wow6432Node\Microsoft\Internet Explorer\Low Rights\ElevationPolicy\{a1ad1bbb-3b33-4260-a74c-5fd8bc1479fc}">
+      <registryValue name="Policy" valueType="REG_DWORD" value="0x00000003" />
+      <registryValue name="AppPath" valueType="REG_EXPAND_SZ" value="$(runtime.windows)" />
+      <registryValue name="AppName" valueType="REG_SZ" value="splwow64.exe" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\Software\Microsoft\Internet Explorer\Low Rights\ElevationPolicy\{a1ad1bbb-3b33-4260-a74c-5fd8bc1479fc}">
+      <registryValue name="Policy" valueType="REG_DWORD" value="0x00000003" />
+      <registryValue name="AppPath" valueType="REG_EXPAND_SZ" value="$(runtime.windows)" />
+      <registryValue name="AppName" valueType="REG_SZ" value="splwow64.exe" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{BA7C0D29-81CA-4901-B450-634E20BB8C34}">
+      <registryValue name="" valueType="REG_SZ" value="CPrintTicket WoW Services" />
+      <registryValue name="AppID" valueType="REG_SZ" value="{AA0B85DA-FDDF-4272-8D1D-FF9B966D75B0}" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{BA7C0D29-81CA-4901-B450-634E20BB8C34}\InprocServer32">
+      <registryValue name="" valueType="REG_EXPAND_SZ" value="%systemroot%\system32\prntvpt.dll" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{BA7C0D29-81CA-4901-B450-634E20BB8C34}\InprocServer32\ThreadingModel">
+      <registryValue name="" valueType="REG_SZ" value="Both" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\APPID\{AA0B85DA-FDDF-4272-8D1D-FF9B966D75B0}">
+      <registryValue name="DllSurrogate" valueType="REG_SZ" value="" />
+      <registryValue name="AccessPermission" valueType="REG_BINARY" value="010004807400000084000000000000001400000002006000040000000000180003000000010200000000000f0200000001000000000014000700000001010000000000050a00000000001400030000000101000000000005120000000000180007000000010200000000000520000000200200000102000000000005200000002002000001020000000000052000000020020000" />
+      <registryValue name="LaunchPermission" valueType="REG_BINARY" value="01000480740000008400000000000000140000000200600004000000000014001f000000010100000000000512000000000018001f00000001020000000000052000000020020000000018000b000000010200000000000f0200000001000000000014001f0000000101000000000005040000000102000000000005200000002002000001020000000000052000000020020000" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{B86F86AF-AA5D-47C2-AB44-17AB64F907B4}">
+      <registryValue name="" valueType="REG_SZ" value="CPrintTicket WoW Services App Container" />
+      <registryValue name="AppID" valueType="REG_SZ" value="{2A81FE91-95D7-487E-BBF8-B03308E54207}" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{B86F86AF-AA5D-47C2-AB44-17AB64F907B4}\InprocServer32">
+      <registryValue name="" valueType="REG_EXPAND_SZ" value="%systemroot%\system32\prntvpt.dll" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{B86F86AF-AA5D-47C2-AB44-17AB64F907B4}\InprocServer32\ThreadingModel">
+      <registryValue name="" valueType="REG_SZ" value="Both" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\APPID\{2A81FE91-95D7-487E-BBF8-B03308E54207}">
+      <registryValue name="DllSurrogate" valueType="REG_SZ" value="" />
+      <registryValue name="AppIDFlags" valueType="REG_DWORD" value="0x00000038" />
+      <registryValue name="RunAs" valueType="REG_SZ" value="Interactive User" />
+      <registryValue name="AccessPermission" valueType="REG_BINARY" value="01001480C8000000D8000000140000003000000002001C0001000000110014000400000001010000000000100010000002009800050000000000180003000000010200000000000F02000000010000000000380003000000010A00000000000F0300000000040000434917F17937759E2C1571BA3F86A0131DA96CE6CBFE8D738A557B1B664FCA40000014000700000001010000000000050A00000000001400030000000101000000000005120000000000180007000000010200000000000520000000200200000102000000000005200000002002000001020000000000052000000020020000" />
+      <registryValue name="LaunchPermission" valueType="REG_BINARY" value="01001480C8000000D8000000140000003000000002001C000100000011001400040000000101000000000010001000000200980005000000000018001F000000010200000000000F0200000001000000000038001F000000010A00000000000F0300000000040000434917F17937759E2C1571BA3F86A0131DA96CE6CBFE8D738A557B1B664FCA40000014001F000000010100000000000512000000000018001F00000001020000000000052000000020020000000014001F0000000101000000000005040000000102000000000005200000002002000001020000000000052000000020020000" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\WMI\AutoLogger\SpoolerLogger">
+      <registryValue name="Guid" valueType="REG_SZ" value="{3353BC7B-6901-4EA7-9CA2-2154FE8E3FAF}" />
+      <registryValue name="FileMax" valueType="REG_DWORD" value="0x00000004" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\WMI\AutoLogger\SpoolerLogger\{C9BF4A9E-D547-4d11-8242-E03A18B5BE01}">
+      <registryValue name="Enabled" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="EnableLevel" valueType="REG_DWORD" value="0x00000005" />
+      <registryValue name="EnableFlags" valueType="REG_DWORD" value="0x0000ffff" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\WMI\AutoLogger\SpoolerLogger\{C9BF4A9F-D547-4d11-8242-E03A18B5BE01}">
+      <registryValue name="Enabled" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="EnableLevel" valueType="REG_DWORD" value="0x00000005" />
+      <registryValue name="EnableFlags" valueType="REG_DWORD" value="0x0000ffff" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\WMI\AutoLogger\SpoolerLogger\{C9BF4A01-D547-4d11-8242-E03A18B5BE01}">
+      <registryValue name="Enabled" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="EnableLevel" valueType="REG_DWORD" value="0x00000005" />
+      <registryValue name="EnableFlags" valueType="REG_DWORD" value="0x0000ffff" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\WMI\AutoLogger\SpoolerLogger\{C9BF4A02-D547-4d11-8242-E03A18B5BE01}">
+      <registryValue name="Enabled" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="EnableLevel" valueType="REG_DWORD" value="0x00000005" />
+      <registryValue name="EnableFlags" valueType="REG_DWORD" value="0x0000ffff" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\WMI\AutoLogger\SpoolerLogger\{C9BF4A03-D547-4d11-8242-E03A18B5BE01}">
+      <registryValue name="Enabled" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="EnableLevel" valueType="REG_DWORD" value="0x00000005" />
+      <registryValue name="EnableFlags" valueType="REG_DWORD" value="0x0000ffff" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\WMI\AutoLogger\SpoolerLogger\{C9BF4A05-D547-4d11-8242-E03A18B5BE01}">
+      <registryValue name="Enabled" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="EnableLevel" valueType="REG_DWORD" value="0x00000005" />
+      <registryValue name="EnableFlags" valueType="REG_DWORD" value="0x0000ffff" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\WMI\AutoLogger\SpoolerLogger\{6d5ca4bb-df8e-41bc-b554-8aeab241f206}">
+      <registryValue name="Enabled" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="EnableLevel" valueType="REG_DWORD" value="0x00000005" />
+      <registryValue name="EnableFlags" valueType="REG_DWORD" value="0x0000ffff" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\WMI\AutoLogger\SpoolerLogger\{bf3eac2a-65ca-5ecc-2076-e23c6420a687}">
+      <registryValue name="Enabled" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="EnableLevel" valueType="REG_DWORD" value="0x00000005" />
+      <registryValue name="EnableFlags" valueType="REG_DWORD" value="0x0000ffff" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\WMI\AutoLogger\SpoolerLogger\{B795C7DF-07BC-4362-938E-E8ABD81A9A01}">
+      <registryValue name="Enabled" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="EnableLevel" valueType="REG_DWORD" value="0x00000005" />
+      <registryValue name="EnableFlags" valueType="REG_DWORD" value="0x0000ffff" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\WMI\AutoLogger\SpoolerLogger\{3fc887c9-c23f-59cd-88b5-a6086f4bbc9e}">
+      <registryValue name="Enabled" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="EnableLevel" valueType="REG_DWORD" value="0x00000005" />
+      <registryValue name="EnableFlags" valueType="REG_DWORD" value="0x0000ffff" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\WMI\AutoLogger\SpoolerLogger\{6fb61ac3-3455-4da4-8313-c1a855ee64c5}">
+      <registryValue name="Enabled" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="EnableLevel" valueType="REG_DWORD" value="0x00000005" />
+      <registryValue name="EnableFlags" valueType="REG_DWORD" value="0x0000ffff" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\WMI\AutoLogger\SpoolerLogger\{e73d49d6-9eda-5059-74d1-b879b18cf9ae}">
+      <registryValue name="Enabled" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="EnableLevel" valueType="REG_DWORD" value="0x00000005" />
+      <registryValue name="EnableFlags" valueType="REG_DWORD" value="0x0000ffff" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\WMI\AutoLogger\SpoolerLogger\{d758d01c-7402-5923-6a27-44bdcc59a5c5}">
+      <registryValue name="Enabled" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="EnableLevel" valueType="REG_DWORD" value="0x00000005" />
+      <registryValue name="EnableFlags" valueType="REG_DWORD" value="0x0000ffff" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\WMI\AutoLogger\SpoolerLogger\{201eb0f8-12f0-5b34-c99b-75c1541f3479}">
+      <registryValue name="Enabled" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="EnableLevel" valueType="REG_DWORD" value="0x00000005" />
+      <registryValue name="EnableFlags" valueType="REG_DWORD" value="0x0000ffff" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\WMI\AutoLogger\SpoolerLogger\{62A0EB6C-3E3E-471d-960C-7C574A72534C}">
+      <registryValue name="Enabled" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="EnableLevel" valueType="REG_DWORD" value="0x00000005" />
+      <registryValue name="EnableFlags" valueType="REG_DWORD" value="0x0000ffff" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\WMI\AutoLogger\SpoolerLogger\{9558985e-3bc8-45ef-a2fd-2e6ff06fb886}">
+      <registryValue name="Enabled" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="EnableLevel" valueType="REG_DWORD" value="0x00000005" />
+      <registryValue name="EnableFlags" valueType="REG_DWORD" value="0x0000ffff" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\WMI\AutoLogger\SpoolerLogger\{836767A6-AF31-4938-B4C0-EF86749A9AEF}">
+      <registryValue name="Enabled" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="EnableLevel" valueType="REG_DWORD" value="0x00000005" />
+      <registryValue name="EnableFlags" valueType="REG_DWORD" value="0x0000ffff" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\WMI\AutoLogger\SpoolerLogger\{3048407B-56AA-4D41-82B2-7d5F4b1CDD39}">
+      <registryValue name="Enabled" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="EnableLevel" valueType="REG_DWORD" value="0x00000005" />
+      <registryValue name="EnableFlags" valueType="REG_DWORD" value="0x0000ffff" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\WMI\AutoLogger\SpoolerLogger\{19E464A4-7408-49BD-B960-53446AE47820}">
+      <registryValue name="Enabled" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="EnableLevel" valueType="REG_DWORD" value="0x00000005" />
+      <registryValue name="EnableFlags" valueType="REG_DWORD" value="0x0000ffff" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\WMI\AutoLogger\SpoolerLogger\{402E812D-04E6-4E66-ABDB-32E5F79D36A2}">
+      <registryValue name="Enabled" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="EnableLevel" valueType="REG_DWORD" value="0x00000005" />
+      <registryValue name="EnableFlags" valueType="REG_DWORD" value="0x0000ffff" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\WMI\AutoLogger\SpoolerLogger\{acf1e4a7-9241-4fbf-9555-c27638434f8d}">
+      <registryValue name="Enabled" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="EnableLevel" valueType="REG_DWORD" value="0x00000005" />
+      <registryValue name="EnableFlags" valueType="REG_DWORD" value="0x0000ffff" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\WMI\AutoLogger\SpoolerLogger\{49868e3d-77fb-5083-9e09-61e3f37e0309}">
+      <registryValue name="Enabled" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="EnableLevel" valueType="REG_DWORD" value="0x00000005" />
+      <registryValue name="EnableFlags" valueType="REG_DWORD" value="0x0000ffff" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\WMI\AutoLogger\SpoolerLogger\{19E93940-A1BD-497F-BC58-CA333880BAB4}">
+      <registryValue name="Enabled" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="EnableLevel" valueType="REG_DWORD" value="0x00000005" />
+      <registryValue name="EnableFlags" valueType="REG_DWORD" value="0x0000ffff" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\WMI\AutoLogger\SpoolerLogger\{ba4936a1-31db-4edc-89ce-9190e3c0653b}">
+      <registryValue name="Enabled" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="EnableLevel" valueType="REG_DWORD" value="0x00000005" />
+      <registryValue name="EnableFlags" valueType="REG_DWORD" value="0x00000000" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Spooler\Performance">
+      <registryValue name="Close" valueType="REG_SZ" value="PerfClose" />
+      <registryValue name="Collect" valueType="REG_SZ" value="PerfCollect" />
+      <registryValue name="Collect Timeout" valueType="REG_DWORD" value="0x000007D0" />
+      <registryValue name="Library" valueType="REG_SZ" value="$(runtime.system32)\winspool.drv" />
+      <registryValue name="Object List" valueType="REG_SZ" value="1450" />
+      <registryValue name="Open" valueType="REG_SZ" value="PerfOpen" />
+      <registryValue name="Open Timeout" valueType="REG_DWORD" value="0x00000FA0" />
+    </registryKey>
+  </registryKeys>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="SpoolerSecurity" sddl="D:(A;;CCLCSWLOCRRC;;;AU)(A;;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;BA)(A;;CCLCSWRPWPDTLOCRRC;;;SY)S:(AU;FA;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;WD)" operationHint="replace" />
+          <securityDescriptorDefinition name="SpoolDirectorySecurity" sddl="O:SYG:SYD:P(A;CI;0x10008e;;;BU)(A;OICI;0x1f01df;;;CO)(A;OICI;0x1f01df;;;SY)(A;OICI;0x1f01df;;;BA)" operationHint="replace" />
+          <securityDescriptorDefinition name="DriversDirectorySecurity" sddl="O:SYG:SYD:P(A;ID;FA;;;SY)(A;OICIIOID;GA;;;SY)(A;ID;FA;;;BA)(A;OICIIOID;GA;;;BA)(A;ID;0x1200a9;;;WD)(A;OICIIOID;GXGR;;;WD)(A;ID;0x1200a9;;;S-1-15-2-1)(A;OICIIOID;GXGR;;;S-1-15-2-1)(A;ID;0x1200a9;;;S-1-15-3-1024-4044835139-2658482041-3127973164-329287231-3865880861-1938685643-461067658-1087000422)(A;OICIIOID;GXGR;;;S-1-15-3-1024-4044835139-2658482041-3127973164-329287231-3865880861-1938685643-461067658-1087000422)(A;OICIIOID;GA;;;CO)" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_REGKEY_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;CI;GA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;CI;GR;;;SY)(A;CI;GR;;;BA)(A;CI;GR;;;BU)(A;CI;GR;;;S-1-15-2-1)(A;CI;GR;;;S-1-15-3-1024-1065365936-1281604716-3511738428-1654721687-432734479-3232135806-4053264122-3456934681)" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_PARENT_DIR_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;CI;GA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;0x1301bf;;;SY)(A;IOCIOI;GA;;;SY)(A;;0x1301bf;;;BA)(A;IOCIOI;GA;;;BA)(A;CIOI;GRGX;;;BU)(A;OICIIO;GA;;;CO)(A;CIOI;GRGX;;;S-1-15-2-1)(A;CIOI;GRGX;;;S-1-15-2-2)" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" description="Default SDDL for Windows Resource Protected file" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+  <asmv3:configuration xmlns:asmv3="urn:schemas-microsoft-com:asm.v3" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State">
+    <asmv3:configurationSchema>
+      <xsd:schema xmlns="Microsoft-Windows-Printing-Spooler-Core" targetNamespace="Microsoft-Windows-Printing-Spooler-Core">
+        <xsd:element default="0" name="NetPopupToComputer" type="xsd:unsignedInt" wcm:description="NetPopupToComputer" wcm:displayName="NetPopupToComputer" wcm:handler="regkey('HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Print\Providers')" wcm:legacyType="REG_DWORD" wcm:migrate="yes" wcm:scope="allUsers" wcm:subScope="machineIndependent" />
+        <xsd:element default="1" name="NetPopup" type="xsd:unsignedInt" wcm:description="NetPopup" wcm:displayName="NetPopup" wcm:handler="regkey('HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Print\Providers')" wcm:legacyType="REG_DWORD" wcm:migrate="yes" wcm:scope="allUsers" wcm:subScope="machineIndependent" />
+        <xsd:element default="0" name="RetryPopup" type="xsd:unsignedInt" wcm:description="RetryPopup" wcm:displayName="RetryPopup" wcm:handler="regkey('HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Print\Providers')" wcm:legacyType="REG_DWORD" wcm:migrate="yes" wcm:scope="allUsers" wcm:subScope="machineIndependent" />
+        <xsd:element default="600" name="RestartJobOnPoolError" type="xsd:unsignedInt" wcm:description="RestartJobOnPoolError" wcm:displayName="RestartJobOnPoolError" wcm:handler="regkey('HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Print\Providers')" wcm:legacyType="REG_DWORD" wcm:migrate="yes" wcm:scope="allUsers" wcm:subScope="machineIndependent" />
+        <xsd:element default="3" name="EventLog" type="xsd:unsignedInt" wcm:description="EventLog" wcm:displayName="EventLog" wcm:handler="regkey('HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Print\Providers')" wcm:legacyType="REG_DWORD" wcm:migrate="yes" wcm:scope="allUsers" wcm:subScope="machineIndependent" />
+        <xsd:element default="1" name="RestartJobOnPoolEnabled" type="xsd:unsignedInt" wcm:description="RestartJobOnPoolEnabled" wcm:displayName="RestartJobOnPoolEnabled" wcm:handler="regkey('HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Print\Providers')" wcm:legacyType="REG_DWORD" wcm:migrate="yes" wcm:scope="allUsers" wcm:subScope="machineIndependent" />
+        <xsd:element default="%SystemRoot%\System32\spool\PRINTERS" name="DefaultSpoolDirectory" type="xsd:string" wcm:description="DefaultSpoolDirectory" wcm:displayName="DefaultSpoolDirectory" wcm:handler="regkey('HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Print\Printers')" wcm:legacyType="REG_EXPAND_SZ" wcm:migrate="yes" wcm:scope="allUsers" wcm:subScope="machineIndependent" />
+        <xsd:element default="" name="Device" type="xsd:string" wcm:description="Default printer" wcm:displayName="Device" wcm:handler="regkey('HKEY_CURRENT_USER\Software\Microsoft\Windows NT\CurrentVersion\Windows')" wcm:legacyType="REG_SZ" wcm:migrate="yes" wcm:scope="perUser" wcm:subScope="machineIndependent" />
+        <xsd:element default="0" name="RemoveMPDW" type="xsd:integer" wcm:description="Set to 1 to force removal of Print To PDF print queue and driver." wcm:displayName="Force removal of MPDW." wcm:handler="regkey('HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\Print\')" wcm:passes="specialize" wcm:scope="allUsers" wcm:visible="true" />
+        <xsd:element default="0" name="RemoveMXDW" type="xsd:integer" wcm:description="The RemoveMXDW setting is used to remove the Microsoft® XPS Document Writer (MXDW) print queue and driver package from a Windows® installation." wcm:displayName="Force removal of MXDW." wcm:handler="regkey('HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\Print\')" wcm:passes="specialize" wcm:scope="allUsers" wcm:visible="true" />
+        <xsd:element default="-1" name="LegacyDefaultPrinterMode" type="xsd:integer" wcm:description="Set to 1 to revert to legacy default printer mode. Set to 0 for MRU mode." wcm:displayName="Select the default printer mode." wcm:handler="regkey('HKEY_CURRENT_USER\Software\Microsoft\Windows NT\CurrentVersion\Windows')" wcm:migrate="yes" wcm:passes="generalize" wcm:scope="perUser" />
+        <xsd:element default="-1" name="IsMRUEstablished" type="xsd:integer" wcm:description="Set to 1 to indicate that an MRU has been established." wcm:displayName="Select whether or not an MRU printer has been established." wcm:handler="regkey('HKEY_CURRENT_USER\Software\Microsoft\Windows NT\CurrentVersion\Windows')" wcm:migrate="yes" wcm:passes="generalize" wcm:scope="perUser" />
+        <xsd:element default="1" name="Start" type="xsd:integer" wcm:description="Set 1 to indicate that Spooler AutoLogger start on boot by default. " wcm:displayName="Key to control (start/stop) autologger on boot" wcm:handler="regkey('HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\WMI\AutoLogger\SpoolerLogger')" wcm:legacyType="REG_DWORD" wcm:passes="specialize" wcm:scope="allUsers" wcm:visible="true" />
+      </xsd:schema>
+    </asmv3:configurationSchema>
+    <asmv3:metadata />
+  </asmv3:configuration>
+  <instrumentation>
+    <events xmlns="http://schemas.microsoft.com/win/2004/08/events" xmlns:win="http://manifests.microsoft.com/win/2004/08/windows/events" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <provider guid="{747EF6FD-E535-4d16-B510-42C90F6873A1}" message="$(string.eventProviderPrintSpooler)" messageFileName="%SystemRoot%\system32\ntprint.dll" name="Microsoft-Windows-PrintService" resourceFileName="%SystemRoot%\system32\ntprint.dll" symbol="SPOOLER_ETW_CONTROL_GUID">
+        <channels>
+          <channel chid="Admin" enabled="true" isolation="Application" message="$(string.AdminChannel)" name="Microsoft-Windows-PrintService/Admin" symbol="SPOOLER_CHANNEL_ADMIN" type="Admin" />
+          <channel chid="Operational" enabled="false" isolation="Application" message="$(string.OperationalChannel)" name="Microsoft-Windows-PrintService/Operational" symbol="SPOOLER_CHANNEL_OPERATIONAL" type="Operational" />
+          <channel chid="Debug" enabled="false" isolation="Application" message="$(string.DebugChannel)" name="Microsoft-Windows-PrintService/Debug" symbol="SPOOLER_CHANNEL_DEBUG" type="Debug" />
+        </channels>
+      </provider>
+      <cmi />
+    </events>
+  </instrumentation>
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string id="eventProviderPrintSpooler" value="Microsoft-Windows-PrintService" />
+        <string id="AdminChannel" value="Admin" />
+        <string id="OperationalChannel" value="Operational" />
+        <string id="DebugChannel" value="Debug" />
+        <string id="SPOOLER_KEYWORD_LOCALSPL.KeywordMessage" value="Local Spooler" />
+        <string id="SPOOLER_KEYWORD_WIN32SPL.KeywordMessage" value="Remote Spooler" />
+        <string id="SPOOLER_KEYWORD_PRINTER.KeywordMessage" value="Printer" />
+        <string id="SPOOLER_KEYWORD_JOB.KeywordMessage" value="Document Print Job" />
+        <string id="SPOOLER_KEYWORD_CONNECTION.KeywordMessage" value="Spooler Connection" />
+        <string id="SPOOLER_KEYWORD_DRIVER.KeywordMessage" value="Print Driver" />
+        <string id="SPOOLER_KEYWORD_SETUP.KeywordMessage" value="Printer Setup" />
+        <string id="SPOOLER_KEYWORD_TRACE.KeywordMessage" value="Spooler Trace" />
+        <string id="SPOOLER_KEYWORD_CLASSIC.KeywordMessage" value="Classic Spooler Event" />
+        <string id="SPOOLER_KEYWORD_ACTIVE_DIR.KeywordMessage" value="Active Directory" />
+        <string id="SPOOLER_KEYWORD_ROUTER.KeywordMessage" value="Router" />
+        <string id="SPOOLER_KEYWORD_CSR.KeywordMessage" value="Client Side Rendering (CSR)" />
+        <string id="SPOOLER_KEYWORD_PIPELINE.KeywordMessage" value="Print Filter Pipeline" />
+        <string id="SPOOLER_KEYWORD.KeywordMessage" value="Print Spooler" />
+        <string id="SPOOLER_KEYWORD_PRINT_DRIVER_SANDBOX.KeywordMessage" value="Print Driver Sandbox" />
+        <string id="XPS_PRINT_API_KEYWORD.KeywordMessage" value="XPS Print API" />
+        <string id="XPS_PRINT_API_KEYWORD_PERFORMANCE.KeywordMessage" value="XPS Print API performance" />
+        <string id="SPOOLER_KEYWORD_BRANCH_OFFICE_PRINTING.KeywordMessage" value="Branch Office Printing" />
+        <string id="SETUP_WFS_KEYWORD.KeywordMessage" value="Service Windows Fax and Scan" />
+        <string id="SPOOLER_KEYWORD_WSDMON.KeywordMessage" value="WS-Print Port Monitor" />
+        <string id="SPOOLER_OPCODE_START.OpcodeMessage" value="Spooler Operation Started" />
+        <string id="SPOOLER_OPCODE_SUCCEEDED.OpcodeMessage" value="Spooler Operation Succeeded" />
+        <string id="SPOOLER_OPCODE_FAILED.OpcodeMessage" value="Spooler Operation Failed" />
+        <string id="SPOOLER_OPCODE_TRACE.OpcodeMessage" value="Spooler Trace" />
+        <string id="SPOOLER_OPCODE_WARNING.OpcodeMessage" value="Spooler Warning" />
+        <string id="SPOOLER_OPCODE_UNEXPECTED_SHUTDOWN.OpcodeMessage" value="Unexpected process termination" />
+        <string id="XPS_PRINT_API_OPCODE_FAILED.OpcodeMessage" value="XPS Print API failure" />
+        <string id="SPOOLER_TASK_INITIALIZEPRINTPROVIDOR.TaskMessage" value="Initializing a print provider" />
+        <string id="SPOOLER_TASK_OPENPRINTER.TaskMessage" value="Opening a printer handle" />
+        <string id="SPOOLER_TASK_CLOSEPRINTER.TaskMessage" value="Closing a printer handle" />
+        <string id="SPOOLER_TASK_ADDPRINTER.TaskMessage" value="Adding a printer" />
+        <string id="SPOOLER_TASK_DELETEPRINTER.TaskMessage" value="Deleting a printer" />
+        <string id="SPOOLER_TASK_ADDCONNECTION.TaskMessage" value="Adding a printer connection" />
+        <string id="SPOOLER_TASK_DELETECONNECTION.TaskMessage" value="Deleting a printer connection" />
+        <string id="SPOOLER_TASK_ADDDRIVER.TaskMessage" value="Adding a printer driver" />
+        <string id="SPOOLER_TASK_DELETEDRIVER.TaskMessage" value="Deleting a printer driver" />
+        <string id="SPOOLER_TASK_STARTDOCPRINTER.TaskMessage" value="Starting a document print job" />
+        <string id="SPOOLER_TASK_ENDDOCPRINTER.TaskMessage" value="Ending a document print job" />
+        <string id="SPOOLER_TASK_STARTPAGE.TaskMessage" value="Starting a new document page" />
+        <string id="SPOOLER_TASK_ENDPAGE.TaskMessage" value="Ending a document page" />
+        <string id="SPOOLER_TASK_SEEKPRINTER.TaskMessage" value="Seeking in the spool file" />
+        <string id="SPOOLER_TASK_SETPRINTER.TaskMessage" value="Setting printer configuration" />
+        <string id="SPOOLER_TASK_PARSEINF.TaskMessage" value="Parsing a printer driver inf" />
+        <string id="SPOOLER_TASK_INSTALL_PRINTER_DRIVER.TaskMessage" value="Installing a printer driver" />
+        <string id="SPOOLER_TASK_COPY_PRINTER_DRIVER_PACKAGE.TaskMessage" value="Copying a printer driver package" />
+        <string id="SPOOLER_TASK_ENUMPRINTERS.TaskMessage" value="Enumerating printers" />
+        <string id="SPOOLER_TASK_TRACE.TaskMessage" value="Tracing a spooler message" />
+        <string id="SPOOLER_TASK_PAUSE_PRINTER.TaskMessage" value="Pausing a printer" />
+        <string id="SPOOLER_TASK_UNPAUSE_PRINTER.TaskMessage" value="Resuming a printer" />
+        <string id="SPOOLER_TASK_PURGE_PRINTER.TaskMessage" value="Purging jobs from printer queue" />
+        <string id="SPOOLER_TASK_PRINT_DOCUMENT.TaskMessage" value="Printing a document" />
+        <string id="SPOOLER_TASK_DELETE_DOCUMENT.TaskMessage" value="Deleting a document" />
+        <string id="SPOOLER_TASK_ADD_FORM.TaskMessage" value="Adding a print form" />
+        <string id="SPOOLER_TASK_DELETE_FORM.TaskMessage" value="Deleting a print form" />
+        <string id="SPOOLER_TASK_SHARE_PRINTER.TaskMessage" value="Sharing a printer" />
+        <string id="SPOOLER_TASK_UNSHARE_PRINTER.TaskMessage" value="Unsharing a printer" />
+        <string id="SPOOLER_TASK_INITIALIZE.TaskMessage" value="Initializing the print spooler" />
+        <string id="SPOOLER_TASK_PUBLISH_PRINTER.TaskMessage" value="Publishing a printer in the Active Directory" />
+        <string id="SPOOLER_TASK_UNPUBLISH_PRINTER.TaskMessage" value="Removing a printer from the Active Directory" />
+        <string id="SPOOLER_TASK_PRUNE_PRINTER.TaskMessage" value="Pruning a printer" />
+        <string id="SPOOLER_TASK_INITIALIZE_OBJECT.TaskMessage" value="Initializing" />
+        <string id="SPOOLER_TASK_INITIALIZE_PRINT_PROCESSOR.TaskMessage" value="Initializing a print processor" />
+        <string id="SPOOLER_TASK_VERIFY_REGENERATE_DRIVER_PACKAGE.TaskMessage" value="Verifying or regenerating a print driver package" />
+        <string id="SPOOLER_TASK_ROUTE_COMMANDS.TaskMessage" value="Routing print spooler command(s)" />
+        <string id="SPOOLER_TASK_CSR.TaskMessage" value="Client-side rendering" />
+        <string id="SPOOLER_TASK_PIPELINE.TaskMessage" value="Executing print filters in the spooler pipeline" />
+        <string id="SPOOLER_TASK_JOB_DIAGNOSTICS.TaskMessage" value="Print job diagnostics" />
+        <string id="SPOOLER_TASK_UNEXPECTED_SHUTDOWN.TaskMessage" value="Process termination due to critical failure" />
+        <string id="SPOOLER_TASK_DELETE_DIR.TaskMessage" value="Deleting a directory" />
+        <string id="SPOOLER_TASK_FILE_OP.TaskMessage" value="Executing a file operation" />
+        <string id="SPOOLER_TASK_ENABLE_RPC_ENDPOINTS.TaskMessage" value="Enabling spooler RPC endpoints" />
+        <string id="SPOOLER_TASK_CSR_REVERTING_TO_SSR.TaskMessage" value="Client Side Rendering reverting to Server Side Rendering" />
+        <string id="SPOOLER_TASK_CHANGING_DEFAULT_PRINTER.TaskMessage" value="Changing the default printer" />
+        <string id="SPOOLER_TASK_PRINT_DRIVER_SANDBOX.TaskMessage" value="Isolating printer drivers and other plug-ins" />
+        <string id="XPS_PRINT_API_TASK.TaskMessage" value="Executing XPS Print API calls" />
+        <string id="XPS_PRINT_API_TASK_PERFORMANCE.TaskMessage" value="XPS Print API performance tracking" />
+        <string id="SPOOLER_TASK_PERFORMANCE.TaskMessage" value="General print spooler performance tracking" />
+        <string id="SPOOLER_TASK_DRIVER_MONITORING.TaskMessage" value="Print driver operation" />
+        <string id="SPOOLER_TASK_CONNECTION_RECONFIGURED.TaskMessage" value="Connection reconfigured" />
+        <string id="SPOOLER_TASK_SETUP_WFS.TaskMessage" value="Servicing Windows Fax and Scan" />
+        <string id="SPOOLER_TASK_CREATE_PRINT_DEVNODE.TaskMessage" value="Creating a Plug and Play device object instance for a printer" />
+        <string id="SPOOLER_TASK_WSDMON_INITIALIZATION.TaskMessage" value="Initializing the WS-Print Port Monitor" />
+        <string id="SPOOLER_TASK_BOP_OFFLINE_LOG_ARCHIVE_FULL.TaskMessage" value="BOP Event Offline Archive Full" />
+        <string id="SPOOLER_UNEXPECTED_SHUTDOWN.EventMessage" value="The print spooler encountered a fatal error while executing a critical operation (%1, error %2) and must immediately terminate. Try to manually restart the print spooler service (from Control Panel | Administrative Tools | Services or from an elevated command prompt running: net start spooler)." />
+        <string id="LOCAL_ADDPRN_SUCCEEDED.EventMessage" value="Printer %3 successfully added. See the event user data for context information." />
+        <string id="LOCAL_ADDPRN_FAILED.EventMessage" value="Failed to add printer %3, error code %2. See the event user data for context information." />
+        <string id="LOCAL_DELPRN_SUCCEEDED.EventMessage" value="Deleting printer %3 succeeded. See the event user data for context information." />
+        <string id="LOCAL_DELPRN_FAILED.EventMessage" value="Deleting printer %3 failed, error code %2. See the event user data for context information." />
+        <string id="LOCAL_STARTDOC_SUCCEEDED.EventMessage" value="Starting document job %3 for printer %4 succeeded. See the event user data for context information." />
+        <string id="LOCAL_STARTDOC_FAILED.EventMessage" value="Starting document job %3 for printer %4 failed, error code %2. See the event user data for context information." />
+        <string id="LOCAL_ENDDOC_SUCCEEDED.EventMessage" value="Ending document job %3 for printer %4 succeeded. See the event user data for context information." />
+        <string id="LOCAL_ENDDOC_FAILED.EventMessage" value="Ending document job %3 for printer %4 failed, error code %2. See the event user data for context information." />
+        <string id="LOCAL_ADDDRV_SUCCEEDED.EventMessage" value="Adding printer driver %3 succeeded. See the event user data for context information." />
+        <string id="LOCAL_ADDDRV_FAILED.EventMessage" value="Adding printer driver %3 failed, error code %2. See the event user data for context information." />
+        <string id="LOCAL_OPENPRN_SUCCEEDED.EventMessage" value="Opening printer %3 succeeded. See the event user data for context information." />
+        <string id="LOCAL_OPENPRN_FAILED.EventMessage" value="Opening printer %3 failed, error code %2. See the event user data for context information." />
+        <string id="LOCAL_STARTPAGE_SUCCEEDED.EventMessage" value="Starting page job %3 at printer %4 succeeded. See the event user data for context information." />
+        <string id="LOCAL_STARTPAGE_FAILED.EventMessage" value="Starting page failed at printer %3, error code %2. See the event user data for context information." />
+        <string id="LOCAL_ENDPAGE_SUCCEEDED.EventMessage" value="Ending page job %3 at printer %4 succeeded. See the event user data for context information." />
+        <string id="LOCAL_ENDPAGE_FAILED.EventMessage" value="Ending page job %3 at printer %4 failed, error code %2. See the event user data for context information." />
+        <string id="LOCAL_SETPRN_FAILED.EventMessage" value="Setting printer %3 failed, error code %2. See the event user data for context information." />
+        <string id="CSR_ADDCONN_SUCCEEDED.EventMessage" value="Adding CSR printer connection %3 succeeded. See the event user data for context information." />
+        <string id="CSR_ADDCONN_FAILED.EventMessage" value="Adding CSR printer connection %3 failed, error code %2. See the event user data for context information." />
+        <string id="CSR_DELCONN_SUCCEEDED.EventMessage" value="Deleting CSR printer connection %3 succeeded. See the event user data for context information." />
+        <string id="CSR_DELCONN_FAILED.EventMessage" value="Deleting CSR printer connection %3 failed, error code %2. See the event user data for context information." />
+        <string id="CSR_OPENPRN_FAILED.EventMessage" value="Opening CSR printer %3 failed, error code %2. See the event user data for context information." />
+        <string id="CSR_CLOSEPRN_SUCCEEDED.EventMessage" value="Closing CSR printer %3 succeeded. See the event user data for context information." />
+        <string id="CSR_CLOSEPRN_FAILED.EventMessage" value="Closing CSR printer %3 failed, error code %2. See the event user data for context information." />
+        <string id="CSR_RETRIEVE_CACHE_INFO_SUCCEEDED.EventMessage" value="Retrieving CSR cache information for printer %3 succeeded. See the event user data for context information." />
+        <string id="CSR_RETRIEVE_CACHE_INFO_FAILED.EventMessage" value="Retrieving CSR cache information for printer %3 failed, error code %2. See the event user data for context information." />
+        <string id="SETUP_PARSEINF_SUCCEEDED.EventMessage" value="Parsing inf (%4) for printer driver %5 succeeded (processor architecture %7). See the event user data for context information." />
+        <string id="SETUP_PARSEINF_FAILED.EventMessage" value="Parsing inf (%4) for printer driver %5 failed (processor architecture %7), error code %8, HRESULT %9. See the event user data for context information." />
+        <string id="SETUP_INSTALL_PRINTER_DRIVER_SUCCEEDED.EventMessage" value="Installing printer driver %5 succeeded. See the event user data for context information." />
+        <string id="SETUP_INSTALL_PRINTER_DRIVER_FAILED.EventMessage" value="Installing printer driver %5 failed, error code %10, HRESULT %11. See the event user data for context information." />
+        <string id="SETUP_INSTALL_V4_PRINTER_DRIVER_WARNING.EventMessage" value="A problem was encountered while installing printer driver %2. See the event user data for context information." />
+        <string id="SETUP_INSTALL_V4_PRINTER_DRIVER_FAILED.EventMessage" value="An error occurred while installing printer driver '%1'. Error code: %4. Please obtain and install a new version of the driver from the manufacturer (if available), or choose an alternate driver that works with this print device." />
+        <string id="SETUP_INSTALL_PRINTER_DRIVER_UNSUPPORTED_VERSION.EventMessage" value="An error occurred while installing printer driver '%1'. The driver being installed is incompatible with this version of Windows. Please obtain and install a compatible version of the driver from the manufacturer (if available), or choose an alternate driver that works with this print device. See the event user data for context information." />
+        <string id="SETUP_INSTALL_PRINTER_DRIVER_CLASS_DRIVER_UNAVAILABLE.EventMessage" value="An error occurred while installing printer driver '%1'. Error code: %4. The driver being installed relies on class driver '%3', which is not present on this computer. The class driver may be available on Windows Update. Please ensure that Windows Update is enabled in Device Installation Settings and that a connection can be established, and try again, or choose an alternate driver that works with this print device." />
+        <string id="SETUP_INSTALL_PRINTER_DRIVER_CLASS_DRIVER_FAILURE.EventMessage" value="An error occurred while installing printer driver '%1'. The driver being installed relies on class driver '%3', which failed to install. Error code: %4. Please obtain and install a new version of the driver from the manufacturer (if available), or choose an alternate driver that works with this print device." />
+        <string id="SETUP_INSTALL_PRINTER_DRIVER_MISSING_PIPELINECONFIG.EventMessage" value="An error occurred while installing printer driver '%1'. The driver must contain a pipelineconfig.xml file." />
+        <string id="SETUP_PRINTER_EXTENSION_REGISTRATION_FAILED.EventMessage" value="A problem was encountered while installing printer driver '%1'. A printer extension bundled with the driver failed to register, and will be unavailable. Error code: %4. The driver will still be functional. Please obtain and install a new version of the printer extension or printer driver from the manufacturer (if available)." />
+        <string id="SETUP_INSTALL_PRINTER_DRIVER_CLASS_TO_NONCLASS.EventMessage" value="An attempt was made to upgrade installed class driver '%1' to a non-class driver. Doing so will prevent any driver that relies on the class driver to stop functioning. The class driver will remain installed." />
+        <string id="SETUP_INSTALL_PRINTER_DRIVER_NEW_TO_OLD.EventMessage" value="An attempt was made to upgrade installed printer driver '%1' to an older version of the driver, which is unsupported. If the older version of the driver is required, please delete the current version (via Print Management or Print Server Properties) and try again." />
+        <string id="SETUP_INSTALL_PRINTER_DRIVER_SHARING_BLOCK.EventMessage" value="An attempt was made to upgrade installed printer driver '%1' to a version that does not support printer sharing, or may cause compatibility problems when sharing to some computers. In order to use the new driver, please disable sharing for all print queues that are using this driver (via Print Management or the Sharing tab in Printer Properties) and try again." />
+        <string id="SETUP_PRINTER_EXTENSION_UNREGISTRATION_FAILED.EventMessage" value="A problem was encountered while deleting printer driver '%1'. A printer extension bundled with the driver failed to unregister. Error code: %4. The driver will still be deleted." />
+        <string id="SETUP_INSTALL_PRINTER_DRIVER_MISSING_FILE.EventMessage" value="An error occurred while installing printer driver '%1'. The file '%5' referenced by the %4 directive could not be found." />
+        <string id="SETUP_INSTALL_PRINTER_DRIVER_FORBIDDEN_DIRECTIVE.EventMessage" value="An error occurred while installing printer driver '%1'. The %4 directive is not allowed for this type of driver. See the event user data for context information." />
+        <string id="SETUP_INSTALL_PRINTER_DRIVER_MALFORMED_DIRECTIVE.EventMessage" value="An error occurred while installing printer driver '%1'. The %4 directive is malformed, by having either an empty token or an incorrect number of tokens. See the event user data for context information." />
+        <string id="SETUP_INSTALL_PRINTER_DRIVER_GUID_REQUIRED.EventMessage" value="An error occurred while installing printer driver '%1'. The %4 must be a GUID, but '%5' was provided." />
+        <string id="SETUP_INSTALL_PRINTER_DRIVER_MISSING_DIRECTIVE.EventMessage" value="An error occurred while installing printer driver '%1'. The %4 directive must be present in the manifest." />
+        <string id="SETUP_INSTALL_PRINTER_DRIVER_INVALID_MANIFEST_COUNT.EventMessage" value="An error occurred while installing printer driver '%1'. There must be only one manifest per driver. Either no manifest was found, or too many manifests were found. See the event user data for context information." />
+        <string id="SETUP_INSTALL_PRINTER_DRIVER_PORT_MONITOR.EventMessage" value="An attempt was made to upgrade installed printer driver '%1' to a driver that does not support non-inbox port monitors. In order to use the new driver, please remove or reconfigure all print queues that are using this driver and try again." />
+        <string id="SETUP_PRINTER_UNSUPPORTED_PORT_MONITOR.EventMessage" value="An error occurred while configuring print queue '%1'. Printer driver '%2' may not be used in conjunction with a non-inbox port monitor." />
+        <string id="SETUP_PRINTER_OPERATION_SUCCEEDED.EventMessage" value="A printer setup operation succeeded during the installation process. See the event user data for context information." />
+        <string id="SETUP_PRINTER_OPERATION_FAILED.EventMessage" value="A printer setup operation failed during the installation process, error code %5, HRESULT %6. See the event user data for context information." />
+        <string id="SETUP_COPY_PRINTER_DRIVER_PACKAGE_SUCCEEDED.EventMessage" value="Copying printer driver package %5 succeeded. See the event user data for context information." />
+        <string id="SETUP_COPY_PRINTER_DRIVER_PACKAGE_FAILED.EventMessage" value="Copying printer driver package %5 failed, error code %8, HRESULT %9. See the event user data for context information." />
+        <string id="SETUP_WFS_OPERATION_FAILED.EventMessage" value="The Windows Fax and Scan servicing operation failed, HRESULT %1." />
+        <string id="SPOOLER_TRACE_EVENT.EventMessage" value="%1" />
+        <string id="CSR_REMOTE_PACKAGE_INSTALL_CALL_FAILED.EventMessage" value="A remote print driver package operation %1 failed with error code %2, server name %3. This was most likely caused by an unexpected error in the protocol communication between the client and the print server." />
+        <string id="MSG_CSRSPL_UNTRUSTED_DRIVER" value="The print spooler failed to download package for driver %1. Error code= %2. Blocking driver as there could be a possibility of potential tampering." />
+        <string id="VALIDATEDRVINFO_FAILED" value="In VALIDATINGDRVINFO, Adding printer driver %3 failed, error code %2. See the event user data for context information. Driver has no valid catalog" />
+        <string id="event_MSG_ROUTER_COMPUTER_NAME_FAILED" value="The print spooler failed to get the computer name. Error %2. This can occur due to system instability or a lack of system resources." />
+        <string id="event_MSG_ROUTER_LOCALSPL_FAILED" value="The system failed to initialize the local print provider: Error %2. This can occur because of system instability or a lack of system resources." />
+        <string id="event_MSG_ROUTER_WORKCREW_FAILED" value="Failed to initialize the router work crew: Error %2. This can occur because of system instability or a lack of system resources." />
+        <string id="event_MSG_ROUTER_PHASE2INIT_FAILED" value="Failed to create Phase2Init event in WaitForSpoolerInitialization: Error %2. This can occur because of system instability or a lack of system resources." />
+        <string id="event_MSG_ROUTER_NAME_CACHE_FAILED" value="The system failed to initialize the name cache: Error %2. This can occur because of system instability or a lack of system resources." />
+        <string id="event_MSG_ROUTER_CACHE_FAILED" value="Failed to initialize the router cache: Error %2. This can occur because of system instability or a lack of system resources." />
+        <string id="event_MSG_ROUTER_ADDBUSENUM_FAILED" value="The print spooler cannot start because the PrinterBusEnumerator could not start. Error code %2. This can occur because of system instability or a lack of system resources." />
+        <string id="event_MSG_ROUTER_PROVIDER_ALLOC_FAILED" value="InitializeProvider cannot allocate memory for %1. This can occur because of system instability or a lack of system resources." />
+        <string id="event_MSG_ROUTER_PROVIDER_LOAD_FAILED" value="The print spooler failed to load print provider %1. This can occur because of system instability or a lack of system resources." />
+        <string id="event_MSG_ROUTER_PROVIDER_INIT_FAILED" value="InitializePrintProvider failed for provider %1. This can occur because of system instability or a lack of system resources." />
+        <string id="event_MSG_ROUTER_PER_MACHINE_CONNECTION_ADD_FAILED" value="Group Policy was unable to add per computer connection %1. Error code %2. This can occur if the name of the printer connection is incorrect, or if the print spooler cannot contact the print server." />
+        <string id="event_MSG_ROUTER_PER_MACHINE_CONNECTION_DELETE_FAILED" value="Group Policy was unable to delete per computer connection %1. Error %2. This can occur if the name of the printer connection is incorrect, or if the print spooler cannot contact the print server." />
+        <string id="event_MSG_ROUTER_PUSHED_MACHINE_CONNECTION_DELETE_FAILED" value="Group Policy was unable to delete per computer printer connection %1. Error %2. The printer connection is still available to users on this computer. This can occur if the name of the printer connection is incorrect, if there is a Group Policy problem, or if the print spooler cannot contact the print server. Group Policy will periodically retry deleting the printer connection." />
+        <string id="event_MSG_ROUTER_PUSHED_MACHINE_CONNECTION_ADD_FAILED" value="Group Policy was unable to deploy per computer printer connection %1. Error %2. The printer connection is not available to users on this computer. This can occur if the name of the printer connection is incorrect, if there is a Group Policy problem, or if the print spooler cannot contact the print server. Group Policy will periodically retry adding the printer connection." />
+        <string id="event_MSG_ROUTER_PUSHED_MACHINE_CONNECTION_UPDATE_FAILED" value="Group Policy was unable to update per computer printer connection %1. Error code %2. This can occur if the name of the printer connection is incorrect, if there is a Group Policy problem, or if the print spooler cannot contact the print server. Group Policy will periodically retry updating the printer connection." />
+        <string id="event_MSG_ROUTER_PUSHED_USER_CONNECTION_DELETE_FAILED" value="Group Policy was unable to delete the per user printer connection %1. Error code %2. The printer connection is still available to users on this computer. This can occur if the name of the printer connection is incorrect, if there is a Group Policy problem, or if the print spooler cannot contact the print server. Group Policy will periodically retry deleting the printer connection." />
+        <string id="event_MSG_ROUTER_PUSHED_USER_CONNECTION_ADD_FAILED" value="Group Policy was unable to deploy per user printer connection %1. Error code %2. The printer connection is not available to the users on this computer to which the Group Policy object applies. This can occur if the name of the printer connection is incorrect, if there is a Group Policy problem, or if the print spooler cannot contact the print server. Group Policy will periodically retry adding the printer connection." />
+        <string id="event_MSG_ROUTER_PUSHED_USER_CONNECTION_UPDATE_FAILED" value="Group Policy was unable to update per user printer connection %1. Error code %2. This can occur if the name of the printer connection is incorrect, if there is a Group Policy problem, or if the print spooler cannot contact the print server. Group Policy will periodically retry updating the printer connection." />
+        <string id="event_MSG_CSRSPL_IMPORT_FAILED" value="The print spooler failed to import the printer driver that was downloaded from %1 into the driver store for driver %2. Error code= %3. This can occur if there is a problem with the driver or the digital signature of the driver." />
+        <string id="event_MSG_CSRSPL_DOWNLOAD_FAILED" value="The print spooler failed to download and import the printer driver from %1 into the driver store for driver %2. Error code= %3." />
+        <string id="event_MSG_CSRSPL_REGISTRY_FAILED" value="The print spooler failed to reopen an existing printer connection because it could not read the configuration information from the registry key %1\%2. This can occur if the key name or values are malformed or missing." />
+        <string id="event_MSG_CSRSPL_REGISTRY_CONNECTION_FAILED" value="The print spooler failed to reopen an existing printer connection because it could not read the configuration information from the registry key %1. The print spooler could not open the registry key. This can occur if the registry key is corrupt or missing, or if the registry recently became unavailable." />
+        <string id="event_MSG_CSRSPL_INVALID_DRIVER_TYPE" value="The print spooler encountered an unknown driver type while saving %1 cache information. This can occur because of a protocol or network error." />
+        <string id="event_MSG_PRINT_PIPELINE_COM_INIT_FAILED" value="The print filter pipeline host cannot initialize with the Component Object Model (COM) system. Error %1. This can occur because of system instability or a lack of system resources." />
+        <string id="event_MSG_PRINT_PIPELINE_RUN_FAILED" value="The print filter pipeline host is shutting down due to the following error: Error %1. This can occur because of system instability or a lack of system resources." />
+        <string id="event_MSG_PRINT_PIPELINE_COM_SIGNAL_FAILED" value="The print filter pipeline host is shutting down due to an error in signaling the Component Object Model (COM) proxy in the spooler. Error %1. This can occur because of system instability or a lack of system resources." />
+        <string id="event_MSG_PRINT_PIPELINE_COM_QI_SIGNAL_FAILED" value="The print filter pipeline host is shutting down because the query interface for ISignal in the Component Object Model (COM) proxy in the spooler failed. Error %1. This can occur because of system instability or a lack of system resources." />
+        <string id="EVENT_TRACE_TYPE_SPL_SPOOLJOB" value="Spooling job %1." />
+        <string id="EVENT_TRACE_TYPE_SPL_PRINTJOB" value="Printing job %1." />
+        <string id="EVENT_TRACE_TYPE_SPL_DELETEJOB" value="Deleting job %1." />
+        <string id="EVENT_TRACE_TYPE_SPL_JOBRENDERED" value="Rendering job %1." />
+        <string id="EVENT_TRACE_TYPE_SPL_PAUSE" value="Pausing job %1." />
+        <string id="EVENT_TRACE_TYPE_SPL_RESUME" value="Resuming job %1." />
+        <string id="LOAD_PLUGIN_FAILED_EVENT" value="The print spooler failed to load a plug-in module %1, error code %2. See the event user data for context information." />
+        <string id="SPOOLER_RECURSIVE_DELETE_DIR_FAILED" value="The print spooler failed to recursively delete the directory %1, error code %2. See the event user data for context information." />
+        <string id="SPOOLER_DELETE_DIR_FAILED" value="The print spooler failed to delete the directory %1 and the contained files, error code %2. See the event user data for context information." />
+        <string id="SPOOLER_MOVE_FILE_FAILED" value="The print spooler failed to move the file %1 to %2, error code %4. See the event user data for context information." />
+        <string id="SPOOLER_DELETE_FILE_FAILED" value="The print spooler failed to delete the file %1, error code %4. See the event user data for context information." />
+        <string id="SPOOLER_COPY_FILE_FAILED" value="The print spooler failed to copy the file %1 to %2, error code %4. See the event user data for context information." />
+        <string id="SPOOLER_ADD_PRINT_PROCESSOR_FAILED" value="The print spooler failed to install the print processor %1 %2 %3, error code %4." />
+        <string id="SPOOLER_REGISTER_RPC_PROTOCOL_SEQUENCE_FAILED" value="The print spooler service failed to register the RPC server protocol sequence %1, error code %3. See the event user data for context information." />
+        <string id="SPOOLER_INVALID_RPC_PROTOCOL_SEQUENCE" value="The print spooler service detected an invalid RPC protocol sequence %1, expecting %2, error code %3." />
+        <string id="SPOOLER_RPC_END_POINT_POLICY_DISABLED" value="The RPC end-point policy for the print spooler service is disabled. See the event user data for context information." />
+        <string id="SPOOLER_START_RPC_SERVER_FAILED" value="The print spooler RPC server failed to start, error code %1. See the event user data for context information." />
+        <string id="SPOOLER_CSR_DISABLED_BY_POLICY" value="Client Side Rendering is currently disabled by policy (%1)." />
+        <string id="SPOOLER_CSR_FAILED_REVERT_TO_SSR" value="Client side rendering to %1 failed, error code %4. The print spooler service will retry server side rendering. See the event user data for more context information." />
+        <string id="SPOOLER_CSR_STARTING_SSR_JOB" value="The print spooler Client Side Rendering is attempting to render the job %1 on the server (Server Side Rendering), status %3. See the event user data for context information." />
+        <string id="SPOOLER_CSR_NO_PRINT_PROCESSOR_OR_DATA_TYPE" value="Unknown print processor (%1) or invalid data type (%4), error %7, Client Side Rendering is disabled. See the event user data for more context information." />
+        <string id="SPOOLER_CSR_FAILED_DONT_REVERT_TO_SSR" value="Client side rendering to %1 failed, error code %4. The print spooler service will not retry server side rendering. See the event user data for more context information." />
+        <string id="SPOOLER_CSR_FORCE_CSR_POLICY_SET" value="Force Client Side Rendering policy was successfully set on printer %1, path %2, port %3." />
+        <string id="DEFAULT_PRINTER_CHANGED_EVENT" value="The default printer was changed to %3. See the event user data for context information." />
+        <string id="PRINT_FILTER_PIPELINE_SHUTDOWN_EVENT" value="A fatal error occurred while printing job %1, id %2 on the print queue %3. The print filter pipeline process was terminated. Error information: %4." />
+        <string id="XPS_PRINT_API_INVALID_QUEUE_EVENT" value="The specified print queue %1 is invalid." />
+        <string id="XPS_PRINT_API_JOB_FAILED_EVENT" value="The print job %1 failed with error code %2." />
+        <string id="XPS_PRINT_API_START_EVENT" value="XPS API call %1 (%2) started." />
+        <string id="XPS_PRINT_API_END_EVENT" value="XPS API call %1 (%2) ended, status %3." />
+        <string id="XPS_PRINT_API_DEPENDENCY_START_EVENT" value="XPS API dependency %1 (%2) started." />
+        <string id="XPS_PRINT_API_DEPENDENCY_END_EVENT" value="XPS API dependency %1 (%2) ended, status %3." />
+        <string id="SPOOLER_OPERATION_START_EVENT" value="Print spooler operation %1 (%2) started." />
+        <string id="SPOOLER_OPERATION_END_EVENT" value="Print spooler operation %1 (%2) ended, status %3." />
+        <string id="PRINT_DRIVER_SANDBOX_JOB_PRINT_PROC_EVENT" value="The print job %1 was sent through the print processor %2 on printer %3, driver %4, in the isolation mode %5 (0 - loaded in the spooler, 1 - loaded in shared sandbox, 2 - loaded in isolated sandbox). Win32 error code returned by the print processor: %6." />
+        <string id="PRINT_DRIVER_SANDBOX_RPC_SUCCESS_EVENT" value="The print spooler service recorded %1 successful and %2 failed RPC requests for all active print driver sandbox hosts." />
+        <string id="PRINT_DRIVER_SANDBOX_MODE_SELECTION_EVENT" value="The print spooler selected the isolation mode %1 (0 - loaded in the spooler, 1 - loaded in shared sandbox, 2 - loaded in isolated sandbox) for printer %2, printer driver %3." />
+        <string id="PRINT_DRIVER_SANDBOX_LOAD_MODULE_EVENT" value="Attempted to load module %1 for printer %2, printer driver %3. Win32 error code %4." />
+        <string id="PRINTER_SCAVENGED_EVENT" value="Cached printer %1 has been scavenged and deleted. This printer's age (%2 seconds) has surpassed the expiry age of %3 seconds." />
+        <string id="PRINTER_SCHEDULED_FOR_SCAVENGING_EVENT" value="Cached printer %1 has been scheduled for deletion due to a logon scavenging operation. This printer is no longer referenced in the registry." />
+        <string id="event_MSG_PRINTER_CREATED" value="Printer %1 was created. No user action is required." />
+        <string id="event_MSG_PRINTER_DELETED" value="Printer %1 was deleted, and users will no longer be able to print to this printer. No user action is required." />
+        <string id="event_MSG_PRINTER_DELETION_PENDING" value="Printer %1 will be deleted. No user action is required." />
+        <string id="event_MSG_PRINTER_PAUSED" value="Printer %1 was paused. No user action is required." />
+        <string id="event_MSG_PRINTER_UNPAUSED" value="Printer %1 was resumed. No user action is required." />
+        <string id="event_MSG_PRINTER_PURGED" value="The jobs in the print queue for printer %1 were deleted. No user action is required." />
+        <string id="event_MSG_PRINTER_SET" value="Settings for printer %1 were changed. No user action is required." />
+        <string id="event_MSG_DOCUMENT_PRINTED" value="Document %1, %2 owned by %3 on %4 was printed on %5 through port %6.  Size in bytes: %7. Pages printed: %8. No user action is required." />
+        <string id="event_MSG_DOCUMENT_PAUSED" value="Document %1, %2 owned by %3 was paused on %4. This document will not print until the document owner resumes the print job. No user action is required." />
+        <string id="event_MSG_DOCUMENT_RESUMED" value="Document %1, %2 owned by %3 was resumed on %4. No user action is required." />
+        <string id="event_MSG_DOCUMENT_DELETED" value="Document %1, %2 owned by %3 was deleted on %4. No user action is required." />
+        <string id="event_MSG_DOCUMENT_POSITION_CHANGED" value="An administrator moved document %1, %2 owned by %3 to position %4 on %5. This changes when the document will print. No user action is required." />
+        <string id="event_MSG_FORM_ADDED" value="Form %1 was added. No user action is required." />
+        <string id="event_MSG_FORM_DELETED" value="Form %1 was removed. No user action is required." />
+        <string id="event_MSG_DOCUMENT_TIMEOUT" value="Document %1, %2 owned by %3 timed out while printing on %4. The spooler waited for %5 milliseconds and no data was received." />
+        <string id="event_MSG_SHARE_FAILED" value="The print spooler failed to share printer %2 with shared resource name %3. Error %1. The printer cannot be used by others on the network." />
+        <string id="event_MSG_UNSHARE_FAILED" value="The print spooler failed to unshare printer %2 which is shared as %3. Error %1." />
+        <string id="PRINTER_SHARE_SUCCEEDED" value="Printer %1 was shared by the print spooler as %2." />
+        <string id="PRINTER_UNSHARE_SUCCEEDED" value="Printer %1 shared as %2 was unshared by the print spooler." />
+        <string id="PRINTER_DRIVER_FAILED_TO_UNINIT_COM" value="The print spooler called the function %2 in print driver module %1. This call initialized the Component Object Model (COM) system without properly un-initializing it." />
+        <string id="POINT_AND_PRINT_DISABLED_BY_POLICY" value="Point and Print not allowed by policy for queue %1. Cannot make a Point and Print connection to this queue. Error %2." />
+        <string id="PRINT_DRIVER_MISMATCH" value="Driver %1 could not be installed for printer connection %3. The print system selected the replacement driver %2 for the printer connection. No user action is required." />
+        <string id="CSR_SYNC_JOB_CACHE_COMPLETED" value="Print Client Side Rendering synchronization for print job cache completed with code %1 for printer %2." />
+        <string id="CSR_SYNC_PRINTER_INFO_CACHE_COMPLETED" value="Print Client Side Rendering synchronization for printer information cache completed with code %1 for printer %2." />
+        <string id="OPEN_PRINTER_ADDED_TO_CACHE" value="OpenPrinter cache entry added for printer %1 with access code %2." />
+        <string id="event_MSG_DRIVER_ADDED" value="Printer driver %1 for %2 %3 was added or updated. Files:- %4. No user action is required." />
+        <string id="event_MSG_DRIVER_DELETED" value="Printer driver %1 was deleted. No user action is required." />
+        <string id="event_MSG_DRIVER_FAILED_UPGRADE" value="Failed to upgrade printer settings for printer %1 driver %2. Error: %3. The device settings for the printer are set to those configured by the manufacturer." />
+        <string id="event_MSG_NO_DRIVER_FOUND_FOR_PRINTER" value="Printer %1 failed to initialize because a suitable %2 driver could not be found. The new printer settings that you specified have not taken effect. Install or reinstall the printer driver. You might need to contact the vendor for an updated driver." />
+        <string id="event_MSG_NO_PORT_FOUND_FOR_PRINTER" value="Printer %1 failed to initialize because none of its ports (%2) could be found. This can occur if the ports were deleted or the port information is invalid." />
+        <string id="event_MSG_FILES_COPIED" value="File(s) %1 associated with printer %2 were added or updated. No user action is required." />
+        <string id="event_MSG_CANT_PUBLISH_PROPERTY" value="While attempting to publish the printer to the Active Directory directory service, Windows failed to publish property %1 at %2.  Error: %3" />
+        <string id="event_MSG_CANT_GET_CONTAINER" value="While attempting to publish the printer to the Active Directory directory service, the print spooler could not create or update the print queue because Windows failed to bind to container: %1.  Error: %2. The printer is not published in Active Directory and cannot be located by searching Active Directory." />
+        <string id="event_MSG_CANT_DELETE_PRINTQUEUE" value="While attempting to remove the printer from the Active Directory directory service, Windows failed to delete print queue %1 at %2.  Error: %3" />
+        <string id="event_MSG_CANT_CREATE_PRINTQUEUE" value="While attempting to publish the printer to the Active Directory directory service, the print spooler could not create or update the print queue under container %1.  Error: %2. The printer is not published in Active Directory and cannot be located by searching Active Directory." />
+        <string id="event_MSG_CANT_PUBLISH_MANDATORY_PROPERTIES" value="While attempting to publish the printer to the Active Directory directory service, the print spooler could not create print queue %1 under container %2 because Mandatory properties could not be set.  Error: %3. The printer is not published in Active Directory and cannot be located by searching Active Directory." />
+        <string id="event_MSG_CANT_GET_PRIMARY_DOMAIN_INFO" value="While attempting to publish the printer to the Active Directory directory service, the print spooler could not find the appropriate print queue container because the primary domain query failed. Error: %1. This can occur if Domain Name System (DNS) cannot resolve the domain controller IP address, or if the domain controller or directory service is not functioning correctly. The printer is not published in Active Directory and cannot be located by searching Active Directory." />
+        <string id="event_MSG_CANT_GET_DNS_DOMAIN_NAME" value="While attempting to publish the printer to the Active Directory directory service, the print spooler could not find the appropriate print queue container because the Domain Name System (DNS) domain name could not be retrieved. Error: %1. This can occur if DNS cannot resolve the domain controller IP address, or if the domain controller or directory service is not functioning correctly. The printer is not published in Active Directory and cannot be located by searching Active Directory." />
+        <string id="event_MSG_CANT_CRACK" value="While attempting to publish the printer to the Active Directory directory service, the print spooler could not find the appropriate print queue container on domain %1.  Error: %2. The printer is not published in Active Directory and cannot be located by searching Active Directory." />
+        <string id="event_MSG_PRINTER_PUBLISHED" value="The printer was successfully published to the Active Directory directory service. The print queue %1 was successfully created in container %2. No user action is required." />
+        <string id="event_MSG_PRINTER_NOT_PUBLISHED" value="While attempting to publish the printer to the Active Directory directory service, the print spooler failed to create or update print queue %1 in container %2.  Error: %3. The printer is not published in Active Directory and cannot be located by searching Active Directory." />
+        <string id="event_MSG_PRINTER_UNPUBLISHED" value="The printer was successfully removed from the Active Directory directory service. Print queue %1 was successfully deleted from container %2. The printer can no longer be located by searching Active Directory. No user action is required." />
+        <string id="event_MSG_PRINTER_NOT_UNPUBLISHED" value="While attempting to remove the printer from the Active Directory directory service, the print spooler failed to delete print queue %1 from container %2.  Error: %3" />
+        <string id="event_MSG_PRINTER_UPDATED" value="Print queue %1 was successfully updated in the Active Directory directory service container %2. No user action is required." />
+        <string id="event_MSG_CANT_CRACK_GUID" value="The print queue could not be found on domain %1.  It may have been deleted from the Active Directory directory service. Windows will attempt to republish the print queue.  Error: %2" />
+        <string id="event_MSG_MISSING_PRINTER_UNPUBLISHED" value="Printer %1 was successfully removed from the Active Directory directory service. The printer can no longer be located by searching Active Directory. No user action is required." />
+        <string id="event_MSG_PRUNING_NOUNC_PRINTER" value="The print spooler removed print queue %1 from the Active Directory directory service because it does not have a Universal Naming Convention (UNC) name or server name listed. No user action is required." />
+        <string id="event_MSG_PRUNING_ABSENT_PRINTER" value="The print spooler was unable to connect to print queue %1 based on the information published in the Active Directory. Error %2. No user action is required. If this print queue continues to be unreachable it may be removed from Active Directory." />
+        <string id="event_MSG_PRUNING_UNPUBLISHED_PRINTER" value="The print spooler removed print queue %1 from the Active Directory directory service. No user action is required." />
+        <string id="event_MSG_PRUNING_DUPLICATE_PRINTER" value="The print spooler removed print queue %1 from the Active Directory directory service because it is a duplicate of another print queue. No user action is required." />
+        <string id="event_MSG_PRUNING_PRINTER" value="The print spooler removed print queue %1 from the Active Directory directory service. No user action is required." />
+        <string id="event_MSG_CANT_PRUNE_PRINTER" value="Print queue %1 could not be deleted (pruned) from the Active Directory directory service.  Error: %2. The spooler will periodically try to remove the entry until it is successful. Continued failures may indicate an Active Directory problem, a basic network problem, or a communication problem between the domain controller and the print server." />
+        <string id="event_MSG_BAD_OEM_DRIVER" value="This version of %1 is incompatible with this version of Windows. Please obtain and install a new version of the driver from the manufacturer (if available), or choose an alternate driver that works with this print device." />
+        <string id="event_MSG_BACKUP_SPOOLER_REGISTRY" value="The print spooler failed to create a symbolic link between HKEY_LOCAL_MACHINE\\System\\CurrentControlSet\\Control\\Print\\Printers and HKEY_LOCAL_MACHINE\\Software\\Microsoft\\Windows NT\\CurrentVersion\\Print\\Printers. Error %1. This only affects older applications, but is probably a sign that the system itself is in a poor condition or that the print spooler does not have the proper registry permissions." />
+        <string id="event_MSG_BAD_JOB" value="Document %1 failed to print and was deleted because of corruption in the spooled file. The associated driver is: %2. Try printing the document again." />
+        <string id="event_MSG_KM_PRINTERS_BLOCKED" value="The attempt for %1 to use a Windows NT 4.0 (kernel mode) driver failed because this version of Windows does not support Windows NT 4.0 printer drivers. Please obtain and install a new version of the driver from the manufacturer (if available), or choose an alternate driver that works with this print device." />
+        <string id="event_MSG_DOCUMENT_PRIORITY_CHANGED" value="The priority of document %1, %2 owned by %3 was changed to %4 on %5. Windows prints the document with the highest priority number before other print jobs with lower priority numbers. Documents that are currently printing are unaffected by changes in priority. No user action is required." />
+        <string id="event_MSG_DOCUMENT_FAILED_ACCESS_DENIED" value="The document failed to print because the user did not have the necessary privileges." />
+        <string id="event_MSG_INIT_FAILED" value="%1 initialization failed at %2. Error: %3. This can occur because of system instability or a lack of system resources." />
+        <string id="event_MSG_CANT_ADD_UPDATE_CLUSTER_DRIVER" value="Failed to install or update driver %1 on cluster spooler resource %2. Win32 error: %3. The printer driver is different from the driver in use on other computers (nodes) in the cluster. This can occur because of a transient failure in replication between nodes." />
+        <string id="event_MSG_OFFLINE_PRINTER_ADD_FAILED" value="The attempt to install printer %1 into an offline operating system image failed with Win32 error code %2. This can occur if the printer driver requires user input or displays a user interface (UI) during installation." />
+        <string id="event_MSG_UPDATE_COLOR_PROFILE_FAILED" value="Updating the color profile failed for printer %1 with Win32 error code %2. The colors printed may not be correctly matched to the colors in the document being printed." />
+        <string id="event_MSG_PORT_INITIALIZATION_ERROR" value="Printer %1 failed to initialize its ports. Win32 error: %2. This error usually occurs because of a problem with the port monitor. Try recreating the port using a standard TCP/IP printer port, if possible. This problem does not affect other printers." />
+        <string id="event_MSG_PRINT_ON_PROC_FAILED_EX" value="The document %1, owned by %2, failed to print on printer %3. Try to print the document again, or restart the print spooler. %nData type: %4. Size of the spool file in bytes: %5. Number of bytes printed: %6. Total number of pages in the document: %7. Number of pages printed: %8. Client computer: %9. Win32 error code returned by the print processor: %10. %11" />
+        <string id="event_MSG_SPOOLER_OUT_GDI_RESOURCES" value="The spooler has detected that a component has an unusually large number of open Graphical Device Interface (GDI) objects. As a result, some enhanced metafile (EMF) print jobs might not print until the spooler is restarted." />
+        <string id="event_MSG_MACHINENAME_INIT_FAILED" value="The print spooler could not initialize because resolving the local machine name to IP addresses failed with error code %1. This may be a transient error. Try to manually restart the print spooler service (from Control Panel | Administrative Tools | Services or from an elevated command prompt running: net start spooler)." />
+        <string id="event_MSG_SPOOLER_CREATION_FAILED" value="The print spooler %1 failed to start. To determine the cause of this error, examine the preceding events in the Event Log." />
+        <string id="event_MSG_PRINT_PROC_NO_ENUM_DATA" value="Windows could not load print processor %1 because EnumDatatypes did not return any data. Module: %2. Please obtain and install a new version of the driver from the manufacturer (if available), or choose an alternate driver that works with this print device." />
+        <string id="event_MSG_PRINT_PROC_ENUM_DATA_FAILED" value="Windows could not load print processor %1 because EnumDatatypes failed. Error code %2. Module: %3. Please obtain and install a new version of the driver from the manufacturer (if available), or choose an alternate driver that works with this print device." />
+        <string id="event_MSG_BAD_SERVER_SEC_DESC" value="The print server security descriptor for %1 is invalid. The default print server security descriptor will be used." />
+        <string id="event_MSG_NO_PRINT_PROC_FOUND_FOR_PRINTER" value="Windows could not initialize printer %1 because the print processor %2 could not be found. Please obtain and install a new version of the driver from the manufacturer (if available), or choose an alternate driver that works with this print device." />
+        <string id="event_MSG_VERIFY_PACKAGE_INFORMATION_FOR_DRIVER_FAILED" value="The print spooler failed to verify printer driver package %1 for environment %2. Win32 system error code %3. This can occur after an operating system upgrade or because of data loss on the hard drive. The print spooler will try to regenerate the driver information from the driver store, which is where drivers are saved before they are installed. No user action is required." />
+        <string id="event_MSG_VERIFY_PACKAGE_INFORMATION_FAILED" value="The print spooler failed to verify printer driver package for environment %1. Win32 system error code %2. This can occur because of insufficient memory or other system failures. No user action is required." />
+        <string id="event_MSG_PACKAGE_REGENERATION_FOR_DRIVER_FAILED" value="The print spooler failed to regenerate the printer driver information for driver %1 for environment %2. Win32 system error code %3. This can occur after an operating system upgrade or because of data loss on the hard drive." />
+        <string id="SPOOLER_CSR_BOP_DISABLED" value="Connection '%1' has been reconfigured for normal operation because branch office printing has been disabled." />
+        <string id="SPOOLER_CSR_INCOMPATIBLE_BOP_QUEUE" value="Connection '%1' has been reconfigured for normal operation because the queue is incompatible with branch office printing." />
+        <string id="SPOOLER_CSR_QUEUE_CONFIGURED_TO_SSR" value="Connection '%1' has been reconfigured for normal operation because the queue has been configured for Server Side Rendering. To re-enable Branch Office Printing, enable the 'Render Jobs On Client' setting on the server queue." />
+        <string id="SPOOLER_CSR_BOP_UNSUPPORTED_BY_CLIENT" value="Connection '%1' has been reconfigured for normal operation because the client is incompatible with branch office printing." />
+        <string id="SPOOLER_CSR_BOP_UNSUPPORTED_BY_SERVER" value="Connection '%1' has been reconfigured for normal operation because the server is incompatible with branch office printing." />
+        <string id="SPOOLER_CSR_INCOMPATIBLE_REMOTE_PORT" value="Connection '%1' has been reconfigured for normal operation because the remote port is incompatible with branch office printing." />
+        <string id="SPOOLER_CSR_KEEP_PRINTED_JOBS_ENABLED" value="Connection '%1' has been reconfigured for normal operation because the 'Keep Printed Jobs' setting is enabled on the queue. To re-enable Branch Office Printing, disable the 'Keep Printed Jobs' setting on the server queue." />
+        <string id="SPOOLER_CSR_CONNECTION_RECONFIGURED" value="Connection '%1' has been reconfigured for normal operation due to an internal error, %2." />
+        <string id="SPOOLER_CSR_BOP_OFFLINE_LOG_ARCHIVE_FULL" value="The Offline EventLog on machine '%1' exceeded the allow maximum size. Some job events may have been lost." />
+        <string id="FORCED_DRIVER_ISOLATION_DISABLED.EventMessage" value="There were %1 print job failures out of %2 jobs sent to printer '%3' using driver '%4'. The printer driver isolation setting was updated to load the printer driver inside the print spooler process. No user action is required." />
+        <string id="PRINT_QUEUE_DEVNODE_CREATE_FAILED.EventMessage" value="The print spooler failed to create a Plug and Play printer device object for the printer '%1'. Print object instance identifier '%2'. Error code %3. This printer will not be fully functional until the print spooler service is restarted and the Plug and Play printer device object is successfully created." />
+        <string id="WSDMON_INITIALIZATION_FAILED_ASSOC_LISTENER.EventMessage" value="The WS-Print Port Monitor failed to initialize correctly. Creating the Device Association listener failed with the following error code: %1." />
+        <string id="SPOOLER_TASK_DEVICE_CONTROL.TaskMessage" value="Device Control Printing" />
+        <string id="DEVICE_CONTROL_PRINT_FAILED.EventMessage" value="The current print job was rejected due to Device Control Print Restrictions. Rejection Reason: %1, Printer: %2, Job or Document Name: %3, User Name: %4, Port Name: %5" />
+        <string id="displayName0" value="Print Spooler Service" />
+        <string id="displayName2" value="DefaultSpoolDirectory" />
+        <string id="displayName3" value="NetPopupToComputer" />
+        <string id="displayName5" value="NetPopup" />
+        <string id="displayName6" value="DefaultSpoolDirectory" />
+        <string id="displayName7" value="RetryPopup" />
+        <string id="displayName8" value="RestartJobOnPoolError" />
+        <string id="displayName9" value="RestartJobOnPoolEnabled" />
+        <string id="displayName10" value="RestartJobOnPoolEnabled" />
+        <string id="displayName21" value="EventLog" />
+        <string id="description0" value="Contains the core print spooler service." />
+        <string id="description2" value="DefaultSpoolDirectory" />
+        <string id="description4" value="MultiString" />
+        <string id="description6" value="PortsType" />
+        <string id="description8" value="serversType" />
+        <string id="description10" value="multiStringTypexX" />
+        <string id="description11" value="multiStringType" />
+        <string id="description12" value="NetPopupToComputer" />
+        <string id="description14" value="NetPopup" />
+        <string id="description15" value="DefaultSpoolDirectory" />
+        <string id="description16" value="RetryPopup" />
+        <string id="description17" value="RestartJobOnPoolError" />
+        <string id="description19" value="RestartJobOnPoolEnabled" />
+        <string id="description18" value="RestartJobOnPoolEnabled" />
+        <string id="description21" value="EventLog" />
+        <string id="description101" value="A canonical Printer will have this structure. This represents a single printer hardware." />
+        <string id="description102" value="DsDriverType" />
+        <string id="description100" value="List of print queues on this system" />
+        <string id="description103" value="DsSpoolerType" />
+        <string id="description104" value="PrinterDriverDataType" />
+        <string id="displayName36" value="Spooler Service ACL" />
+        <string id="description37" value="This specifies the service ACL for the Print Spooler service" />
+        <string id="displayName37" value="WRP_FILE_DEFAULT_SDDL" />
+        <string id="description38" value="Default SDDL for Windows Resource Protected file" />
+        <string id="displayName39" value="Device" />
+        <string id="description40" value="Default printer" />
+        <string id="description41" value="Default security descriptor for spool file directory" />
+        <string id="displayName41" value="Spool file directory security descriptor" />
+        <string id="description42" value="Default security descriptor for drivers directory" />
+        <string id="displayName42" value="Drivers directory security descriptor" />
+      </stringTable>
+    </resources>
+  </localization>
+  <migration settingsVersion="0">
+    <machineSpecific>
+      <migXml xmlns="">
+        <rules context="User">
+          <include>
+            <objectSet>
+              <pattern type="Registry">HKCU\Printers\Defaults\* [*]</pattern>
+            </objectSet>
+          </include>
+          <merge script="MigXmlHelper.DestinationPriority()">
+            <objectSet>
+              <pattern type="Registry">HKCU\Printers\Defaults\* [*]</pattern>
+            </objectSet>
+          </merge>
+        </rules>
+        <rules context="System">
+          <include>
+            <objectSet>
+              <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Control\Print\Monitors\Appmon\* [*]</pattern>
+            </objectSet>
+          </include>
+          <merge script="MigXmlHelper.DestinationPriority()">
+            <objectSet>
+              <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Control\Print\Monitors\Appmon\* [*]</pattern>
+            </objectSet>
+          </merge>
+        </rules>
+        <rules context="System">
+          <include>
+            <objectSet>
+              <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Control\Print\Monitors\3D Port\* [*]</pattern>
+            </objectSet>
+          </include>
+          <merge script="MigXmlHelper.DestinationPriority()">
+            <objectSet>
+              <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Control\Print\Monitors\3D Port\* [*]</pattern>
+            </objectSet>
+          </merge>
+        </rules>
+      </migXml>
+    </machineSpecific>
+    <supportedComponents>
+      <supportedComponent>
+        <assemblyIdentity name="_" version="1.0.0.0" />
+        <supportedComponentIdentity buildType="release" language="neutral" name="Microsoft-Windows-Printing-Spooler-Core" processorArchitecture="*" publicKeyToken="31bf3856ad364e35" settingsVersionRange="0" versionScope="nonSxS" xmlns="urn:schemas-microsoft-com:asm.v3" />
+      </supportedComponent>
+      <supportedComponent>
+        <assemblyIdentity name="_" version="1.0.0.0" />
+        <supportedComponentIdentity language="*" name="Microsoft-Windows-Printing-Spooler-Core-DL" processorArchitecture="*" settingsVersionRange="0" xmlns="urn:schemas-microsoft-com:asm.v3" />
+        <migXml xmlns="">
+          <rules context="System">
+            <merge script="MigXmlHelper.SourcePriority()">
+              <objectSet>
+                <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Control\Print\Providers [*]</pattern>
+                <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Print\Printers [DefaultSpoolDirectory]</pattern>
+              </objectSet>
+            </merge>
+          </rules>
+        </migXml>
+      </supportedComponent>
+    </supportedComponents>
+    <migrationDisplayID>Hardware\Printers_and_Faxes</migrationDisplayID>
+  </migration>
+</assembly>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-IIS-FTPSvc-GC" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <dependency discoverable="no" name="SharedLibraries">
+    <dependentAssembly dependencyType="prerequisite">
+      <assemblyIdentity name="Microsoft-Windows-IIS-SharedLibraries" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+    </dependentAssembly>
+  </dependency>
+  <dependency discoverable="no" name="SharedLibraries-ServerCommon">
+    <dependentAssembly dependencyType="prerequisite">
+      <assemblyIdentity name="Microsoft-Windows-IIS-SharedLibraries-ServerCommon" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+    </dependentAssembly>
+  </dependency>
+  <genericCommands>
+    <genericCommand arguments="/launch $(runtime.system32)\inetsrv\appcmd.exe reset config -section:system.ftpServer/providerDefinitions" executableName="$(runtime.system32)\inetsrv\iissetup.exe" />
+    <genericCommand arguments="/launch $(runtime.system32)\inetsrv\appcmd.exe reset config -section:system.ftpServer/log" executableName="$(runtime.system32)\inetsrv\iissetup.exe" />
+    <genericCommand arguments="/launch $(runtime.system32)\inetsrv\appcmd.exe reset config -section:system.ftpServer/firewallSupport" executableName="$(runtime.system32)\inetsrv\iissetup.exe" />
+    <genericCommand arguments="/launch $(runtime.system32)\inetsrv\appcmd.exe reset config -section:system.ftpServer/caching" executableName="$(runtime.system32)\inetsrv\iissetup.exe" />
+    <genericCommand arguments="/launch $(runtime.system32)\inetsrv\appcmd.exe reset config -section:system.ftpServer/security/ipSecurity" executableName="$(runtime.system32)\inetsrv\iissetup.exe" />
+    <genericCommand arguments="/launch $(runtime.system32)\inetsrv\appcmd.exe reset config -section:system.ftpServer/security/requestFiltering" executableName="$(runtime.system32)\inetsrv\iissetup.exe" />
+    <genericCommand arguments="/launch $(runtime.system32)\inetsrv\appcmd.exe reset config -section:system.ftpServer/security/authorization" executableName="$(runtime.system32)\inetsrv\iissetup.exe" />
+    <genericCommand arguments="/firewall FTPSvc" executableName="$(runtime.system32)\inetsrv\iissetup.exe" passes="configuration" />
+    <genericCommand arguments="/launch $(runtime.system32)\sc.exe sidtype ftpsvc unrestricted" executableName="$(runtime.system32)\inetsrv\iissetup.exe" passes="configuration" />
+    <genericCommand arguments="/install FTPSvc" executableName="$(runtime.system32)\inetsrv\iissetup.exe" />
+    <genericCommand arguments="/launch_uninstall $(runtime.system32)\inetsrv\appcmd.exe clear config -section:system.ftpServer/providerDefinitions" executableName="$(dependentAssembly.SharedLibraries-ServerCommon.path)\iissetup.exe" install="false" />
+    <genericCommand arguments="/launch_uninstall $(runtime.system32)\inetsrv\appcmd.exe clear config -section:system.ftpServer/log" executableName="$(dependentAssembly.SharedLibraries-ServerCommon.path)\iissetup.exe" install="false" />
+    <genericCommand arguments="/launch_uninstall $(runtime.system32)\inetsrv\appcmd.exe clear config -section:system.ftpServer/firewallSupport" executableName="$(dependentAssembly.SharedLibraries-ServerCommon.path)\iissetup.exe" install="false" />
+    <genericCommand arguments="/launch_uninstall $(runtime.system32)\inetsrv\appcmd.exe clear config -section:system.ftpServer/caching" executableName="$(dependentAssembly.SharedLibraries-ServerCommon.path)\iissetup.exe" install="false" />
+    <genericCommand arguments="/launch_uninstall $(runtime.system32)\inetsrv\appcmd.exe clear config -section:system.ftpServer/security/ipSecurity" executableName="$(dependentAssembly.SharedLibraries-ServerCommon.path)\iissetup.exe" install="false" />
+    <genericCommand arguments="/launch_uninstall $(runtime.system32)\inetsrv\appcmd.exe clear config -section:system.ftpServer/security/requestFiltering" executableName="$(dependentAssembly.SharedLibraries-ServerCommon.path)\iissetup.exe" install="false" />
+    <genericCommand arguments="/launch_uninstall $(runtime.system32)\inetsrv\appcmd.exe clear config -section:system.ftpServer/security/authorization" executableName="$(dependentAssembly.SharedLibraries-ServerCommon.path)\iissetup.exe" install="false" />
+    <genericCommand arguments="/uninstall FTPSvc" executableName="$(dependentAssembly.SharedLibraries-ServerCommon.path)\iissetup.exe" install="false" />
+  </genericCommands>
+</assembly>

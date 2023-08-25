@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-AppManagement-AppVSystem" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <file name="AppVClient.exe" destinationPath="$(runtime.system32)\" sourceName="AppVClient.exe" importPath="$(build.nttree)\AppV\client\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>IjzzUZW1KCzOW10qTBEMJseSajDjwT/Pu9G7A0TpO2U=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <file name="AppvVemgr.sys" destinationPath="$(runtime.drivers)\" sourceName="AppvVemgr.sys" importPath="$(build.nttree)\AppV\Drivers\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>kfx/3SaB50GscIUE/2dYk5k9eKVAJ+VKf7Wjl1bnPMA=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <file name="AppvVfs.sys" destinationPath="$(runtime.drivers)\" sourceName="AppvVfs.sys" importPath="$(build.nttree)\AppV\Drivers\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>J8GecFsp4OUV4vPeeP9nrK5q4rJjmUeEkd8ykefW++Y=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <file name="AppVStrm.sys" destinationPath="$(runtime.drivers)\" sourceName="AppVStrm.sys" importPath="$(build.nttree)\AppV\Drivers\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>gINAchij3PMDmJSTnB82n5IYC5bwGsO8OW5a5+ca1wI=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <memberships>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories" version="1.0.0.0" publicKeyToken="365143bb27e7ac8b" typeName="BootCritical" />
+    </categoryMembership>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories.Services" version="10.0.22621.1" publicKeyToken="31bf3856ad364e35" typeName="Service" />
+      <categoryInstance subcategory="AppVClient">
+        <serviceData name="AppVClient" displayName="@%systemroot%\system32\AppVClient.exe,-102" errorControl="normal" start="disabled" type="win32OwnProcess" description="@%systemroot%\system32\AppVClient.exe,-101" dependOnService="RpcSS,netprofm,AppvVfs,AppVStrm" imagePath="%systemroot%\system32\AppVClient.exe" objectName="LocalSystem">
+          <securityDescriptor name="APPV-SDDL" />
+        </serviceData>
+      </categoryInstance>
+      <categoryInstance>
+        <serviceData name="AppvVemgr" displayName="@%systemroot%\system32\drivers\AppvVemgr.sys,-101" errorControl="normal" start="demand" type="fileSystemDriver" description="@%systemroot%\system32\drivers\AppvVemgr.sys,-102" dependOnService="FltMgr" group="FSFilter Activity Monitor" imagePath="\SystemRoot\system32\drivers\AppvVemgr.sys" />
+      </categoryInstance>
+      <categoryInstance>
+        <serviceData name="AppvVfs" displayName="@%systemroot%\system32\drivers\AppvVfs.sys,-101" errorControl="normal" start="demand" type="fileSystemDriver" description="@%systemroot%\system32\drivers\AppvVfs.sys,-102" dependOnService="FltMgr,AppvVemgr" group="FSFilter Activity Monitor" imagePath="\SystemRoot\system32\drivers\AppvVfs.sys" />
+      </categoryInstance>
+      <categoryInstance>
+        <serviceData name="AppvStrm" displayName="@%systemroot%\system32\drivers\AppvStrm.sys,-101" errorControl="normal" start="demand" type="fileSystemDriver" description="@%systemroot%\system32\drivers\AppvStrm.sys,-102" dependOnService="FltMgr" group="FSFilter HSM" imagePath="\SystemRoot\system32\drivers\AppvStrm.sys" />
+      </categoryInstance>
+    </categoryMembership>
+  </memberships>
+  <registryKeys>
+    <registryKey keyName="HKEY_CLASSES_ROOT\AppID\{8D315960-32C4-4235-8369-901DF222816F}">
+      <registryValue name="" valueType="REG_SZ" value="AppVClient" />
+      <registryValue name="LocalService" valueType="REG_SZ" value="AppVClient" />
+      <registryValue name="ServiceParameters" valueType="REG_SZ" value="" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\AppID\AppVClient.exe">
+      <registryValue name="AppID" valueType="REG_SZ" value="{8D315960-32C4-4235-8369-901DF222816F}" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Microsoft.AppV.Client">
+      <registryValue name="" valueType="REG_SZ" value="Microsoft App-V Client Class" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Microsoft.AppV.Client\CurVer">
+      <registryValue name="" valueType="REG_SZ" value="Microsoft.AppV.Client.1" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Microsoft.AppV.Client.1">
+      <registryValue name="" valueType="REG_SZ" value="Microsoft App-V Client Class" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Microsoft.AppV.Client.1\CLSID">
+      <registryValue name="" valueType="REG_SZ" value="{F01D6448-0959-4E38-B6F6-B6643D4558FE}" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{F01D6448-0959-4E38-B6F6-B6643D4558FE}">
+      <registryValue name="" valueType="REG_SZ" value="Microsoft App-V Client Class" />
+      <registryValue name="AppID" valueType="REG_SZ" value="{8D315960-32C4-4235-8369-901DF222816F}" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{F01D6448-0959-4E38-B6F6-B6643D4558FE}\ProgID">
+      <registryValue name="" valueType="REG_SZ" value="Microsoft.AppV.Client.1" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{F01D6448-0959-4E38-B6F6-B6643D4558FE}\TypeLib">
+      <registryValue name="" valueType="REG_SZ" value="{6A125BC2-F756-45C7-B82D-C68427C7716D}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{F01D6448-0959-4E38-B6F6-B6643D4558FE}\Version">
+      <registryValue name="" valueType="REG_SZ" value="1.0" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{F01D6448-0959-4E38-B6F6-B6643D4558FE}\VersionIndependentProgID">
+      <registryValue name="" valueType="REG_SZ" value="Microsoft.AppV.Client" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{2281C1CE-2CB9-42E9-99D6-0888A99AFB68}">
+      <registryValue name="" valueType="REG_SZ" value="IAppVClient" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{2281C1CE-2CB9-42E9-99D6-0888A99AFB68}\ProxyStubClsid">
+      <registryValue name="" valueType="REG_SZ" value="{00020424-0000-0000-C000-000000000046}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{2281C1CE-2CB9-42E9-99D6-0888A99AFB68}\ProxyStubClsid32">
+      <registryValue name="" valueType="REG_SZ" value="{00020424-0000-0000-C000-000000000046}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{2281C1CE-2CB9-42E9-99D6-0888A99AFB68}\TypeLib">
+      <registryValue name="" valueType="REG_SZ" value="{6A125BC2-F756-45C7-B82D-C68427C7716D}" />
+      <registryValue name="Version" valueType="REG_SZ" value="1.0" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{57BB7098-DAEE-48C6-8C1A-EA12CD2DB64E}">
+      <registryValue name="" valueType="REG_SZ" value="IAppVClientEventSink" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{57BB7098-DAEE-48C6-8C1A-EA12CD2DB64E}\ProxyStubClsid">
+      <registryValue name="" valueType="REG_SZ" value="{1A7F9F39-FB98-4405-A66D-954E07714E2A}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{57BB7098-DAEE-48C6-8C1A-EA12CD2DB64E}\ProxyStubClsid32">
+      <registryValue name="" valueType="REG_SZ" value="{1A7F9F39-FB98-4405-A66D-954E07714E2A}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{57BB7098-DAEE-48C6-8C1A-EA12CD2DB64E}\TypeLib">
+      <registryValue name="" valueType="REG_SZ" value="{6A125BC2-F756-45C7-B82D-C68427C7716D}" />
+      <registryValue name="Version" valueType="REG_SZ" value="1.0" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\TypeLib\{6A125BC2-F756-45C7-B82D-C68427C7716D}\1.0">
+      <registryValue name="" valueType="REG_SZ" value="Microsoft App-V Client 1.0 Type Library" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\TypeLib\{6A125BC2-F756-45C7-B82D-C68427C7716D}\1.0\0\win32">
+      <registryValue name="" valueType="REG_SZ" value="$(runtime.system32)\AppVClient.exe" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\TypeLib\{6A125BC2-F756-45C7-B82D-C68427C7716D}\1.0\FLAGS">
+      <registryValue name="" valueType="REG_SZ" value="0" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\TypeLib\{6A125BC2-F756-45C7-B82D-C68427C7716D}\1.0\HELPDIR">
+      <registryValue name="" valueType="REG_SZ" value="$(runtime.system32)" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\AppvVemgr\Instances">
+      <registryValue name="DefaultInstance" valueType="REG_SZ" value="AppvVemgr Instance" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\AppvVemgr\Instances\AppvVemgr Instance">
+      <registryValue name="Altitude" valueType="REG_SZ" value="40800" />
+      <registryValue name="Flags" valueType="REG_DWORD" value="0x00000001" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\AppvVfs">
+      <registryValue name="DebugFlags" valueType="REG_DWORD" value="0x00000001" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\AppvVfs\Instances">
+      <registryValue name="DefaultInstance" valueType="REG_SZ" value="AppvVfs Instance" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\AppvVfs\Instances\AppvVfs Instance">
+      <registryValue name="Altitude" valueType="REG_SZ" value="404700" />
+      <registryValue name="Flags" valueType="REG_DWORD" value="0x00000001" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\AppvStrm\Instances">
+      <registryValue name="DefaultInstance" valueType="REG_SZ" value="AppvStrm Instance" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\AppvStrm\Instances\AppvStrm Instance">
+      <registryValue name="Altitude" valueType="REG_SZ" value="180710" />
+      <registryValue name="Flags" valueType="REG_DWORD" value="0x00000001" />
+    </registryKey>
+  </registryKeys>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="WRP_REGKEY_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;CI;GA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;CI;GR;;;SY)(A;CI;GR;;;BA)(A;CI;GR;;;BU)(A;CI;GR;;;S-1-15-2-1)(A;CI;GR;;;S-1-15-3-1024-1065365936-1281604716-3511738428-1654721687-432734479-3232135806-4053264122-3456934681)" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" />
+          <securityDescriptorDefinition name="APPV-SDDL" sddl="D:(A;;CCLCSWRPLORC;;;AU)(A;;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;BA)(A;;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;SY)S:(AU;FA;CCDCLCSWRPWPDTLOSDRCWDWO;;;WD)" operationHint="replace" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+</assembly>

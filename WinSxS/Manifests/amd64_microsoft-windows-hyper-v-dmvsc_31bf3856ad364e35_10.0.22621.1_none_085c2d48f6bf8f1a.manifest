@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved." xmlns:win="http://manifests.microsoft.com/win/2004/08/windows/events">
+  <assemblyIdentity name="Microsoft-Windows-Hyper-V-dmvsc" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <instrumentation>
+    <events xmlns="http://schemas.microsoft.com/win/2004/08/events">
+      <provider guid="{ba2ffb5c-e20a-4fb9-91b4-45f61b4b66a0}" message="$(string.Hyper-V-Dynamic-Memory-Provider)" messageFileName="%systemroot%\system32\drivers\dmvsc.sys" name="Microsoft-Windows-Hyper-V-Guest-Drivers-Dynamic-Memory" parameterFileName="%systemroot%\system32\drivers\dmvsc.sys" resourceFileName="%systemroot%\system32\drivers\dmvsc.sys" symbol="DMVSC_PROVIDER">
+        <channels>
+          <channel chid="Hyper-VGuestDriversDiagnoseEvents" isolation="System" message="$(string.Hyper-V-Guest-Drivers-Diagnose-Channel)" name="Microsoft-Windows-Hyper-V-Guest-Drivers/Diagnose" symbol="HyperV_Guest_Drivers_Diagnose_Events" type="Debug">$(string.Hyper-V-Guest-Drivers-Diagnose-Channel-Description)</channel>
+          <channel chid="Hyper-VGuestDriversDebugEvents" isolation="System" message="$(string.Hyper-V-Guest-Drivers-Debug-Channel)" name="Microsoft-Windows-Hyper-V-Guest-Drivers/Debug" symbol="HyperV_Guest_Drivers_Debug_Events" type="Debug">$(string.Hyper-V-Guest-Drivers-Debug-Channel-Description)</channel>
+          <channel chid="Hyper-VGuestDriversAnalyticEvents" isolation="System" message="$(string.Hyper-V-Guest-Drivers-Analytic-Channel)" name="Microsoft-Windows-Hyper-V-Guest-Drivers/Analytic" symbol="HyperV_Guest_Drivers_Analytic_Events" type="Analytic">$(string.Hyper-V-Guest-Drivers-Analytic-Channel-Description)</channel>
+          <channel chid="Hyper-VGuestDriversOperationalEvents" isolation="System" message="$(string.Hyper-V-Guest-Drivers-Operational-Channel)" name="Microsoft-Windows-Hyper-V-Guest-Drivers/Operational" symbol="HyperV_Guest_Drivers_Operational_Events" type="Operational">$(string.Hyper-V-Guest-Drivers-Operational-Channel-Description)</channel>
+          <channel chid="Hyper-VGuestDriversAdminEvents" enabled="true" isolation="System" message="$(string.Hyper-V-Guest-Drivers-Admin-Channel)" name="Microsoft-Windows-Hyper-V-Guest-Drivers/Admin" symbol="HyperV_Guest_Drivers_Admin_Events" type="Admin">$(string.Hyper-V-Guest-Drivers-Admin-Channel-Description)</channel>
+        </channels>
+      </provider>
+      <cmi />
+    </events>
+    <counters xmlns="http://schemas.microsoft.com/win/2005/12/counters" schemaVersion="2">
+      <provider applicationIdentity="%systemroot%\system32\drivers\dmvsc.sys" providerGuid="{A18453E4-433B-4D33-AC66-2551E3BBA9BE}" providerType="kernelMode">
+        <counterSet description="This counter set represents the statistics for Dynamic Memory Integration Services" descriptionID="3" guid="{66F19DFF-A4DD-4802-8FBB-29E6A54AF9DA}" instances="single" name="Hyper-V Dynamic Memory Integration Service" nameID="1" symbol="Channel" uri="Microsoft.Windows.Hyper-V.DMVSC">
+          <structs>
+            <struct name="DmStats" type="DM_STATISTICS" />
+          </structs>
+          <counter detailLevel="standard" field="MaximumMemory" id="1" name="Maximum Memory, Mbytes" nameID="5" struct="DmStats" type="perf_counter_large_rawcount" uri="Microsoft.Windows.Hyper-V.DMVSC.MaximumMemory" />
+        </counterSet>
+      </provider>
+    </counters>
+  </instrumentation>
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string id="Hyper-V-Dynamic-Memory-Provider" value="Microsoft-Windows-Hyper-V-Guest-Drivers" />
+        <string id="Hyper-V-Guest-Drivers-Diagnose-Channel" value="Microsoft-Hyper-V-Guest-Drivers-Diagnose" />
+        <string id="Hyper-V-Guest-Drivers-Diagnose-Channel-Description" value="This channel contains Hyper-V guest drivers Diagnostics events." />
+        <string id="Hyper-V-Guest-Drivers-Debug-Channel" value="Microsoft-Hyper-V-Guest-Drivers-Debug" />
+        <string id="Hyper-V-Guest-Drivers-Debug-Channel-Description" value="This channel contains Hyper-V guest drivers Debug events." />
+        <string id="Hyper-V-Guest-Drivers-Analytic-Channel" value="Microsoft-Hyper-V-Guest-Drivers-Analytic" />
+        <string id="Hyper-V-Guest-Drivers-Analytic-Channel-Description" value="This channel contains Hyper-V guest drivers Analytic events." />
+        <string id="Hyper-V-Guest-Drivers-Operational-Channel" value="Microsoft-Hyper-V-Guest-Drivers-Operational" />
+        <string id="Hyper-V-Guest-Drivers-Operational-Channel-Description" value="This channel contains Hyper-V guest drivers Operational events." />
+        <string id="Hyper-V-Guest-Drivers-Admin-Channel" value="Microsoft-Hyper-V-Guest-Drivers-Admin" />
+        <string id="Hyper-V-Guest-Drivers-Admin-Channel-Description" value="This channel contains Hyper-V guest drivers Admin events." />
+        <string id="event.DMCLOG_UNEXPECTED_FAILURE" value="The dynamic memory driver failed unexpectedly." />
+        <string id="event.DMCLOG_UNSUPPORTED_SKU" value="The dynamic memory driver failed because this version of Windows does not support this feature." />
+        <string id="event.DMCLOG_REVISION_MISMATCH" value="The dynamic memory driver failed because it is outdated and cannot communicate with the management operating system." />
+        <string id="event.DMCLOG_DEVICE_REMOVED" value="The dynamic memory driver failed because the device was removed." />
+        <string id="event.DMCLOG_UNSUPPORTED_NESTED" value="The dynamic memory driver failed because a nested instance of Hyper-V was detected." />
+        <string id="event.DMCLOG_OPERATION_FAILURE" value="The dynamic memory driver operation [%1] failed with error: %2." />
+        <string id="event.DMCLOG_MEMORY_OPERATION_FAILURE" value="The dynamic memory driver memory operation [%1] failed with error: %2." />
+        <string id="event.DMCLOG_POWER_CAPABILITIES_FAILURE" value="The system power capabilities could not be determined. Failed with error: %1." />
+        <string id="event.DMCLOG_MEMORY_OPERATION_SUCCEEDED" value="The dynamic memory driver memory operation [%1] succeeded. Page count processed: %2." />
+        <string id="event.DMCLOG_MEMORY_CAPABILITY" value="The following dynamic memory capability was exchanged - Highest hot add page: %1, Min page count: %2, IsHighestPageDetermined: %3, Supports hot add: %4, Supports hot remove: %5, Supports Contiguous Allocations: %6, Supports Fast Contiguous Allocations: %7, Supports huge page allocations: %8." />
+        <string id="event.DMCLOG_PROTOCOL_ACCEPT" value="The dynamic memory driver successfully negotiated the protocol version %1.%2." />
+        <string id="event.DMCLOG_S4_SYSTEM_STATE_HOT_ADD_REMOVE_UNSUPPORTED" value="Hibernate is supported. As a result, hot add and hot remove are not supported." />
+      </stringTable>
+    </resources>
+  </localization>
+</assembly>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-LanguageOverlay-ReconcileLanguageResourcesTask" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <taskScheduler>
+    <Task xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task">
+      <RegistrationInfo>
+        <Source>$(@%SystemRoot%\system32\LanguageOverlayServer.dll,-102)</Source>
+        <Author>$(@%SystemRoot%\system32\LanguageOverlayServer.dll,-102)</Author>
+        <Description>$(@%SystemRoot%\system32\LanguageOverlayServer.dll,-103)</Description>
+        <URI>\Microsoft\Windows\LanguageComponentsInstaller\ReconcileLanguageResources</URI>
+        <SecurityDescriptor>D:P(A;;FA;;;BA)(A;;FA;;;SY)(A;;FRFX;;;IU)</SecurityDescriptor>
+      </RegistrationInfo>
+      <Triggers>
+        <LogonTrigger>
+          <Repetition>
+            <Interval>P1D</Interval>
+            <StopAtDurationEnd>false</StopAtDurationEnd>
+          </Repetition>
+          <Delay>PT2H</Delay>
+        </LogonTrigger>
+      </Triggers>
+      <Principals>
+        <Principal id="InteractiveUsers">
+          <GroupId>S-1-5-4</GroupId>
+          <RunLevel>LeastPrivilege</RunLevel>
+        </Principal>
+      </Principals>
+      <Settings>
+        <MultipleInstancesPolicy>Queue</MultipleInstancesPolicy>
+        <DisallowStartIfOnBatteries>true</DisallowStartIfOnBatteries>
+        <StopIfGoingOnBatteries>false</StopIfGoingOnBatteries>
+        <AllowHardTerminate>true</AllowHardTerminate>
+        <StartWhenAvailable>true</StartWhenAvailable>
+        <RunOnlyIfNetworkAvailable>true</RunOnlyIfNetworkAvailable>
+        <IdleSettings>
+          <StopOnIdleEnd>true</StopOnIdleEnd>
+          <RestartOnIdle>false</RestartOnIdle>
+        </IdleSettings>
+        <AllowStartOnDemand>true</AllowStartOnDemand>
+        <Enabled>true</Enabled>
+        <Hidden>false</Hidden>
+        <RunOnlyIfIdle>false</RunOnlyIfIdle>
+        <DisallowStartOnRemoteAppSession>false</DisallowStartOnRemoteAppSession>
+        <UseUnifiedSchedulingEngine>true</UseUnifiedSchedulingEngine>
+        <WakeToRun>false</WakeToRun>
+        <ExecutionTimeLimit>PT1H</ExecutionTimeLimit>
+        <Priority>7</Priority>
+      </Settings>
+      <Actions Context="InteractiveUsers">
+        <ComHandler>
+          <ClassId>{D0582E3B-3126-4CAA-9155-AC37C912A489}</ClassId>
+        </ComHandler>
+      </Actions>
+    </Task>
+  </taskScheduler>
+</assembly>

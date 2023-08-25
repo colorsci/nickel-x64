@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-Network-EQoS" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <instrumentation>
+    <events xmlns="http://schemas.microsoft.com/win/2004/08/events" xmlns:ut="http://manifests.microsoft.com/win/2004/08/windows/networkevents" xmlns:win="http://manifests.microsoft.com/win/2004/08/windows/events" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <provider guid="{54CB22FF-26B4-4393-A8C2-6B0715912C5F}" message="$(string.EventProvider.Message)" messageFileName="%SystemRoot%\system32\eqossnap.dll" name="Microsoft-Windows-EQoS" resourceFileName="%SystemRoot%\system32\eqossnap.dll" symbol="EQOS_EVENT_PROVIDER">
+        <channels>
+          <channel chid="Channel.Operational" enabled="true" isolation="System" message="$(string.OperationalChannelName.Message)" name="Microsoft-Windows-Policy/Operational" type="Operational" />
+          <channel chid="Channel.Analytic" enabled="false" isolation="System" message="$(string.AnalyticChannelName.Message)" name="Microsoft-Windows-Policy/Analytic" type="Analytic">
+            <publishing>
+              <level>4</level>
+            </publishing>
+          </channel>
+        </channels>
+      </provider>
+      <cmi />
+    </events>
+    <counters xmlns="http://schemas.microsoft.com/win/2005/12/counters" schemaVersion="2.0">
+      <provider applicationIdentity="%SystemRoot%\system32\drivers\tcpip.sys" providerGuid="{2CCB0D8D-EA94-4235-986B-C97F61F63969}" providerType="kernelMode">
+        <counterSet description="This counter set consists of flow statistics specific to a network QoS policy." descriptionID="2002" guid="{EF82017E-50E2-4CA2-B9EC-B9895AB70E08}" instances="multiple" name="Network QoS Policy" nameID="2000" symbol="PolicyCounterSet" uri="Microsoft.Windows.Network.QoS.Policy">
+          <structs>
+            <struct name="PolicyCounters" type="UQOS_POLICY_COUNTERS" />
+          </structs>
+          <counter defaultScale="-3" description="The number of packets sent that are covered by this policy." descriptionID="2006" detailLevel="standard" field="PacketsTransmitted" id="0" name="Packets transmitted" nameID="2004" struct="PolicyCounters" type="perf_counter_rawcount" uri="Microsoft.Windows.Network.QoS.Policy.PacketsTransmitted" />
+          <counter defaultScale="-3" description="The number of packets sent per second that are covered by this policy." descriptionID="2010" detailLevel="standard" field="PacketsTransmittedPerSec" id="1" name="Packets transmitted/sec" nameID="2008" struct="PolicyCounters" type="perf_counter_counter" uri="Microsoft.Windows.Network.QoS.Policy.PacketsTransmittedPerSec" />
+          <counter defaultScale="-6" description="The number of bytes sent that are covered by this policy." descriptionID="2014" detailLevel="standard" field="BytesTransmitted" id="2" name="Bytes transmitted" nameID="2012" struct="PolicyCounters" type="perf_counter_large_rawcount" uri="Microsoft.Windows.Network.QoS.Policy.BytesTransmitted" />
+          <counter defaultScale="-3" description="The number of bytes sent per second that are covered by this policy." descriptionID="2018" detailLevel="standard" field="BytesTransmittedPerSec" id="3" name="Bytes transmitted/sec" nameID="2016" struct="PolicyCounters" type="perf_counter_bulk_count" uri="Microsoft.Windows.Network.QoS.Policy.BytesTransmittedPerSec" />
+          <counter defaultScale="0" description="The number of packets dropped that are covered by this policy." descriptionID="2022" detailLevel="standard" field="PacketsDropped" id="4" name="Packets dropped" nameID="2020" struct="PolicyCounters" type="perf_counter_rawcount" uri="Microsoft.Windows.Network.QoS.Policy.PacketsDropped" />
+          <counter defaultScale="0" description="The number of packets dropped per second that are covered by this policy." descriptionID="2026" detailLevel="standard" field="PacketsDroppedPerSec" id="5" name="Packets dropped/sec" nameID="2024" struct="PolicyCounters" type="perf_counter_counter" uri="Microsoft.Windows.Network.QoS.Policy.PacketsDroppedPerSec" />
+        </counterSet>
+      </provider>
+    </counters>
+  </instrumentation>
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string id="EventProvider.Message" value="Microsoft-Windows-Policy-based QoS" />
+        <string id="OperationalChannelName.Message" value="Microsoft-Windows-Policy-based QoS/Operational" />
+        <string id="AnalyticChannelName.Message" value="Microsoft-Windows-Policy-based QoS/Analytic" />
+        <string id="Map.PolicyType.User.Message" value="User" />
+        <string id="Map.PolicyType.Computer.Message" value="Computer" />
+        <string id="Map.TcpAutotuningLevel.NotConfigured.Message" value="Setting value is not specified by any QoS policy. Local computer default will be applied." />
+        <string id="Map.TcpAutotuningLevel.Off.Message" value="Setting value is Level 0 (minimum throughput)." />
+        <string id="Map.TcpAutotuningLevel.HighlyRestricted.Message" value="Setting value is Level 1." />
+        <string id="Map.TcpAutotuningLevel.Restricted.Message" value="Setting value is Level 2." />
+        <string id="Map.TcpAutotuningLevel.Normal.Message" value="Setting value is Level 3 (maximum throughput)." />
+        <string id="Map.AppMarkingSetting.NotConfigured.Message" value="Setting value is not specified by any QoS policy. Local computer default will be applied. By default, applications can set DSCP values independently of QoS policies." />
+        <string id="Map.AppMarkingSetting.Ignored.Message" value="Application DSCP marking requests will be ignored. Only QoS policies can set DSCP values." />
+        <string id="Map.AppMarkingSetting.Allowed.Message" value="Applications can set DSCP values independently of QoS policies." />
+        <string id="Event.PolicyRefreshNoChangeInfo.Message" value="%1 QoS policies successfully refreshed. No changes detected." />
+        <string id="Event.PolicyRefreshWithChangeInfo.Message" value="%1 QoS policies successfully refreshed. Policy changes detected." />
+        <string id="Event.TcpAutotuningLevelInfo.Message" value="The Advanced QoS Setting for inbound TCP throughput level successfully refreshed. %1" />
+        <string id="Event.AppMarkingSettingInfo.Message" value="The Advanced QoS Setting for DSCP marking overrides successfully refreshed. %1" />
+        <string id="Event.LocalSettingDontUseNlaInfo.Message" value="Selective application of legacy QoS policies based on domain or non-domain network category has been disabled on this machine. QoS policies will be applied to all network interfaces." />
+        <string id="Event.UrlQosApplicationConflictInfo.Message" value="In the past %1 hour(s) and %2 minute(s), %3 HTTP.SYS responses have had their application requested QoS conflict with URL QoS policies." />
+        <string id="Event.MinBwMixWarning.Message" value="There is at least one policy containing minimum bandwidth specification and at least one other policy that does not. It is generally not a good idea to mix these two classes of policies on the same system." />
+        <string id="Event.PolicyVersionWarning.Message" value="A %1 QoS policy &quot;%2&quot; has an invalid version number. This policy will not be applied." />
+        <string id="Event.PolicyProfileNotSpecifiedWarning.Message" value="A %1 QoS policy &quot;%2&quot; does not specify a QoS parameter (e.g. DSCP value, throttle rate, etc.) This policy will not be applied." />
+        <string id="Event.PolicyConflictWarning.Message" value="A %1 QoS policy &quot;%2&quot; potentially conflicts with other QoS policies. See documentation for rules about which policy will be applied at packet send time." />
+        <string id="Event.PolicyNoFullpathAppnameWarning.Message" value="A %1 QoS policy &quot;%2&quot; was ignored because the application path could not be processed. The application path may be totally invalid, or has an invalid drive letter, or contains network-mapped drive letter." />
+        <string id="Event.PolicyRefreshError.Message" value="%1 QoS policies failed to refresh. Error code: %2" />
+        <string id="Event.PolicyKeynameTooLongError.Message" value="A %1 QoS policy exceeds the maximum allowed name length. The offending policy is listed under the relevant policy root key with index %2." />
+        <string id="Event.PolicyKeynameSizeZeroError.Message" value="A %1 QoS policy has a zero length name. The offending policy is listed under the relevant policy root key with index %2." />
+        <string id="Event.OpeningPolicySubkeyError.Message" value="Failed to open the registry subkey for a %1 QoS policy. The policy is listed under the relevant policy root key with index %2." />
+        <string id="Event.ProcessingPolicyFieldError.Message" value="Failed to read or validate the &quot;%2&quot; field for %1 QoS policy named &quot;%3&quot;." />
+        <string id="Event.SettingTcpAutotuningError.Message" value="Failed to read or set inbound TCP throughput level. Error code: %1" />
+        <string id="Event.SettingAppMarkingError.Message" value="Failed to read or set the DSCP marking override setting. Error code: %1" />
+      </stringTable>
+    </resources>
+  </localization>
+</assembly>

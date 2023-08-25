@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-NetBT-MinWin" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <file name="netbt.sys" destinationPath="$(runtime.drivers)\" sourceName="netbt.sys" importPath="$(build.nttree)\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>wKMvpwmWId+7/Y7NCuVb20R07cjv766RoQz005+hFoY=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <memberships>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories.Services" version="10.0.22621.1" publicKeyToken="31bf3856ad364e35" typeName="Service" />
+      <categoryInstance subcategory="netbt">
+        <serviceData name="netbt" displayName="@%SystemRoot%\system32\drivers\netbt.sys,-2" errorControl="normal" start="system" type="kernelDriver" description="@%SystemRoot%\system32\drivers\netbt.sys,-1" dependOnService="Tdx,tcpip" group="PNP_TDI" imagePath="System32\DRIVERS\netbt.sys">
+          <securityDescriptor name="NetBIOSServiceACL" />
+        </serviceData>
+      </categoryInstance>
+    </categoryMembership>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories" version="1.0.0.0" publicKeyToken="365143bb27e7ac8b" typeName="BootCritical" />
+    </categoryMembership>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories" version="1.0.0.0" publicKeyToken="365143bb27e7ac8b" typeName="BootRecovery" />
+    </categoryMembership>
+  </memberships>
+  <networkComponents>
+    <protocolDriver bindName="NetBT" displayName="@%windir%\system32\drivers\netbt.sys,-3" hidden="true" identifier="ms_netbt" nonUserRemovable="true">
+      <bind keyword="tdi" ruleType="lower" />
+      <bind keyword="netbios" ruleType="upper" />
+      <property name="NETSETUPPKEY_Driver_NtServiceName" type="string" value="NetBT" />
+      <property name="NETSETUPPKEY_INF_Name" type="string" value="nettcpip.inf" />
+      <property name="NETSETUPPKEY_INF_Section" type="string" value="MS_WINS.PrimaryInstall" />
+      <property name="NETSETUPPKEY_INF_Characteristics" type="uint32" value="0x28" />
+    </protocolDriver>
+    <protocolDriver bindName="NetbiosSmb" displayName="@%windir%\system32\drivers\netbt.sys,-4" hidden="true" identifier="ms_netbt_smb" nonUserRemovable="true">
+      <bind keyword="netbios_smb" ruleType="upper" />
+      <property name="NETSETUPPKEY_INF_Name" type="string" value="nettcpip.inf" />
+      <property name="NETSETUPPKEY_INF_Section" type="string" value="MS_NETBT_SMB.PrimaryInstall" />
+      <property name="NETSETUPPKEY_INF_Characteristics" type="uint32" value="0x38" />
+    </protocolDriver>
+  </networkComponents>
+  <registryKeys>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\WMI\Autologger\NBSMBLOGGER">
+      <registryValue name="GUID" valueType="REG_SZ" value="{0A26649A-89EE-4ad5-83F2-AB28811C6729}" />
+      <registryValue name="Start" valueType="REG_DWORD" value="0x00000000" />
+      <registryValue name="LogFileMode" valueType="REG_DWORD" value="0x00008400" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\WMI\AutoLogger\NBSMBLOGGER\{bca7bd7f-b0bf-4051-99f4-03cfe79664c1}">
+      <registryValue name="_Description" valueType="REG_SZ" value="NetBT Trace Provider" />
+      <registryValue name="LoggerName" valueType="REG_SZ" value="netbtlogger" />
+      <registryValue name="Enabled" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="EnableLevel" valueType="REG_DWORD" value="0x00000005" />
+      <registryValue name="EnableFlags" valueType="REG_DWORD" value="0x7FFFFFFF" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\WMI\AutoLogger\NBSMBLOGGER\{81f307db-f5fb-4c3e-9b9d-8b39a9cb6198}">
+      <registryValue name="_Description" valueType="REG_SZ" value="lmhsvc Trace Provider" />
+      <registryValue name="LoggerName" valueType="REG_SZ" value="lmhsvclogger" />
+      <registryValue name="Enabled" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="EnableLevel" valueType="REG_DWORD" value="0x00000005" />
+      <registryValue name="EnableFlags" valueType="REG_DWORD" value="0x7FFFFFFF" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Eventlog\System\NetBT">
+      <registryValue name="EventMessageFile" valueType="REG_EXPAND_SZ" value="%SystemRoot%\System32\netevent.dll" />
+      <registryValue name="TypesSupported" valueType="REG_DWORD" value="0x00000007" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\NetBT">
+      <overridable name="Start" scope="Microsoft" type="REG_DWORD" />
+      <securityDescriptor name="Service key security" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\NetBT\Parameters">
+      <securityDescriptor name="Parameters key security" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\NetBT\Parameters\Interfaces">
+      <securityDescriptor name="Parameters key security" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\NetBT\Linkage">
+      <registryValue name="OtherDependencies" valueType="REG_MULTI_SZ" value="Tcpip" />
+    </registryKey>
+  </registryKeys>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="NetBIOSServiceACL" sddl="D:(A;;CCLCSWLOCRRC;;;AU)(A;;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;BA)(A;;CCLCSWRPWPDTLOCRRC;;;SO)(A;;CCLCSWRPWPDTLOCRRC;;;SY)(A;;DT;;;LS)(A;;DT;;;NS)(A;;CCLCSWRPLOCRRC;;;NO)" operationHint="replace" />
+          <securityDescriptorDefinition name="Service key security" sddl="D:P(A;CI;GR;;;BU)(A;CI;GA;;;BA)(A;CI;GA;;;SY)(A;CI;GR;;;NS)(A;CI;GR;;;LS)(A;CI;CCLCSWRPRC;;;NO)(A;CIIO;RC;;;OW)(A;CI;GR;;;S-1-15-2-1)" operationHint="replace" />
+          <securityDescriptorDefinition name="Parameters key security" sddl="D:P(A;CI;GR;;;BU)(A;CI;GA;;;BA)(A;CI;GA;;;SY)(A;CI;GR;;;NS)(A;CI;GR;;;LS)(A;CI;CCDCLCSWRPSDRC;;;NO)(A;CI;GA;;;S-1-5-80-2940520708-3855866260-481812779-327648279-1710889582)(A;CIIO;RC;;;OW)(A;CI;GR;;;S-1-15-2-1)" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" description="Default SDDL for Windows Resource Protected file" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+</assembly>

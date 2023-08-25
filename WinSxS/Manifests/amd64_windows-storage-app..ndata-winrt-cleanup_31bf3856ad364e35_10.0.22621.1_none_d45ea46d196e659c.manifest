@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Windows-Storage-ApplicationData-WinRT-Cleanup" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <taskScheduler>
+    <Task xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task">
+      <Actions Context="LocalSystem">
+        <Exec>
+          <Command>%windir%\system32\rundll32.exe</Command>
+          <Arguments>Windows.Storage.ApplicationData.dll,CleanupTemporaryState</Arguments>
+        </Exec>
+      </Actions>
+      <Principals>
+        <Principal id="LocalSystem">
+          <UserId>S-1-5-18</UserId>
+        </Principal>
+      </Principals>
+      <RegistrationInfo>
+        <Author>$(@%systemroot%\system32\Windows.Storage.ApplicationData.dll,-5002)</Author>
+        <Description>$(@%systemroot%\system32\Windows.Storage.ApplicationData.dll,-5003)</Description>
+        <Source>$(@%systemroot%\system32\Windows.Storage.ApplicationData.dll,-5001)</Source>
+        <SecurityDescriptor>D:(A;;FRFX;;;BA)(A;;FA;;;SY)</SecurityDescriptor>
+        <URI>Microsoft\Windows\ApplicationData\CleanupTemporaryState</URI>
+      </RegistrationInfo>
+      <Settings>
+        <AllowStartOnDemand>true</AllowStartOnDemand>
+        <Enabled>true</Enabled>
+        <MaintenanceSettings>
+          <Deadline>P1M</Deadline>
+          <Exclusive>false</Exclusive>
+          <Period>P7D</Period>
+        </MaintenanceSettings>
+        <MultipleInstancesPolicy>IgnoreNew</MultipleInstancesPolicy>
+        <StartWhenAvailable>true</StartWhenAvailable>
+        <RunOnlyIfIdle>false</RunOnlyIfIdle>
+        <UseUnifiedSchedulingEngine>true</UseUnifiedSchedulingEngine>
+        <WakeToRun>false</WakeToRun>
+      </Settings>
+    </Task>
+  </taskScheduler>
+</assembly>

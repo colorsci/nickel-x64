@@ -1,0 +1,555 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved." xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <assemblyIdentity name="Microsoft-Windows-Time-Service" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <dependency discoverable="no" resourceType="Resources">
+    <dependentAssembly dependencyType="prerequisite">
+      <assemblyIdentity name="Microsoft-Windows-Time-Service.Resources" version="10.0.22621.1" processorArchitecture="amd64" language="*" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+    </dependentAssembly>
+  </dependency>
+  <file name="w32time.dll" destinationPath="$(runtime.system32)\" sourceName="w32time.dll" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>CW0fbW6dMQEvWZg10UcZ2ED8evcMaxmUmAcM81AIrL4=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <memberships>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories.Services" version="10.0.22621.1" publicKeyToken="31bf3856ad364e35" typeName="Service" />
+      <categoryInstance subcategory="w32time">
+        <serviceData name="w32time" displayName="@%SystemRoot%\system32\w32time.dll,-200" errorControl="normal" start="demand" type="win32ShareProcess" description="@%SystemRoot%\system32\w32time.dll,-201" imagePath="%SystemRoot%\system32\svchost.exe -k LocalService" objectName="NT AUTHORITY\LocalService" requiredPrivileges="SeAuditPrivilege,SeChangeNotifyPrivilege,SeCreateGlobalPrivilege,SeSystemTimePrivilege,SeImpersonatePrivilege" sidType="unrestricted">
+          <serviceTrigger action="start" subtype="DOMAIN_JOIN" type="DomainAvailability" />
+          <failureActions resetPeriod="86400">
+            <actions>
+              <action delay="60000" type="restartService" />
+              <action delay="120000" type="restartService" />
+              <action delay="0" type="none" />
+            </actions>
+          </failureActions>
+          <securityDescriptor name="W32TIME Service Security Descriptor" />
+        </serviceData>
+      </categoryInstance>
+    </categoryMembership>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories" version="1.0.0.0" publicKeyToken="365143bb27e7ac8b" typeName="BootRecovery" />
+    </categoryMembership>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories" version="1.0.0.0" publicKeyToken="365143bb27e7ac8b" typeName="SvcHost" />
+      <categoryInstance subcategory="LocalService">
+        <serviceGroup position="last" serviceName="w32time" />
+      </categoryInstance>
+    </categoryMembership>
+  </memberships>
+  <taskScheduler>
+    <Task xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task">
+      <RegistrationInfo>
+        <Source>$(@%systemroot%\system32\w32time.dll,-200)</Source>
+        <Author>$(@%systemroot%\system32\w32time.dll,-202)</Author>
+        <Description>$(@%systemroot%\system32\w32time.dll,-201)</Description>
+        <URI>Microsoft\Windows\Time Synchronization\SynchronizeTime</URI>
+      </RegistrationInfo>
+      <Settings>
+        <Enabled>true</Enabled>
+        <UseUnifiedSchedulingEngine>true</UseUnifiedSchedulingEngine>
+        <AllowStartOnDemand>true</AllowStartOnDemand>
+        <MultipleInstancesPolicy>IgnoreNew</MultipleInstancesPolicy>
+        <DisallowStartIfOnBatteries>true</DisallowStartIfOnBatteries>
+        <StopIfGoingOnBatteries>true</StopIfGoingOnBatteries>
+        <StartWhenAvailable>true</StartWhenAvailable>
+        <WakeToRun>false</WakeToRun>
+        <AllowHardTerminate>true</AllowHardTerminate>
+        <RunOnlyIfNetworkAvailable>true</RunOnlyIfNetworkAvailable>
+        <Hidden>false</Hidden>
+        <MaintenanceSettings>
+          <Period>P1D</Period>
+          <Deadline>P2D</Deadline>
+        </MaintenanceSettings>
+      </Settings>
+      <Principals>
+        <Principal id="LocalService">
+          <UserId>S-1-5-19</UserId>
+          <RunLevel>HighestAvailable</RunLevel>
+        </Principal>
+      </Principals>
+      <Actions Context="LocalService">
+        <Exec>
+          <Command>%windir%\system32\sc.exe</Command>
+          <Arguments>start w32time task_started</Arguments>
+        </Exec>
+      </Actions>
+    </Task>
+  </taskScheduler>
+  <registryKeys>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\W32Time">
+      <overridable name="Start" scope="Microsoft" type="REG_DWORD" />
+      <securityDescriptor name="W32TIME Service Setting SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\W32Time\Parameters">
+      <registryValue name="ServiceDll" valueType="REG_EXPAND_SZ" value="%systemroot%\system32\w32time.dll" />
+      <registryValue name="ServiceMain" valueType="REG_SZ" value="SvchostEntry_W32Time" />
+      <registryValue name="ServiceDllUnloadOnStop" valueType="REG_DWORD" value="0x00000001" />
+      <securityDescriptor name="W32TIME Service Setting SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Eventlog\System\W32Time">
+      <registryValue name="EventMessageFile" valueType="REG_EXPAND_SZ" value="%Systemroot%\system32\w32time.dll" />
+      <registryValue name="TypesSupported" valueType="REG_DWORD" value="0x00000007" />
+      <registryValue name="ProviderGuid" valueType="REG_SZ" value="{06EDCFEB-0FD0-4E53-ACCA-A6F8BBF81BCB}" />
+      <securityDescriptor name="W32TIME Service Setting SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\w32time\Config">
+      <securityDescriptor name="W32TIME Service Configuration SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\w32time\TimeProviders">
+      <securityDescriptor name="W32TIME Service Configuration SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\w32time\TimeProviders\NtpClient">
+      <registryValue name="DllName" valueType="REG_EXPAND_SZ" value="%systemroot%\system32\w32time.dll" />
+      <securityDescriptor name="W32TIME Service Configuration SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\w32time\TimeProviders\NtpServer">
+      <registryValue name="DllName" valueType="REG_EXPAND_SZ" value="%systemroot%\system32\w32time.dll" />
+      <securityDescriptor name="W32TIME Service Configuration SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\W32Time\SecureTimeLimits">
+      <securityDescriptor name="W32TIME Service Setting SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\SharedAccess\Parameters\FirewallPolicy\RestrictedServices\Static\System">
+      <registryValue name="W32Time-1" valueType="REG_SZ" value="V2.0|Action=Allow|Dir=In|Protocol=17|LPort=123|App=%SystemRoot%\System32\svchost.exe|Svc=W32Time|Name=Allow inbound UDP traffic to NTP port 123|" />
+      <registryValue name="W32Time-2" valueType="REG_SZ" value="V2.0|Action=Allow|Dir=Out|Protocol=17|LPort=123|RPort=123|App=%SystemRoot%\System32\svchost.exe|Svc=W32Time|Name=Allow outbound UDP traffic from local NTP port 123 to remote NTP port 123|" />
+    </registryKey>
+  </registryKeys>
+  <migration settingsVersion="0">
+    <migXml xmlns="">
+      <rules context="System">
+        <include>
+          <objectSet>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\w32time\* [*]</pattern>
+          </objectSet>
+        </include>
+        <exclude>
+          <objectSet>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\W32time [RequiredPrivileges]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\W32Time\TriggerInfo\1\* [*]</pattern>
+          </objectSet>
+        </exclude>
+        <merge script="MigXmlHelper.SourcePriority()">
+          <objectSet>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\w32time\* [*]</pattern>
+          </objectSet>
+        </merge>
+      </rules>
+    </migXml>
+    <supportedComponents>
+      <supportedComponent>
+        <assemblyIdentity name="_" version="1.0.0.0" />
+        <supportedComponentIdentity buildType="release" language="neutral" name="Microsoft-Windows-Time-Service" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" settingsVersionRange="0" versionScope="nonSxS" xmlns="urn:schemas-microsoft-com:asm.v3" />
+        <migXml xmlns="">
+          <rules context="System">
+            <exclude>
+              <objectSet>
+                <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\W32time [RequiredPrivileges]</pattern>
+                <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\W32Time\TriggerInfo\1\* [*]</pattern>
+              </objectSet>
+            </exclude>
+            <merge script="MigXmlHelper.SourcePriority()">
+              <objectSet>
+                <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\w32time\* [*]</pattern>
+              </objectSet>
+            </merge>
+          </rules>
+        </migXml>
+      </supportedComponent>
+      <supportedComponent>
+        <assemblyIdentity name="_" version="1.0.0.0" />
+        <supportedComponentIdentity buildType="release" language="neutral" name="Product-coresystemserver__Microsoft-Windows-Time-Service" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" settingsVersionRange="0" versionScope="nonSxS" xmlns="urn:schemas-microsoft-com:asm.v3" />
+        <migXml xmlns="">
+          <rules context="System">
+            <exclude>
+              <objectSet>
+                <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\W32time [RequiredPrivileges]</pattern>
+                <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\W32Time\TriggerInfo\1\* [*]</pattern>
+              </objectSet>
+            </exclude>
+            <merge script="MigXmlHelper.SourcePriority()">
+              <objectSet>
+                <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\w32time\* [*]</pattern>
+              </objectSet>
+            </merge>
+          </rules>
+        </migXml>
+      </supportedComponent>
+    </supportedComponents>
+  </migration>
+  <asmv3:configuration xmlns:asmv3="urn:schemas-microsoft-com:asm.v3" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State">
+    <asmv3:configurationSchema>
+      <xsd:schema xmlns="Microsoft-Windows-Time-Service" targetNamespace="Microsoft-Windows-Time-Service">
+        <xsd:simpleType name="ServiceStartTypeOndemandOrAuto" wcm:description="Service Start Type">
+          <xsd:restriction base="xsd:integer">
+            <xsd:enumeration value="2" />
+            <xsd:enumeration value="3" />
+          </xsd:restriction>
+        </xsd:simpleType>
+        <xsd:simpleType name="ServiceTriggerAction" wcm:description="Service Trigger Action Type">
+          <xsd:restriction base="xsd:integer">
+            <xsd:enumeration value="1" />
+            <xsd:enumeration value="2" />
+          </xsd:restriction>
+        </xsd:simpleType>
+        <xsd:complexType name="AdvancedType" wcm:description="Advanced Setting">
+          <xsd:sequence>
+            <xsd:element default="4" name="FrequencyCorrectRate" type="xsd:unsignedInt" />
+            <xsd:element default="5" name="PollAdjustFactor" type="xsd:unsignedInt" />
+            <xsd:element default="50000000" name="LargePhaseOffset" type="xsd:unsignedInt" />
+            <xsd:element default="900" name="SpikeWatchPeriod" type="xsd:unsignedInt" />
+            <xsd:element default="10" name="LocalClockDispersion" type="xsd:unsignedInt" />
+            <xsd:element default="5" name="HoldPeriod" type="xsd:unsignedInt" />
+            <xsd:element default="1" name="PhaseCorrectRate" type="xsd:unsignedInt" />
+            <xsd:element default="360000" name="UpdateInterval" type="xsd:unsignedInt" />
+          </xsd:sequence>
+        </xsd:complexType>
+        <xsd:complexType name="ConfigurationType" wcm:description="Configuration Setting">
+          <xsd:sequence>
+            <xsd:element default="2" name="EventLogFlags" type="xsd:unsignedInt" />
+            <xsd:element default="10" name="AnnounceFlags" type="xsd:unsignedInt" />
+            <xsd:element default="28800" name="TimeJumpAuditOffset" type="xsd:unsignedInt" />
+            <xsd:element default="50000" name="ClockHoldoverPeriod" type="xsd:unsignedInt" />
+            <xsd:element default="10" name="MinPollInterval" type="xsd:unsignedInt" />
+            <xsd:element default="15" name="MaxPollInterval" type="xsd:unsignedInt" />
+            <xsd:element default="54000" name="MaxNegPhaseCorrection" type="xsd:unsignedInt" />
+            <xsd:element default="54000" name="MaxPosPhaseCorrection" type="xsd:unsignedInt" />
+            <xsd:element default="1" name="MaxAllowedPhaseOffset" type="xsd:unsignedInt" />
+            <xsd:element default="1" name="UtilizeSslTimeData" type="xsd:unsignedInt" />
+            <xsd:element default="130828608000000000" name="LastKnownGoodTime" type="xsd:unsignedLong" />
+            <xsd:element default="800" name="ClockAdjustmentAuditLimit" type="xsd:unsignedInt" />
+          </xsd:sequence>
+        </xsd:complexType>
+        <xsd:complexType name="NtpClientType" wcm:description="NtpClient Setting">
+          <xsd:sequence>
+            <xsd:element default="true" name="Enabled" type="xsd:boolean" />
+            <xsd:element default="true" name="InputProvider" type="xsd:boolean" />
+            <xsd:element default="true" name="AllowNonstandardModeCombinations" type="xsd:boolean" />
+            <xsd:element default="2" name="CrossSiteSyncFlags" type="xsd:unsignedInt" />
+            <xsd:element default="15" name="ResolvePeerBackoffMinutes" type="xsd:unsignedInt" />
+            <xsd:element default="7" name="ResolvePeerBackoffMaxTimes" type="xsd:unsignedInt" />
+            <xsd:element default="2147483648" name="CompatibilityFlags" type="xsd:unsignedInt" />
+            <xsd:element default="1" name="EventLogFlags" type="xsd:unsignedInt" />
+            <xsd:element default="3" name="LargeSampleSkew" type="xsd:unsignedInt" />
+            <xsd:element default="32768" name="SpecialPollInterval" type="xsd:unsignedInt" />
+            <xsd:element default="" name="SpecialPollTimeRemaining" type="wcm:multiString" />
+            <xsd:element default="1" name="SignatureAuthAllowed" type="xsd:unsignedInt" />
+          </xsd:sequence>
+        </xsd:complexType>
+        <xsd:complexType name="NtpSeverType" wcm:description="NtpServer Setting">
+          <xsd:sequence>
+            <xsd:element default="false" name="Enabled" type="xsd:boolean" />
+            <xsd:element default="false" name="InputProvider" type="xsd:boolean" />
+            <xsd:element default="true" name="AllowNonstandardModeCombinations" type="xsd:boolean" />
+            <xsd:element default="0" name="EventLogFlags" type="xsd:unsignedInt" />
+            <xsd:element default="0" name="RequireSecureTimeSyncRequests" type="xsd:unsignedInt" />
+            <xsd:element default="16" name="ChainEntryTimeout" type="xsd:unsignedInt" />
+            <xsd:element default="128" name="ChainMaxEntries" type="xsd:unsignedInt" />
+            <xsd:element default="4" name="ChainMaxHostEntries" type="xsd:unsignedInt" />
+            <xsd:element default="false" name="ChainDisable" type="xsd:boolean" />
+            <xsd:element default="30" name="ChainLoggingRate" type="xsd:unsignedInt" />
+          </xsd:sequence>
+        </xsd:complexType>
+        <xsd:complexType name="ParameterType" wcm:description="Parameters">
+          <xsd:sequence>
+            <xsd:element default="NTP" name="Type" type="xsd:string" />
+            <xsd:element default="time.windows.com,0x9" name="NtpServer" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+        <xsd:complexType name="TimeProvidersType" wcm:description="Time Providers">
+          <xsd:sequence>
+            <xsd:element minOccurs="0" name="NtpClient" type="NtpClientType" />
+            <xsd:element minOccurs="0" name="NtpServer" type="NtpSeverType" />
+          </xsd:sequence>
+        </xsd:complexType>
+        <xsd:complexType name="SecureTimeLimitsType" wcm:description="Secure Time Limits">
+          <xsd:sequence>
+            <xsd:element default="130828608000000000" name="SecureTimeLow" type="xsd:unsignedLong" />
+            <xsd:element default="130828608000000000" name="SecureTimeHigh" type="xsd:unsignedLong" />
+            <xsd:element default="130828608000000000" name="SecureTimeEstimated" type="xsd:unsignedLong" />
+          </xsd:sequence>
+        </xsd:complexType>
+        <xsd:complexType name="DefaultType" wcm:description="Default Setting not installed">
+          <xsd:sequence>
+            <xsd:element name="FileLogName" type="xsd:string" />
+            <xsd:element name="FileLogEntries" type="xsd:string" />
+            <xsd:element name="FileLogSize" type="xsd:unsignedInt" />
+          </xsd:sequence>
+        </xsd:complexType>
+        <xsd:element default="3" name="ServiceStartType" type="ServiceStartTypeOndemandOrAuto" wcm:description="Windows Time Service Start Type Setting" wcm:displayName="Service Start Type" wcm:handler="regkey('HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\w32time')" wcm:legacyName="Start" wcm:legacyType="REG_DWORD" wcm:scope="allUsers" wcm:subScope="machineIndependent" />
+        <xsd:element name="Configurations" type="ConfigurationType" wcm:description="Windows Time Service Configuration Local Settings" wcm:displayName="Basic Configuration" wcm:handler="regkey('HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\w32time')" wcm:legacyName="Config" wcm:scope="allUsers" wcm:subScope="machineIndependent" />
+        <xsd:element name="Advanced" type="AdvancedType" wcm:description="Windows Time Service Advanced Configuration Local Settings" wcm:displayName="Advanced Configurations" wcm:handler="regkey('HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\w32time')" wcm:legacyName="Config" wcm:scope="allUsers" wcm:subScope="machineIndependent" />
+        <xsd:element name="Default" type="DefaultType" wcm:description="Windows Time Service Setting not installed by default" wcm:displayName="Default" wcm:handler="regkey('HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\w32time')" wcm:legacyName="Config" wcm:scope="allUsers" wcm:subScope="machineIndependent" />
+        <xsd:element name="Parameters" type="ParameterType" wcm:description="Windows Time Service Parameters Local Settings" wcm:displayName="Parameters" wcm:handler="regkey('HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\w32time')" wcm:scope="allUsers" wcm:subScope="machineIndependent" />
+        <xsd:element name="NtpClient" type="NtpClientType" wcm:description="d__os_obj_amd64fre_temp_f38184a4c26ae37553c5e50017888da3_rpyfoyukmk_time-service.man.temp1.missingResource.description25" wcm:displayName="d__os_obj_amd64fre_temp_f38184a4c26ae37553c5e50017888da3_rpyfoyukmk_time-service.man.temp1.missingResource.displayName23" wcm:handler="regkey('HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\w32time\TimeProviders')" wcm:scope="allUsers" wcm:subScope="machineIndependent" />
+        <xsd:element name="NtpServer" type="NtpSeverType" wcm:description="d__os_obj_amd64fre_temp_f38184a4c26ae37553c5e50017888da3_rpyfoyukmk_time-service.man.temp1.missingResource.description26" wcm:displayName="d__os_obj_amd64fre_temp_f38184a4c26ae37553c5e50017888da3_rpyfoyukmk_time-service.man.temp1.missingResource.displayName24" wcm:handler="regkey('HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\w32time\TimeProviders')" wcm:scope="allUsers" wcm:subScope="machineIndependent" />
+        <xsd:element name="SecureTimeLimits" type="SecureTimeLimitsType" wcm:description="Windows Time Service Secure Time Limits" wcm:displayName="d__os_obj_amd64fre_temp_f38184a4c26ae37553c5e50017888da3_rpyfoyukmk_time-service.man.temp1.missingResource.displayName30" wcm:handler="regkey('HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\w32time')" wcm:scope="allUsers" wcm:subScope="machineIndependent" />
+      </xsd:schema>
+    </asmv3:configurationSchema>
+  </asmv3:configuration>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="W32TIME Service Setting SDDL" sddl="D:P(A;CI;GR;;;BU)(A;CI;GA;;;BA)(A;CI;GA;;;SY)(A;CI;GR;;;NS)(A;CI;GR;;;LS)(A;CI;GR;;;NO)(A;CI;GRGWSD;;;S-1-5-80-3169285310-278349998-1452333686-3865143136-4212226833)" operationHint="replace" />
+          <securityDescriptorDefinition name="W32TIME Service Configuration SDDL" sddl="D:P(A;CI;GR;;;BU)(A;CI;GA;;;BA)(A;CI;GA;;;SY)(A;CI;GR;;;NS)(A;CI;GRGWSD;;;S-1-5-80-4267341169-2882910712-659946508-2704364837-2204554466)(A;CI;GR;;;NO)(A;CI;GRGWSD;;;S-1-5-80-3169285310-278349998-1452333686-3865143136-4212226833)" operationHint="replace" />
+          <securityDescriptorDefinition name="W32TIME Service Security Descriptor" sddl="D:(A;;CCLCSWRPWPDTLOCRRC;;;SY)(A;;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;BA)(A;;CCLCSWLOCRRC;;;IU)(A;;CCLCSWLOCRRC;;;SU)(A;;CCLCSWLOCRRCRP;;;LS)(A;;FRFX;;;LS)(A;;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;S-1-5-80-3169285310-278349998-1452333686-3865143136-4212226833)" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" description="Default SDDL for Windows Resource Protected file" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+  <instrumentation>
+    <events xmlns="http://schemas.microsoft.com/win/2004/08/events" xmlns:win="http://manifests.microsoft.com/win/2004/08/windows/events">
+      <provider guid="{06EDCFEB-0FD0-4E53-ACCA-A6F8BBF81BCB}" message="$(string.eventProviderName)" messageFileName="%SystemRoot%\system32\w32time.dll" name="Microsoft-Windows-Time-Service" resourceFileName="%SystemRoot%\system32\w32time.dll" symbol="S_MICROSOFT_WINDOWS_TIME_SERVICE">
+        <channels>
+          <importChannel chid="w32TimeSysChannel" name="System" />
+          <channel chid="opsChannel" enabled="true" name="Microsoft-Windows-Time-Service/Operational" type="Operational" />
+        </channels>
+      </provider>
+      <messageTable>
+        <message message="$(string.msg_0x005A)" symbol="W32TIMEMSG_AUTHTYPE_NOAUTH" value="0x0000005A" />
+        <message message="$(string.msg_0x005B)" symbol="W32TIMEMSG_AUTHTYPE_NTDIGEST" value="0x0000005B" />
+        <message message="$(string.msg_0x005C)" symbol="W32TIMEMSG_UNREACHABLE_PEER" value="0x0000005C" />
+        <message message="$(string.msg_0x005E)" mid="MID_ERROR_PACKETTEST1" symbol="W32TIMEMSG_ERROR_PACKETTEST1" value="0x0000005E" />
+        <message message="$(string.msg_0x005F)" mid="MID_ERROR_PACKETTEST2" symbol="W32TIMEMSG_ERROR_PACKETTEST2" value="0x0000005F" />
+        <message message="$(string.msg_0x0060)" mid="MID_ERROR_PACKETTEST3" symbol="W32TIMEMSG_ERROR_PACKETTEST3" value="0x00000060" />
+        <message message="$(string.msg_0x0061)" mid="MID_ERROR_PACKETTEST4" symbol="W32TIMEMSG_ERROR_PACKETTEST4" value="0x00000061" />
+        <message message="$(string.msg_0x0062)" mid="MID_ERROR_PACKETTEST5" symbol="W32TIMEMSG_ERROR_PACKETTEST5" value="0x00000062" />
+        <message message="$(string.msg_0x0063)" mid="MID_ERROR_PACKETTEST6" symbol="W32TIMEMSG_ERROR_PACKETTEST6" value="0x00000063" />
+        <message message="$(string.msg_0x0064)" mid="MID_ERROR_PACKETTEST7" symbol="W32TIMEMSG_ERROR_PACKETTEST7" value="0x00000064" />
+        <message message="$(string.msg_0x0065)" mid="MID_ERROR_PACKETTEST8" symbol="W32TIMEMSG_ERROR_PACKETTEST8" value="0x00000065" />
+        <message message="$(string.msg_0x0066)" symbol="W32TIMEMSG_SERVICE_DESCRIPTION" value="0x00000066" />
+        <message message="$(string.msg_0x0067)" symbol="W32TIMEMSG_ERROR_AUTHREQUEST_NETLOGON" value="0x00000067" />
+        <message message="$(string.msg_0x0068)" symbol="W32TIMEMSG_ERROR_SENDTO" value="0x00000068" />
+        <message message="$(string.msg_0x0069)" symbol="W32TIMEMSG_ERROR_AUTHRESPONSE_NETLOGON" value="0x00000069" />
+        <message message="$(string.msg_0x006A)" symbol="W32TIMEMSG_ERROR_AUTHRESPONSE_BAD_SIGNATURE" value="0x0000006A" />
+        <message message="$(string.msg_0x006B)" symbol="W32TIMEMSG_ERROR_AUTHRESPONSE_MISSING_SIGNATURE" value="0x0000006B" />
+        <message message="$(string.msg_0x0070)" symbol="W32TIMEMSG_ERROR_UNRESOLVED" value="0x00000070" />
+        <message message="$(string.msg_0x009B)" symbol="W32TIMEMSG_AUTHTYPE_NTSIGNATURE" value="0x0000009B" />
+        <message message="$(string.Added_string_0x0115)" symbol="W32TIMEMSG_ADDED_STRING" value="0x00000115" />
+        <message message="$(string.Subtracted_string_0x0116)" symbol="W32TIMEMSG_SUBTRACTED_STRING" value="0x00000116" />
+      </messageTable>
+      <cmi />
+    </events>
+    <counters>
+      <provider applicationIdentity="%systemroot%\system32\w32time.dll" providerGuid="{3817CB9C-49A8-436B-BC29-5518877D3C3A}" providerName="Microsoft-Windows-W32Time-Perf" symbol="W32TimePerfProvider">
+        <counterSet description="$(string.counterSetDescription)" guid="{82FA211F-E7F8-4AB5-A04C-CC523073B971}" instances="single" name="$(string.counterSetName)" symbol="W32TimePerfCounters" uri="Microsoft.Windows.TimeService">
+          <counter defaultScale="-2" description="$(string.counter_1_desc)" detailLevel="standard" id="2" name="$(string.counter_1_name)" symbol="W32TIME_PERF_COMPUTED_TIME_OFFSET" type="perf_counter_large_rawcount" uri="Microsoft.Windows.TimeService.ComputedTimeOffset">
+            <counterAttributes>
+              <counterAttribute name="reference" />
+            </counterAttributes>
+          </counter>
+          <counter description="$(string.counter_2_desc)" detailLevel="standard" id="3" name="$(string.counter_2_name)" symbol="W32TIME_PERF_CLOCK_FREQ_ADJUSTMENT" type="perf_counter_rawcount" uri="Microsoft.Windows.TimeService.ClockFreqAdjustment">
+            <counterAttributes>
+              <counterAttribute name="reference" />
+            </counterAttributes>
+          </counter>
+          <counter defaultScale="-3" description="$(string.counter_3_desc)" detailLevel="standard" id="4" name="$(string.counter_3_name)" symbol="W32TIME_PERF_CLOCK_FREQ_ADJUSTMENT_PPB" type="perf_counter_rawcount" uri="Microsoft.Windows.TimeService.ClockFreqAdjustmentPPB">
+            <counterAttributes>
+              <counterAttribute name="reference" />
+            </counterAttributes>
+          </counter>
+          <counter defaultScale="-3" description="$(string.counter_10_desc)" detailLevel="standard" id="11" name="$(string.counter_10_name)" symbol="W32TIME_PERF_NTP_ROUNDTRIP_DELAY" type="perf_counter_rawcount" uri="Microsoft.Windows.TimeService.NtpRoundtripDelay">
+            <counterAttributes>
+              <counterAttribute name="reference" />
+            </counterAttributes>
+          </counter>
+          <counter defaultScale="1" description="$(string.counter_11_desc)" detailLevel="standard" id="12" name="$(string.counter_11_name)" symbol="W32TIME_PERF_NTP_SOURCES" type="perf_counter_rawcount" uri="Microsoft.Windows.TimeService.NtpTimeSourceCount">
+            <counterAttributes>
+              <counterAttribute name="reference" />
+            </counterAttributes>
+          </counter>
+          <counter description="$(string.counter_20_desc)" detailLevel="standard" id="21" name="$(string.counter_20_name)" symbol="W32TIME_PERF_NTP_SERVER_REQUEST_RATE" type="perf_counter_bulk_count" uri="Microsoft.Windows.TimeService.NtpServerIncomingRequestRate">
+            <counterAttributes>
+              <counterAttribute name="reference" />
+            </counterAttributes>
+          </counter>
+          <counter description="$(string.counter_21_desc)" detailLevel="standard" id="22" name="$(string.counter_21_name)" symbol="W32TIME_PERF_NTP_SERVER_RESPONSE_RATE" type="perf_counter_bulk_count" uri="Microsoft.Windows.TimeService.NtpServerOutgoingResponseRate">
+            <counterAttributes>
+              <counterAttribute name="reference" />
+            </counterAttributes>
+          </counter>
+        </counterSet>
+      </provider>
+    </counters>
+  </instrumentation>
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string id="displayName0" value="Windows Time Service (W32Time)" />
+        <string id="description1" value="The Windows Time Service is an NTP based synchronization service which keeps the local system time in sync with another NTP based source.  It can be configured automatically using the domain synchronization, or a manual peer can be specified." />
+        <string id="displayName1" value="Windows Time" />
+        <string id="description2" value="Service Start Type" />
+        <string id="description3" value="Service Trigger Action Type" />
+        <string id="description4" value="Advanced Setting" />
+        <string id="description5" value="Configuration Setting" />
+        <string id="description6" value="NtpClient Setting" />
+        <string id="description7" value="NtpServer Setting" />
+        <string id="description8" value="Time Providers" />
+        <string id="displayName9" value="Basic Configuration" />
+        <string id="displayName10" value="Time Providers" />
+        <string id="displayName11" value="Service Start Type" />
+        <string id="displayName12" value="Service Trigger Action" />
+        <string id="description10" value="Windows Time Service Start Type Setting" />
+        <string id="description11" value="Windows Time Service Trigger Action Setting" />
+        <string id="description12" value="Windows Time Service Configuration Local Settings" />
+        <string id="description13" value="Windows Time Service Time Providers Local Settings" />
+        <string id="description14" value="Parameters" />
+        <string id="displayName14" value="Advanced Configurations" />
+        <string id="displayName15" value="Parameters" />
+        <string id="description16" value="Windows Time Service Advanced Configuration Local Settings" />
+        <string id="description17" value="Windows Time Service Parameters Local Settings" />
+        <string id="description18" value="Default Setting not installed" />
+        <string id="displayName19" value="Default" />
+        <string id="description20" value="Windows Time Service Setting not installed by default" />
+        <string id="displayName21" value="WRP_FILE_DEFAULT_SDDL" />
+        <string id="description22" value="Default SDDL for Windows Resource Protected file" />
+        <string id="description30" value="Secure Time Limits" />
+        <string id="description31" value="Windows Time Service Secure Time Limits" />
+        <string id="event_0x0001" value="The time provider '%1' logged the following error: %2" />
+        <string id="event_0x0002" value="The time provider '%1' logged the following warning: %2" />
+        <string id="event_0x0003" value="The time provider '%1' logged the following message: %2" />
+        <string id="event_0x0004" value="The time provider '%1' failed to start due to the following error: %2" />
+        <string id="event_0x0005" value="The time provider '%1' returned the following error during shutdown: %2" />
+        <string id="event_0x0006" value="The time service encountered an error while reading its configuration from the registry, and will continue running with its previous configuration. The error was: %1" />
+        <string id="event_0x0007" value="The time provider '%1' returned an error while updating its configuration. The error will be ignored. The error was: %2" />
+        <string id="event_0x0008" value="The time provider '%1' returned an error when notified of a polling interval change. The error will be ignored. The error was: %2" />
+        <string id="event_0x0009" value="The time provider '%1' returned an error when notified of a time jump. The error will be ignored. The error was: %2" />
+        <string id="event_0x000A" value="The time provider '%1' returned an error when asked for time samples. The error will be ignored. The error was: %2" />
+        <string id="event_0x000B" value="Time Provider NtpClient: This machine is configured to use the domain hierarchy to determine its time source, but it is not a member of a domain. NtpClient will attempt to use an alternate configured external time source if available. If an external time source is not configured or used for this computer, you may choose to disable the NtpClient." />
+        <string id="event_0x000C" value="Time Provider NtpClient: This machine is configured to use the domain hierarchy to determine its time source, but it is the AD PDC emulator for the domain at the root of the forest, so there is no machine above it in the domain hierarchy to use as a time source. It is recommended that you either configure a reliable time service in the root domain, or manually configure the AD PDC to synchronize with an external time source. Otherwise, this machine will function as the authoritative time source in the domain hierarchy. If an external time source is not configured or used for this computer, you may choose to disable the NtpClient." />
+        <string id="event_0x000D" value="Time Provider NtpClient: This machine is configured to use the domain hierarchy to determine its time source, but the computer is joined to a Windows NT 4.0 domain. Windows NT 4.0 domain controllers do not have a time service and do not support domain hierarchy as a time source. NtpClient will attempt to use an alternate configured external time source if available. If an external time source is not configured or used for this computer, you may choose to disable the NtpClient." />
+        <string id="event_0x000E" value="The time provider NtpClient was unable to find a domain controller to use as a time source. NtpClient will try again in %1 minutes." />
+        <string id="event_0x000F" value="The time provider NtpClient was unable to find a domain controller to use as a time source.  NtpClient will fall back to the remaining configured time sources, if any are available. The error was: %1" />
+        <string id="event_0x0010" value="Time Provider NtpClient: An unexpected error occurred during DNS lookup of the manually configured peer '%1'. This peer will not be used as a time source. The error was: %2" />
+        <string id="event_0x0011" value="Time Provider NtpClient: An error occurred during DNS lookup of the manually configured peer '%1'. NtpClient will try the DNS lookup again in %3 minutes. The error was: %2" />
+        <string id="event_0x0012" value="The time provider NtpClient failed to establish a trust relationship between this computer and the %1 domain in order to securely synchronize time. NtpClient will try again in %3 minutes. The error was: %2" />
+        <string id="event_0x0013" value="Logging was requested, but the time service encountered an error while trying to set up the log file: %1. The error was: %2. Please make sure that 'Local Service' has permission to write to the file or directory." />
+        <string id="event_0x0014" value="Logging was requested, but the time service encountered an error while trying to write to the log file: %1. The error was: %2" />
+        <string id="event_0x0015" value="The time service is configured to use one or more input providers, however, none of the input providers are available. The time service has no source of accurate time." />
+        <string id="event_0x0016" value="The time provider NtpServer encountered an error while digitally signing the NTP response for peer %1. NtpServer cannot provide secure (signed) time to the client and will ignore the request. The error was: %2" />
+        <string id="event_0x0017" value="The time provider NtpServer encountered an error while digitally signing the NTP response for symmetric peer %1. NtpServer cannot provide secure (signed) time to the peer and will not send a packet. The error was: %2" />
+        <string id="event_0x0018" value="Time Provider NtpClient: No valid response has been received from domain controller %1 after 8 attempts to contact it. This domain controller will be discarded as a time source and NtpClient will attempt to discover a new domain controller from which to synchronize. The error was: %2" />
+        <string id="event_0x0019" value="The time provider NtpClient cannot determine whether the response received from %1 has  a valid signature. The response will be ignored. The error was: %2" />
+        <string id="event_0x001A" value="Time Provider NtpClient: The response received from domain controller %1 has a bad signature. The response may have been tampered with and will be ignored." />
+        <string id="event_0x001B" value="Time Provider NtpClient: The response received from domain controller %1 is missing the signature. The response may have been tampered with and will be ignored." />
+        <string id="event_0x001C" value="The time provider NtpClient is configured to acquire time from one or more time sources, however none of the sources are accessible. NtpClient has no source of accurate time." />
+        <string id="event_0x001D" value="The time provider NtpClient is configured to acquire time from one or more time sources, however none of the sources are currently accessible. No attempt to contact a source will be made for %1 minutes. NtpClient has no source of accurate time." />
+        <string id="event_0x001E" value="The time service encountered an error while reading its configuration from the registry and cannot start. The error was: %1" />
+        <string id="event_0x001F" value="The time service discovered that the system time zone information was corrupted. Because many system components require valid time zone information, the time service has reset the system time zone to GMT. Use the Date/Time control panel to set the correct time zone." />
+        <string id="event_0x0020" value="The time service discovered that the system time zone information was corrupted. The time service tried to reset the system time zone to GMT, but failed. The time service cannot start. The error was: %1" />
+        <string id="event_0x0021" value="The time service has jumped the local system clock by %1 seconds. This occurs when the time source and local system time are far enough apart that clock rate adjustments cannot be made to reach the time specified by the time source." />
+        <string id="event_0x0022" value="The time service has detected that the system time needs to be  changed by %1 seconds. The time service will not change the system time by more than %2 seconds. Verify that your time and time zone are correct, and that the time source %3 is working properly." />
+        <string id="event_0x0023" value="The time service is now synchronizing the system time with the time source %1 with reference id %2. Current local stratum number is %3." />
+        <string id="event_0x0024" value="The time service has not synchronized the system time for the last %1 seconds because none of the time service providers provided a usable time stamp. The time service will not update the local system time until it is able to synchronize with a time source. If the local system is configured to act as a time server for clients, it will stop advertising as a time source to clients after %2 seconds. The time service will continue to retry and sync time with its time sources. Check system event log for other W32time events for more details. Run 'w32tm /resync' to force an instant time synchronization. You can control the frequency of the time source rediscovery using ClockHoldoverPeriod W32time config setting. Modify the EventLogFlags W32time config setting if you wish to disable this message." />
+        <string id="event_0x0025" value="The time provider NtpClient is currently receiving valid time data from %1." />
+        <string id="event_0x0026" value="The time provider NtpClient has not received response from server %1." />
+        <string id="event_0x0027" value="The time service is unable to register for network configuration change events. This may occur when TCP/IP is not correctly configured. The time service will be unable to sync time from network providers, but will still use locally installed hardware provdiers, if any are available." />
+        <string id="event_0x0028" value="The time provider '%1' was stopped with error %2." />
+        <string id="event_0x0029" value="The time service has been configured to use one or more input providers, however, none of the input providers are still running. The time service has no source of accurate time." />
+        <string id="event_0x002A" value="The time service attempted to create a named event which was already opened. This could be the result of an attempt to compromise your system's security." />
+        <string id="event_0x002B" value="The time provider '%1' returned an error when notified of a network configuration change. The error will be ignored. The error was: %2" />
+        <string id="event_0x002C" value="The time provider NtpClient encountered an error and was forced to shut down. The error was: %1" />
+        <string id="event_0x002D" value="The time provider NtpServer encountered an error and was forced to shut down. The error was: %1" />
+        <string id="event_0x002E" value="The time service encountered an error and was forced to shut down. The error was: %1" />
+        <string id="event_0x002F" value="Time Provider NtpClient: No valid response has been received from manually configured peer %1 after 8 attempts to contact it. This peer will be discarded as a time source and NtpClient will attempt to discover a new peer with this DNS name. The error was: %2" />
+        <string id="event_0x0030" value="Time Provider NtpClient: An error occurred during DNS lookup of the manually configured peer '%1'. NtpClient will continue to try the DNS lookup every %3 minutes. This message will not be logged again until a successful lookup of this manually configured peer occurs. The error was: %2" />
+        <string id="event_0x0031" value="The time provider NtpClient was unable to find a domain controller to use as a time source. NtpClient will continue trying to locate an AD DC every %1 minutes. This message will not be logged again until after a domain controller is found." />
+        <string id="event_0x0032" value="The time service detected a time difference of greater than %1 milliseconds for %2 seconds. The time difference might be caused by synchronization with low-accuracy time sources or by suboptimal network conditions. The time service is no longer synchronized and cannot provide the time to other clients or update the system clock. When a valid time stamp is received from a time service provider, the time service will correct itself." />
+        <string id="event_0x0033" value="Time Provider NtpClient: The time sample received from peer %1 differs from the local time by %2 seconds. The observed transmission delay from the server was %3 milliseconds." />
+        <string id="event_0x0034" value="The time service has set the time with offset %1 seconds." />
+        <string id="event_0x0035" value="The time provider NtpClient fails sending request to server %1." />
+        <string id="event_0x0036" value="The time service encountered an error while refreshing its configuration in the registry and cannot start. The error was: %1" />
+        <string id="event_0x0037" value="The time service has started advertising as a time source." />
+        <string id="event_0x0038" value="The time service has stopped advertising as a time source because the local machine is not an Active Directory Domain Controller." />
+        <string id="event_0x0039" value="The time service has stopped advertising as a time source because there are no providers running." />
+        <string id="event_0x003A" value="The time service has stopped advertising as a time source because the local clock is not synchronized." />
+        <string id="event_0x003B" value="The time service has started advertising as a good time source." />
+        <string id="event_0x003C" value="The time service has stopped advertising as a good time source." />
+        <string id="event_0x003D" value="The time service has stopped advertising as a time source." />
+        <string id="msg_0x005A" value="NoAuth" />
+        <string id="msg_0x005B" value="NtDigest" />
+        <string id="msg_0x005C" value="The peer is unreachable." />
+        <string id="msg_0x005E" value="The time sample was rejected because: Duplicate timestamps were received from this peer." />
+        <string id="msg_0x005F" value="The time sample was rejected because: Message was received out-of-order." />
+        <string id="msg_0x0060" value="The time sample was rejected because: The peer is not synchronized, or reachability has been lost in one, or both, directions. This may also indicate that the peer has incorrectly sent an NTP request instead of an NTP response." />
+        <string id="msg_0x0061" value="The time sample was rejected because: Round-trip delay too large." />
+        <string id="msg_0x0062" value="The time sample was rejected because: Packet not authenticated." />
+        <string id="msg_0x0063" value="The time sample was rejected because: The peer is not synchronized, or it has been too long since the peer's last synchronization." />
+        <string id="msg_0x0064" value="The time sample was rejected because: The peer's stratum is less than the host's stratum." />
+        <string id="msg_0x0065" value="The time sample was rejected because: Packet contains unreasonable root delay or root dispersion values. This may be caused by poor network conditions." />
+        <string id="msg_0x0066" value="Maintains date and time synchronization on all clients and servers in the network. If this service is stopped, date and time synchronization will be unavailable. If this service is disabled, any services that explicitly depend on it will fail to start.%0" />
+        <string id="msg_0x0067" value="The server fails authenticating a request with netlogon failure." />
+        <string id="msg_0x0068" value="The client fails sending out a request." />
+        <string id="msg_0x0069" value="The client fails authenticating a response with netlogon failure." />
+        <string id="msg_0x006A" value="The client fails authenticating a response with a bad signature." />
+        <string id="msg_0x006B" value="The client fails authenticating a response with a missing signature." />
+        <string id="msg_0x0070" value="The peer is unresolved." />
+        <string id="msg_0x0071" value="The RODC has received %1 requests in the previous %2 minutes. %3 have resulted in success, and %4 have resulted in failure." />
+        <string id="event_0x0081" value="NtpClient was unable to set a domain peer to use as a time source because of discovery error. NtpClient will try again in %2 minutes and double the reattempt interval thereafter. The error was: %1" />
+        <string id="event_0x0082" value="NtpClient was unable to set a domain peer to use as a time source because of failure in establishing  a trust relationship between this computer and the '%3' domain in order to securely synchronize time. NtpClient will try again in %2 minutes and double the reattempt interval thereafter. The error was: %1" />
+        <string id="event_0x0083" value="NtpClient was unable to set a domain peer to use as a time source because of DNS resolution error on '%3'. NtpClient will try again in %2 minutes and double the reattempt interval thereafter. The error was: %1." />
+        <string id="event_0x0084" value="NtpClient was unable to set a domain peer to use as a time source because of duplicate error on '%3'.  The same time source '%4' has been specified as manual peer in NtpServer. NtpClient will try again in %2 minutes and double the reattempt interval thereafter. The error was: %1" />
+        <string id="event_0x0085" value="NtpClient was unable to set a domain peer to use a time source because of an unexpected error.  NtpClient will try again in %2 minutes and double the reattempt interval thereafter. The error was: %1" />
+        <string id="event_0x0086" value="NtpClient was unable to set a manual peer to use as a time source because of DNS resolution error on '%3'. NtpClient will try again in %2 minutes and double the reattempt interval thereafter. The error was: %1" />
+        <string id="event_0x0087" value="NtpClient was unable to set a manual peer to use as a time source because of duplicate error on '%3'. The same time source '%4' has been either specified as manual peer in NtpServer or selected as domain peer.  NtpClient will try again in %2 minutes and double the reattempt interval thereafter. The error was: %1" />
+        <string id="event_0x0088" value="NtpClient was unable to set a manual peer to use as a time source because of an unexpected error. NtpClient will try again in %2 minutes and double the reattempt interval thereafter. The error was: %1" />
+        <string id="event_0x0089" value="NtpClient succeeds in resolving manual peer %1 after a previous failure." />
+        <string id="event_0x008A" value="NtpClient succeeds in resolving domain peer %1 after a previous failure." />
+        <string id="msg_0x009B" value="NtSignature" />
+        <string id="eventProviderName" value="Microsoft-Windows-Time-Service" />
+        <string id="msg_0x009C" value="The RODC was unable to forward a time sync request from client RID %1 because the client's RID value is too large and the domain peer (%2) does not support the uplevel timesync authentication format." />
+        <string id="msg_0x009D" value="The time provider NtpServer received a request from a client (%1) using a legacy protocol format. The request has been ignored per the RequireSecureTimeSyncRequests policy setting. By default, this message will be logged only once per day per unique client address." />
+        <string id="event_0x009E" value="The time provider '%1' has indicated that the current hardware and operating environment is not supported and has stopped. This behavior is expected for VMICTimeProvider on non-HyperV-guest environments. This may be the expected behavior for the current provider in the current operating environment as well." />
+        <string id="event_0x009F" value="W32time is unable to communicate with Netlogon Service. This failure prevents NTPClient from discovering and using domain peers, besides causing problems with correct W32time service state being advertised by Netlogon. This could be a temporary condition that resolves itself shortly. If this warning repeats over a considerable period of time, ensure the Netlogon service is running and is responsive and restart W32time service to reintiaize the overall state. The error was %1" />
+        <string id="event_0x0101" value="W32time service has started at %1 (UTC), System Tick Count %2.%nConfiguration:%n%3%nTime Providers:%n%4Clock Rate:%5%nFor more information, see https://go.microsoft.com/fwlink/?linkid=845961." />
+        <string id="event_0x0102" value="W32time service is stopping at %1 (UTC), System Tick Count %2 with return code: %3%nFor more information, see https://go.microsoft.com/fwlink/?linkid=845961." />
+        <string id="event_0x0103" value="NTP Client provider periodic status:%nNtp Client is receiving time data from the following NTP Servers: %1  and the chosen reference time server is %2. System Tick Count %3. IFTSTMP:%4.%nFor more information, see https://go.microsoft.com/fwlink/?linkid=845961." />
+        <string id="event_0x0104" value="W32time Service periodic configuration and status message%nConfiguration:%n%1%nTime Providers:%n%2%nCurrent Status:%nLeap Indicator: %3%nStratum: %4%nPrecision: %5%nRootDelay: %6%nRootDispersion: %7%nReferenceId: %8%nLast Successful Sync Time: %9 (UTC)%nSource: %10%nPoll Interval: %11%nPhase Offset: %12%nClock Rate: %13%nState Machine: %14%nTime Source Flags: %15%nServer Role: %16%nLast Sync Error: %17%nTime Since Last Good Sync: %18%nSystem Tick Count: %19%nFor more information, see https://go.microsoft.com/fwlink/?linkid=845961." />
+        <string id="event_0x0105" value="W32time service has set the system time to %1(UTC). Previous system time was %2(UTC). System Tick Count: %3%nFor more information, see https://go.microsoft.com/fwlink/?linkid=845961." />
+        <string id="event_0x0106" value="W32time service has adjusted the system clock rate by %1 PPM and the new nominal clock rate is %2. Previous nominal clock rate was %3. System Tick Count: %4.%nClock adjustments below %5 PPM are not logged. Performance counters are recommended to efficiently track small adjustment values.%nFor more information, see https://go.microsoft.com/fwlink/?linkid=845961." />
+        <string id="event_0x0107" value="W32time Service configuration parameters have been updated. This may impact the fine-grained time synchronization accuracy.%nUpdated Configuration:%n%1%nUpdated Time Providers:%n%2System Tick Count: %3%nFor more information, see https://go.microsoft.com/fwlink/?linkid=845961." />
+        <string id="event_0x0108" value="NTP Client observed a change peer reachability. Ntp Client is now receiving time data from the following NTP Servers: %1. System Tick Count: %2.%nFor more information, see https://go.microsoft.com/fwlink/?linkid=845961." />
+        <string id="event_0x0109" value="The time service is now synchronizing the system time with the reference time source %1 with reference id %2. Current local stratum number is %3, System Tick Count: %4.%nFor more information, see https://go.microsoft.com/fwlink/?linkid=845961." />
+        <string id="event_0x010A" value="W32time Service received notification to rediscover its time sources and/or resynchronize time. Reason Code:%1 System Tick Count: %2%nReason code description:%n0 : An explicit time resynchronization request from an administrator%n1 : Power state changes on this machine%n2 : Changes to the network interface or to the network topology%n3 : State changes within W32time that require time synchronization%nThe actions that follow this notifcation may impact fine-grained time synchronization accuracy.For more information, see https://go.microsoft.com/fwlink/?linkid=845961." />
+        <string id="event_0x010B" value="NTP provider is receiving timestamps from the network stack. These typically help reduce the jitter in time error calculations and improve time sync accuracy.%nCurrent Tick Count:%1%nFor more information, see https://go.microsoft.com/fwlink/?linkid=845961." />
+        <string id="event_0x010C" value="NTP provider is not receiving any timestamps from the network stack, which may result in lowered time sync accuracy. This is the default configuration and the behavior on service startup. This can also occur if there are conflicting settings for a NIC or due to actual runtime issues.%nCurrent Tick Count:%1%nFor more information, see https://go.microsoft.com/fwlink/?linkid=845961." />
+        <string id="event_0x0110" value="Leap second configuration:%nEnabled: %1 (Local)%nCount: %2 (Local)%nCurrent Offset from UTC(Seconds): %3 (Local)%nRuntime state consistent with settings: %4%nNewest Leap Seconds List (Local):%n%5%nSystem Tick Count: %6.%n%nFor more information, see https://go.microsoft.com/fwlink/?linkid=845961." />
+        <string id="event_0x0111" value="A leap second will be %1 at %2 UTC (%3 local time). The local system data on this leap second matches with the data from the time provider %4.%nSystem Tick Count: %5.%n%nFor more information, see https://go.microsoft.com/fwlink/?linkid=845961." />
+        <string id="event_0x0112" value="The time provider %4 has signaled a leap second should be %1 at %2 UTC (%3 local time). However, there is no matching local system data. Please make sure you are synchronizing time from a time source that supports leap seconds and apply the latest Windows patches to avoid seeing this message.%nSystem Tick Count: %5.%n%nFor more information, see https://go.microsoft.com/fwlink/?linkid=845961." />
+        <string id="event_0x0113" value="Per configuration, W32time service attempted to add a leap second %1 UTC to local settings. Result: %2. System Tick Count: %3.%n%nFor more information, see https://go.microsoft.com/fwlink/?linkid=845961." />
+        <string id="event_0x0114" value="The local system data indicates that a leap second will be %1 at %2 UTC (%3 local time). This information is not corroborated by the current chosen time provider %4. W32time service will update the system data to excude this leap second. Please make sure you are synchronizing time from a time source that supports leap seconds and ensure you have applied the latest Windows patches. System Tick Count: %5.%n%nFor more information, see https://go.microsoft.com/fwlink/?linkid=845961." />
+        <string id="Added_string_0x0115" value="added" />
+        <string id="Subtracted_string_0x0116" value="subtracted" />
+        <string id="event_0x0117" value="W32time could not update the local system time data on leap seconds. Please make sure you are synchronizing time from a time source that supports leap seconds and ensure you have applied the latest Windows patches. System Tick Count: %1.%n%nFor more information, see https://go.microsoft.com/fwlink/?linkid=845961." />
+        <string id="event_0x0118" value="Error %1 registering an RPC endpoint.  Please restart the Windows Time Service for it to become fully functional." />
+        <string id="event_0x0119" value="The local system clock requires a frequency correction of approximately %1 parts per million (PPM). This frequency correction averaged %2 PPM over the past %3 minutes. The system time can drift approx %4 seconds per day if the system clock is undisciplined. This drift can vary over time depending on external and internal factors." />
+        <string id="event_0x011A" value="The local system clock required an average frequency correction of %1 parts per million (PPM) over the past %2 minutes. The system time can drift approx %3 seconds per day if the system clock is undisciplined. This is larger than the suggested upper limit of 1 second/day for high accuracy applications. A highly available good time source is necessary to run high accuracy applications on this machine. Ignore this message if your application does not require high accuracy time." />
+        <string id="event_0x011B" value="Inconsistent timekeeping or a time jump has been detected.%nExpected System Time:%1%nActual System Time:%2%nSystem Tick Count:%3%n%nThe system time was changed by a different application or the underlying hardware has potential issues with keeping time reasonably accurately. Windows time service will attempt to correct this inaccuracy within the current operational parameters, when reliable time data becomes available next." />
+        <string id="counterSetName" value="Windows Time Service" />
+        <string id="counterSetDescription" value="Windows Time Service Performance Counters display the time synchronization runtime information from the service. Note that the service has to be running in order for this information to be displayed." />
+        <string id="counter_1_name" value="Computed Time Offset" />
+        <string id="counter_1_desc" value="The absolute time offset between the system clock and the chosen time source, as computed by W32Time Service in microseconds. When a new valid sample is available, the computed time is updated with the time offset indicated by the sample. This is the actual time offset of the local clock. W32time initiates clock correction using this offset and updates the computed time in between samples with the remaining time offset that needs to be applied to the local clock. Clock accuracy can be tracked using this performance counter with a low polling interval (eg:256 seconds or less) and looking for the counter value to be smaller than the desired clock accuracy limit." />
+        <string id="counter_2_name" value="Clock Frequency Adjustment" />
+        <string id="counter_2_desc" value="This value reflects the adjustment made to the local system clock frequency by W32Time in nominal clock units. This counter helps visualize the finer adjustments being made by W32time to synchronize the local clock." />
+        <string id="counter_3_name" value="Clock Frequency Adjustment (PPB)" />
+        <string id="counter_3_desc" value="This value reflects the adjustment made to the local system clock frequency by W32Time in Parts Per Billion (PPB) units. 1 PPB adjustment imples the system clock was adjusted at a rate of 1 nanosecond per second. The smallest possible adjustment can vary and can be expected to be in the order of 100's of PPB. This counter helps visualize the finer adjustments being made by W32time to synchronize the local clock." />
+        <string id="counter_10_name" value="NTP Roundtrip Delay" />
+        <string id="counter_10_desc" value="Most recent roundtrip delay experienced by the NTP Client in receiving a response from the server in microseconds. This is the time elapsed on the NTP client between transmitting a request to the NTP server and receiving a valid response from the server. This counter helps characterize the delays experienced by the NTP client. Larger or varying roundtrips can add noise to NTP time computations, which in turn may affect the accuracy of time synchronization through NTP." />
+        <string id="counter_11_name" value="NTP Client Time Source Count" />
+        <string id="counter_11_desc" value="Active number of NTP Time sources being used by the NTP Client. This is a count of active, distinct IP addresses of time servers that are responding to this client's requests. This number may be larger or smaller than the configured peers, depending on DNS resolution of peer names and current reachability." />
+        <string id="counter_20_name" value="NTP Server Incoming Requests" />
+        <string id="counter_20_desc" value="Number of requests received by the NTP Server (Requests/Sec)." />
+        <string id="counter_21_name" value="NTP Server Outgoing Responses" />
+        <string id="counter_21_desc" value="Number of requests answered by NTP Server (Responses/Sec)." />
+      </stringTable>
+    </resources>
+  </localization>
+</assembly>

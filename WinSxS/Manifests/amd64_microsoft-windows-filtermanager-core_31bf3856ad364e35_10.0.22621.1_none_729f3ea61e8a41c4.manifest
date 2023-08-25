@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-FilterManager-Core" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <dependency discoverable="no" resourceType="resources">
+    <dependentAssembly dependencyType="prerequisite">
+      <assemblyIdentity name="Microsoft-Windows-FilterManager-core.Resources" version="10.0.22621.1" processorArchitecture="amd64" language="*" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+    </dependentAssembly>
+  </dependency>
+  <file name="fltMgr.sys" destinationPath="$(runtime.drivers)\" sourceName="fltMgr.sys" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>qVjyYauMNNphAdBwFUtYzU430H33u4h8lhw9qZC4VM8=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <memberships>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories.Services" version="10.0.22621.1" publicKeyToken="31bf3856ad364e35" typeName="Service" />
+      <categoryInstance subcategory="FltMgr">
+        <serviceData name="FltMgr" displayName="@%SystemRoot%\system32\drivers\fltmgr.sys,-10001" errorControl="critical" start="boot" type="fileSystemDriver" description="@%SystemRoot%\system32\drivers\fltmgr.sys,-10000" group="FSFilter Infrastructure" imagePath="system32\drivers\fltmgr.sys" tag="1" />
+      </categoryInstance>
+    </categoryMembership>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories" version="1.0.0.0" publicKeyToken="365143bb27e7ac8b" typeName="BootCritical" />
+    </categoryMembership>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories" version="1.0.0.0" publicKeyToken="365143bb27e7ac8b" typeName="BootRecovery" />
+    </categoryMembership>
+  </memberships>
+  <registryKeys>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\EventLog\System\FltMgr">
+      <registryValue name="TypesSupported" valueType="REG_DWORD" value="0x00000007" />
+      <registryValue name="EventMessageFile" valueType="REG_EXPAND_SZ" value="%SystemRoot%\System32\drivers\fltmgr.sys;%SystemRoot%\System32\IoLogMsg.dll" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\System\CurrentControlset\Services\FltMgr">
+      <registryValue name="AttachWhenLoaded" valueType="REG_DWORD" value="0x00000001" />
+    </registryKey>
+  </registryKeys>
+  <instrumentation>
+    <events xmlns="http://schemas.microsoft.com/win/2004/08/events" xmlns:ms="http://manifests.microsoft.com/win/2004/08/windows/events" xmlns:win="http://manifests.microsoft.com/win/2004/08/windows/events" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <provider guid="{f3c5e28e-63f6-49c7-a204-e48a1bc4b09d}" message="$(string.EventProviderName)" messageFileName="%SystemRoot%\system32\drivers\fltmgr.sys" name="Microsoft-Windows-FilterManager" parameterFileName="%SystemRoot%\system32\drivers\fltmgr.sys" resourceFileName="%SystemRoot%\system32\drivers\fltmgr.sys" symbol="PROV_FLTMGR">
+        <channels>
+          <importChannel chid="SYSTEM" name="System" />
+        </channels>
+      </provider>
+      <cmi />
+    </events>
+  </instrumentation>
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string id="FLTMGR_FILTER_UNLOADED.EventMessage" value="File System Filter '%5' (Version %2.%3, %6) unloaded successfully." />
+        <string id="FLTMGR_NAME_CACHING_DISABLED.EventMessage" value="Name caching for File System Filters has been disabled on volume '%3'." />
+        <string id="FLTMGR_VOLUME_ATTACH_FAILED.EventMessage" value="Filter Manager failed to attach to volume '%3'.  This volume will be unavailable for filtering until a reboot.  The final status was %1." />
+        <string id="FLTMGR_VOLUME_ATTACH_SUCCEEDED.EventMessage" value="Filter Manager successfully attached to volume '%3'." />
+        <string id="FLTMGR_FS_ATTACH_FAILED.EventMessage" value="Filter Manager failed to attach to file system control device object (CDO) '%3'.  All volumes associated with this file system will be unavailable for filtering until a reboot. The final status was %1." />
+        <string id="FLTMGR_FS_ATTACH_SUCCEEDED.EventMessage" value="Filter Manager successfully attached to file system '%3'." />
+        <string id="FLTMGR_FILTER_FAILED_INSTANCE_SETUP.EventMessage" value="File System Filter '%5' (Version %2.%3, %6) failed to attach to volume '%8'.  The filter returned a non-standard final status of %1.  This filter and/or its supporting applications should handle this condition.  If this condition persists, contact the vendor." />
+        <string id="FLTMGR_REGISTER_FILTER_FAILED.EventMessage" value="File System Filter '%5' (Version %2.%3, %6) failed to register with Filter Manager.  The final status for this operation was %1." />
+        <string id="FLTMGR_FILTER_REGISTERED.EventMessage" value="File System Filter '%5' (%2.%3, %6) has successfully loaded and registered with Filter Manager." />
+        <string id="FLTMGR_START_FILTERING_FAILED.EventMessage" value="File System Filter '%5' (Version %2.%3, %6) failed to start filtering.  The final status for this operation was %1." />
+        <string id="FLTMGR_FS_BYPASSIO_NOT_SUPPORTED.EventMessage" value="File System Filter '%1' (Version %2.%3, %4) does not support bypass IO.%nSupported features: %5." />
+        <string id="FLTMGR_FS_BYPASSIO_VETOED.EventMessage" value="File System Filter '%1' (Version %2.%3, %4) vetoed bypass IO.%n%n     Process: %5%n     File: %6%n     Bypass IO Operation: %7%n     Vetoing Reason: %8%n     Operation Status: %9%n" />
+        <string id="displayName" value="File System Filter Manager" />
+        <string id="description" value="File System Filter Manager Manages file system filters that are written to the Filter Manager API set (Core)" />
+        <string id="EventProviderName" value="Microsoft-Windows-FilterManager" />
+        <string id="map_FS_BPIO_OP_ENABLE" value="FS_BPIO_OP_ENABLE" />
+        <string id="map_FS_BPIO_OP_DISABLE" value="FS_BPIO_OP_DISABLE" />
+        <string id="map_FS_BPIO_OP_QUERY" value="FS_BPIO_OP_QUERY" />
+        <string id="map_FS_BPIO_OP_VOLUME_STACK_PAUSE" value="FS_BPIO_OP_VOLUME_STACK_PAUSE" />
+        <string id="map_FS_BPIO_OP_VOLUME_STACK_RESUME" value="FS_BPIO_OP_VOLUME_STACK_RESUME" />
+        <string id="map_FS_BPIO_OP_STREAM_PAUSE" value="FS_BPIO_OP_STREAM_PAUSE" />
+        <string id="map_FS_BPIO_OP_STREAM_RESUME" value="FS_BPIO_OP_STREAM_RESUME" />
+        <string id="map_FS_BPIO_OP_GET_INFO" value="FS_BPIO_OP_GET_INFO" />
+      </stringTable>
+    </resources>
+  </localization>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" description="Default SDDL for Windows Resource Protected file" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+</assembly>

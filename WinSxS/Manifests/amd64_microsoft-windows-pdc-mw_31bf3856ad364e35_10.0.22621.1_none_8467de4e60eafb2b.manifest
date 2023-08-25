@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-PDC-MW" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <dependency discoverable="no" resourceType="Resources">
+    <dependentAssembly>
+      <assemblyIdentity name="Microsoft-Windows-PDC.Resources" version="10.0.22621.1" processorArchitecture="amd64" language="*" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </dependentAssembly>
+  </dependency>
+  <file name="pdc.sys" destinationPath="$(runtime.drivers)\" sourceName="pdc.sys" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>UllNrQGCj3dcMenGhI142QMsB1+/71N3t16x3pQxzL8=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <file name="kmpdc.sys" destinationPath="$(runtime.drivers)\" sourceName="kmpdc.sys" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>5Sc0Trl7vvozVwiGpKa0NcOuSvA773HHNUO0dEb/1Mk=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <memberships>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories.Services" version="10.0.22621.1" publicKeyToken="31bf3856ad364e35" typeName="Service" />
+      <categoryInstance subcategory="PDC">
+        <serviceData name="pdc" displayName="@%SystemRoot%\system32\drivers\pdc.sys,-100" errorControl="critical" start="boot" type="kernelDriver" description="@%SystemRoot%\system32\drivers\pdc.sys,-101" group="Boot Bus Extender" imagePath="system32\drivers\pdc.sys" />
+      </categoryInstance>
+    </categoryMembership>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories" version="1.0.0.0" publicKeyToken="365143bb27e7ac8b" typeName="BootCritical" />
+    </categoryMembership>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories" version="1.0.0.0" publicKeyToken="365143bb27e7ac8b" typeName="BootRecovery" />
+    </categoryMembership>
+  </memberships>
+  <instrumentation xmlns:win="http://manifests.microsoft.com/win/2004/08/windows/events" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <events xmlns="http://schemas.microsoft.com/win/2004/08/events">
+      <provider guid="{A6BF0DEB-3659-40ad-9F81-E25AF62CE3C7}" message="$(string.PDC.ProviderName)" messageFileName="%SystemRoot%\System32\Microsoft-Windows-Pdc.dll" name="Microsoft-Windows-PDC" resourceFileName="%SystemRoot%\System32\Microsoft-Windows-Pdc.dll" symbol="PDC_EVENT_PROVIDER">
+        <channels>
+          <channel chid="chidPdc" name="Microsoft-Windows-Kernel-Pdc/Diagnostic" type="Analytic" />
+        </channels>
+      </provider>
+      <cmi />
+    </events>
+  </instrumentation>
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string id="PDC.ProviderName" value="Microsoft-Windows-PDC" />
+        <string id="Channel.Analytic" value="Microsoft-Windows-Diagnosis-PDC/Analytic" />
+        <string id="errors.KeywordMessage" value="Errors" />
+        <string id="notifications.KeywordMessage" value="Notifications" />
+        <string id="resiliencyClients.KeywordMessage" value="ResiliencyClients" />
+        <string id="activators.KeywordMessage" value="Activators" />
+        <string id="Cs.KeywordMessage" value="Activators" />
+        <string id="suspendResume.KeywordMessage" value="SuspendResume" />
+        <string id="tasks.KeywordMessage" value="Tasks" />
+        <string id="Spm.KeywordMessage" value="SPM" />
+        <string id="CsVerbose.KeywordMessage" value="ActivatorsVerbose" />
+        <string id="PdcGroup.KeywordMessage" value="PDCGroup" />
+        <string id="event.SuspendEnter" value="Suspend Entered" />
+        <string id="event.SuspendExit" value="Suspend Exited" />
+        <string id="event.ResumeEnter" value="Resume Entered" />
+        <string id="event.ResumeExit" value="Resume Exited" />
+        <string id="event.SuspendResumeCallback" value="Suspend/Resume callback" />
+        <string id="event.TaskRegistration" value="Task client %1 (PDC Identifier:%2) registered with status: %3" />
+        <string id="event.TaskDeregistration" value="Task client %1 (PDC Identifier:%2) deregistered with status: %3" />
+        <string id="event.TaskMessage" value="Task message %1: Status/Active: %2" />
+        <string id="event.TaskReceive" value="Task Client %1 sent a request to PDC" />
+        <string id="event.TaskSend" value="Response from PDC to task client %1" />
+        <string id="event.TaskRundown" value="Rundown of PDC task client %1 - PDC identifier:%2, ReferenceCount:%3, Status:%4, Name:%5" />
+        <string id="event.TaskReference" value="PDC task client %1 referenced at csphase %2" />
+        <string id="event.TaskDereference" value="PDC task client %1 dereferenced at csphase %2" />
+        <string id="event.ActivatorRegistration" value="Activator %1 (PDC Identifier:%2) registered with status: %3" />
+        <string id="event.ActivatorDeregistration" value="Activator %1 (PDC Identifier:%2) deregistered with status: %3" />
+        <string id="event.NotificationRegistration" value="Notification client %1 (PDC Identifier:%2) registered with status: %3" />
+        <string id="event.NotificationDeregistration" value="Notification client %1 (PDC Identifier:%2) deregistered with status: %3" />
+        <string id="event.ResiliencyClientRegistration" value="Resiliency client %1 (PDC Identifier:%2) registered with status: %3" />
+        <string id="event.ResiliencyClientDeregistration" value="Resiliency client %1 (PDC Identifier:%2) deregistered with status: %3" />
+        <string id="event.SuspendResumeRegistration" value="Suspend/Resume client in process %1 (session:%2) at %3 (PDC Identifier:%4) registered with status: %5" />
+        <string id="event.SuspendResumeDeregistration" value="Suspend/Resume client in process %1 (session:%2) at %3 (PDC Identifier:%4) deregistered with status: %5" />
+        <string id="event.ActivatorMessage" value="Notification message %1: Status/Active: %2, ActivityType: %3" />
+        <string id="event.SuspendResumeMessage" value="Suspend/resume message %1: Transaction id: %2, PowerEvent: %3" />
+        <string id="event.ActivatorAcknowledgement" value="Activators received acknowledgement: Status: %1, State: %2" />
+        <string id="event.SuspendResumeStarted" value="Suspend/resume started: Type: %1, Session: %2, IteratioType: %3, ClientContext:%4, PDC Sequence:%5, Power Event:%6, WaitTime:%7" />
+        <string id="event.ActivatorClientAcknowledgement" value="Activator client %1 received acknowledgement: Status: %2" />
+        <string id="event.NotificationStarted" value="Notification started: Type: %1, ClientContext:%2, PDC Sequence:%3, Value:%4, WaitTime:%5" />
+        <string id="event.ControlNotification" value="Control notification: Type: %1, Flags:%2" />
+        <string id="event.InvalidNotification" value="Invalid notification: Client: %1, Expected sequence number:%2, Received sequence number:%3" />
+        <string id="event.NotificationReceived" value="Notification received: Client: %1, Received sequence number:%2" />
+        <string id="event.NotificationAllClientResponded" value="Notification received from all clients: Status:%1" />
+        <string id="event.NotificationCallback" value="Callback activated for type: %1" />
+        <string id="event.NotificationMessage" value="Notification message: Client %1, Message: %2, Control: %3, Status: %4; PDC Sequence: %5" />
+        <string id="event.ActivatorSend" value="Response from PDC to activator Client %1" />
+        <string id="event.ActivatorReceive" value="Activator Client %1 sent a request to PDC" />
+        <string id="event.ResiliencyClient" value="%9 resiliency client: client: %1, Port: %2, ResiliencyType: %3, ClientReferences: %4, Transation Id: %5, CurrentState: %6, NextState: %7" />
+        <string id="event.ResiliencyMessage" value="Resiliency Message %1, TransactionId: %2, ClientState: %3, ClientStatus: %4, SendMessage: %5, UserModeMessage: %6" />
+        <string id="event.ResiliencySend" value="PDC sent message to resiliency client %1" />
+        <string id="event.ResiliencyReceive" value="PDC recieved message from resiliency client %1" />
+        <string id="event.ResiliencyReference" value="PDC resiliency client %2 referenced" />
+        <string id="event.ResiliencyDereference" value="PDC resiliency client %2 dereferenced" />
+        <string id="event.CsEnterPhase" value="PDC is entering %1 phase" />
+        <string id="event.CsExitPhase" value="PDC is exiting %1 phase with status: %2" />
+        <string id="event.CsDisplayState" value="PDC received display notification: %1" />
+        <string id="event.CsMonitorRequestEnter" value="PDC received monitor request ON/OFF: %1, Console:%2" />
+        <string id="event.CsMonitorRequestExit" value="PDC received monitor request exit at: %1, Status:%2" />
+        <string id="event.CsMonitorContext" value="PDC monitor context - Session Count:%1, Console Session:%2, Session: %3, Current On Request: %4, Processed On Request: %5,  Current Off Request: %6, Processed Off Request: %7" />
+        <string id="event.CsMonitorHandler" value="PDC monitor handler activated at:%1" />
+        <string id="event.CsMonitorControl" value="PDC monitor control activated." />
+        <string id="event.CsPowerButtonHandler" value="PDC power button handler activated." />
+        <string id="event.CsPowerButtonConsumed" value="PDC power button consumed." />
+        <string id="event.CsDisplayNotification" value="PDC Display notification handler activated." />
+        <string id="event.CsEnterExit" value="PDC PdcCsEnterExit handler activated at:%1." />
+        <string id="event.CsEnableInput" value="PDC Enable Input." />
+        <string id="event.CsDisableInput" value="PDC Disable Input." />
+        <string id="event.CsFilterInput" value="PDC Filter Input." />
+        <string id="event.CsSuspendResumeHandler" value="PDC Suspend/Resume handler activated. :%1." />
+        <string id="event.CsSuspendResumeEvent" value="PDC Suspend/Resume event handler activated. Session:%1, Suspend:%2, Apps:%3, User:%4." />
+        <string id="event.CsSessionConnect" value="PDC Session handler - Session %1, Console: %2, Connected: %3." />
+        <string id="event.CsConnectionEvent" value="PDC Connection Event." />
+        <string id="event.PdcInit" value="PDC Initialization - AoAc: %1, Status:%2." />
+        <string id="event.ResumeSuspendSend" value="Response from PDC to suspend/resume client %1" />
+        <string id="event.ResumeSuspendReceive" value="Suspend/reesume Client %1 sent a request to PDC" />
+        <string id="event.EnterConnectedStandbyStart" value="Connected standby entered" />
+        <string id="event.EnterConnectedStandbyEnd" value="CS entered with times: PLM: %1, DAM: %2,Low Power Epoch: %3" />
+        <string id="event.EnterConnectedStandbyCancel" value="Connected standby entry cancelled" />
+        <string id="event.ExitFromConnectedStandbyStart" value="Connected standby about the exit" />
+        <string id="event.ExitFromConnectedStandbyEnd" value="CS exited with times: Low Power Epoch: %1, DAM:%2, PLM:%3" />
+        <string id="event.AbortConnectedStandbyStart" value="Connected standby progression aborted" />
+        <string id="event.AbortConnectedStandbyEnd" value="Connected standby exited" />
+        <string id="event.PdcStateChange" value="PDC state changed: new: %1, old:%2" />
+        <string id="event.PdcScreenOffRequest" value="Console Display Off request status:%1" />
+        <string id="event.PdcScreenOffDisabled" value="Console Display Off is disabled" />
+        <string id="event.SpmClientRegistration" value="Scenario client %1 (PDC Identifier:%2) registered with status: %3" />
+        <string id="event.SpmClientDeregistration" value="Scenario client %1 (PDC Identifier:%2) deregistered with status: %3" />
+        <string id="event.SpmClientMessage" value="Task message %1: Status/Active: %2" />
+        <string id="event.SpmClientReceive" value="Scenario Client %1 sent a request to PDC" />
+        <string id="event.SpmClientSend" value="Response from PDC to scenario client %1" />
+        <string id="event.SpmClientRundown" value="Rundown of PDC scenario client %1 - PDC identifier:%2, Active:%3, Status:%4, Name:%5" />
+        <string id="event.SpmClientControlStateChange" value="SPM client ID %1 state changed: old %2, new %3" />
+        <string id="event.SpmClientControlStateRundown" value="SPM client %4 (ID: %1) has current reference count %2" />
+        <string id="event.SpmScenarioStateChange" value="SPM scenario %1 state changed: new %3, old %2" />
+        <string id="event.SpmScenarioDependencyRundown" value="SPM scenario %1 has %3 scenario clients of dependency type %2" />
+        <string id="event.SpmClientInformationRundown" value="SPM scenario client %1 info - Name:%3 TestClient:%2" />
+        <string id="event.SpmScenarioRundown" value="Rundown of SPM scenario %1 - GUID:%2, Flags:%3, State:%4, Name:%6" />
+        <string id="event.SpmScenarioAccountingRundown" value="Rundown of SPM scenario %1 - DripsTime:%2, DripsCount:%3, PlatformIdleTranstions:%4, PlatformIdleCount:%5" />
+        <string id="event.PpmProfileClientRegistration" value="Ppm Profile client %1 (PDC Identifier:%2, ProfileGuid:%3) registered with status: %4" />
+        <string id="event.PpmProfileClientDeregistration" value="PPM profile client %1 (PDC Identifier:%2) deregistered with status: %3" />
+        <string id="event.PpmProfileClientReference" value="PDC PPM profile client %1 acquired a referenced" />
+        <string id="event.PpmProfileClientDereference" value="PDC PPM profile client %1 released a referenced" />
+        <string id="event.PDCV2ActivationClientRegister" value="PDCV2 ClientRegistered - ClientId=%1, status=%2" />
+        <string id="event.PDCV2ActivationClientActivate" value="PDCV2 ClientActivated - ClientId=%1(%3, %5)(activationHandle=%10) activationCount=%6, upCounter=%7, maxDuration=%8, status=%9" />
+        <string id="event.PDCV2ActivationClientRenewActivation" value="PDCV2 ClientRenewed - ClientId=%1(%3, %5)(activationHandle=%13) expectedMax=%6, activationCount=%7, upCounter=%8, activationDuration=%9, renewalUpcount=%10, errorDetails=%11, status=%12" />
+        <string id="event.PDCV2ActivationClientSetBrokeredProcessID" value="PDCV2 SetBrokeredPID- ClientId=%1(%3, %5)(activationHandle=%13) PID=%11, expectedMax=%6, activationCount=%7, upCounter=%8, activationDuration=%9, renewalUpcount=%10, status=%12" />
+        <string id="event.PDCV2ActivationClientDeactivate" value="PDCV2 ClientDeactivated - ClientId=%1(%3, %5)(activationHandle=%10) activationCount=%6, upCounter=%7, Status=%9, activationDuration=%8" />
+        <string id="event.PDCV2ActivationClientUnregister" value="PDCV2 ClientUnregistered - ClientId=%1, status=%2" />
+        <string id="event.PDCV2ActivationClientCallback" value="PDCV2 ActivationClientCallback ClientId=%1(%3, %5)(activationHandle=%11) was called with reason %6, activationCount=%7, upCounter=%8, duration=%9, Status=%10" />
+        <string id="PdcClient.KeywordMessage" value="PdcClient" />
+        <string id="event.PdcSignalClassExitFromConnectedStandby" value="Modern Standby exit due to PDC signal client" />
+        <string id="event.PdcSignalClassEnterConnectedStandby" value="Modern Standby entry due to PDC signal client" />
+        <string id="event.PdcPhaseReferenced" value="PDC phase %1 was referenced" />
+        <string id="event.PdcPhaseDereferenced" value="PDC phase %1 was dereferenced" />
+        <string id="event.PdcTargetPhaseSelected" value="PDC phase %1 was selected as target" />
+        <string id="event.PdcTargetPhaseReached" value="PDC target phase %1 was reached" />
+        <string id="event.PdcPhaseNotificationsStateChanged" value="PDC phase %1 notifications state changed" />
+        <string id="event.PdcPhaseRundown" value="PDC phase %1 rundown" />
+        <string id="event.PdcPhaseAccountingRundown" value="PDC phase %1 accounting rundown" />
+        <string id="PhaseName.PdcNoCsPhase" value="No CS Phase" />
+        <string id="PhaseName.PdcConnectionPhase" value="Connection Phase" />
+        <string id="PhaseName.PdcShellPhase" value="Shell Phase" />
+        <string id="PhaseName.PdcPlmPhase" value="PLM Phase" />
+        <string id="PhaseName.PdcMaintenancePhase" value="Maintenance Phase" />
+        <string id="PhaseName.PdcDamPhase" value="DAM Phase" />
+        <string id="PhaseName.PdcLowPowerPhase" value="Low Power Phase" />
+        <string id="PhaseName.PdcResiliencyNotificationPhase" value="Resiliency Notification Phase" />
+        <string id="PhaseName.PdcResiliencyPhase" value="Resiliency Phase" />
+        <string id="PhaseName.PdcInvalidPhase" value="Invalid Phase" />
+        <string id="PhaseNotificationsState.None" value="None" />
+        <string id="PhaseNotificationsState.ExitComplete" value="Exit Complete" />
+        <string id="PhaseNotificationsState.ExitPending" value="Exit Pending" />
+        <string id="PhaseNotificationsState.EnterPending" value="Enter Pending" />
+        <string id="PhaseNotificationsState.EnterComplete" value="Enter Complete" />
+        <string id="PhaseNotificationsState.Failed" value="Failed" />
+        <string id="event.PdcPhaseNotificationCallback" value="PDC phase notification callback" />
+        <string id="event.PdcSIdleUpdateNotification" value="PDC notified system is idle state %1" />
+        <string id="event.PdcInvalidArgumentToFunction" value="A function in PDC received an invalid argument" />
+      </stringTable>
+    </resources>
+  </localization>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" description="Default SDDL for Windows Resource Protected file" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+</assembly>

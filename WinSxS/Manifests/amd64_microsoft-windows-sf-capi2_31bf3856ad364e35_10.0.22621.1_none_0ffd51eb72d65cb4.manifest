@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-SF-CAPI2" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <registryKeys>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\Software\Microsoft\SystemCertificates\AuthRoot\">
+      <securityDescriptor name="CRYPTSVC_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\Software\Microsoft\Cryptography\OID\" perUserVirtualization="DisableRecurse" />
+    <registryKey keyName="HKEY_LOCAL_MACHINE\Software\Microsoft\Cryptography\Providers\" perUserVirtualization="DisableRecurse" />
+    <registryKey keyName="HKEY_LOCAL_MACHINE\System\CurrentControlSet\Services\CryptSvc\Parameters">
+      <registryValue name="ServiceDll" valueType="REG_EXPAND_SZ" value="%SystemRoot%\system32\cryptsvc.dll" />
+      <registryValue name="ServiceMain" valueType="REG_SZ" value="CryptServiceMain" />
+      <registryValue name="ServiceDllUnloadOnStop" valueType="REG_DWORD" value="0x00000001" />
+    </registryKey>
+  </registryKeys>
+  <memberships>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories.Services" version="10.0.22621.1" publicKeyToken="31bf3856ad364e35" typeName="Service" />
+      <categoryInstance subcategory="CryptSvc">
+        <serviceData name="CryptSvc" displayName="@%SystemRoot%\system32\cryptsvc.dll,-1001" errorControl="normal" start="auto" type="win32OwnProcess" description="@%SystemRoot%\system32\cryptsvc.dll,-1002" dependOnService="RpcSs" imagePath="%SystemRoot%\system32\svchost.exe -k NetworkService -p" objectName="NT Authority\NetworkService" requiredPrivileges="SeChangeNotifyPrivilege,SeCreateGlobalPrivilege,SeImpersonatePrivilege" sidType="unrestricted">
+          <serviceTrigger action="start" subtype="RPC_INTERFACE_EVENT" type="NetworkEndpointEvent">
+            <triggerData type="string" value="F50AAC00-C7F3-428e-A022-A6B71BFB9D43" />
+          </serviceTrigger>
+          <failureActions resetPeriod="86400">
+            <actions>
+              <action delay="60000" type="restartService" />
+              <action delay="0" type="none" />
+              <action delay="0" type="none" />
+            </actions>
+          </failureActions>
+          <securityDescriptor name="CRYPTSVC_SERVICE_SDDL" />
+        </serviceData>
+      </categoryInstance>
+    </categoryMembership>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories" version="1.0.0.0" publicKeyToken="365143bb27e7ac8b" typeName="SvcHost" />
+      <categoryInstance subcategory="NetworkService">
+        <serviceGroup position="last" serviceName="CryptSvc" />
+      </categoryInstance>
+    </categoryMembership>
+  </memberships>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="CRYPTSVC_SDDL" sddl="D:AI(A;CIOI;GA;;;S-1-5-80-242729624-280608522-2219052887-3187409060-2225943459)" operationHint="replace" />
+          <securityDescriptorDefinition name="CRYPTSVC_SERVICE_SDDL" sddl="D:(A;;GRGX;;;SY)(A;;GA;;;BA)((A;;GRCR;;;IU)(A;;GRCR;;;SU)(A;;GRGX;;;SO)(A;;GR;;;S-1-15-2-1)(A;;GR;;;S-1-15-3-1024-3203351429-2120443784-2872670797-1918958302-2829055647-4275794519-765664414-2751773334)" operationHint="replace" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string id="description1" value="Provides two management services: Catalog Database Service, which confirms the signatures of Windows files; and Protected Root Service, which adds and removes Trusted Root Certification Authority certificates from this computer. If this service is stopped, these management services will not function properly. If this service is disabled, any services that explicitly depend on it will fail to start." />
+        <string id="description" value="Server Foundation components to supplement the Minwin components in Microsoft-Windows-Cryptography" />
+        <string id="displayName" value="Server Foundation Cryptographic Services" />
+        <string id="displayName1" value="Cryptographic Services" />
+        <string id="displayName2" value="CryptSvc SDDL" />
+        <string id="description2" value="Adds Full Control DACL for CryptSvc" />
+      </stringTable>
+    </resources>
+  </localization>
+</assembly>

@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-CredentialEnrollmentManager" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <dependency discoverable="no" resourceType="Resources">
+    <dependentAssembly dependencyType="prerequisite">
+      <assemblyIdentity name="Microsoft-Windows-CredentialEnrollmentManager.Resources" version="10.0.22621.1" processorArchitecture="amd64" language="*" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </dependentAssembly>
+  </dependency>
+  <file name="CredentialEnrollmentManager.exe" destinationPath="$(runtime.system32)\" sourceName="CredentialEnrollmentManager.exe" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>r6SpgmgOK5ahbRIoJ0Fot9ok+yNGn+DTs0WNUfnvMsE=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <file name="CredentialEnrollmentManagerForUser.dll" destinationPath="$(runtime.system32)\" sourceName="CredentialEnrollmentManagerForUser.dll" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>7DrYu4GS2JlDkDH1lLD0987s2LbIkHeYTWN9xRP79OE=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <memberships>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories.Services" version="10.0.22621.1" publicKeyToken="31bf3856ad364e35" typeName="Service" />
+      <categoryInstance>
+        <serviceData name="CredentialEnrollmentManagerUserSvc" displayName="@%SystemRoot%\system32\CredentialEnrollmentManager.exe,-100" errorControl="normal" start="demand" type="win32UserOwnProcess" description="@%SystemRoot%\system32\CredentialEnrollmentManager.exe,-101" dependOnService="RpcSs" imagePath="%SystemRoot%\system32\CredentialEnrollmentManager.exe">
+          <failureActions resetPeriod="86400">
+            <actions>
+              <action delay="10000" type="restartService" />
+              <action delay="0" type="none" />
+            </actions>
+          </failureActions>
+          <securityDescriptor name="SERVICE_SDDL" />
+        </serviceData>
+      </categoryInstance>
+    </categoryMembership>
+  </memberships>
+  <registryKeys>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{a62b9bb1-54cd-44b1-9f55-5a5914c37672}">
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+      <registryValue name="" valueType="REG_SZ" value="OOBE NGC Registration Manager Factory" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{a62b9bb1-54cd-44b1-9f55-5a5914c37672}\InProcServer32">
+      <registryValue name="" valueType="REG_SZ" value="$(runtime.system32)\CredentialEnrollmentManagerForUser.dll" />
+      <registryValue name="ThreadingModel" valueType="REG_SZ" value="Both" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\Software\Microsoft\WindowsRuntime\Server\CredentialEnrollmentManagerUserSvc">
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+      <registryValue name="ServerType" valueType="REG_DWORD" value="0x00000002" />
+      <registryValue name="Permissions" valueType="REG_BINARY" value="010014806400000070000000140000003000000002001c000100000011001400040000000101000000000010001000000200340002000000000014000b00000001010000000000050b000000000018000b000000010200000000000f020000000100000001010000000000050a00000001020000000000052000000021020000" />
+      <registryValue name="ServiceName" valueType="REG_SZ" value="CredentialEnrollmentManagerUserSvc" />
+      <registryValue name="IdentityType" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="Identity" valueType="REG_SZ" value="nt authority\system" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\Software\Microsoft\WindowsRuntime\ActivatableClassId\Windows.Internal.UI.Auth.Enrollment.UserCredentialEnrollmentManager">
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+      <registryValue name="TrustLevel" valueType="REG_DWORD" value="0x00000000" />
+      <registryValue name="ActivationType" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="Server" valueType="REG_SZ" value="CredentialEnrollmentManagerUserSvc" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\Software\Microsoft\WindowsRuntime\ActivatableClassId\Windows.Internal.UI.BioEnrollment.DataModel.PerUserBioEnrollmentSessionFactory">
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+      <registryValue name="TrustLevel" valueType="REG_DWORD" value="0x00000000" />
+      <registryValue name="ActivationType" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="Server" valueType="REG_SZ" value="CredentialEnrollmentManagerUserSvc" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\Software\Microsoft\WindowsRuntime\ActivatableClassId\UserDeviceRegistration.Ngc.UserNgcRegManager">
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+      <registryValue name="TrustLevel" valueType="REG_DWORD" value="0x00000000" />
+      <registryValue name="ActivationType" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="Server" valueType="REG_SZ" value="CredentialEnrollmentManagerUserSvc" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\Software\Microsoft\WindowsRuntime\ActivatableClassId\Windows.Internal.Shell.PlatformExtensions.UserServiceHostForHighILCredUICallers">
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+      <registryValue name="TrustLevel" valueType="REG_DWORD" value="0x00000002" />
+      <registryValue name="ActivationType" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="Server" valueType="REG_SZ" value="CredentialEnrollmentManagerUserSvc" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\Software\Microsoft\WindowsRuntime\ActivatableClassId\Windows.Internal.UI.Auth.Enrollment.CredentialEnrollmentManager">
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+      <registryValue name="TrustLevel" valueType="REG_DWORD" value="0x00000000" />
+      <registryValue name="ActivationType" valueType="REG_DWORD" value="0x00000000" />
+      <registryValue name="DllPath" valueType="REG_SZ" value="$(runtime.system32)\CredentialEnrollmentManagerForUser.dll" />
+      <registryValue name="Threading" valueType="REG_DWORD" value="0x00000000" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\Software\Microsoft\WindowsRuntime\ActivatableClassId\Windows.Internal.UI.BioEnrollment.DataModel.BioEnrollmentSessionUser">
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+      <registryValue name="TrustLevel" valueType="REG_DWORD" value="0x00000000" />
+      <registryValue name="ActivationType" valueType="REG_DWORD" value="0x00000000" />
+      <registryValue name="DllPath" valueType="REG_SZ" value="$(runtime.system32)\CredentialEnrollmentManagerForUser.dll" />
+      <registryValue name="Threading" valueType="REG_DWORD" value="0x00000000" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\Software\Microsoft\WindowsRuntime\ActivatableClassId\Windows.Internal.Shell.PlatformExtension.HighILCredUX.UserEnrollmentService">
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+      <registryValue name="TrustLevel" valueType="REG_DWORD" value="0x00000002" />
+      <registryValue name="ActivationType" valueType="REG_DWORD" value="0x00000000" />
+      <registryValue name="DllPath" valueType="REG_SZ" value="$(runtime.system32)\CredentialEnrollmentManagerForUser.dll" />
+      <registryValue name="Threading" valueType="REG_DWORD" value="0x00000000" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\Software\Microsoft\WindowsRuntime\ActivatableClassId\UserDeviceRegistration.Ngc.UserNgcRegManagerFactory">
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+      <registryValue name="TrustLevel" valueType="REG_DWORD" value="0x00000000" />
+      <registryValue name="ActivationType" valueType="REG_DWORD" value="0x00000000" />
+      <registryValue name="DllPath" valueType="REG_SZ" value="$(runtime.system32)\CredentialEnrollmentManagerForUser.dll" />
+      <registryValue name="Threading" valueType="REG_DWORD" value="0x00000000" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\OneCoreContracts\Windows.Internal.Shell.CredUXHostForHighIL\Default">
+      <registryValue name="ActivatableClassId" valueType="REG_SZ" value="Windows.Internal.Shell.PlatformExtension.HighILCredUX.UserEnrollmentService" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+  </registryKeys>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="WRP_REGKEY_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;CI;GA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;CI;GR;;;SY)(A;CI;GR;;;BA)(A;CI;GR;;;BU)(A;CI;GR;;;S-1-15-2-1)(A;CI;GR;;;S-1-15-3-1024-1065365936-1281604716-3511738428-1654721687-432734479-3232135806-4053264122-3456934681)" operationHint="replace" />
+          <securityDescriptorDefinition name="SERVICE_SDDL" sddl="O:SYG:SYD:(A;;CCLCSWRPWPDTLOCRRC;;;SU)(A;;CCLCSWRPWPDTLOCRRC;;;IU)(A;;CCLCSWRPWPDTLOCRRC;;;AU)(A;;CCLCSWRPWPDTLOCRRC;;;AC)" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" description="Default SDDL for Windows Resource Protected file" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+</assembly>

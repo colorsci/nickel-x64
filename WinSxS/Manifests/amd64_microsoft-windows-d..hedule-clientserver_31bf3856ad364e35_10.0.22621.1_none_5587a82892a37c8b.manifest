@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-DeviceCensus-Schedule-ClientServer" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <taskScheduler>
+    <Task xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task">
+      <RegistrationInfo>
+        <Version>1.0</Version>
+        <URI>\Microsoft\Windows\Device Information\Device</URI>
+        <SecurityDescriptor>D:(A;;GA;;;BA)(A;;GA;;;SY)(A;;FRFX;;;LS)</SecurityDescriptor>
+      </RegistrationInfo>
+      <Triggers>
+        <TimeTrigger>
+          <StartBoundary>2008-09-01T03:00:00</StartBoundary>
+          <Repetition>
+            <Interval>P1D</Interval>
+          </Repetition>
+          <RandomDelay>PT2H</RandomDelay>
+        </TimeTrigger>
+        <WnfStateChangeTrigger id="WNF_DEP_OOBE_COMPLETE">
+          <StateName>750cbca3290b9641</StateName>
+          <Data>01</Data>
+          <Enabled>true</Enabled>
+        </WnfStateChangeTrigger>
+      </Triggers>
+      <Settings>
+        <Enabled>true</Enabled>
+        <Hidden>false</Hidden>
+        <RunOnlyIfIdle>false</RunOnlyIfIdle>
+        <AllowStartOnDemand>true</AllowStartOnDemand>
+        <StartWhenAvailable>true</StartWhenAvailable>
+        <MultipleInstancesPolicy>IgnoreNew</MultipleInstancesPolicy>
+        <DisallowStartIfOnBatteries>false</DisallowStartIfOnBatteries>
+        <StopIfGoingOnBatteries>false</StopIfGoingOnBatteries>
+        <Priority>7</Priority>
+        <UseUnifiedSchedulingEngine>true</UseUnifiedSchedulingEngine>
+        <ExecutionTimeLimit>P4D</ExecutionTimeLimit>
+        <RunOnlyIfNetworkAvailable>false</RunOnlyIfNetworkAvailable>
+      </Settings>
+      <Principals>
+        <Principal id="LocalSystem">
+          <UserId>S-1-5-18</UserId>
+        </Principal>
+      </Principals>
+      <Actions Context="LocalSystem">
+        <Exec>
+          <Command>%windir%\system32\devicecensus.exe</Command>
+          <Arguments>SystemCxt</Arguments>
+        </Exec>
+      </Actions>
+    </Task>
+    <Task xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task" version="1.6">
+      <RegistrationInfo>
+        <Version>1.0</Version>
+        <URI>\Microsoft\Windows\Device Information\Device User</URI>
+        <SecurityDescriptor>D:(A;;GA;;;BA)(A;;GA;;;SY)(A;;FRFX;;;LS)</SecurityDescriptor>
+      </RegistrationInfo>
+      <Triggers>
+        <LogonTrigger>
+          <Enabled>true</Enabled>
+          <Delay>PT2M</Delay>
+        </LogonTrigger>
+      </Triggers>
+      <Principals>
+        <Principal id="Users">
+          <GroupId>S-1-5-4</GroupId>
+          <RunLevel>LeastPrivilege</RunLevel>
+        </Principal>
+      </Principals>
+      <Settings>
+        <MultipleInstancesPolicy>IgnoreNew</MultipleInstancesPolicy>
+        <DisallowStartIfOnBatteries>false</DisallowStartIfOnBatteries>
+        <StopIfGoingOnBatteries>false</StopIfGoingOnBatteries>
+        <AllowHardTerminate>true</AllowHardTerminate>
+        <StartWhenAvailable>true</StartWhenAvailable>
+        <RunOnlyIfNetworkAvailable>true</RunOnlyIfNetworkAvailable>
+        <IdleSettings>
+          <Duration>PT1M</Duration>
+          <WaitTimeout>P1D</WaitTimeout>
+          <StopOnIdleEnd>false</StopOnIdleEnd>
+          <RestartOnIdle>false</RestartOnIdle>
+        </IdleSettings>
+        <AllowStartOnDemand>true</AllowStartOnDemand>
+        <Enabled>true</Enabled>
+        <Hidden>false</Hidden>
+        <RunOnlyIfIdle>true</RunOnlyIfIdle>
+        <DisallowStartOnRemoteAppSession>false</DisallowStartOnRemoteAppSession>
+        <UseUnifiedSchedulingEngine>true</UseUnifiedSchedulingEngine>
+        <WakeToRun>false</WakeToRun>
+        <ExecutionTimeLimit>P4D</ExecutionTimeLimit>
+        <Priority>7</Priority>
+      </Settings>
+      <Actions Context="Users">
+        <Exec>
+          <Command>%windir%\system32\devicecensus.exe</Command>
+          <Arguments>UserCxt</Arguments>
+        </Exec>
+      </Actions>
+    </Task>
+  </taskScheduler>
+  <imaging>
+    <sysprepInformation>
+      <sysprepProvider stage="cleanup">
+        <sysprepOrder order="0x1600" />
+        <sysprepModule methodName="SysprepCleanupEnableCustomTrigger" moduleName="$(runtime.system32)\dcntel.dll" />
+      </sysprepProvider>
+    </sysprepInformation>
+  </imaging>
+</assembly>

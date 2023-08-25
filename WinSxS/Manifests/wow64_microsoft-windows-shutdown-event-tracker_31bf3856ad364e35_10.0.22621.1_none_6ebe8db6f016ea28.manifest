@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved." xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <assemblyIdentity name="Microsoft-Windows-Shutdown-Event-Tracker" version="10.0.22621.1" processorArchitecture="wow64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <dependency discoverable="no" resourceType="Resources">
+    <dependentAssembly dependencyType="prerequisite">
+      <assemblyIdentity name="Microsoft-Windows-Shutdown-Event-Tracker.Resources" version="10.0.22621.1" processorArchitecture="wow64" language="*" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </dependentAssembly>
+  </dependency>
+  <file name="shutdown.exe" destinationPath="$(runtime.system32)\" sourceName="shutdown.exe" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>hePs4lbJRzqpZh3R3j/vaRGegEQIjM0/xVX+XIgZN4Q=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <registryKeys>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Reliability">
+      <registryValue name="TimeStampInterval" valueType="REG_DWORD" value="0x00000001" />
+      <securityDescriptor name="LocalService" />
+    </registryKey>
+  </registryKeys>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="LocalService" sddl="D:PAI(A;CI;KA;;;BA)(A;CIIO;KA;;;CO)(A;CI;CCDCLCRPSD;;;LS)(A;CI;KA;;;SY)(A;CI;KR;;;BU)" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" description="Default SDDL for Windows Resource Protected file" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+  <configuration xmlns:app="Shutdown-Event-Tracker" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State">
+    <configurationSchema>
+      <xsd:schema xmlns="Shutdown-Event-Tracker" targetNamespace="Shutdown-Event-Tracker">
+        <xsd:element name="UserDefined" type="xsd:string" wcm:displayName="UserDefined Reasons" wcm:handler="regtree('HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Reliability\UserDefined')" wcm:migrate="no" wcm:scope="allUsers" wcm:subScope="machineIndependent" />
+      </xsd:schema>
+    </configurationSchema>
+  </configuration>
+  <migration ignoreConfigurationSection="Yes" settingsVersion="1">
+    <migXml xmlns="">
+      <rules context="System">
+        <include>
+          <objectSet>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows\CurrentVersion\Reliability\UserDefined\* [*]</pattern>
+          </objectSet>
+        </include>
+        <merge script="MigXmlHelper.SourcePriority()">
+          <objectSet>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows\CurrentVersion\Reliability\UserDefined\* [*]</pattern>
+          </objectSet>
+        </merge>
+      </rules>
+    </migXml>
+    <supportedComponents>
+      <supportedComponent>
+        <assemblyIdentity name="_" version="1.0.0.0" />
+        <supportedComponentIdentity buildType="release" language="neutral" name="Microsoft-Windows-Shutdown-Event-Tracker" processorArchitecture="x86" publicKeyToken="31bf3856ad364e35" settingsVersionRange="1" versionScope="nonSxS" xmlns="urn:schemas-microsoft-com:asm.v3" />
+        <migXml xmlns="">
+          <rules context="System">
+            <merge script="MigXmlHelper.SourcePriority()">
+              <objectSet>
+                <pattern type="Registry">HKLM\Software\Microsoft\Windows\CurrentVersion\Reliability\UserDefined\* [*]</pattern>
+              </objectSet>
+            </merge>
+          </rules>
+        </migXml>
+      </supportedComponent>
+      <supportedComponent>
+        <assemblyIdentity name="_" version="1.0.0.0" />
+        <supportedComponentIdentity language="*" name="Microsoft-Windows-Shutdown-Event-Tracker-DL" processorArchitecture="*" settingsVersionRange="0" xmlns="urn:schemas-microsoft-com:asm.v3" />
+        <migXml xmlns="">
+          <rules context="System">
+            <merge script="MigXmlHelper.SourcePriority()">
+              <objectSet>
+                <pattern type="Registry">HKLM\Software\Microsoft\Windows\CurrentVersion\Reliability\UserDefined\* [*]</pattern>
+              </objectSet>
+            </merge>
+          </rules>
+        </migXml>
+      </supportedComponent>
+    </supportedComponents>
+  </migration>
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string id="description" value="Shutdown command line utility" />
+        <string id="displayName" value="Shutdown" />
+        <string id="description5" value="ReliabilityGUID" />
+        <string id="description1" value="UserDefinedType" />
+        <string id="description2" value="A1033Type" />
+        <string id="displayName6" value="TimeStampInterval" />
+        <string id="description3" value="ShutdownStateSnapshot" />
+        <string id="displayName4" value="UserDefined" />
+        <string id="description4" value="LastAliveStamp" />
+        <string id="description6" value="UserDefined" />
+        <string id="displayName3" value="ReliabilityGUID" />
+        <string id="displayName5" value="LastAliveUptime" />
+        <string id="displayName2" value="LastAliveStamp" />
+        <string id="description8" value="TimeStampInterval" />
+        <string id="description7" value="LastAliveUptime" />
+        <string id="displayName1" value="ShutdownStateSnapshot" />
+        <string id="description18" value="ShutdownType" />
+        <string id="description19" value="UserDefinedType" />
+        <string id="displayName20" value="TimeStampInterval" />
+        <string id="description21" value="TimeStampInterval" />
+        <string id="displayName22" value="Reliability Key" />
+        <string id="displayName23" value="WRP_FILE_DEFAULT_SDDL" />
+        <string id="description24" value="Default SDDL for Windows Resource Protected file" />
+      </stringTable>
+    </resources>
+  </localization>
+</assembly>

@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved." xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <assemblyIdentity name="Microsoft-Windows-Deployment" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <file name="setupugc.exe" destinationPath="$(runtime.system32)\" sourceName="setupugc.exe" importPath="$(build.nttree)\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>NIBvfKqahNWoefG4jePh8RrOXvgYtOK4yxQq86aIMvU=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <configuration xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State">
+    <configurationSchema>
+      <xsd:schema xmlns="setupugc" targetNamespace="setupugc">
+        <xsd:simpleType name="OrderType">
+          <xsd:restriction base="xsd:integer">
+            <xsd:minInclusive value="1" />
+            <xsd:maxInclusive value="500" />
+          </xsd:restriction>
+        </xsd:simpleType>
+        <xsd:complexType name="CredentialsType">
+          <xsd:sequence>
+            <xsd:element name="Domain" type="xsd:string" />
+            <xsd:element name="Username" type="xsd:string" />
+            <xsd:element name="Password" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+        <xsd:simpleType name="ComputerNameType">
+          <xsd:restriction base="xsd:string">
+            <xsd:maxLength value="15" />
+          </xsd:restriction>
+        </xsd:simpleType>
+        <xsd:simpleType name="PathType">
+          <xsd:restriction base="xsd:string">
+            <xsd:maxLength value="259" />
+          </xsd:restriction>
+        </xsd:simpleType>
+        <xsd:complexType name="AuditComputerNameType">
+          <xsd:sequence>
+            <xsd:element default="*" name="Name" type="ComputerNameType" />
+            <xsd:element default="false" name="MustReboot" type="xsd:boolean" />
+          </xsd:sequence>
+        </xsd:complexType>
+        <xsd:element name="AuditComputerName" type="AuditComputerNameType" wcm:dataOnly="false" wcm:handler="regkey('HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\UnattendSettings\Setup-Unattend-Settings')" wcm:passes="auditSystem" wcm:visible="true" />
+        <xsd:simpleType name="DescriptionType">
+          <xsd:restriction base="xsd:string">
+            <xsd:maxLength value="250" />
+          </xsd:restriction>
+        </xsd:simpleType>
+        <xsd:complexType name="RunAsynchronousCommandType">
+          <xsd:sequence>
+            <xsd:element maxOccurs="1" minOccurs="1" name="Order" type="OrderType" />
+            <xsd:element maxOccurs="1" minOccurs="1" name="Path" type="PathType" />
+            <xsd:element name="Description" type="DescriptionType" />
+            <xsd:element maxOccurs="1" minOccurs="0" name="Credentials" type="CredentialsType" />
+          </xsd:sequence>
+        </xsd:complexType>
+        <xsd:complexType name="RunAsynchronousType">
+          <xsd:sequence>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="RunAsynchronousCommand" type="RunAsynchronousCommandType" wcm:key="Order" />
+          </xsd:sequence>
+        </xsd:complexType>
+        <xsd:simpleType name="RebootType">
+          <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="Never" />
+            <xsd:enumeration value="Always" />
+            <xsd:enumeration value="OnRequest" />
+          </xsd:restriction>
+        </xsd:simpleType>
+        <xsd:complexType name="RunSynchronousCommandType">
+          <xsd:sequence>
+            <xsd:element maxOccurs="1" minOccurs="1" name="Order" type="OrderType" />
+            <xsd:element maxOccurs="1" minOccurs="1" name="Path" type="PathType" />
+            <xsd:element name="Description" type="DescriptionType" />
+            <xsd:element default="Never" name="WillReboot" type="RebootType" />
+            <xsd:element maxOccurs="1" minOccurs="0" name="Credentials" type="CredentialsType" />
+          </xsd:sequence>
+        </xsd:complexType>
+        <xsd:complexType name="RunSynchronousType">
+          <xsd:sequence>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="RunSynchronousCommand" type="RunSynchronousCommandType" wcm:key="Order" />
+          </xsd:sequence>
+        </xsd:complexType>
+        <xsd:element name="RunAsynchronous" type="RunAsynchronousType" wcm:dataOnly="false" wcm:handler="regkey('HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\UnattendSettings\Setup-Unattend-Settings')" wcm:passes="specialize auditUser" wcm:visible="true" />
+        <xsd:element name="RunSynchronous" type="RunSynchronousType" wcm:dataOnly="false" wcm:handler="regkey('HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\UnattendSettings\Setup-Unattend-Settings')" wcm:passes="specialize auditUser" wcm:visible="true" />
+        <xsd:complexType name="ExtendOSPartitionType">
+          <xsd:sequence>
+            <xsd:element maxOccurs="1" minOccurs="0" name="Size" type="xsd:positiveInteger" />
+            <xsd:element default="false" maxOccurs="1" minOccurs="0" name="Extend" type="xsd:boolean" />
+          </xsd:sequence>
+        </xsd:complexType>
+        <xsd:element name="ExtendOSPartition" type="ExtendOSPartitionType" wcm:dataOnly="false" wcm:handler="regkey('HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\UnattendSettings\Setup-Unattend-Settings')" wcm:passes="generalize specialize auditSystem oobeSystem" wcm:visible="true" />
+        <xsd:element name="DuplicatorDescription" type="wcm:multiString" wcm:dataOnly="true" wcm:description="DuplicatorDescription specifies a description of the duplication tool used, as well as any other information that an OEM or an administrator might store in the registry." wcm:handler="regkey('HKLM\SYSTEM\Setup')" wcm:legacyName="OEMDuplicatorString" wcm:legacyType="REG_MULTI_SZ" wcm:passes="generalize" wcm:visible="true" />
+        <xsd:element name="DeviceForm" type="xsd:unsignedInt" wcm:dataOnly="true" wcm:description="DeviceForm specifies a enumeration value that dictates the form factor of the device as reported through telemetry" wcm:handler="regkey('HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\OEM')" wcm:legacyName="DeviceForm" wcm:legacyType="REG_DWORD" wcm:passes="generalize specialize auditSystem oobeSystem" wcm:visible="true" />
+        <xsd:simpleType name="ResealModeType">
+          <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="Audit" />
+            <xsd:enumeration value="OOBE" />
+          </xsd:restriction>
+        </xsd:simpleType>
+        <xsd:complexType name="ResealType">
+          <xsd:sequence>
+            <xsd:element default="OOBE" maxOccurs="1" minOccurs="0" name="Mode" type="ResealModeType" />
+            <xsd:element default="false" maxOccurs="1" minOccurs="0" name="ForceShutdownNow" type="xsd:boolean" />
+          </xsd:sequence>
+        </xsd:complexType>
+        <xsd:element name="Reseal" type="ResealType" wcm:dataOnly="true" wcm:handler="regkey('HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\UnattendSettings\Setup-Unattend-Settings')" wcm:passes="auditUser auditSystem oobeSystem" wcm:visible="true" />
+        <xsd:element name="Generalize" type="ResealType" wcm:dataOnly="true" wcm:handler="regkey('HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\UnattendSettings\Setup-Unattend-Settings')" wcm:passes="auditUser" wcm:visible="true" />
+      </xsd:schema>
+    </configurationSchema>
+  </configuration>
+  <unattendActions>
+    <unattendAction executableName="$(runtime.system32)\setupugc.exe" passes="auditSystem auditUser oobeSystem generalize specialize" />
+  </unattendActions>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" description="Default SDDL for Windows Resource Protected file" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+</assembly>

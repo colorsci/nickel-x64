@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-Update-UX-UserPredictionModel" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <registryKeys>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\UpdatePlatform\UX\Configurations">
+      <registryValue name="RebootSBCEnabled" valueType="REG_DWORD" value="0x00000001" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+      <registryValue name="RebootDowntimeEstimatesEnabled" valueType="REG_DWORD" value="0x00000001" />
+    </registryKey>
+  </registryKeys>
+  <file name="SBCModel.json" destinationPath="$(runtime.windows)\WUModels\" sourceName="SBCModel.json" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="UPDATE_MODEL_FILE_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>MiDcU7tBXmZFVdYfkCrD3c+8RHMxq3jBWFdGV4p0oCA=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <file name="SBCModel.txt" destinationPath="$(runtime.windows)\WUModels\" sourceName="SBCModel.txt" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="UPDATE_MODEL_FILE_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>0Pr+lJFQAd7odo1uYY3Zo9bHoRnatolLBP1cojHlCNw=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <file name="QualityUpdateModel.txt" destinationPath="$(runtime.windows)\WUModels\" sourceName="QualityUpdateModel.txt" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="UPDATE_MODEL_FILE_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>OVZbSunRnWY5Nqixzkdho35RVR8lFOxHm4dIszkVmA0=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <file name="QualityUpdateMetadata.json" destinationPath="$(runtime.windows)\WUModels\" sourceName="QualityUpdateMetadata.json" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="UPDATE_MODEL_FILE_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>RhN0TpTyk0VQ2uXHwvF3SKRl54P1gtLG/WKTDEIBjDY=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <taskScheduler>
+    <Task xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task">
+      <RegistrationInfo>
+        <Author>$(@%systemRoot%\system32\usosvc.dll,-103)</Author>
+        <Source>$(@%systemRoot%\system32\usosvc.dll,-104)</Source>
+        <Description>$(@%systemRoot%\system32\usosvc.dll,-108)</Description>
+        <URI>\Microsoft\Windows\UpdateOrchestrator\UpdateModelTask</URI>
+        <SecurityDescriptor>D:P(A;;FA;;;SY)(A;;FRFX;;;LS)(A;;FRFX;;;BA)</SecurityDescriptor>
+        <Version>1.0</Version>
+      </RegistrationInfo>
+      <Triggers>
+        <TimeTrigger>
+          <Enabled>true</Enabled>
+          <StartBoundary>2001-01-01T01:00:00</StartBoundary>
+          <EndBoundary>2001-01-01T02:00:00</EndBoundary>
+        </TimeTrigger>
+      </Triggers>
+      <Settings>
+        <DeleteExpiredTaskAfter>PT0S</DeleteExpiredTaskAfter>
+        <UseUnifiedSchedulingEngine>true</UseUnifiedSchedulingEngine>
+      </Settings>
+      <Principals>
+        <Principal id="LocalSystem">
+          <UserId>S-1-5-18</UserId>
+          <RunLevel>LeastPrivilege</RunLevel>
+        </Principal>
+      </Principals>
+      <Actions Context="LocalSystem">
+        <Exec>
+          <Command>cmd</Command>
+        </Exec>
+      </Actions>
+    </Task>
+  </taskScheduler>
+  <directories>
+    <directory destinationPath="$(runtime.windows)\WUModels">
+      <securityDescriptor name="UPDATE_MODEL_DIR_SDDL" />
+    </directory>
+    <directory destinationPath="$(runtime.programData)\Microsoft\Windows\Models">
+      <securityDescriptor name="UPDATE_MODEL_DIR_SDDL" />
+    </directory>
+  </directories>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="REGKEY_UPDATEUX_SDDL" sddl="O:BAD:P(A;OICI;GA;;;SY)(A;OICI;GA;;;BA)(A;OICI;GRGW;;;BU)" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_DIRECTORY_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;CIOI;GA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;CIOI;GRGX;;;SY)(A;CIOI;GRGX;;;BA)(A;CIOI;GRGX;;;BU)(A;CIOI;GRGX;;;S-1-15-2-1)(A;CIOI;GRGX;;;S-1-15-2-2)S:(AU;FASA;SDWDWOFW;;;WD)" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_PARENT_DIR_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;CI;GA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;0x1301bf;;;SY)(A;IOCIOI;GA;;;SY)(A;;0x1301bf;;;BA)(A;IOCIOI;GA;;;BA)(A;CIOI;GRGX;;;BU)(A;OICIIO;GA;;;CO)(A;CIOI;GRGX;;;S-1-15-2-1)(A;CIOI;GRGX;;;S-1-15-2-2)" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_REGKEY_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;CI;GA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;CI;GR;;;SY)(A;CI;GR;;;BA)(A;CI;GR;;;BU)(A;CI;GR;;;S-1-15-2-1)(A;CI;GR;;;S-1-15-3-1024-1065365936-1281604716-3511738428-1654721687-432734479-3232135806-4053264122-3456934681)" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" />
+          <securityDescriptorDefinition name="UPDATE_MODEL_DIR_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;CI;GA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;0x001301bf;;;SY)(A;CIOIIO;GA;;;SY)(A;;GXGR;;;BA)(A;CIOIIO;GXGR;;;BA)(A;CIOIIO;GXGR;;;BU)" operationHint="replace" />
+          <securityDescriptorDefinition name="UPDATE_MODEL_FILE_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;CI;GA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GXGR;;;SY)(A;;GXGR;;;BA)" operationHint="replace" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+</assembly>

@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-Fax-Service" version="10.0.22621.1" processorArchitecture="wow64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <dependency discoverable="no" resourceType="Resources">
+    <dependentAssembly>
+      <assemblyIdentity name="Microsoft-Windows-Fax-Service.Resources" version="10.0.22621.1" processorArchitecture="wow64" language="*" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </dependentAssembly>
+  </dependency>
+  <directories>
+    <directory destinationPath="$(runtime.programData)\Microsoft\Windows NT\MSFax\Inbox">
+      <securityDescriptor name="SDAdmNetworkServiceFull" />
+    </directory>
+    <directory destinationPath="$(runtime.programData)\Microsoft\Windows NT\MSFax\SentItems">
+      <securityDescriptor name="SDAdmNetworkServiceFull" />
+    </directory>
+    <directory destinationPath="$(runtime.programData)\Microsoft\Windows NT\MSFax\Queue">
+      <securityDescriptor name="SDAdmNetworkServiceFull" />
+    </directory>
+  </directories>
+  <registryKeys>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Fax\Outbound Routing" />
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Fax">
+      <securityDescriptor name="SDAdmFullNSRdWrDel" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Fax\Accounts">
+      <registryValue name="FooBar" valueType="REG_DWORD" value="0x00000000" />
+    </registryKey>
+  </registryKeys>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="SDAdmNetworkServiceFull" sddl="D:PAI(A;OICI;FA;;;BA)(A;OICI;FA;;;S-1-5-80-2117685068-4011115449-2646761356-2137676340-222423812)" operationHint="replace" />
+          <securityDescriptorDefinition name="SDFaxService" sddl="O:SYG:SYD:(A;;LCRP;;;WD)(A;;CCLCSWRPWPDTLOCRRC;;;S-1-5-80-2117685068-4011115449-2646761356-2137676340-222423812)(A;;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;BA)(A;;CCLCSWLOCRRC;;;AU)" operationHint="replace" />
+          <securityDescriptorDefinition name="SDNSAdmFullAURead" sddl="D:PAI(A;OICI;FA;;;BA)(A;OICI;RCSDKRKW;;;S-1-5-80-2117685068-4011115449-2646761356-2137676340-222423812)(A;;KR;;;BU)" operationHint="replace" />
+          <securityDescriptorDefinition name="SDAdmFullNSRdWrDel" sddl="D:PAI(A;OICI;FA;;;BA)(A;OICI;RCSDKRKW;;;S-1-5-80-2117685068-4011115449-2646761356-2137676340-222423812)" operationHint="replace" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+  <unattendActions>
+    <unattendAction executableName="$(runtime.system32)\fxsunatd.exe" passes="specialize" />
+  </unattendActions>
+  <instrumentation>
+    <counters xmlns="http://schemas.microsoft.com/win/2005/12/counters" schemaVersion="2.0">
+      <provider applicationIdentity="fxsresm.dll" callback="custom" providerGuid="{DB314EE3-3157-4e56-8FD9-2184874D195D}" providerName="Fax Service" providerType="userMode" symbol="Fax_Service">
+        <counterSet description="Fax Service Counter Set" descriptionID="3" guid="{FB01B3EF-BB4A-4c48-9AB8-DC1871675E6D}" instances="single" name="Fax Service" nameID="1" symbol="Fax_Service_Counter" uri="Microsoft.Windows.System.PerfCounters.FaxService">
+          <counter defaultScale="1" description="Total number of minutes that the service sent and received faxes." descriptionID="7" detailLevel="standard" id="1" name="Total minutes sending and receiving" nameID="5" type="perf_counter_rawcount" uri="Microsoft.Windows.System.PerfCounters.FaxServiceCounterSet.TotalMinutes">
+            <counterAttributes>
+              <counterAttribute name="reference" />
+            </counterAttributes>
+          </counter>
+          <counter defaultScale="1" description="Total number of pages sent and received." descriptionID="11" detailLevel="standard" id="2" name="Total pages" nameID="9" type="perf_counter_rawcount" uri="Microsoft.Windows.System.PerfCounters.FaxServiceCounterSet.TotalPages">
+            <counterAttributes>
+              <counterAttribute name="reference" />
+            </counterAttributes>
+          </counter>
+          <counter defaultScale="1" description="Total number of faxes sent and received." descriptionID="15" detailLevel="standard" id="3" name="Total faxes sent and received" nameID="13" type="perf_counter_rawcount" uri="Microsoft.Windows.System.PerfCounters.FaxServiceCounterSet.TotalFaxes">
+            <counterAttributes>
+              <counterAttribute name="reference" />
+            </counterAttributes>
+          </counter>
+          <counter defaultScale="1" description="Total number of bytes sent and received." descriptionID="19" detailLevel="standard" id="4" name="Total bytes" nameID="17" type="perf_counter_rawcount" uri="Microsoft.Windows.System.PerfCounters.FaxService.TotalBytes">
+            <counterAttributes>
+              <counterAttribute name="reference" />
+            </counterAttributes>
+          </counter>
+          <counter defaultScale="1" description="Number of faxes that failed." descriptionID="23" detailLevel="standard" id="5" name="Failed faxes transmissions" nameID="21" type="perf_counter_rawcount" uri="Microsoft.Windows.System.PerfCounters.FaxService.FailedTx">
+            <counterAttributes>
+              <counterAttribute name="reference" />
+            </counterAttributes>
+          </counter>
+          <counter defaultScale="1" description="Number of outgoing connections that failed." descriptionID="27" detailLevel="standard" id="6" name="Failed outgoing connections" nameID="25" type="perf_counter_rawcount" uri="Microsoft.Windows.System.PerfCounters.FaxService.FailedConn">
+            <counterAttributes>
+              <counterAttribute name="reference" />
+            </counterAttributes>
+          </counter>
+          <counter defaultScale="1" description="Number of minutes that the service spent in sending successfully transmitted faxes." descriptionID="31" detailLevel="standard" id="7" name="Minutes sending" nameID="29" type="perf_counter_rawcount" uri="Microsoft.Windows.System.PerfCounters.FaxService.SentMinutes">
+            <counterAttributes>
+              <counterAttribute name="reference" />
+            </counterAttributes>
+          </counter>
+          <counter defaultScale="1" description="Number of pages sent." descriptionID="35" detailLevel="standard" id="8" name="Pages sent" nameID="33" type="perf_counter_rawcount" uri="Microsoft.Windows.System.PerfCounters.FaxService.SentPages">
+            <counterAttributes>
+              <counterAttribute name="reference" />
+            </counterAttributes>
+          </counter>
+          <counter defaultScale="1" description="Number of faxes successfully sent." descriptionID="39" detailLevel="standard" id="9" name="Faxes sent" nameID="37" type="perf_counter_rawcount" uri="Microsoft.Windows.System.PerfCounters.FaxService.SentFaxes">
+            <counterAttributes>
+              <counterAttribute name="reference" />
+            </counterAttributes>
+          </counter>
+          <counter defaultScale="1" description="Number of bytes sent." descriptionID="43" detailLevel="standard" id="10" name="Bytes sent" nameID="41" type="perf_counter_rawcount" uri="Microsoft.Windows.System.PerfCounters.FaxService.SentBytes">
+            <counterAttributes>
+              <counterAttribute name="reference" />
+            </counterAttributes>
+          </counter>
+          <counter defaultScale="1" description="Number of faxes that service failed to receive." descriptionID="47" detailLevel="standard" id="11" name="Failed receptions" nameID="45" type="perf_counter_rawcount" uri="Microsoft.Windows.System.PerfCounters.FaxService.ReceivedFailed">
+            <counterAttributes>
+              <counterAttribute name="reference" />
+            </counterAttributes>
+          </counter>
+          <counter defaultScale="1" description="Number of minutes that the service received faxes." descriptionID="51" detailLevel="standard" id="12" name="Minutes receiving" nameID="49" type="perf_counter_rawcount" uri="Microsoft.Windows.System.PerfCounters.FaxService.ReceivedMinutes">
+            <counterAttributes>
+              <counterAttribute name="reference" />
+            </counterAttributes>
+          </counter>
+          <counter defaultScale="1" description="Number of pages received." descriptionID="55" detailLevel="standard" id="13" name="Received pages" nameID="53" type="perf_counter_rawcount" uri="Microsoft.Windows.System.PerfCounters.FaxService.ReceivedPages">
+            <counterAttributes>
+              <counterAttribute name="reference" />
+            </counterAttributes>
+          </counter>
+          <counter defaultScale="1" description="Number of successfully received faxes." descriptionID="59" detailLevel="standard" id="14" name="Received faxes" nameID="57" type="perf_counter_rawcount" uri="Microsoft.Windows.System.PerfCounters.FaxService.ReceivedFaxes">
+            <counterAttributes>
+              <counterAttribute name="reference" />
+            </counterAttributes>
+          </counter>
+          <counter defaultScale="1" description="Number of bytes received." descriptionID="63" detailLevel="standard" id="15" name="Bytes received" nameID="61" type="perf_counter_rawcount" uri="Microsoft.Windows.System.PerfCounters.FaxService.ReceivedBytes">
+            <counterAttributes>
+              <counterAttribute name="reference" />
+            </counterAttributes>
+          </counter>
+        </counterSet>
+      </provider>
+    </counters>
+  </instrumentation>
+  <migration scope="Upgrade,MigWiz,USMT" settingsVersion="0">
+    <migXml xmlns="">
+      <environment context="System">
+        <variable name="FaxService.ARCHIVEROOT">
+          <script>MigXmlHelper.GetStringContent("Registry","HKLM\Software\Microsoft\Fax [ArchiveFolder]")</script>
+        </variable>
+        <variable name="FaxService.ACTIVITYLOG">
+          <script>MigXmlHelper.GetStringContent("Registry","HKLM\Software\Microsoft\Fax\ActivityLogging [DBFile]")</script>
+        </variable>
+      </environment>
+      <rules context="System">
+        <include>
+          <objectSet>
+            <pattern type="Registry">HKLM\Software\Microsoft\Fax\Accounts\* [*]</pattern>
+            <pattern type="File">%FaxService.ARCHIVEROOT%\Inbox [*]</pattern>
+            <pattern type="File">%FaxService.ARCHIVEROOT%\SentItems [*]</pattern>
+            <pattern type="File">%FaxService.ACTIVITYLOG%\* [*]</pattern>
+            <pattern type="File">%CSIDL_SYSTEM% [fxsperf.ini]</pattern>
+            <pattern type="File">%CSIDL_COMMON_APPDATA%\Microsoft\Windows NT\MSFax\Common Coverpages\* [*]</pattern>
+            <pattern type="File">%CSIDL_COMMON_APPDATA%\Microsoft\Windows NT\MSFax\Queue\* [*]</pattern>
+          </objectSet>
+        </include>
+        <exclude>
+          <objectSet>
+            <pattern type="File">%FaxService.ACTIVITYLOG% [schema.ini]</pattern>
+          </objectSet>
+        </exclude>
+        <locationModify script="MigXmlHelper.ExactMove('%CSIDL_COMMON_APPDATA%\Microsoft\Windows NT\MSFax\Queue_Migrated')">
+          <objectSet>
+            <pattern type="File">%CSIDL_COMMON_APPDATA%\Microsoft\Windows NT\MSFax\Queue\* [*]</pattern>
+          </objectSet>
+        </locationModify>
+        <merge script="MigXmlHelper.SourcePriority()">
+          <objectSet>
+            <pattern type="File">%FaxService.ACTIVITYLOG%\* [*]</pattern>
+            <pattern type="File">%CSIDL_COMMON_APPDATA%\Microsoft\Windows NT\MSFax\Common Coverpages\* [*]</pattern>
+          </objectSet>
+        </merge>
+        <merge script="MigXmlHelper.DestinationPriority()">
+          <objectSet>
+            <pattern type="File">%CSIDL_COMMON_APPDATA%\Microsoft\Windows NT\MSFax\Queue\* [*]</pattern>
+          </objectSet>
+        </merge>
+        <merge script="MigXmlHelper.SourcePriority()">
+          <objectSet>
+            <pattern type="File">%FaxService.ARCHIVEROOT%\SentItems [*]</pattern>
+            <pattern type="File">%FaxService.ARCHIVEROOT%\Inbox [*]</pattern>
+          </objectSet>
+        </merge>
+      </rules>
+    </migXml>
+    <machineSpecific>
+      <migXml xmlns="">
+        <rules context="System">
+          <include>
+            <objectSet>
+              <pattern type="Registry">HKLM\Software\Microsoft\Fax\Security [Descriptor]</pattern>
+            </objectSet>
+          </include>
+          <merge script="MigXmlHelper.DestinationPriority()">
+            <objectSet>
+              <pattern type="Registry">HKLM\Software\Microsoft\Fax\Security [Descriptor]</pattern>
+            </objectSet>
+          </merge>
+        </rules>
+      </migXml>
+    </machineSpecific>
+    <supportedComponents>
+      <supportedComponent>
+        <assemblyIdentity name="_" version="1.0.0.0" />
+        <supportedComponentIdentity buildType="release" language="neutral" name="Microsoft-Windows-Fax-Service" processorArchitecture="*" publicKeyToken="31bf3856ad364e35" settingsVersionRange="0" versionScope="nonSxS" xmlns="urn:schemas-microsoft-com:asm.v3" />
+        <migXml xmlns="">
+          <rules context="System">
+            <locationModify script="MigXmlHelper.ExactMove('%CSIDL_COMMON_APPDATA%\Microsoft\Windows NT\MSFax\Queue_Migrated')">
+              <objectSet>
+                <pattern type="File">%CSIDL_COMMON_APPDATA%\Microsoft\Windows NT\MSFax\Queue\* [*]</pattern>
+              </objectSet>
+            </locationModify>
+            <merge script="MigXmlHelper.SourcePriority()">
+              <objectSet>
+                <pattern type="File">%FaxService.ACTIVITYLOG%\* [*]</pattern>
+                <pattern type="File">%CSIDL_COMMON_APPDATA%\Microsoft\Windows NT\MSFax\Common Coverpages\* [*]</pattern>
+              </objectSet>
+            </merge>
+            <merge script="MigXmlHelper.DestinationPriority()">
+              <objectSet>
+                <pattern type="File">%CSIDL_COMMON_APPDATA%\Microsoft\Windows NT\MSFax\Queue\* [*]</pattern>
+              </objectSet>
+            </merge>
+            <merge script="MigXmlHelper.SourcePriority()">
+              <objectSet>
+                <pattern type="File">%FaxService.ARCHIVEROOT%\SentItems [*]</pattern>
+                <pattern type="File">%FaxService.ARCHIVEROOT%\Inbox [*]</pattern>
+              </objectSet>
+            </merge>
+          </rules>
+        </migXml>
+        <machineSpecific>
+          <migXml xmlns="">
+            <rules>
+              <merge script="MigXmlHelper.DestinationPriority()">
+                <objectSet>
+                  <pattern type="Registry">HKLM\Software\Microsoft\Fax\Security [Descriptor]</pattern>
+                </objectSet>
+              </merge>
+            </rules>
+          </migXml>
+        </machineSpecific>
+      </supportedComponent>
+      <supportedComponent>
+        <assemblyIdentity name="_" version="1.0.0.0" />
+        <supportedComponentIdentity buildType="release" language="*" name="Microsoft-Windows-Fax-Service-DL" processorArchitecture="*" publicKeyToken="31bf3856ad364e35" settingsVersionRange="0" versionScope="nonSxS" xmlns="urn:schemas-microsoft-com:asm.v3" />
+        <migXml xmlns="">
+          <rules context="System">
+            <locationModify script="MigXmlHelper.ExactMove('%FaxService.ARCHIVEROOT%\Inbox')">
+              <objectSet>
+                <pattern type="File">%CSIDL_COMMON_DOCUMENTS%\My Faxes\Received Faxes\* [*]</pattern>
+              </objectSet>
+            </locationModify>
+            <locationModify script="MigXmlHelper.ExactMove('%FaxService.ARCHIVEROOT%\SentItems')">
+              <objectSet>
+                <pattern type="File">%CSIDL_COMMON_DOCUMENTS%\My Faxes\Sent Faxes\* [*]</pattern>
+              </objectSet>
+            </locationModify>
+            <locationModify script="MigXmlHelper.ExactMove('%FaxService.COVERPAGEDIR%')">
+              <objectSet>
+                <pattern type="File">%CSIDL_COMMON_DOCUMENTS%\My Faxes\Common CoverPages\* [*]</pattern>
+              </objectSet>
+            </locationModify>
+            <locationModify script="MigXmlHelper.ExactMove('%CSIDL_COMMON_APPDATA%\Microsoft\Windows NT\MSFax\Queue_Migrated')">
+              <objectSet>
+                <pattern type="File">%CSIDL_COMMON_APPDATA%\Microsoft\Windows NT\MSFax\Queue\* [*]</pattern>
+              </objectSet>
+            </locationModify>
+            <merge script="MigXmlHelper.FindFilePlaceByPattern('&lt;F&gt;&lt;N&gt;.&lt;E&gt;')">
+              <objectSet>
+                <pattern type="File">%CSIDL_COMMON_DOCUMENTS%\My Faxes\Sent Faxes\* [*]</pattern>
+                <pattern type="File">%CSIDL_COMMON_DOCUMENTS%\My Faxes\Received Faxes\* [*]</pattern>
+                <pattern type="File">%CSIDL_COMMON_DOCUMENTS%\My Faxes\Common CoverPages\* [*]</pattern>
+              </objectSet>
+            </merge>
+            <merge script="MigXmlHelper.SourcePriority()">
+              <objectSet>
+                <pattern type="File">%CSIDL_COMMON_APPDATA%\Microsoft\Windows NT\MSFax\ActivityLog\* [*]</pattern>
+              </objectSet>
+            </merge>
+            <locationModify script="MigXmlHelper.ExactMove('HKLM\SOFTWARE\Microsoft\Fax [QueueAgeLimit]')">
+              <objectSet>
+                <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Fax [Dirty Days]</pattern>
+              </objectSet>
+            </locationModify>
+            <locationModify script="MigXmlHelper.ExactMove('%FaxService.ArchiveRoot%\SentItems')">
+              <objectSet>
+                <pattern type="File">%CSIDL_COMMON_APPDATA%\Microsoft\Windows NT\MSFax\SentItems\* [*]</pattern>
+              </objectSet>
+            </locationModify>
+            <locationModify script="MigXmlHelper.ExactMove('%FaxService.ArchiveRoot%\Inbox')">
+              <objectSet>
+                <pattern type="File">%CSIDL_COMMON_APPDATA%\Microsoft\Windows NT\MSFax\Inbox\* [*]</pattern>
+              </objectSet>
+            </locationModify>
+            <merge script="MigXmlHelper.FindFilePlaceByPattern('&lt;F&gt;&lt;N&gt;.&lt;E&gt;')">
+              <objectSet>
+                <pattern type="File">%CSIDL_COMMON_APPDATA%\Microsoft\Windows NT\MSFax\Inbox\* [*]</pattern>
+                <pattern type="File">%CSIDL_COMMON_APPDATA%\Microsoft\Windows NT\MSFax\SentItems\* [*]</pattern>
+              </objectSet>
+            </merge>
+            <externalProcess when="apply-success">
+              <commandLine>%windir%\system32\cmd.exe /c  "cd /d %CSIDL_COMMON_APPDATA%\Microsoft\Windows NT\MSFax\Inbox &amp;&amp; for %i in (dir 4*.tif) do rename %i Unassigned$%i"</commandLine>
+            </externalProcess>
+          </rules>
+        </migXml>
+        <machineSpecific>
+          <migXml xmlns="">
+            <rules>
+              <merge script="MigXmlHelper.DestinationPriority()">
+                <objectSet>
+                  <pattern type="Registry">HKLM\Software\Microsoft\Fax\Security [Descriptor]</pattern>
+                </objectSet>
+              </merge>
+            </rules>
+          </migXml>
+        </machineSpecific>
+      </supportedComponent>
+    </supportedComponents>
+    <migrationDisplayID>Communications_and_Sync\Fax</migrationDisplayID>
+  </migration>
+</assembly>

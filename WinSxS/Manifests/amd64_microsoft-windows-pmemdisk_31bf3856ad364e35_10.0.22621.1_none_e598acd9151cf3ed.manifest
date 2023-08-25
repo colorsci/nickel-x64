@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-PmemDisk" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <instrumentation xmlns:win="http://manifests.microsoft.com/win/2004/08/windows/events" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <events xmlns="http://schemas.microsoft.com/win/2004/08/events">
+      <provider guid="{0fa2ee03-1feb-5057-3bb3-eb25521b8482}" messageFileName="%SystemRoot%\system32\drivers\pmem.sys" name="Microsoft-Windows-PersistentMemory-PmemDisk" parameterFileName="%SystemRoot%\system32\drivers\pmem.sys" resourceFileName="%SystemRoot%\system32\drivers\pmem.sys" symbol="PmemEventProvider">
+        <channels>
+          <importChannel chid="SYSTEM" name="System" />
+          <channel chid="Analytic" enabled="false" isolation="System" name="Microsoft-Windows-PersistentMemory-PmemDisk/Analytic" type="Analytic" />
+          <channel chid="Diagnostic" enabled="false" isolation="System" name="Microsoft-Windows-PersistentMemory-PmemDisk/Diagnostic" type="Debug" />
+          <channel chid="Operational" enabled="true" isolation="System" name="Microsoft-Windows-PersistentMemory-PmemDisk/Operational" type="Operational">
+            <logging>
+              <maxSize>6291456</maxSize>
+            </logging>
+          </channel>
+        </channels>
+      </provider>
+      <cmi />
+    </events>
+  </instrumentation>
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string id="keyword.write" value="Write request" />
+        <string id="keyword.read" value="Read request" />
+        <string id="keyword.pnp" value="PnP request" />
+        <string id="keyword.pagingwrite" value="Paging Write request" />
+        <string id="keyword.pagingread" value="Paging Read request" />
+        <string id="keyword.nonreadwrite" value="Non-Read/Write request" />
+        <string id="keyword.ioperf" value="IO Performance measurement" />
+        <string id="keyword.ioctl" value="Device I/O control request" />
+        <string id="keyword.hardwareevents" value="Hardware events" />
+        <string id="event.pnpcomplete" value="Completing a PnP request." />
+        <string id="event.pnp" value="Dispatching a PnP request." />
+        <string id="event.nonreadwritecomplete" value="Completing a non-read/write request." />
+        <string id="event.iowrite" value="Dispatching a write request." />
+        <string id="event.ioread" value="Dispatching a read request." />
+        <string id="event.ioperfduration" value="Request servicing time taken by lower driver stack(s)." />
+        <string id="event.ioctl" value="Dispatching an IOCTL." />
+        <string id="event.iocomplete" value="Completing an IO (read/write) request." />
+        <string id="event.diskMemoryDuration" value="Memory operation duration, in hundreds of nanoseconds." />
+        <string id="event.diskInitMemory" value="Reported memory resource." />
+        <string id="displayName0" value="Microsoft persistent memory disk driver" />
+        <string id="event.StartDeviceFailed" value="Persistent memory disk %1 failed to start.                    %nReason: %7                    %nNTSTATUS code: %8" />
+        <string id="StartDeviceFailure.InterpretResources" value="The driver could not interpret the device's memory resources." />
+        <string id="StartDeviceFailure.Interleave" value="The driver could not discover the device's interleaving settings." />
+        <string id="StartDeviceFailure.SerialNumber" value="The driver could not read the device's serial number." />
+        <string id="StartDeviceFailure.InternalError" value="The driver encountered an internal error." />
+        <string id="StartDeviceFailure.BootTimeStatus" value="The driver could not discover whether boot-time operations, like save and restore, succeeded." />
+        <string id="StartDeviceFailure.NotificationRegistrationError" value="The driver could not register to be notified of health-related events on the NVDIMM." />
+        <string id="StartDeviceFailure.DeviceHealthDsm" value="The driver could not determine the health status of the persistent memory disk." />
+        <string id="StartDeviceFailure.MemoryMap" value="There is an uncorrectable memory error in a critical region of the persistent memory disk." />
+        <string id="HealthStatusMap.Unknown" value="unknown" />
+        <string id="HealthStatusMap.Unhealthy" value="unhealthy" />
+        <string id="HealthStatusMap.Warning" value="warning" />
+        <string id="HealthStatusMap.Healthy" value="healthy" />
+        <string id="event.StartDeviceSucceeded" value="Persistent memory disk %1 started successfully." />
+        <string id="event.BootTimeOperationFailed" value="One of the NVDIMMs that make up persistent memory disk %1 encountered an error while transferring your data to or from persistent media (see the Details tab for more information). Some of your data may have been lost. If this is a data disk, it is now in read-only mode as a precaution. If you want to keep using it, run the Reset-PhysicalDisk command to make it writeable again. If this is the system disk, it will remain writeable but will appear as Unhealthy until you run the Reset-PhysicalDisk command in PowerShell.                    %n                    %nLook at the events logged by the physical NVDIMM driver for more details." />
+        <string id="event.BootTimeOperationFailedPreviously" value="During a previous boot session, one of the NVDIMMs that make up persistent memory disk %1 encountered an error while transferring your data to or from persistent media. Some of your data may have been lost then. If this is a data disk, it is now in read-only mode as a precaution. If you want to keep using it, run the Reset-PhysicalDisk command to make it writeable again. If this is the system disk, it will remain writeable but will appear as Unhealthy until you run the Reset-PhysicalDisk command in PowerShell.                    %n                    %nLook at the events logged by the physical NVDIMM driver for more details." />
+        <string id="event.NotificationFromNvdimm" value="NVDIMM %5 notified persistent memory disk %1 of a change in its health state. The NVDIMM now has the following health status: %7." />
+        <string id="event.PersistenceLoss" value="One of the NVDIMMs that make up the persistent memory disk %1 encountered a serious problem and the disk is now in read-only mode. Data that was saved to this disk may be lost when the computer shuts down or restarts. Consider backing up your data to another disk.                    %n                    %nUse the Get-PhysicalDisk command to get more information about the disk's health status.                    %nLook at the events logged by the physical NVDIMM driver for more details." />
+        <string id="event.PersistenceRegained" value="The problem with the persistent memory disk %1 was resolved and it is now back in read-write mode." />
+        <string id="event.HealthWarning" value="One of the NVDIMMs that make up the persistent memory disk %1 is in a degraded health state and may soon encounter serious problems. Consider backing up your data to another disk.                    %n                    %nLook at the events logged by the physical NVDIMM driver for more details." />
+        <string id="event.NoMemoryResources" value="The computer didn't assign any memory resources to persistent memory disk %1. You won't be able to access the data on the device, but you can still query its health status by using the Get-PhysicalDisk command." />
+        <string id="event.LockedNvdimm" value="The persistent memory disk %1 is inaccessible because at least one of its NVDIMMs are locked. Contact your hardware vendor for instructions on how to unlock the NVDIMMs." />
+        <string id="event.TracePrint" value="Persistent memory disk %1 logged:             %n             %n %2" />
+        <string id="event.ReadOnly" value="Persistent memory disk %1 is now in read-only mode.  Use the Get-PhysicalDisk command to get the device’s health status.  The Microsoft-Windows-PersistentMemory-PmemDisk/Operational event log may also contain more information." />
+        <string id="event.ReadOnlyRecovered" value="Persistent memory disk %1 is no longer in read-only mode." />
+        <string id="event.InterleaveNotSupported" value="Windows does not support this configuration: two or more NVDIMMs on this system are part of an interleaved set. Back up the data on the interleaved set to a different drive and then break up the interleaved set. Consider using Storage Spaces if NVDIMM capacity needs to be aggregated." />
+        <string id="event.BadMemoryRanges" value="Some physical memory locations on persistent memory disk %1 are corrupt. In order to protect your computer, Windows will not access those locations and you may see failures trying to read or write to your data. Contact your hardware vendor to learn what recovery steps are available." />
+        <string id="event.InconsistentNativeAtomicityMode" value="The physical devices that make up persistent memory disk %1 have an atomicity setting that is incompatible with the data on the disk. Windows didn't start the disk to prevent data loss.             %n             %nThis type of problem can happen when you update your computer's firmware, or when you upgrade from a version of Windows that doesn't look at atomicity settings to one that does.             %n             %nTo recover the disk, follow these steps:             %n1. Open the registry editor (regedit) and navigate to 'Computer\HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Enum\ACPI\ACPI0012\&lt;instance ID&gt;\Device Parameters'. There will only be one instance ID key.             %n2. Create a registry key named 'ScmBus'. Inside it, create a new DWORD value named 'IgnoreLabels' and set it to 1.             %n3. Restart your computer.             %n4. When Windows starts again, your persistent memory disks will be accessible. Back up **all the data** on **all of them** to a different disk. NOTE: these recovery steps will clear all persistent memory disks, even the ones that aren't affected by this problem, so it's important to back up all your data.             %n5. Open the registry editor, navigate to the 'IgnoreLabels' value you created and set it to 0.             %n6. Restart your computer.             %n7. The persistent memory disk will be inaccessible again. To use it, you will have to reinitialize all physical persistent memory devices on the system. Open an elevated PowerShell window and run 'Get-PmemPhysicalDevice | Initialize-PmemPhysicalDevice'.             %n8. The last step is to recreate the persistent memory disks. You can do that in the elevated PowerShell window by running 'Get-PmemUnusedRegion | New-PmemDisk'. Look at the help content for 'New-PmemDisk' to learn how to specify the disks' atomicity modes." />
+        <string id="event.changedurabilitymode" value="The persistent memory disk %1 changed its powerfail persistence mode to %2. (0 is PerformanceMode, 1 is DurabilityMode)" />
+        <string id="event.InternalError" value="The driver for persistent memory disk %1 encountered an internal error. The information in the Details tab might help Microsoft or your platform vendor to diagnose the problem." />
+        <string id="event.DumpInitFailure" value="The driver couldn't configure the dump stack on persistent memory disk %1, which may cause hibernation or memory dump generation to fail." />
+      </stringTable>
+    </resources>
+  </localization>
+</assembly>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved." xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <assemblyIdentity name="Microsoft-Windows-DNS-Client" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <file name="dnscacheugc.exe" destinationPath="$(runtime.system32)\" sourceName="dnscacheugc.exe" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>dExYVpuxxFyQSNjDXwqTJ2xBxOAKXMJvli8cGpJhXUg=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <unattendActions>
+    <unattendAction executableName="$(runtime.system32)\dnscacheugc.exe" passes="specialize windowsPE" />
+  </unattendActions>
+  <asmv3:configuration xmlns:asmv3="urn:schemas-microsoft-com:asm.v3" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State">
+    <asmv3:configurationSchema>
+      <xsd:schema xmlns="Microsoft-Windows-DNS-Client" targetNamespace="Microsoft-Windows-DNS-Client">
+        <xsd:simpleType name="InterfaceIdentifierType">
+          <xsd:restriction base="xsd:string">
+            <xsd:maxLength value="255" />
+          </xsd:restriction>
+        </xsd:simpleType>
+        <xsd:simpleType name="IpAddressType">
+          <xsd:restriction base="xsd:string">
+            <xsd:maxLength value="45" />
+          </xsd:restriction>
+        </xsd:simpleType>
+        <xsd:simpleType name="DomainNameType">
+          <xsd:restriction base="xsd:string">
+            <xsd:maxLength value="255" />
+          </xsd:restriction>
+        </xsd:simpleType>
+        <xsd:complexType name="DomainNameCollectionType">
+          <xsd:sequence>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="DomainName" type="DomainNameType" />
+          </xsd:sequence>
+        </xsd:complexType>
+        <xsd:complexType name="IpAddressCollectionType">
+          <xsd:sequence>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="IpAddress" type="IpAddressType" />
+          </xsd:sequence>
+        </xsd:complexType>
+        <xsd:complexType name="InterfaceType">
+          <xsd:sequence>
+            <xsd:element maxOccurs="1" minOccurs="1" name="Identifier" type="InterfaceIdentifierType" />
+            <xsd:element maxOccurs="1" minOccurs="0" name="DNSDomain" type="DomainNameType" />
+            <xsd:element maxOccurs="1" minOccurs="0" name="DNSServerSearchOrder" type="IpAddressCollectionType" />
+            <xsd:element maxOccurs="1" minOccurs="0" name="EnableAdapterDomainNameRegistration" type="xsd:boolean" />
+            <xsd:element maxOccurs="1" minOccurs="0" name="DisableDynamicUpdate" type="xsd:boolean" />
+          </xsd:sequence>
+        </xsd:complexType>
+        <xsd:complexType name="InterfaceCollectionType">
+          <xsd:sequence>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="Interface" type="InterfaceType" wcm:key="Identifier" />
+          </xsd:sequence>
+        </xsd:complexType>
+        <xsd:element name="DNSDomain" type="DomainNameType" wcm:dataOnly="false" wcm:description="DNSDomain specifies the primary Domain Name System (DNS) domain to be searched for the name resolution. The DNS suffix is used by the DNS client for registrations and to assist with resolution if no DNSSuffixSearchOrder is configured." wcm:displayName="DNSDomain" wcm:handler="regkey('HKLM\Software\Microsoft\Windows NT\CurrentVersion\UnattendSettings\DnsCache')" wcm:passes="specialize windowsPE" wcm:scope="allUsers" wcm:subScope="machineIndependent" wcm:visible="true" />
+        <xsd:element name="DNSSuffixSearchOrder" type="DomainNameCollectionType" wcm:dataOnly="false" wcm:description="DNSSuffixSearchOrder specifies the suffix search order for the name resolution." wcm:displayName="DNSSuffixSearchOrder" wcm:handler="regkey('HKLM\Software\Microsoft\Windows NT\CurrentVersion\UnattendSettings\DnsCache')" wcm:passes="specialize windowsPE" wcm:scope="allUsers" wcm:subScope="machineIndependent" wcm:visible="true" />
+        <xsd:element name="UseDomainNameDevolution" type="xsd:boolean" wcm:dataOnly="false" wcm:description="UseDomainNameDevolution specifies whether the name resolver uses domain-name devolution to resolve an unqualified query. For example, when a query with a single-label name is received, such as &quot;Fabrikam&quot;, UseDomainNameDevolution specifies whether a domain is added to it to make it &quot;Fabrikam.com&quot;." wcm:displayName="UseDomainNameDevolution" wcm:handler="regkey('HKLM\Software\Microsoft\Windows NT\CurrentVersion\UnattendSettings\DnsCache')" wcm:passes="specialize windowsPE" wcm:scope="allUsers" wcm:subScope="machineIndependent" wcm:visible="true" />
+        <xsd:element name="Interfaces" type="InterfaceCollectionType" wcm:dataOnly="false" wcm:description="Interfaces is a container for DNS interface settings." wcm:displayName="Interfaces" wcm:handler="regkey('HKLM\Software\Microsoft\Windows NT\CurrentVersion\UnattendSettings\DnsCache')" wcm:passes="specialize windowsPE" wcm:scope="allUsers" wcm:subScope="machineIndependent" wcm:visible="true" />
+      </xsd:schema>
+    </asmv3:configurationSchema>
+  </asmv3:configuration>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" description="Default SDDL for Windows Resource Protected file" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+</assembly>

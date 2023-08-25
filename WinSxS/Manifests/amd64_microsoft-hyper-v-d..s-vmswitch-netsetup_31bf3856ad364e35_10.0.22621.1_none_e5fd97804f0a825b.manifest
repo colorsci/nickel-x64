@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Hyper-V-Drivers-VmSwitch-NetSetup" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <dependency discoverable="no" resourceType="Resources">
+    <dependentAssembly>
+      <assemblyIdentity name="Microsoft-Hyper-V-Drivers-VmSwitch-NetSetup.Resources" version="10.0.22621.1" processorArchitecture="amd64" language="*" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+    </dependentAssembly>
+  </dependency>
+  <memberships>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories.Services" version="6.1.6734.1" publicKeyToken="31bf3856ad364e35" typeName="Service" />
+      <categoryInstance subcategory="vmSwitchProxy">
+        <serviceData name="VmsProxy" displayName="VmSwitch Proxy Driver" errorControl="normal" start="boot" type="kernelDriver" group="Extended Base" imagePath="system32\drivers\VmsProxy.sys" tag="12" />
+      </categoryInstance>
+      <categoryInstance subcategory="vmSwitchNicProxy">
+        <serviceData name="VMSNPXY" displayName="VmSwitch NIC Proxy Driver" errorControl="normal" start="boot" type="kernelDriver" group="Extended Base" imagePath="system32\drivers\VmsProxyHNic.sys" />
+      </categoryInstance>
+      <categoryInstance subcategory="vmSwitch">
+        <serviceData name="VMSP" displayName="VmSwitch Protocol Driver" errorControl="normal" start="auto" type="kernelDriver" dependOnService="VMSNPXY" group="NDIS" imagePath="System32\drivers\vmswitch.sys" />
+      </categoryInstance>
+      <categoryInstance subcategory="vmSwitchExt">
+        <serviceData name="VMSVSP" displayName="VmSwitch Extensibility Protocol" errorControl="normal" start="demand" type="kernelDriver" group="NDIS" imagePath="System32\drivers\vmswitch.sys" />
+      </categoryInstance>
+      <categoryInstance subcategory="vmSwitchExtFilter">
+        <serviceData name="VMSVSF" displayName="VmSwitch Extensibility Filter" errorControl="normal" start="demand" type="kernelDriver" dependOnService="ndis" group="NDIS" imagePath="System32\drivers\vmswitch.sys" />
+      </categoryInstance>
+    </categoryMembership>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories" version="1.0.0.0" publicKeyToken="365143bb27e7ac8b" typeName="BootCritical" />
+    </categoryMembership>
+  </memberships>
+  <registryKeys>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\vmsmp" />
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\vmsmp\parameters">
+      <registryValue name="WppRecorder_PerBufferMaxBytes" valueType="REG_DWORD" value="0x00010000" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\VmsProxy\parameters">
+      <registryValue name="WppRecorder_PerBufferMaxBytes" valueType="REG_DWORD" value="0x00010000" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\VMSNPXY\parameters">
+      <registryValue name="WppRecorder_PerBufferMaxBytes" valueType="REG_DWORD" value="0x00010000" />
+    </registryKey>
+  </registryKeys>
+  <networkComponents>
+    <netAdapterDriver id="{72FEF6B3-26F8-42AA-A41C-5B491CBB0914}" ifDescrSeed="Hyper-V Virtual Ethernet Adapter" ifType="IF_TYPE_ETHERNET_CSMACD" isVirtual="true" mediaType="NdisMedium802_3" physicalMediaType="NdisPhysicalMediumUnspecified">
+      <bind keyword="ndis5" ruleType="upper" />
+      <bind keyword="ethernet" ruleType="lower" />
+      <property name="NETSETUPPKEY_Interface_IsLightweight" type="boolean" value="true" />
+    </netAdapterDriver>
+    <protocolDriver bindName="VMSP" defaultDisable="false" displayDescription="@%windir%\System32\drivers\vmswitch.sys,-60000" displayName="@%windir%\System32\drivers\vmswitch.sys,-60001" hidden="false" identifier="vms_pp" noStartAtBoot="false" nonUserRemovable="false">
+      <bind keyword="ndis5" ruleType="lower" />
+    </protocolDriver>
+    <protocolDriver bindName="VMSVSP" displayDescription="@%windir%\System32\drivers\vmswitch.sys,-60002" displayName="@%windir%\System32\drivers\vmswitch.sys,-60003" hidden="false" identifier="vms_vsp" noStartAtBoot="false" nonUserRemovable="false">
+      <bind keyword="vmnetprotocol" ruleType="lower" />
+    </protocolDriver>
+    <filterDriver bindGuid="{529B8983-9625-49A5-8284-CE944FD8E242}" displayDescription="@%windir%\System32\drivers\vmswitch.sys,-60004" displayName="@%windir%\System32\drivers\vmswitch.sys,-60005" filterClass="ms_switch_reserved" hidden="false" identifier="vms_vsf" mandatory="false" noStartAtBoot="false" nonUserRemovable="false" type="modifying" unbindOnAttach="false" unbindOnDetach="false">
+      <bind keyword="vmnetextension" ruleType="bottom" />
+      <property name="NETSETUPPKEY_INF_Name" type="string" value="wvms_vsft.inf" />
+      <property name="NETSETUPPKEY_INF_Section" type="string" value="VMSVSF.ndi" />
+      <property name="NETSETUPPKEY_INF_LegacyCoServices" type="stringList" value="VMSP" />
+    </filterDriver>
+  </networkComponents>
+  <file name="VmsProxy.sys" destinationPath="$(runtime.drivers)\" sourceName="VmsProxy.sys" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>5EN/Z5CSb1CnIreAI0cwiV9wXeBnn+89uOpifAiBPxo=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <file name="VmsProxyHNic.sys" destinationPath="$(runtime.drivers)\" sourceName="VmsProxyHNic.sys" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>rg20Zdm3Ns/tiCMQv3tlG46RASUIzEqM52pQ67nFYvc=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <file name="vmswitch.sys" destinationPath="$(runtime.drivers)\" sourceName="vmswitch.sys" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>9rX5RZOk77wLdUQLya3Mxdj0egwQd0SdCuMq5m2jrfg=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <file name="nvspinfo.exe" destinationPath="$(runtime.system32)\" sourceName="nvspinfo.exe" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>UB3qskiKst45giWpqgZmjaxGtFpeLUOaYUPckQY9HC8=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_REGKEY_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;CI;GA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;CI;GR;;;SY)(A;CI;GR;;;BA)(A;CI;GR;;;BU)(A;CI;GR;;;S-1-15-2-1)(A;CI;GR;;;S-1-15-3-1024-1065365936-1281604716-3511738428-1654721687-432734479-3232135806-4053264122-3456934681)" operationHint="replace" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+</assembly>

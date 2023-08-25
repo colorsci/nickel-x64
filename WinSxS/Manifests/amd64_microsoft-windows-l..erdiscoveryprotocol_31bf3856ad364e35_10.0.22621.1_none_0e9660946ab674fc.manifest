@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-LinkLayerDiscoveryProtocol" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <dependency discoverable="no" resourceType="Resources">
+    <dependentAssembly dependencyType="prerequisite">
+      <assemblyIdentity name="Microsoft-Windows-LinkLayerDiscoveryProtocol.Resources" version="10.0.22621.1" processorArchitecture="amd64" language="*" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+    </dependentAssembly>
+  </dependency>
+  <file name="mslldp.sys" destinationPath="$(runtime.drivers)\" sourceName="mslldp.sys" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>4V0kJQbkcV2wx5Q9CVqu5/g5cBKm9cO92s/lP9Rli28=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <memberships>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories.Services" version="10.0.22621.1" publicKeyToken="31bf3856ad364e35" typeName="Service" />
+      <categoryInstance>
+        <serviceData name="MsLldp" displayName="@%SystemRoot%\system32\drivers\mslldp.sys,-200" errorControl="normal" start="auto" type="kernelDriver" description="@%SystemRoot%\system32\drivers\mslldp.sys,-201" group="NDIS" imagePath="system32\drivers\mslldp.sys">
+          <securityDescriptor name="LLDP service" />
+        </serviceData>
+      </categoryInstance>
+    </categoryMembership>
+  </memberships>
+  <registryKeys>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\System\CurrentControlSet\Services\MsLldp\Parameters\Agents" />
+  </registryKeys>
+  <networkComponents>
+    <protocolDriver bindName="MsLldp" displayDescription="@%SystemRoot%\system32\drivers\mslldp.sys,-210" displayName="@%SystemRoot%\system32\drivers\mslldp.sys,-211" identifier="ms_lldp">
+      <bind keyword="ndis5" ruleType="lower" />
+      <property name="NETSETUPPKEY_ProtocolDriver_SkipLinkageKeyGeneration" type="boolean" value="true" />
+      <property name="NETSETUPPKEY_Driver_NtServiceName" type="string" value="MsLldp" />
+      <property name="NETSETUPPKEY_INF_Name" type="string" value="netlldp.inf" />
+      <property name="NETSETUPPKEY_INF_Section" type="string" value="Install" />
+    </protocolDriver>
+  </networkComponents>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="WRP_REGKEY_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;CI;GA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;CI;GR;;;SY)(A;CI;GR;;;BA)(A;CI;GR;;;BU)(A;CI;GR;;;S-1-15-2-1)(A;CI;GR;;;S-1-15-3-1024-1065365936-1281604716-3511738428-1654721687-432734479-3232135806-4053264122-3456934681)" operationHint="replace" />
+          <securityDescriptorDefinition name="LLDP service" sddl="D:(A;;CCLCSWRPWPDTLOCRRC;;;SY)(A;;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;BA)(A;;CCLCSWLOCRRC;;;IU)(A;;CCLCSWLOCRRC;;;SU)(A;;RPWPLC;;;S-1-5-80-3635958274-2059881490-2225992882-984577281-633327304)S:(AU;FA;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;WD)" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" description="Default SDDL for Windows Resource Protected file" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+  <instrumentation xmlns:ut="http://manifests.microsoft.com/win/2004/08/windows/networkevents" xmlns:win="http://manifests.microsoft.com/win/2004/08/windows/events" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <events xmlns="http://schemas.microsoft.com/win/2004/08/events">
+      <provider guid="{dcbfb8f0-cd19-4f1c-a27d-23ac706ded72}" message="$(string.EventProviderName)" messageFileName="%windir%\system32\drivers\mslldp.sys" name="Microsoft-Windows-LinkLayerDiscoveryProtocol" resourceFileName="%windir%\system32\drivers\mslldp.sys" symbol="LLDP_ETW_PROVIDER">
+        <channels>
+          <channel chid="cOperational" enabled="false" message="$(string.OperationalChannelName)" name="Microsoft-Windows-LinkLayerDiscoveryProtocol/Operational" type="Operational" />
+          <channel chid="cAnalytic" enabled="false" message="$(string.DiagnosticChannelName)" name="Microsoft-Windows-LinkLayerDiscoveryProtocol/Diagnostic" type="Analytic" />
+        </channels>
+      </provider>
+      <cmi />
+    </events>
+  </instrumentation>
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string id="UT.evtNetError" value="Error: %1 Location: %2 Context: %3" />
+        <string id="UT.evtNetWarning" value="Warning: %1 Location: %2 Context: %3" />
+        <string id="UT.evtContextUpdate" value="Updated Context: %1 Update Reason: %2" />
+        <string id="UT.evtTuple" value="SourceAddress: %1 SourcePort: %2 DestinationAddress: %3 DestinationPort: %4 Protocol: %5 ReferenceContext: %6" />
+        <string id="UT.evtIfInfo" value="Interface Guid: %1 IfIndex: %2 Interface Luid: %3 ReferenceContext: %4" />
+        <string id="UT.opcodeStart" value="Start State" />
+        <string id="UT.opcodeEnd" value="End State" />
+        <string id="UT.opcodeClosed" value="Closed State" />
+        <string id="UT.opcodeOpen" value="Open State" />
+        <string id="UT.opcodeConnect" value="Connect State" />
+        <string id="UT.opcodeListen" value="Listen State" />
+        <string id="UT.opcodeAssociation" value="Association State" />
+        <string id="UT.opcodeAuthentication" value="Authentication State" />
+        <string id="UT.opcodeEstablished" value="Established State" />
+        <string id="EventProviderName" value="Microsoft-Windows-LinkLayerDiscoveryProtocol" />
+        <string id="DiagnosticChannelName" value="Microsoft-Windows-LinkLayerDiscoveryProtocol/Diagnostic" />
+        <string id="OperationalChannelName" value="Microsoft-Windows-LinkLayerDiscoveryProtocol/Operational" />
+        <string id="EventMsg.LldpStarted" value="The Link Layer Discovery Protocol driver (LLDP) is starting" />
+        <string id="EventMsg.LldpStopped" value="The Link Layer Discovery Protocol driver (LLDP) is stopping" />
+        <string id="EventMsg.InterfaceEnabled" value="The interface %1 is enabled" />
+        <string id="EventMsg.InterfaceDisabled" value="The interface %1 is disabled" />
+        <string id="EventMsg.LocalMibChanged" value="The local MIB on interface %1 has been updated" />
+        <string id="EventMsg.LocalMibChangeRejected" value="An update to the local MIB on interface %1 was rejected" />
+        <string id="EventMsg.AdminParameterChanged" value="The parameter %2 on interface %1 has been changed" />
+        <string id="EventMsg.LldpduTransmitted" value="An LLDP frame was transmitted on interface %1" />
+        <string id="EventMsg.LldpduReceived" value="An LLDP frame was received on interface %1" />
+        <string id="EventMsg.LldpduDiscarded" value="An LLDP frame received on interface %1 was rejected.%n%2" />
+        <string id="EventMsg.LldpduAccepted" value="An LLDP frame was successfully validated on interface %1" />
+        <string id="EventMsg.RemoteMibAdded" value="A new neighbor was discovered on interface %1%nNeighbor ID: %3" />
+        <string id="EventMsg.RemoteMibChanged" value="The neighbor on interface %1 has updated its MIB%nNeighbor ID: %3" />
+        <string id="EventMsg.RemoteMibExpired" value="The neighbor on interface %1 was removed because no message has been received within the timeout interval%nNeighbor ID: %3" />
+        <string id="EventMsg.RemoteMibShutdown" value="The neighbor on interface %1 was removed because a shutdown message was received%nNeighbor ID: %3" />
+        <string id="EventMsg.TooManyNeighborsBegin" value="The system has detected that there are multiple neighbors sending LLDP packets to the network interface %1.  A &quot;tooManyNeighbors&quot; state has been declared.  This may inhibit some network operations." />
+        <string id="EventMsg.TooManyNeighborsEnd" value="The &quot;tooManyNeighbors&quot; state has been cleared" />
+        <string id="EventMsg.TooManyNeighborsReceive" value="A message was received on interface %1 from an unknown neighbor, while the previously-detected neighbor is still active.  This will prolong the &quot;tooManyNeighbors&quot; state.%nExisting Neighbor ID: %3%nRecived Neighbor ID: %5" />
+        <string id="PacketDiscardReason.InsufficientResources" value="Insufficient system resources are available" />
+        <string id="PacketDiscardReason.WrongDestinationAddress" value="This frame is not directed at a supported multicast address" />
+        <string id="PacketDiscardReason.NotLldpEthertype" value="This frame is not an LLDP frame" />
+        <string id="PacketDiscardReason.MissingRequiredTlv" value="This frame is missing a required element" />
+        <string id="PacketDiscardReason.BadRequiredTlv" value="One of the required elements in this frame is malformed" />
+        <string id="PacketDiscardReason.BadDuplicateTlv" value="This frame has conflicting duplicate elements" />
+        <string id="PacketDiscardReason.InvalidTlvLength" value="This frame has an element with an invalid length" />
+        <string id="PacketDiscardReason.MissingEndOfFrame" value="The End-of-Frame marker is missing" />
+        <string id="PacketDiscardReason.TooManyNeighbors" value="Frames are not accepted from multiple neighbors" />
+        <string id="PacketDiscardReason.AdminDisabledRx" value="LLDP receive processing has been administratively disabled" />
+        <string id="MibChangeRejectReason.ExceededMtu" value="More information cannot be added to the MIB because the resulting LLDP frame would exceed the link's Maximum Transmission Unit (MTU)" />
+        <string id="MibChangeRejectReason.BadTlvLength" value="An element cannot be added to the MIB because it has has invalid length" />
+        <string id="MibChangeRejectReason.TlvTypeNotAllowed" value="An element cannot be added to the MIB because its type is not allowed" />
+        <string id="AdminParameter.AdminStatus" value="AdminStatus" />
+        <string id="AdminParameter.MsgTxHold" value="MsgTxHold" />
+        <string id="AdminParameter.MsgTxInterval" value="MsgTxInterval" />
+        <string id="AdminParameter.ReinitDelay" value="ReinitDelay" />
+        <string id="AdminParameter.TxCreditMax" value="TxCreditMax" />
+        <string id="AdminParameter.MsgFastTx" value="MsgFastTx" />
+        <string id="AdminParameter.TxFastInit" value="TxFastInit" />
+        <string id="AdminParameter.Max" value="." />
+      </stringTable>
+    </resources>
+  </localization>
+</assembly>

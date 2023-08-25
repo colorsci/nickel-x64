@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved." xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <assemblyIdentity name="Microsoft-Windows-NetworkProfile" version="10.0.22621.1" processorArchitecture="wow64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <file name="nlaapi.dll" destinationPath="$(runtime.system32)\" sourceName="nlaapi.dll" importPath="$(build.nttree)\" sourcePath=".\">
+    <signatureInfo>
+      <signatureDescriptor pageHash="true" />
+    </signatureInfo>
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>1qGoYvmKjRw/ettZl9Zqy3R3raBAnLh8ffczeGkFrsY=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <file name="nlmproxy.dll" destinationPath="$(runtime.system32)\" sourceName="nlmproxy.dll" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>N0nvpBS+As/V1gFALHqJNonCKRDWfkE//aMw+tHEKPg=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <file name="nlmsprep.dll" destinationPath="$(runtime.system32)\" sourceName="nlmsprep.dll" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>ZLBPW1r2wcybI9Oi3rXGxwD69wMMa1qirEau7kT/UHk=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <memberships>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories" version="1.0.0.0" publicKeyToken="365143bb27e7ac8b" typeName="SvcHost" />
+      <categoryInstance subcategory="netprofm">
+        <serviceGroup position="last" serviceName="netprofm" />
+      </categoryInstance>
+      <categoryInstance subcategory="netprofm">
+        <serviceGroup position="last" serviceName="nlasvc" />
+      </categoryInstance>
+    </categoryMembership>
+  </memberships>
+  <imaging>
+    <sysprepInformation>
+      <sysprepProvider stage="generalize">
+        <sysprepOrder order="0x2100" />
+        <sysprepModule methodName="NetworkListManager_Generalize" moduleName="$(runtime.system32)\nlmsprep.dll" />
+      </sysprepProvider>
+    </sysprepInformation>
+  </imaging>
+  <migration scope="Upgrade" settingsVersion="1">
+    <machineSpecific>
+      <migXml xmlns="">
+        <rules context="System">
+          <include>
+            <objectSet>
+              <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\NetworkList\Signatures\* [*]</pattern>
+              <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\NetworkList\Profiles\* [*]</pattern>
+              <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\NetworkList\Policies\* [*]</pattern>
+              <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\NetworkList\Nla\* [*]</pattern>
+              <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\NetworkList [FirstNetwork]</pattern>
+              <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\NlaSvc\Parameters\Internet\* [*]</pattern>
+              <pattern type="File">%WINDIR%\System32\NetworkList\Icons\* [*]</pattern>
+            </objectSet>
+          </include>
+          <merge script="MigXmlHelper.SourcePriority()">
+            <objectSet>
+              <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\NetworkList\Signatures\* [*]</pattern>
+              <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\NetworkList\Profiles\* [*]</pattern>
+              <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\NetworkList\Policies\* [*]</pattern>
+              <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\NetworkList\Nla\* [*]</pattern>
+              <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\NetworkList [FirstNetwork]</pattern>
+              <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\NlaSvc\Parameters\Internet\* [*]</pattern>
+              <pattern type="File">%WINDIR%\System32\NetworkList\Icons\* [*]</pattern>
+            </objectSet>
+          </merge>
+        </rules>
+      </migXml>
+    </machineSpecific>
+    <supportedComponents>
+      <supportedComponent>
+        <assemblyIdentity name="_" version="1.0.0.0" />
+        <supportedComponentIdentity buildType="release" language="neutral" name="Microsoft-Windows-NetworkProfile" processorArchitecture="*" publicKeyToken="31bf3856ad364e35" settingsVersionRange="1" versionScope="nonSxS" xmlns="urn:schemas-microsoft-com:asm.v3" />
+        <machineSpecific>
+          <migXml xmlns="">
+            <rules context="System">
+              <merge script="MigXmlHelper.SourcePriority()">
+                <objectSet>
+                  <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\NetworkList\Signatures\* [*]</pattern>
+                  <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\NetworkList\Profiles\* [*]</pattern>
+                  <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\NetworkList\Policies\* [*]</pattern>
+                  <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\NetworkList\Nla\* [*]</pattern>
+                  <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\NetworkList [FirstNetwork]</pattern>
+                  <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\NlaSvc\Parameters\Internet\* [*]</pattern>
+                  <pattern type="File">%WINDIR%\System32\NetworkList\Icons\* [*]</pattern>
+                </objectSet>
+              </merge>
+            </rules>
+          </migXml>
+        </machineSpecific>
+      </supportedComponent>
+    </supportedComponents>
+  </migration>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="NLM_DHCP_NLA_SDDL" sddl="D:P(A;CI;GA;;;BA)(A;CI;GA;;;SY)(A;;CCLCRP;;;IU)(A;;CCLCSWLOCRRC;;;SU)(A;;KRKW;;;S-1-5-80-3635958274-2059881490-2225992882-984577281-633327304)(A;;KRKW;;;S-1-5-80-2940520708-3855866260-481812779-327648279-1710889582)(A;;KR;;;S-1-5-80-3141615172-2057878085-1754447212-2405740020-3916490453)" operationHint="replace" />
+          <securityDescriptorDefinition name="LANIDS_REGKEY_SDDL" sddl="D:(A;OICI;KRKW;;;S-1-5-80-3635958274-2059881490-2225992882-984577281-633327304)" operationHint="replace" />
+          <securityDescriptorDefinition name="NCSI_SDDL" sddl="D:P(A;CI;GR;;;BU)(A;CI;GA;;;BA)(A;CI;GA;;;SY)(A;;CCDCLCSWRPRC;;;S-1-5-80-3635958274-2059881490-2225992882-984577281-633327304)(A;CI;KR;;;S-1-15-2-1)" operationHint="replace" />
+          <securityDescriptorDefinition name="NCSI_GP_SDDL" sddl="D:AI(A;OICI;SDGRGW;;;S-1-5-80-3088073201-1464728630-1879813800-1107566885-823218052)(A;OICI;SDGRGW;;;SY)(A;OICI;SDGRGW;;;BA)(A;CI;KR;;;S-1-15-2-1)" operationHint="replace" />
+          <securityDescriptorDefinition name="NetworkListRootKey_SDDL" sddl="D:PAI(A;CI;KRKW;;;S-1-5-80-3635958274-2059881490-2225992882-984577281-633327304)(A;CI;KA;;;BA)" operationHint="replace" />
+          <securityDescriptorDefinition name="NetworkListNlaSubkey_SDDL" sddl="D:AI(A;CIID;KRKW;;;S-1-5-80-3635958274-2059881490-2225992882-984577281-633327304)(A;CIID;KA;;;BA)" operationHint="replace" />
+          <securityDescriptorDefinition name="NetworkListPoliciesKey_SDDL" sddl="D:PAI(A;CIID;KR;;;S-1-5-80-3635958274-2059881490-2225992882-984577281-633327304)(A;CIID;KA;;;SY)(A;CIID;KA;;;BA)" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_KEY_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;CI;GA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;CI;GR;;;SY)(A;CI;GR;;;BA)(A;CI;GR;;;BU)(A;CI;GR;;;S-1-15-2-1)(A;CI;GR;;;S-1-15-3-1024-1065365936-1281604716-3511738428-1654721687-432734479-3232135806-4053264122-3456934681)" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" description="Default SDDL for Windows Resource Protected file" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+  <asmv3:configuration xmlns:asmv3="urn:schemas-microsoft-com:asm.v3" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State">
+    <asmv3:configurationSchema>
+      <xsd:schema targetNamespace="Microsoft-Windows-NetworkProfile">
+        <xsd:element default="1" name="FirstNetwork" type="xsd:unsignedInt" wcm:accessControl="NetworkListRootKey_SDDL" wcm:handler="regkey('HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\NetworkList')" />
+      </xsd:schema>
+    </asmv3:configurationSchema>
+    <asmv3:metadata>
+      <asmv3:elements />
+    </asmv3:metadata>
+  </asmv3:configuration>
+  <instrumentation xmlns:ut="http://manifests.microsoft.com/win/2004/08/windows/networkevents" xmlns:win="http://manifests.microsoft.com/win/2004/08/windows/events" xmlns:xs="http://www.w3.org/2001/XMLSchema" />
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string id="displayName0" value="Network List Manager" />
+        <string id="description1" value="Manages the network list." />
+        <string id="displayName2" value="WRP_FILE_DEFAULT_SDDL" />
+        <string id="description3" value="Default SDDL for Windows Resource Protected file" />
+        <string id="displayName4" value="Network List Manager" />
+        <string id="description5" value="Manages the network list on the system." />
+        <string id="description6" value="Network List Manager" />
+        <string id="description7" value="Network Enumerator" />
+        <string id="description8" value="Network Signature Enumerator" />
+        <string id="description9" value="Network" />
+        <string id="description10" value="Network Signature" />
+        <string id="displayName11" value="Network List Root Key Security Descriptor" />
+        <string id="displayName12" value="Network List Subkey Security Descriptor" />
+        <string id="displayName13" value="Network List Permissions Security Descriptor" />
+        <string id="displayName14" value="Network List Root Directory Security Descriptor" />
+        <string id="description15" value="Network List Root Directory Security Descriptor" />
+        <string id="displayName16" value="Network List Subdirectory Security Descriptor" />
+        <string id="description17" value="Network List Subdirectory Security Descriptor" />
+        <string id="displayName18" value="Network List Nla Subdirectory Security Descriptor" />
+        <string id="description19" value="Network List Nla Subdirectory Security Descriptor" />
+        <string id="EventProviderName" value="Microsoft-Windows-NetworkProfile" />
+        <string id="OperationalChannel.Name" value="Microsoft-Windows-NetworkProfile/Operational" />
+        <string id="evtStartWait" value="Entered State: %2 Interface Guid: %1" />
+        <string id="evtStopWait" value="Transitioning to State: %2 Interface Guid: %1" />
+        <string id="taskWaitForIdentification" value="Wait for Identification" />
+        <string id="stateIdentifying" value="Identifying Network" />
+        <string id="stateIdentified" value="Identified Network" />
+        <string id="DiagnosticChannel.Name" value="Microsoft-Windows-NetworkProfile/Diagnostic" />
+        <string id="NetworkStateMap.NP_NETWORK_CONNECTED" value="Connected" />
+        <string id="NetworkStateMap.NP_NETWORK_DISCONNECTED" value="Disconnected" />
+        <string id="NetworkStateMap.NP_NETWORK_CONNECTIVITY_V4_LOCAL" value="IPV4 (Local)" />
+        <string id="NetworkStateMap.NP_NETWORK_CONNECTIVITY_V4_INTERNET" value="IPV4 (Internet)" />
+        <string id="NetworkStateMap.NP_NETWORK_CONNECTIVITY_V6_LOCAL" value="IPV6 (Local)" />
+        <string id="NetworkStateMap.NP_NETWORK_CONNECTIVITY_V6_INTERNET" value="IPV6 (Internet)" />
+        <string id="NetworkCategoryMap.NP_NETWORK_PUBLIC" value="Public" />
+        <string id="NetworkCategoryMap.NP_NETWORK_PRIVATE" value="Private" />
+        <string id="NetworkCategoryMap.NP_NETWORK_DOMAIN_AUTHENTICATED" value="Domain Authenticated" />
+        <string id="NetworkTypeMap.NP_NETWORK_UNMANAGED" value="Unmanaged" />
+        <string id="NetworkTypeMap.NP_NETWORK_MANAGED" value="Managed" />
+        <string id="evtNetworkConnected" value="Network Connected%n%tName: %1%n%tDesc: %2%n%tType: %4%n%tState: %5%n%tCategory: %6%n" />
+        <string id="evtNetworkDisconnected" value="Network Disconnected%n%tName: %1%n%tDesc: %2%n%tType: %4%n%tState: %5%n%tCategory: %6%n" />
+        <string id="evtNetworkCategoryChange" value="Network Category Changed%n%tName: %1%n%tDesc: %2%n%tType: %4%n%tState: %5%n%tCategory: %6%n" />
+        <string id="stateUnidentified" value="Unidentified Network" />
+        <string id="taskNotifyClients" value="Notify Clients" />
+        <string id="eventNetwork_Added_Notifying" value="Network Added Event Notifying" />
+        <string id="eventNetwork_Deleted_Notifying" value="Network Deleted Event Notifying" />
+        <string id="eventNetwork_Connected_Notifying" value="Network Connected Event Notifying" />
+        <string id="eventNetwork_Disconnected_Notifying" value="Network Disconnected Event Notifying" />
+        <string id="eventNetwork_PropertyChange_Notifying" value="Network Property Event Notifying" />
+        <string id="eventNetwork_Added_Notified" value="Network Added Event Notified" />
+        <string id="eventNetwork_Deleted_Notified" value="Network Deleted Event Notified" />
+        <string id="eventNetwork_Connected_Notified" value="Network Connected Event Notified" />
+        <string id="eventNetwork_Disconnected_Notified" value="Network Disconnected Event Notified" />
+        <string id="eventNetwork_PropertyChange_Notified" value="Network Property Event Notified" />
+        <string id="evtStartNotifyNetworkProfileEvent" value="Posting Network Profile Event Type: %1%n%tProfileID: %2%n" />
+        <string id="evtStopNotifyNetworkProfileEvent" value="Posted Network Profile Event Type: %1%n%tProfileID: %2%n" />
+        <string id="evtStartNotifyNetworkConnectedEvent" value="Posting Network Connected Event Type: %1%n%tProfileID: %2%n" />
+        <string id="evtStopNotifyNetworkConnectedEvent" value="Posted Network Connected Event Type: %1%n%tProfileID: %2%n" />
+        <string id="evtStartNotifyNetworkDisconnectedEvent" value="Posting Network Disconnected Event Type: %1%n%tProfileID: %2%n" />
+        <string id="evtStopNotifyNetworkDisconnectedEvent" value="Posted Network Disconnected Event Type: %1%n%tProfileID: %2%n" />
+        <string id="evtNLMInitializationFailure" value="NLM service initialization failed (error=%1)" />
+        <string id="evtPublishNetworkStateChange" value="Network State Change Fired%n%tNew Internet Connection Profile: %1%n%tConnection Cost Changed: %2%n%tDomain Connectivity Level Changed: %3%n%tNetwork Connectivity Level Changed: %4%n%tHost Name Changed: %5%n%tWwan Registration State Changed: %6%n%tTethering Operational State Changed: %7%n%tTethering Client Count Changed: %8" />
+        <string id="evtNsiSetCategoryResult" value="NSI Set Category Result%n%tProfile GUID: %1%n%tInterface GUID: %2%n%tNetwork Category: %3%n%tIPv4 Error Code: %4%n%tIPv6 Error Code: %5%n%tContext: %6%n" />
+        <string id="nla.EventProviderName" value="Microsoft-Windows-NlaSvc" />
+        <string id="nla.DiagnosticChannel.Name" value="Microsoft-Windows-NlaSvc/Diagnostic" />
+        <string id="nla.OperationalChannel.Name" value="Microsoft-Windows-NlaSvc/Operational" />
+        <string id="evtMediaConnect" value="Received WMI Media Connect Notification for '%2' %1" />
+        <string id="evtMediaDisconnect" value="Received WMI Media Disconnect Notification for '%2' %1" />
+        <string id="evtRouteChange" value="Route change has occurred for interface %1 (%2)" />
+        <string id="evtAddressChange" value="Address change has occurred for interface %1 (%2)" />
+        <string id="evtQuarantineStateChange" value="Quarantine state has changed" />
+        <string id="evtDhcpNotification" value="Received DHCP notification" />
+        <string id="evtStartLinkResolver" value="Start link resolver" />
+        <string id="evtStopLinkResolver" value="Stop link resolver" />
+        <string id="evtStartGwResolution" value="Start gateway resolution on interface %1 for %2" />
+        <string id="evtStopGwResolution" value="Stop gateway resolution on interface %1 for %2. Error: %3 NlnsState: %4 MAC: %6" />
+        <string id="evtFailedGwResolution" value="Gateway resolution failed on interface %1 for %2 with error: %3" />
+        <string id="evtPluginDataIndication" value="Plug-in data indicated from %1 for entity %2 (%3 rows)%n%5" />
+        <string id="evtDhcpStabilized" value="DHCP has stabilized for %1 (%2)" />
+        <string id="evtStartIntranetResolver" value="Start Intranet resolver" />
+        <string id="evtStopIntranetResolver" value="Stop Intranet resolver" />
+        <string id="evtStartDsGetDcName_DnsSuffix" value="Start DsGetDcName(%1,%2) for DnsSuffix" />
+        <string id="evtStopDsGetDcName_DnsSuffix" value="Stop DsGetDcName(%1,%2) for DnsSuffix returned error %3 (domain=%4, forest=%5)" />
+        <string id="evtFailedDsGetDcName_DnsSuffix" value="DsGetDcName(%1,%2) for DnsSuffix failed with error %3" />
+        <string id="evtStartDsGetDcName_Ds" value="Start DsGetDcName(%2) for DS info" />
+        <string id="evtStopDsGetDcName_Ds" value="Stop DsGetDcName(%2) for DS info returned error %3 (domain=%4, forest=%5)" />
+        <string id="evtFailedDsGetDcName_Ds" value="DsGetDcName(%2) for DS info failed with error %3" />
+        <string id="evtStartDsGetDcName_RootDomainGuid" value="Start DsGetDcName(%2) for root domain GUID" />
+        <string id="evtStopDsGetDcName_RootDomainGuid" value="Stop DsGetDcName(%2) for root domain GUID returned error %3 (domain=%4, forest=%5)" />
+        <string id="evtFailedDsGetDcName_RootDomainGuid" value="DsGetDcName(%2) for root domain GUID failed with error %3" />
+        <string id="evtStartLdapAuth" value="Start LDAP authentication on interface %1 (%2) (%3 tries)" />
+        <string id="evtStopLdapAuth" value="Stop LDAP authentication on interface %1 (%2)" />
+        <string id="evtFailedLdapAuth" value="LDAP authentication on interface %1 (%2) failed with error %4" />
+        <string id="evtStartLdapConnect" value="Start ldap_connect(%1) for DC=%2 (%3 of %4 tries)" />
+        <string id="evtStopLdapConnect" value="Stop ldap_connect(%1) for DC=%2 (%3 of %4 tries)" />
+        <string id="evtFailedLdapConnect" value="ldap_connect(%1) for DC=%2 (%3 of %4 tries) failed with %5" />
+        <string id="evtStartLdapBind" value="Start ldap_bind(%1) for DC=%2 (%3 of %4 tries)" />
+        <string id="evtStopLdapBind" value="Stop ldap_bind(%1) for DC=%2 (%3 of %4 tries)" />
+        <string id="evtFailedLdapBind" value="ldap_bind(%1) for DC=%2 (%3 of %4 tries) failed with %5" />
+        <string id="evtInsertIdentifyingSignature" value="Inserting identifying signature for interface %1 %nSource=%4 Signature=%3" />
+        <string id="evtInsertIdentifiedSignature" value="Inserting identified signature for interface %1 %nSource=%4 Signature=%3" />
+        <string id="evtRemoveIdentifiedSignature" value="Removing identified signature for interface %1 %nSource=%4 Signature=%3" />
+        <string id="taskTrigger" value="Trigger" />
+        <string id="taskGwResolution" value="Gateway Resolution" />
+        <string id="taskPlugin" value="Plugin" />
+        <string id="taskDhcp" value="Dhcp" />
+        <string id="taskIntranetResolution" value="Intranet Resolution" />
+        <string id="taskDsGetDcName_DnsSuffix" value="DsGetDcName(DnsSuffix)" />
+        <string id="taskDsGetDcName_Ds" value="DsGetDcName(Ds)" />
+        <string id="taskDsGetDcName_RootDomainGuid" value="DsGetDcName(RootDomainGuid)" />
+        <string id="taskLdapAuthentication" value="Ldap Authentication" />
+        <string id="taskLdapConnect" value="ldap_connect" />
+        <string id="taskLdapBind" value="ldap_bind" />
+        <string id="taskIdentifying" value="Identifying" />
+        <string id="taskIdentified" value="Identified" />
+        <string id="taskRemoveIdentifiedSignature" value="Disconnect" />
+        <string id="mibAddInstance" value="MibAddInstance" />
+        <string id="mibDeleteInstance" value="MibDeleteInstance" />
+        <string id="NlnsUnreachable" value="NlnsUnreachable" />
+        <string id="NlnsIncomplete" value="NlnsIncomplete" />
+        <string id="NlnsStale" value="NlnsStale" />
+        <string id="NlnsDelay" value="NlnsDelay" />
+        <string id="NlnsProbe" value="NlnsProbe" />
+        <string id="NlnsReachable" value="NlnsReachable" />
+        <string id="NlnsPermanent" value="NlnsPermanent" />
+        <string id="NlnsMaximum" value="NlnsMaximum" />
+        <string id="dhcpStateStable" value="DHCPCAPI_ADDR_STABLE" />
+        <string id="dhcpStateNotStableAcq" value="DHCPCAPI_ADDR_NOT_STABLE_ACQ" />
+        <string id="dhcpStateNotStableDone" value="DHCPCAPI_ADDR_NOT_STABLE_DONE" />
+        <string id="dhcpStateNotStableAcqCont" value="DHCPCAPI_ADDR_NOT_STABLE_ACQ_CONT" />
+        <string id="nlaStateUnknown" value="NLA_STABLE_UNKNOWN" />
+        <string id="nlaStateStable" value="NLA_STABLE_STABLE" />
+        <string id="nlaStateGaveUp" value="NLA_STABLE_GAVE_UP" />
+        <string id="nlaStateTrying" value="NLA_STABLE_TRYING" />
+        <string id="DS_FORCE_REDISCOVERY" value="DS_FORCE_REDISCOVERY" />
+        <string id="DS_IS_FLAT_NAME" value="DS_IS_FLAT_NAME" />
+        <string id="DS_IS_DNS_NAME" value="DS_IS_DNS_NAME" />
+        <string id="DS_RETURN_DNS_NAME" value="DS_RETURN_DNS_NAME" />
+        <string id="DS_RETURN_FLAT_NAME" value="DS_RETURN_FLAT_NAME" />
+        <string id="NLA_SIGNATURE_SOURCE_UNIDENTIFIED" value="NLA_SIGNATURE_SOURCE_UNIDENTIFIED" />
+        <string id="NLA_SIGNATURE_SOURCE_IDENTIFYING" value="NLA_SIGNATURE_SOURCE_IDENTIFYING" />
+        <string id="NLA_SIGNATURE_SOURCE_RANDOM" value="NLA_SIGNATURE_SOURCE_RANDOM" />
+        <string id="NLA_SIGNATURE_SOURCE_GATEWAY_MAC" value="NLA_SIGNATURE_SOURCE_GATEWAY_MAC" />
+        <string id="NLA_SIGNATURE_SOURCE_DOMAIN_GUID" value="NLA_SIGNATURE_SOURCE_DOMAIN_GUID" />
+        <string id="NLA_SIGNATURE_SOURCE_ROOT_DOMAIN_GUID" value="NLA_SIGNATURE_SOURCE_ROOT_DOMAIN_GUID" />
+        <string id="NLA_SIGNATURE_SOURCE_DOMAIN_NAME" value="NLA_SIGNATURE_SOURCE_DOMAIN_NAME" />
+        <string id="NLA_SIGNATURE_SOURCE_FOREST_NAME" value="NLA_SIGNATURE_SOURCE_FOREST_NAME" />
+        <string id="NLA_SIGNATURE_SOURCE_DNS_SUFFIX" value="NLA_SIGNATURE_SOURCE_DNS_SUFFIX" />
+        <string id="NLA_SIGNATURE_SOURCE_LOCAL_INTERFACE_ID" value="NLA_SIGNATURE_SOURCE_LOCAL_INTERFACE_ID" />
+        <string id="NLA_SIGNATURE_SOURCE_WLAN_SSID" value="NLA_SIGNATURE_SOURCE_WLAN_SSID" />
+        <string id="NLA_SIGNATURE_SOURCE_WLAN_PROFILE" value="NLA_SIGNATURE_SOURCE_WLAN_PROFILE" />
+        <string id="NLA_SIGNATURE_SOURCE_WWAN" value="NLA_SIGNATURE_SOURCE_WWAN" />
+        <string id="NLA_SIGNATURE_SOURCE_SECURITY_DOWNGRADE" value="NLA_SIGNATURE_SOURCE_SECURITY_DOWNGRADE" />
+        <string id="NLA_SIGNATURE_SOURCE_PRIVATE" value="NLA_SIGNATURE_SOURCE_PRIVATE" />
+        <string id="NLA_SIGNATURE_SOURCE_SECONDARY" value="NLA_SIGNATURE_SOURCE_SECONDARY" />
+        <string id="AuthCapUnlikelyReasonPreviousFailures" value="LDAP has had no previous successes with the current combination of adapter addresses" />
+        <string id="AuthCapUnlikelyReasonFirstAttemptSpeculativeTimeout" value="This is the first LDAP attempt ever and a speculative timeout occurred" />
+        <string id="evtAuthCapUnlikely" value="Network on %1 is unlikely to be authentication-capable; authentication will continue in the background. %nReason: %2%n" />
+        <string id="taskInterface" value="Interface" />
+        <string id="evtAddInterface" value="Adding interface '%2' %1" />
+        <string id="evtRemoveInterface" value="Removing interface '%2' %1" />
+        <string id="AuthCapUnlikelyReasonDsValidationFailed" value="DS validation failed; there may not be a DC available on this network" />
+        <string id="IncorrectUrlFormatForTlsAuth" value="Url %1 is of incorrect format" />
+      </stringTable>
+    </resources>
+  </localization>
+</assembly>

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-Sens-Service" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <dependency discoverable="no" resourceType="Resources">
+    <dependentAssembly>
+      <assemblyIdentity name="Microsoft-Windows-Sens-Service.Resources" version="10.0.22621.1" processorArchitecture="amd64" language="*" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </dependentAssembly>
+  </dependency>
+  <file name="Sens.dll" destinationPath="$(runtime.system32)\" sourceName="Sens.dll" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>drdf2LhLHl+Xu48T2Cy1xDRd+Tm/mrKubIfqRADSaGY=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <registryKeys>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Winlogon\Notifications\Components\Sens">
+      <registryValue name="Friendly Name" valueType="REG_SZ" value="System Event Notification" />
+      <registryValue name="Events" valueType="REG_SZ" value="Shutdown,Logoff,Reconnect,Disconnect,Unlock,Lock,Logon,StartSSAsUser,StopSSAsUser,StartSSAsNoone,StopSSAsNoone,StartShell" />
+      <registryValue name="ServiceName" valueType="REG_SZ" value="SENS" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Mobile" />
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Mobile\SENS">
+      <registryValue name="Configured" valueType="REG_DWORD" value="0x00000020" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\SENS\Parameters">
+      <registryValue name="ServiceDll" valueType="REG_EXPAND_SZ" value="%SystemRoot%\System32\sens.dll" />
+      <registryValue name="ServiceMain" valueType="REG_SZ" value="ServiceMain" />
+      <registryValue name="ServiceDllUnloadOnStop" valueType="REG_DWORD" value="0x00000001" />
+    </registryKey>
+  </registryKeys>
+  <memberships>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories.Services" version="10.0.22621.1" publicKeyToken="31bf3856ad364e35" typeName="Service" />
+      <categoryInstance subcategory="SENS">
+        <serviceData name="SENS" displayName="@%SystemRoot%\system32\Sens.dll,-200" errorControl="normal" start="auto" type="win32ShareProcess" description="@%SystemRoot%\system32\Sens.dll,-201" dependOnService="EventSystem" group="ProfSvc_Group" imagePath="%SystemRoot%\system32\svchost.exe -k netsvcs -p" objectName="LocalSystem" requiredPrivileges="SeAuditPrivilege,SeChangeNotifyPrivilege,SeCreateGlobalPrivilege,SeImpersonatePrivilege,SeTcbPrivilege" sidType="unrestricted">
+          <failureActions resetPeriod="86400">
+            <actions>
+              <action delay="120000" type="restartService" />
+              <action delay="300000" type="restartService" />
+              <action type="none" />
+            </actions>
+          </failureActions>
+          <securityDescriptor name="SENS_Service_Security" />
+        </serviceData>
+      </categoryInstance>
+    </categoryMembership>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories" version="1.0.0.0" publicKeyToken="365143bb27e7ac8b" typeName="BootRecovery" />
+    </categoryMembership>
+  </memberships>
+  <instrumentation xmlns:el="http://manifests.microsoft.com/win/2004/08/windows/eventlog" xmlns:win="http://manifests.microsoft.com/win/2004/08/windows/events" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <events xmlns="http://schemas.microsoft.com/win/2004/08/events">
+      <provider guid="{be69781c-b63b-41a1-8e24-a4fc7b3fc498}" message="$(string.Publisher.Name)" messageFileName="%SystemRoot%\System32\sens.dll" name="Microsoft-Windows-Sens" resourceFileName="%SystemRoot%\System32\sens.dll" symbol="SENSSERVICE">
+        <channels>
+          <channel chid="ChDebug" isolation="System" message="$(string.Channel.Debug)" name="Microsoft-Windows-Sens/Debug" type="Debug">
+            <publishing>
+              <level>15</level>
+              <keywords>0xFFFFFFFF</keywords>
+              <controlGuid>{A0CA1D82-539D-4FB0-944B-1620C6E86231}</controlGuid>
+            </publishing>
+          </channel>
+        </channels>
+      </provider>
+      <cmi />
+    </events>
+  </instrumentation>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="SENS_Service_Security" sddl="D:(A;;CCLCSWLOCRRC;;;AU)(A;;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;BA)(A;;CCLCSWRPWPDTLOCR;;;SO)(A;;CCLCSWRPWPDTLOCRRC;;;SY)(A;;LOLCRC;;;S-1-15-2-1)S:(AU;FA;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;WD)" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" description="Default SDDL for Windows Resource Protected file" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string id="description1" value="Monitors system events and notifies subscribers to COM+ Event System of these events. If this service is stopped, COM+ Event System subscribers will not receive system event notifications." />
+        <string id="description" value="Monitors system events and notifies subscribers to COM+ Event System of these events. If this service is stopped, COM+ Event System subscribers will not receive system event notifications. If this service is disabled, any services that explicitly depend on it will fail to start." />
+        <string id="displayName1" value="System Event Notification Service" />
+        <string id="displayName" value="System Event Notification" />
+        <string id="displayName2" value="SENS Service Security" />
+        <string id="description2" value="SENS Service Security" />
+        <string id="Channel.Debug" value="Debug" />
+        <string id="Publisher.Name" value="Microsoft-Windows-Sens" />
+      </stringTable>
+    </resources>
+  </localization>
+</assembly>

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-Network-ExecutionContext" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <file name="ExecutionContext.sys" destinationPath="$(runtime.drivers)\" sourceName="ExecutionContext.sys" importPath="$(build.nttree)\netcx\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>ihv7BeedFyuzN9G02vufg0xaOUkeP0moGoiSB7G7ueM=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <memberships>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories.Services" version="10.0.22621.1" publicKeyToken="31bf3856ad364e35" typeName="Service" />
+      <categoryInstance>
+        <serviceData name="ExecutionContext" displayName="@%SystemRoot%\System32\Drivers\ExecutionContext.sys,-101" errorControl="normal" start="demand" type="kernelDriver" group="System" imagePath="System32\Drivers\ExecutionContext.sys" />
+      </categoryInstance>
+    </categoryMembership>
+  </memberships>
+  <instrumentation xmlns:win="http://manifests.microsoft.com/win/2004/08/windows/events">
+    <events xmlns="http://schemas.microsoft.com/win/2004/08/events">
+      <provider guid="{0075e1ab-e1d1-5d1f-35f5-da36fb4f41b1}" messageFileName="%SystemRoot%\system32\drivers\ExecutionContext.sys" name="Microsoft-Windows-Network-ExecutionContext" resourceFileName="%SystemRoot%\system32\drivers\ExecutionContext.sys" symbol="Windows_Network_Ec">
+        <channels>
+          <channel chid="Operational" enabled="false" message="$(string.OperationalChannelName)" name="Microsoft-Windows-Network-ExecutionContext/Operational" type="Operational" />
+          <importChannel chid="System" name="System" />
+        </channels>
+      </provider>
+      <cmi />
+    </events>
+  </instrumentation>
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string id="OperationalChannelName" value="Execution Context Operational Channel" />
+        <string id="ExecutionTimeExceededWarning" value="Nic %1 (%2) executed more than %3 miliseconds continuously at DISPATCH for %4 times in last %5 miliseconds" />
+        <string id="ExecutionContextState.Stopped" value="Stopped" />
+        <string id="ExecutionContextState.WaitingWorkerThread" value="WaitingWorkerThread" />
+        <string id="ExecutionContextState.WaitingWorkerDpc" value="WaitingWorkerDpc" />
+        <string id="ExecutionContextState.Running" value="Running" />
+        <string id="ExecutionContextStateChangeReason.NotifyDpcScheduledWhileStopped" value="NotifyDpcScheduledWhileStopped" />
+        <string id="ExecutionContextStateChangeReason.NotifyNeedsDpc" value="NotifyNeedsDpc" />
+        <string id="ExecutionContextStateChangeReason.NotifyNeedsWorkerThread" value="NotifyNeedsWorkerThread" />
+        <string id="ExecutionContextStateChangeReason.NotifyWhileExitingWorker" value="NotifyWhileExitingWorker" />
+        <string id="ExecutionContextStateChangeReason.TaskQueuedWhileStopped" value="TaskQueuedWhileStopped" />
+        <string id="ExecutionContextStateChangeReason.TaskQueuedWhileRunningFromDpc" value="TaskQueuedWhileRunningFromDpc" />
+        <string id="ExecutionContextStateChangeReason.TaskQueuedWhileExitingWorker" value="TaskQueuedWhileExitingWorker" />
+        <string id="ExecutionContextStateChangeReason.TaskPreemptedPolling" value="TaskPreemptedPolling" />
+        <string id="ExecutionContextStateChangeReason.WorkerDpcScheduled" value="WorkerDpcScheduled" />
+        <string id="ExecutionContextStateChangeReason.WorkerThreadScheduled" value="WorkerThreadScheduled" />
+        <string id="ExecutionContextStateChangeReason.NoMoreWork" value="NoMoreWork" />
+        <string id="ExecutionContextStateChangeReason.OutOfDpcBudget" value="OutOfDpcBudget" />
+        <string id="ExecutionContextStateChangeReason.TerminateWorkerThread" value="TerminateWorkerThread" />
+        <string id="ExecutionContextStateChangeReason.NotifyContextStealing" value="NotifyContextStealing" />
+      </stringTable>
+    </resources>
+  </localization>
+  <registryKeys>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\KLoader\Modules\{9C0B898D-6275-48EC-81B4-E5EDBE44B535}">
+      <registryValue name="ServiceName" valueType="REG_SZ" value="ExecutionContext" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\NDIS\Parameters\Reserved">
+      <securityDescriptor name="EC_PROFILE_OUTER_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\NDIS\Parameters\Reserved\ExecutionContextProfiles">
+      <securityDescriptor name="EC_PROFILE_INNER_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\NDIS\Parameters\Reserved\ExecutionContextProfiles\Balanced">
+      <registryValue name="Flags" valueType="REG_DWORD" value="0x00000000" />
+      <registryValue name="MaxTimeAtDispatch" valueType="REG_DWORD" value="0x00000000" />
+      <registryValue name="DpcWatchdogTimerThreshold" valueType="REG_DWORD" value="0x00000050" />
+      <registryValue name="WorkerThreadPriority" valueType="REG_DWORD" value="0x0000000A" />
+      <registryValue name="MaxPacketsSendAtPassive" valueType="REG_DWORD" value="0x00000040" />
+      <registryValue name="MaxPacketsSendCompleteAtPassive" valueType="REG_DWORD" value="0x00000040" />
+      <registryValue name="MaxPacketsReceiveAtPassive" valueType="REG_DWORD" value="0x00000040" />
+      <registryValue name="MaxPacketsReceiveCompleteAtPassive" valueType="REG_DWORD" value="0x00000040" />
+      <registryValue name="MaxPacketsSendAtDispatch" valueType="REG_DWORD" value="0x00000040" />
+      <registryValue name="MaxPacketsSendCompleteAtDispatch" valueType="REG_DWORD" value="0x00000040" />
+      <registryValue name="MaxPacketsReceiveAtDispatch" valueType="REG_DWORD" value="0x00000040" />
+      <registryValue name="MaxPacketsReceiveCompleteAtDispatch" valueType="REG_DWORD" value="0x00000040" />
+    </registryKey>
+  </registryKeys>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="EC_PROFILE_OUTER_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;CI;GA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)" operationHint="replace" />
+          <securityDescriptorDefinition name="EC_PROFILE_INNER_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;CI;GA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;CI;GR;;;SY)(A;CI;GR;;;BA)(A;CI;GR;;;BU)(A;CI;GR;;;S-1-15-2-1)(A;CI;GR;;;S-1-15-3-1024-1065365936-1281604716-3511738428-1654721687-432734479-3232135806-4053264122-3456934681)" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" description="Default SDDL for Windows Resource Protected file" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+</assembly>

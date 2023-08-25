@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PowerShellMetadata xmlns="http://schemas.microsoft.com/cmdlets-over-objects/2009/11">
+  <Class ClassName="ROOT/microsoft/ipam/MSFT_IPAM_DnsZone" ClassVersion="1.0.0">
+    <Version>1.0.0</Version>
+    <DefaultNoun>IpamDnsZone</DefaultNoun>
+    <InstanceCmdlets>
+     <GetCmdletParameters/>
+      <GetCmdlet>
+        <CmdletMetadata Verb="Get" />
+        <!-- We override GetCmdletParameters for Get cmdlet to allow invocation of Get without any parameters -->
+        <GetCmdletParameters>
+          <QueryableProperties>
+            <!-- by ZoneName 
+            -ZoneType<enum> (mandatory)
+            -ZoneName<string[]>
+            -->
+
+            <Property PropertyName="ZoneType">
+              <Type PSType="Ipam.ZoneType" />
+              <RegularQuery AllowGlobbing="false">
+                <CmdletParameterMetadata PSName="ZoneType" Position="1" IsMandatory="true" ValueFromPipelineByPropertyName="true" CmdletParameterSets="ByZoneName" >
+                    <ValidateNotNullOrEmpty />
+                    <ValidateSet>
+                      <AllowedValue>Forward</AllowedValue>
+                      <AllowedValue>IPv4Reverse</AllowedValue>
+                      <AllowedValue>IPv6Reverse</AllowedValue>
+                    </ValidateSet>
+                </CmdletParameterMetadata>
+              </RegularQuery>
+            </Property>
+
+            <Property PropertyName="ZoneName">
+              <Type PSType="System.String" />
+              <RegularQuery AllowGlobbing="false">
+                <CmdletParameterMetadata PSName="ZoneName" Position="2" ValueFromPipelineByPropertyName="true" CmdletParameterSets="ByZoneName" >
+                  <ValidateNotNullOrEmpty />
+                </CmdletParameterMetadata>
+              </RegularQuery>
+            </Property>
+
+          </QueryableProperties>
+        </GetCmdletParameters>
+      </GetCmdlet>
+    </InstanceCmdlets>
+  </Class>
+  
+  <Enums>
+    <Enum EnumName="Ipam.ZoneType" UnderlyingType="UInt16">
+      <Value Name="Forward" Value="1" />
+      <Value Name="IPv4Reverse" Value="2" />
+     <Value Name="IPv6Reverse" Value="3" />
+    </Enum>
+    <Enum EnumName="Ipam.DynamicUpdateStatus" UnderlyingType="UInt16">
+      <Value Name="NotApplicable" Value="0" />
+      <Value Name="None" Value="1" />
+      <Value Name="NonSecureAndSecure" Value="2" />
+      <Value Name="Secure" Value="3" />
+    </Enum>
+    <Enum EnumName="Ipam.HealthStatus" UnderlyingType="UInt16">
+      <Value Name="None" Value="0" />
+      <Value Name="Green" Value="1" />
+      <Value Name="Yellow" Value="2" />
+      <Value Name="Red" Value="3" />
+      <Value Name="NotApplicable" Value="4" />
+      <Value Name="Unknown" Value="5" />
+      <Value Name="Unchecked" Value="6" />
+    </Enum>
+  </Enums>
+</PowerShellMetadata>

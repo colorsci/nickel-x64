@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-Update-OrchestratorSchedulerTasks" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <taskScheduler>
+    <Task xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task">
+      <RegistrationInfo>
+        <Author>$(@%systemRoot%\system32\usosvc.dll,-103)</Author>
+        <Source>$(@%systemRoot%\system32\usosvc.dll,-104)</Source>
+        <Description>$(@%systemRoot%\system32\usosvc.dll,-105)</Description>
+        <URI>\Microsoft\Windows\UpdateOrchestrator\Schedule Scan Static Task</URI>
+        <SecurityDescriptor>D:P(A;;FA;;;SY)(A;;FRFX;;;LS)(A;;FRFX;;;BA)</SecurityDescriptor>
+        <Version>1.0</Version>
+      </RegistrationInfo>
+      <Triggers>
+        <WnfStateChangeTrigger>
+          <StateName>7524bca33e06830d</StateName>
+          <Enabled>true</Enabled>
+          <Delay>PT2H5M</Delay>
+          <Data>01</Data>
+          <DataOffset>0</DataOffset>
+        </WnfStateChangeTrigger>
+        <WnfStateChangeTrigger>
+          <StateName>750cbca3290b9641</StateName>
+          <Enabled>true</Enabled>
+          <Delay>PT2H5M</Delay>
+          <Data>01</Data>
+          <DataOffset>0</DataOffset>
+        </WnfStateChangeTrigger>
+        <WnfStateChangeTrigger>
+          <StateName>7550bca322028f02</StateName>
+          <Enabled>false</Enabled>
+        </WnfStateChangeTrigger>
+        <WnfStateChangeTrigger>
+          <StateName>7508bca32e07c641</StateName>
+          <Enabled>true</Enabled>
+        </WnfStateChangeTrigger>
+        <EventTrigger>
+          <Enabled>true</Enabled>
+          <Subscription>&lt;QueryList&gt;&lt;Query Id="0" Path="System"&gt;&lt;Select Path="System"&gt;*[System[EventID=8202]]&lt;/Select&gt;&lt;/Query&gt;&lt;/QueryList&gt;</Subscription>
+        </EventTrigger>
+      </Triggers>
+      <Settings>
+        <AllowHardTerminate>true</AllowHardTerminate>
+        <AllowStartOnDemand>true</AllowStartOnDemand>
+        <DisallowStartIfOnBatteries>false</DisallowStartIfOnBatteries>
+        <DisallowStartOnRemoteAppSession>false</DisallowStartOnRemoteAppSession>
+        <Enabled>true</Enabled>
+        <ExecutionTimeLimit>PT72H</ExecutionTimeLimit>
+        <Hidden>false</Hidden>
+        <MultipleInstancesPolicy>IgnoreNew</MultipleInstancesPolicy>
+        <Priority>7</Priority>
+        <RunOnlyIfNetworkAvailable>true</RunOnlyIfNetworkAvailable>
+        <IdleSettings>
+          <StopOnIdleEnd>false</StopOnIdleEnd>
+          <RestartOnIdle>false</RestartOnIdle>
+        </IdleSettings>
+        <RunOnlyIfIdle>false</RunOnlyIfIdle>
+        <StartWhenAvailable>true</StartWhenAvailable>
+        <StopIfGoingOnBatteries>false</StopIfGoingOnBatteries>
+        <UseUnifiedSchedulingEngine>true</UseUnifiedSchedulingEngine>
+        <WakeToRun>false</WakeToRun>
+      </Settings>
+      <Principals>
+        <Principal id="LocalSystem">
+          <UserId>S-1-5-18</UserId>
+          <RunLevel>LeastPrivilege</RunLevel>
+        </Principal>
+      </Principals>
+      <Actions Context="LocalSystem">
+        <Exec>
+          <Command>%systemroot%\system32\usoclient.exe</Command>
+          <Arguments>StartScan</Arguments>
+        </Exec>
+      </Actions>
+    </Task>
+    <Task xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task">
+      <RegistrationInfo>
+        <Author>$(@%systemRoot%\system32\usosvc.dll,-103)</Author>
+        <Source>$(@%systemRoot%\system32\usosvc.dll,-104)</Source>
+        <URI>\Microsoft\Windows\UpdateOrchestrator\Report policies</URI>
+        <SecurityDescriptor>D:P(A;;FA;;;SY)(A;;FRFX;;;LS)(A;;FRFX;;;BA)</SecurityDescriptor>
+        <Version>1.0</Version>
+      </RegistrationInfo>
+      <Triggers>
+        <WnfStateChangeTrigger>
+          <StateName>7508bca32a1e890d</StateName>
+          <Enabled>true</Enabled>
+          <Delay>PT5M</Delay>
+        </WnfStateChangeTrigger>
+        <WnfStateChangeTrigger>
+          <StateName>7548bca328009213</StateName>
+          <Enabled>true</Enabled>
+          <Delay>PT5M</Delay>
+        </WnfStateChangeTrigger>
+      </Triggers>
+      <Principals>
+        <Principal id="LocalSystem">
+          <UserId>S-1-5-18</UserId>
+          <RunLevel>LeastPrivilege</RunLevel>
+        </Principal>
+      </Principals>
+      <Settings>
+        <MaintenanceSettings>
+          <Period>P7D</Period>
+          <Deadline>P14D</Deadline>
+          <Exclusive>false</Exclusive>
+        </MaintenanceSettings>
+        <MultipleInstancesPolicy>IgnoreNew</MultipleInstancesPolicy>
+        <DisallowStartIfOnBatteries>false</DisallowStartIfOnBatteries>
+        <DisallowStartOnRemoteAppSession>false</DisallowStartOnRemoteAppSession>
+        <StopIfGoingOnBatteries>false</StopIfGoingOnBatteries>
+        <AllowHardTerminate>true</AllowHardTerminate>
+        <StartWhenAvailable>true</StartWhenAvailable>
+        <RunOnlyIfNetworkAvailable>false</RunOnlyIfNetworkAvailable>
+        <IdleSettings>
+          <StopOnIdleEnd>false</StopOnIdleEnd>
+          <RestartOnIdle>false</RestartOnIdle>
+        </IdleSettings>
+        <AllowStartOnDemand>true</AllowStartOnDemand>
+        <Enabled>true</Enabled>
+        <Hidden>false</Hidden>
+        <UseUnifiedSchedulingEngine>true</UseUnifiedSchedulingEngine>
+        <RunOnlyIfIdle>false</RunOnlyIfIdle>
+        <WakeToRun>false</WakeToRun>
+        <ExecutionTimeLimit>PT72H</ExecutionTimeLimit>
+        <Priority>7</Priority>
+      </Settings>
+      <Actions Context="LocalSystem">
+        <Exec>
+          <Command>%systemroot%\system32\usoclient.exe</Command>
+          <Arguments>ReportPolicies</Arguments>
+        </Exec>
+      </Actions>
+    </Task>
+    <Task xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task">
+      <RegistrationInfo>
+        <Author>$(@%systemRoot%\system32\usosvc.dll,-103)</Author>
+        <Source>$(@%systemRoot%\system32\usosvc.dll,-104)</Source>
+        <URI>\Microsoft\Windows\UpdateOrchestrator\UUS Failover Task</URI>
+        <SecurityDescriptor>D:P(A;;FA;;;SY)(A;;FRFX;;;LS)(A;;FRFX;;;BA)</SecurityDescriptor>
+        <Version>1.0</Version>
+      </RegistrationInfo>
+      <Triggers>
+        <WnfStateChangeTrigger>
+          <StateName>7508bca3381b9541</StateName>
+          <Enabled>true</Enabled>
+        </WnfStateChangeTrigger>
+      </Triggers>
+      <Settings>
+        <AllowHardTerminate>false</AllowHardTerminate>
+        <AllowStartOnDemand>false</AllowStartOnDemand>
+        <DisallowStartIfOnBatteries>false</DisallowStartIfOnBatteries>
+        <DisallowStartOnRemoteAppSession>false</DisallowStartOnRemoteAppSession>
+        <Enabled>true</Enabled>
+        <ExecutionTimeLimit>PT72H</ExecutionTimeLimit>
+        <Hidden>false</Hidden>
+        <MultipleInstancesPolicy>IgnoreNew</MultipleInstancesPolicy>
+        <Priority>7</Priority>
+        <RunOnlyIfNetworkAvailable>false</RunOnlyIfNetworkAvailable>
+        <IdleSettings>
+          <StopOnIdleEnd>false</StopOnIdleEnd>
+          <RestartOnIdle>false</RestartOnIdle>
+        </IdleSettings>
+        <RunOnlyIfIdle>false</RunOnlyIfIdle>
+        <StartWhenAvailable>true</StartWhenAvailable>
+        <StopIfGoingOnBatteries>false</StopIfGoingOnBatteries>
+        <UseUnifiedSchedulingEngine>true</UseUnifiedSchedulingEngine>
+        <WakeToRun>false</WakeToRun>
+      </Settings>
+      <Principals>
+        <Principal id="LocalSystem">
+          <UserId>S-1-5-18</UserId>
+          <RunLevel>LeastPrivilege</RunLevel>
+        </Principal>
+      </Principals>
+      <Actions Context="LocalSystem">
+        <Exec>
+          <Command>%systemroot%\system32\usoclient.exe</Command>
+          <Arguments>HandleUusFailoverSignal</Arguments>
+        </Exec>
+      </Actions>
+    </Task>
+  </taskScheduler>
+  <migration scope="Upgrade,Data" settingsVersion="0">
+    <migXml xmlns="">
+      <rules context="System">
+        <include>
+          <objectSet>
+            <pattern type="File">%windir%\System32\Tasks\Microsoft\Windows\UpdateOrchestrator [MusUx_LogonUpdateResults]</pattern>
+          </objectSet>
+        </include>
+        <exclude>
+          <objectSet>
+            <pattern type="File">%windir%\System32\Tasks\Microsoft\Windows\UpdateOrchestrator [*]</pattern>
+          </objectSet>
+        </exclude>
+      </rules>
+    </migXml>
+    <supportedComponents>
+      <supportedComponent>
+        <assemblyIdentity name="_" version="1.0.0.0" />
+        <supportedComponentIdentity language="neutral" name="Microsoft-Windows-Update-OrchestratorSchedulerTasks" processorArchitecture="amd64" settingsVersionRange="0" xmlns="urn:schemas-microsoft-com:asm.v3" />
+        <migXml xmlns="">
+          <rules context="System">
+            <include>
+              <objectSet>
+                <pattern type="File">%windir%\System32\Tasks\Microsoft\Windows\UpdateOrchestrator [MusUx_LogonUpdateResults]</pattern>
+              </objectSet>
+            </include>
+            <exclude>
+              <objectSet>
+                <pattern type="File">%windir%\System32\Tasks\Microsoft\Windows\UpdateOrchestrator [*]</pattern>
+              </objectSet>
+            </exclude>
+          </rules>
+        </migXml>
+      </supportedComponent>
+    </supportedComponents>
+  </migration>
+  <registryKeys>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Ubpm">
+      <registryValue name="CriticalTask_USO1" valueType="REG_SZ" value="NT TASK\Microsoft\Windows\UpdateOrchestrator\Schedule Scan" />
+      <registryValue name="OOBETask_USO1" valueType="REG_SZ" value="NT TASK\Microsoft\Windows\UpdateOrchestrator\Schedule Scan" />
+      <registryValue name="CriticalMeasured_UsoScheduleScan" valueType="REG_SZ" value="NT Task\Microsoft\Windows\UpdateOrchestrator\Schedule Scan" />
+      <registryValue name="CriticalTask_US03" valueType="REG_SZ" value="NT TASK\Microsoft\Windows\UpdateOrchestrator\Schedule Scan Static Task" />
+      <registryValue name="CriticalMeasured_UsoStaticScan" valueType="REG_SZ" value="NT Task\Microsoft\Windows\UpdateOrchestrator\Schedule Scan Static Task" />
+      <registryValue name="OOBETask_US03" valueType="REG_SZ" value="NT TASK\Microsoft\Windows\UpdateOrchestrator\Schedule Scan Static Task" />
+      <registryValue name="OOBETask_USOUX02" valueType="REG_SZ" value="NT TASK\Microsoft\Windows\UpdateOrchestrator\USO_UxBroker" />
+      <registryValue name="CriticalMeasured_UsoAcPowerDownload" valueType="REG_SZ" value="NT Task\Microsoft\Windows\UpdateOrchestrator\AC Power Download" />
+      <registryValue name="CriticalMeasured_UsoAcPowerInstall" valueType="REG_SZ" value="NT Task\Microsoft\Windows\UpdateOrchestrator\AC Power Install" />
+      <registryValue name="CriticalTask_UnivOrch" valueType="REG_SZ" value="NT Task\Microsoft\Windows\UpdateOrchestrator\Universal Orchestrator Start" />
+      <registryValue name="CriticalMeasured_UnivOrch" valueType="REG_SZ" value="NT Task\Microsoft\Windows\UpdateOrchestrator\Universal Orchestrator Start" />
+      <registryValue name="CriticalTask_UnivOrchIdle" valueType="REG_SZ" value="NT Task\Microsoft\Windows\UpdateOrchestrator\Universal Orchestrator Idle Start" />
+      <registryValue name="CriticalMeasured_UnivOrchIdle" valueType="REG_SZ" value="NT Task\Microsoft\Windows\UpdateOrchestrator\Universal Orchestrator Idle Start" />
+      <registryValue name="CriticalTask_ScheduleWork" valueType="REG_SZ" value="NT Task\Microsoft\Windows\UpdateOrchestrator\Schedule Work" />
+      <registryValue name="CriticalMeasured_ScheduleWork" valueType="REG_SZ" value="NT Task\Microsoft\Windows\UpdateOrchestrator\Schedule Work" />
+      <registryValue name="CriticalTask_ScheduleWakeToWork" valueType="REG_SZ" value="NT Task\Microsoft\Windows\UpdateOrchestrator\Schedule Wake To Work" />
+      <registryValue name="CriticalMeasured_ScheduleWakeToWork" valueType="REG_SZ" value="NT Task\Microsoft\Windows\UpdateOrchestrator\Schedule Wake To Work" />
+      <registryValue name="CriticalMaintenance_MaintenanceWork" valueType="REG_SZ" value="NT Task\Microsoft\Windows\UpdateOrchestrator\Schedule Maintenance Work" />
+      <registryValue name="CriticalMeasured_MaintenanceWork" valueType="REG_SZ" value="NT Task\Microsoft\Windows\UpdateOrchestrator\Schedule Maintenance Work" />
+      <registryValue name="CriticalMeasured_UsoBrokerDisplay" valueType="REG_SZ" value="NT Task\Microsoft\Windows\UpdateOrchestrator\USO_Broker_Display" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+  </registryKeys>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="Windows-Update-Orchestrator-Core-SDDL" sddl="D:(A;;CCLCSWRPLORC;;;AU)(A;;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;BA)(A;;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;SY)S:(AU;FA;CCDCLCSWRPWPDTLOSDRCWDWO;;;WD)" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_PARENT_DIR_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;CI;GA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;0x1301bf;;;SY)(A;IOCIOI;GA;;;SY)(A;;0x1301bf;;;BA)(A;IOCIOI;GA;;;BA)(A;CIOI;GRGX;;;BU)(A;OICIIO;GA;;;CO)(A;CIOI;GRGX;;;S-1-15-2-1)(A;CIOI;GRGX;;;S-1-15-2-2)" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_REGKEY_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;CI;GA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;CI;GR;;;SY)(A;CI;GR;;;BA)(A;CI;GR;;;BU)(A;CI;GR;;;S-1-15-2-1)(A;CI;GR;;;S-1-15-3-1024-1065365936-1281604716-3511738428-1654721687-432734479-3232135806-4053264122-3456934681)" operationHint="replace" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+</assembly>

@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved." xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <assemblyIdentity name="Microsoft-Windows-OfflineFiles-Service" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <dependency discoverable="no" resourceType="Resources">
+    <dependentAssembly dependencyType="prerequisite">
+      <assemblyIdentity name="Microsoft-Windows-OfflineFiles-Service.Resources" version="10.0.22621.1" processorArchitecture="amd64" language="*" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+    </dependentAssembly>
+  </dependency>
+  <file name="cscsvc.dll" destinationPath="$(runtime.system32)\" sourceName="cscsvc.dll" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>WuVGsq1lNbolitukG2qhhk7xJYDiM7hfwVM2S3NShnI=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <file name="Microsoft-Windows-OfflineFiles.mof" destinationPath="$(runtime.wbem)\" sourceName="Microsoft-Windows-OfflineFiles.mof" importPath="$(build.nttree)\" sourcePath=".\">
+    <dependencies>
+      <dependentAssembly>
+        <assemblyIdentity name="Microsoft-Windows-WMI-Feature-Core" version="10.0.22621.1" processorArchitecture="amd64" language="*" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="Microsoft-Windows-WMI-Mof" version="10.0.22621.1" processorArchitecture="amd64" language="*" buildType="release" publicKeyToken="31bf3856ad364e35" />
+      </dependentAssembly>
+    </dependencies>
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>rhKARQKd91a4mzlwPX+fbVJZcIF9D2uWNxGD2EZARJU=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <memberships>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories.Services" version="10.0.22621.1" publicKeyToken="31bf3856ad364e35" typeName="Service" />
+      <categoryInstance subcategory="CscService">
+        <serviceData name="CscService" displayName="@%systemroot%\system32\cscsvc.dll,-200" errorControl="normal" start="demand" type="win32ShareProcess" description="@%systemroot%\system32\cscsvc.dll,-201" dependOnService="RpcSs" group="ProfSvc_Group" imagePath="%SystemRoot%\System32\svchost.exe -k LocalSystemNetworkRestricted -p" objectName="LocalSystem" requiredPrivileges="SeTcbPrivilege,SeImpersonatePrivilege,SeIncreaseBasePriorityPrivilege" sidType="unrestricted">
+          <serviceTrigger action="start" subtype="WNF_STATE_CHANGE" type="WnfStateEvent">
+            <triggerData type="binary" value="7508bca32e1d8541" />
+          </serviceTrigger>
+          <failureActions resetPeriod="86400">
+            <actions>
+              <action delay="120000" type="restartService" />
+              <action delay="300000" type="restartService" />
+              <action delay="0" type="none" />
+            </actions>
+          </failureActions>
+        </serviceData>
+      </categoryInstance>
+    </categoryMembership>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories" version="1.0.0.0" publicKeyToken="365143bb27e7ac8b" typeName="SvcHost" />
+      <categoryInstance subcategory="LocalSystemNetworkRestricted">
+        <serviceGroup position="last" serviceName="CscService" />
+      </categoryInstance>
+    </categoryMembership>
+  </memberships>
+  <registryKeys>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{69486DD6-C19F-42e8-B508-A53F9F8E67B8}">
+      <registryValue name="" valueType="REG_SZ" value="Offline Files Service Control" />
+      <registryValue name="AppId" valueType="REG_SZ" value="{52551A19-B337-498d-AE75-2283E29902DE}" />
+      <securityDescriptor name="WRP_KEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\AppId\{52551A19-B337-498d-AE75-2283E29902DE}">
+      <registryValue name="" valueType="REG_SZ" value="Offline Files Service" />
+      <registryValue name="LocalService" valueType="REG_SZ" value="CscService" />
+      <registryValue name="LaunchPermission" valueType="REG_BINARY" value="01000480440000006000000000000000140000000200300002000000010014001700000001010000000000050b000000000014000900000001010000000000050b000000010500000000000515000000a05f841f5e2e6b49ce120303f4010000010500000000000515000000a05f841f5e2e6b49ce120303f4010000" />
+      <securityDescriptor name="WRP_KEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{FD3659E9-A920-4123-AD64-7FC76C7AACDF}">
+      <registryValue name="" valueType="REG_SZ" value="Offline Files Setting Object" />
+      <registryValue name="AppId" valueType="REG_SZ" value="{AAAF9453-58F9-4872-A428-0507C383AC37}" />
+      <securityDescriptor name="WRP_KEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\AppId\{AAAF9453-58F9-4872-A428-0507C383AC37}">
+      <registryValue name="LocalService" valueType="REG_SZ" value="CscService" />
+      <securityDescriptor name="WRP_KEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\NetCache">
+      <registryValue name="OfflineDirRenameDelete" valueType="REG_DWORD" value="0x00000001" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\NetCache\OfflineDirRenameDeleteList">
+      <registryValue name="\\" valueType="REG_DWORD" value="0x00000001" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\SharedAccess\Parameters\FirewallPolicy\RestrictedServices\Static\System">
+      <registryValue name="CscService-1" valueType="REG_SZ" value="V2.0|Action=Block|Dir=In|App=%SystemRoot%\system32\svchost.exe|Svc=CscService|Name=Block any other traffic to and from CSCService|" />
+      <registryValue name="CscService-2" valueType="REG_SZ" value="V2.0|Action=Block|Dir=Out|App=%SystemRoot%\system32\svchost.exe|Svc=CscService|Name=Block any other traffic to and from CSCService|" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\System\CurrentControlSet\Services\CscService\Parameters">
+      <registryValue name="ServiceMain" valueType="REG_SZ" value="CscServiceMain" />
+      <registryValue name="ServiceDll" valueType="REG_EXPAND_SZ" value="%SystemRoot%\System32\cscsvc.dll" />
+    </registryKey>
+  </registryKeys>
+  <asmv3:configuration xmlns:asmv3="urn:schemas-microsoft-com:asm.v3" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State">
+    <asmv3:configurationSchema>
+      <xsd:schema xmlns="Microsoft-Windows-OfflineFiles-Service" targetNamespace="Microsoft-Windows-OfflineFiles-Service">
+        <xsd:simpleType name="CscServiceStartType" wcm:description="d__os_obj_amd64fre_temp_340bd4e8f765b5546db0b413c762e114_aljmgo24jd_microsoft-windows-offlinefiles-service.man.temp1.missingResource.CscServiceStartType_Desc">
+          <xsd:restriction base="xsd:integer">
+            <xsd:enumeration value="2" />
+            <xsd:enumeration value="3" />
+            <xsd:enumeration value="4" />
+          </xsd:restriction>
+        </xsd:simpleType>
+        <xsd:element default="4" name="ServiceStart" type="CscServiceStartType" wcm:description="2 is auto start, 4 is disabled" wcm:displayName="Service start" wcm:handler="regkey('HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\CscService')" wcm:legacyName="Start" wcm:legacyType="REG_DWORD" wcm:scope="allUsers" />
+      </xsd:schema>
+    </asmv3:configurationSchema>
+    <asmv3:metadata />
+  </asmv3:configuration>
+  <instrumentation>
+    <counters xmlns="http://schemas.microsoft.com/win/2005/12/counters" schemaVersion="2.0">
+      <provider applicationIdentity="cscsvc.dll" callback="custom" providerGuid="{b1c6de93-e020-4ad9-9ca5-4dd5553004cf}" providerName="OfflineFiles" providerType="userMode" symbol="OfflineFilesProvider">
+        <counterSet description="Performance counters for Offline Files" descriptionID="502" guid="{86b34670-d4bb-40c9-8301-33fb16675d61}" instances="single" name="Offline Files" nameID="500" symbol="OfflineFiles" uri="Microsoft.Windows.System.PerfCounters.OfflineFiles">
+          <counter defaultScale="5" description="Bytes synchronized from server to client" descriptionID="506" detailLevel="standard" id="1" name="Bytes Received" nameID="504" symbol="CSCPERFCTR_SERVER_TO_CLIENT_BYTES" type="perf_counter_large_rawcount" uri="Microsoft.Windows.System.PerfCounters.OfflineFiles.ServerToClientBytes">
+            <counterAttributes>
+              <counterAttribute name="reference" />
+            </counterAttributes>
+          </counter>
+          <counter defaultScale="5" description="Bytes synchronized from client to server" descriptionID="510" detailLevel="standard" id="2" name="Bytes Transmitted" nameID="508" symbol="CSCPERFCTR_CLIENT_TO_SERVER_BYTES" type="perf_counter_large_rawcount" uri="Microsoft.Windows.System.PerfCounters.OfflineFiles.ClientToServerBytes">
+            <counterAttributes>
+              <counterAttribute name="reference" />
+            </counterAttributes>
+          </counter>
+          <counter baseID="4" defaultScale="2" description="Bytes synchronized per second, client to server" descriptionID="514" detailLevel="standard" id="3" name="Bytes Transmitted/sec" nameID="512" symbol="CSCPERFCTR_CLIENT_TO_SERVER_BYTE_RATE" type="perf_average_bulk" uri="Microsoft.Windows.System.PerfCounters.OfflineFiles.ClientToServerByteRate">
+            <counterAttributes>
+              <counterAttribute name="reference" />
+            </counterAttributes>
+          </counter>
+          <counter detailLevel="standard" id="4" symbol="CSCPERFCTR_CLIENT_TO_SERVER_BYTE_RATE_BASE" type="perf_average_base" uri="Microsoft.Windows.System.PerfCounters.OfflineFiles.ClientToServerByteRateBase">
+            <counterAttributes>
+              <counterAttribute name="noDisplay" />
+              <counterAttribute name="reference" />
+            </counterAttributes>
+          </counter>
+          <counter baseID="6" defaultScale="2" description="Bytes synchronized per second, server to client" descriptionID="518" detailLevel="standard" id="5" name="Bytes Received/sec" nameID="516" symbol="CSCPERFCTR_SERVER_TO_CLIENT_BYTE_RATE" type="perf_average_bulk" uri="Microsoft.Windows.System.PerfCounters.OfflineFiles.ServerToClientByteRate">
+            <counterAttributes>
+              <counterAttribute name="reference" />
+            </counterAttributes>
+          </counter>
+          <counter detailLevel="standard" id="6" symbol="CSCPERFCTR_SERVER_TO_CLIENT_BYTE_RATE_BASE" type="perf_average_base" uri="Microsoft.Windows.System.PerfCounters.OfflineFiles.ServerToClientByteRateBase">
+            <counterAttributes>
+              <counterAttribute name="noDisplay" />
+              <counterAttribute name="reference" />
+            </counterAttributes>
+          </counter>
+        </counterSet>
+        <counterSet description="Performance counters for SMB BranchCache for reduced bandwidth consumption" descriptionID="522" guid="{1045bf74-023b-445a-9e2b-2038ff4789a6}" instances="single" name="Client Side Caching" nameID="520" symbol="ClientSideCaching" uri="Microsoft.Windows.System.PerfCounters.ClientSideCaching">
+          <counter defaultScale="-4" description="Bytes requested from BranchCache" descriptionID="526" detailLevel="standard" id="1" name="SMB BranchCache Bytes Requested" nameID="524" symbol="CSCPERFCTR_PEER_CACHE_REQUESTED_BYTES" type="perf_counter_large_rawcount" uri="Microsoft.Windows.System.PerfCounters.ClientSideCaching.SMBBranchCacheRequestedBytes">
+            <counterAttributes>
+              <counterAttribute name="reference" />
+            </counterAttributes>
+          </counter>
+          <counter defaultScale="-4" description="Bytes received from BranchCache" descriptionID="530" detailLevel="standard" id="2" name="SMB BranchCache Bytes Received" nameID="528" symbol="CSCPERFCTR_PEER_CACHE_RECEIVED_BYTES" type="perf_counter_large_rawcount" uri="Microsoft.Windows.System.PerfCounters.ClientSideCaching.SMBBranchCacheReceivedBytes">
+            <counterAttributes>
+              <counterAttribute name="reference" />
+            </counterAttributes>
+          </counter>
+          <counter defaultScale="-4" description="Bytes published back to BranchCache" descriptionID="534" detailLevel="standard" id="3" name="SMB BranchCache Bytes Published" nameID="532" symbol="CSCPERFCTR_PEER_CACHE_MISSED_BYTES" type="perf_counter_large_rawcount" uri="Microsoft.Windows.System.PerfCounters.ClientSideCaching.SMBBranchCachePublishedBytes">
+            <counterAttributes>
+              <counterAttribute name="reference" />
+            </counterAttributes>
+          </counter>
+          <counter defaultScale="-4" description="Bytes not found in BranchCache and retrieved from the server" descriptionID="538" detailLevel="standard" id="4" name="SMB BranchCache Bytes Requested From Server" nameID="536" symbol="CSCPERFCTR_PEER_CACHE_REQUESTED_BYTES_FROM_SERVER" type="perf_counter_large_rawcount" uri="Microsoft.Windows.System.PerfCounters.ClientSideCaching.SMBBranchCacheRequestedBytesFromServer">
+            <counterAttributes>
+              <counterAttribute name="reference" />
+            </counterAttributes>
+          </counter>
+          <counter defaultScale="2" description="Count of hash requests sent to the server for BranchCache lookup" descriptionID="542" detailLevel="standard" id="5" name="SMB BranchCache Hashes Requested" nameID="540" symbol="CSCPERFCTR_PEER_CACHE_HASHES_REQUESTED" type="perf_counter_rawcount" uri="Microsoft.Windows.System.PerfCounters.ClientSideCaching.SMBBranchCacheHashesRequested">
+            <counterAttributes>
+              <counterAttribute name="reference" />
+            </counterAttributes>
+          </counter>
+          <counter defaultScale="2" description="Count of hash requests successfully receieved back from the server for BranchCache lookup" descriptionID="546" detailLevel="standard" id="6" name="SMB BranchCache Hashes Received" nameID="544" symbol="CSCPERFCTR_PEER_CACHE_HASHES_RECEIVED" type="perf_counter_rawcount" uri="Microsoft.Windows.System.PerfCounters.ClientSideCaching.SMBBranchCacheHashesReceived">
+            <counterAttributes>
+              <counterAttribute name="reference" />
+            </counterAttributes>
+          </counter>
+          <counter defaultScale="-2" description="Bytes of hash data successfully received back from the server for BranchCache lookup" descriptionID="550" detailLevel="standard" id="7" name="SMB BranchCache Hash Bytes Received" nameID="548" symbol="CSCPERFCTR_PEER_CACHE_HASHES_BYTES_RECEIVED" type="perf_counter_large_rawcount" uri="Microsoft.Windows.System.PerfCounters.ClientSideCaching.SMBBranchCacheHashesBytesReceived">
+            <counterAttributes>
+              <counterAttribute name="reference" />
+            </counterAttributes>
+          </counter>
+          <counter defaultScale="2" description="Count of prefetch operations queued to retrieve or publish BranchCache data" descriptionID="554" detailLevel="standard" id="8" name="Prefetch Operations Queued" nameID="552" symbol="CSCPERFCTR_PREFETCH_OPS" type="perf_counter_rawcount" uri="Microsoft.Windows.System.PerfCounters.ClientSideCaching.PrefetchOpsQueued">
+            <counterAttributes>
+              <counterAttribute name="reference" />
+            </counterAttributes>
+          </counter>
+          <counter defaultScale="-4" description="Bytes read by the BranchCache prefetcher service from the Client Side Cache" descriptionID="558" detailLevel="standard" id="9" name="Prefetch Bytes Read From Cache" nameID="556" symbol="CSCPERFCTR_PREFETCH_BYTES_READ_FROM_CACHE" type="perf_counter_large_rawcount" uri="Microsoft.Windows.System.PerfCounters.ClientSideCaching.PrefetchBytesReadFromCache">
+            <counterAttributes>
+              <counterAttribute name="reference" />
+            </counterAttributes>
+          </counter>
+          <counter defaultScale="-4" description="Bytes read by the BranchCache prefetcher from the server" descriptionID="562" detailLevel="standard" id="10" name="Prefetch Bytes Read From Server" nameID="560" symbol="CSCPERFCTR_PREFETCH_BYTES_READ_FROM_SERVER" type="perf_counter_large_rawcount" uri="Microsoft.Windows.System.PerfCounters.ClientSideCaching.PrefetchBytesReadFromServer">
+            <counterAttributes>
+              <counterAttribute name="reference" />
+            </counterAttributes>
+          </counter>
+          <counter defaultScale="-4" description="Transparently cached bytes read by applications from the Client Side Cache" descriptionID="566" detailLevel="standard" id="11" name="Application Bytes Read From Cache" nameID="564" symbol="CSCPERFCTR_TRANSPARENT_BYTES_READ_FROM_CACHE" type="perf_counter_large_rawcount" uri="Microsoft.Windows.System.PerfCounters.ClientSideCaching.TransparentBytesReadFromCache">
+            <counterAttributes>
+              <counterAttribute name="reference" />
+            </counterAttributes>
+          </counter>
+          <counter defaultScale="-4" description="Transparently cached bytes read by applications from the server" descriptionID="570" detailLevel="standard" id="12" name="Application Bytes Read From Server" nameID="568" symbol="CSCPERFCTR_TRANSPARENT_BYTES_READ_FROM_SERVER" type="perf_counter_large_rawcount" uri="Microsoft.Windows.System.PerfCounters.ClientSideCaching.TransparentBytesReadFromServer">
+            <counterAttributes>
+              <counterAttribute name="reference" />
+            </counterAttributes>
+          </counter>
+          <counter defaultScale="-4" description="Transparently cached bytes read by applications from the server and not cached by the client" descriptionID="574" detailLevel="standard" id="13" name="Application Bytes Read From Server (Not Cached)" nameID="572" symbol="CSCPERFCTR_TRANSPARENT_BYTES_READ_FROM_SERVER_NOT_CACHED" type="perf_counter_large_rawcount" uri="Microsoft.Windows.System.PerfCounters.ClientSideCaching.TransparentBytesReadFromServerNotCached">
+            <counterAttributes>
+              <counterAttribute name="reference" />
+            </counterAttributes>
+          </counter>
+        </counterSet>
+      </provider>
+    </counters>
+    <events xmlns="http://schemas.microsoft.com/win/2004/08/events" xmlns:win="http://manifests.microsoft.com/win/2004/08/windows/events">
+      <provider guid="{95353826-4FBE-41d4-9C42-F521C6E86360}" message="$(string.eventProviderName)" messageFileName="%systemroot%\system32\cscsvc.dll" name="Microsoft-Windows-OfflineFiles" resourceFileName="%systemroot%\system32\cscsvc.dll" symbol="CSC_SERVICE_EVENT_PROVIDER">
+        <channels>
+          <importChannel chid="EvtChSystem" name="System" />
+          <channel chid="CscEvtChOperational" enabled="true" message="$(string.CscEvtChannel_Operational)" name="Microsoft-Windows-OfflineFiles/Operational" type="Operational" />
+          <channel access="O:BAG:SYD:(D;;0xf0007;;;AN)(D;;0xf0007;;;BG)(A;;0x7;;;SY)(A;;0x7;;;BA)(A;;0x2;;;WD)" chid="CscEvtChScopeAnalytic" isolation="Custom" message="$(string.CscEvtChannel_Analytic)" name="Microsoft-Windows-OfflineFiles/Analytic" type="Analytic" />
+          <channel access="O:BAG:SYD:(D;;0xf0007;;;AN)(D;;0xf0007;;;BG)(A;;0x7;;;SY)(A;;0x7;;;BA)(A;;0x2;;;WD)" chid="CscEvtChDebug" isolation="Custom" message="$(string.CscEvtChannel_Debug)" name="Microsoft-Windows-OfflineFiles/Debug" type="Debug" />
+          <channel access="O:BAG:SYD:(D;;0xf0007;;;AN)(D;;0xf0007;;;BG)(A;;0x7;;;SY)(A;;0x7;;;BA)(A;;0x2;;;WD)" chid="CscEvtChSyncLog" isolation="Custom" message="$(string.CscEvtChannel_SyncLog)" name="Microsoft-Windows-OfflineFiles/SyncLog" type="Analytic" />
+        </channels>
+      </provider>
+      <provider guid="{4a933674-fb3d-4e8d-b01d-17ee14e91a3e}" message="$(string.BranchCacheSMBEventProviderName)" messageFileName="%systemroot%\system32\cscsvc.dll" name="Microsoft-Windows-BranchCacheSMB" resourceFileName="%systemroot%\system32\cscsvc.dll" symbol="CSC_SERVICE_BRANCHCACHE_EVENT_PROVIDER">
+        <channels>
+          <channel chid="CscEvtChSMBBranchCacheOperational" enabled="true" message="$(string.CscEvtChannel_SMBBranchCacheOperational)" name="Microsoft-Windows-BranchCacheSMB/Operational" type="Operational" />
+          <channel access="O:BAG:SYD:(D;;0xf0007;;;AN)(D;;0xf0007;;;BG)(A;;0x7;;;SY)(A;;0x7;;;BA)(A;;0x2;;;WD)" chid="CscEvtChSMBBranchCacheAnalytic" isolation="Custom" message="$(string.CscEvtChannel_SMBBranchCacheAnalytic)" name="Microsoft-Windows-BranchCacheSMB/Analytic" type="Analytic" />
+        </channels>
+      </provider>
+      <cmi />
+    </events>
+  </instrumentation>
+  <mof name="$(runtime.wbem)\Microsoft-Windows-OfflineFiles.mof" />
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string id="eventProviderName" value="Microsoft-Windows-OfflineFiles" />
+        <string id="displayName" value="Offline Files Service" />
+        <string id="cscsvc_DLL" value="%SystemRoot%\System32\cscsvc.dll" />
+        <string id="cscsvc_CLSID_OfflineFilesService" value="{69486DD6-C19F-42e8-B508-A53F9F8E67B8}" />
+        <string id="cscsvc_CLSID_OfflineFilesSetting" value="{FD3659E9-A920-4123-AD64-7FC76C7AACDF}" />
+        <string id="cscsvc_SERVICE_NAME" value="CscService" />
+        <string id="cscsvc_SERVICE_DESC" value="Offline Files Service Control" />
+        <string id="cscsvc_SETTING_DESC" value="Offline Files Setting Object" />
+        <string id="cscsvc_EVENTLOG_SRC" value="Offline Files Service" />
+        <string id="cscsvc_APPID_OfflineFilesService" value="{52551A19-B337-498d-AE75-2283E29902DE}" />
+        <string id="cscsvc_APPID_OfflineFilesSetting" value="{AAAF9453-58F9-4872-A428-0507C383AC37}" />
+        <string id="ServiceStartAutoOrDisableType_Desc" value="Service start type [auto start or disabled]" />
+        <string id="ServiceStart_DisplayName" value="Service start" />
+        <string id="ServiceStart_Desc" value="2 is auto start, 4 is disabled" />
+        <string id="CscEvtMsg_BGSyncIgnoreBlockOut" value="Background Synchronization has started on %n%n%1%n%n as client has not synced for %2 minutes." />
+        <string id="CscEvtMsg_BGSyncScopeFailure" value="Background Synchronization failed on %n%n%1%n%n" />
+        <string id="CscEvtMsg_BGSyncScopeFailedFileCount" value="Background Synchronization failed for %2 files on %n%n%1%n%n" />
+        <string id="CscEvtMsg_BGSyncSuccess" value="Background Synchronization executed successfully." />
+        <string id="CscEvtMsg_DriverNotRunning" value="The Offline Files driver (csc.sys) is not running." />
+        <string id="CscEvtMsg_ServiceReceivedStopOrShutdownControl" value="The Offline Files service received a STOP or SHUTDOWN control from the Service Control Manager.  The service will now stop." />
+        <string id="CscEvtMsg_ServiceRunning" value="The Offline Files service started successfully." />
+        <string id="CscEvtMsg_ServiceTerminated" value="The Offline Files service has terminated." />
+        <string id="CscEvtMsg_ServiceTerminating" value="The Offline Files service is terminating." />
+        <string id="CscEvtMsg_ServiceWaitingForTasksToComplete" value="The Offline Files service is waiting for all running tasks to complete." />
+        <string id="CscEvtMsg_SyncItemInfo_ClientOnlyExists" value="Sync info for %1%nOnly the client copy exists.%n%12%nSee details for more information." />
+        <string id="CscEvtMsg_SyncItemInfo_ServerOnlyExists" value="Sync info for %1%nOnly the server copy exists.%n%10%nSee details for more information." />
+        <string id="CscEvtMsg_SyncItemInfo_ClientAndServerExist" value="Sync info for %1%nBoth client and server copies exist.%n%17%nSee details for more information." />
+        <string id="CscEvtMsg_SyncItemInfo_ClientDeletedAndServerExists" value="Sync info for %1%nServer copy exists, client copy deleted.%n%13%nSee details for more information." />
+        <string id="CscEvtMsg_SyncItemInfo_ClientReplacedAndDeletedAndServerExists" value="Sync info for %1%nServer copy exists, client copy replaced then deleted.%n%10\%nSee details for more information." />
+        <string id="CscEvtMsg_SyncItemSuccess" value="Sync succeeded.%n%n%1%n%nOperation: %2" />
+        <string id="CscEvtMsg_SyncItemFailure" value="Sync failed.%n%n%1%n%nOperation: %2%nResult: %4" />
+        <string id="CscEvtMsg_UserLogon" value="User logon detected%nAccount: %1%nSession: %2" />
+        <string id="CscEvtMsg_UserLogoff" value="User logoff detected%nAccount: %1%nSession: %2" />
+        <string id="CscEvtMsg_AgentFailedStartup" value="Background agent failed startup, error = %1" />
+        <string id="CscEvtMsg_PathDisconnected" value="Path disconnected.%n%1" />
+        <string id="CscEvtMsg_PathReconnected" value="Path reconnected.%n%1" />
+        <string id="CscEvtMsg_PathTransitionToSlowLink" value="Path %1 transitioned to slow link with latency = %2 and bandwidth = %3%n" />
+        <string id="CscEvtMsg_PathTransitionToSlowLinkDueToAlwaysOffline" value="Path %1 transitioned to slow link mode so the user will work offline with background synchronization of the data to the file server. The administrator has configured this path to work offline regardless of the network performance." />
+        <string id="CscEvtMsg_PathFailedToTransitionToSlowLinkDueToOpenHandle" value="Path %1 failed to transition to slow link mode due to an open handle on %2." />
+        <string id="CscEvtMsg_PathFailedToTransitionToSlowLinkDueToOpenHandleNoFileName" value="Path %1 failed to transition to slow link mode due to an open handle." />
+        <string id="CscEvtMsg_PathTransitionToOnline" value="Path %1 transitioned to online with latency = %2%n" />
+        <string id="CscEvtMsg_ExcludedFileTypeCreate" value="Creation of new excluded file type %n%1 was blocked." />
+        <string id="CscEvtMsg_ExcludedFileTypeRename" value="Rename of file %1 to file %2 was blocked. The source and/or target file name is an excluded file type." />
+        <string id="CscEvtMsg_PolicyAuthorityGP" value="Offline Files configuration is being controlled by Group Policy." />
+        <string id="CscEvtMsg_PolicyAuthorityWMI" value="Offline Files configuration is being controlled by WMI configuration classes Win32_OfflineFilesUserConfiguration and Win32_OfflineFilesMachineConfiguration." />
+        <string id="CscEvtKeywd_Agent" value="Background agent" />
+        <string id="CscEvtKeywd_Transition" value="Online/offline transitions" />
+        <string id="CscEvtKeywd_ItemStateChange" value="Cached item state changes" />
+        <string id="CscEvtKeywd_UserSessionChange" value="User logon/logoff" />
+        <string id="CscEvtKeywd_StartupShutdown" value="Service startup/shutdown" />
+        <string id="CscEvtKeywd_Setting" value="Settings activity" />
+        <string id="CscEvtKeywd_Sync" value="Cache item sync" />
+        <string id="CscEvtKeywd_SyncConflict" value="Cache item sync conflicts" />
+        <string id="CscEvtKeywd_Encrypt" value="Encryption/unencryption of cache" />
+        <string id="CscEvtKeywd_BGSync" value="Background sync" />
+        <string id="CscEvtKeywd_ExcludedFileType" value="Blocked excluded file extensions" />
+        <string id="CscEvtChannel_Operational" value="Microsoft-Windows-OfflineFiles/Operational" />
+        <string id="CscEvtChannel_Analytic" value="Microsoft-Windows-OfflineFiles/Analytic" />
+        <string id="CscEvtChannel_Debug" value="Microsoft-Windows-OfflineFiles/Debug" />
+        <string id="CscEvtChannel_SyncLog" value="Microsoft-Windows-OfflineFiles/SyncLog" />
+        <string id="BranchCacheSMBEventProviderName" value="Microsoft-Windows-BranchCacheSMB" />
+        <string id="CscEvtKeywd_SMBBranchCache" value="SMB BranchCache" />
+        <string id="CscEvtChannel_SMBBranchCacheOperational" value="Microsoft-Windows-BranchCacheSMB/Operational" />
+        <string id="CscEvtChannel_SMBBranchCacheAnalytic" value="Microsoft-Windows-BranchCacheSMB/Analytic" />
+        <string id="CscEvtMsg_BranchCacheEnabled" value="SMB BranchCache was enabled with min hash version %1 and max hash version %2." />
+        <string id="CscEvtMsg_BranchCacheDisabled" value="SMB BranchCache was disabled." />
+        <string id="CscEvtMsg_PrefetchBegin" value="SMB BranchCache prefetch began for file %n%1." />
+        <string id="CscEvtMsg_PrefetchEndSuccess" value="SMB BranchCache prefetch ended for file %n%1 (content handle %2) with an expected result of %3. %n%4" />
+        <string id="CscEvtMsg_PrefetchEndError" value="SMB BranchCache prefetch ended for file %n%1 (content handle %2) with an unexpected result of %3. %n%4" />
+        <string id="CscEvtMsg_CounterSummary" value="A summary of the Client Side Caching counters has been generated. The counter list can be found in the event details." />
+        <string id="CscEvtMsg_PrefetchCloseHandleBegin" value="SMB BranchCache prefetch close handle began." />
+        <string id="CscEvtMsg_PrefetchCloseHandleEndSuccess" value="SMB BranchCache prefetch closed %1 handle(s) with remaining %2 open handle(s) with an expected result of %3. %n%4" />
+        <string id="CscEvtMsg_PrefetchCloseHandleEndError" value="SMB BranchCache prefetch closed %1 handle(s) with remaining %2 open handle(s) with  an unexpected result of %3. %n%4" />
+      </stringTable>
+    </resources>
+  </localization>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="WRP_KEY_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;CI;GA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;CI;GR;;;SY)(A;CI;GR;;;BA)(A;CI;GR;;;BU)(A;CI;GR;;;S-1-15-2-1)(A;CI;GR;;;S-1-15-3-1024-1065365936-1281604716-3511738428-1654721687-432734479-3232135806-4053264122-3456934681)" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" description="Default SDDL for Windows Resource Protected file" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+</assembly>

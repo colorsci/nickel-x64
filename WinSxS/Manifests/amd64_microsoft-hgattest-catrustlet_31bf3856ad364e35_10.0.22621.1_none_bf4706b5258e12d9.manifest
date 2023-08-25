@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-HgAttest-CATrustlet" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <dependency discoverable="no" resourceType="Resources">
+    <dependentAssembly dependencyType="prerequisite">
+      <assemblyIdentity name="Microsoft-HgAttest-CATrustlet.Resources" version="10.0.22621.1" processorArchitecture="amd64" language="*" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+    </dependentAssembly>
+  </dependency>
+  <file name="vmplatformca.exe" destinationPath="$(runtime.System32)\" sourceName="vmplatformca.exe" importPath="$(build.nttree)\vm\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>2dLT7+oLA5hLogq27tfM0U1S8p/f6EAQZpml0e3wBlg=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <instrumentation>
+    <events xmlns="http://schemas.microsoft.com/win/2004/08/events" xmlns:win="http://manifests.microsoft.com/win/2004/08/windows/events">
+      <provider guid="{9fb3388c-a54c-4e98-bdd1-445a82ed4bf7}" messageFileName="%windir%\System32\vmplatformca.exe" name="Microsoft-Windows-HostGuardianService-CA" resourceFileName="%windir%\System32\vmplatformca.exe" symbol="ATTESTATION_CA_EVENT_SOURCE">
+        <channels>
+          <channel chid="Admin" enabled="true" message="$(string.Channel.Admin)" name="Microsoft-Windows-HostGuardianService-CA/Admin" symbol="ATTESTATION_CA_EVENT_SOURCE_ADMIN_CHANNEL" type="Admin" />
+          <channel chid="Operational" enabled="true" message="$(string.Channel.Operational)" name="Microsoft-Windows-HostGuardianService-CA/Operational" symbol="ATTESTATION_CA_EVENT_SOURCE_OPERATIONAL_CHANNEL" type="Operational" />
+          <channel chid="Debug" enabled="false" message="$(string.Channel.Debug)" name="Microsoft-Windows-HostGuardianService-CA/Debug" symbol="ATTESTATION_CA_EVENT_SOURCE_DEBUG_CHANNEL" type="Debug">
+            <logging>
+              <maxSize>314572800</maxSize>
+            </logging>
+          </channel>
+        </channels>
+      </provider>
+      <cmi />
+    </events>
+  </instrumentation>
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string id="Channel.Admin" value="Microsoft-Windows-HostGuardianService-CA/Admin" />
+        <string id="Channel.Operational" value="Microsoft-Windows-HostGuardianService-CA/Operational" />
+        <string id="Channel.Debug" value="Microsoft-Windows-HostGuardianService-CA/Debug" />
+        <string id="level.Warning" value="Warning" />
+        <string id="level.Verbose" value="Verbose" />
+        <string id="level.Informational" value="Information" />
+        <string id="level.Error" value="Error" />
+        <string id="Event.TrustletStart" value="Platform CA trustlet started." />
+        <string id="Event.TrustletStop" value="Platform CA trustel stopped." />
+        <string id="Event.DebugMessage" value="%1" />
+      </stringTable>
+    </resources>
+  </localization>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_PARENT_DIR_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;CI;GA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;0x1301bf;;;SY)(A;IOCIOI;GA;;;SY)(A;;0x1301bf;;;BA)(A;IOCIOI;GA;;;BA)(A;CIOI;GRGX;;;BU)(A;OICIIO;GA;;;CO)(A;CIOI;GRGX;;;S-1-15-2-1)(A;CIOI;GRGX;;;S-1-15-2-2)" operationHint="replace" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+</assembly>

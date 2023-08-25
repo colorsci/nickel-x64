@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved." xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <assemblyIdentity name="Microsoft-Windows-QWAVE" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <file name="qwave.dll" destinationPath="$(runtime.system32)\" sourceName="qwave.dll" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>HzOTEY252y63RTG7hgRfxVrJuEnar+OyujB/pb9Qow0=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <file name="qwavedrv.sys" destinationPath="$(runtime.drivers)\" sourceName="qwavedrv.sys" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>0+Xud5u3EAJfNRj0G2rcm/Ybg34BYTWAjL+isX84Z8Q=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <dependency discoverable="no" resourceType="Resources">
+    <dependentAssembly>
+      <assemblyIdentity name="microsoft-windows-qwave.resources" version="10.0.22621.1" processorArchitecture="amd64" language="*" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+    </dependentAssembly>
+  </dependency>
+  <memberships>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories.Services" version="10.0.22621.1" publicKeyToken="31bf3856ad364e35" typeName="Service" />
+      <categoryInstance subcategory="QWAVE">
+        <serviceData name="QWAVE" displayName="@%SystemRoot%\system32\qwave.dll,-1" errorControl="normal" start="demand" type="win32ShareProcess" description="@%SystemRoot%\system32\qwave.dll,-2" dependOnService="rpcss,psched,QWAVEdrv,LLTDIO" imagePath="%windir%\system32\svchost.exe -k LocalServiceAndNoImpersonation -p" objectName="NT AUTHORITY\LocalService" requiredPrivileges="SeChangeNotifyPrivilege" sidType="unrestricted">
+          <failureActions resetPeriod="900">
+            <actions>
+              <action delay="120000" type="restartService" />
+              <action delay="300000" type="restartService" />
+              <action delay="0" type="none" />
+            </actions>
+          </failureActions>
+          <securityDescriptor name="QWAVE_CONTROL_SDDL" />
+        </serviceData>
+      </categoryInstance>
+      <categoryInstance subcategory="QWAVEdrv">
+        <serviceData name="QWAVEdrv" displayName="@%SystemRoot%\system32\drivers\qwavedrv.sys,-1" errorControl="normal" start="demand" type="kernelDriver" description="@%SystemRoot%\system32\drivers\qwavedrv.sys,-2" imagePath="\SystemRoot\system32\drivers\qwavedrv.sys">
+          <securityDescriptor name="QWAVE_CONTROL_SDDL" />
+        </serviceData>
+      </categoryInstance>
+    </categoryMembership>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories" version="1.0.0.0" publicKeyToken="365143bb27e7ac8b" typeName="SvcHost" />
+      <categoryInstance subcategory="LocalServiceAndNoImpersonation">
+        <serviceGroup position="last" serviceName="QWAVE" />
+      </categoryInstance>
+    </categoryMembership>
+  </memberships>
+  <asmv3:configuration xmlns:asmv3="urn:schemas-microsoft-com:asm.v3" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State">
+    <asmv3:configurationSchema>
+      <xsd:schema xmlns="Microsoft-Windows-QWAVE" targetNamespace="Microsoft-Windows-QWAVE">
+        <xsd:element default="1" name="LLTD" type="xsd:unsignedInt" wcm:handler="regkey('HKEY_LOCAL_MACHINE\System\CurrentControlset\Services\QWAVE\Parameters')" wcm:legacyType="REG_DWORD" wcm:scope="allUsers" />
+        <xsd:element default="0" name="ProbegapTrace" type="xsd:unsignedInt" wcm:handler="regkey('HKEY_LOCAL_MACHINE\System\CurrentControlset\Services\QWAVE\Parameters')" wcm:legacyType="REG_DWORD" wcm:scope="allUsers" />
+      </xsd:schema>
+    </asmv3:configurationSchema>
+    <asmv3:metadata />
+  </asmv3:configuration>
+  <instrumentation>
+    <events xmlns="http://schemas.microsoft.com/win/2004/08/events" xmlns:win="http://manifests.microsoft.com/win/2004/08/windows/events" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <provider guid="{6BA132C4-DA49-415b-A7F4-31870DC9FE25}" message="$(string.eventProviderName)" messageFileName="%SystemRoot%\system32\qwave.dll" name="Microsoft-Windows-QoS-qWAVE" resourceFileName="%SystemRoot%\system32\qwave.dll" symbol="QOS_EVENT_PROVIDER_QWAVE">
+        <channels>
+          <channel chid="chid1" isolation="Custom" name="Microsoft-Windows-QoS-qWAVE/Debug" symbol="QOS_EVENT_CHANNEL_QWAVE" type="Debug" />
+        </channels>
+      </provider>
+      <cmi />
+    </events>
+  </instrumentation>
+  <registryKeys>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\System\CurrentControlset\Services\QWAVE\Parameters">
+      <registryValue name="ServiceDll" valueType="REG_EXPAND_SZ" value="%windir%\system32\qwave.dll" />
+      <registryValue name="ServiceMain" valueType="REG_EXPAND_SZ" value="ServiceMain" />
+      <registryValue name="ServiceDllUnloadOnStop" valueType="REG_DWORD" value="0x00000001" />
+    </registryKey>
+  </registryKeys>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="QWAVE_CONTROL_SDDL" sddl="O:SYG:SYD:(A;;0x9D;;;IU)(A;;0x9D;;;NS)(A;;0x9D;;;UD)(A;;0xF01FF;;;BA)" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" description="Default SDDL for Windows Resource Protected file" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string id="eventProviderName" value="Microsoft-Windows-QoS-qWAVE" />
+        <string id="displayName0" value="Quality Windows Audio Video Experience Service" />
+        <string id="description0" value="Quality Windows Audio Video Experience (qWave) is a networking platform for Audio Video (AV) streaming applications on IP home networks. qWave enhances AV streaming performance and reliability by ensuring network quality-of-service (QoS) for AV applications. It provides mechanisms for admission control, run time monitoring and enforcement, application feedback, and traffic prioritization." />
+        <string id="valuemap_errortype.0.Message" value="Win32 Error Code" />
+        <string id="valuemap_errortype.1.Message" value="NTSTATUS" />
+        <string id="valuemap_failurecontext.0.Message" value="Generic" />
+        <string id="valuemap_failurecontext.1.Message" value="Flag Checks" />
+        <string id="valuemap_failurecontext.2.Message" value="Interface Enable Check" />
+        <string id="valuemap_failurecontext.3.Message" value="Searching for Flow" />
+        <string id="valuemap_failurecontext.4.Message" value="Traffic Control Check" />
+        <string id="valuemap_failurecontext.5.Message" value="Buffer Size Check" />
+        <string id="valuemap_failurecontext.6.Message" value="RTME Update" />
+        <string id="valuemap_failurecontext.7.Message" value="Distributed Admission Control" />
+        <string id="valuemap_failurecontext.8.Message" value="Admission Control Cache" />
+        <string id="valuemap_failurecontext.9.Message" value="Determining Path Statistics" />
+        <string id="valuemap_failurecontext.10.Message" value="Administrator Privilege" />
+        <string id="valuemap_failurecontext.11.Message" value="Bottleneck Bandwidth Exceeded" />
+        <string id="valuemap_failurecontext.12.Message" value="Socket Verification" />
+        <string id="valuemap_failurecontext.13.Message" value="Determine Path" />
+        <string id="valuemap_failurecontext.14.Message" value="QWAVE Service Control" />
+        <string id="valuemap_failurecontext.15.Message" value="QWAVE Service Start Failure" />
+        <string id="valuemap_failurecontext.16.Message" value="QWAVEDRV Control" />
+        <string id="QosSetFlow_Failure.EventMessage" value="QOSSetFlow Failure" />
+        <string id="QosSetFlow_Success.EventMessage" value="QOSSetFlow Success" />
+        <string id="QosQueryFlow.EventMessage" value="QOSQueryFlow Failure" />
+        <string id="QosNotifyFlow.EventMessage" value="QOSNotifyFlow Failure" />
+        <string id="QosAddSocketToFlow_Failure.EventMessage" value="QosAddSocketToFlow Failure" />
+        <string id="QosAddSocketToFlow_Success.EventMessage" value="QosAddSocketToFlow Success" />
+        <string id="QosEnumerateFlows.EventMessage" value="QOSEnumerateFlows Failure" />
+        <string id="QosStartTrackingClient.EventMessage" value="QOSStartTrackingClient Failure" />
+        <string id="QosStopTrackingClient.EventMessage" value="QOSStopTrackingClient Failure" />
+        <string id="OverloadDetected.EventMessage" value="Network Congestion Begin" />
+        <string id="UnderloadDetected.EventMessage" value="Network Congestion End" />
+        <string id="AvailableDetected.EventMessage" value="Available Bandwidth Detected" />
+        <string id="QosCreateHandle.EventMessage" value="QOSCreateHandle" />
+        <string id="QosStartDiagnosingPath.EventMessage" value="QDLHStartDiagnosingPath" />
+        <string id="Diagnostics.EventMessage" value="Diagonstics" />
+        <string id="PacketPair.EventMessage" value="Packet Pair Result" />
+        <string id="ProbegapQuiescent.EventMessage" value="Probe Quiescent" />
+        <string id="LegacyModeActive.EventMessage" value="Legacy Mode Active" />
+        <string id="LegacyModeInactive.EventMessage" value="Legacy Mode Inactive" />
+        <string id="BurstControl.EventMessage" value="Burst Control" />
+        <string id="ACCacheInitialized.EventMessage" value="AC Cache Initialized" />
+        <string id="ACCacheDeInitialized.EventMessage" value="AC Cache DeInitialized" />
+      </stringTable>
+    </resources>
+  </localization>
+</assembly>

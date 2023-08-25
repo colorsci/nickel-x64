@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-msmq-multicast" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <MsmqWorkgroupOnlineInstall xmlns="urn:schemas-microsoft-com:msmq.v1" />
+  <firewallRule action="allow" active="true" binary="System" desc="@%systemroot%\system32\firewallapi.dll,-11197" dir="in" group="@%systemroot%\system32\firewallapi.dll,-11199" internalName="MSMQ-PGM-In" name="@%systemroot%\system32\firewallapi.dll,-11197" protocol="113" />
+  <firewallRule action="allow" active="true" binary="System" desc="@%systemroot%\system32\firewallapi.dll,-11198" dir="out" group="@%systemroot%\system32\firewallapi.dll,-11199" internalName="MSMQ-PGM-Out" name="@%systemroot%\system32\firewallapi.dll,-11198" protocol="113" />
+  <registryKeys>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\SharedAccess\Parameters\FirewallPolicy\RestrictedServices\Static\System">
+      <registryValue name="MSMQ-Allow-PGM-In" valueType="REG_SZ" value="V2.0|Action=Allow|Dir=In|Protocol=113|App=%SystemRoot%\System32\mqsvc.exe|Name=MessageQueuing-MulticastPGM-Inbound|Desc=Allow inbound Message Queuing multicast traffic over PGM|" />
+      <registryValue name="MSMQ-Allow-PGM-Out" valueType="REG_SZ" value="V2.0|Action=Allow|Dir=Out|Protocol=113|App=%SystemRoot%\System32\mqsvc.exe|Name=MessageQueuing-MulticastPGM-Outbound|Desc=Allow outbound Message Queuing multicast traffic over PGM|" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\MSMQ\Setup">
+      <registryValue name="msmq_Multicast" valueType="REG_DWORD" value="0x00000001" />
+    </registryKey>
+  </registryKeys>
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string id="description" value="Allows sending messages to a multicast IP address" />
+        <string id="displayName" value="Multicasting Support" />
+      </stringTable>
+    </resources>
+  </localization>
+  <migration settingsVersion="0">
+    <supportedComponents>
+      <supportedComponent>
+        <assemblyIdentity name="_" version="1.0.0.0" />
+        <supportedComponentIdentity buildType="release" language="neutral" name="Microsoft-Windows-msmq-multicast" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" settingsVersionRange="0" versionScope="nonSxS" xmlns="urn:schemas-microsoft-com:asm.v3" />
+      </supportedComponent>
+      <supportedComponent>
+        <assemblyIdentity name="_" version="1.0.0.0" />
+        <supportedComponentIdentity language="*" name="Microsoft-Windows-msmq-multicast-DL" processorArchitecture="*" settingsVersionRange="0" xmlns="urn:schemas-microsoft-com:asm.v3" />
+      </supportedComponent>
+    </supportedComponents>
+  </migration>
+</assembly>

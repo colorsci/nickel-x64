@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-Memory-Diagnostic-Client-Tasks" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <taskScheduler>
+    <Task xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task">
+      <RegistrationInfo>
+        <Author>$(@%SystemRoot%\system32\MemoryDiagnostic.dll,-600)</Author>
+        <Source>$(@%SystemRoot%\system32\MemoryDiagnostic.dll,-601)</Source>
+        <URI>\Microsoft\Windows\MemoryDiagnostic\RunFullMemoryDiagnostic</URI>
+        <SecurityDescriptor>D:P(A;;FA;;;BA)(A;;FA;;;SY)(A;;FR;;;AU)(A;;FRFX;;;LS)</SecurityDescriptor>
+        <Version>1.0</Version>
+        <Description>$(@%SystemRoot%\system32\MemoryDiagnostic.dll,-602)</Description>
+      </RegistrationInfo>
+      <Settings>
+        <Enabled>true</Enabled>
+        <Hidden>true</Hidden>
+        <AllowStartOnDemand>true</AllowStartOnDemand>
+        <MultipleInstancesPolicy>IgnoreNew</MultipleInstancesPolicy>
+        <DisallowStartIfOnBatteries>true</DisallowStartIfOnBatteries>
+        <StopIfGoingOnBatteries>true</StopIfGoingOnBatteries>
+        <AllowHardTerminate>false</AllowHardTerminate>
+        <StartWhenAvailable>true</StartWhenAvailable>
+        <RunOnlyIfIdle>true</RunOnlyIfIdle>
+        <IdleSettings>
+          <StopOnIdleEnd>true</StopOnIdleEnd>
+          <RestartOnIdle>true</RestartOnIdle>
+        </IdleSettings>
+        <UseUnifiedSchedulingEngine>true</UseUnifiedSchedulingEngine>
+        <WakeToRun>false</WakeToRun>
+        <ExecutionTimeLimit>PT2H</ExecutionTimeLimit>
+        <MaintenanceSettings>
+          <Period>P1M</Period>
+          <Deadline>P2M</Deadline>
+          <Exclusive>false</Exclusive>
+        </MaintenanceSettings>
+      </Settings>
+      <Triggers />
+      <Principals>
+        <Principal id="LocalAdmin">
+          <GroupId>S-1-5-32-544</GroupId>
+          <RunLevel>HighestAvailable</RunLevel>
+        </Principal>
+      </Principals>
+      <Actions Context="LocalAdmin">
+        <ComHandler>
+          <ClassId>{8168e74a-b39f-46d8-adcd-7bed477b80a3}</ClassId>
+          <Data>Time</Data>
+        </ComHandler>
+      </Actions>
+    </Task>
+    <Task xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task">
+      <RegistrationInfo>
+        <Author>$(@%SystemRoot%\system32\MemoryDiagnostic.dll,-600)</Author>
+        <Source>$(@%SystemRoot%\system32\MemoryDiagnostic.dll,-601)</Source>
+        <URI>\Microsoft\Windows\MemoryDiagnostic\ProcessMemoryDiagnosticEvents</URI>
+        <SecurityDescriptor>D:P(A;;FA;;;BA)(A;;FA;;;SY)(A;;FR;;;AU)</SecurityDescriptor>
+        <Version>1.0</Version>
+        <Description>$(@%SystemRoot%\system32\MemoryDiagnostic.dll,-603)</Description>
+      </RegistrationInfo>
+      <Settings>
+        <Enabled>true</Enabled>
+        <Hidden>true</Hidden>
+        <AllowStartOnDemand>true</AllowStartOnDemand>
+        <MultipleInstancesPolicy>IgnoreNew</MultipleInstancesPolicy>
+        <DisallowStartIfOnBatteries>true</DisallowStartIfOnBatteries>
+        <StopIfGoingOnBatteries>true</StopIfGoingOnBatteries>
+        <AllowHardTerminate>false</AllowHardTerminate>
+        <StartWhenAvailable>true</StartWhenAvailable>
+        <RunOnlyIfIdle>true</RunOnlyIfIdle>
+        <IdleSettings>
+          <StopOnIdleEnd>true</StopOnIdleEnd>
+          <RestartOnIdle>true</RestartOnIdle>
+        </IdleSettings>
+        <UseUnifiedSchedulingEngine>true</UseUnifiedSchedulingEngine>
+        <WakeToRun>false</WakeToRun>
+        <ExecutionTimeLimit>PT2H</ExecutionTimeLimit>
+      </Settings>
+      <Triggers>
+        <EventTrigger>
+          <Enabled>true</Enabled>
+          <Subscription>&lt;QueryList&gt;&lt;Query Id="0" Path="System"&gt;&lt;Select Path="System"&gt;*[System[Provider[@Name='Microsoft-Windows-WER-SystemErrorReporting'] and (EventID=1000 or EventID=1001 or EventID=1006)]]&lt;/Select&gt;&lt;/Query&gt;&lt;/QueryList&gt;</Subscription>
+        </EventTrigger>
+        <EventTrigger>
+          <Enabled>true</Enabled>
+          <Subscription>&lt;QueryList&gt;&lt;Query Id="0" Path="Application"&gt;&lt;Select Path="Application"&gt;*[System[Provider[@Name='Application Error'] and EventID=1000]] and *[EventData[Data[1]='svchost.exe_SysMain' and Data[7]='c000003f']]&lt;/Select&gt;&lt;/Query&gt;&lt;/QueryList&gt;</Subscription>
+        </EventTrigger>
+        <EventTrigger>
+          <Enabled>true</Enabled>
+          <Subscription>&lt;QueryList&gt;&lt;Query Id="0" Path="System"&gt;&lt;Select Path="System"&gt;*[System[Provider[@Name='Application Popup'] and EventID=1801]]&lt;/Select&gt;&lt;/Query&gt;&lt;/QueryList&gt;</Subscription>
+        </EventTrigger>
+        <EventTrigger>
+          <Enabled>true</Enabled>
+          <Subscription>&lt;QueryList&gt;&lt;Query Id="0" Path="Microsoft-Windows-Kernel-StoreMgr/Operational"&gt;&lt;Select Path="Microsoft-Windows-Kernel-StoreMgr/Operational"&gt;*[System[Provider[@Name='Microsoft-Windows-Kernel-StoreMgr'] and EventID=6]]&lt;/Select&gt;&lt;/Query&gt;&lt;/QueryList&gt;</Subscription>
+        </EventTrigger>
+      </Triggers>
+      <Principals>
+        <Principal id="LocalAdmin">
+          <GroupId>S-1-5-32-544</GroupId>
+          <RunLevel>HighestAvailable</RunLevel>
+        </Principal>
+      </Principals>
+      <Actions Context="LocalAdmin">
+        <ComHandler>
+          <ClassId>{8168e74a-b39f-46d8-adcd-7bed477b80a3}</ClassId>
+          <Data>Event</Data>
+        </ComHandler>
+      </Actions>
+    </Task>
+    <Task xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task">
+      <RegistrationInfo>
+        <Author>$(@%SystemRoot%\system32\memdiag.dll,-230)</Author>
+        <Source>$(@%SystemRoot%\system32\memdiag.dll,-231)</Source>
+        <URI>\Microsoft\Windows\MemoryDiagnostic\CorruptionDetector</URI>
+        <SecurityDescriptor>O:BAG:BAD:P(D;;GA;;;BG)(D;;GA;;;AN)(A;;FA;;;BA)(A;;FA;;;SY)(A;;FRSD;;;BU)</SecurityDescriptor>
+        <Version>1.0</Version>
+        <Description>$(@%SystemRoot%\system32\memdiag.dll,-232)</Description>
+      </RegistrationInfo>
+      <Settings>
+        <Enabled>false</Enabled>
+        <MultipleInstancesPolicy>IgnoreNew</MultipleInstancesPolicy>
+        <DisallowStartIfOnBatteries>false</DisallowStartIfOnBatteries>
+        <UseUnifiedSchedulingEngine>true</UseUnifiedSchedulingEngine>
+        <StopIfGoingOnBatteries>false</StopIfGoingOnBatteries>
+        <AllowStartOnDemand>false</AllowStartOnDemand>
+        <Hidden>true</Hidden>
+        <DeleteExpiredTaskAfter>PT0S</DeleteExpiredTaskAfter>
+      </Settings>
+      <Triggers>
+        <TimeTrigger>
+          <StartBoundary>2001-01-01T00:00:00</StartBoundary>
+          <EndBoundary>2001-01-01T00:00:01</EndBoundary>
+          <Enabled>false</Enabled>
+        </TimeTrigger>
+      </Triggers>
+      <Principals>
+        <Principal id="Group">
+          <GroupId>S-1-5-32-545</GroupId>
+          <RunLevel>LeastPrivilege</RunLevel>
+        </Principal>
+      </Principals>
+      <Actions Context="Group">
+        <ComHandler>
+          <ClassId>{190BA3F6-0205-4f46-B589-95C6822899D2}</ClassId>
+          <Data>PageNotZero</Data>
+        </ComHandler>
+      </Actions>
+    </Task>
+    <Task xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task">
+      <RegistrationInfo>
+        <Author>$(@%SystemRoot%\system32\memdiag.dll,-230)</Author>
+        <Source>$(@%SystemRoot%\system32\memdiag.dll,-231)</Source>
+        <URI>\Microsoft\Windows\MemoryDiagnostic\DecompressionFailureDetector</URI>
+        <SecurityDescriptor>O:BAG:BAD:P(D;;GA;;;BG)(D;;GA;;;AN)(A;;FA;;;BA)(A;;FA;;;SY)(A;;FRSD;;;BU)</SecurityDescriptor>
+        <Version>1.0</Version>
+        <Description>$(@%SystemRoot%\system32\memdiag.dll,-232)</Description>
+      </RegistrationInfo>
+      <Settings>
+        <Enabled>false</Enabled>
+        <MultipleInstancesPolicy>IgnoreNew</MultipleInstancesPolicy>
+        <DisallowStartIfOnBatteries>false</DisallowStartIfOnBatteries>
+        <UseUnifiedSchedulingEngine>true</UseUnifiedSchedulingEngine>
+        <StopIfGoingOnBatteries>false</StopIfGoingOnBatteries>
+        <AllowStartOnDemand>false</AllowStartOnDemand>
+        <Hidden>true</Hidden>
+        <DeleteExpiredTaskAfter>PT0S</DeleteExpiredTaskAfter>
+      </Settings>
+      <Triggers>
+        <TimeTrigger>
+          <StartBoundary>2001-01-01T00:00:00</StartBoundary>
+          <EndBoundary>2001-01-01T00:00:01</EndBoundary>
+          <Enabled>false</Enabled>
+        </TimeTrigger>
+      </Triggers>
+      <Principals>
+        <Principal id="Group">
+          <GroupId>S-1-5-32-545</GroupId>
+          <RunLevel>LeastPrivilege</RunLevel>
+        </Principal>
+      </Principals>
+      <Actions Context="Group">
+        <ComHandler>
+          <ClassId>{190BA3F6-0205-4f46-B589-95C6822899D2}</ClassId>
+          <Data>Decompression</Data>
+        </ComHandler>
+      </Actions>
+    </Task>
+    <Task xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task">
+      <RegistrationInfo>
+        <Author>$(@%SystemRoot%\system32\memusage.dll,-600)</Author>
+        <Source>$(@%SystemRoot%\system32\memusage.dll,-601)</Source>
+        <URI>\Microsoft\Windows\MemoryDiagnostic\MemUsageTask</URI>
+        <Description>$(@%SystemRoot%\system32\memusage.dll,-602)</Description>
+        <SecurityDescriptor>D:(A;OICI;FA;;;BA)(A;OICI;FA;;;SY)(A;OICI;GRGX;;;AU)(A;OICI;SD;;;LS)</SecurityDescriptor>
+      </RegistrationInfo>
+      <Triggers>
+        <TimeTrigger>
+          <StartBoundary>2008-09-01T00:00:00</StartBoundary>
+          <EndBoundary>2008-09-01T00:00:01</EndBoundary>
+          <Repetition>
+            <Interval>PT18H</Interval>
+          </Repetition>
+        </TimeTrigger>
+      </Triggers>
+      <Settings>
+        <DeleteExpiredTaskAfter>PT0S</DeleteExpiredTaskAfter>
+        <UseUnifiedSchedulingEngine>true</UseUnifiedSchedulingEngine>
+        <AllowStartOnDemand>true</AllowStartOnDemand>
+        <RestartOnFailure>
+          <Interval>PT45M</Interval>
+          <Count>1</Count>
+        </RestartOnFailure>
+        <MultipleInstancesPolicy>IgnoreNew</MultipleInstancesPolicy>
+        <DisallowStartIfOnBatteries>true</DisallowStartIfOnBatteries>
+        <StopIfGoingOnBatteries>false</StopIfGoingOnBatteries>
+        <Enabled>false</Enabled>
+        <Hidden>true</Hidden>
+        <RunOnlyIfIdle>true</RunOnlyIfIdle>
+        <IdleSettings>
+          <Duration>PT3M</Duration>
+          <WaitTimeout>PT17H</WaitTimeout>
+          <StopOnIdleEnd>false</StopOnIdleEnd>
+        </IdleSettings>
+      </Settings>
+      <Principals>
+        <Principal id="LocalService">
+          <UserId>S-1-5-19</UserId>
+          <RequiredPrivileges>
+            <Privilege>SeChangeNotifyPrivilege</Privilege>
+          </RequiredPrivileges>
+        </Principal>
+      </Principals>
+      <Actions Context="LocalService">
+        <ComHandler>
+          <ClassId>{e7ed314f-2816-4c26-aeb5-54a34d02404c}</ClassId>
+        </ComHandler>
+      </Actions>
+    </Task>
+  </taskScheduler>
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string id="assemblyName" value="Windows Memory Diagnostic Tasks" />
+      </stringTable>
+    </resources>
+  </localization>
+</assembly>

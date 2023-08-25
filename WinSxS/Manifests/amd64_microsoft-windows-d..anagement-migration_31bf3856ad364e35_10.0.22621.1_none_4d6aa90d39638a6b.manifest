@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-DeviceManagement-Migration" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <migration scope="Upgrade" settingsVersion="1">
+    <machineSpecific>
+      <migXml xmlns="">
+        <environment>
+          <variable name="PROVIDERID">
+            <script>MigXmlHelper.GetStringContent("Registry", "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\MDM [AuthorityName]")</script>
+          </variable>
+          <variable name="ENROLLMENTID">
+            <text>B92E7305-9462-4B48-AE6D-57D9D09FD698</text>
+          </variable>
+        </environment>
+        <rules context="System">
+          <include>
+            <objectSet>
+              <pattern type="Registry">HKLM\Software\Microsoft\Enrollments\* [*]</pattern>
+              <pattern type="Registry">HKLM\Software\Microsoft\Provisioning\OMADM* [*]</pattern>
+              <pattern type="Registry">HKLM\Software\Microsoft\SCEP\* [*]</pattern>
+              <pattern type="Registry">HKLM\Software\Microsoft\EnterpriseResourceManager\* [*]</pattern>
+            </objectSet>
+          </include>
+        </rules>
+        <rules context="User">
+          <include>
+            <objectSet>
+              <pattern type="Registry">HKCU\Software\Microsoft\SCEP\* [*]</pattern>
+            </objectSet>
+          </include>
+        </rules>
+      </migXml>
+    </machineSpecific>
+    <supportedComponents>
+      <supportedComponent>
+        <assemblyIdentity name="_" version="1.0.0.0" />
+        <supportedComponentIdentity language="neutral" name="Microsoft-Windows-DeviceManagement-Migration" processorArchitecture="*" publicKeyToken="31bf3856ad364e35" settingsVersionRange="1" xmlns="urn:schemas-microsoft-com:asm.v3" />
+      </supportedComponent>
+      <supportedComponent>
+        <assemblyIdentity name="_" version="1.0.0.0" />
+        <supportedComponentIdentity language="neutral" name="Microsoft-Windows-DeviceManagement-Migration" processorArchitecture="*" publicKeyToken="31bf3856ad364e35" settingsVersionRange="0" xmlns="urn:schemas-microsoft-com:asm.v3" />
+        <machineSpecific>
+          <migXml xmlns="">
+            <rules context="System">
+              <locationModify script="MigXmlHelper.ExactMove('HKLM\SOFTWARE\Microsoft\Enrollments\%ENROLLMENTID% [ProviderID]')">
+                <objectSet>
+                  <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\MDM [AuthorityName]</pattern>
+                </objectSet>
+              </locationModify>
+              <locationModify script="MigXmlHelper.ExactMove('HKLM\SOFTWARE\Microsoft\Enrollments\%ENROLLMENTID% [UPN]')">
+                <objectSet>
+                  <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\MDM [EmailAddress]</pattern>
+                </objectSet>
+              </locationModify>
+              <locationModify script="MigXmlHelper.ExactMove('HKLM\SOFTWARE\Microsoft\Enrollments\%ENROLLMENTID% [DomainSId]')">
+                <objectSet>
+                  <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\MDM [DomainSId]</pattern>
+                </objectSet>
+              </locationModify>
+              <locationModify script="MigXmlHelper.ExactMove('HKLM\SOFTWARE\Microsoft\Enrollments\%ENROLLMENTID% [SID]')">
+                <objectSet>
+                  <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\MDM [EnrolledUserSID]</pattern>
+                </objectSet>
+              </locationModify>
+              <locationModify script="MigXmlHelper.ExactMove('HKLM\SOFTWARE\Microsoft\Enrollments\%ENROLLMENTID% [DiscoveryServiceFullURL]')">
+                <objectSet>
+                  <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\MDM [EnrollmentServer]</pattern>
+                </objectSet>
+              </locationModify>
+              <locationModify script="MigXmlHelper.ExactMove('HKLM\SOFTWARE\Microsoft\Enrollments\%ENROLLMENTID% [RootCertThumbPrint]')">
+                <objectSet>
+                  <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\MDM\%PROVIDERID% [RootThumprint]</pattern>
+                </objectSet>
+              </locationModify>
+              <locationModify script="MigXmlHelper.ExactMove('HKLM\SOFTWARE\Microsoft\Enrollments\%ENROLLMENTID% [DMPCertThumbPrint]')">
+                <objectSet>
+                  <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\MDM\%PROVIDERID% [SslProvisionedCertThumbprint]</pattern>
+                </objectSet>
+              </locationModify>
+              <locationModify script="MigXmlHelper.ExactMove('HKLM\SOFTWARE\Microsoft\Enrollments\%ENROLLMENTID% [CurKeyContainer]')">
+                <objectSet>
+                  <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\MDM\MachineEnrollment [NewKeyContainer]</pattern>
+                </objectSet>
+              </locationModify>
+              <locationModify script="MigXmlHelper.ExactMove('HKLM\SOFTWARE\Microsoft\Provisioning\OMADM\Accounts\%ENROLLMENTID%\Protected [ServerId]')">
+                <objectSet>
+                  <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\MDM\%ENROLLMENTID% [TempAUTHORITYNAME]</pattern>
+                </objectSet>
+              </locationModify>
+              <locationModify script="MigXmlHelper.ExactMove('HKLM\SOFTWARE\Microsoft\Provisioning\OMADM\Accounts\%ENROLLMENTID%\Protected [AcctSID]')">
+                <objectSet>
+                  <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\MDM\%ENROLLMENTID% [TempENROLLEDUSERSID]</pattern>
+                </objectSet>
+              </locationModify>
+              <locationModify script="MigXmlHelper.ExactMove('HKLM\SOFTWARE\Microsoft\Provisioning\OMADM\Accounts\%ENROLLMENTID%\Protected [SslClientCertSearchCriteria]')">
+                <objectSet>
+                  <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\MDM\%PROVIDERID% [SslClientSearchCriteria]</pattern>
+                </objectSet>
+              </locationModify>
+              <locationModify script="MigXmlHelper.ExactMove('HKLM\SOFTWARE\Microsoft\Provisioning\OMADM\Accounts\%ENROLLMENTID%\Protected\AddrInfo [Addr]')">
+                <objectSet>
+                  <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\MDM [BootstrapMP]</pattern>
+                </objectSet>
+              </locationModify>
+              <locationModify script="MigXmlHelper.ExactMove('HKLM\SOFTWARE\Microsoft\Provisioning\OMADM\HwDevId [DeviceID]')">
+                <objectSet>
+                  <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\MDM [DeviceClientId]</pattern>
+                </objectSet>
+              </locationModify>
+              <locationModify script="MigXmlHelper.ExactMove('HKLM\SOFTWARE\Microsoft\Enrollments\%ENROLLMENTID% [SslCertStore]')">
+                <objectSet>
+                  <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\MDM [SslCertStore]</pattern>
+                </objectSet>
+              </locationModify>
+              <locationModify script="MigXmlHelper.ExactMove('HKLM\SOFTWARE\Microsoft\Enrollments\%ENROLLMENTID% [DeviceClientID]')">
+                <objectSet>
+                  <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\MDM\%ENROLLMENTID% [TempDEVICECLIENTID]</pattern>
+                </objectSet>
+              </locationModify>
+              <locationModify script="MigXmlHelper.ExactMove('HKLM\SOFTWARE\Microsoft\PolicyManager\current\Device\DataProtection [LegacySelectiveWipeID]')">
+                <objectSet>
+                  <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\MDM [EnterpriseIDs]</pattern>
+                </objectSet>
+              </locationModify>
+              <locationModify script="MigXmlHelper.ExactMove('HKLM\SOFTWARE\Microsoft\PolicyManager\providers\%ENROLLMENTID%\default\Device\DataProtection [LegacySelectiveWipeID]')">
+                <objectSet>
+                  <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\MDM\%ENROLLMENTID% [TempENTERPRISEIDS]</pattern>
+                </objectSet>
+              </locationModify>
+              <locationModify script="MigXmlHelper.ExactMove('HKLM\SOFTWARE\Microsoft\Enrollments\%ENROLLMENTID%\ProviderID [SSPHyperLink]')">
+                <objectSet>
+                  <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\MDM [Hyperlink]</pattern>
+                </objectSet>
+              </locationModify>
+            </rules>
+          </migXml>
+        </machineSpecific>
+      </supportedComponent>
+    </supportedComponents>
+  </migration>
+</assembly>

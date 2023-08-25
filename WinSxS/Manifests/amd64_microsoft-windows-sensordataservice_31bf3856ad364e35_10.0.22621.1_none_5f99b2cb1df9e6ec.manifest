@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-SensorDataService" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <dependency discoverable="no" resourceType="Resources">
+    <dependentAssembly>
+      <assemblyIdentity name="Microsoft-Windows-SensorDataService.Resources" version="10.0.22621.1" processorArchitecture="amd64" language="*" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+    </dependentAssembly>
+  </dependency>
+  <file name="SensorDataService.exe" destinationPath="$(runtime.system32)\" sourceName="SensorDataService.exe" importPath="$(build.nttree)\Analog\Sensors\Service\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>za4O5odZ/T2Rxw6/50Y/YgtYYRbReusTDpU7kwKPAx0=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <file name="MediaFoundation.DefaultPerceptionProvider.dll" destinationPath="$(runtime.system32)\" sourceName="MediaFoundation.DefaultPerceptionProvider.dll" importPath="$(build.nttree)\Analog\Sensors\Providers\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>lsAxFdq034SfJzH7WqW9AM29zSvUn8gBIWPs/0XYc8E=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="WRP_REGKEY_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;CI;GA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;CI;GR;;;SY)(A;CI;GR;;;BA)(A;CI;GR;;;BU)(A;CI;GR;;;S-1-15-2-1)(A;CI;GR;;;S-1-15-3-1024-1065365936-1281604716-3511738428-1654721687-432734479-3232135806-4053264122-3456934681)" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+  <memberships>
+    <categoryMembership>
+      <id name="SensorDataService" version="10.0.22621.1" publicKeyToken="31bf3856ad364e35" typeName="Service" />
+      <categoryInstance>
+        <serviceData name="SensorDataService" displayName="@%SystemRoot%\system32\SensorDataService.exe,-101" errorControl="normal" start="demand" type="win32OwnProcess" description="@%SystemRoot%\system32\SensorDataService.exe,-102" imagePath="%SystemRoot%\System32\SensorDataService.exe" objectName="LocalSystem" sidType="unrestricted">
+          <serviceTrigger action="start" subtype="NAMED_PIPE_EVENT" type="NetworkEndpointEvent">
+            <triggerData type="string" value="ProtectedPrefix\Administrators\SensorDataService" />
+          </serviceTrigger>
+          <failureActions resetPeriod="86400">
+            <actions>
+              <action delay="15000" type="restartService" />
+              <action delay="120000" type="restartService" />
+              <action delay="0" type="none" />
+            </actions>
+          </failureActions>
+        </serviceData>
+      </categoryInstance>
+    </categoryMembership>
+  </memberships>
+  <registryKeys>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\Software\Microsoft\Analog">
+      <registryValue name="IdleShutdownInMS" valueType="REG_DWORD" value="0x00002710" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\Software\Microsoft\Analog\Providers\MediaFoundationDefaultPerceptionProvider">
+      <registryValue name="ActivatableClass" valueType="REG_SZ" value="MediaFoundationFrameProviderManager" />
+      <registryValue name="ModulePath" valueType="REG_EXPAND_SZ" value="%SystemRoot%\System32\MediaFoundation.DefaultPerceptionProvider.dll" />
+    </registryKey>
+  </registryKeys>
+  <instrumentation xmlns:eth="http://schemas.microsoft.com/eth/2015/01" xmlns:win="http://manifests.microsoft.com/win/2004/08/windows/events" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <events xmlns="http://schemas.microsoft.com/win/2004/08/events">
+      <provider guid="{85BE49EA-38F1-4547-A604-80060202FB27}" message="$(string.Provider.Name)" messageFileName="%SystemDrive%\windows\system32\SensorDataService.exe" name="Microsoft-Windows-PerceptionSensorDataService" resourceFileName="%SystemDrive%\windows\system32\SensorDataService.exe" symbol="PROVIDER">
+        <channels>
+          <channel chid="Operational" enabled="true" name="Microsoft-Windows-PerceptionSensorDataService/Operational" symbol="SENSOR_DATA_SERVICE_EVENT_CHANNEL" type="Operational" value="16" />
+        </channels>
+      </provider>
+      <cmi />
+    </events>
+  </instrumentation>
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string id="Provider.Name" value="Sensor data service provider" />
+      </stringTable>
+    </resources>
+  </localization>
+</assembly>

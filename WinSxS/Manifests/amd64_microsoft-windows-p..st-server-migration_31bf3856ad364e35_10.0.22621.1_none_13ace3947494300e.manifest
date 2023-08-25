@@ -1,0 +1,399 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-PeerDist-Server-Migration" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <migration scope="MigWiz,USMT,SvrMig" settingsVersion="2">
+    <migXml xmlns="">
+      <environment>
+        <variable name="CustomRepubCacheDirectory">
+          <script>MigXmlHelper.GetStringContent("Registry", "HKLM\Software\Microsoft\Windows NT\CurrentVersion\PeerDist\CacheMgr\Republication [Directory]")</script>
+        </variable>
+        <variable name="CustomSecondaryRepubCacheDirectory0">
+          <script>MigXmlHelper.GetStringContent("Registry", "HKLM\Software\Microsoft\Windows NT\CurrentVersion\PeerDist\CacheMgr\Republication\Secondary0 [Directory]")</script>
+        </variable>
+        <variable name="CustomSecondaryRepubCacheDirectory1">
+          <script>MigXmlHelper.GetStringContent("Registry", "HKLM\Software\Microsoft\Windows NT\CurrentVersion\PeerDist\CacheMgr\Republication\Secondary1 [Directory]")</script>
+        </variable>
+        <variable name="CustomSecondaryRepubCacheDirectory2">
+          <script>MigXmlHelper.GetStringContent("Registry", "HKLM\Software\Microsoft\Windows NT\CurrentVersion\PeerDist\CacheMgr\Republication\Secondary2 [Directory]")</script>
+        </variable>
+        <variable name="CustomSecondaryRepubCacheDirectory3">
+          <script>MigXmlHelper.GetStringContent("Registry", "HKLM\Software\Microsoft\Windows NT\CurrentVersion\PeerDist\CacheMgr\Republication\Secondary3 [Directory]")</script>
+        </variable>
+        <variable name="CustomPubCacheDirectory">
+          <script>MigXmlHelper.GetStringContent("Registry", "HKLM\Software\Microsoft\Windows NT\CurrentVersion\PeerDist\CacheMgr\Publication [Directory]")</script>
+        </variable>
+      </environment>
+      <rules context="System">
+        <include>
+          <objectSet>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\PeerDist\* [*]</pattern>
+            <pattern type="Registry">HKLM\System\CurrentControlSet\Services\PeerDistSvc [Start]</pattern>
+          </objectSet>
+        </include>
+        <merge script="MigXmlHelper.DestinationPriority()">
+          <objectSet>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\PeerDist\CacheMgr\Republication [Directory]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\PeerDist\CacheMgr\Republication\Secondary0 [Directory]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\PeerDist\CacheMgr\Republication\Secondary1 [Directory]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\PeerDist\CacheMgr\Republication\Secondary2 [Directory]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\PeerDist\CacheMgr\Republication\Secondary3 [Directory]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\PeerDist\CacheMgr\Publication [Directory]</pattern>
+            <pattern type="File">* [*]</pattern>
+          </objectSet>
+        </merge>
+      </rules>
+      <rules context="System">
+        <detects>
+          <detect>
+            <condition>MigXmlHelper.DoesObjectExist("Registry", "HKLM\Software\Microsoft\Windows NT\CurrentVersion\PeerDist\CacheMgr\Republication [Directory]")</condition>
+          </detect>
+          <detect>
+            <condition negation="Yes">MigXmlHelper.DoesStringContentEqual("Registry", "HKLM\Software\Microsoft\Windows NT\CurrentVersion\PeerDist\CacheMgr\Republication [Directory]", "")</condition>
+          </detect>
+        </detects>
+        <include>
+          <objectSet>
+            <pattern type="File">%CustomRepubCacheDirectory%</pattern>
+          </objectSet>
+        </include>
+        <locationModify script="MigXmlHelper.RelativeMove('%CustomRepubCacheDirectory%','%CustomRepubCacheDirectory%')">
+          <objectSet>
+            <pattern type="File">%CustomRepubCacheDirectory%</pattern>
+          </objectSet>
+        </locationModify>
+      </rules>
+      <rules context="System">
+        <detects>
+          <detect>
+            <condition>MigXmlHelper.DoesObjectExist("Registry", "HKLM\Software\Microsoft\Windows NT\CurrentVersion\PeerDist\CacheMgr\Republication\Secondary0 [Enable]")</condition>
+          </detect>
+          <detect>
+            <condition negation="Yes">MigXmlHelper.DoesStringContentEqual("Registry", "HKLM\Software\Microsoft\Windows NT\CurrentVersion\PeerDist\CacheMgr\Republication\Secondary0 [Enable]", "0")</condition>
+          </detect>
+          <detect>
+            <condition>MigXmlHelper.DoesObjectExist("Registry", "HKLM\Software\Microsoft\Windows NT\CurrentVersion\PeerDist\CacheMgr\Republication\Secondary0 [Directory]")</condition>
+          </detect>
+          <detect>
+            <condition negation="Yes">MigXmlHelper.DoesStringContentEqual("Registry", "HKLM\Software\Microsoft\Windows NT\CurrentVersion\PeerDist\CacheMgr\Republication\Secondary0 [Directory]", "")</condition>
+          </detect>
+        </detects>
+        <include>
+          <objectSet>
+            <pattern type="File">%CustomSecondaryRepubCacheDirectory0%</pattern>
+          </objectSet>
+        </include>
+        <locationModify script="MigXmlHelper.RelativeMove('%CustomSecondaryRepubCacheDirectory0%','%CustomSecondaryRepubCacheDirectory0%')">
+          <objectSet>
+            <pattern type="File">%CustomSecondaryRepubCacheDirectory0%</pattern>
+          </objectSet>
+        </locationModify>
+      </rules>
+      <rules context="System">
+        <detects>
+          <detect>
+            <condition>MigXmlHelper.DoesObjectExist("Registry", "HKLM\Software\Microsoft\Windows NT\CurrentVersion\PeerDist\CacheMgr\Republication\Secondary1 [Enable]")</condition>
+          </detect>
+          <detect>
+            <condition negation="Yes">MigXmlHelper.DoesStringContentEqual("Registry", "HKLM\Software\Microsoft\Windows NT\CurrentVersion\PeerDist\CacheMgr\Republication\Secondary1 [Enable]", "0")</condition>
+          </detect>
+          <detect>
+            <condition>MigXmlHelper.DoesObjectExist("Registry", "HKLM\Software\Microsoft\Windows NT\CurrentVersion\PeerDist\CacheMgr\Republication\Secondary1 [Directory]")</condition>
+          </detect>
+          <detect>
+            <condition negation="Yes">MigXmlHelper.DoesStringContentEqual("Registry", "HKLM\Software\Microsoft\Windows NT\CurrentVersion\PeerDist\CacheMgr\Republication\Secondary1 [Directory]", "")</condition>
+          </detect>
+        </detects>
+        <include>
+          <objectSet>
+            <pattern type="File">%CustomSecondaryRepubCacheDirectory1%</pattern>
+          </objectSet>
+        </include>
+        <locationModify script="MigXmlHelper.RelativeMove('%CustomSecondaryRepubCacheDirectory1%','%CustomSecondaryRepubCacheDirectory1%')">
+          <objectSet>
+            <pattern type="File">%CustomSecondaryRepubCacheDirectory1%</pattern>
+          </objectSet>
+        </locationModify>
+      </rules>
+      <rules context="System">
+        <detects>
+          <detect>
+            <condition>MigXmlHelper.DoesObjectExist("Registry", "HKLM\Software\Microsoft\Windows NT\CurrentVersion\PeerDist\CacheMgr\Republication\Secondary2 [Enable]")</condition>
+          </detect>
+          <detect>
+            <condition negation="Yes">MigXmlHelper.DoesStringContentEqual("Registry", "HKLM\Software\Microsoft\Windows NT\CurrentVersion\PeerDist\CacheMgr\Republication\Secondary2 [Enable]", "0")</condition>
+          </detect>
+          <detect>
+            <condition>MigXmlHelper.DoesObjectExist("Registry", "HKLM\Software\Microsoft\Windows NT\CurrentVersion\PeerDist\CacheMgr\Republication\Secondary2 [Directory]")</condition>
+          </detect>
+          <detect>
+            <condition negation="Yes">MigXmlHelper.DoesStringContentEqual("Registry", "HKLM\Software\Microsoft\Windows NT\CurrentVersion\PeerDist\CacheMgr\Republication\Secondary2 [Directory]", "")</condition>
+          </detect>
+        </detects>
+        <include>
+          <objectSet>
+            <pattern type="File">%CustomSecondaryRepubCacheDirectory2%</pattern>
+          </objectSet>
+        </include>
+        <locationModify script="MigXmlHelper.RelativeMove('%CustomSecondaryRepubCacheDirectory2%','%CustomSecondaryRepubCacheDirectory2%')">
+          <objectSet>
+            <pattern type="File">%CustomSecondaryRepubCacheDirectory2%</pattern>
+          </objectSet>
+        </locationModify>
+      </rules>
+      <rules context="System">
+        <detects>
+          <detect>
+            <condition>MigXmlHelper.DoesObjectExist("Registry", "HKLM\Software\Microsoft\Windows NT\CurrentVersion\PeerDist\CacheMgr\Republication\Secondary3 [Enable]")</condition>
+          </detect>
+          <detect>
+            <condition negation="Yes">MigXmlHelper.DoesStringContentEqual("Registry", "HKLM\Software\Microsoft\Windows NT\CurrentVersion\PeerDist\CacheMgr\Republication\Secondary3 [Enable]", "0")</condition>
+          </detect>
+          <detect>
+            <condition>MigXmlHelper.DoesObjectExist("Registry", "HKLM\Software\Microsoft\Windows NT\CurrentVersion\PeerDist\CacheMgr\Republication\Secondary3 [Directory]")</condition>
+          </detect>
+          <detect>
+            <condition negation="Yes">MigXmlHelper.DoesStringContentEqual("Registry", "HKLM\Software\Microsoft\Windows NT\CurrentVersion\PeerDist\CacheMgr\Republication\Secondary3 [Directory]", "")</condition>
+          </detect>
+        </detects>
+        <include>
+          <objectSet>
+            <pattern type="File">%CustomSecondaryRepubCacheDirectory3%</pattern>
+          </objectSet>
+        </include>
+        <locationModify script="MigXmlHelper.RelativeMove('%CustomSecondaryRepubCacheDirectory3%','%CustomSecondaryRepubCacheDirectory3%')">
+          <objectSet>
+            <pattern type="File">%CustomSecondaryRepubCacheDirectory3%</pattern>
+          </objectSet>
+        </locationModify>
+      </rules>
+      <rules context="System">
+        <detects>
+          <detect>
+            <condition>MigXmlHelper.DoesObjectExist("Registry", "HKLM\Software\Microsoft\Windows NT\CurrentVersion\PeerDist\CacheMgr\Publication [Directory]")</condition>
+          </detect>
+          <detect>
+            <condition negation="Yes">MigXmlHelper.DoesStringContentEqual("Registry", "HKLM\Software\Microsoft\Windows NT\CurrentVersion\PeerDist\CacheMgr\Publication [Directory]", "")</condition>
+          </detect>
+        </detects>
+        <include>
+          <objectSet>
+            <pattern type="File">%CustomPubCacheDirectory%</pattern>
+          </objectSet>
+        </include>
+        <locationModify script="MigXmlHelper.RelativeMove('%CustomPubCacheDirectory%','%CustomPubCacheDirectory%')">
+          <objectSet>
+            <pattern type="File">%CustomPubCacheDirectory%</pattern>
+          </objectSet>
+        </locationModify>
+      </rules>
+    </migXml>
+    <supportedComponents>
+      <supportedComponent>
+        <assemblyIdentity name="_" version="1.0.0.0" />
+        <supportedComponentIdentity language="*" name="Microsoft-Windows-PeerDist-Server-Migration" processorArchitecture="*" settingsVersionRange="1-2" xmlns="urn:schemas-microsoft-com:asm.v3" />
+        <migXml xmlns="">
+          <environment>
+            <variable name="CustomRepubCacheDirectory">
+              <script>MigXmlHelper.GetStringContent("Registry", "HKLM\Software\Microsoft\Windows NT\CurrentVersion\PeerDist\CacheMgr\Republication [Directory]")</script>
+            </variable>
+            <variable name="CustomSecondaryRepubCacheDirectory0">
+              <script>MigXmlHelper.GetStringContent("Registry", "HKLM\Software\Microsoft\Windows NT\CurrentVersion\PeerDist\CacheMgr\Republication\Secondary0 [Directory]")</script>
+            </variable>
+            <variable name="CustomSecondaryRepubCacheDirectory1">
+              <script>MigXmlHelper.GetStringContent("Registry", "HKLM\Software\Microsoft\Windows NT\CurrentVersion\PeerDist\CacheMgr\Republication\Secondary1 [Directory]")</script>
+            </variable>
+            <variable name="CustomSecondaryRepubCacheDirectory2">
+              <script>MigXmlHelper.GetStringContent("Registry", "HKLM\Software\Microsoft\Windows NT\CurrentVersion\PeerDist\CacheMgr\Republication\Secondary2 [Directory]")</script>
+            </variable>
+            <variable name="CustomSecondaryRepubCacheDirectory3">
+              <script>MigXmlHelper.GetStringContent("Registry", "HKLM\Software\Microsoft\Windows NT\CurrentVersion\PeerDist\CacheMgr\Republication\Secondary3 [Directory]")</script>
+            </variable>
+            <variable name="CustomPubCacheDirectory">
+              <script>MigXmlHelper.GetStringContent("Registry", "HKLM\Software\Microsoft\Windows NT\CurrentVersion\PeerDist\CacheMgr\Publication [Directory]")</script>
+            </variable>
+          </environment>
+          <rules context="System">
+            <merge script="MigXmlHelper.DestinationPriority()">
+              <objectSet>
+                <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\PeerDist\CacheMgr\Republication [Directory]</pattern>
+                <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\PeerDist\CacheMgr\Republication\Secondary0 [Directory]</pattern>
+                <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\PeerDist\CacheMgr\Republication\Secondary1 [Directory]</pattern>
+                <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\PeerDist\CacheMgr\Republication\Secondary2 [Directory]</pattern>
+                <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\PeerDist\CacheMgr\Republication\Secondary3 [Directory]</pattern>
+                <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\PeerDist\CacheMgr\Publication [Directory]</pattern>
+                <pattern type="File">* [*]</pattern>
+              </objectSet>
+            </merge>
+          </rules>
+          <rules context="System">
+            <detects>
+              <detect>
+                <condition>MigXmlHelper.DoesObjectExist("Registry", "HKLM\Software\Microsoft\Windows NT\CurrentVersion\PeerDist\CacheMgr\Republication [Directory]")</condition>
+              </detect>
+              <detect>
+                <condition negation="Yes">MigXmlHelper.DoesStringContentEqual("Registry", "HKLM\Software\Microsoft\Windows NT\CurrentVersion\PeerDist\CacheMgr\Republication [Directory]", "")</condition>
+              </detect>
+            </detects>
+            <locationModify script="MigXmlHelper.RelativeMove('%CustomRepubCacheDirectory%','%CustomRepubCacheDirectory%')">
+              <objectSet>
+                <pattern type="File">%CustomRepubCacheDirectory%</pattern>
+              </objectSet>
+            </locationModify>
+          </rules>
+          <rules context="System">
+            <detects>
+              <detect>
+                <condition>MigXmlHelper.DoesObjectExist("Registry", "HKLM\Software\Microsoft\Windows NT\CurrentVersion\PeerDist\CacheMgr\Republication\Secondary0 [Enable]")</condition>
+              </detect>
+              <detect>
+                <condition negation="Yes">MigXmlHelper.DoesStringContentEqual("Registry", "HKLM\Software\Microsoft\Windows NT\CurrentVersion\PeerDist\CacheMgr\Republication\Secondary0 [Enable]", "0")</condition>
+              </detect>
+              <detect>
+                <condition>MigXmlHelper.DoesObjectExist("Registry", "HKLM\Software\Microsoft\Windows NT\CurrentVersion\PeerDist\CacheMgr\Republication\Secondary0 [Directory]")</condition>
+              </detect>
+              <detect>
+                <condition negation="Yes">MigXmlHelper.DoesStringContentEqual("Registry", "HKLM\Software\Microsoft\Windows NT\CurrentVersion\PeerDist\CacheMgr\Republication\Secondary0 [Directory]", "")</condition>
+              </detect>
+            </detects>
+            <locationModify script="MigXmlHelper.RelativeMove('%CustomSecondaryRepubCacheDirectory0%','%CustomSecondaryRepubCacheDirectory0%')">
+              <objectSet>
+                <pattern type="File">%CustomSecondaryRepubCacheDirectory0%</pattern>
+              </objectSet>
+            </locationModify>
+          </rules>
+          <rules context="System">
+            <detects>
+              <detect>
+                <condition>MigXmlHelper.DoesObjectExist("Registry", "HKLM\Software\Microsoft\Windows NT\CurrentVersion\PeerDist\CacheMgr\Republication\Secondary1 [Enable]")</condition>
+              </detect>
+              <detect>
+                <condition negation="Yes">MigXmlHelper.DoesStringContentEqual("Registry", "HKLM\Software\Microsoft\Windows NT\CurrentVersion\PeerDist\CacheMgr\Republication\Secondary1 [Enable]", "0")</condition>
+              </detect>
+              <detect>
+                <condition>MigXmlHelper.DoesObjectExist("Registry", "HKLM\Software\Microsoft\Windows NT\CurrentVersion\PeerDist\CacheMgr\Republication\Secondary1 [Directory]")</condition>
+              </detect>
+              <detect>
+                <condition negation="Yes">MigXmlHelper.DoesStringContentEqual("Registry", "HKLM\Software\Microsoft\Windows NT\CurrentVersion\PeerDist\CacheMgr\Republication\Secondary1 [Directory]", "")</condition>
+              </detect>
+            </detects>
+            <locationModify script="MigXmlHelper.RelativeMove('%CustomSecondaryRepubCacheDirectory1%','%CustomSecondaryRepubCacheDirectory1%')">
+              <objectSet>
+                <pattern type="File">%CustomSecondaryRepubCacheDirectory1%</pattern>
+              </objectSet>
+            </locationModify>
+          </rules>
+          <rules context="System">
+            <detects>
+              <detect>
+                <condition>MigXmlHelper.DoesObjectExist("Registry", "HKLM\Software\Microsoft\Windows NT\CurrentVersion\PeerDist\CacheMgr\Republication\Secondary2 [Enable]")</condition>
+              </detect>
+              <detect>
+                <condition negation="Yes">MigXmlHelper.DoesStringContentEqual("Registry", "HKLM\Software\Microsoft\Windows NT\CurrentVersion\PeerDist\CacheMgr\Republication\Secondary2 [Enable]", "0")</condition>
+              </detect>
+              <detect>
+                <condition>MigXmlHelper.DoesObjectExist("Registry", "HKLM\Software\Microsoft\Windows NT\CurrentVersion\PeerDist\CacheMgr\Republication\Secondary2 [Directory]")</condition>
+              </detect>
+              <detect>
+                <condition negation="Yes">MigXmlHelper.DoesStringContentEqual("Registry", "HKLM\Software\Microsoft\Windows NT\CurrentVersion\PeerDist\CacheMgr\Republication\Secondary2 [Directory]", "")</condition>
+              </detect>
+            </detects>
+            <locationModify script="MigXmlHelper.RelativeMove('%CustomSecondaryRepubCacheDirectory2%','%CustomSecondaryRepubCacheDirectory2%')">
+              <objectSet>
+                <pattern type="File">%CustomSecondaryRepubCacheDirectory2%</pattern>
+              </objectSet>
+            </locationModify>
+          </rules>
+          <rules context="System">
+            <detects>
+              <detect>
+                <condition>MigXmlHelper.DoesObjectExist("Registry", "HKLM\Software\Microsoft\Windows NT\CurrentVersion\PeerDist\CacheMgr\Republication\Secondary3 [Enable]")</condition>
+              </detect>
+              <detect>
+                <condition negation="Yes">MigXmlHelper.DoesStringContentEqual("Registry", "HKLM\Software\Microsoft\Windows NT\CurrentVersion\PeerDist\CacheMgr\Republication\Secondary3 [Enable]", "0")</condition>
+              </detect>
+              <detect>
+                <condition>MigXmlHelper.DoesObjectExist("Registry", "HKLM\Software\Microsoft\Windows NT\CurrentVersion\PeerDist\CacheMgr\Republication\Secondary3 [Directory]")</condition>
+              </detect>
+              <detect>
+                <condition negation="Yes">MigXmlHelper.DoesStringContentEqual("Registry", "HKLM\Software\Microsoft\Windows NT\CurrentVersion\PeerDist\CacheMgr\Republication\Secondary3 [Directory]", "")</condition>
+              </detect>
+            </detects>
+            <locationModify script="MigXmlHelper.RelativeMove('%CustomSecondaryRepubCacheDirectory3%','%CustomSecondaryRepubCacheDirectory3%')">
+              <objectSet>
+                <pattern type="File">%CustomSecondaryRepubCacheDirectory3%</pattern>
+              </objectSet>
+            </locationModify>
+          </rules>
+          <rules context="System">
+            <detects>
+              <detect>
+                <condition>MigXmlHelper.DoesObjectExist("Registry", "HKLM\Software\Microsoft\Windows NT\CurrentVersion\PeerDist\CacheMgr\Publication [Directory]")</condition>
+              </detect>
+              <detect>
+                <condition negation="Yes">MigXmlHelper.DoesStringContentEqual("Registry", "HKLM\Software\Microsoft\Windows NT\CurrentVersion\PeerDist\CacheMgr\Publication [Directory]", "")</condition>
+              </detect>
+            </detects>
+            <locationModify script="MigXmlHelper.RelativeMove('%CustomPubCacheDirectory%','%CustomPubCacheDirectory%')">
+              <objectSet>
+                <pattern type="File">%CustomPubCacheDirectory%</pattern>
+              </objectSet>
+            </locationModify>
+          </rules>
+        </migXml>
+      </supportedComponent>
+      <supportedComponent>
+        <assemblyIdentity name="_" version="1.0.0.0" />
+        <supportedComponentIdentity language="*" name="Microsoft-Windows-PeerDist-Client-Migration" processorArchitecture="*" settingsVersionRange="1" xmlns="urn:schemas-microsoft-com:asm.v3" />
+        <migXml xmlns="">
+          <environment>
+            <variable name="CustomRepubCacheDirectory">
+              <script>MigXmlHelper.GetStringContent("Registry", "HKLM\Software\Microsoft\Windows NT\CurrentVersion\PeerDist\CacheMgr\Republication [Directory]")</script>
+            </variable>
+            <variable name="CustomPubCacheDirectory">
+              <script>MigXmlHelper.GetStringContent("Registry", "HKLM\Software\Microsoft\Windows NT\CurrentVersion\PeerDist\CacheMgr\Publication [Directory]")</script>
+            </variable>
+          </environment>
+          <rules context="System">
+            <merge script="MigXmlHelper.DestinationPriority()">
+              <objectSet>
+                <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\PeerDist\CacheMgr\Republication [Directory]</pattern>
+                <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\PeerDist\CacheMgr\Publication [Directory]</pattern>
+                <pattern type="File">* [*]</pattern>
+              </objectSet>
+            </merge>
+          </rules>
+          <rules context="System">
+            <detects>
+              <detect>
+                <condition>MigXmlHelper.DoesObjectExist("Registry", "HKLM\Software\Microsoft\Windows NT\CurrentVersion\PeerDist\CacheMgr\Republication [Directory]")</condition>
+              </detect>
+              <detect>
+                <condition negation="Yes">MigXmlHelper.DoesStringContentEqual("Registry", "HKLM\Software\Microsoft\Windows NT\CurrentVersion\PeerDist\CacheMgr\Republication [Directory]", "")</condition>
+              </detect>
+            </detects>
+            <locationModify script="MigXmlHelper.RelativeMove('%CustomRepubCacheDirectory%','%CustomRepubCacheDirectory%')">
+              <objectSet>
+                <pattern type="File">%CustomRepubCacheDirectory%</pattern>
+              </objectSet>
+            </locationModify>
+          </rules>
+          <rules context="System">
+            <detects>
+              <detect>
+                <condition>MigXmlHelper.DoesObjectExist("Registry", "HKLM\Software\Microsoft\Windows NT\CurrentVersion\PeerDist\CacheMgr\Publication [Directory]")</condition>
+              </detect>
+              <detect>
+                <condition negation="Yes">MigXmlHelper.DoesStringContentEqual("Registry", "HKLM\Software\Microsoft\Windows NT\CurrentVersion\PeerDist\CacheMgr\Publication [Directory]", "")</condition>
+              </detect>
+            </detects>
+            <locationModify script="MigXmlHelper.RelativeMove('%CustomPubCacheDirectory%','%CustomPubCacheDirectory%')">
+              <objectSet>
+                <pattern type="File">%CustomPubCacheDirectory%</pattern>
+              </objectSet>
+            </locationModify>
+          </rules>
+        </migXml>
+      </supportedComponent>
+    </supportedComponents>
+  </migration>
+</assembly>

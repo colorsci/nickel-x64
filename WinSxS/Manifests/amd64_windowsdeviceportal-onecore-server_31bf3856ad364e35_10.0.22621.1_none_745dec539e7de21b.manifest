@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="WindowsDevicePortal-OneCore-Server" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <memberships>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories.Services" version="10.0.22621.1" publicKeyToken="31bf3856ad364e35" typeName="Service" />
+      <categoryInstance>
+        <serviceData name="WebManagement" displayName="@%systemroot%\system32\WebManagement.exe,-101" errorControl="normal" start="auto" type="win32OwnProcess" description="@%systemroot%\system32\WebManagement.exe,-102" dependOnService="rpcss,http" imagePath="%systemroot%\system32\WebManagement.exe" objectName="LocalSystem" sidType="unrestricted">
+          <failureActions resetPeriod="86400">
+            <actions>
+              <action delay="60000" type="restartService" />
+              <action delay="60000" type="restartService" />
+              <action delay="0" type="none" />
+            </actions>
+          </failureActions>
+        </serviceData>
+      </categoryInstance>
+    </categoryMembership>
+  </memberships>
+  <firewallRule LPort="80" Protocol="TCP" action="allow" active="true" binary="System" desc="@%SystemRoot%\system32\firewallapi.dll,-60042" dir="in" group="@%SystemRoot%\system32\firewallapi.dll,-60047" internalName="WebManagement-In-80" name="@%SystemRoot%\system32\firewallapi.dll,-60041" />
+  <firewallRule LPort="443" Protocol="TCP" action="allow" active="true" binary="System" desc="@%SystemRoot%\system32\firewallapi.dll,-60044" dir="in" group="@%SystemRoot%\system32\firewallapi.dll,-60047" internalName="WebManagement-In-443" name="@%SystemRoot%\system32\firewallapi.dll,-60043" />
+  <registryKeys>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\WebManagement">
+      <overridable name="Start" scope="Microsoft" type="REG_DWORD" />
+    </registryKey>
+  </registryKeys>
+  <migration scope="Upgrade" settingsVersion="1">
+    <migXml xmlns="">
+      <rules context="System">
+        <include>
+          <objectSet>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WebManagement [Start]</pattern>
+          </objectSet>
+        </include>
+      </rules>
+    </migXml>
+    <supportedComponents>
+      <supportedComponent>
+        <assemblyIdentity name="_" version="1.0.0.0" />
+        <supportedComponentIdentity language="neutral" name="WindowsDevicePortal-OneCore-Server" processorArchitecture="*" settingsVersionRange="1" xmlns="urn:schemas-microsoft-com:asm.v3" />
+      </supportedComponent>
+    </supportedComponents>
+  </migration>
+</assembly>

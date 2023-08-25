@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-Embedded-KeyboardFilterService-Client" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <dependency discoverable="no" resourceType="Resources">
+    <dependentAssembly>
+      <assemblyIdentity name="Microsoft-Windows-Embedded-KeyboardFilterService-Client.Resources" version="10.0.22621.1" processorArchitecture="amd64" language="*" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+    </dependentAssembly>
+  </dependency>
+  <registryKeys>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\MsKeyboardFilter\Parameters">
+      <registryValue name="ServiceDll" valueType="REG_EXPAND_SZ" value="%SystemRoot%\System32\KeyboardFilterSvc.dll" />
+      <registryValue name="ServiceDllUnloadOnStop" valueType="REG_DWORD" value="0x00000001" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\Software\Microsoft\Windows Embedded\KeyboardFilter">
+      <registryValue name="BreakoutKeyScanCode" valueType="REG_DWORD" value="0x0000005b" />
+      <registryValue name="KBFServiceIsRunning" valueType="REG_DWORD" value="0x00000000" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\Software\Microsoft\WindowsRuntime\ActivatableClassId\Windows.Internal.KeyboardFilter.FilterRuleParser">
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+      <registryValue name="TrustLevel" valueType="REG_DWORD" value="0x00000000" />
+      <registryValue name="ActivationType" valueType="REG_DWORD" value="0x00000000" />
+      <registryValue name="DllPath" valueType="REG_SZ" value="$(runtime.system32)\KeyboardFilterManager.dll" />
+      <registryValue name="Threading" valueType="REG_DWORD" value="0x00000000" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\Software\Microsoft\WindowsRuntime\ActivatableClassId\Windows.Internal.KeyboardFilter.KeyboardFilterManager">
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+      <registryValue name="TrustLevel" valueType="REG_DWORD" value="0x00000000" />
+      <registryValue name="ActivationType" valueType="REG_DWORD" value="0x00000000" />
+      <registryValue name="DllPath" valueType="REG_SZ" value="$(runtime.system32)\KeyboardFilterManager.dll" />
+      <registryValue name="Threading" valueType="REG_DWORD" value="0x00000000" />
+    </registryKey>
+  </registryKeys>
+  <file name="KeyboardFilterSvc.dll" destinationPath="$(runtime.system32)\" sourceName="KeyboardFilterSvc.dll" importPath="$(build.nttree)\EmbeddedRunTime\KeyboardFilter\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>viFF3jwL2sD/i+l5nrXDmDoG1YybKRYNFycRsu7Ga6I=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <file name="KeyboardFilterManager.dll" destinationPath="$(runtime.system32)\" sourceName="KeyboardFilterManager.dll" importPath="$(build.nttree)\EmbeddedRunTime\KeyboardFilter\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>KKeXREId00tPdj1/YiPE3HoAGTipVvYOWSqzm4Px644=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <migration settingsVersion="2">
+    <machineSpecific>
+      <migXml xmlns="">
+        <rules context="System">
+          <include>
+            <objectSet>
+              <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Windows Embedded\KeyboardFilter\* [*]</pattern>
+              <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\MsKeyboardFilter [Start]</pattern>
+            </objectSet>
+          </include>
+        </rules>
+      </migXml>
+    </machineSpecific>
+    <supportedComponents>
+      <supportedComponent>
+        <assemblyIdentity name="_" version="1.0.0.0" />
+        <supportedComponentIdentity language="neutral" name="Microsoft-Windows-Embedded-KeyboardFilterService-Client" processorArchitecture="*" settingsVersionRange="1-2" xmlns="urn:schemas-microsoft-com:asm.v3" />
+      </supportedComponent>
+    </supportedComponents>
+  </migration>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_REGKEY_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;CI;GA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;CI;GR;;;SY)(A;CI;GR;;;BA)(A;CI;GR;;;BU)(A;CI;GR;;;S-1-15-2-1)(A;CI;GR;;;S-1-15-3-1024-1065365936-1281604716-3511738428-1654721687-432734479-3232135806-4053264122-3456934681)" operationHint="replace" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+  <memberships>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories.Services" version="10.0.22621.1" publicKeyToken="31bf3856ad364e35" typeName="Service" />
+      <categoryInstance subcategory="MsKeyboardFilter">
+        <serviceData name="MsKeyboardFilter" displayName="@%SystemRoot%\system32\KeyboardFilterSvc.dll,-101" errorControl="normal" start="disabled" type="win32ShareProcess" description="@%SystemRoot%\system32\KeyboardFilterSvc.dll,-102" imagePath="%SystemRoot%\system32\svchost.exe -k netsvcs -p" objectName="LocalSystem" requiredPrivileges="SeTcbPrivilege,SeAssignPrimaryTokenPrivilege" sidType="unrestricted">
+          <failureActions resetPeriod="0">
+            <actions>
+              <action delay="60000" type="restartService" />
+              <action delay="60000" type="restartService" />
+              <action delay="0" type="none" />
+            </actions>
+          </failureActions>
+        </serviceData>
+      </categoryInstance>
+    </categoryMembership>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories" version="1.0.0.0" publicKeyToken="365143bb27e7ac8b" typeName="SvcHost" />
+      <categoryInstance subcategory="netsvcs">
+        <serviceGroup position="last" serviceName="MsKeyboardFilter" />
+      </categoryInstance>
+    </categoryMembership>
+  </memberships>
+  <instrumentation xmlns:win="http://manifests.microsoft.com/win/2004/08/windows/events" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <events xmlns="http://schemas.microsoft.com/win/2004/08/events">
+      <provider guid="{84de80eb-86e8-4ff6-85a6-9319abd578a4}" messageFileName="%SystemRoot%\system32\KeyboardFilterSvc.dll" name="Microsoft-Windows-KeyboardFilter" resourceFileName="%SystemRoot%\system32\KeyboardFilterSvc.dll" symbol="KEYBOARDFILTER_SERVICE_ETW_PROVIDER">
+        <channels>
+          <channel chid="chidOperational" name="Microsoft-Windows-KeyboardFilter/Operational" type="Operational" />
+          <channel chid="chidAdmin" enabled="true" isolation="System" name="Microsoft-Windows-KeyboardFilter/Admin" type="Admin" />
+          <channel chid="chidPerf" name="Microsoft-Windows-KeyboardFilter/Performance" type="Operational" />
+        </channels>
+      </provider>
+      <cmi />
+    </events>
+  </instrumentation>
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string id="description" value="Manages Key Stroke and Hot Key filtering policies" />
+        <string id="displayName" value="Microsoft Keyboard Filter" />
+        <string id="Map.LControl" value="LCtrl" />
+        <string id="Map.RControl" value="RCtrl" />
+        <string id="Map.LAlt" value="LAlt" />
+        <string id="Map.RAlt" value="RAlt" />
+        <string id="Map.LWindows" value="LWin" />
+        <string id="Map.RWindows" value="RWin" />
+        <string id="Map.LShift" value="LShift" />
+        <string id="Map.RShift" value="RShift" />
+        <string id="Map.Apps" value="Apps" />
+        <string id="Map.Numlock" value="Numlock" />
+        <string id="Map.Extended0" value="KEY_E0" />
+        <string id="Map.Extended1" value="KEY_E1" />
+        <string id="Task.Service" value="Microsoft KeyboardFilter Service" />
+        <string id="Task.Service.ReadRegistry" value="Read Registry" />
+        <string id="Task.Service.WriteDriver" value="Write Driver" />
+        <string id="Task.FilterConfiguration" value="KeyboardFilter Configuration" />
+        <string id="Task.HwInput" value="Hardware keyboard input" />
+        <string id="Task.SwInput" value="Software keyboard input" />
+        <string id="Task.LoadConfig" value="Load Configuration" />
+        <string id="Task.LayoutChange" value="Keybaord Layout Change" />
+        <string id="Task.DesktopChange" value="Desktop Change" />
+        <string id="Task.Login" value="User login" />
+        <string id="Task.Logout" value="User logout" />
+        <string id="Service.TokenUnavailable" value="The Keyboard Filter Service was unable to obtain the session token from the session id: %1 (%2).   Please verify that Terminal Services client is installed and the service is running under the LocalSystem user." />
+        <string id="Service.SessionGrantPermission" value="The Keyboard Filter Service was unable to obtain access to Terminal Services: %1 (%2). Please verify that the Terminal Services client is installed and the service is running under the LocalSystem user." />
+        <string id="Service.PolicyEventError" value="Could not obtain a lock on local policy settings for update detection, %1 (%2)." />
+        <string id="Service.DriverUpdateError" value="Could not update keyboard filter subsystem, %1 (%2)." />
+        <string id="Service.SessionStartHook" value="The Keyboard Filter Service could not start session monitor. The session monitor ensures keyboard layout changes are reflected within the service and that on-screen keyboards work correctly.  Check to make sure system permissions are set up correctly.  Reason, %1 (%2)." />
+        <string id="Service.SessionHandleAbandoned" value="Session Manager handle to Keyboard Filter process was abandoned. Handle will be removed from the session list." />
+        <string id="Driver.DriverInitError" value="Keyboard Filter Driver could not start and has unloaded.  Reason, %1 (%2)." />
+        <string id="Driver.DeviceAddError" value="The Keyboard Filter Driver could not attach to keyboard.  Reason, %1 (%2)." />
+        <string id="Driver.FilterError" value="The Keyboard Filter Driver could not properly filter keystroke information.  Reason, %1 (%2)." />
+        <string id="Driver.UpdateError" value="The Keyboard Filter Driver could not update filter configuration.  Reason, %1 (%2)." />
+        <string id="Service.Started" value="The Keyboard Filter Service has Started" />
+        <string id="Service.Stopped" value="The Keyboard Filter Service has stopped" />
+        <string id="Service.Message" value="Generic Keyboard Filter Service message: %1" />
+        <string id="Service.LogonUser" value="User %1 is now logged on. Keyboard filtering is now in effect." />
+        <string id="Service.UserLogoffDisableFilter" value="User %1 logged off. Keyboard filtering is disabled." />
+        <string id="Service.UserLogoffEnableFilter" value="User %1 logged off. Keyboard filtering is disabled for the Windows Logon Screen." />
+        <string id="Service.LogonAdmin" value="Administrator user %1 is now logged on, keyboard filtering is disabled for this session." />
+        <string id="Service.LoadPolicies" value="The Keyboard Filter Service has detected Policy changes and is reloading them" />
+        <string id="Service.LayoutChange" value="The Keyboard Filter Service has detected a layout change to %1." />
+        <string id="Service.LogonHookFailure" value="The Keyboard Filter Service failed to launch hook process.  Reason: %1" />
+        <string id="Service.EnumeratePolicies" value="The Keyboard Filter Service has found the following enabled policies." />
+        <string id="Service.TransferScancodes" value="The Keyboard Filter Service is sending scancodes to the Filter Driver." />
+        <string id="Service.SdbInstFailed" value="'sdbinst -q (%1)' has probably failed, exit code of (%2)." />
+        <string id="Service.SdbSessionDisconnected" value="Unsupported (e.g. remote) session was disconnected by Keyboard Filter Service." />
+        <string id="Service.SdbInstExecuted" value="'sdbinst -q (%1)' executed, exit code (%2)" />
+        <string id="Filter.ModifierError" value="A custom filter (%1) appears to have an invalid modifier (system) key. Valid modifiers include Ctrl or Control, Alt, Shift, and Win or Windows. Each key must be separated from the one that follows with a plus (+)." />
+        <string id="Filter.KeyError" value="A custom filter (%1) appears to have an invalid key. Keys can be any character on the system's keyboard or it's name. Please see documentation for the names of all valid keys." />
+        <string id="Filter.FormatError" value="A custom filter (%1) appears to be invalid.  A valid filter has zero or more modifiers, and a single key.  Each modifier and key must be separated by (+)." />
+        <string id="Filter.Overflow" value="Too many custom filters have been enabled.  No more than %1 custom and fixed filters may be defined." />
+        <string id="Service.NoScancodes" value="A non-empty list of keyboard filter rules resulted in an empty scancode list." />
+        <string id="Service.ScancodeLookupFailed" value="Error was returned when trying to transform a keyboard filter rule to a scancode." />
+        <string id="Service.RetryLaunchHook" value="Attempting to launch the keyboard filter hook process." />
+        <string id="Service.BreakoutKeyMissingScanKeycodeError" value="Missing Breakout keycode" />
+        <string id="Service.IoctlReadBreakoutKeyFailed" value="IOCTLReadBreakoutKeyFailed %1 (%2)" />
+        <string id="Service.CreateResourcesFailed" value="CreateResources failed %1 (%2)" />
+        <string id="Service.RpcInitFailed" value="RPC initialization failed %1 (%2)" />
+        <string id="Service.LaunchBreakoutKeyThreadFailed" value="BreakoutKey thread launch failure %1 (%2)" />
+        <string id="Service.WaitForMultipleObjectsFailed" value="Run failed while waiting on handles %1 (%2)" />
+        <string id="Service.AttachSessionFailed" value="Failed to attach session %1 (%2)" />
+        <string id="Service.DetachSessionFailed" value="Failed to detach session %1 (%2)" />
+        <string id="Service.SetCurrentLayoutFailed" value="Set KeyboardLayout failed %1 (%2)" />
+        <string id="Service.RegisterDeviceNotificationFailed" value="RegisterDeviceNotification failed %1 (%2)" />
+      </stringTable>
+    </resources>
+  </localization>
+</assembly>

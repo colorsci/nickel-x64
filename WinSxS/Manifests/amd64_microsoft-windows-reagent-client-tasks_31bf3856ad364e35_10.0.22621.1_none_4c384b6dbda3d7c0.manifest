@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-ReAgent-Client-Tasks" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <taskScheduler>
+    <Task xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task">
+      <RegistrationInfo>
+        <Author>$(@%SystemRoot%\system32\ReAgentTask.dll,-601)</Author>
+        <Source>$(@%SystemRoot%\system32\ReAgentTask.dll,-602)</Source>
+        <URI>\Microsoft\Windows\RecoveryEnvironment\VerifyWinRE</URI>
+        <SecurityDescriptor>D:P(A;;FA;;;BA)(A;;FA;;;SY)(A;;FR;;;AU)(A;;FRFX;;;LS)</SecurityDescriptor>
+        <Version>1.0</Version>
+        <Description>$(@%SystemRoot%\system32\ReAgentTask.dll,-603)</Description>
+      </RegistrationInfo>
+      <Settings>
+        <Enabled>true</Enabled>
+        <Hidden>true</Hidden>
+        <AllowStartOnDemand>true</AllowStartOnDemand>
+        <MultipleInstancesPolicy>IgnoreNew</MultipleInstancesPolicy>
+        <DisallowStartIfOnBatteries>true</DisallowStartIfOnBatteries>
+        <StopIfGoingOnBatteries>false</StopIfGoingOnBatteries>
+        <AllowHardTerminate>false</AllowHardTerminate>
+        <StartWhenAvailable>true</StartWhenAvailable>
+        <RunOnlyIfIdle>true</RunOnlyIfIdle>
+        <IdleSettings>
+          <StopOnIdleEnd>false</StopOnIdleEnd>
+          <RestartOnIdle>false</RestartOnIdle>
+        </IdleSettings>
+        <UseUnifiedSchedulingEngine>true</UseUnifiedSchedulingEngine>
+        <WakeToRun>false</WakeToRun>
+        <ExecutionTimeLimit>PT1H</ExecutionTimeLimit>
+        <MaintenanceSettings>
+          <Period>P14D</Period>
+          <Deadline>P1M</Deadline>
+          <Exclusive>false</Exclusive>
+        </MaintenanceSettings>
+      </Settings>
+      <Triggers />
+      <Principals>
+        <Principal id="LocalAdmin">
+          <GroupId>S-1-5-32-544</GroupId>
+          <RunLevel>HighestAvailable</RunLevel>
+        </Principal>
+      </Principals>
+      <Actions Context="LocalAdmin">
+        <ComHandler>
+          <ClassId>{89d1d0c2-a3cf-490c-abe3-b86cde34b047}</ClassId>
+          <Data>VerifyWinRE</Data>
+        </ComHandler>
+      </Actions>
+    </Task>
+  </taskScheduler>
+</assembly>

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Hyper-V-VStack-VSmb" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <dependency discoverable="no" resourceType="Resources">
+    <dependentAssembly>
+      <assemblyIdentity name="Microsoft-Hyper-V-VStack-VSmb.Resources" version="10.0.22621.1" processorArchitecture="amd64" language="*" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+    </dependentAssembly>
+  </dependency>
+  <file name="vmsmb.dll" destinationPath="$(runtime.System32)\" sourceName="vmsmb.dll" importPath="$(build.nttree)\vm\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>uRK/pMQy8ADRbXL/R1BfMZo5+GlCiIX3cLpkyDc0qh4=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <file name="vmusrv.dll" destinationPath="$(runtime.System32)\" sourceName="vmusrv.dll" importPath="$(build.nttree)\vm\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>F/aObykzwfQHlvcCc03B5gIxcZRmcXASbqW1P+U/5dw=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <registryKeys>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{FEA6E63B-45DA-4E32-8B3D-1873B2CE50E7}">
+      <registryValue name="" valueType="REG_SZ" value="VSmbVdev" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{FEA6E63B-45DA-4E32-8B3D-1873B2CE50E7}\InprocServer32">
+      <registryValue name="" valueType="REG_SZ" value="$(runtime.System32)\vmsmb.dll" />
+      <registryValue name="ThreadingModel" valueType="REG_SZ" value="Free" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{FEA6E63B-45DA-4E32-8B3D-1873B2CE50E7}\ProgID">
+      <registryValue name="" valueType="REG_SZ" value="VSmbVdev.1" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{FEA6E63B-45DA-4E32-8B3D-1873B2CE50E7}\VersionIndependentProgID">
+      <registryValue name="" valueType="REG_SZ" value="VSmbVdev" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\VSmbVdev">
+      <registryValue name="" valueType="REG_SZ" value="VSmbVdev" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\VSmbVdev\CurVer">
+      <registryValue name="" valueType="REG_SZ" value="VSmbVdev.1" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\VSmbVdev.1">
+      <registryValue name="" valueType="REG_SZ" value="VSmbVdev.1" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\VSmbVdev.1\CLSID">
+      <registryValue name="" valueType="REG_SZ" value="{FEA6E63B-45DA-4E32-8B3D-1873B2CE50E7}" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+  </registryKeys>
+  <instrumentation>
+    <events xmlns="http://schemas.microsoft.com/win/2004/08/events" xmlns:win="http://manifests.microsoft.com/win/2004/08/windows/events" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <provider guid="{7b0ea079-e3bc-424a-b2f0-e3d8478d204b}" message="$(string.HyperVVSmbProvider)" messageFileName="%systemroot%\system32\vmsmb.dll" name="Microsoft-Windows-Hyper-V-VSmb" resourceFileName="%systemroot%\system32\vmsmb.dll" symbol="MSWVMVSmb">
+        <channels>
+          <importChannel chid="VMC_WORKER_ADMIN" name="Microsoft-Windows-Hyper-V-Worker-Admin" />
+          <importChannel chid="VMC_WORKER_ANALYTIC" name="Microsoft-Windows-Hyper-V-Worker-Analytic" />
+          <importChannel chid="VMC_WORKER_OPERATIONAL" name="Microsoft-Windows-Hyper-V-Worker-Operational" />
+        </channels>
+      </provider>
+      <cmi />
+    </events>
+  </instrumentation>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="WRP_REGKEY_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;CI;GA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;CI;GR;;;SY)(A;CI;GR;;;BA)(A;CI;GR;;;BU)(A;CI;GR;;;S-1-15-2-1)(A;CI;GR;;;S-1-15-3-1024-1065365936-1281604716-3511738428-1654721687-432734479-3232135806-4053264122-3456934681)" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" description="Default SDDL for Windows Resource Protected file" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string id="HyperVVSmbProvider" value="Microsoft-Windows-Hyper-V-VSmb" />
+        <string id="MSWVM_GENERIC_TRACE.EventMessage" value="[VMID %3] %1" />
+        <string id="SMB2_EVENT_REQ_NEGOTIATE.EventMessage" value="SMB2 Request Negotiate" />
+        <string id="SMB2_EVENT_RESP_NEGOTIATE.EventMessage" value="SMB2 Response Negotiate" />
+        <string id="SMB2_EVENT_RESP_SESSION_SETUP.EventMessage" value="SMB2 Response Session Setup" />
+        <string id="SMB2_EVENT_RESP_LOGOFF.EventMessage" value="SMB2 Response Logoff" />
+        <string id="SMB2_EVENT_RESP_TREE_CONNECT.EventMessage" value="SMB2 Response Tree Connect" />
+        <string id="SMB2_EVENT_RESP_TREE_DISCONNECT.EventMessage" value="SMB2 Response Tree Disconnect" />
+        <string id="SMB2_EVENT_RESP_ECHO.EventMessage" value="SMB2 Response Echo" />
+        <string id="SMB2_EVENT_RESP_CREATE.EventMessage" value="SMB2 Response Create" />
+        <string id="SMB2_EVENT_RESP_CLOSE.EventMessage" value="SMB2 Response Close" />
+        <string id="SMB2_EVENT_RESP_FLUSH.EventMessage" value="SMB2 Response Flush" />
+        <string id="SMB2_EVENT_RESP_READ.EventMessage" value="SMB2 Response Read" />
+        <string id="SMB2_EVENT_RESP_WRITE.EventMessage" value="SMB2 Response Write" />
+        <string id="SMB2_EVENT_RESP_BREAK_OPLOCK.EventMessage" value="SMB2 Response Break Oplock" />
+        <string id="SMB2_EVENT_RESP_ACKNOWLEDGE_BREAK_LEASE.EventMessage" value="SMB2 Response Acknowledge Break Lease" />
+        <string id="SMB2_EVENT_RESP_LOCK.EventMessage" value="SMB2 Response Lock" />
+        <string id="SMB2_EVENT_RESP_IOCTL.EventMessage" value="SMB2 Response Ioctl" />
+        <string id="SMB2_EVENT_RESP_QUERY_DIRECTORY.EventMessage" value="SMB2 Response Query Directory" />
+        <string id="SMB2_EVENT_RESP_CHANGE_NOTIFY.EventMessage" value="SMB2 Response Change Notify" />
+        <string id="SMB2_EVENT_RESP_QUERY_INFO.EventMessage" value="SMB2 Response Query Info" />
+        <string id="SMB2_EVENT_RESP_SET_INFO.EventMessage" value="SMB2 Response Set Info" />
+        <string id="SMB2_EVENT_RESP_ERROR.EventMessage" value="SMB2 Response Error" />
+        <string id="VSMB_EVENT_READ_SEGMENTLENGTH.EventMessage" value="VSMBNET Read segment length" />
+        <string id="VSMB_EVENT_READ_SEGMENT.EventMessage" value="VSMBNET Read segment" />
+        <string id="VSMB_EVENT_WRITE_SEGMENT.EventMessage" value="VSMBNET write segment" />
+        <string id="VSMB_EVENT_CREATE_DIRECT_MAP_SECTION.EventMessage" value="%1: VSMB Direct Map Section Created GPA Index %2 PageCount %3" />
+        <string id="VSMB_EVENT_DESTROY_DIRECT_MAP_SECTION.EventMessage" value="%1: VSMB Direct Map Section destroyed GPA Index %2" />
+        <string id="VSMB_EVENT_DATALESS_CIM_FILE_SIZE_MISMATCH.EventMessage" value="%1: VSMB Dataless CIMFs Direct Map Request failed in share %2 for file %3 due to size mismatch. Expected: %4. Actual %5. The CIM file may need to be recreated." />
+        <string id="VSMB_EVENT_ADD_SHARE.EventMessage" value="'%2': VSMB Share is creating ShareName: '%3' SharePath: '%4' ShareFlags: %5. (Virtual machine ID %1)" />
+        <string id="VSMB_GENERIC_TRACE_MESSAGE.EventMessage" value="%1" />
+      </stringTable>
+    </resources>
+  </localization>
+</assembly>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-CmiSetup-Instrumentation" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <registryKeys>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\WMI\AutoLogger\Microsoft-Windows-Setup\{75EBC33E-0CC6-49da-8CD9-8903A5222AA0}">
+      <registryValue name="Enabled" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="EnableLevel" valueType="REG_DWORD" value="0x00000004" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\WMI\AutoLogger\SetupPlatform\{75EBC33E-0CC6-49da-8CD9-8903A5222AA0}">
+      <registryValue name="Enabled" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="EnableLevel" valueType="REG_DWORD" value="0x00000004" />
+    </registryKey>
+  </registryKeys>
+  <instrumentation xmlns:ms="http://manifests.microsoft.com/win/2004/08/windows/events" xmlns:win="http://manifests.microsoft.com/win/2004/08/windows/events" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <events xmlns="http://schemas.microsoft.com/win/2004/08/events">
+      <provider guid="{75EBC33E-0CC6-49da-8CD9-8903A5222AA0}" message="$(string.CmiSetup.ProviderMessage)" messageFileName="%SystemRoot%\system32\oobe\CmiSetup.dll" name="Microsoft-Windows-CmiSetup" resourceFileName="%SystemRoot%\system32\oobe\CmiSetup.dll" symbol="Microsoft_Windows_CmiSetup">
+        <channels>
+          <channel chid="chaCmiSetupAnalytic" name="Microsoft-Windows-CmiSetup/Analytic" type="Analytic" />
+          <importChannel chid="chaSetup" name="Setup" />
+        </channels>
+      </provider>
+      <cmi />
+    </events>
+  </instrumentation>
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string id="Performance.KeywordMessage" value="Performance" />
+        <string id="CmiSetup.ProviderMessage" value="Microsoft-Windows-CmiSetup" />
+        <string id="CmiConfigInstall.TaskMessage" value="CMI Configuration" />
+        <string id="CmiConfigInstall.StartMessage" value="CMI Configuration Started" />
+        <string id="CmiConfigInstall.StopMessage" value="CMI Configuration completed with status %1." />
+        <string id="CmiConfigInstallWork.TaskMessage" value="CMI Execute Changes" />
+        <string id="CmiConfigInstallWork.StartMessage" value="Executing CMI changes." />
+        <string id="CmiConfigInstallWork.StopMessage" value="CMI changes completed with status %1." />
+        <string id="CbsDoOnlineInstall.TaskMessage" value="CBS Online Install" />
+        <string id="CbsDoOnlineInstall.StartMessage" value="Performing CBS Online Install." />
+        <string id="CbsDoOnlineInstall.StopMessage" value="CBS Online Install completed with status %1." />
+      </stringTable>
+    </resources>
+  </localization>
+</assembly>

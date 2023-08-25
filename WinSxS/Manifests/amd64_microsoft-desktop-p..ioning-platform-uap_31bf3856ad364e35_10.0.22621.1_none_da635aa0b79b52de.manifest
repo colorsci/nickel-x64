@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Desktop-Provisioning-Platform-Uap" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <directories>
+    <directory destinationPath="$(runtime.programdata)\Microsoft\Provisioning\AssetCache" owner="true">
+      <securityDescriptor name="FOLDER_ADMIN_ONLY_FULL_ACCESS_SDDL" />
+    </directory>
+    <directory destinationPath="$(runtime.programdata)\Microsoft\Provisioning\AssetCache\CellularUx" owner="true">
+      <securityDescriptor name="FOLDER_ADMIN_FULL_AC_BU_READ_ACCESS_SDDL" />
+    </directory>
+  </directories>
+  <file name="Microsoft-Desktop-Provisioning.dat" destinationPath="$(runtime.windows)\Provisioning\" sourceName="" importPath="$(build.nttree)\knobs\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>MwkZcNCQN/EU+//syGofv7Av0JvjjXQIPNz6B+UgpCc=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <file name="Microsoft-Desktop-Provisioning-Sequence.dat" destinationPath="$(runtime.windows)\Provisioning\" sourceName="" importPath="$(build.nttree)\knobs\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>kRhZTP2wI4SThh/To3YWeKSZceX6Cqlhn/lKDYPODU8=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <taskScheduler>
+    <Task xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task">
+      <RegistrationInfo>
+        <URI>\Microsoft\Windows\Management\Provisioning\Cellular</URI>
+        <SecurityDescriptor>D:(A;;FA;;;BA)(A;;FA;;;SY)</SecurityDescriptor>
+      </RegistrationInfo>
+      <Triggers>
+        <WnfStateChangeTrigger>
+          <StateName>7518bca33a19870f</StateName>
+        </WnfStateChangeTrigger>
+      </Triggers>
+      <Principals>
+        <Principal id="LocalSystem">
+          <UserId>S-1-5-18</UserId>
+          <RunLevel>HighestAvailable</RunLevel>
+        </Principal>
+      </Principals>
+      <Settings>
+        <MultipleInstancesPolicy>Queue</MultipleInstancesPolicy>
+        <DisallowStartIfOnBatteries>false</DisallowStartIfOnBatteries>
+        <StopIfGoingOnBatteries>false</StopIfGoingOnBatteries>
+        <AllowHardTerminate>false</AllowHardTerminate>
+        <RunOnlyIfNetworkAvailable>false</RunOnlyIfNetworkAvailable>
+        <AllowStartOnDemand>false</AllowStartOnDemand>
+        <Hidden>true</Hidden>
+        <UseUnifiedSchedulingEngine>true</UseUnifiedSchedulingEngine>
+      </Settings>
+      <Actions Context="LocalSystem">
+        <Exec>
+          <Command>%windir%\system32\ProvTool.exe</Command>
+          <Arguments>/turn 7 /source CellStateChangeTask</Arguments>
+        </Exec>
+      </Actions>
+    </Task>
+    <Task xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task">
+      <RegistrationInfo>
+        <URI>\Microsoft\Windows\Management\Provisioning\PostResetBoot</URI>
+        <SecurityDescriptor>D:(A;;FA;;;BA)(A;;FA;;;SY)</SecurityDescriptor>
+      </RegistrationInfo>
+      <Triggers>
+        <BootTrigger>
+          <Enabled>true</Enabled>
+        </BootTrigger>
+      </Triggers>
+      <Principals>
+        <Principal id="LocalSystem">
+          <UserId>S-1-5-18</UserId>
+          <RunLevel>HighestAvailable</RunLevel>
+        </Principal>
+      </Principals>
+      <Settings>
+        <MultipleInstancesPolicy>StopExisting</MultipleInstancesPolicy>
+        <DisallowStartIfOnBatteries>false</DisallowStartIfOnBatteries>
+        <StopIfGoingOnBatteries>false</StopIfGoingOnBatteries>
+        <AllowHardTerminate>false</AllowHardTerminate>
+        <RunOnlyIfNetworkAvailable>false</RunOnlyIfNetworkAvailable>
+        <AllowStartOnDemand>true</AllowStartOnDemand>
+        <Hidden>false</Hidden>
+        <RunOnlyIfIdle>false</RunOnlyIfIdle>
+        <Priority>9</Priority>
+        <UseUnifiedSchedulingEngine>true</UseUnifiedSchedulingEngine>
+      </Settings>
+      <Actions Context="LocalSystem">
+        <Exec>
+          <Command>%windir%\system32\ProvTool.exe</Command>
+          <Arguments>/turn 3 /source ProvResetBoot</Arguments>
+        </Exec>
+      </Actions>
+    </Task>
+  </taskScheduler>
+  <registryKeys>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Multivariant\Handlers\{E6FE8C05-1500-4754-8B9A-14BF27C3B1D8}">
+      <registryValue name="name" valueType="REG_SZ" value="Uicc2" />
+      <registryValue name="KeyOrder" valueType="REG_DWORD" value="0x0000000A" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Multivariant">
+      <registryValue name="CellularClsid" valueType="REG_SZ" value="{bf734930-7763-494e-a6c6-5b8a6aa37d77}" />
+      <registryValue name="UIStatusClsid" valueType="REG_SZ" value="{b545fb2e-878f-4400-8a6b-ed42a63a8b14}" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Multivariant\InImageConfigurations">
+      <registryValue name="CellularClsid" valueType="REG_SZ" value="{bf734930-7763-494e-a6c6-5b8a6aa37d77}" />
+      <registryValue name="UIStatusClsid" valueType="REG_SZ" value="{b545fb2e-878f-4400-8a6b-ed42a63a8b14}" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Ubpm">
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+      <registryValue name="CriticalTask_CellularProvisioning" valueType="REG_SZ" value="NT TASK\Microsoft\Windows\Management\Provisioning\Cellular" />
+      <registryValue name="OOBETask_CellularProvisioning" valueType="REG_SZ" value="NT TASK\Microsoft\Windows\Management\Provisioning\Cellular" />
+    </registryKey>
+  </registryKeys>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="WRP_REGKEY_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;CI;GA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;CI;GR;;;SY)(A;CI;GR;;;BA)(A;CI;GR;;;BU)(A;CI;GR;;;S-1-15-2-1)(A;CI;GR;;;S-1-15-3-1024-1065365936-1281604716-3511738428-1654721687-432734479-3232135806-4053264122-3456934681)" operationHint="replace" />
+          <securityDescriptorDefinition name="FOLDER_ADMIN_ONLY_FULL_ACCESS_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;OICI;GA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;OICI;GA;;;BA)(A;OICI;GA;;;SY)" operationHint="replace" />
+          <securityDescriptorDefinition name="FOLDER_ADMIN_FULL_AC_BU_READ_ACCESS_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;OICI;GA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;OICI;GA;;;BA)(A;OICI;GA;;;SY)(A;OICI;GR;;;BU)(A;OICI;GR;;;AC)" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" description="Default SDDL for Windows Resource Protected file" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+  <migration settingsVersion="0">
+    <supportedComponents>
+      <supportedComponent>
+        <assemblyIdentity name="_" version="1.0.0.0" />
+        <supportedComponentIdentity language="neutral" name="Microsoft-Desktop-Provisioning-Platform-Uap" processorArchitecture="amd64" settingsVersionRange="0" xmlns="urn:schemas-microsoft-com:asm.v3" />
+      </supportedComponent>
+    </supportedComponents>
+    <migXml xmlns="">
+      <environment>
+        <variable name="RuntimeProvPkgsDirectory">
+          <text>%PROGRAMDATA%\Microsoft\Provisioning</text>
+        </variable>
+      </environment>
+      <rules context="System">
+        <include>
+          <objectSet>
+            <pattern type="File">%RuntimeProvPkgsDirectory%\AssetCache\* [*]</pattern>
+          </objectSet>
+        </include>
+      </rules>
+    </migXml>
+  </migration>
+</assembly>

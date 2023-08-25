@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-TabletPC-Platform-Input-Service-Client" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <memberships>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories.Services" version="10.0.22621.1" publicKeyToken="31bf3856ad364e35" typeName="Service" />
+      <categoryInstance subcategory="TextInputManagementService">
+        <serviceData name="TextInputManagementService" displayName="@%SystemRoot%\system32\TabSvc.dll,-100" errorControl="normal" start="auto" type="win32ShareProcess" description="@%SystemRoot%\system32\TabSvc.dll,-101" dependOnService="RpcSs" group="PlugPlay" imagePath="%SystemRoot%\System32\svchost.exe -k LocalSystemNetworkRestricted -p" objectName="LocalSystem" requiredPrivileges="SeTcbPrivilege,SeImpersonatePrivilege,SeIncreaseQuotaPrivilege,SeAssignPrimaryTokenPrivilege,SeCreateGlobalPrivilege" sidType="unrestricted">
+          <failureActions resetPeriod="86400">
+            <actions>
+              <action delay="0" type="restartService" />
+              <action delay="10000" type="restartService" />
+              <action delay="0" type="none" />
+            </actions>
+          </failureActions>
+          <serviceTrigger action="start" subtype="{4d1e55b2-f16f-11cf-88cb-001111000030}" type="DeviceInterfaceArrival">
+            <triggerData type="string" value="HID_DEVICE_UP:000D_U:0001" />
+            <triggerData type="string" value="HID_DEVICE_UP:000D_U:0002" />
+            <triggerData type="string" value="HID_DEVICE_UP:000D_U:0003" />
+            <triggerData type="string" value="HID_DEVICE_UP:000D_U:0004" />
+          </serviceTrigger>
+          <securityDescriptor name="TextInputManagementService_SDDL" />
+        </serviceData>
+      </categoryInstance>
+    </categoryMembership>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories" version="1.0.0.0" publicKeyToken="365143bb27e7ac8b" typeName="SvcHost" />
+      <categoryInstance subcategory="LocalSystemNetworkRestricted">
+        <serviceGroup position="last" serviceName="TextInputManagementService" />
+      </categoryInstance>
+    </categoryMembership>
+  </memberships>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="TextInputManagementService_SDDL" sddl="D:(A;;CCLCSWRPWPDTLOCRRC;;;SY)(A;;CCLCSWRPLOCRRC;;;BA)(A;;CCLCSWRPLOCRRC;;;IU)(A;;CCLCSWRPLOCRRC;;;SU)(A;;RP;;;WD)" operationHint="replace" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string id="description" value="This component installs the text input services." />
+        <string id="displayName" value="Text Input Management Service" />
+      </stringTable>
+    </resources>
+  </localization>
+  <registryKeys>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\TextInputManagementService\Parameters">
+      <registryValue name="ServiceDll" valueType="REG_EXPAND_SZ" value="%SystemRoot%\System32\TabSvc.dll" />
+      <registryValue name="ServiceDllUnloadOnStop" valueType="REG_DWORD" value="0x00000001" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\SharedAccess\Parameters\FirewallPolicy\RestrictedServices\Static\System">
+      <registryValue name="TextInputManagementService-1" valueType="REG_SZ" value="V2.0|Action=Block|Dir=In|App=%SystemRoot%\system32\svchost.exe|Svc=TextInputManagementService|Name=Block any traffic to TextInputManagementService|" />
+      <registryValue name="TextInputManagementService-2" valueType="REG_SZ" value="V2.0|Action=Block|Dir=Out|App=%SystemRoot%\system32\svchost.exe|Svc=TextInputManagementService|Name=Block any traffic from TextInputManagementService|" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\TabletPC\TabSetup" />
+  </registryKeys>
+</assembly>

@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-PSHED" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <dependency discoverable="no" resourceType="resources">
+    <dependentAssembly dependencyType="prerequisite">
+      <assemblyIdentity name="Microsoft-Windows-PSHED.Resources" version="10.0.22621.1" processorArchitecture="amd64" language="*" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+    </dependentAssembly>
+  </dependency>
+  <file name="PSHED.DLL" destinationPath="$(runtime.system32)\" sourceName="PSHED.DLL" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>6CCzedGYp/Egt0UrmcEmMgT2wYR7nHgRvGhpgKUMn/g=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <registryKeys>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\WMI\Security">
+      <registryValue name="7b563579-53c8-44e7-8236-0f87b9fe6594" valueType="REG_BINARY" value="01000480140000002400000000000000340000000102000000000005200000002002000001020000000000052000000020020000020048000300000000001400ff0f120001010000000000051200000000001800ff0f1200010200000000000520000000200200000000140080000000010100000000000513000000" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\WMI\Autologger\SQMLogger\{7b563579-53c8-44e7-8236-0f87b9fe6594}">
+      <registryValue name="LoggerName" valueType="REG_SZ" value="SQMLogger" />
+      <registryValue name="Enabled" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="EnableLevel" valueType="REG_DWORD" value="0x00000004" />
+      <registryValue name="MatchAnyKeyword" valueType="REG_QWORD" value="0000000000000800" />
+      <registryValue name="EnableProperty" valueType="REG_DWORD" value="0x00000002" />
+    </registryKey>
+  </registryKeys>
+  <instrumentation xmlns:win="http://manifests.microsoft.com/win/2004/08/windows/events" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <events xmlns="http://schemas.microsoft.com/win/2004/08/events">
+      <provider guid="{7b563579-53c8-44e7-8236-0f87b9fe6594}" message="$(string.eventProviderName)" messageFileName="%SystemRoot%\system32\PSHED.DLL" name="Microsoft-Windows-Kernel-WHEA" resourceFileName="%SystemRoot%\system32\PSHED.DLL" symbol="WHEA_ETW_PROVIDER">
+        <channels>
+          <importChannel chid="systemChannel" name="System" />
+          <channel chid="wheaChannel" enabled="true" isolation="System" name="Microsoft-Windows-Kernel-WHEA/Errors" symbol="WHEA_CHANNEL" type="Operational">
+            <logging>
+              <maxSize>33554432</maxSize>
+            </logging>
+          </channel>
+          <channel chid="wheaEventLogChannel" enabled="true" isolation="System" name="Microsoft-Windows-Kernel-WHEA/Operational" symbol="WHEA_EVENTLOG_CHANNEL" type="Operational">
+            <logging>
+              <maxSize>33554432</maxSize>
+            </logging>
+          </channel>
+        </channels>
+      </provider>
+      <cmi />
+    </events>
+  </instrumentation>
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string id="CorrectedError.EventMessage" value="A non-fatal hardware error occurred." />
+        <string id="UncorrectedError.EventMessage" value="A fatal hardware error occurred." />
+        <string id="MCAMemHierarchyErr.EventMessage" value="Machine Check Event reported is a fatal memory hierarchy error.%n Trasaction Type: %1%n Memory Hierarchy Level: %5%n Request Type: %3%n Address: %6" />
+        <string id="MCAMemHierarchyWrn.EventMessage" value="Machine Check Event reported is a memory hierarchy error.%n Trasaction Type: %1%n Memory Hierarchy Level: %5%n Request Type: %3%n Address: %6" />
+        <string id="MCATLBErr.EventMessage" value="Machine Check Event reported is a fatal TLB error.%n Transaction Type: %1%n Memory Hierarchy Level: %5%n Address: %6" />
+        <string id="MCATLBWrn.EventMessage" value="Machine Check Event reported is a TLB error.%n Transaction Type: %1%n Memory Hierarchy Level: %5%n Address: %6" />
+        <string id="MCABusErr.EventMessage" value="Machine Check Event reported is a fatal Bus or Interconnect error.%n Memory Hierarchy Level: %5%n Participation: %2%n Request Type: %3%n Memory/IO: %4%n Address: %6" />
+        <string id="MCABusWrn.EventMessage" value="Machine Check Event reported is a Bus or Interconnect error.%n Memory Hierarchy Level: %5%n Participation: %2%n Request Type: %3%n Memory/IO: %4%n Address: %6" />
+        <string id="MCABusTOErr.EventMessage" value="Machine Check Event reported is a fatal Bus or Interconnect timeout error.%n Memory Hierarchy Level: %5%n Participation: %2%n Request Type: %3%n Memory/IO: %4%n Address: %6" />
+        <string id="MCABusTOWrn.EventMessage" value="Machine Check Event reported is a Bus or Interconnect timeout error.%n Memory Hierarchy Level: %5%n Participation: %2%n Request Type: %3%n Memory/IO: %4%n Address: %6" />
+        <string id="MCAWDTOErr.EventMessage" value="Machine Check Event reported is a fatal internal watchdog timer error." />
+        <string id="MCAROMParityErr.EventMessage" value="Machine Check Event reported is a fatal microcode ROM parity error." />
+        <string id="MCAExternalErr.EventMessage" value="Machine Check Event reported is a fatal condition. A processor received an external signal that an unrecoverable error has occurred." />
+        <string id="MCAFRCErr.EventMessage" value="Machine Check Event reported is a fatal functional redundancy check error." />
+        <string id="PCIeErr.EventMessage" value="PCI Express reported a fatal error.%n Device Identifier: Bus %1 Device %2 Function %3%n Uncorrectable Error Status: %4%n Correctable Error Status: %5%n Header Log: %6 %7 %8 %9" />
+        <string id="PCIeWrn.EventMessage" value="PCI Express reported a non-fatal error.%n Device Identifier: Bus %1 Device %2 Function %3%n Uncorrectable Error Status: %4%n Correctable Error Status: %5%n Header Log: %6 %7 %8 %9" />
+        <string id="Init.EventMessage" value="WHEA successfully initialized.%n   %1 error sources are active%n   Error record format version is %2." />
+        <string id="WHEA.EventMessage" value="WHEA Event" />
+        <string id="mapWHEAPending.No" value="has been taken out of service" />
+        <string id="mapWHEAPending.Yes" value="will be taken out of service (if and when it becomes available)" />
+        <string id="mapWHEAPlatformDirected.No" value="due to" />
+        <string id="mapWHEAPlatformDirected.Yes" value="at the direction of the platform due to" />
+        <string id="mapWHEAUncorrected.No" value="one or more corrected errors" />
+        <string id="mapWHEAUncorrected.Yes" value="an uncorrected error" />
+        <string id="mapWHEAPersisted.No" value="The page is not listed in the boot configuration data store as defective, and will be used by the operating system after a reboot." />
+        <string id="mapWHEAPersisted.Yes" value="The page is listed in the boot configuration data store as defective, and will not be used by the operating system after a reboot." />
+        <string id="MemoryOffline.EventMessage" value="The memory page located at physical address %1 %2 %3 %4. %5" />
+        <string id="WHEA_ERROR_KEYWORD.KeywordMessage" value="WHEA Error Events" />
+        <string id="WHEA_EVENTLOG_KEYWORD.KeywordMessage" value="WHEA Event Log Entries" />
+        <string id="eventProviderName" value="Microsoft-Windows-Kernel-WHEA" />
+        <string id="ProcessTerminate.EventMessage" value="A processs was terminated due to an uncorrected hardware error.%n Process ID: %1%n Image name: %2" />
+        <string id="WheaEventLog.EventMessage" value="WHEA event log entry" />
+      </stringTable>
+    </resources>
+  </localization>
+  <memberships>
+    <categoryMembership>
+      <id name="Microsoft-Windows-Base Technologies-PSHED" version="10.0.22621.1" publicKeyToken="31bf3856ad364e35" buildType="release" language="neutral" processorArchitecture="amd64" />
+    </categoryMembership>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories" version="1.0.0.0" publicKeyToken="365143bb27e7ac8b" typeName="BootCritical" />
+    </categoryMembership>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories" version="1.0.0.0" publicKeyToken="365143bb27e7ac8b" typeName="BootRecovery" />
+    </categoryMembership>
+  </memberships>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" description="Default SDDL for Windows Resource Protected file" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+</assembly>

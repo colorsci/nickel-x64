@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Windows-Defender-Drivers" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <file name="WdFilter.sys" destinationPath="$(runtime.drivers)\" sourceName="WdFilter.sys" importPath="$(build.nttree)\mocamp_binary_release\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>KTp66TX5Qb2s0kB4M8NViRCLX9WP3MSw69u0BwT3dDE=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <file name="WdBoot.sys" destinationPath="$(runtime.drivers)\" sourceName="WdBoot.sys" importPath="$(build.nttree)\mocamp_binary_release\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>ATMVaD5W/d/rCOftyEmycyYNM2xHyomzoY+QYfhnFTE=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <file name="WdDevFlt.sys" destinationPath="$(runtime.drivers)\" sourceName="WdDevFlt.sys" importPath="$(build.nttree)\mocamp_binary_release\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>XEcOZ6wOaW6Km9xOeWCBU/cJ6ruh5M6DiYGAQhs9twA=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <memberships>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories" version="1.0.0.0" publicKeyToken="365143bb27e7ac8b" typeName="BootRecovery" />
+    </categoryMembership>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories" version="1.0.0.0" publicKeyToken="365143bb27e7ac8b" typeName="BootCritical" />
+    </categoryMembership>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories.Services" version="10.0.22621.1" publicKeyToken="31bf3856ad364e35" typeName="Service" />
+      <categoryInstance>
+        <serviceData name="WdFilter" displayName="@%ProgramFiles%\Windows Defender\MpAsDesc.dll,-330" errorControl="normal" start="boot" type="fileSystemDriver" description="@%ProgramFiles%\Windows Defender\MpAsDesc.dll,-340" dependOnService="FltMgr" group="FSFilter Anti-Virus" imagePath="system32\drivers\WdFilter.sys" startAfterInstall="asynchronous">
+          <securityDescriptor name="DefenderDriversSD" />
+        </serviceData>
+      </categoryInstance>
+      <categoryInstance>
+        <serviceData name="WdBoot" displayName="@%ProgramFiles%\Windows Defender\MpAsDesc.dll,-390" errorControl="normal" start="boot" type="kernelDriver" description="@%ProgramFiles%\Windows Defender\MpAsDesc.dll,-400" group="Early-Launch" imagePath="system32\drivers\WdBoot.sys">
+          <securityDescriptor name="DefenderDriversSD" />
+        </serviceData>
+      </categoryInstance>
+    </categoryMembership>
+  </memberships>
+  <registryKeys>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\System\CurrentControlset\Services\WdFilter\Instances">
+      <registryValue name="DefaultInstance" valueType="REG_SZ" value="WdFilter Instance" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\System\CurrentControlset\Services\WdFilter\Instances\WdFilter Instance">
+      <registryValue name="Altitude" valueType="REG_SZ" value="328010" />
+      <registryValue name="Flags" valueType="REG_DWORD" value="0x00000000" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\System\CurrentControlset\Services\WdFilter">
+      <registryValue name="SupportedFeatures" valueType="REG_DWORD" value="0x0000000F" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\System\CurrentControlset\Services\WdBoot">
+      <registryValue name="SupportElamHive" valueType="REG_DWORD" value="0x00000000" />
+    </registryKey>
+  </registryKeys>
+  <instrumentation>
+    <events xmlns="http://schemas.microsoft.com/win/2004/08/events" xmlns:win="http://manifests.microsoft.com/win/2004/08/windows/events">
+      <provider guid="{cfeb0608-330e-4410-b00d-56d8da9986e6}" message="$(string.Microsoft-Antimalware-AMFilter.provider.name)" messageFileName="%windir%\system32\drivers\WdFilter.sys" name="Microsoft-Antimalware-AMFilter" resourceFileName="%windir%\system32\drivers\WdFilter.sys" symbol="Microsoft_Antimalware_AMFilter" />
+      <cmi />
+    </events>
+  </instrumentation>
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string id="Microsoft-Antimalware-AMFilter.provider.name" value="Microsoft-Antimalware-AMFilter" />
+      </stringTable>
+    </resources>
+  </localization>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="DefenderDriversSD" sddl="D:(A;;GA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;OICIIO;GA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;CCLCSWRPWPDTLOCRRC;;;SY)(A;;CCDCLCSWRPWPDTLOCRRCWDWO;;;BA)(A;;CCLCSWRPLOCRRC;;;IU)(A;;CCLCSWRPLOCRRC;;;SU)S:(AU;FA;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;WD)" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" description="Default SDDL for Windows Resource Protected file" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+</assembly>

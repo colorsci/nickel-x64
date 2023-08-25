@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-AppX-Deployment-Client-TaskScheduler" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <taskScheduler>
+    <Task xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task">
+      <RegistrationInfo>
+        <URI>\Microsoft\Windows\AppxDeploymentClient\Pre-staged app cleanup</URI>
+        <SecurityDescriptor>D:(A;;GA;;;SY)(A;;FRFX;;;LS)(A;;FA;;;BA)</SecurityDescriptor>
+      </RegistrationInfo>
+      <Principals>
+        <Principal id="LocalSystem">
+          <UserId>S-1-5-18</UserId>
+        </Principal>
+      </Principals>
+      <Triggers>
+        <LogonTrigger>
+          <Delay>PT60M</Delay>
+          <Enabled>true</Enabled>
+        </LogonTrigger>
+      </Triggers>
+      <Settings>
+        <IdleSettings>
+          <Duration>PT15M</Duration>
+          <RestartOnIdle>false</RestartOnIdle>
+          <StopOnIdleEnd>false</StopOnIdleEnd>
+        </IdleSettings>
+        <MaintenanceSettings>
+          <Period>P1D</Period>
+          <Deadline>P7D</Deadline>
+        </MaintenanceSettings>
+        <UseUnifiedSchedulingEngine>true</UseUnifiedSchedulingEngine>
+        <MultipleInstancesPolicy>IgnoreNew</MultipleInstancesPolicy>
+        <DisallowStartIfOnBatteries>true</DisallowStartIfOnBatteries>
+        <StopIfGoingOnBatteries>true</StopIfGoingOnBatteries>
+        <AllowHardTerminate>false</AllowHardTerminate>
+        <StartWhenAvailable>false</StartWhenAvailable>
+        <RunOnlyIfNetworkAvailable>false</RunOnlyIfNetworkAvailable>
+        <AllowStartOnDemand>true</AllowStartOnDemand>
+        <Enabled>true</Enabled>
+        <Hidden>true</Hidden>
+        <RunOnlyIfIdle>true</RunOnlyIfIdle>
+        <WakeToRun>false</WakeToRun>
+        <ExecutionTimeLimit>PT0S</ExecutionTimeLimit>
+        <Priority>7</Priority>
+      </Settings>
+      <Actions Context="LocalSystem">
+        <Exec>
+          <Command>%windir%\system32\rundll32.exe</Command>
+          <Arguments>%windir%\system32\AppxDeploymentClient.dll,AppxPreStageCleanupRunTask</Arguments>
+        </Exec>
+      </Actions>
+    </Task>
+  </taskScheduler>
+</assembly>

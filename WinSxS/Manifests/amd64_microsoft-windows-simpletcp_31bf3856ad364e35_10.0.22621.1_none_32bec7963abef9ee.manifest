@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-SimpleTCP" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <dependency discoverable="no" resourceType="Resources">
+    <dependentAssembly>
+      <assemblyIdentity name="Microsoft-Windows-SimpleTCP.Resources" version="10.0.22621.1" processorArchitecture="amd64" language="*" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+    </dependentAssembly>
+  </dependency>
+  <file name="simptcp.dll" destinationPath="$(runtime.system32)\" sourceName="simptcp.dll" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>TnJ+C/dXYo9h8U6tnmNtEV8Y74xQzf0ri0DRPoVuPcA=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <file name="quotes" destinationPath="$(runtime.drivers)\ETC\" sourceName="quotes" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>ujD9WxjcP2vRPDrfXPO+feMuswlTKLqIyct/DkcehU8=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <memberships>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories.Services" version="10.0.22621.1" publicKeyToken="31bf3856ad364e35" typeName="Service" />
+      <categoryInstance subcategory="simptcp">
+        <serviceData name="simptcp" displayName="@%SystemRoot%\system32\simptcp.dll,-200" errorControl="normal" start="auto" type="win32ShareProcess" description="@%SystemRoot%\system32\simptcp.dll,-201" dependOnService="afd" imagePath="%SystemRoot%\System32\tcpsvcs.exe" objectName="NT AUTHORITY\LocalService" requiredPrivileges="SeCreateGlobalPrivilege,SeAuditPrivilege" sidType="unrestricted" />
+      </categoryInstance>
+    </categoryMembership>
+  </memberships>
+  <migration settingsVersion="0">
+    <migXml xmlns="">
+      <rules context="System">
+        <detects>
+          <detect>
+            <condition>MigXmlHelper.DoesObjectExist("File","%WINDIR%\system32\simptcp.dll")</condition>
+          </detect>
+        </detects>
+      </rules>
+    </migXml>
+    <supportedComponents>
+      <supportedComponent>
+        <assemblyIdentity name="_" version="1.0.0.0" />
+        <supportedComponentIdentity language="*" name="Microsoft-Windows-SimpleTCP" processorArchitecture="amd64" settingsVersionRange="0" xmlns="urn:schemas-microsoft-com:asm.v3" />
+      </supportedComponent>
+    </supportedComponents>
+  </migration>
+  <registryKeys>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\System\CurrentControlSet\Services\simptcp\Parameters">
+      <registryValue name="EnableTcpEcho" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="EnableUdpEcho" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="EnableTcpDiscard" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="EnableUdpDiscard" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="EnableTcpChargen" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="EnableUdpChargen" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="EnableTcpDaytime" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="EnableUdpDaytime" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="EnableTcpQotd" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="EnableUdpQotd" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="QotdFileName" valueType="REG_EXPAND_SZ" value="%SystemRoot%\system32\drivers\etc\quotes" />
+      <registryValue name="MaxTcpClients" valueType="REG_DWORD" value="0x00000010" />
+      <registryValue name="MaxIdleTicks" valueType="REG_DWORD" value="0x000927C0" />
+      <registryValue name="SelectTimeout" valueType="REG_DWORD" value="0x0000012C" />
+      <registryValue name="IoBufferSize" valueType="REG_DWORD" value="0x00002000" />
+      <securityDescriptor name="SIMPTCP_SDDL" />
+    </registryKey>
+  </registryKeys>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="SIMPTCP_SDDL" sddl="D:P(A;CI;GA;;;BA)(A;CI;GA;;;SY)(A;;RCCCDCLCFRKRKWSW;;;S-1-5-80-4099760352-3762620554-3118011487-3605123082-3529737292)" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" description="Default SDDL for Windows Resource Protected file" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string id="description1" value="Supports the following TCP/IP services: Character Generator, Daytime, Discard, Echo, and Quote of the Day." />
+        <string id="description2" value="contols the ACL on simptcp.dll" />
+        <string id="description3" value="Simple TCP/IP Service SD" />
+        <string id="displayName2" value="file security descriptor" />
+        <string id="displayName1" value="Simple TCP/IP Services" />
+        <string id="displayName3" value="SIMPTCP_SDDL" />
+        <string id="description" value="Supports the following TCP/IP services: Character Generator, Daytime, Discard, Echo, and Quote of the Day." />
+        <string id="displayName" value="Simple TCP/IP Services" />
+      </stringTable>
+    </resources>
+  </localization>
+</assembly>

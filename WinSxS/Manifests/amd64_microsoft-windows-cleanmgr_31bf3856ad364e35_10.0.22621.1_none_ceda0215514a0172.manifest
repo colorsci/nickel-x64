@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-cleanmgr" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <dependency discoverable="no" resourceType="Resources">
+    <dependentAssembly>
+      <assemblyIdentity name="Microsoft-Windows-cleanmgr.Resources" version="10.0.22621.1" processorArchitecture="amd64" language="*" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </dependentAssembly>
+  </dependency>
+  <file name="cleanmgr.exe" destinationPath="$(runtime.system32)\" sourceName="cleanmgr.exe" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>vCLRrHoS3bBh9c0l3WHezRDA5PQitXIcprhb4nhdr/c=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <registryKeys>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Explorer\MyComputer\cleanuppath">
+      <registryValue name="" valueType="REG_EXPAND_SZ" value="%SystemRoot%\System32\cleanmgr.exe /D %c" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Explorer\CommandStore\shell\Windows.CleanUp">
+      <registryValue name="ExplorerCommandHandler" valueType="REG_SZ" value="{9cca66bb-9c78-4e59-a76f-a5e9990b8aa0}" />
+      <registryValue name="ImpliedSelectionModel" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="CommandStateSync" valueType="REG_SZ" value="" />
+      <registryValue name="Icon" valueType="REG_SZ" value="%SystemRoot%\System32\cleanmgr.exe,-104" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\ShellCompatibility\InboxApp">
+      <registryValue name="F2F872BD2FAC6E88_Disk_Cleanup_lnk_amd64.lnk" valueType="REG_EXPAND_SZ" value="$(runtime.StartMenu)\Programs\Administrative Tools\Disk Cleanup.lnk" />
+      <securityDescriptor name="SHORTCUT_REGISTRY_DEFAULT_SDDL" />
+    </registryKey>
+  </registryKeys>
+  <taskScheduler>
+    <Task xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task">
+      <RegistrationInfo>
+        <Source>$(@%systemroot%\system32\cleanmgr.exe,-1300)</Source>
+        <Author>$(@%systemroot%\system32\cleanmgr.exe,-1300)</Author>
+        <Description>$(@%systemroot%\system32\cleanmgr.exe,-1301)</Description>
+        <URI>Microsoft\Windows\DiskCleanup\SilentCleanup</URI>
+        <SecurityDescriptor>D:AI(A;;FA;;;BA)(A;;FA;;;SY)(A;;FRFX;;;AU)</SecurityDescriptor>
+      </RegistrationInfo>
+      <Triggers />
+      <Settings>
+        <Enabled>true</Enabled>
+        <UseUnifiedSchedulingEngine>true</UseUnifiedSchedulingEngine>
+        <MaintenanceSettings>
+          <Period>P1D</Period>
+          <Deadline>P1M</Deadline>
+          <Exclusive>false</Exclusive>
+        </MaintenanceSettings>
+        <AllowStartOnDemand>true</AllowStartOnDemand>
+        <MultipleInstancesPolicy>IgnoreNew</MultipleInstancesPolicy>
+        <DisallowStartIfOnBatteries>true</DisallowStartIfOnBatteries>
+        <StopIfGoingOnBatteries>true</StopIfGoingOnBatteries>
+        <StartWhenAvailable>true</StartWhenAvailable>
+        <IdleSettings>
+          <StopOnIdleEnd>true</StopOnIdleEnd>
+          <RestartOnIdle>true</RestartOnIdle>
+        </IdleSettings>
+        <RunOnlyIfIdle>true</RunOnlyIfIdle>
+        <WakeToRun>false</WakeToRun>
+        <AllowHardTerminate>true</AllowHardTerminate>
+        <RunOnlyIfNetworkAvailable>false</RunOnlyIfNetworkAvailable>
+        <Hidden>false</Hidden>
+        <ExecutionTimeLimit>PT15M</ExecutionTimeLimit>
+      </Settings>
+      <Principals>
+        <Principal id="Authenticated Users">
+          <GroupId>S-1-5-32-545</GroupId>
+          <RunLevel>HighestAvailable</RunLevel>
+        </Principal>
+      </Principals>
+      <Actions Context="Authenticated Users">
+        <Exec>
+          <Command>%windir%\system32\cleanmgr.exe</Command>
+          <Arguments>/autocleanstoragesense /d %systemdrive%</Arguments>
+        </Exec>
+      </Actions>
+    </Task>
+  </taskScheduler>
+  <memberships>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories.Explorer" version="10.0.22621.1" publicKeyToken="31bf3856ad364e35" typeName="Shortcut" />
+      <categoryInstance subcategory="Disk Cleanup.lnk\$(runtime.StartMenu)\Programs\Administrative Tools">
+        <shortCut description="@%SystemRoot%\system32\Shell32.dll,-22538" destinationName="Disk Cleanup.lnk" destinationPath="$(runtime.StartMenu)\Programs\Administrative Tools" displayResource="$(runtime.system32)\shell32.dll,22026" iconPath="$(runtime.system32)\cleanmgr.exe,0" targetPath="$(runtime.system32)\cleanmgr.exe" />
+      </categoryInstance>
+    </categoryMembership>
+  </memberships>
+  <asmv3:application xmlns:asmv3="urn:schemas-microsoft-com:asm.v3">
+    <windowsSettings xmlns="http://schemas.microsoft.com/SMI/2005/WindowsSettings">
+      <dpiAware>true</dpiAware>
+    </windowsSettings>
+  </asmv3:application>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="WRP_REGKEY_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;CI;GA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;CI;GR;;;SY)(A;CI;GR;;;BA)(A;CI;GR;;;BU)(A;CI;GR;;;S-1-15-2-1)(A;CI;GR;;;S-1-15-3-1024-1065365936-1281604716-3511738428-1654721687-432734479-3232135806-4053264122-3456934681)" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" description="Default SDDL for Windows Resource Protected file" />
+          <securityDescriptorDefinition name="SHORTCUT_FILE_DEFAULT_SDDL" sddl="O:SYG:SYD:AIS:AI" operationHint="replace" />
+          <securityDescriptorDefinition name="SHORTCUT_REGISTRY_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;CI;GA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;CI;GR;;;SY)(A;CI;GR;;;BA)(A;CI;GR;;;BU)(A;CI;GR;;;S-1-15-2-1)(A;CI;GR;;;S-1-15-3-1024-1065365936-1281604716-3511738428-1654721687-432734479-3232135806-4053264122-3456934681)" operationHint="replace" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+  <instrumentation xmlns:win="http://manifests.microsoft.com/win/2004/08/windows/events" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <events xmlns="http://schemas.microsoft.com/win/2004/08/events">
+      <provider guid="{9ae87b12-a014-5288-92df-e3030981ebab}" messageFileName="%SystemRoot%\system32\cleanmgr.exe" name="Microsoft-Windows-Cleanmgr" resourceFileName="%SystemRoot%\system32\cleanmgr.exe" symbol="Microsoft_Windows_Cleanmgr">
+        <channels>
+          <channel chid="Diagnostic" enabled="true" isolation="Application" name="Microsoft-Windows-Cleanmgr/Diagnostic" type="Operational">
+            <logging>
+              <maxSize>8388608</maxSize>
+            </logging>
+          </channel>
+        </channels>
+      </provider>
+      <cmi />
+    </events>
+  </instrumentation>
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string id="description" value="Manifest for cleanmgr.exe" />
+        <string id="displayName" value="cleanmgr.exe" />
+        <string id="sm_cleanmgr" value="Disk Cleanup.lnk" />
+        <string id="CleanmgrInit.EventMessage" value="Completing initialization." />
+        <string id="PluginInit.EventMessage" value="Iterating cleanup plugins." />
+        <string id="PluginScan.EventMessage" value="Scanning cleanup plugins." />
+        <string id="CleanmgrScanComplete.EventMessage" value="Completing scan." />
+        <string id="PluginPurge.EventMessage" value="Purge cleanup plugins." />
+        <string id="CleanmgrPurgeComplete.EventMessage" value="Completing cleanup." />
+      </stringTable>
+    </resources>
+  </localization>
+  <file name="Disk Cleanup.lnk" destinationPath="$(runtime.StartMenu)\Programs\Administrative Tools\" sourceName="F2F872BD2FAC6E88_Disk_Cleanup_lnk_amd64.lnk" importPath="$(build.nttree)\Shortcuts\">
+    <securityDescriptor name="SHORTCUT_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>sQhdotQeAb5onWsbItDonYC7BF12tTlp1diuid4475I=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+</assembly>

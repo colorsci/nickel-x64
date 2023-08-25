@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-Tunnel" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <dependency discoverable="no" resourceType="Resources">
+    <dependentAssembly dependencyType="prerequisite">
+      <assemblyIdentity name="Microsoft-Windows-Tunnel.Resources" version="10.0.22621.1" processorArchitecture="amd64" language="*" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+    </dependentAssembly>
+  </dependency>
+  <file name="tunnel.sys" destinationPath="$(runtime.drivers)\" sourceName="tunnel.sys" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>7v5gN5xhwbByae2Mge1VYDPMDlUtJyhPCMRf8kiP0Iw=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <memberships>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories.Services" version="10.0.22621.1" publicKeyToken="31bf3856ad364e35" typeName="Service" />
+      <categoryInstance subcategory="tunnel">
+        <serviceData name="tunnel" displayName="@%SystemRoot%\System32\drivers\tunnel.sys,-500" errorControl="normal" start="demand" type="kernelDriver" group="NDIS" imagePath="System32\drivers\tunnel.sys" tag="1" />
+      </categoryInstance>
+    </categoryMembership>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories" version="1.0.0.0" publicKeyToken="365143bb27e7ac8b" typeName="BootCritical" />
+    </categoryMembership>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories" version="1.0.0.0" publicKeyToken="365143bb27e7ac8b" typeName="BootRecovery" />
+    </categoryMembership>
+  </memberships>
+  <registryKeys>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\WMI\Autologger\SQMLogger\{4214dcd2-7c33-4f74-9898-719ccceec20f}">
+      <registryValue name="LoggerName" valueType="REG_SZ" value="SQMLogger" />
+      <registryValue name="Enabled" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="EnableLevel" valueType="REG_DWORD" value="0x00000004" />
+      <registryValue name="MatchAnyKeyword" valueType="REG_QWORD" value="0000000000000800" />
+      <registryValue name="EnableProperty" valueType="REG_DWORD" value="0x00000002" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\EventLog\System\tunnel" />
+  </registryKeys>
+  <networkComponents>
+    <netAdapterDriver hidden="true" id="{2F306C79-A693-47B8-BE06-D773D6929C8C}" ifType="IF_TYPE_TUNNEL" isVirtual="true" mediaType="NdisMediumTunnel" physicalMediaType="NdisPhysicalMediumUnspecified">
+      <bind keyword="ndis5_ip6_tunnel" ruleType="upper" />
+      <bind keyword="tunnel" ruleType="lower" />
+      <property name="NETSETUPPKEY_INF_Characteristics" type="uint32" value="0x9" />
+      <property name="NETSETUPPKEY_Interface_IsLightweight" type="boolean" value="true" />
+    </netAdapterDriver>
+    <netAdapter hidden="true" id="{93123211-9629-4e04-82f0-ea2e4f221468}" ifAlias="Teredo Tunneling Pseudo-Interface" ifDescr="Microsoft Teredo Tunneling Adapter" ifLuid="32512" ifType="IF_TYPE_TUNNEL" isVirtual="true" mediaType="NdisMediumTunnel" physicalMediaType="NdisPhysicalMediumUnspecified">
+      <bind keyword="ndis5_ip6_tunnel" ruleType="upper" />
+      <bind keyword="tunnel" ruleType="lower" />
+      <property name="NETSETUPPKEY_INF_Characteristics" type="uint32" value="0x9" />
+      <property name="NETSETUPPKEY_Interface_IsLightweight" type="boolean" value="true" />
+    </netAdapter>
+    <netAdapter hidden="true" id="{2EE2C70C-A092-4D88-A654-98C8D7645CD5}" ifAlias="Microsoft IP-HTTPS Platform Interface" ifDescr="Microsoft IP-HTTPS Platform Adapter" ifLuid="32513" ifType="IF_TYPE_TUNNEL" isVirtual="true" mediaType="NdisMediumTunnel" physicalMediaType="NdisPhysicalMediumUnspecified">
+      <bind keyword="ndis5_ip6_tunnel" ruleType="upper" />
+      <bind keyword="tunnel" ruleType="lower" />
+      <property name="NETSETUPPKEY_INF_Characteristics" type="uint32" value="0x9" />
+      <property name="NETSETUPPKEY_Interface_IsLightweight" type="boolean" value="true" />
+    </netAdapter>
+    <netAdapter hidden="true" id="{07374750-E68B-490E-9330-9FD785CD71B6}" ifAlias="6to4 Adapter" ifDescr="Microsoft 6to4 Adapter" ifLuid="32514" ifType="IF_TYPE_TUNNEL" isVirtual="true" mediaType="NdisMediumTunnel" physicalMediaType="NdisPhysicalMediumUnspecified">
+      <bind keyword="ndis5_ip6_tunnel" ruleType="upper" />
+      <bind keyword="tunnel" ruleType="lower" />
+      <property name="NETSETUPPKEY_INF_Characteristics" type="uint32" value="0x9" />
+      <property name="NETSETUPPKEY_Interface_IsLightweight" type="boolean" value="true" />
+    </netAdapter>
+  </networkComponents>
+  <instrumentation>
+    <events xmlns="http://schemas.microsoft.com/win/2004/08/events" xmlns:win="http://manifests.microsoft.com/win/2004/08/windows/events" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <provider guid="{4edbe902-9ed3-4cf0-93e8-b8b5fa920299}" message="$(string.TunnelDriverProviderName)" messageFileName="%windir%\system32\drivers\tunnel.sys" name="Microsoft-Windows-TunnelDriver" parameterFileName="%windir%\system32\drivers\tunnel.sys" resourceFileName="%windir%\system32\drivers\tunnel.sys" symbol="MS_TUNNEL_DRIVER_PROVIDER_ID">
+        <channels>
+          <channel chid="TunnelTrace" enabled="false" message="$(string.TUNNEL_ETW_CHANNEL)" name="Microsoft-Windows-TunnelDriver" symbol="TUNNEL_ETW_CHANNEL" type="Analytic">
+            <publishing>
+              <level>0xFF</level>
+            </publishing>
+          </channel>
+        </channels>
+      </provider>
+      <provider guid="{4214dcd2-7c33-4f74-9898-719ccceec20f}" messageFileName="%windir%\system32\drivers\tunnel.sys" name="Microsoft-Windows-TunnelDriver-SQM-Provider" parameterFileName="%windir%\system32\drivers\tunnel.sys" resourceFileName="%windir%\system32\drivers\tunnel.sys" symbol="MS_TUNNEL_DRIVER_SQM_PROVIDER_ID" />
+      <cmi />
+    </events>
+  </instrumentation>
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string id="TunnelDriverProviderName" value="Microsoft-Windows-Tunnel" />
+        <string id="TUNNEL_ETW_CHANNEL" value="Tunnel Driver Etw Channel" />
+        <string id="EVENT_TUNNEL_MINIPORT_INITIALIZED" value="Tunnel Driver of type %1 successfully initialized with index %2." />
+        <string id="EVENT_TUNNEL_MINIPORT_INIT_FAILED" value="Tunnel Driver of type %1 could not initialize.%n Windows Status Code %2, Tunnel Status Code %3." />
+        <string id="TUNNEL_ETW_LOGGING_TunnelType_ValueMap.0" value="None" />
+        <string id="TUNNEL_ETW_LOGGING_TunnelType_ValueMap.1" value="Other" />
+        <string id="TUNNEL_ETW_LOGGING_TunnelType_ValueMap.2" value="Direct" />
+        <string id="TUNNEL_ETW_LOGGING_TunnelType_ValueMap.11" value="6TO4" />
+        <string id="TUNNEL_ETW_LOGGING_TunnelType_ValueMap.13" value="ISATAP" />
+        <string id="TUNNEL_ETW_LOGGING_TunnelType_ValueMap.14" value="TEREDO" />
+        <string id="TUNNEL_ETW_LOGGING_TunnelType_ValueMap.15" value="IP HTTPS" />
+        <string id="TUNNEL_ETW_LOGGING_DriverEntry_ValueMap.0" value="NBL Library failed to initialize" />
+        <string id="TUNNEL_ETW_LOGGING_DriverEntry_ValueMap.1" value="Miniport Driver failed to register" />
+        <string id="TUNNEL_ETW_LOGGING_DriverEntry_ValueMap.2" value="Tunnel Work Queue failed to initialize" />
+        <string id="TUNNEL_ETW_LOGGING_DriverEntry_ValueMap.3" value="Connectivity Platform failed to initialize" />
+        <string id="TUNNEL_ETW_LOGGING_DriverEntry_ValueMap.4" value="Network Layer Client failed to initialize" />
+        <string id="TUNNEL_ETW_LOGGING_DriverEntry_ValueMap.5" value="Netio Processor Callback failed to register" />
+        <string id="TUNNEL_ETW_LOGGING_DriverEntry_ValueMap.6" value="Stack expansion failed to initialize" />
+        <string id="TUNNEL_ETW_LOGGING_DriverEntry_ValueMap.7" value="Tunnel Driver loaded successfully" />
+        <string id="EVENT_TUNNEL_DRIVER_ENTRY" value="Tunnel Driver Load: %1. Status %2" />
+        <string id="EVENT_TUNNEL_INTERFACE_UPDATE_NOTIFICATION" value="Tunnel Updated flag for Interface with index %1, interface forwarding is%2set, weakhostreceive is%3set." />
+        <string id="TUNNEL_ETW_LOGGING_YesNo_ValueMap.0" value=" not " />
+        <string id="TUNNEL_ETW_LOGGING_YesNo_ValueMap.1" value=" " />
+        <string id="EVENT_TUNNEL_PACKET_WITH_INCOMPLETE_INNER_IP_HEADER" value="Tunnel received packet with incomplete inner IP header" />
+        <string id="EVENT_TUNNEL_INTERFACE_NOT_FOUND_FOR_PACKET" value="Could not find tunnel interface for packet." />
+        <string id="EVENT_TUNNEL_INTERFACE_RECEIVES_DISABLED" value="Packet filter on tunnel interface %1 is off. Dropping Packet." />
+        <string id="EVENT_TUNNEL_PACKET_INTEGRITY_CHECK_FAILED" value="Packet failed integrity check on interface type %1 with index %2." />
+        <string id="EVENT_TUNNEL_NON_IPV6_PACKET" value="Non IPv6 Packet received on interface %1." />
+        <string id="EVENT_TUNNEL_INTERFACE_NOT_FOUND_FOR_ICMP" value="Could not find tunnel interface for truncated ICMP message." />
+        <string id="EVENT_TUNNEL_ICMP_SOURCE_NOT_FOUND" value="Could not find the source of the ICMP message on tunnel interface %1." />
+        <string id="EVENT_TUNNEL_FAILED_COPY_BUFFER_TO_MDL" value="Failed to copy Buffer into MDL while generating ICMPv6 message on tunnel interface %1." />
+        <string id="TUNNEL_ETW_LOGGING_InterfaceOp_ValueMap.0" value="halted" />
+        <string id="TUNNEL_ETW_LOGGING_InterfaceOp_ValueMap.1" value="paused" />
+        <string id="TUNNEL_ETW_LOGGING_InterfaceOp_ValueMap.2" value="restarted" />
+        <string id="TUNNEL_ETW_LOGGING_InterfaceOp_ValueMap.3" value="shutdown" />
+        <string id="EVENT_TUNNEL_INTERFACE_OP" value="Tunnel interface of type %1 with index %2 has been %3." />
+        <string id="EVENT_TUNNEL_INTERFACE_PAUSE_COMPLETE" value="Completing the pause for tunnel interface %1." />
+        <string id="EVENT_TUNNEL_INTERFACE_POWER_COMPLETE" value="Completing power notification for tunnel interface %1." />
+        <string id="EVENT_TUNNEL_INTERFACE_MEDIA_STATUS" value="Tunnel interface %1 has media status set to %2." />
+        <string id="TUNNEL_ETW_LOGGING_MediaStatus_ValueMap.0" value="unknown" />
+        <string id="TUNNEL_ETW_LOGGING_MediaStatus_ValueMap.1" value="connected" />
+        <string id="TUNNEL_ETW_LOGGING_MediaStatus_ValueMap.2" value="disconnected" />
+        <string id="TUNNEL_ETW_LOGGING_ReadError_ValueMap.0" value="NDIS configuration" />
+        <string id="TUNNEL_ETW_LOGGING_ReadError_ValueMap.1" value="sub type" />
+        <string id="TUNNEL_ETW_LOGGING_ReadError_ValueMap.2" value="type" />
+        <string id="TUNNEL_ETW_LOGGING_ReadError_ValueMap.3" value="address length" />
+        <string id="TUNNEL_ETW_LOGGING_ReadError_ValueMap.4" value="link local address" />
+        <string id="EVENT_TUNNEL_INTERFACE_READ_ERROR" value="Tunnel interface %1 %3 could not be read.%nNDIS returned status %2." />
+        <string id="EVENT_TUNNEL_UNKNOWN_INTERFACE" value="Tunnel interface %1 has unknown type %2." />
+        <string id="TUNNEL_ETW_LOGGING_FlowType_ValueMap.0" value="Invalid" />
+        <string id="TUNNEL_ETW_LOGGING_FlowType_ValueMap.1" value="IPv4" />
+        <string id="TUNNEL_ETW_LOGGING_FlowType_ValueMap.2" value="IPv6" />
+        <string id="EVENT_TUNNEL_TEREDO_FLOW_FREED" value="Teredo Tunnel offload %1 flow entry freed." />
+        <string id="EVENT_TUNNEL_TEREDO_WFP_CLONE_LIST_NULL" value="Teredo WFP receive path worker has NULL clone list." />
+        <string id="EVENT_TUNNEL_NON_TEREDO_FLOW_SKIPPED" value="Skipped offload flow creation for non-Teredo address pair.%nLocal %2 Remote %3." />
+        <string id="EVENT_TUNNEL_TEREDO_V4FLOW_CREATED" value="Teredo Wfp created IPv4 flow with following parameters.%nLocalV4:%1 RemoteV4:%2 %nLocalPort:%3 RemotePort:%4." />
+        <string id="EVENT_TUNNEL_TEREDO_V6FLOW_CREATED" value="Teredo Wfp created V6 flow with status %6 following parameters.%nLocalV4:%2 RemoteV4:%3 %nLocalV6:%4 RemoteV6:%5." />
+        <string id="TUNNEL_ETW_LOGGING_FlowDirection_ValueMap.0" value="Outbound" />
+        <string id="TUNNEL_ETW_LOGGING_FlowDirection_ValueMap.1" value="Inbound" />
+        <string id="TUNNEL_ETW_LOGGING_FlowDirection_ValueMap.2" value="Invalid" />
+        <string id="EVENT_TUNNEL_TEREDOWFP_REGISTRATION" value="Teredo Wfp registration occured with status %1." />
+        <string id="EVENT_TUNNEL_V4ADDRESS_ASSOCIATED_WITH_INTERFACE" value="Tunnel type %1 with index %2 has IPv4 address %3 now %4 associated with physical interface with index %5." />
+        <string id="EVENT_TUNNEL_OFFLOADED_SEND_NBL" value="Tunnel type %1 offloaded %2 NBLs, Could not offload %3 NBLs" />
+        <string id="EVENT_TUNNEL_SEND_FAILED_INVALID_DEVICE_STATE" value="Tunnel Type %1 with index %2 is in an invalid device state such as not opened or being closed.%n%3 NBLs could not be sent." />
+        <string id="EVENT_TUNNEL_TEREDO_CALLOUT_WRITE_NOT_PERMITTED" value="Teredo tunnel callout wasn't allowed to modify a packet. PID: %1. FilterID: %2. Flow handle %3." />
+      </stringTable>
+    </resources>
+  </localization>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" description="Default SDDL for Windows Resource Protected file" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+</assembly>

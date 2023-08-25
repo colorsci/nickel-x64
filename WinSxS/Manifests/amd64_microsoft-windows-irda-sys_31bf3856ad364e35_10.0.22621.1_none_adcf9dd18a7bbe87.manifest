@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-Irda-Sys" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <memberships>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories.Services" version="10.0.22621.1" publicKeyToken="31bf3856ad364e35" typeName="Service" />
+      <categoryInstance>
+        <serviceData name="irda" displayName="IrDA" errorControl="normal" start="demand" type="kernelDriver" group="PNP_TDI" imagePath="\SystemRoot\system32\drivers\irda.sys" tag="9" />
+      </categoryInstance>
+    </categoryMembership>
+  </memberships>
+  <WinsockTransportOnlineInstall HelperDllName="%SystemRoot%\System32\wshirda.dll" MaxSockAddrLength="50" MinSockAddrLength="8" ProviderGuid="{3972523d-2af1-11d1-b655-00805f3642cc}" TransportService="irda">
+    <mappingRow addressFamily="26" protocol="1" socketType="SOCK_STREAM" />
+    <mappingRow addressFamily="26" protocol="NULL" socketType="SOCK_STREAM" />
+    <mappingRow addressFamily="26" protocol="1" socketType="NULL" />
+    <protocol addressFamily="26" byteOrder="BIG_ENDIAN" maxSockAddrLength="32" messageSize="0" minSockAddrLength="8" protocol="1" protocolMaxOffset="0" protocolName="MSAFD Irda [IrDA]" socketType="SOCK_STREAM" version="2">
+      <providerFlag value="PFL_MATCHES_PROTOCOL_ZERO" />
+      <serviceFlag value="XP1_GUARANTEED_DELIVERY" />
+      <serviceFlag value="XP1_GUARANTEED_ORDER" />
+      <serviceFlag value="XP1_IFS_HANDLES" />
+    </protocol>
+  </WinsockTransportOnlineInstall>
+  <registryKeys>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\irda\Parameters">
+      <registryValue name="WindowSize" valueType="REG_DWORD" value="0x0000000F" />
+    </registryKey>
+  </registryKeys>
+  <file name="irda.sys" destinationPath="$(runtime.drivers)\" sourceName="irda.sys" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>gDmz3B7Wt9rY07PiRakVDM5PO/oFuloxvcy2wpQV68A=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <file name="irda.mof" destinationPath="$(runtime.wbem)\" sourceName="irda.mof" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>tXs0Q+cTHnZVcLPDDT3YQuQcsq0Q6BxKGm7DHXiPhI0=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <networkComponents>
+    <protocolDriver bindName="IrDA" displayDescription="@netirda.inf,%irda.helptext%;Infrared Data Association Protocol. Easy to use self configuring point-to-point connectivity without wires" displayName="@netirda.inf,%irda.displayname%;IrDA Protocol" identifier="ms_irda" nonUserRemovable="true">
+      <bind keyword="ndisirda" ruleType="lower" />
+      <property name="NETSETUPPKEY_Driver_NtServicesToAutoStartWhenBound" type="stringList" value="irmon irda" />
+      <property name="NETSETUPPKEY_Driver_NtServicesToDemandStartWhenUnbound" type="stringList" value="irmon irda" />
+      <property name="NETSETUPPKEY_Driver_NtServiceName" type="string" value="irda" />
+      <property name="NETSETUPPKEY_INF_Name" type="string" value="netirda.inf" />
+      <property name="NETSETUPPKEY_INF_Section" type="string" value="IrDA.Install" />
+      <property name="NETSETUPPKEY_INF_Characteristics" type="uint32" value="0x28" />
+    </protocolDriver>
+  </networkComponents>
+  <mof name="$(runtime.wbem)\irda.mof" />
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string id="displayName0" value="Irda protocol binary" />
+        <string id="description1" value="Irda protocol binary" />
+        <string id="displayName2" value="WRP_FILE_DEFAULT_SDDL" />
+        <string id="description3" value="Default SDDL for Windows Resource Protected file" />
+      </stringTable>
+    </resources>
+  </localization>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" description="Default SDDL for Windows Resource Protected file" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+</assembly>

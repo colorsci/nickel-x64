@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved." xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <assemblyIdentity name="Microsoft-Windows-WDF-Kernel Library" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <dependency discoverable="no" resourceType="Resources">
+    <dependentAssembly dependencyType="prerequisite">
+      <assemblyIdentity name="Microsoft-Windows-WDF-Kernel Library.Resources" version="10.0.22621.1" processorArchitecture="amd64" language="*" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+    </dependentAssembly>
+  </dependency>
+  <file name="Wdf01000.sys" destinationPath="$(runtime.drivers)\" sourceName="Wdf01000.sys" importPath="$(build.nttree)\wdf\" sourcePath=".\">
+    <signatureInfo>
+      <signatureDescriptor DRMLevel="1300" />
+    </signatureInfo>
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>2ilFCgttMZTQt3WWQHe9Z4tb7AhJLduXNQuFrYN6ES0=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <file name="WdfLdr.sys" destinationPath="$(runtime.drivers)\" sourceName="WdfLdr.sys" importPath="$(build.nttree)\wdf\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>pUv3lUNQ1Bej6VtTe6M9iZzq3m41ojef/lmtJ9dF9JY=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <memberships>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories" version="1.0.0.0" publicKeyToken="365143bb27e7ac8b" typeName="BootCritical" />
+      <categoryInstance subcategory="Wdf01000">
+        <serviceData name="Wdf01000" displayName="@%SystemRoot%\system32\drivers\Wdf01000.sys,-1000" errorControl="normal" start="boot" type="kernelDriver" group="WdfLoadGroup" imagePath="system32\drivers\Wdf01000.sys" />
+      </categoryInstance>
+    </categoryMembership>
+  </memberships>
+  <registryKeys>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\EventLog\System\wdf01000">
+      <registryValue name="EventMessageFile" valueType="REG_SZ" value="$(runtime.system32)\drivers\Wdf01000.sys" />
+      <registryValue name="TypesSupported" valueType="REG_DWORD" value="0x00000007" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Wdf\Kmdf\KmdfLibrary\Versions\1">
+      <registryValue name="Service" valueType="REG_SZ" value="Wdf01000" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Wdf\KMDF\1">
+      <registryValue name="Version" valueType="REG_SZ" value="1.11" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Wdf\Schema\KmdfService">
+      <registryValue name="Type" valueType="REG_DWORD" value="0x00000000" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Wdf\Schema\KmdfService\Object">
+      <registryValue name="KeyRoot" valueType="REG_SZ" value="SYSTEM" />
+      <registryValue name="KeyPath" valueType="REG_SZ" value="CurrentControlSet\Services" />
+    </registryKey>
+  </registryKeys>
+  <asmv3:configuration xmlns:asmv3="urn:schemas-microsoft-com:asm.v3" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State">
+    <asmv3:configurationSchema>
+      <xsd:schema xmlns="Microsoft-Windows-WDF-Kernel Library" targetNamespace="Microsoft-Windows-WDF-Kernel Library">
+        <xsd:simpleType name="ServiceStartBootOrAuto" wcm:description="Wdf01000 override value">
+          <xsd:restriction base="xsd:integer">
+            <xsd:enumeration value="0" />
+            <xsd:enumeration value="3" />
+          </xsd:restriction>
+        </xsd:simpleType>
+        <xsd:element default="0" name="DriverStartType" type="ServiceStartBootOrAuto" wcm:description="DriverStartType specifies whether the Kernel-Mode Driver Framework (KMDF) service is started at boot or on demand." wcm:displayName="WDF Kernel-Mode Library" wcm:handler="regkey('HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Wdf01000')" wcm:legacyName="Start" wcm:legacyType="REG_DWORD" wcm:passes="offlineServicing" wcm:scope="allUsers" wcm:visible="true" />
+      </xsd:schema>
+    </asmv3:configurationSchema>
+    <asmv3:metadata />
+  </asmv3:configuration>
+  <instrumentation xmlns:kmdf="http://manifests.microsoft.com/DriverFrameworks/KernelMode" xmlns:win="http://manifests.microsoft.com/win/2004/08/windows/events" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <events xmlns="http://schemas.microsoft.com/win/2004/08/events">
+      <provider guid="{486A5C7C-11CC-46C5-9DE7-43DFE0BB57C1}" messageFileName="%SystemRoot%\system32\drivers\wdf01000.sys" name="Microsoft-Windows-DriverFrameworks-KernelMode-Performance" resourceFileName="%SystemRoot%\system32\drivers\wdf01000.sys" symbol="KMDF_PERF_PROVIDER" />
+      <cmi />
+    </events>
+  </instrumentation>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" description="Default SDDL for Windows Resource Protected file" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+</assembly>

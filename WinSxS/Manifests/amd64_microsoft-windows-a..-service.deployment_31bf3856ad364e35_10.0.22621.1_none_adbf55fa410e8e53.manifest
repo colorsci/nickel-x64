@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-AppReadiness-Service.Deployment" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <file name="AppReadiness.dll" destinationPath="$(runtime.system32)\" sourceName="AppReadiness.dll" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>WT/xRMNvYAUQI0jZNS6akQFSl1I0SOo4wR+tQCT+QXM=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <directories>
+    <directory destinationPath="$(runtime.windows)\AppReadiness\" owner="true">
+      <securityDescriptor name="AppReadiness_File_SDDL" />
+    </directory>
+  </directories>
+  <registryKeys>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\AppReadiness">
+      <registryValue name="NotifyObject" valueType="REG_SZ" value="{c980e4c2-c178-4572-935d-a8a429884806}" />
+      <securityDescriptor name="AppReadiness_Registry_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\AppID\{88283d7c-46f4-47d5-8fc2-db0b5cf0cb54}">
+      <registryValue name="" valueType="REG_SZ" value="AppReadiness Service" />
+      <registryValue name="LocalService" valueType="REG_SZ" value="AppReadiness" />
+      <registryValue name="AccessPermission" valueType="REG_BINARY" value="010014808C000000A8000000140000003000000002001C0001000000110014000400000001010000000000100010000002005C0004000000000018000100000001020000000000052000000020020000000014000100000001010000000000050400000000001400010000000101000000000005060000000000140001000000010100000000000512000000010500000000000515000000A05F841F5E2E6B49CE120303F4010000010500000000000515000000A05F841F5E2E6B49CE120303F4010000" />
+      <registryValue name="LaunchPermission" valueType="REG_BINARY" value="010014808C000000A8000000140000003000000002001C0001000000110014000400000001010000000000100010000002005C0004000000000018000100000001020000000000052000000020020000000014000100000001010000000000050400000000001400010000000101000000000005060000000000140001000000010100000000000512000000010500000000000515000000A05F841F5E2E6B49CE120303F4010000010500000000000515000000A05F841F5E2E6B49CE120303F4010000" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{c980e4c2-c178-4572-935d-a8a429884806}">
+      <registryValue name="" valueType="REG_SZ" value="AppReadiness Service Class" />
+      <registryValue name="AppId" valueType="REG_SZ" value="{88283d7c-46f4-47d5-8fc2-db0b5cf0cb54}" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\System\CurrentControlSet\Services\AppReadiness\Parameters">
+      <registryValue name="ServiceDLL" valueType="REG_EXPAND_SZ" value="%SystemRoot%\system32\AppReadiness.dll" />
+      <registryValue name="ServiceDllUnloadOnStop" valueType="REG_DWORD" value="0x00000001" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\EventLog\System\AppReadiness">
+      <registryValue name="EventMessageFile" valueType="REG_EXPAND_SZ" value="%SystemRoot%\system32\AppReadiness.dll" />
+      <registryValue name="TypesSupported" valueType="REG_DWORD" value="0x00000007" />
+      <registryValue name="ProviderGuid" valueType="REG_SZ" value="{f0be35f8-237b-4814-86b5-ade51192e503}" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\AppReadiness">
+      <registryValue name="DllName" valueType="REG_EXPAND_SZ" value="%SystemRoot%\system32\AppReadiness.dll" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\SettingSync\Extensions">
+      <registryValue name="AppReadinessService" valueType="REG_SZ" value="{c980e4c2-c178-4572-935d-a8a429884806}" />
+    </registryKey>
+  </registryKeys>
+  <memberships>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories.Services" version="10.0.22621.1" publicKeyToken="31bf3856ad364e35" typeName="Service" />
+      <categoryInstance>
+        <serviceData name="AppReadiness" displayName="@%SystemRoot%\System32\AppReadiness.dll,-1000" errorControl="normal" start="demand" type="win32ShareProcess" description="@%SystemRoot%\System32\AppReadiness.dll,-1001" imagePath="%SystemRoot%\System32\svchost.exe -k AppReadiness -p" objectName="LocalSystem" requiredPrivileges="SeImpersonatePrivilege,SeTcbPrivilege,SeBackupPrivilege,SeRestorePrivilege,SeProfileSingleProcessPrivilege" sidType="unrestricted" />
+      </categoryInstance>
+    </categoryMembership>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories" version="1.0.0.0" publicKeyToken="365143bb27e7ac8b" typeName="SvcHost" />
+      <categoryInstance subcategory="AppReadiness">
+        <serviceGroup position="last" serviceName="AppReadiness" />
+      </categoryInstance>
+    </categoryMembership>
+  </memberships>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="WRP_REGKEY_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;CI;GA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;CI;GR;;;SY)(A;CI;GR;;;BA)(A;CI;GR;;;BU)(A;CI;GR;;;S-1-15-2-1)(A;CI;GR;;;S-1-15-3-1024-1065365936-1281604716-3511738428-1654721687-432734479-3232135806-4053264122-3456934681)" operationHint="replace" />
+          <securityDescriptorDefinition name="AppReadiness_Registry_SDDL" sddl="O:S-1-5-80-2020831507-1298702824-3288167190-116113825-4190209G:SYD:P(A;OICI;KR;;;AU)(A;OICI;KA;;;BA)(A;OICI;KA;;;S-1-5-80-2020831507-1298702824-3288167190-116113825-4190209)" operationHint="replace" />
+          <securityDescriptorDefinition name="AppReadiness_File_SDDL" sddl="O:SYG:SYD:P(A;OICI;FRGR;;;AU)(A;OICI;FAGA;;;BA)(A;OICI;FAGA;;;SY)" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" description="Default SDDL for Windows Resource Protected file" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+</assembly>

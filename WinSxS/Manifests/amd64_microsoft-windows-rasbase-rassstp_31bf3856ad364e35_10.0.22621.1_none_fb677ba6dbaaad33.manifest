@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved." xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <assemblyIdentity name="Microsoft-Windows-RasBase-RasSstp" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <dependency discoverable="no" resourceType="Resources">
+    <dependentAssembly dependencyType="prerequisite">
+      <assemblyIdentity name="Microsoft-Windows-RasBase-RasSstp.Resources" version="10.0.22621.1" processorArchitecture="amd64" language="*" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </dependentAssembly>
+  </dependency>
+  <directories>
+    <directory destinationPath="$(runtime.system32)\ras\SSTPProxy\">
+      <securityDescriptor name="SSTPSVC_CONFIG_STORE_SDDL" />
+    </directory>
+  </directories>
+  <file name="sstpsvc.dll" destinationPath="$(runtime.system32)\" sourceName="sstpsvc.dll" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>HX0Lu4n9TJw2Qr8RWM49k39+iDGaG5DJ2jscpbIZkT0=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <memberships>
+    <categoryMembership>
+      <id name="Microsoft-Windows-Networking-Remote Access and Routing" version="10.0.22621.1" publicKeyToken="31bf3856ad364e35" buildType="release" language="neutral" processorArchitecture="amd64" versionScope="nonSxS" />
+    </categoryMembership>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories" version="1.0.0.0" publicKeyToken="365143bb27e7ac8b" typeName="BootCritical" />
+    </categoryMembership>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories" version="1.0.0.0" publicKeyToken="365143bb27e7ac8b" />
+    </categoryMembership>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories" version="1.0.0.0" publicKeyToken="365143bb27e7ac8b" typeName="SvcHost" />
+      <categoryInstance subcategory="LocalService">
+        <serviceGroup position="last" serviceName="SstpSvc" />
+      </categoryInstance>
+    </categoryMembership>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories.Services" version="10.0.22621.1" publicKeyToken="31bf3856ad364e35" typeName="Service" />
+      <categoryInstance subcategory="SstpSvc">
+        <serviceData name="SstpSvc" displayName="@%SystemRoot%\system32\sstpsvc.dll,-200" errorControl="normal" start="demand" type="win32ShareProcess" description="@%SystemRoot%\system32\sstpsvc.dll,-201" imagePath="%SystemRoot%\system32\svchost.exe -k LocalService -p" objectName="NT Authority\LocalService" requiredPrivileges="SeChangeNotifyPrivilege,SeImpersonatePrivilege" sidType="unrestricted">
+          <securityDescriptor name="SERVICE_SECURITY_SDDL" />
+          <failureActions resetPeriod="86400">
+            <actions>
+              <action delay="120000" type="restartService" />
+              <action delay="300000" type="restartService" />
+              <action delay="0" type="none" />
+            </actions>
+          </failureActions>
+        </serviceData>
+      </categoryInstance>
+    </categoryMembership>
+  </memberships>
+  <HTTPAI>
+    <AddUrl sddl="D:(A;;GA;;;S-1-5-80-3435701886-799518250-3791383489-3228296122-2938884314)(A;;GA;;;BA)(A;;GA;;;SY)" url="https://+:443/sra_{BA195980-CD49-458b-9E23-C84EE0ADCD75}/" />
+  </HTTPAI>
+  <registryKeys>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\System\CurrentControlSet\Services\SstpSvc\Parameters\">
+      <registryValue name="ServiceDllUnloadOnStop" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="ServiceDll" valueType="REG_EXPAND_SZ" value="%SystemRoot%\system32\sstpsvc.dll" />
+      <registryValue name="ServerURI" valueType="REG_SZ" value="/sra_{BA195980-CD49-458b-9E23-C84EE0ADCD75}/" />
+      <securityDescriptor name="WRP_ADMIN_CONFIG_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\System\CurrentControlSet\Services\SstpSvc\Parameters\ConfigStore\">
+      <securityDescriptor name="SSTPSVC_CONFIG_STORE_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Eventlog\System\RasSstp">
+      <registryValue name="TypesSupported" valueType="REG_DWORD" value="0x0000001C" />
+      <registryValue name="EventMessageFile" valueType="REG_EXPAND_SZ" value="%systemroot%\system32\sstpsvc.dll" />
+      <registryValue name="ProviderGuid" valueType="REG_SZ" value="{6c260f2c-049a-43d8-bf4d-d350a4e6611a}" />
+      <securityDescriptor name="WRP_REGKEY_READONLY_SDDL" />
+    </registryKey>
+  </registryKeys>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="SERVICE_SECURITY_SDDL" sddl="D:(A;;CCLCSWRPLOCRRC;;;AU)(A;;CCLCSWRPWPDTLOCRRC;;;NO)(A;;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;BA)(A;;CCLCSWRPWPDTLOCRRC;;;SY)(A;;CCLCSWRPLOCRRC;;;S-1-15-3-1024-1068037383-729401668-2768096886-125909118-1680096985-174794564-3112554050-3241210738)S:(AU;FA;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;WD)" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_ADMIN_CONFIG_SDDL" sddl="D:ARP(A;;GRCCSWRC;;;LS)(A;;GA;;;SY)(A;;GA;;;BA)(A;;GRCCSWRC;;;AU)(A;;GRCCSWRC;;;WD)(A;;GRCCSWRC;;;WD)(A;;GA;;;S-1-5-80-3435701886-799518250-3791383489-3228296122-2938884314)" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_REGKEY_READONLY_SDDL" sddl="D:ARP(A;;GRCCSWRC;;;LS)(A;;GA;;;SY)(A;;GRCCSWRC;;;AU)(A;;GRCCSWRC;;;WD)" operationHint="replace" />
+          <securityDescriptorDefinition name="SSTPSVC_CONFIG_STORE_SDDL" sddl="D:ARP(A;;GRCCSWRC;;;LS)(A;;GA;;;BA)(A;;GA;;;SY)(A;;GRCCSWRC;;;AU)(A;;GRCCSWRC;;;WD)(A;;GA;;;S-1-5-80-3435701886-799518250-3791383489-3228296122-2938884314)" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" description="Default SDDL for Windows Resource Protected file" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+  <migration scope="Upgrade,SvrMig,MigWiz,USMT" settingsVersion="1">
+    <migXml xmlns="">
+      <rules context="System">
+        <include>
+          <objectSet>
+            <pattern type="Registry">HKLM\System\CurrentControlSet\Services\SstpSvc\Parameters [UseHttps]</pattern>
+            <pattern type="Registry">HKLM\System\CurrentControlSet\Services\SstpSvc\Parameters [ListenerPort]</pattern>
+            <pattern type="Registry">HKLM\System\CurrentControlSet\Services\SstpSvc\Parameters\ConfigStore [ListenerPort]</pattern>
+            <pattern type="Registry">HKLM\System\CurrentControlSet\Services\SstpSvc\Parameters\ConfigStore [UseHttps]</pattern>
+          </objectSet>
+        </include>
+        <merge script="MigXmlHelper.SourcePriority()">
+          <objectSet>
+            <pattern type="Registry">HKLM\System\CurrentControlSet\Services\SstpSvc\Parameters [UseHttps]</pattern>
+            <pattern type="Registry">HKLM\System\CurrentControlSet\Services\SstpSvc\Parameters [ListenerPort]</pattern>
+            <pattern type="Registry">HKLM\System\CurrentControlSet\Services\SstpSvc\Parameters\ConfigStore [ListenerPort]</pattern>
+            <pattern type="Registry">HKLM\System\CurrentControlSet\Services\SstpSvc\Parameters\ConfigStore [UseHttps]</pattern>
+          </objectSet>
+        </merge>
+      </rules>
+    </migXml>
+    <migXml xmlns="">
+      <rules context="System">
+        <detects>
+          <detect>
+            <condition negation="No">MigXmlHelper.IsUpgrade()</condition>
+          </detect>
+        </detects>
+        <include>
+          <objectSet>
+            <pattern type="Registry">HKLM\System\CurrentControlSet\Services\SstpSvc\Parameters\ConfigStore [V4CertPlumbedBySstp]</pattern>
+            <pattern type="Registry">HKLM\System\CurrentControlSet\Services\SstpSvc\Parameters\ConfigStore [V6CertPlumbedBySstp]</pattern>
+            <pattern type="Registry">HKLM\System\CurrentControlSet\Services\SstpSvc\Parameters [SHA1CertificateHash]</pattern>
+            <pattern type="Registry">HKLM\System\CurrentControlSet\Services\SstpSvc\Parameters [SHA256CertificateHash]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\SstpSvc\Parameters [NoCertRevocationCheck]</pattern>
+          </objectSet>
+        </include>
+        <merge script="MigXmlHelper.SourcePriority()">
+          <objectSet>
+            <pattern type="Registry">HKLM\System\CurrentControlSet\Services\SstpSvc\Parameters\ConfigStore [V4CertPlumbedBySstp]</pattern>
+            <pattern type="Registry">HKLM\System\CurrentControlSet\Services\SstpSvc\Parameters\ConfigStore [V6CertPlumbedBySstp]</pattern>
+            <pattern type="Registry">HKLM\System\CurrentControlSet\Services\SstpSvc\Parameters [SHA1CertificateHash]</pattern>
+            <pattern type="Registry">HKLM\System\CurrentControlSet\Services\SstpSvc\Parameters [SHA256CertificateHash]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\SstpSvc\Parameters [NoCertRevocationCheck]</pattern>
+          </objectSet>
+        </merge>
+      </rules>
+    </migXml>
+    <supportedComponents>
+      <supportedComponent>
+        <assemblyIdentity name="_" version="1.0.0.0" />
+        <supportedComponentIdentity buildType="release" language="neutral" name="Microsoft-Windows-RasBase-RasSstp" processorArchitecture="*" publicKeyToken="31bf3856ad364e35" settingsVersionRange="0-1" versionScope="nonSxS" xmlns="urn:schemas-microsoft-com:asm.v3" />
+        <migXml xmlns="">
+          <rules context="System">
+            <merge script="MigXmlHelper.SourcePriority()">
+              <objectSet>
+                <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\SstpSvc\Parameters [UseHttps]</pattern>
+                <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\SstpSvc\Parameters [ListenerPort]</pattern>
+                <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\SstpSvc\Parameters [SHA1CertificateHash]</pattern>
+                <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\SstpSvc\Parameters [SHA256CertificateHash]</pattern>
+                <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\SstpSvc\Parameters\ConfigStore [ListenerPort]</pattern>
+                <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\SstpSvc\Parameters\ConfigStore [UseHttps]</pattern>
+                <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\SstpSvc\Parameters\ConfigStore [V4CertPlumbedBySstp]</pattern>
+                <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\SstpSvc\Parameters\ConfigStore [V6CertPlumbedBySstp]</pattern>
+                <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\SstpSvc\Parameters [Sha256Enabled]</pattern>
+                <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\SstpSvc\Parameters [Sha1Enabled]</pattern>
+                <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\SstpSvc\Parameters [isHashConfiguredByAdmin]</pattern>
+                <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\SstpSvc\Parameters [NoCertRevocationCheck]</pattern>
+              </objectSet>
+            </merge>
+          </rules>
+        </migXml>
+      </supportedComponent>
+    </supportedComponents>
+  </migration>
+  <asmv3:configuration xmlns:asmv3="urn:schemas-microsoft-com:asm.v3" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State">
+    <asmv3:configurationSchema>
+      <xsd:schema xmlns="Microsoft-Windows-RasBase-RasSstp" targetNamespace="Microsoft-Windows-RasBase-RasSstp">
+        <xsd:element default="true" name="HKEY_LOCAL_MACHINE_System_CurrentControlSet_Services_SstpSvc_Parameters_UseHttps" type="xsd:boolean" wcm:description="Denotes whether HTTPS should be used or HTTP to be used (for Reverse Proxy scenario)" wcm:displayName="UseHttps" wcm:handler="regkey('HKEY_LOCAL_MACHINE\System\CurrentControlSet\Services\SstpSvc\Parameters\')" wcm:legacyName="UseHttps" wcm:legacyType="REG_DWORD" wcm:scope="allUsers" />
+        <xsd:element default="0" name="HKEY_LOCAL_MACHINE_System_CurrentControlSet_Services_SstpSvc_Parameters_ListenerPort" type="xsd:unsignedInt" wcm:description="The port number on which the server should listen on, for accepting the SSTP connections" wcm:displayName="Port" wcm:handler="regkey('HKEY_LOCAL_MACHINE\System\CurrentControlSet\Services\SstpSvc\Parameters\')" wcm:legacyName="ListenerPort" wcm:legacyType="REG_DWORD" wcm:scope="allUsers" />
+        <xsd:element name="HKEY_LOCAL_MACHINE_System_CurrentControlSet_Services_SstpSvc_Parameters_SHA1CertificateHash" type="xsd:hexBinary" wcm:description="Specifies the SHA1 certificate hash to be used to validate the crypto-binding specified by the client. This is used when SHA1Enabled is set." wcm:displayName="SHA1CertificateHash" wcm:handler="regkey('HKEY_LOCAL_MACHINE\System\CurrentControlSet\Services\SstpSvc\Parameters\')" wcm:legacyName="SHA1CertificateHash" wcm:legacyType="REG_BINARY" wcm:scope="allUsers" />
+        <xsd:element name="HKEY_LOCAL_MACHINE_System_CurrentControlSet_Services_SstpSvc_Parameters_SHA256CertificateHash" type="xsd:hexBinary" wcm:description="Specifies the SHA256 certificate hash to be used to validate the crypto-binding specified by the client. This is used when SHA256Enabled is set." wcm:displayName="SHA256CertificateHash" wcm:handler="regkey('HKEY_LOCAL_MACHINE\System\CurrentControlSet\Services\SstpSvc\Parameters\')" wcm:legacyName="SHA256CertificateHash" wcm:legacyType="REG_BINARY" wcm:scope="allUsers" />
+        <xsd:element default="0" name="HKEY_LOCAL_MACHINE_System_CurrentControlSet_Services_SstpSvc_Parameters_ConfigStore_ListenerPort" type="xsd:unsignedInt" wcm:accessControl="SSTPSVC_CONFIG_STORE_SDDL" wcm:description="The port number on which the server should listen on, for accepting the SSTP connections" wcm:displayName="Port" wcm:handler="regkey('HKEY_LOCAL_MACHINE\System\CurrentControlSet\Services\SstpSvc\Parameters\ConfigStore\')" wcm:legacyName="ListenerPort" wcm:legacyType="REG_DWORD" wcm:scope="allUsers" wcm:visible="false" />
+        <xsd:element default="true" name="HKEY_LOCAL_MACHINE_System_CurrentControlSet_Services_SstpSvc_Parameters_ConfigStore_UseHttps" type="xsd:boolean" wcm:accessControl="SSTPSVC_CONFIG_STORE_SDDL" wcm:description="Denotes whether HTTPS should be used or HTTP to be used (for Reverse Proxy scenario)" wcm:displayName="UseHttps" wcm:handler="regkey('HKEY_LOCAL_MACHINE\System\CurrentControlSet\Services\SstpSvc\Parameters\ConfigStore\')" wcm:legacyName="UseHttps" wcm:legacyType="REG_DWORD" wcm:scope="allUsers" wcm:visible="false" />
+        <xsd:element default="false" name="HKEY_LOCAL_MACHINE_System_CurrentControlSet_Services_SstpSvc_Parameters_ConfigStore_V4CertPlumbedBySstp" type="xsd:boolean" wcm:accessControl="SSTPSVC_CONFIG_STORE_SDDL" wcm:description="Denotes whether the V4 SSL certificate was plumbed by SSTP or not" wcm:displayName="V4CertPlumbedBySstp" wcm:handler="regkey('HKEY_LOCAL_MACHINE\System\CurrentControlSet\Services\SstpSvc\Parameters\ConfigStore\')" wcm:legacyName="V4CertPlumbedBySstp" wcm:legacyType="REG_DWORD" wcm:scope="allUsers" wcm:visible="false" />
+        <xsd:element default="false" name="HKEY_LOCAL_MACHINE_System_CurrentControlSet_Services_SstpSvc_Parameters_ConfigStore_V6CertPlumbedBySstp" type="xsd:boolean" wcm:accessControl="SSTPSVC_CONFIG_STORE_SDDL" wcm:description="Denotes whether the V6 SSL certificate was plumbed by SSTP or not" wcm:displayName="V6CertPlumbedBySstp" wcm:handler="regkey('HKEY_LOCAL_MACHINE\System\CurrentControlSet\Services\SstpSvc\Parameters\ConfigStore\')" wcm:legacyName="V6CertPlumbedBySstp" wcm:legacyType="REG_DWORD" wcm:scope="allUsers" wcm:visible="false" />
+      </xsd:schema>
+    </asmv3:configurationSchema>
+  </asmv3:configuration>
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string id="displayName0" value="WAN Miniport (SSTP)" />
+        <string id="description1" value="WAN Miniport for SSL-based VPN" />
+        <string id="displayName2" value="WRP_FILE_DEFAULT_SDDL" />
+        <string id="description3" value="Default SDDL for Windows Resource Protected file" />
+        <string id="displayName4" value="SERVICE_SECURITY_SDDL" />
+        <string id="description5" value="SDDL for the service" />
+        <string id="displayName6" value="WRP_REGKEY_READONLY_SDDL" />
+        <string id="description7" value="Read Only SDDL for Windows Resource Protected file" />
+        <string id="descriptionUseHttps" value="Denotes whether HTTPS should be used or HTTP to be used (for Reverse Proxy scenario)" />
+        <string id="displayNameUseHttps" value="UseHttps" />
+        <string id="descriptionSHA1CertificateHash" value="Specifies the SHA1 certificate hash to be used to validate the crypto-binding specified by the client. This is used when SHA1Enabled is set." />
+        <string id="descriptionSHA256CertificateHash" value="Specifies the SHA256 certificate hash to be used to validate the crypto-binding specified by the client. This is used when SHA256Enabled is set." />
+        <string id="displayNameSHA1CertificateHash" value="SHA1CertificateHash" />
+        <string id="displayNameSHA256CertificateHash" value="SHA256CertificateHash" />
+        <string id="displayNamePort" value="Port" />
+        <string id="descriptionPort" value="The port number on which the server should listen on, for accepting the SSTP connections" />
+        <string id="descCfgStore" value="Secure Socket Tunneling Protocol Service - Private Store for tracking current configuration" />
+        <string id="displayNameCfgStore" value="SSTP_CONFIG_STORE_SDDL" />
+        <string id="descV4Cert" value="Denotes whether the V4 SSL certificate was plumbed by SSTP or not" />
+        <string id="descV6Cert" value="Denotes whether the V6 SSL certificate was plumbed by SSTP or not" />
+        <string id="displayNameV4Cert" value="V4CertPlumbedBySstp" />
+        <string id="displayNameV6Cert" value="V6CertPlumbedBySstp" />
+        <string id="event_0x00000001" value="CoId=%1:The initial Secure Socket Tunneling Protocol request could not be successfully sent to the server. This can be due to network connectivity issues or certificate (trust) issues. The detailed error message is provided below. Correct the problem and try again.%n%n%2" />
+        <string id="event_0x00000002" value="CoId=%1:The initial Secure Socket Tunneling Protocol (SSTP) response could not be received. There might be intermittent network connectivity issues or the server might not be accepting SSTP connections. The detailed error message is provided below. Correct the problem and try again. %n%n%2" />
+        <string id="event_0x00000003" value="CoId=%1:The HTTP response received from the server-side Secure Socket Tunneling Protocol (SSTP) either does not have the version information or the version is not supported. The HTTP version information received is logged in the data section below. The HTTP response from the SSTP server must contain the version header and the version must be 1.1." />
+        <string id="event_0x00000004" value="CoId=%1:The server has refused the Secure Socket Tunneling Protocol (SSTP) request. Either a failure response code or no response code was received. The data portion below contains the response code that was received from the server. This is the HTTP status code present in the response. It can be because the web proxy or the SSTP server might be rejecting the connection, the server might not be configured for SSTP or the server might not have a port available for connection." />
+        <string id="event_0x00000005" value="CoId=%1:The Secure Socket Tunneling Protocol (SSTP) negotiation has failed. The failure code is stored in the Data section of this message. Correct the problem and try again." />
+        <string id="event_0x00000006" value="CoId=%1:The SSTP-based VPN connection to the remote access server was terminated because of a security check failure. Security settings on the remote access server do not match settings on this computer. Contact the system administrator of the remote access server and relay the following information:%n%nSHA1 Certificate Hash: %2%nSHA256 Certificate Hash: %3" />
+        <string id="event_0x00000007" value="The Secure Socket Tunneling Protocol service could not open the ConfigStore that is used for storing service-specific information. This can lead to incorrect service configuration or a leak of system resources." />
+        <string id="event_0x00000008" value="The Secure Socket Tunneling Protocol (SSTP) service could not initialize the HTTP layer for setting up the configuration. Any configuration changes applied by the administrator might not be applied by SSTP." />
+        <string id="event_0x00000009" value="The Secure Socket Tunneling Protocol service could not secure the URL with the new service configuration. Other applications or services can override the URL reservation. Use 'netsh.exe http add urlacl' command to secure the access control list (ACL) manually. The detailed error message is given at the end of this message. %n%nURL: %1 %n%n%2" />
+        <string id="event_0x0000000a" value="The Secure Socket Tunneling Protocol service could not secure the default URL. This can prevent the servicing of the SSTP modules. Use 'netsh.exe http add urlacl' command to secure the ACL manually. The detailed error message is given at the end of this message. %n%nURL: %1%n%n%2" />
+        <string id="event_0x0000000b" value="The Secure Socket Tunneling Protocol (SSTP) service could not find either a Server Authentication certificate or an Any Purpose certificate to be used for HTTPS. Check to see the availability of either a Server Authentication certificate or an Any Purpose certificate which also has a private key. SSTP sessions may not get established. Use ‘netsh.exe http add sslcert’ command to configure the certificate manually or install the appropriate certificate for SSTP use and restart RemoteAccess service." />
+        <string id="event_0x0000000c" value="The Secure Socket Tunneling Protocol service could not configure the following certificate for use with Internet Protocol version 4 (IPv4). This might prevent SSTP connections from being established successfully. Correct the problem and try again.%n%nCertificate Name - %2%n%n%1" />
+        <string id="event_0x0000000d" value="The Secure Socket Tunneling Protocol service could not configure the following certificate for use with Internet Protocol version 6 (IPv6). This might prevent SSTP connections from being established successfully. Correct the problem and try again.%n%nCertificate Name - %2%n%n%1" />
+        <string id="event_0x0000000e" value="The Secure Socket Tunneling Protocol service could not configure the route to the VPN server, which is required for the proper functioning of the VPN connection. The detailed error message is given below. Correct the problem and try again. %1" />
+        <string id="event_0x0000000f" value="The Secure Socket Tunneling Protocol service could not get the network address of the remote server. This address is required for establishing the route for redirecting the traffic over the VPN interface. The detailed error message is provided below. Correct the problem and try again. %1" />
+        <string id="event_0x00000010" value="CoId=%1:The Secure Socket Tunneling Protocol server has provided a certificate with an Enhanced Key Usage that is neither Server Authentication nor Any Purpose. This client will not accept the certificate. The connection will be canceled. Contact the server administrator to correct the issue and try again." />
+        <string id="event_0x00000011" value="The Secure Socket Tunneling Protocol service could not open the Parameters section of the registry to read the configuration values, so SSTP cannot be initialized. The detailed error message is provided below. Correct the problem and try again. %n%n%1" />
+        <string id="event_0x00000012" value="The Secure Socket Tunneling Protocol service either could not read the SHA256 certificate hash from the registry or the data is invalid. To be valid, the SHA256 certificate hash must be of type REG_BINARY and 32 bytes in length. SSTP might not be able to retrieve the value from the registry due to some other system failure. The detailed error message is provided below. SSTP connections will not be accepted on this server. Correct the problem and try again. %n%n%1" />
+        <string id="event_0x00000013" value="The Secure Socket Tunneling Protocol service either could not read the SHA1 certificate hash from the registry or the data is invalid. To be valid, the SHA1 certificate hash must be of type REG_BINARY and 20 bytes in length. SSTP might not be able to retrieve the value from the registry due to some other system failure. The detailed error message is provided below. SSTP connections will not be accepted on this server. Correct the problem and try again. %n%n%1" />
+        <string id="event_0x00000014" value="The Secure Socket Tunneling Protocol service was not able to allocate memory for setting up the configuration for accepting connections. The system might be low on memory. Correct the problem and restart the service." />
+        <string id="event_0x00000015" value="The Secure Socket Tunneling Protocol service was not able to get the hash for the certificate configured with HTTP. The detailed error message is provided below. Correct the problem and try again. %n%n%1" />
+        <string id="event_0x00000016" value="The Secure Socket Tunneling Protocol service could not be configured to accept incoming connections. The detailed error message is provided below. Correct the problem and restart the SSTP service. %n%n%1" />
+        <string id="event_0x00000017" value="CoId=%1:The initial Secure Socket Tunneling Protocol request could not be successfully sent to the server. This can be due to the presence of a web proxy between the client and the server requiring authentication. Proxy authentication is not supported by this version of SSTP." />
+        <string id="event_0x00000018" value="The certificates bound to the HTTPS listener for IPv4 and IPv6 do not match. For SSTP connections, certificates should be configured for 0.0.0.0:Port for IPv4, and [::]:Port for IPv6. The port is the listener port configured to be used with SSTP. The default listener port is 443." />
+        <string id="event_0x00000019" value="The certificate used for Secure Socket Tunnelling Protocol (SSTP) is missing. You should configure a new certificate for SSTP or use default configuration" />
+        <string id="event_0x00000020" value="The thumbprint (cert hash) of the certificate used for Secure Socket Tunnelling Protocol (SSTP) %1 is different than the certificate bound %2 to the Web listener (HTTP.sys). Configure SSTP to use the default certificate or the certificate bound to SSL. You can configure web server applications to use the same certificate used by SSTP" />
+        <string id="event_0x00000021" value="CoId=%1: “Secure Socket Tunnelling Protocol (SSTP)” service could not configure the VPN server specific cookies. The detailed information on the error is given below.%n%n%%2" />
+        <string id="EventProviderName" value="Microsoft-Windows-RasSstp" />
+      </stringTable>
+    </resources>
+  </localization>
+  <instrumentation xmlns:ut="http://manifests.microsoft.com/win/2004/08/windows/networkevents" xmlns:win="http://manifests.microsoft.com/win/2004/08/windows/events" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <events xmlns="http://schemas.microsoft.com/win/2004/08/events">
+      <provider guid="{6c260f2c-049a-43d8-bf4d-d350a4e6611a}" message="$(string.EventProviderName)" messageFileName="%SystemRoot%\System32\sstpsvc.dll" name="Microsoft-Windows-RasSstp" resourceFileName="%SystemRoot%\System32\sstpsvc.dll" symbol="SSTP_EVENT_SOURCE" />
+      <cmi />
+    </events>
+  </instrumentation>
+</assembly>

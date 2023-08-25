@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-SharedPC-AccountManager" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <registryKeys>
+    <registryKey keyName="HKEY_CLASSES_ROOT\AppId\{f7f34f79-6791-4d4e-9f15-9eaecd50bd78}">
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+      <registryValue name="" valueType="REG_SZ" value="Account Manager Service" />
+      <registryValue name="LocalService" valueType="REG_SZ" value="shpamsvc" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{e7921051-7828-4d09-b4fe-aa5393e85971}">
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+      <registryValue name="" valueType="REG_SZ" value="AccountManagerUserRequest" />
+      <registryValue name="AppID" valueType="REG_SZ" value="{f7f34f79-6791-4d4e-9f15-9eaecd50bd78}" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\SharedPC">
+      <securityDescriptor name="ADMIN_FULL_ACCESS_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\System\CurrentControlset\Services\shpamsvc">
+      <overridable name="Start" scope="Microsoft" type="REG_DWORD" />
+      <overridable name="DelayedAutostart" scope="Microsoft" type="REG_DWORD" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\System\CurrentControlset\Services\shpamsvc\Parameters">
+      <registryValue name="ServiceDll" valueType="REG_EXPAND_SZ" value="%systemroot%\system32\Windows.SharedPC.AccountManager.dll" />
+      <registryValue name="ServiceMain" valueType="REG_SZ" value="ServiceMain" />
+      <registryValue name="ServiceDllUnloadOnStop" valueType="REG_DWORD" value="0x00000001" />
+    </registryKey>
+  </registryKeys>
+  <memberships>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories" version="1.0.0.0" publicKeyToken="365143bb27e7ac8b" typeName="SvcHost" />
+      <categoryInstance subcategory="netsvcs">
+        <serviceGroup position="last" serviceName="shpamsvc" />
+      </categoryInstance>
+    </categoryMembership>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories.Services" version="10.0.22621.1" publicKeyToken="31bf3856ad364e35" typeName="Service" />
+      <categoryInstance>
+        <serviceData name="shpamsvc" displayName="@%SystemRoot%\System32\Windows.SharedPC.AccountManager.dll,-100" errorControl="normal" start="disabled" type="win32ShareProcess" description="@%SystemRoot%\System32\Windows.SharedPC.AccountManager.dll,-101" dependOnService="RpcSs,ProfSvc" imagePath="%SystemRoot%\System32\svchost.exe -k netsvcs -p" objectName="LocalSystem" requiredPrivileges="SeImpersonatePrivilege, SeTcbPrivilege, SeTakeOwnershipPrivilege" />
+      </categoryInstance>
+    </categoryMembership>
+  </memberships>
+  <taskScheduler>
+    <Task xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task">
+      <RegistrationInfo>
+        <URI>\Microsoft\Windows\SharedPC\Account Cleanup</URI>
+      </RegistrationInfo>
+      <Principals>
+        <Principal id="Author">
+          <RunLevel>HighestAvailable</RunLevel>
+          <GroupId>NT AUTHORITY\SYSTEM</GroupId>
+        </Principal>
+      </Principals>
+      <Settings>
+        <MultipleInstancesPolicy>IgnoreNew</MultipleInstancesPolicy>
+        <DisallowStartIfOnBatteries>true</DisallowStartIfOnBatteries>
+        <AllowHardTerminate>false</AllowHardTerminate>
+        <StartWhenAvailable>true</StartWhenAvailable>
+        <RunOnlyIfNetworkAvailable>false</RunOnlyIfNetworkAvailable>
+        <MaintenanceSettings>
+          <Period>P1D</Period>
+        </MaintenanceSettings>
+        <AllowStartOnDemand>true</AllowStartOnDemand>
+        <Enabled>false</Enabled>
+        <Hidden>false</Hidden>
+        <RunOnlyIfIdle>true</RunOnlyIfIdle>
+        <DisallowStartOnRemoteAppSession>false</DisallowStartOnRemoteAppSession>
+        <UseUnifiedSchedulingEngine>true</UseUnifiedSchedulingEngine>
+        <WakeToRun>true</WakeToRun>
+        <ExecutionTimeLimit>PT30M</ExecutionTimeLimit>
+        <Priority>7</Priority>
+      </Settings>
+      <Actions Context="Author">
+        <Exec>
+          <Command>%windir%\System32\rundll32.exe</Command>
+          <Arguments>%windir%\System32\Windows.SharedPC.AccountManager.dll,StartMaintenance</Arguments>
+        </Exec>
+      </Actions>
+    </Task>
+  </taskScheduler>
+  <file name="Windows.SharedPC.AccountManager.dll" destinationPath="$(runtime.system32)\" sourceName="Windows.SharedPC.AccountManager.dll" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>PfEs+vtaXnOfIe7LveyQH2O7W4Up/vJP+Z3o8SjKLWs=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="WRP_REGKEY_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;CI;GA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;CI;GR;;;SY)(A;CI;GR;;;BA)(A;CI;GR;;;BU)(A;CI;GR;;;S-1-15-2-1)(A;CI;GR;;;S-1-15-3-1024-1065365936-1281604716-3511738428-1654721687-432734479-3232135806-4053264122-3456934681)" operationHint="replace" />
+          <securityDescriptorDefinition name="ADMIN_FULL_ACCESS_SDDL" sddl="O:BAG:SYD:(A;;GA;;;BA)(A;;GA;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" description="Default SDDL for Windows Resource Protected file" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string id="description" value="Manifest for Windows.SharedPC.AccountManager.dll" />
+        <string id="displayName" value="Windows.SharedPC.AccountManager.dll" />
+      </stringTable>
+    </resources>
+  </localization>
+  <migration scope="Upgrade" settingsVersion="1">
+    <migXml xmlns="">
+      <rules context="system">
+        <include>
+          <objectSet>
+            <pattern type="Registry">HKLM\System\CurrentControlSet\Services\shpamsvc [Start]</pattern>
+            <pattern type="Registry">HKLM\System\CurrentControlSet\Services\shpamsvc [DelayedAutostart]</pattern>
+          </objectSet>
+        </include>
+      </rules>
+    </migXml>
+    <supportedComponents>
+      <supportedComponent>
+        <assemblyIdentity name="_" version="1.0.0.0" />
+        <supportedComponentIdentity language="neutral" name="Microsoft-Windows-SharedPC-AccountManager" processorArchitecture="*" settingsVersionRange="1" xmlns="urn:schemas-microsoft-com:asm.v3" />
+      </supportedComponent>
+    </supportedComponents>
+  </migration>
+</assembly>

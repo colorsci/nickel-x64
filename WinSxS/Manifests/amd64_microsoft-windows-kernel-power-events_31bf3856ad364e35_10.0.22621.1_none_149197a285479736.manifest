@@ -1,0 +1,413 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-Kernel-Power-Events" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <registryKeys>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\WMI\Security">
+      <registryValue name="331c3b3a-2005-44c2-ac5e-77220c37d6b4" valueType="REG_BINARY" value="01000480140000002400000000000000340000000102000000000005200000002002000001020000000000052000000020020000020048000300000000001400ff0f120001010000000000051200000000001800ff0f1200010200000000000520000000200200000000140080000000010100000000000513000000" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\WMI\Autologger\SQMLogger\{331c3b3a-2005-44c2-ac5e-77220c37d6b4}">
+      <registryValue name="LoggerName" valueType="REG_SZ" value="SQMLogger" />
+      <registryValue name="Enabled" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="EnableLevel" valueType="REG_DWORD" value="0x00000004" />
+      <registryValue name="MatchAnyKeyword" valueType="REG_QWORD" value="0000000000000800" />
+      <registryValue name="EnableProperty" valueType="REG_DWORD" value="0x00000002" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\WMI\Autologger\UBPM\{aa1f73e8-15fd-45d2-abfd-e7f64f78eb11}">
+      <registryValue name="LoggerName" valueType="REG_SZ" value="UBPM" />
+      <registryValue name="Enabled" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="EnableLevel" valueType="REG_DWORD" value="0x00000004" />
+      <registryValue name="MatchAnyKeyword" valueType="REG_QWORD" value="0100000000000000" />
+    </registryKey>
+  </registryKeys>
+  <instrumentation xmlns:ms="http://manifests.microsoft.com/win/2004/08/windows/events" xmlns:win="http://manifests.microsoft.com/win/2004/08/windows/events" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <events xmlns="http://schemas.microsoft.com/win/2004/08/events">
+      <provider xmlns:potrg="http://manifests.microsoft.com/windows/kernel/powertrigger" guid="{aa1f73e8-15fd-45d2-abfd-e7f64f78eb11}" message="$(string.PowerTriggerProviderName)" messageFileName="%systemroot%\system32\microsoft-windows-kernel-power-events.dll" name="Microsoft-Windows-Kernel-PowerTrigger" resourceFileName="%systemroot%\system32\microsoft-windows-kernel-power-events.dll" symbol="POP_TRIGGER_ETW_PROVIDER" />
+      <provider xmlns:thrmpoll="http://manifests.microsoft.com/windows/kernel/thermalpolling" guid="{e8a7c168-81ee-465c-8e8e-d39a2ac1ca41}" message="$(string.ThermalPollingProviderName)" messageFileName="%systemroot%\system32\microsoft-windows-kernel-power-events.dll" name="Microsoft-Windows-Thermal-Polling" resourceFileName="%systemroot%\system32\microsoft-windows-kernel-power-events.dll" symbol="THERMAL_POLLING_ETW_PROVIDER" />
+      <provider xmlns:po="http://manifests.microsoft.com/windows/kernel/power" guid="{331c3b3a-2005-44c2-ac5e-77220c37d6b4}" message="$(string.PowerProviderName)" messageFileName="%systemroot%\system32\microsoft-windows-kernel-power-events.dll" name="Microsoft-Windows-Kernel-Power" resourceFileName="%systemroot%\system32\microsoft-windows-kernel-power-events.dll" symbol="POP_ETW_PROVIDER">
+        <channels>
+          <importChannel chid="chidSystem" name="System" />
+          <channel chid="chidPower" name="Microsoft-Windows-Kernel-Power/Diagnostic" type="Analytic" />
+          <channel chid="chidThermalDiagnostic" name="Microsoft-Windows-Kernel-Power/Thermal-Diagnostic" type="Analytic" />
+          <channel chid="chidThermalOperational" enabled="true" isolation="System" message="$(string.ThermalOperationalChannelName)" name="Microsoft-Windows-Kernel-Power/Thermal-Operational" type="Operational" />
+        </channels>
+      </provider>
+      <provider xmlns:popep="http://manifests.microsoft.com/windows/kernel/popep" guid="{5412704E-B2E1-4624-8FFD-55777B8F7373}" message="$(string.PepProviderName)" messageFileName="%systemroot%\system32\microsoft-windows-kernel-power-events.dll" name="Microsoft-Windows-Kernel-Pep" resourceFileName="%systemroot%\system32\microsoft-windows-kernel-power-events.dll" symbol="POP_PEP_ETW_PROVIDER">
+        <channels>
+          <channel chid="chidPepPower" name="Microsoft-Windows-Kernel-Pep/Diagnostic" type="Analytic" />
+        </channels>
+      </provider>
+      <cmi />
+    </events>
+  </instrumentation>
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string id="ThermalOperationalChannelName" value="Thermal-Operational" />
+        <string id="PowerProviderName" value="Microsoft-Windows-Kernel-Power" />
+        <string id="EventMap.SleepReason.DeviceSystemButton" value="Button or Lid" />
+        <string id="EventMap.SleepReason.DeviceThermalZone" value="Thermal Zone" />
+        <string id="EventMap.SleepReason.DeviceBattery" value="Battery" />
+        <string id="EventMap.SleepReason.InitiatePowerActionApi" value="Application API" />
+        <string id="EventMap.SleepReason.SetPowerStateApi" value="Kernel API" />
+        <string id="EventMap.SleepReason.ImmediateDozeS4Timeout" value="Hibernate from Sleep - Fixed Timeout" />
+        <string id="EventMap.SleepReason.ImmediateDozeS4Predicted" value="Hibernate from Sleep - User Away Predicted" />
+        <string id="EventMap.SleepReason.ImmediateDozeS4PredictedNoWake" value="Hibernate from Sleep without Wake - User Away Predicted" />
+        <string id="EventMap.SleepReason.PolicyImmediateDozeS4AdaptiveBudget" value="Hibernate from Sleep - Standby Battery Budget Exceeded" />
+        <string id="EventMap.SleepReason.PolicyImmediateDozeS4AdaptiveReserveNoWake" value="Hibernate from Sleep without Wake - Reserve Battery Level Reached" />
+        <string id="EventMap.SleepReason.PolicySystemInitiatedShutdown" value="Acpi Initiated Shutdown through Kernel API" />
+        <string id="EventMap.SleepReason.SystemIdle" value="System Idle" />
+        <string id="EventMap.SystemPowerState.Working" value="System Power State Working" />
+        <string id="EventMap.SystemPowerState.Sleeping1" value="System Power State Sleeping1" />
+        <string id="EventMap.SystemPowerState.Sleeping2" value="System Power State Sleeping2" />
+        <string id="EventMap.SystemPowerState.Sleeping3" value="System Power State Sleeping3" />
+        <string id="EventMap.SystemPowerState.Hibernate" value="System Power State Hibernate" />
+        <string id="EventMap.SystemPowerState.Shutdown" value="System Power State Shutdown" />
+        <string id="EventMap.PowerAction.Sleep" value="Power Action Sleep" />
+        <string id="EventMap.PowerAction.Hibernate" value="Power Action Hibernate" />
+        <string id="EventMap.PowerAction.Shutdown" value="Power Action Shutdown" />
+        <string id="EventMap.PowerAction.ShutdownReset" value="Power Action Reboot" />
+        <string id="EventMap.PowerAction.ShutdownOff" value="Power Action Shutdown Off" />
+        <string id="EventMap.PowerAction.DisplayOff" value="Power Action Turn Off The Display" />
+        <string id="EventMap.Cooling.Engaged" value="engaged" />
+        <string id="EventMap.Cooling.Disengaged" value="disengaged" />
+        <string id="EventMap.CsEnterExitReason.Unknown" value="Unknown" />
+        <string id="EventMap.CsEnterExitReason.PowerButton" value="Power Button" />
+        <string id="EventMap.CsEnterExitReason.RemoteConnection" value="Remote Connection" />
+        <string id="EventMap.CsEnterExitReason.ScMonitorPower" value="SC_MONITORPOWER" />
+        <string id="EventMap.CsEnterExitReason.UserInput" value="User Input" />
+        <string id="EventMap.CsEnterExitReason.AcDcDisplayBurst" value="AC/DC Display Burst" />
+        <string id="EventMap.CsEnterExitReason.UserDisplayBurst" value="User Display Burst" />
+        <string id="EventMap.CsEnterExitReason.PoSetSystemState" value="PoSetSystemState" />
+        <string id="EventMap.CsEnterExitReason.SetThreadExecutionState" value="SetThreadExecutionState" />
+        <string id="EventMap.CsEnterExitReason.FullWake" value="Full Wake" />
+        <string id="EventMap.CsEnterExitReason.SessionUnlock" value="Session Unlock" />
+        <string id="EventMap.CsEnterExitReason.ScreenOffRequest" value="Screen Off Request" />
+        <string id="EventMap.CsEnterExitReason.SleepButton" value="Sleep Button" />
+        <string id="EventMap.CsEnterExitReason.Lid" value="Lid" />
+        <string id="EventMap.CsEnterExitReason.IdleTimeout" value="Idle Timeout" />
+        <string id="EventMap.CsEnterExitReason.PolicyChange" value="Policy Change" />
+        <string id="EventMap.CsEnterExitReason.BatteryCountChange" value="Battery Count Change" />
+        <string id="EventMap.CsEnterExitReason.ResumeS4" value="Resume from Hibernate" />
+        <string id="EventMap.DynamicTickDisabled.BcdOverride" value="BCD override" />
+        <string id="EventMap.DynamicTickDisabled.NoHwSuppot" value="No HW support" />
+        <string id="EventMap.DynamicTickDisabled.EmOverride" value="Errata Manager override" />
+        <string id="EventMap.SpmStatus.SpmStatusFailedNoMemory" value="Out of memory" />
+        <string id="EventMap.SpmStatus.SpmStatusFailedNoPoliciesFound" value="No power policies support found" />
+        <string id="EventMap.SpmStatus.SpmStatusFailedToOpenExtHandle" value="Failed to open registry handle to external power settings" />
+        <string id="EventMap.SpmStatus.SpmStatusFailedToOpenIntHandle" value="Failed to open registry handle to internal power settings" />
+        <string id="EventMap.SpmStatus.SpmStatusWaitingForRegistration" value="Waiting for registration" />
+        <string id="EventMap.SpmStatus.SpmStatusInitialized" value="Initialized successfully" />
+        <string id="EventMap.PerfSetType.Discrete" value="Discrete" />
+        <string id="EventMap.PerfSetType.Range" value="Range" />
+        <string id="EventMap.PerfSetUnit.Other" value="Other" />
+        <string id="EventMap.PerfSetUnit.Frequency" value="Clock speed (in Hertz)" />
+        <string id="EventMap.PerfSetUnit.Bandwidth" value="Memory bandwidth (in bps)" />
+        <string id="EventMap.PerfPhase.DriverCallback" value="About to issue driver callback." />
+        <string id="EventMap.PerfPhase.PEPCompleted" value="PEP completed request." />
+        <string id="EventMap.PerfPhase.PEPPending" value="PEP notified by returned pending." />
+        <string id="EventMap.SystemIdleTimeout.Unknown" value="Unknown." />
+        <string id="EventMap.SystemIdleTimeout.S0LowPower" value="The user is present, the system is InstantGo capable, and the system is not already in S0 Low Power, so using IdleTimeout." />
+        <string id="EventMap.SystemIdleTimeout.Suspend" value="The user is present, the system is not InstantGo capable but does support S1, S2 or S3, so using IdleTimeout." />
+        <string id="EventMap.SystemIdleTimeout.Hibernate" value="The user is present but either the system does not support InstantGo or S1, S2 or S3. Using DozeS4Timeout." />
+        <string id="EventMap.SystemIdleTimeout.Unattend" value="The user is not present. Using UnattendTimeout." />
+        <string id="EventMap.SystemIdleTimeout.Disabled" value="The system idle timeout is disabled because the system does not support an idle state." />
+        <string id="EventMap.SystemIdleTimeResetReason.Unknown" value="Unknown." />
+        <string id="EventMap.SystemIdleTimeResetReason.UserInput" value="The system detected user input." />
+        <string id="EventMap.SystemIdleTimeResetReason.UserPresentSet" value="An application has indicated the user is present." />
+        <string id="EventMap.SystemIdleTimeResetReason.SystemRequired" value="An application requires system execution." />
+        <string id="EventMap.SystemIdleTimeResetReason.IdleParametersChanged" value="The system idle parameters changed." />
+        <string id="EventMap.SystemIdleTimeResetReason.IdleActionInitiated" value="The system is entering a sleep state due to the idle timeout." />
+        <string id="EventMap.MapSystemIdleDozeTimerSource.Unknown" value="Unknown." />
+        <string id="EventMap.MapSystemIdleDozeTimerSource.FixedHibernateIdleTimeout" value="Fixed hibernate idle timeout." />
+        <string id="EventMap.MapSystemIdleDozeTimerSource.SmartUserPresenceGracePeriod" value="Smart standby grace period after user predicted away." />
+        <string id="EventMap.MapSystemIdleDozeTimerSource.AdaptiveStandbyBudget" value="Adaptive standby connected standby battery drain budget exceeded." />
+        <string id="EventMap.MapSystemIdleDozeTimerSource.AdaptiveStandbyReserve" value="Adaptive standby minimum reserved screen-on time battery capacity reached." />
+        <string id="EventMap.MapSystemIdleDozeTimerCancelledReason.Unknown" value="Unknown." />
+        <string id="EventMap.MapSystemIdleDozeTimerCancelledReason.ExitCS" value="System exited connected standby." />
+        <string id="EventMap.MapSystemIdleDozeTimerCancelledReason.UserPresent" value="Global user presence was asserted." />
+        <string id="EventMap.MapSystemIdleDozeTimerCancelledReason.SmartUserPresencePredictionUpdated" value="Smart standby predictions updated." />
+        <string id="EventMap.MapSystemIdleDozeTimerCancelledReason.AdaptiveStandbyAction" value="Adaptive standby was triggered." />
+        <string id="EventMap.SystemIdleInitReason.Unknown" value="Unknown" />
+        <string id="EventMap.SystemIdleInitReason.PostSleep" value="Post-Sleep" />
+        <string id="EventMap.SystemIdleInitReason.AcDcStateChange" value="AC/DC State Change" />
+        <string id="EventMap.SystemIdleInitReason.PolicyChange" value="Power Policy Change" />
+        <string id="EventMap.SystemIdleInitReason.FullWake" value="Full Wake" />
+        <string id="EventMap.MapCsComplianceType.Storage" value="Storage" />
+        <string id="EventMap.MapCsComplianceType.WiFi" value="Wireless" />
+        <string id="EventMap.MapCsComplianceType.Mbn" value="MBB" />
+        <string id="EventMap.MapCsComplianceType.Audio" value="Audio" />
+        <string id="EventMap.MapCsComplianceType.Ethernet" value="Ethernet" />
+        <string id="EventMap.MapCsComplianceState.NonCompliant" value="NonCompliant" />
+        <string id="EventMap.MapCsComplianceState.Absent" value="Absent" />
+        <string id="EventMap.MapCsComplianceState.Compliant" value="Compliant" />
+        <string id="EventMessage.AppVeto" value="The application %4 stopped the power transition." />
+        <string id="EventMessage.ServiceVeto" value="The service %3 stopped the power transition." />
+        <string id="EventMessage.DriverVeto" value="The driver %2 for device %4 stopped the power transition." />
+        <string id="EventMessage.DirtyTransition_v0" value="The last sleep transition was unsuccessful. This error could be caused if the system stopped responding, failed, or lost power during the sleep transition." />
+        <string id="EventMessage.DirtyTransition" value="The system has rebooted without cleanly shutting down first. This error could be caused if the system stopped responding, crashed, or lost power unexpectedly." />
+        <string id="EventMessage.SetExecutionState" value="The application or service %3 has overridden user power management settings with a code of %1." />
+        <string id="EventMessage.SetTimeResolutionChange_v0" value="The application or service %3 is attempting to update the system timer resolution to a value of %1." />
+        <string id="EventMessage.SetTimeResolutionChange_v1" value="The application or service %5 is attempting to update the system timer resolution to a value of %1." />
+        <string id="EventMessage.SetTimeResolutionKernelChange" value="A driver is attempting to update the system timer resolution to a value of %1." />
+        <string id="EventMessage.SetTimeResolutionUpdate" value="The system timer resolution has changed to a value of %1." />
+        <string id="EventMessage.SetTimeResolutionRundown" value="The system timer resolution currently has a value of %1." />
+        <string id="EventMessage.SetTimeResolutionRequestRundown" value="The application or service %4 currently has a system timer resolution request of %1." />
+        <string id="EventMessage.PreSleepNotification" value="The system is entering sleep." />
+        <string id="EventMessage.PreSleepNotification2" value="The system is entering sleep.%n%nSleep Reason: %3" />
+        <string id="EventMessage.PostSleepNotification" value="The system has resumed from sleep." />
+        <string id="EventMessage.AwayMode" value="The system is entering Away Mode." />
+        <string id="EventMessage.SkipTick" value="Timer tick distribution policy:             %n             %nDisabled: %1             %nOverridden: %2" />
+        <string id="EventMessage.CoolingMode" value="ACPI thermal zone %2 has changed to %4 cooling." />
+        <string id="EventMessage.PassiveCooling_V0" value="ACPI thermal zone %2 has %5 passive cooling.             %nEventTime = %3             %n_PSV = %7K             %n_TMP = %8K             %n_TC1 = %9             %n_TC2 = %10             %n_TSP = %11ms             %nDelta P = %12             %n_PSL - see event data." />
+        <string id="EventMessage.PassiveCooling_V1" value="ACPI thermal zone %2 has %4 passive cooling.             %nEventTime = %3             %n_PSV = %5K             %n_TMP = %6K             %n_TC1 = %7             %n_TC2 = %8             %n_TSP = %9ms             %nDelta P = %10" />
+        <string id="EventMessage.PassiveCooling" value="ACPI thermal zone %2 has %4 passive cooling.             %nEventTime = %3             %n_PSV = %5K             %n_TMP = %6K             %n_TC1 = %7             %n_TC2 = %8             %n_TSP = %9ms             %nDelta P = %10             %nMinimum Throttle = %11" />
+        <string id="EventMessage.ActiveCooling_V0" value="ACPI thermal zone %2 has %5 active cooling.             %nEventTime = %3             %n_AC0 = %6K             %n_AC1 = %7K             %n_AC2 = %8K             %n_AC3 = %9K             %n_AC4 = %10K             %n_AC5 = %11K             %n_AC6 = %12K             %n_AC7 = %13K             %n_AC8 = %14K             %n_AC9 = %15K             %n_TMP = %16K" />
+        <string id="EventMessage.ActiveCooling" value="ACPI thermal zone %2 has %4 active cooling.             %nEventTime = %3             %n_AC0 = %5K             %n_AC1 = %6K             %n_AC2 = %7K             %n_AC3 = %8K             %n_AC4 = %9K             %n_AC5 = %10K             %n_AC6 = %11K             %n_AC7 = %12K             %n_AC8 = %13K             %n_AC9 = %14K             %n_TMP = %15K" />
+        <string id="EventMessage.CriticalTripPoint" value="The system was shut down due to a critical thermal event.             %nShutdown Time = %3             %nACPI Thermal Zone = %2             %n_CRT = %4K" />
+        <string id="EventMessage.S4TripPoint" value="The system was hibernated due to a critical thermal event.%nHibernate Time = %3             %nACPI Thermal Zone = %2             %n_HOT = %4K" />
+        <string id="EventMessage.ThermalZoneEnumerated_v0" value="ACPI thermal zone %2 has been enumerated.             %n_PSV = %4K             %n_TC1 = %5             %n_TC2 = %6             %n_TSP = %7ms             %n_AC0 = %8K             %n_AC1 = %9K             %n_AC2 = %10K             %n_AC3 = %11K             %n_AC4 = %12K             %n_AC5 = %13K             %n_AC6 = %14K             %n_AC7 = %15K             %n_AC8 = %16K             %n_AC9 = %17K             %n_CRT = %18K             %n_HOT = %19K             %n_PSL - see event data." />
+        <string id="EventMessage.ThermalZoneEnumerated_v1" value="ACPI thermal zone %2 has been enumerated.             %n_PSV = %3K             %n_TC1 = %4             %n_TC2 = %5             %n_TSP = %6ms             %n_AC0 = %7K             %n_AC1 = %8K             %n_AC2 = %9K             %n_AC3 = %10K             %n_AC4 = %11K             %n_AC5 = %12K             %n_AC6 = %13K             %n_AC7 = %14K             %n_AC8 = %15K             %n_AC9 = %16K             %n_CRT = %17K             %n_HOT = %18K" />
+        <string id="EventMessage.ThermalZoneEnumerated_v2" value="ACPI thermal zone %2 has been enumerated.             %n_PSV = %3K             %n_TC1 = %4             %n_TC2 = %5             %n_TSP = %6ms             %n_AC0 = %7K             %n_AC1 = %8K             %n_AC2 = %9K             %n_AC3 = %10K             %n_AC4 = %11K             %n_AC5 = %12K             %n_AC6 = %13K             %n_AC7 = %14K             %n_AC8 = %15K             %n_AC9 = %16K             %n_CRT = %17K             %n_HOT = %18K             %nminimum throttle = %19" />
+        <string id="EventMessage.ThermalZoneEnumerated" value="ACPI thermal zone %2 has been enumerated.             %n_PSV = %3K             %n_TC1 = %4             %n_TC2 = %5             %n_TSP = %6ms             %n_AC0 = %7K             %n_AC1 = %8K             %n_AC2 = %9K             %n_AC3 = %10K             %n_AC4 = %11K             %n_AC5 = %12K             %n_AC6 = %13K             %n_AC7 = %14K             %n_AC8 = %15K             %n_AC9 = %16K             %n_CRT = %17K             %n_HOT = %18K             %nminimum throttle = %19             %n_CR3 = %20K" />
+        <string id="EventMessage.IllegalProcessorThrottle" value="Processor %1 was throttled by an entity other than the kernel power manager. %nIA32_CLOCK_MODULATION MSR = %2. %nElapsed time since last event logged = %3s. %nLog interval = %4 events." />
+        <string id="EventMessage.ShutdownAction" value="The kernel power manager has initiated a shutdown transition.%n%nAction: %1 %nEvent Code: %2 %nReason: %3" />
+        <string id="EventMessage.IdleResiliencyStart_v1" value="Idle resiliency activated with requested clock period: %1(Internal flags:%2, Ticks:%3)." />
+        <string id="EventMessage.IdleResiliencyStop_v1" value="Idle resiliency deactivated (Internal flags:%2)." />
+        <string id="EventMessage.AdmpSessionInfo_v1" value="SessionId: %1, Console:%2" />
+        <string id="EventMessage.AdmpSensorValue_v1" value="User presence:%1" />
+        <string id="EventMessage.AdmpSensorInvalid_v1" value="Reason code:%1" />
+        <string id="EventMessage.AdmpSensorSmoothing_v1" value="Engaged:%1" />
+        <string id="EventMessage.AdmpValue_v1" value="Session Id:%1, Value: %2" />
+        <string id="EventMessage.AdmpSensorInputChanged_v1" value="Old value:%1, New value: %2" />
+        <string id="EventMessage.AdmpTimeout_v1" value="Value:%1, Zeroed: %2, Computed: %3" />
+        <string id="EventMessage.AdmpPolicyChanged" value="Sensor display timeout:%1, display timeout: %2, sensor input timeout:%3, input timeout: %4, sensor input enabled:%5" />
+        <string id="EventMessage.IoCoalescingOn_v1" value="IO coalescing activated with spindown period: %1, Timer:%2, Flush:%3, Flags:%4." />
+        <string id="EventMessage.IoCoalescingOff_v1" value="IO coalescing deactivated." />
+        <string id="EventMessage.IoCoalescingFlush_v1" value="IO coalescing flush command generated." />
+        <string id="EventMessage.IoCoalescingDiskIdle_v1" value="IO coalescing disk device %1 is about to be spun down." />
+        <string id="PowerTriggerProviderName" value="Microsoft-Windows-Kernel-PowerTrigger" />
+        <string id="EventMessage.S3FwSuspendStats" value="Firmware S3 times. SuspendStart: %1, SuspendEnd: %2" />
+        <string id="EventMessage.S3FwResumeStats" value="Firmware S3 times. ResumeCount: %1, FullResume: %2, AverageResume: %3" />
+        <string id="EventMessage.MtrrChanged" value="The system firmware has changed the processor's memory type range registers (MTRRs) across a sleep state transition (S%1). This can result in reduced resume performance." />
+        <string id="EventMessage.CsEnterReason" value="The system is entering Modern Standby %n%nReason: %1." />
+        <string id="EventMessage.CsExitReason" value="The system is exiting Modern Standby %n%nReason: %10." />
+        <string id="EventMessage.DynamicTickDisabled" value="The system has been constrained to a periodic tick %n%nReason: %1." />
+        <string id="EventMessage.SpmStatusUpdate" value="Scenario Power Manager (SPM) policy framework has current status: %1." />
+        <string id="EventMessage.StandbyConnectivityUpdate" value="Connectivity state in standby: %1, Reason: %2" />
+        <string id="EventMessage.BackgroundActivityPolicyUpdate" value="Background Activity Policy updated from %1 to %2." />
+        <string id="EventMessage.NtInitiatePowerActionApiCall" value="User-mode process attempted to change the system state by calling SetSuspendState or SetSystemPowerState APIs." />
+        <string id="ThermalPollingProviderName" value="Microsoft-Windows-Thermal-Polling" />
+        <string id="EventMessage.BatteryTriggerMet" value="%1 Battery Trigger Met" />
+        <string id="PepProviderName" value="Microsoft-Windows-Kernel-Pep" />
+        <string id="EventMessage.AbnormalReset" value="The system has rebooted without cleanly shutting down first. This error is caused because the system stopped responding and the hardware watchdog triggered a system reset." />
+        <string id="EventMap.CsEnterExitReason.GracePeriod" value="Grace Period" />
+        <string id="EventMap.CsEnterExitReason.PnP" value="Graphics PnP Operation" />
+        <string id="EventMap.CsEnterExitReason.DP" value="Dynamic Partitioning" />
+        <string id="EventMap.CsEnterExitReason.SxTransition" value="Sleep, Hibernate, or Shutdown" />
+        <string id="EventMap.CsEnterExitReason.SystemIdle" value="System Idle Timeout" />
+        <string id="EventMap.CsEnterExitReason.NearProximity" value="Proximity Sensor" />
+        <string id="EventMap.CsEnterExitReason.ThermalStandby" value="Thermal Standby" />
+        <string id="EventMap.CsEnterExitReason.ResumePdc" value="Resume PDC" />
+        <string id="EventMap.MapStandbyConnectivityState.Cs" value="Connected" />
+        <string id="EventMap.MapStandbyConnectivityState.CsRestricted" value="Restricted" />
+        <string id="EventMap.MapStandbyConnectivityState.Ds" value="Disconnected" />
+        <string id="EventMap.MapStandbyConnectivityReason.None" value="None" />
+        <string id="EventMap.MapStandbyConnectivityReason.SettingPolicy" value="Policy Setting" />
+        <string id="EventMap.MapStandbyConnectivityReason.Enforced" value="Enforced" />
+        <string id="EventMap.MapStandbyConnectivityReason.ComplianceCheckFailure" value="Device Compliance" />
+        <string id="EventMap.MapStandbyConnectivityReason.UserAwayPrediction" value="Smart Presence" />
+        <string id="EventMap.MapStandbyConnectivityReason.BIReference" value="Pending Tasks" />
+        <string id="EventMap.MapStandbyConnectivityReason.NonCompliantNic" value="NIC compliance" />
+        <string id="EventMap.MapStandbyConnectivityReason.AdaptiveCs" value="Adaptive Connected Standby" />
+        <string id="EventMap.MapBackgroundActivityPolicy.None" value="None" />
+        <string id="EventMap.MapBackgroundActivityPolicy.Limited" value="Limited" />
+        <string id="EventMap.ForceIdleState.Inactive" value="Inactive" />
+        <string id="EventMap.ForceIdleState.QueuedStartDpc" value="QueuedStartDpc" />
+        <string id="EventMap.ForceIdleState.Armed" value="Armed" />
+        <string id="EventMap.ForceIdleState.QueuedStopDpc" value="QueuedStopDpc" />
+        <string id="EventMap.ForceIdleState.Active" value="Active" />
+        <string id="EventMap.ForceIdleResetReason.Timeout" value="Timeout" />
+        <string id="EventMap.ForceIdleResetReason.Interrupt" value="Interrupt" />
+        <string id="EventMap.ForceIdleResetReason.Abort" value="Abort" />
+        <string id="EventMap.ForceIdleResetReason.Canceled" value="Canceled" />
+        <string id="EventMap.ForceIdleResetReason.TimerFailed" value="TimerFailed" />
+        <string id="EventMap.DeepSleepConstraint.Inactive" value="Inactive" />
+        <string id="EventMap.DeepSleepConstraint.NonAoAc" value="NonAoAc" />
+        <string id="EventMap.DeepSleepConstraint.PendingIrps" value="PendingIrps" />
+        <string id="EventMap.DeepSleepConstraint.PowerSettingInProgress" value="PowerSettingInProgress" />
+        <string id="EventMap.DeepSleepConstraint.DozeS4Worker" value="DozeS4Worker" />
+        <string id="EventMap.DeepSleepConstraint.SystemPowerTransition" value="SystemPowerTransition" />
+        <string id="EventMap.DeepSleepConstraint.DevicesBlockingDrips" value="DevicesBlockingDrips" />
+        <string id="EventMap.DeepSleepConstraint.Acpi" value="ACPI" />
+        <string id="EventMap.DeepSleepConstraint.DirectedDripsTransition" value="DirectedDripsTransition" />
+        <string id="EventMap.DeepSleepConstraint.PepPreVeto" value="PepPreVeto" />
+        <string id="EventMap.DeepSleepConstraint.Thermal" value="Thermal" />
+        <string id="EventMap.CsEnterExitReason.Terminal" value="Terminal Arrival/Departure" />
+        <string id="EventMap.CsEnterExitReason.PdcSignal" value="PDC Signal" />
+        <string id="EventMap.CsEnterExitReason.AcDcDisplayBurstSuppressed" value="AC/DC Display Burst Suppressed" />
+        <string id="EventMap.CsEnterExitReason.SystemStateEntered" value="Transition to System Sleep State S4/S5" />
+        <string id="EventMessage.BrightnessEngineSwap" value="The brightness on this system is managed by high-precision brightness aware service." />
+        <string id="EventMessage.PowerSourceChange" value="Power source change." />
+        <string id="EventMessage.BatteryCountChange" value="Active battery count change." />
+        <string id="EventMessage.SystemSessionSwitch" value="The system session has transitioned from %3 to %10.%n%nReason %2 %n%nBootId: %1" />
+        <string id="EventMessage.SystemInitiatedRebootPrepare" value="The system has prepared for a system initiated reboot from %1." />
+        <string id="EventMessage.AdaptiveOverrideBootState" value="The system has detected a system initiated reboot from %1." />
+        <string id="EventMap.WakeSourceRtcRejectReason.None" value="None (It woke the system)" />
+        <string id="EventMap.WakeSourceRtcRejectReason.NotProgrammed" value="Not programmed" />
+        <string id="EventMap.WakeSourceRtcRejectReason.BeforeProgrammedTime" value="Wake before programmed time" />
+        <string id="EventMap.WakeSourceRtcRejectReason.AfterProgrammedTime" value="Wake after programmed time" />
+        <string id="EventMap.WakeSourceRtcRejectReason.IgnoredBySimulation" value="Ignored by Simulation Reg Value" />
+        <string id="EventMap.CsEnterExitReason.Winrt" value="Winrt" />
+        <string id="EventMap.CsEnterExitReason.UserInputKeyboard" value="Input Keyboard" />
+        <string id="EventMap.CsEnterExitReason.UserInputMouse" value="Input Mouse" />
+        <string id="EventMap.CsEnterExitReason.UserInputTouchpad" value="Input Touchpad" />
+        <string id="EventMap.CsEnterExitReason.UserInputPen" value="Input Pen" />
+        <string id="EventMap.CsEnterExitReason.UserInputAccelerometer" value="Input Accelerometer" />
+        <string id="EventMap.CsEnterExitReason.UserInputHid" value="Input Hid Device" />
+        <string id="EventMap.CsEnterExitReason.UserInputPoUserPresent" value="Input User Present" />
+        <string id="EventMap.CsEnterExitReason.UserInputSessionSwitch" value="Input Session Switch" />
+        <string id="EventMap.CsEnterExitReason.UserInputInitialization" value="Input Initialization" />
+        <string id="EventMap.CsEnterExitReason.UserInputTouch" value="Input Touch" />
+        <string id="EventMap.CsEnterExitReason.PdcSignalWindowsMobilePwrNotif" value="PDC Signal: Windows Mobile Power Notification" />
+        <string id="EventMap.CsEnterExitReason.PdcSignalWindowsMobileShell" value="PDC Signal: Windows Mobile Shell" />
+        <string id="EventMap.CsEnterExitReason.PdcSignalHeyCortana" value="PDC Signal: Hey Cortana" />
+        <string id="EventMap.CsEnterExitReason.PdcSignalHolographicShell" value="PDC Signal: Holographic Shell" />
+        <string id="EventMap.CsEnterExitReason.PdcSignalFingerprint" value="PDC Signal: Windows Biometric Framework Fingerprint" />
+        <string id="EventMap.CsEnterExitReason.DirectedDrips" value="Directed DRIPS" />
+        <string id="EventMap.CsEnterExitReason.Dim" value="Monitor Dim" />
+        <string id="EventMap.CsEnterExitReason.BuiltinPanel" value="Builtin Panel" />
+        <string id="EventMap.CsEnterExitReason.DisplayRequiredUnDim" value="Display Required Undim" />
+        <string id="EventMap.CsEnterExitReason.BatteryCountChangeSuppressed" value="Battery Count Change Suppressed" />
+        <string id="EventMap.CsEnterExitReason.ResumeModernStandby" value="Transition From Sleep" />
+        <string id="EventMap.CsEnterExitReason.TerminalInit" value="Terminal Initialization" />
+        <string id="EventMap.DischargePolicyIndex.Critical" value="Critical" />
+        <string id="EventMap.DischargePolicyIndex.Low" value="Low" />
+        <string id="EventMap.PowerStateEvent.Invalid" value="Invalid" />
+        <string id="EventMap.PowerStateEvent.Unknown" value="Unknown" />
+        <string id="EventMap.PowerStateEvent.PowerButton" value="PowerButton" />
+        <string id="EventMap.PowerStateEvent.SleepButton" value="SleepButton" />
+        <string id="EventMap.PowerStateEvent.Lid" value="Lid" />
+        <string id="EventMap.PowerStateEvent.AcDcBurst" value="AcDcBurst" />
+        <string id="EventMap.PowerStateEvent.RemoteConnection" value="RemoteConnection" />
+        <string id="EventMap.PowerStateEvent.UserDisplayBurst" value="UserDisplayBurst" />
+        <string id="EventMap.PowerStateEvent.ScMonitorPower" value="ScMonitorPower" />
+        <string id="EventMap.PowerStateEvent.PoSetSystemState" value="PoSetSystemState" />
+        <string id="EventMap.PowerStateEvent.SetThreadExecutionState" value="SetThreadExecutionState" />
+        <string id="EventMap.PowerStateEvent.FullWake" value="FullWake" />
+        <string id="EventMap.PowerStateEvent.SessionUnlock" value="SessionUnlock" />
+        <string id="EventMap.PowerStateEvent.ScreenOffRequest" value="ScreenOffRequest" />
+        <string id="EventMap.PowerStateEvent.ScreenOffTimeout" value="ScreenOffTimeout" />
+        <string id="EventMap.PowerStateEvent.PolicyChange" value="PolicyChange" />
+        <string id="EventMap.PowerStateEvent.BatteryCountChange" value="BatteryCountChange" />
+        <string id="EventMap.PowerStateEvent.ScreenOffGracePeriod" value="ScreenOffGracePeriod" />
+        <string id="EventMap.PowerStateEvent.ScreenOffThermal" value="ScreenOffThermal" />
+        <string id="EventMap.PowerStateEvent.DynamicPartitioning" value="DynamicPartitioning" />
+        <string id="EventMap.PowerStateEvent.SxTransition" value="SxTransition" />
+        <string id="EventMap.PowerStateEvent.SystemIdle" value="SystemIdle" />
+        <string id="EventMap.PowerStateEvent.Proximity" value="Proximity" />
+        <string id="EventMap.PowerStateEvent.ResumeS4" value="ResumeS4" />
+        <string id="EventMap.PowerStateEvent.Terminal" value="Terminal" />
+        <string id="EventMap.PowerStateEvent.WinRT" value="WinRT" />
+        <string id="EventMap.PowerStateEvent.UserInput" value="UserInput" />
+        <string id="EventMap.PowerStateEvent.InputKeyboard" value="InputKeyboard" />
+        <string id="EventMap.PowerStateEvent.InputMouse" value="InputMouse" />
+        <string id="EventMap.PowerStateEvent.InputTouchpad" value="InputTouchpad" />
+        <string id="EventMap.PowerStateEvent.InputPen" value="InputPen" />
+        <string id="EventMap.PowerStateEvent.InputAccelerometer" value="InputAccelerometer" />
+        <string id="EventMap.PowerStateEvent.InputHid" value="InputHid" />
+        <string id="EventMap.PowerStateEvent.InputPoUserPresent" value="InputPoUserPresent" />
+        <string id="EventMap.PowerStateEvent.InputSessionSwitch" value="InputSessionSwitch" />
+        <string id="EventMap.PowerStateEvent.InputInitialization" value="InputInitialization" />
+        <string id="EventMap.PowerStateEvent.InputTouch" value="InputTouch" />
+        <string id="EventMap.PowerStateEvent.Signal" value="Signal" />
+        <string id="EventMap.PowerStateEvent.SignalPwrNotif" value="SignalPwrNotif" />
+        <string id="EventMap.PowerStateEvent.SignalMobileShell" value="SignalMobileShell" />
+        <string id="EventMap.PowerStateEvent.SignalHeyCortana" value="SignalHeyCortana" />
+        <string id="EventMap.PowerStateEvent.SignalHoloShell" value="SignalHoloShell" />
+        <string id="EventMap.PowerStateEvent.SignalFingerprint" value="SignalFingerprint" />
+        <string id="EventMap.PowerStateEvent.DirectedDrips" value="Directed DRIPS" />
+        <string id="EventMap.PowerStateEvent.AcDcBurstSuppressed" value="AC/DC Burst (Suppressed)" />
+        <string id="EventMap.PowerStateEvent.BuiltinPanel" value="Builtin Panel" />
+        <string id="EventMap.PowerStateEvent.BatteryPreCritical" value="Battery PreCritical" />
+        <string id="EventMap.PowerStateEvent.BatteryCountChangeSuppressed" value="Battery Count Change (Suppressed)" />
+        <string id="EventMap.PowerStateEvent.TerminalInit" value="Terminal Initialization" />
+        <string id="EventMap.PowerStateEvent.ResumeModernStandby" value="Modern Standby Resume" />
+        <string id="EventMap.PowerStateEvent.SensorsHumanPresence" value="Human Presence Sensor" />
+        <string id="EventMap.PowerStateEvent.NearProximity" value="Near Proximity" />
+        <string id="EventMap.PowerStateEventClass.User" value="User" />
+        <string id="EventMap.PowerStateEventClass.System" value="System" />
+        <string id="EventMap.PowerStateEventClass.Critical" value="Critical" />
+        <string id="EventMap.PowerStateIntent.None" value="None" />
+        <string id="EventMap.PowerStateIntent.Active" value="Active" />
+        <string id="EventMap.PowerStateIntent.ModernStandby" value="ModernStandby" />
+        <string id="EventMap.PowerStateIntent.ModernStandbyIdle" value="ModernStandbyIdle" />
+        <string id="EventMap.PowerAggregatorPromotionReason.None" value="None" />
+        <string id="EventMap.PowerAggregatorPromotionReason.ClassPriority" value="ClassPriority" />
+        <string id="EventMap.PowerAggregatorPromotionReason.IntentDepth" value="IntentDepth" />
+        <string id="EventMap.PowerAggregatorPromotionReason.Type" value="Type" />
+        <string id="EventMap.PowerAggregatorPromotionReason.QueueOverflow" value="QueueOverflow" />
+        <string id="EventMap.PowerAggregatorAction.None" value="None" />
+        <string id="EventMap.PowerAggregatorAction.Active" value="Active" />
+        <string id="EventMap.PowerAggregatorAction.Cs" value="Cs" />
+        <string id="EventMap.PowerAggregatorAction.CsIdle" value="CsIdle" />
+        <string id="EventMap.PowerAggregatorAction.Ds" value="Ds" />
+        <string id="EventMap.PowerAggregatorAction.DsIdle" value="DsIdle" />
+        <string id="EventMap.PowerAggregatorAction.AggressiveDs" value="AggressiveDs" />
+        <string id="EventMap.PowerAggregatorAction.AggressiveDsIdle" value="AggressiveDsIdle" />
+        <string id="EventMap.PowerAggregatorAction.DirectedDrips" value="Directed DRIPS" />
+        <string id="EventMap.PowerAggregatorValidationResult.Success" value="Success" />
+        <string id="EventMap.PowerAggregatorValidationResult.Promotion" value="Promotion" />
+        <string id="EventMap.DirectedDripsEnableResult.Success" value="Success" />
+        <string id="EventMap.DirectedDripsEnableResult.ForceEnable" value="ForceEnable" />
+        <string id="EventMap.DirectedDripsEnableResult.ForceDisable" value="ForceDisable" />
+        <string id="EventMap.DirectedDripsEnableResult.NoHibernate" value="NoHibernate" />
+        <string id="EventMap.DirectedDripsEnableResult.NoErrata" value="NoErrata" />
+        <string id="EventMap.DirectedDripsEnableResult.NoWatchdog" value="NoWatchdog" />
+        <string id="EventMap.DirectedDripsEnableResult.NoMS" value="NoMS" />
+        <string id="EventMap.DirectedDripsEnableResult.BadPlatform" value="BadPlatform" />
+        <string id="EventMap.DirectedDripsEnableResult.BadTimeout" value="BadTimeout" />
+        <string id="EventMap.DirectedDripsProblemDeviceReason.SpecialDevice" value="Special Device" />
+        <string id="EventMap.DirectedDripsProblemDeviceReason.NoDfx" value="No DFX" />
+        <string id="EventMap.DirectedDripsProblemDeviceReason.NoPs4" value="No PS4" />
+        <string id="EventMap.DirectedDripsProblemDeviceReason.NoPs4Root" value="No PS4 Root" />
+        <string id="EventMap.SystemIdleEventType.MonitorOffUserInput" value="Monitor Off User Input" />
+        <string id="EventMap.SystemIdleEventType.MonitorOnUserInput" value="Monitor On User Input" />
+        <string id="EventMap.SystemIdleEventType.UserPresence" value="User Presence" />
+        <string id="EventMap.SystemIdleEventType.ResumeFromSxSystemPowerState" value="Resume From Sx System Power State" />
+        <string id="EventMap.SystemIdleEventType.Invalid" value="Invalid" />
+        <string id="EventMap.SystemIdleBusyReason.None" value="None" />
+        <string id="EventMap.SystemIdleBusyReason.TimeoutNotReached" value="Timeout Not Reached" />
+        <string id="EventMap.SystemIdleBusyReason.TimeoutDisabled" value="Timeout Disabled" />
+        <string id="EventMap.PowerAggregatorTargetStateActive" value="Active" />
+        <string id="EventMap.PowerAggregatorTargetStateModernStandby" value="Modern Standby" />
+        <string id="EventMap.PowerAggregatorTargetStateModernStandbySuspended" value="Modern Standby (Suspended)" />
+        <string id="EventMap.PowerAggregatorTargetStateSystemTransitionSuspended" value="System Transition (Suspended)" />
+        <string id="EventMap.PowerAggregatorTargetStateSystemPowerTransition" value="System Power Transition" />
+        <string id="EventMap.PowerAggregatorInternalStateActive" value="Active" />
+        <string id="EventMap.PowerAggregatorInternalStateModernStandby" value="Modern Sleep" />
+        <string id="EventMap.PowerAggregatorInternalStateDisplayPoweringOn" value="Display Powering On" />
+        <string id="EventMap.PowerAggregatorInternalStateScreenOffActive" value="Active (Screen Off)" />
+        <string id="EventMap.PowerAggregatorInternalStateScreenOff" value="Screen Off" />
+        <string id="EventMap.PowerAggregatorInternalStateSystemTransitionSuspended" value="System Transition (Suspended)" />
+        <string id="EventMap.SleepstudySessionTypeActive" value="Active" />
+        <string id="EventMap.SleepstudySessionTypeScreenOff" value="Screen Off" />
+        <string id="EventMap.SleepstudySessionTypeModernStandby" value="Modern Standby" />
+        <string id="EventMap.SleepstudySessionTypeSystemTransition" value="System Transition" />
+        <string id="EventMap.AdaptiveTimeoutSourceOverrideSensor" value="Sensor Timeout" />
+        <string id="EventMap.AdaptiveTimeoutSourceDisplayTimeout" value="Display Timeout" />
+        <string id="EventMap.AdaptiveTimeoutSourceLockTimeout" value="Lock Console Timeout" />
+        <string id="EventMap.AdaptiveTimeoutSourceDimTimeout" value="Dim Timeout" />
+        <string id="EventMap.AdaptiveBootTargetStateActive" value="Active" />
+        <string id="EventMap.AdaptiveBootTargetStateModernStandby" value="Modern Standby" />
+        <string id="EventMap.AdaptiveBootTargetStateS1" value="Sleeping (S1)" />
+        <string id="EventMap.AdaptiveBootTargetStateS2" value="Sleeping (S2)" />
+        <string id="EventMap.AdaptiveBootTargetStateS3" value="Sleeping (S3)" />
+        <string id="EventMap.AdaptiveBootTargetStateS4" value="Hibernate" />
+        <string id="EventMap.AdaptiveBootTargetStateUnspecified" value="Sleeping (Idle)" />
+        <string id="EventMap.SuppressionDisengaged" value="Disengaged" />
+        <string id="EventMap.SuppressionEngaged" value="Engaged" />
+        <string id="EventMap.SuppressionTelemetryOnly" value="Telemetry Only" />
+      </stringTable>
+    </resources>
+  </localization>
+</assembly>

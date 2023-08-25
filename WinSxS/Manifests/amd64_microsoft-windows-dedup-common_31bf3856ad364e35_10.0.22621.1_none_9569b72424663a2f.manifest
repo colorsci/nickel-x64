@@ -1,0 +1,772 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-Dedup-Common" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <dependency discoverable="no" resourceType="Resources">
+    <dependentAssembly dependencyType="prerequisite">
+      <assemblyIdentity name="Microsoft-Windows-Dedup-Common.Resources" version="10.0.22621.1" processorArchitecture="amd64" language="*" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+    </dependentAssembly>
+  </dependency>
+  <file name="ddputils.dll" destinationPath="$(runtime.system32)\" sourceName="ddputils.dll" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>jCh/AY/QXirrx01UG3pY7GRR/VWZOplx/TPsQDhQrhY=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <file name="ddptrace.dll" destinationPath="$(runtime.system32)\" sourceName="ddptrace.dll" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>idFjirS1vwTKrm4tGV9h6lyG2IrrXfS+NSt8Fvtb/ZE=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <file name="ddp_ps.dll" destinationPath="$(runtime.system32)\" sourceName="ddp_ps.dll" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>8BP2qqTBfeGsMjUDqe9x7H6XiaTbCAVlR5Wso9D71is=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <file name="ddp.mof" destinationPath="$(runtime.system32)\wbem\" sourceName="ddp.mof" importPath="$(build.nttree)\ddp\setup\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>+AR+Y4zxovVnR/jfemRnhLYn2y1Mmls1wqnhyHji1wM=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <registryKeys>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{90B584D3-72AA-400F-9767-CAD866A5A2D8}">
+      <registryValue name="" valueType="REG_SZ" value="Dedup Proxy" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{90B584D3-72AA-400F-9767-CAD866A5A2D8}\InProcServer32">
+      <registryValue name="" valueType="REG_EXPAND_SZ" value="%SystemRoot%\system32\ddp_ps.dll" />
+      <registryValue name="ThreadingModel" valueType="REG_SZ" value="Both" />
+    </registryKey>
+  </registryKeys>
+  <mof name="$(runtime.system32)\wbem\ddp.mof" />
+  <instrumentation>
+    <events xmlns="http://schemas.microsoft.com/win/2004/08/events" xmlns:win="http://manifests.microsoft.com/win/2004/08/windows/events" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <provider guid="{F9FE3908-44B8-48D9-9A32-5A763FF5ED79}" message="$(string.DEDUP_EVENT_PROVIDER)" messageFileName="%SystemRoot%\System32\ddputils.dll" name="Microsoft-Windows-Deduplication" resourceFileName="%SystemRoot%\System32\ddputils.dll" symbol="DEDUP_EVENT_PROVIDER">
+        <channels>
+          <channel chid="Microsoft-Windows-Deduplication/Operational" enabled="true" isolation="System" name="Microsoft-Windows-Deduplication/Operational" symbol="DEDUP_EVENT_CHANNEL_OPERATIONAL" type="Operational">
+            <logging>
+              <maxSize>10485760</maxSize>
+            </logging>
+          </channel>
+          <channel chid="Microsoft-Windows-Deduplication/Scrubbing" enabled="true" isolation="System" name="Microsoft-Windows-Deduplication/Scrubbing" symbol="DEDUP_EVENT_CHANNEL_SCRUBBING" type="Operational">
+            <logging>
+              <maxSize>10485760</maxSize>
+            </logging>
+          </channel>
+          <channel chid="Microsoft-Windows-Deduplication/Diagnostic" enabled="true" isolation="System" name="Microsoft-Windows-Deduplication/Diagnostic" symbol="DEDUP_EVENT_CHANNEL_DIAGNOSTIC" type="Operational">
+            <logging>
+              <maxSize>104857600</maxSize>
+            </logging>
+          </channel>
+          <channel access="O:BAG:SYD:(D;;0xf0007;;;AN)(D;;0xf0007;;;BG)(A;;0x7;;;SY)(A;;0x7;;;BA)(A;;0x2;;;WD)" chid="Microsoft-Windows-Deduplication/Performance" isolation="Custom" name="Microsoft-Windows-Deduplication/Performance" symbol="DEDUP_EVENT_CHANNEL_PERFORMANCE" type="Analytic">
+            <logging>
+              <maxSize>10485760</maxSize>
+            </logging>
+            <publishing>
+              <bufferSize>64</bufferSize>
+            </publishing>
+          </channel>
+          <importChannel chid="Application" name="Application" />
+        </channels>
+      </provider>
+      <messageTable>
+        <message message="$(string.DEDUP_EVENT_MAP_CHUNKSTOREITEMTYPE_CHUNKHEADER)" value="0xD0000001" />
+        <message message="$(string.DEDUP_EVENT_MAP_CHUNKSTOREITEMTYPE_CHUNKBODY)" value="0xD0000002" />
+        <message message="$(string.DEDUP_EVENT_MAP_CHUNKSTOREITEMTYPE_CONTAINERHEADER)" value="0xD0000003" />
+        <message message="$(string.DEDUP_EVENT_MAP_CHUNKSTOREITEMTYPE_CONTAINERREDIRECTIONTABLE)" value="0xD0000004" />
+        <message message="$(string.DEDUP_EVENT_MAP_CHUNKSTOREITEMTYPE_HOTSPOTTABLE)" value="0xD0000005" />
+        <message message="$(string.DEDUP_EVENT_MAP_CHUNKSTOREITEMTYPE_DELETELOGHEADER)" value="0xD0000006" />
+        <message message="$(string.DEDUP_EVENT_MAP_CHUNKSTOREITEMTYPE_DELETELOGENTRY)" value="0xD0000007" />
+        <message message="$(string.DEDUP_EVENT_MAP_CHUNKSTOREITEMTYPE_GCBITMAPHEADER)" value="0xD0000008" />
+        <message message="$(string.DEDUP_EVENT_MAP_CHUNKSTOREITEMTYPE_GCBITMAPENTRY)" value="0xD0000009" />
+        <message message="$(string.DEDUP_EVENT_MAP_CHUNKSTOREITEMTYPE_MERGELOGHEADER)" value="0xD000000A" />
+        <message message="$(string.DEDUP_EVENT_MAP_CHUNKSTOREITEMTYPE_MERGELOGENTRY)" value="0xD000000B" />
+        <message message="$(string.DEDUP_EVENT_MAP_CHUNKSTORETYPE_DATA)" value="0xD000000C" />
+        <message message="$(string.DEDUP_EVENT_MAP_CHUNKSTORETYPE_STREAMMAP)" value="0xD000000D" />
+        <message message="$(string.DEDUP_EVENT_MAP_CHUNKSTORETYPE_HOTSPOT)" value="0xD000000E" />
+        <message message="$(string.DEDUP_EVENT_MAP_JOBTYPE_OPTIMIZATION)" value="0xD000000F" />
+        <message message="$(string.DEDUP_EVENT_MAP_JOBTYPE_GC)" value="0xD0000010" />
+        <message message="$(string.DEDUP_EVENT_MAP_JOBTYPE_SCRUBBING)" value="0xD0000011" />
+        <message message="$(string.DEDUP_EVENT_MAP_JOBTYPE_UNOPTIMIZATION)" value="0xD0000012" />
+        <message message="$(string.DEDUP_EVENT_MAP_JOBTYPE_ANALYSIS)" value="0xD0000013" />
+        <message message="$(string.DEDUP_EVENT_MAP_JOBPRIORITYTYPE_LOW)" value="0xD0000014" />
+        <message message="$(string.DEDUP_EVENT_MAP_JOBPRIORITYTYPE_NORMAL)" value="0xD0000015" />
+        <message message="$(string.DEDUP_EVENT_MAP_JOBPRIORITYTYPE_HIGH)" value="0xD0000016" />
+        <message message="$(string.DEDUP_EVENT_MAP_CHUNKSTOREIOTYPE_CACHE)" value="0xD0000017" />
+        <message message="$(string.DEDUP_EVENT_MAP_CHUNKSTOREIOTYPE_NONCACHE)" value="0xD0000018" />
+        <message message="$(string.DEDUP_EVENT_MAP_CHUNKSTOREIOTYPE_PAGING)" value="0xD0000019" />
+        <message message="$(string.DEDUP_EVENT_MAP_CHUNKSTOREIOTYPE_MEMORYMAP)" value="0xD000001A" />
+        <message message="$(string.DEDUP_EVENT_MAP_CHUNKSTOREIOTYPE_PAGINGMEMORYMAP)" value="0xD000001B" />
+        <message message="$(string.DEDUP_EVENT_MAP_CHUNKSTOREBUFFERTYPE_NONE)" value="0xD000001C" />
+        <message message="$(string.DEDUP_EVENT_MAP_CHUNKSTOREBUFFERTYPE_POOL)" value="0xD000001D" />
+        <message message="$(string.DEDUP_EVENT_MAP_CHUNKSTOREBUFFERTYPE_POOLALIGNED)" value="0xD000001E" />
+        <message message="$(string.DEDUP_EVENT_MAP_CHUNKSTOREBUFFERTYPE_MDL)" value="0xD000001F" />
+        <message message="$(string.DEDUP_EVENT_MAP_CHUNKSTOREBUFFERTYPE_MAP)" value="0xD0000020" />
+        <message message="$(string.DEDUP_EVENT_MAP_FLT_IO_CACHED)" value="0xD0000021" />
+        <message message="$(string.DEDUP_EVENT_MAP_FLT_IO_NONCACHED)" value="0xD0000022" />
+        <message message="$(string.DEDUP_EVENT_MAP_FLT_IO_PAGED)" value="0xD0000023" />
+        <message message="$(string.DEDUP_EVENT_MAP_CHUNKSTOREITEMTYPE_CONTAINER)" value="0xD0000024" />
+        <message message="$(string.DEDUP_EVENT_MAP_CHUNKSTOREITEMTYPE_FILELIST)" value="0xD0000025" />
+        <message message="$(string.DEDUP_EVENT_MAP_CHUNKSTOREITEMTYPE_FILELISTHEADER)" value="0xD0000026" />
+        <message message="$(string.DEDUP_EVENT_MAP_CHUNKSTOREITEMTYPE_FILELISTENTRY)" value="0xD0000027" />
+        <message message="$(string.DEDUP_EVENT_MAP_FILELISTFILETYPE_PRIMARY)" value="0xD0000028" />
+        <message message="$(string.DEDUP_EVENT_MAP_FILELISTFILETYPE_BACKUP)" value="0xD0000029" />
+        <message message="$(string.DEDUP_EVENT_MAP_JOBSCHEDULEMODE_SCHEDULED)" value="0xD000002a" />
+        <message message="$(string.DEDUP_EVENT_MAP_JOBSCHEDULEMODE_MANUAL)" value="0xD000002b" />
+        <message message="$(string.DEDUP_EVENT_MAP_CHUNKSTOREITEMTYPE_RECALLBITMAPHEADER)" value="0xD000002c" />
+        <message message="$(string.DEDUP_EVENT_MAP_CHUNKSTOREITEMTYPE_RECALLBITMAPBODY)" value="0xD000002d" />
+        <message message="$(string.DEDUP_EVENT_MAP_CHUNKSTOREITEMTYPE_RECALLBITMAPMISSING)" value="0xD000002e" />
+        <message message="$(string.DEDUP_EVENT_MAP_CHUNKSTORETYPE_RECALLBITMAP)" value="0xD000002f" />
+        <message message="$(string.DEDUP_EVENT_MAP_OPTIMIZATION_ABORT_REASON_UNKNOWN)" value="0xD0000030" />
+        <message message="$(string.DEDUP_EVENT_MAP_OPTIMIZATION_ABORT_REASON_HANDLE_CLOSED)" value="0xD0000031" />
+        <message message="$(string.DEDUP_EVENT_MAP_OPTIMIZATION_ABORT_REASON_FILE_DELETED)" value="0xD0000032" />
+        <message message="$(string.DEDUP_EVENT_MAP_OPTIMIZATION_ABORT_REASON_FILE_OVERWRITTEN)" value="0xD0000033" />
+        <message message="$(string.DEDUP_EVENT_MAP_OPTIMIZATION_ABORT_REASON_FILE_RECALLED)" value="0xD0000034" />
+        <message message="$(string.DEDUP_EVENT_MAP_OPTIMIZATION_ABORT_REASON_TRANSACTION)" value="0xD0000035" />
+        <message message="$(string.DEDUP_EVENT_MAP_OPTIMIZATION_ABORT_REASON_FILE_ENCRYPTED)" value="0xD0000036" />
+        <message message="$(string.DEDUP_EVENT_MAP_OPTIMIZATION_ABORT_REASON_FILE_COMPRESSED)" value="0xD0000037" />
+        <message message="$(string.DEDUP_EVENT_MAP_OPTIMIZATION_ABORT_REASON_SET_ZERO_DATA)" value="0xD0000038" />
+        <message message="$(string.DEDUP_EVENT_MAP_OPTIMIZATION_ABORT_REASON_SET_EA)" value="0xD0000039" />
+        <message message="$(string.DEDUP_EVENT_MAP_OPTIMIZATION_ABORT_REASON_SECTION)" value="0xD000003a" />
+        <message message="$(string.DEDUP_EVENT_MAP_OPTIMIZATION_ABORT_REASON_FILE_TRUNCATED)" value="0xD000003b" />
+        <message message="$(string.DEDUP_EVENT_MAP_OPTIMIZATION_ABORT_REASON_LONG_RUNNING_IO)" value="0xD000003c" />
+        <message message="$(string.DEDUP_EVENT_MAP_OPTIMIZATION_ABORT_REASON_IO_FAILURE)" value="0xD000003d" />
+        <message message="$(string.DEDUP_EVENT_MAP_OPTIMIZATION_FILTER_OPERATION_NOTIFY_OPTIMIZATION)" value="0xD000003e" />
+        <message message="$(string.DEDUP_EVENT_MAP_OPTIMIZATION_FILTER_OPERATION_SET_REPARSE_POINT)" value="0xD000003f" />
+        <message message="$(string.DEDUP_EVENT_MAP_OPTIMIZATION_FILTER_OPERATION_SET_ZERO_DATA)" value="0xD0000040" />
+        <message message="$(string.DEDUP_EVENT_MAP_JOBTYPE_DATAPORT)" value="0xD0000041" />
+      </messageTable>
+      <messageTable>
+        <message message="$(string.DEDUP_EVENT_MAP_CORRUPTIONTYPE_NONE)" value="0xF0000001" />
+        <message message="$(string.DEDUP_EVENT_MAP_CORRUPTIONTYPE_BADCHECKSUM)" value="0xF0000002" />
+        <message message="$(string.DEDUP_EVENT_MAP_CORRUPTIONTYPE_INCONSISTENTMETADATA)" value="0xF0000003" />
+        <message message="$(string.DEDUP_EVENT_MAP_CORRUPTIONTYPE_INVALIDHEADERMETADATA)" value="0xF0000004" />
+        <message message="$(string.DEDUP_EVENT_MAP_CORRUPTIONTYPE_MISSINGFILE)" value="0xF0000005" />
+        <message message="$(string.DEDUP_EVENT_MAP_CORRUPTIONTYPE_FS_BADCHECKSUM)" value="0xF0000006" />
+        <message message="$(string.DEDUP_EVENT_MAP_CORRUPTIONTYPE_FS_CORRUPTERROR)" value="0xF0000007" />
+        <message message="$(string.DEDUP_EVENT_MAP_CORRUPTIONTYPE_MISSING_METADATA)" value="0xF0000008" />
+        <message message="$(string.DEDUP_EVENT_MAP_CORRUPTIONTYPE_DUPLICATE_REPARSE_POINT)" value="0xF0000009" />
+      </messageTable>
+      <provider guid="{1D5E499D-739C-45A6-A3E1-8CBE0A352BEB}" message="$(string.DEDUP_CHANGE_EVENT_PROVIDER)" messageFileName="%SystemRoot%\System32\ddputils.dll" name="Microsoft-Windows-Deduplication-Change" resourceFileName="%SystemRoot%\System32\ddputils.dll" symbol="DEDUP_CHANGE_EVENT_PROVIDER">
+        <channels />
+      </provider>
+      <messageTable>
+        <message message="$(string.DEDUP_CHANGE_EVENT_MAP_COMPRESSIONFORMAT_NONE)" value="0xD1000001" />
+        <message message="$(string.DEDUP_CHANGE_EVENT_MAP_COMPRESSIONFORMAT_LZNT1)" value="0xD1000002" />
+        <message message="$(string.DEDUP_CHANGE_EVENT_MAP_COMPRESSIONFORMAT_XPRESS)" value="0xD1000003" />
+        <message message="$(string.DEDUP_CHANGE_EVENT_MAP_COMPRESSIONFORMAT_XPRESS_HUFF)" value="0xD1000004" />
+        <message message="$(string.DEDUP_CHANGE_EVENT_MAP_COMPRESSIONENGINE_NONE)" value="0xD1000005" />
+        <message message="$(string.DEDUP_CHANGE_EVENT_MAP_COMPRESSIONENGINE_STD)" value="0xD1000006" />
+        <message message="$(string.DEDUP_CHANGE_EVENT_MAP_COMPRESSIONENGINE_MAX)" value="0xD1000007" />
+        <message message="$(string.DEDUP_CHANGE_EVENT_MAP_COMPRESSIONENGINE_HYBRID)" value="0xD1000008" />
+      </messageTable>
+      <cmi />
+    </events>
+  </instrumentation>
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string id="opcode.Info" value="Info" />
+        <string id="level.Warning" value="Warning" />
+        <string id="level.Informational" value="Information" />
+        <string id="level.Error" value="Error" />
+        <string id="channel.Application" value="Application" />
+        <string id="DEDUP_EVENT_TASK_OPTIMIZATION" value="Data Deduplication Optimization Task" />
+        <string id="DEDUP_EVENT_TASK_GC" value="Data Deduplication Garbage Collection Task" />
+        <string id="DEDUP_EVENT_TASK_SCRUBBING" value="Data Deduplication Scrubbing Task" />
+        <string id="DEDUP_EVENT_PROVIDER" value="Data Deduplication" />
+        <string id="DEDUP_EVENT_MAP_CORRUPTIONTYPE_MISSINGFILE" value="Missing file" />
+        <string id="DEDUP_EVENT_MAP_CORRUPTIONTYPE_INVALIDHEADERMETADATA" value="Invalid header metadata" />
+        <string id="DEDUP_EVENT_MAP_CORRUPTIONTYPE_INCONSISTENTMETADATA" value="Inconsistent metadata" />
+        <string id="DEDUP_EVENT_MAP_CORRUPTIONTYPE_BADCHECKSUM" value="Bad checksum" />
+        <string id="DEDUP_EVENT_MAP_CORRUPTIONTYPE_FS_BADCHECKSUM" value="Bad checksum (storage subsystem)" />
+        <string id="DEDUP_EVENT_MAP_CORRUPTIONTYPE_FS_CORRUPTERROR" value="Corruption (storage subsystem)" />
+        <string id="DEDUP_EVENT_MAP_CORRUPTIONTYPE_MISSING_METADATA" value="Corruption (missing metadata)" />
+        <string id="DEDUP_EVENT_MAP_CORRUPTIONTYPE_DUPLICATE_REPARSE_POINT" value="Possible data loss (duplicate reparse data)" />
+        <string id="DEDUP_EVENT_MAP_CORRUPTIONTYPE_NONE" value="None" />
+        <string id="DEDUP_EVENT_MAP_CHUNKSTORETYPE_HOTSPOT" value="Hotspot" />
+        <string id="DEDUP_EVENT_MAP_CHUNKSTORETYPE_STREAMMAP" value="Stream map" />
+        <string id="DEDUP_EVENT_MAP_CHUNKSTORETYPE_DATA" value="Data" />
+        <string id="DEDUP_EVENT_MAP_CHUNKSTORETYPE_RECALLBITMAP" value="Recall bitmap" />
+        <string id="DEDUP_EVENT_MAP_CHUNKSTOREITEMTYPE_GCBITMAPHEADER" value="GC bitmap header" />
+        <string id="DEDUP_EVENT_MAP_CHUNKSTOREITEMTYPE_DELETELOGENTRY" value="Delete log entry" />
+        <string id="DEDUP_EVENT_MAP_CHUNKSTOREITEMTYPE_DELETELOGHEADER" value="Delete log header" />
+        <string id="DEDUP_EVENT_MAP_CHUNKSTOREITEMTYPE_HOTSPOTTABLE" value="Hotspot table" />
+        <string id="DEDUP_EVENT_MAP_CHUNKSTOREITEMTYPE_CONTAINERREDIRECTIONTABLE" value="Container redirection table" />
+        <string id="DEDUP_EVENT_MAP_CHUNKSTOREITEMTYPE_CONTAINERHEADER" value="Container header" />
+        <string id="DEDUP_EVENT_MAP_CHUNKSTOREITEMTYPE_CHUNKBODY" value="Chunk body" />
+        <string id="DEDUP_EVENT_MAP_CHUNKSTOREITEMTYPE_CHUNKHEADER" value="Chunk header" />
+        <string id="DEDUP_EVENT_MAP_CHUNKSTOREITEMTYPE_MERGELOGENTRY" value="Merge log entry" />
+        <string id="DEDUP_EVENT_MAP_CHUNKSTOREITEMTYPE_MERGELOGHEADER" value="Merge log header" />
+        <string id="DEDUP_EVENT_MAP_CHUNKSTOREITEMTYPE_CONTAINER" value="container file" />
+        <string id="DEDUP_EVENT_MAP_CHUNKSTOREITEMTYPE_FILELIST" value="file list file" />
+        <string id="DEDUP_EVENT_MAP_CHUNKSTOREITEMTYPE_FILELISTHEADER" value="file list header" />
+        <string id="DEDUP_EVENT_MAP_CHUNKSTOREITEMTYPE_FILELISTENTRY" value="file list entry" />
+        <string id="DEDUP_EVENT_MAP_CHUNKSTOREITEMTYPE_RECALLBITMAPHEADER" value="recall bitmap header" />
+        <string id="DEDUP_EVENT_MAP_CHUNKSTOREITEMTYPE_RECALLBITMAPBODY" value="recall bitmap body" />
+        <string id="DEDUP_EVENT_MAP_CHUNKSTOREITEMTYPE_RECALLBITMAPMISSING" value="recall bitmap missing" />
+        <string id="DEDUP_EVENT_MAP_FILELISTFILETYPE_PRIMARY" value="primary file list file" />
+        <string id="DEDUP_EVENT_MAP_FILELISTFILETYPE_BACKUP" value="backup file list file" />
+        <string id="DEDUP_EVENT_MAP_CHUNKSTOREITEMTYPE_GCBITMAPENTRY" value="GC bitmap entry" />
+        <string id="DEDUP_EVENT_KEYWORD_REPORTING" value="Reporting" />
+        <string id="DEDUP_EVENT_MAP_JOBTYPE_OPTIMIZATION" value="Optimization" />
+        <string id="DEDUP_EVENT_MAP_JOBTYPE_GC" value="Garbage Collection" />
+        <string id="DEDUP_EVENT_MAP_JOBTYPE_SCRUBBING" value="Scrubbing" />
+        <string id="DEDUP_EVENT_MAP_JOBTYPE_UNOPTIMIZATION" value="Unoptimization" />
+        <string id="DEDUP_EVENT_MAP_JOBTYPE_ANALYSIS" value="Analysis" />
+        <string id="DEDUP_EVENT_MAP_JOBTYPE_DATAPORT" value="DataPort" />
+        <string id="DEDUP_EVENT_MAP_JOBPRIORITYTYPE_LOW" value="Low" />
+        <string id="DEDUP_EVENT_MAP_JOBPRIORITYTYPE_NORMAL" value="Normal" />
+        <string id="DEDUP_EVENT_MAP_JOBPRIORITYTYPE_HIGH" value="High" />
+        <string id="DEDUP_EVENT_MAP_JOBSCHEDULEMODE_SCHEDULED" value="Scheduled" />
+        <string id="DEDUP_EVENT_MAP_JOBSCHEDULEMODE_MANUAL" value="Manual" />
+        <string id="DEDUP_EVENT_MAP_OPTIMIZATION_ABORT_REASON_UNKNOWN" value="Unknown" />
+        <string id="DEDUP_EVENT_MAP_OPTIMIZATION_ABORT_REASON_HANDLE_CLOSED" value="The pipeline handle was closed" />
+        <string id="DEDUP_EVENT_MAP_OPTIMIZATION_ABORT_REASON_FILE_DELETED" value="The file was deleted" />
+        <string id="DEDUP_EVENT_MAP_OPTIMIZATION_ABORT_REASON_FILE_OVERWRITTEN" value="The file was overwritten" />
+        <string id="DEDUP_EVENT_MAP_OPTIMIZATION_ABORT_REASON_FILE_RECALLED" value="The file was recalled" />
+        <string id="DEDUP_EVENT_MAP_OPTIMIZATION_ABORT_REASON_TRANSACTION" value="A transaction was started on the file" />
+        <string id="DEDUP_EVENT_MAP_OPTIMIZATION_ABORT_REASON_FILE_ENCRYPTED" value="The file was encrypted" />
+        <string id="DEDUP_EVENT_MAP_OPTIMIZATION_ABORT_REASON_FILE_COMPRESSED" value="The file was compressed" />
+        <string id="DEDUP_EVENT_MAP_OPTIMIZATION_ABORT_REASON_SET_ZERO_DATA" value="Set Zero Data was called on the file" />
+        <string id="DEDUP_EVENT_MAP_OPTIMIZATION_ABORT_REASON_SET_EA" value="Extended Attributes were set on the file" />
+        <string id="DEDUP_EVENT_MAP_OPTIMIZATION_ABORT_REASON_SECTION" value="A section was created on the file" />
+        <string id="DEDUP_EVENT_MAP_OPTIMIZATION_ABORT_REASON_FILE_TRUNCATED" value="The file was shrunk" />
+        <string id="DEDUP_EVENT_MAP_OPTIMIZATION_ABORT_REASON_LONG_RUNNING_IO" value="A long-running IO operation prevented optimization" />
+        <string id="DEDUP_EVENT_MAP_OPTIMIZATION_ABORT_REASON_IO_FAILURE" value="An IO operation failed" />
+        <string id="DEDUP_EVENT_MAP_OPTIMIZATION_FILTER_OPERATION_NOTIFY_OPTIMIZATION" value="Notifying Optimization" />
+        <string id="DEDUP_EVENT_MAP_OPTIMIZATION_FILTER_OPERATION_SET_REPARSE_POINT" value="Setting the Reparse Point" />
+        <string id="DEDUP_EVENT_MAP_OPTIMIZATION_FILTER_OPERATION_SET_ZERO_DATA" value="Truncating the file" />
+        <string id="DEDUP_WC_EVENT_INVALID_VOLUME" value="Volume &quot;%1&quot; appears as disconnected and it is ignored by the service.  You may want to rescan disks.   Error: %2.%n%3" />
+        <string id="DEDUP_WC_EVENT_VOLUME_TOO_LARGE" value="Volume &quot;%1&quot; cannot be enabled for Data Deduplication. Data Deduplication does not support volumes larger than 64TB. Error: %2.%n%3" />
+        <string id="DEDUP_WC_EVENT_INVALID_VOLUME_SIS" value="Data Deduplication cannot be enabled on SIS volume &quot;%1&quot;. Error: %2.%n%3" />
+        <string id="DEDUP_WC_EVENT_STARTING_COM_SERVER_HEAVYLOAD" value="The COM Server with CLSID %1 and name &quot;%2&quot; cannot be started on machine &quot;%3&quot;. Most likely the CPU is under heavy load.  Error: %4.%n%5" />
+        <string id="DEDUP_WC_EVENT_STARTING_COM_SERVER" value="The COM Server with CLSID %1 and name &quot;%2&quot; cannot be started on machine &quot;%3&quot;.  Error: %4.%n%5" />
+        <string id="DEDUP_WC_EVENT_STARTING_COM_SERVER_SAFEBOOT" value="The COM Server with CLSID %1 and name &quot;%2&quot; cannot be started on machine &quot;%3&quot; during Safe Mode. The Data Deduplication service cannot start while in safe mode.  Error: %4.%n%5" />
+        <string id="DEDUP_WC_EVENT_COM_SERVER_NOT_REGISTERED" value="A critical component required by Data Deduplication is not registered. This might happen if an error occurred during Windows setup, or if the computer does not have the Windows Server 2012 or later version of Deduplication service installed. The error returned from CoCreateInstance on class with CLSID %1 and Name &quot;%2&quot; on machine &quot;%3&quot; is %4.%n%5" />
+        <string id="DEDUP_WC_EVENT_SHUTDOWN_TIMEOUT" value="Data Deduplication service is shutting down due to idle timeout.%n%1" />
+        <string id="DEDUP_WC_EVENT_SHUTDOWN_SIGNAL" value="Data Deduplication service is shutting down due to shutdown event from the Service Control Manager.%n%1" />
+        <string id="DEDUP_WC_EVENT_DEDUP_JOB_COMPLETED" value="Data Deduplication job of type &quot;%1&quot; on volume &quot;%2&quot; has completed with return code: %3%n%4" />
+        <string id="DEDUP_WC_EVENT_UNEXPECTED_CALLING_ROUTINE" value="Data Deduplication error: Unexpected error calling routine %1.  hr = %2.%n%3" />
+        <string id="DEDUP_WC_EVENT_UNEXPECTED_ERROR" value="Data Deduplication error: Unexpected error.%n%1" />
+        <string id="DEDUP_WC_EVENT_UNEXPECTED_WARNING" value="Data Deduplication warning: %1%nError: %2.%n%3" />
+        <string id="DEDUP_WC_EVENT_GENERIC_WARNING" value="Data Deduplication diagnostic warning.%n%n%1%n%2" />
+        <string id="DEDUP_WC_EVENT_GENERIC_INFORMATION" value="Data Deduplication diagnostic information.%n%n%1%n%2" />
+        <string id="DEDUP_WC_EVENT_UNEXPECTED_COM_ERRORCODE" value="Data Deduplication error: Unexpected COM error %1: %2.  Error code: %3.%n%4" />
+        <string id="DEDUP_WC_EVENT_FILE_VOLUME_ACCESS_DENIED" value="Data Deduplication was unable to access the following file or volume: &quot;%1&quot;.  This file or volume might be locked by another application right now, or you might need to give Local System access to it.%n%2" />
+        <string id="DEDUP_WC_EVENT_SCAN_SESSION_FAILED" value="Data Deduplication encountered an unexpected error during volume scan of volumes mounted at &quot;%1&quot; (&quot;%2&quot;). To find out more information about the root cause for this error please consult the Application/System event log for other Deduplication service, VSS or VOLSNAP errors related with these volumes. Also, you might want to make sure that you can create shadow copies on these volumes by using the VSSADMIN command like this: VSSADMIN CREATE SHADOW /For=C:%n%3" />
+        <string id="DEDUP_WC_EVENT_SHADOW_COPY_FAILED" value="Data Deduplication was unable to create or access the shadow copy for volumes mounted at &quot;%1&quot; (&quot;%2&quot;). Possible causes include an improper Shadow Copy configuration, insufficient disk space, or extreme memory, I/O or CPU load of the system. To find out more information about the root cause for this error please consult the Application/System event log for other Deduplication service, VSS or VOLSNAP errors related with these volumes. Also, you might want to make sure that you can create shadow copies on these volumes by using the VSSADMIN command like this: VSSADMIN CREATE SHADOW /For=C:%n%3" />
+        <string id="DEDUP_WC_EVENT_VOLUME_ACCESS_FAILED" value="Data Deduplication was unable to access volumes mounted at &quot;%1&quot; (&quot;%2&quot;). Make sure that dismount or format operations do not happen while running deduplication.%n%3" />
+        <string id="DEDUP_WC_EVENT_FILE_VOLUME_NOT_READY" value="Data Deduplication was unable to access a file or volume. Details:%n%n%1%n The volume may be inaccessible for I/O operations or marked read-only. In case of a cluster volume, this may be a transient failure during failover.%n%2" />
+        <string id="DEDUP_WC_EVENT_SCAN_OUT_OF_MEMORY" value="Data Deduplication was unable to scan volume &quot;%1&quot; (&quot;%2&quot;).%n%3" />
+        <string id="DEDUP_WC_EVENT_CONTAINER_STORE_CORRUPTION" value="Data Deduplication detected a corruption on file &quot;%1&quot; at offset (&quot;%2&quot;).  If this condition persists then please restore the data from a previous backup.  Corruption details: Structure=%3, Corruption type = %4, Additional data = %5%n%6" />
+        <string id="DEDUP_WC_EVENT_RECONCILIATION_DISABLED" value="Data Deduplication encountered failure while reconciling chunk store on volume &quot;%1&quot;. The error code was %2. Reconciliation is disabled for the current optimization job.%n%3" />
+        <string id="DEDUP_WC_EVENT_CORRUPTED_CHUNK_IN_CONTAINER_UPDATE" value="Data Deduplication encountered corrupted chunk %1 while updating container. Corrupted data that cannot be repaired will be copied as-is to the new container %2.%n%3" />
+        <string id="DEDUP_WC_EVENT_CORRUPTED_CHUNK_HEADER_IN_CONTAINER_UPDATE" value="Data Deduplication encountered chunk %1 with corrupted header while updating container. The corrupted chunk is replicated to the new container %2.%n%3" />
+        <string id="DEDUP_WC_EVENT_TRANSIENT_CORRUPTED_CHUNK_HEADER_IN_CONTAINER_UPDATE" value="Data Deduplication encountered chunk %1 with transient header corruption while updating container. The corrupted chunk is NOT replicated to the new container %2.%n%3" />
+        <string id="DEDUP_WC_EVENT_CORRUPTED_CONTAINER_IN_DEEP_GC" value="Data Deduplication encountered corrupted chunk container %1 while performing full garbage collection. The corrupted chunk container is skipped.%n%2" />
+        <string id="DEDUP_WC_EVENT_CHANGE_LOG_NOT_INITIALIZED" value="Data Deduplication could not initialize change log under %1. The error code was %2.%n%3" />
+        <string id="DEDUP_WC_EVENT_XML_CORRUPTED" value="A Data Deduplication configuration file is corrupted. The system or volume may need to be restored from backup.%n%1" />
+        <string id="DEDUP_WC_EVENT_CHUNK_STORE_STATISTICS_FILE_CORRUPTED" value="The Data Deduplication chunk store statistics file on volume &quot;%1&quot; is corrupted and will be reset. Statistics will be updated by a subsequent job and can be updated manually by running the Update-DedupStatus cmdlet.%n%2" />
+        <string id="DEDUP_WC_EVENT_VOLUME_STATISTICS_FILE_CORRUPTED" value="The Data Deduplication volume statistics file on volume &quot;%1&quot; is corrupted and will be reset. Statistics will be updated by a subsequent job and can be updated manually by running the Update-DedupStatus cmdlet.%n%2" />
+        <string id="DEDUP_WC_EVENT_STORE_NOT_SAVED_DISK_FULL" value="Data Deduplication was unable to save one of the configuration stores on volume &quot;%1&quot; due to a disk-full error: If the disk is full, please clean it up (extend the volume or delete some files). If the disk is not full, but there is a hard quota on the volume root, please delete, disable or increase this quota.%n%2" />
+        <string id="DEDUP_WC_EVENT_DISK_FULL" value="Data Deduplication encountered a disk-full error.%n%1" />
+        <string id="DEDUP_WC_EVENT_DEDUP_JOB_INSUFFICIENT_DISK" value="Data Deduplication job cannot run on volume &quot;%1&quot; due to insufficient disk space.%n%2" />
+        <string id="DEDUP_WC_EVENT_DEDUP_JOB_VOLUME_OFFLINE" value="Data Deduplication job cannot run on offline volume &quot;%1&quot;.%n%2" />
+        <string id="DEDUP_WC_EVENT_CLUSTER_NOT_RUNNING" value="Data Deduplication could not access global configuration since the cluster service is not running. Please start the cluster service and retry the operation.%n%1" />
+        <string id="DEDUP_WC_EVENT_SHADOW_COPY_DELETED" value="Shadow copy &quot;%1&quot; was deleted during storage report generation.  Volume &quot;%2&quot; might be configured with inadequate shadow copy storage area. Data Deduplication could not process this volume.%n%3" />
+        <string id="DEDUP_WC_EVENT_SHADOW_COPY_TIMEOUT" value="Shadow copy creation failed for volume &quot;%1&quot; after retrying for %2 minutes because other shadow copies were being created.  Reschedule the Data Deduplication for a less busy time.%n%3" />
+        <string id="DEDUP_WC_EVENT_VOLUME_NOT_SUPPORTED_FOR_SHADOW_COPY" value="Volume &quot;%1&quot; is not supported for shadow copy.  It is possible that the volume was removed from the system.  Data Deduplication service could not process this volume.%n%2" />
+        <string id="DEDUP_WC_EVENT_VOLUME_NOT_FOUND" value="The volume &quot;%1&quot; has been deleted or removed from the system.%n%2" />
+        <string id="DEDUP_WC_EVENT_SHADOW_COPY_CREATION" value="Shadow copy creation failed for volume &quot;%1&quot; with error %2.  The volume might be configured with inadequate shadow copy storage area.  File Serve Deduplication service could not process this volume.%n%3" />
+        <string id="DEDUP_WC_EVENT_FILE_SYSTEM_CORRUPT" value="The file system on volume &quot;%1&quot; is potentially corrupted.  Please run the CHKDSK utility to verify and fix the file system.%n%2" />
+        <string id="DEDUP_WC_EVENT_INSECURE_CHUNK_STORE" value="Data Deduplication detected an insecure internal folder. To secure the folder, reinstall deduplication on the volume again.%n%1" />
+        <string id="DEDUP_WC_EVENT_CHUNK_STORE_NOT_FOUND" value="Data Deduplication could not find a chunk store on the volume.%n%1" />
+        <string id="DEDUP_WC_EVENT_CONFLICT_CHUNK_STORE_ID" value="Data Deduplication detected multiple chunk store folders. To recover, reinstall deduplication on the volume.%n%1" />
+        <string id="DEDUP_WC_EVENT_CONFLICT_CHUNK_STORE_ID_DIRECTORIES" value="Data Deduplication detected conflicting chunk store folders: &quot;%1&quot; and &quot;%2&quot;.%n%3" />
+        <string id="DEDUP_WC_EVENT_INVALID_DATA" value="The data is invalid.%n%1" />
+        <string id="DEDUP_WC_EVENT_WLM_INIT" value="Data Deduplication scheduler failed to initialize with error &quot;%1&quot;.%n%2" />
+        <string id="DEDUP_WC_EVENT_JOB_HOST_VALIDATION" value="Data Deduplication failed to validate job type &quot;%1&quot; on volume &quot;%2&quot; with error &quot;%3&quot;.%n%4" />
+        <string id="DEDUP_WC_EVENT_JOB_START" value="Data Deduplication failed to start job type &quot;%1&quot; on volume &quot;%2&quot; with error &quot;%3&quot;.%n%4" />
+        <string id="DEDUP_WC_EVENT_JOB_EXIT_TIMEOUT" value="Data Deduplication job type &quot;%1&quot; on volume &quot;%2&quot; failed to exit gracefully.%n%3" />
+        <string id="DEDUP_WC_EVENT_ZOMBIE_JOB" value="Data Deduplication job host for job type &quot;%1&quot; on volume &quot;%2&quot; exited unexpectedly.%n%3" />
+        <string id="DEDUP_WC_EVENT_JOB_HOST_TERMINATION_ERROR" value="Error terminating job host process for job type &quot;%1&quot; on volume &quot;%2&quot; (process id: %3).%n%4" />
+        <string id="DEDUP_WC_EVENT_JOB_MEMORY_USAGE_HIGH" value="Data Deduplication detected job type &quot;%1&quot; on volume &quot;%2&quot; uses too much memory. %3 MB is assigned. %4 MB is used.%n%5" />
+        <string id="DEDUP_WC_EVENT_JOB_MEMORY_USAGE_LOWERED" value="Data Deduplication detected job type &quot;%1&quot; on volume &quot;%2&quot; memory usage has dropped to desirable level.%n%3" />
+        <string id="DEDUP_WC_EVENT_JOB_WORKING_SET_LOW" value="Data Deduplication detected job type &quot;%1&quot; on volume &quot;%2&quot; working set is low. Ratio to commit size is %3.%n%4" />
+        <string id="DEDUP_WC_EVENT_JOB_WORKING_SET_RECOVERED" value="Data Deduplication detected job type &quot;%1&quot; on volume &quot;%2&quot; working set has recovered to desirable level.%n%3" />
+        <string id="DEDUP_WC_EVENT_JOB_PAGE_FAULT_HIGH" value="Data Deduplication detected job type &quot;%1&quot; on volume &quot;%2&quot; page fault rate is high. The rate is %3 page faults per second.%n%4" />
+        <string id="DEDUP_WC_EVENT_JOB_PAGE_FAULT_LOWERED" value="Data Deduplication detected job type &quot;%1&quot; on volume &quot;%2&quot; page fault rate has lowered to desirable level. The rate is %3 page faults per second.%n%4" />
+        <string id="DEDUP_WC_EVENT_HIGH_MEMORY_JOB_CANCELLED" value="Data Deduplication cancelled job type &quot;%1&quot; on volume &quot;%2&quot;. It uses too much memory than the amount assigned to it.%n%3" />
+        <string id="DEDUP_WC_EVENT_JOB_CANCELLED_MEMORY_RESOURCE_LOW" value="Data Deduplication cancelled job type &quot;%1&quot; on volume &quot;%2&quot;. Memory resource is running low on the machine or in the job.%n%3" />
+        <string id="DEDUP_WC_EVENT_JOB_CANCELLED_CSV_PLACEMENT_POLICY" value="Data Deduplication cancelled job type &quot;%1&quot; on volume &quot;%2&quot;. The job violated Csv dedup job placement policy.%n%3" />
+        <string id="DEDUP_WC_EVENT_JOB_CANCELLED_CSV_MONITOR_STOP" value="Data Deduplication cancelled job type &quot;%1&quot; on volume &quot;%2&quot;. The csv job monitor has been uninitialized.%n%3" />
+        <string id="DEDUP_WC_EVENT_JOB_CANCELLED_MANUALLY" value="Data Deduplication job type &quot;%1&quot; on volume &quot;%2&quot; was cancelled manually.%n%3" />
+        <string id="DEDUP_WC_EVENT_SCHEDULED_JOB_CANCELLED" value="Scheduled data Deduplication job type &quot;%1&quot; on volume &quot;%2&quot; was cancelled.%n%3" />
+        <string id="DEDUP_WC_EVENT_JOB_ENQUEUE_FAILED" value="Failed to enqueue job of type &quot;%1&quot; on volume &quot;%2&quot;.%n%3" />
+        <string id="DEDUP_WC_EVENT_JOB_COMPLETION_CALLBACK" value="Data Deduplication job type &quot;%1&quot; on volume &quot;%2&quot; failed to report completion to the service with error: %3.%n%4" />
+        <string id="DEDUP_WC_EVENT_GENERATION_OVERFLOW" value="Data Deduplication detected a container cannot be compacted or updated because it has reached the maximum generation.%n%1" />
+        <string id="DEDUP_WC_EVENT_CORRUPTION_LOG_CORRUPTED" value="Data Deduplication corruption log &quot;%1&quot; is corrupted.%n%2" />
+        <string id="DEDUP_WC_EVENT_CORRUPTION_LOG_SIZE_LIMIT_REACHED" value="Data Deduplication corruption log &quot;%1&quot; has reached maximum allowed size &quot;%2&quot;. Please run scrubbing job to process corruption log. No more corruptions will be reported until the log is processed.%n%3" />
+        <string id="DEDUP_WC_EVENT_CORRUPTION_LOG_SIZE_LIMIT_REACHED_SCRUB" value="Data Deduplication corruption log &quot;%1&quot; has reached maximum allowed size &quot;%2&quot;. No more corruptions will be reported until the log is processed.%n%3" />
+        <string id="DEDUP_WC_EVENT_WLM_UNINIT" value="Data Deduplication scheduler failed to uninitialize with error &quot;%1&quot;.%n%2" />
+        <string id="DEDUP_WC_EVENT_CONTAINER_ID_OVERFLOW" value="Data Deduplication detected a new container could not be created in a chunk store because it ran out of available container Id.%n%1" />
+        <string id="DEDUP_WC_EVENT_DEEP_GC_PHASE1_ERROR" value="Data Deduplication full garbage collection phase 1 (cleaning file related metadata) on volume &quot;%1&quot; failed with error: %2.  The job will continue with phase 2 execution (data chunk cleanup).%n%3" />
+        <string id="DEDUP_WC_EVENT_DEEP_GC_FILE_ERROR" value="Data Deduplication full garbage collection phase 1 on volume &quot;%1&quot; encountered an error %2 while processing file %3. Phase 1 will need to be aborted since garbage collection of file-related metadata is unsafe to continue on file errors.%n%4" />
+        <string id="DEDUP_WC_EVENT_DEEP_GC_DELETE_LOG_RENAME" value="Data Deduplication full garbage collection could not achieve maximum space reclamation because delete logs for data container %1 could not be cleaned up.%n%2" />
+        <string id="DEDUP_WC_EVENT_QUOTA_VIOLATIONS" value="Some files could not be deduplicated because of FSRM Quota violations on volume %1. Files skipped are likely compressed or sparse files in folders which are at quota or close to their quota limit. Please consider increasing the quota limit for folders that are at their quota limit or close to it.%n%2" />
+        <string id="DEDUP_WC_EVENT_FILE_PIPELINE_ERROR_NON_FATAL" value="Data Deduplication failed to dedup file &quot;%1&quot; with file ID %2 due to non-fatal error %3%n%4.%n%nNote: You can retrieve the file name by running the command FSUTIL FILE QUERYFILENAMEBYID on the file in question." />
+        <string id="DEDUP_WC_EVENT_FILE_PIPELINE_OPLOCK_BREAK" value="Data Deduplication failed to dedup file &quot;%1&quot; with file ID %2 due to oplock break%n%3" />
+        <string id="DEDUP_WC_EVENT_HOTSPOT_FILE_CORRUPT" value="Data Deduplication failed to load hotspot table from file %1 due to error %2.%n%3" />
+        <string id="DEDUP_WC_EVENT_FILE_PIPELINE_OPLOCK_INIT" value="Data Deduplication failed to initialize oplock.%n%nFile ID: %1%nFile name: &quot;%2&quot;%nError: %3%n%4" />
+        <string id="DEDUP_WC_EVENT_FILE_PIPELINE_OPLOCK_INIT_MISSING_FILE" value="Data Deduplication failed to initialize oplock as the file appears to be missing.%n%nFile ID: %1%nFile name: &quot;%2&quot;%nError: %3%n%4" />
+        <string id="DEDUP_WC_EVENT_FILE_PIPELINE_TOO_MANY_FILE_ERRORS" value="Data Deduplication skipped too many file-level errors. We will not log more than %1 file-level errors per job.%n%2" />
+        <string id="DEDUP_WC_EVENT_FILE_PIPELINE_ERROR_FATAL" value="Data Deduplication failed to dedup file %1 &quot;%2&quot; due to fatal error %3%n%4" />
+        <string id="DEDUP_WC_EVENT_MARK_CONTAINER_RECONCILED_FAILED" value="Data Deduplication service could not mark chunk container %1 as reconciled. The error code was %2.%n%3" />
+        <string id="DEDUP_WC_EVENT_GROUP_SESSION_ABORTED" value="Data Deduplication has aborted a group commit session.%n%nFile count: %1%nError: %2%n%3" />
+        <string id="DEDUP_WC_EVENT_FILE_CORRUPT" value="Data Deduplication encountered corruption while accessing a file in chunk store. Please run scrubbing job for diagnosis and repair.%n%1" />
+        <string id="DEDUP_WC_EVENT_FILE_CORRUPT_SCRUB" value="Data Deduplication encountered corruption while accessing a file in chunk store.%n%1" />
+        <string id="DEDUP_WC_EVENT_CRC_ERROR" value="Data Deduplication encountered checksum (CRC) mismatch error while accessing a file in chunk store. Please run scrubbing job for diagnosis and repair.%n%1" />
+        <string id="DEDUP_WC_EVENT_CRC_ERROR_SCRUB" value="Data Deduplication encountered checksum (CRC) mismatch error while accessing a file in chunk store.%n%1" />
+        <string id="DEDUP_WC_EVENT_FILE_IN_USE" value="Data Deduplication is unable to access file %1 because the file is in use.%n%2" />
+        <string id="DEDUP_WC_EVENT_OPEN_REGISTRY_SETTING_FAIL" value="Fail to open dedup setting registry key" />
+        <string id="DEDUP_WC_EVENT_INVALID_PHYSICAL_SECTOR_SIZE_DETECTED" value="Data Deduplication while running job on volume %1 detected invalid physical sector size %2. Using default value %3.%n%4" />
+        <string id="DEDUP_WC_EVENT_UNSUPPORTED_CHUNKSTORE_CONTAINER_DETECTED" value="Data Deduplication detected an unsupported chunk store container.%n%1" />
+        <string id="DEDUP_WC_EVENT_UNSUPPORTED_CHUNKSTORE_DETECTED" value="Data Deduplication cannot run the job on volume %1 because the dedup store version compatiblity check failed with error %2.%n%3" />
+        <string id="DEDUP_WC_EVENT_VOLUME_DISABLED_TOO_MANY_CORRUPTIONS" value="Data Deduplication has disabled the volume %1 because it has discovered too many corruptions. Please run deep scrubbing on the volume.%n%2" />
+        <string id="DEDUP_WC_EVENT_VOLUME_DISABLED_MISSING_CONTAINER" value="Data Deduplication has disabled the volume %1 because there are missing or corrupt containers. Please run deep scrubbing on the volume.%n%2" />
+        <string id="DEDUP_WC_EVENT_CORRUPTION_TABLE_CORRUPT" value="Data Deduplication has detected a corrupt corruption metadata file on the store at %1. Please run deep scrubbing on the volume.%n%2" />
+        <string id="DEDUP_WC_EVENT_CORRUPTION_TABLE_LOAD_FAILURE" value="Data Deduplication has failed to load corruption metadata file on the store at %1 due to error %2. Please run deep scrubbing on the volume.%n%3" />
+        <string id="DEDUP_WC_EVENT_CORRUPTION_LOG_LOAD_FAILURE" value="Data Deduplication has failed to process corruption metadata file %1 due to error %2. Please run deep scrubbing on the volume.%n%3" />
+        <string id="DEDUP_WC_EVENT_CORRUPTION_JOBSTATE_DELETED" value="Data Deduplication has failed to load a corrupted metadata file %1 due to error %2. Deleting the file and continuing.%n%3" />
+        <string id="DEDUP_WC_EVENT_SET_NTFS_ALLOCATION_SIZE" value="Data Deduplication has failed to set NTFS allocation size for container file %1 due to error %2.%n%3" />
+        <string id="DEDUP_EVENT_JOB_MEMORY_INSUFFICIENT_MEMORY" value="%1 job on volume %4 (%3) was configured with insufficient memory.%n%nSystem memory percentage: %5%nAvailable memory: %8 MB%nMinimum required memory: %6 MB" />
+        <string id="DEDUP_EVENT_OPTIMIZATION_MEMORY_DETAILS" value="Optimization memory details for %1 job on volume %3 (%2)." />
+        <string id="DEDUP_EVENT_DATAPORT_MEMORY_DETAILS" value="DataPort memory details for %1 job on volume %3 (%2)." />
+        <string id="DEDUP_EVENT_INVALID_FILE_ID" value="Data deduplication detected a file with an ID that is not supported.  Files with identifiers unpackable into 64-bits will be skipped. FileId: %1 FileName: %2" />
+        <string id="DEDUP_EVENT_OPEN_FILE_SKIPPED_DURING_OPTIMIZATION" value="An open file was skipped during optimization. No action is required.%n%nFileId: %2%nSkip Reason: %1" />
+        <string id="DEDUP_EVENT_OPTIMIZATION_OPERATION_RETRIED" value="An operation succeeded after one or more retries. Operation: %1; FileId: %3; Number of retries: %2" />
+        <string id="DEDUP_WC_EVENT_FILE_SYSTEM_CASE_SENSITIVE" value="File-system is configured for case-sensitive file/folder names. Data Deduplication does not support case-sensitive file-system mode.%n%1" />
+        <string id="DEDUP_WC_EVENT_CREATE_QUOTA" value="Data Deduplication created emergency file %1.%n%3" />
+        <string id="DEDUP_WC_EVENT_CREATE_QUOTA_ERROR" value="Data Deduplication failed to create emergency file %1 with error %2.%n%3" />
+        <string id="DEDUP_WC_EVENT_DELETE_QUOTA" value="Data Deduplication deleted emergency file %1.%n%3" />
+        <string id="DEDUP_WC_EVENT_DELETE_QUOTA_ERROR" value="Data Deduplication failed to delete emergency file %1 with error %2.%n%3" />
+        <string id="DEDUP_WC_EVENT_CONVERT_SCRUBBING_JOB_TO_READ_ONLY" value="Data Deduplication changed scrubbing job to read-only due to insufficient disk space.%n%1" />
+        <string id="DEDUP_WC_EVENT_DDPCLI_WINDOW_CREATE" value="Data Deduplication could not create window to receive task scheduler stop message due to error %1. Task(s) may not stop after duration limit.%n%2" />
+        <string id="DEDUP_WC_EVENT_DDPCLI_THREAD_CREATE" value="Data Deduplication could not create thread to poll for task scheduler stop message due to error %1. Task(s) may not stop after duration limit.%n%2" />
+        <string id="DEDUP_WC_EVENT_ALREADY_INITIALIZED" value="An attempt was made to perform an initialization operation when initialization has already been completed.%n%1" />
+        <string id="DEDUP_WC_EVENT_MISALIGNED_CHUNK_CONTAINER_VALID_DATA_LENGTH" value="Data Deduplication detected a chunk store container with misaligned valid data length.%n%1" />
+        <string id="DEDUP_WC_EVENT_STREAM_MAP_SIGNATURE_MISMATCH_IN_DELETE_LOG" value="Data Deduplication Garbage Collection encountered a delete log entry with an invalid stream map signature for stream map Id %1.%n%2" />
+        <string id="DEDUP_WC_EVENT_CORRUPT_MISSING_FILE_RECOVERED" value="Data Deduplication recovered a corrupt or missing file.%n%1" />
+        <string id="DEDUP_EVENT_CORRUPT_DELETE_BITMAP_RUN_DEEP_GC" value="Data Deduplication encountered a corrupted metadata file. To correct the problem, schedule or manually run a Garbage Collection job on the affected volume with the -Full option.%n%1" />
+        <string id="DEDUP_EVENT_SCRUBBING_TOO_MANY_CORRUPTIONS_FOUND" value="Data Deduplication service found too many corruptions on volume %3. Some corruptions are not reported." />
+        <string id="DEDUP_EVENT_SCRUBBING_SOME_CORRUPTIONS_REMAINING" value="Data Deduplication service found %4 corruption(s) on volume %3. %5 corruption(s) are fixed. %6 user file(s) are corrupted. %7 user file(s) are fixed. For the corrupted file list, see the Microsoft/Windows/Deduplication/Scrubbing events." />
+        <string id="DEDUP_EVENT_SCRUBBING_ALL_CORRUPTIONS_FIXED" value="Data Deduplication service found %4 corruption(s) on volume %3. All corruptions are fixed." />
+        <string id="DEDUP_EVENT_SCRUBBING_NO_CORRUPTION_FOUND" value="Data Deduplication service has finished scrubbing on volume %3. It did not find any corruption since the last scrubbing." />
+        <string id="DEDUP_EVENT_SCRUBBING_PROCESSED_CHUNK_STORE_ITEM_CORRUPTION" value="Data Deduplication service detected a corrupted item (%11 - %13, %8, %9, %10, %12) in Deduplication Chunk Store on volume %4. See the event details for more information." />
+        <string id="DEDUP_EVENT_SCRUBBING_PROCESSED_REPARSE_POINT_CORRUPTION" value="Data Deduplication service detected corruption (%7) in &quot;%6&quot;. See the event details for more information." />
+        <string id="DEDUP_EVENT_SCRUBBING_PROCESSED_DUPLICATE_REPARSE_POINT" value="Data Deduplication service detected potential data loss (%9) in &quot;%6&quot; due to sharing reparse data with file &quot;%8&quot;. See the event details for more information." />
+        <string id="DEDUP_EVENT_SCRUBBING_UNRECOVERABLE_FILE_CORRUPTION" value="Data Deduplication service detected corruption in &quot;%5%6%7&quot;. The corruption cannot be repaired." />
+        <string id="DEDUP_EVENT_SCRUBBING_REPAIR_FAILURE" value="Data Deduplication service encountered error while repairing corruptions on volume %3. The error was %4. The repair is unsuccessful." />
+        <string id="DEDUP_EVENT_MISSING_CONTAINER" value="Container (%8,%9) with user data is missing from the chunk store. Missing container may result from incomplete restore, incomplete migration or file-system corruption. Volume is disabled from further optimization. It is recommended to restore the volume prior to enabling the volume for further optimization." />
+        <string id="DEDUP_EVENT_CORRUPT_CONTAINER" value="Container (%8,%9) with user data is corrupt in the chunk store. It is recommended to restore the volume prior to enabling the volume for further optimization." />
+        <string id="DEDUP_EVENT_TASK_UNOPTIMIZATION" value="Data Deduplication Unoptimization Task" />
+        <string id="DEDUP_EVENT_UNOPTIMIZATION_FILE_NOT_RECALLED" value="Data Deduplication service could not unoptimize file &quot;%5%6%7&quot;. Error %8, &quot;%9&quot;." />
+        <string id="DEDUP_EVENT_RESTORE_FILE_ERROR" value="Restore of deduplicated file &quot;%1&quot; failed with the following error: %2, &quot;%3&quot;." />
+        <string id="DEDUP_EVENT_UNOPTIMIZATION_TOO_MANY_ERRORS_FOUND" value="Data Deduplication service failed to unoptimize too many files %3. Some files are not reported." />
+        <string id="DEDUP_EVENT_UNOPTIMIZATION_DONE_NO_ERRORS" value="Data Deduplication service has finished unoptimization on volume %3 with no errors." />
+        <string id="DEDUP_EVENT_UNOPTIMIZATION_DONE_WITH_ERRORS" value="Data Deduplication service has finished unoptimization on volume %3 with %4 errors." />
+        <string id="DEDUP_EVENT_SCRUBBING_JOB_SUMMARY" value="Data Deduplication service has finished scrubbing on volume %3. See the event details for more information." />
+        <string id="DEDUP_EVENT_SCRUBBING_SCAN_FILE_ERROR" value="Data Deduplication service encountered error while processing file &quot;%5%6%7&quot;. The error was %8." />
+        <string id="DEDUP_EVENT_DEEP_SCRUB_SCAN_FILE_ERROR" value="Data Deduplication service encountered error while processing file &quot;%5%6%7&quot;. The error was %8." />
+        <string id="DEDUP_EVENT_SCRUBBING_TOO_MANY_SCAN_FILE_ERRORS" value="Data Deduplication service encountered too many errors while processing file on volume %3. The threshold was %4. Some user file corruptions may not be reported." />
+        <string id="DEDUP_EVENT_DEEP_SCRUB_TOO_MANY_SCAN_FILE_ERRORS" value="Data Deduplication service encountered too many errors while processing file on volume %3. The threshold was %4. Some user file corruptions may not be reported." />
+        <string id="DEDUP_EVENT_SCRUBBING_DETECT_STORE_CORRUPTIONS_ERROR" value="Data Deduplication service encountered error while detecting corruptions in chunk store on volume %3. The error was %4. The job is aborted." />
+        <string id="DEDUP_EVENT_SCRUBBING_LOAD_CORRUPTION_LOGS_WARNING" value="Data Deduplication service encountered error while loading corruption logs on volume %3. The error was %4. The job continues. Some corruptions may not be detected." />
+        <string id="DEDUP_EVENT_SCRUBBING_CLEANUP_CORRUPTION_LOGS_WARNING" value="Data Deduplication service encountered error while cleaning up corruption logs on volume %3. The error was %4. Some corruptions may be reported again next time." />
+        <string id="DEDUP_EVENT_SCRUBBING_LOAD_HOTSPOTS_MAPPING_ERROR" value="Data Deduplication service encountered error while loading hotspots mapping from chunk store on volume %3. The error was %4. Some corruptions may not be repaired." />
+        <string id="DEDUP_EVENT_SCRUBBING_DETERMINE_CORRUPTED_USER_FILES_ERROR" value="Data Deduplication service encountered error while determining corrupted user files on volume %3. The error was %4. Some user file corruptions may not be reported." />
+        <string id="DEDUP_EVENT_DEEP_SCRUB_SCAN_DEDUP_USER_FILES_ERROR" value="Data Deduplication service encountered error while scaning dedup user files on volume %3. The error was %4. Some user file corruptions may not be reported." />
+        <string id="DEDUP_EVENT_SCRUBBING_READONLY_CORRUPTIONS_WARNING" value="Data Deduplication service found %4 corruption(s) on volume %3. %6 user file(s) are corrupted. %7 user file(s) are fixable. Please run scrubbing job in read-write mode to attempt fixing reported corruptions." />
+        <string id="DEDUP_EVENT_SCRUBBING_FIXED_FILE" value="Data Deduplication service fixed corruption in &quot;%5%6%7&quot;." />
+        <string id="DEDUP_EVENT_SCRUBBING_FIXABLE_FILE" value="Data Deduplication service detected fixable corruption in &quot;%5%6%7&quot;. Please run scrubbing job in read-write mode to fix this corruption." />
+        <string id="DEDUP_EVENT_SCRUBBING_FILE_LIST_CORRUPTED" value="Data Deduplication service detected a corrupted item (%6, %7, %8, %9) in Deduplication Chunk Store on volume %4. See the event details for more information." />
+        <string id="DEDUP_EVENT_JOB_STARTED" value="%1 job has started.%n%nVolume: %4 (%3)%nAvailable memory: %5 MB%nPriority: %6" />
+        <string id="DEDUP_EVENT_JOB_STARTED_OPTIMIZATION" value="%1 job has started.%n%nVolume: %4 (%3)%nAvailable memory: %5 MB%nAvailable cores: %6%nInstances: %7%nReaders per instance: %8%nPriority: %9%nIoThrottle: %10" />
+        <string id="DEDUP_EVENT_JOB_STARTED_DATAPORT" value="%1 job has started.%n%nVolume: %4 (%3)%nAvailable memory: %5 MB%nAvailable threads: %6%nPriority: %7" />
+        <string id="DEDUP_EVENT_JOB_STARTED_GC" value="%1 job has started.%n%nVolume: %4 (%3)%nAvailable memory: %5 MB%nAvailable cores: %6%nPriority: %7%nFull: %8%nVolume free space (MB): %9" />
+        <string id="DEDUP_EVENT_JOB_STARTED_SCRUBBING" value="%1 job has started.%n%nVolume: %4 (%3)%nAvailable memory: %5 MB%nPriority: %6%nFull: %7%nRead-only: %8" />
+        <string id="DEDUP_EVENT_JOB_STARTED_PRIORITY" value="Priority %1 job has started.%n%nVolume: %4 (%3)%nFile ID: %11%nAvailable memory: %5 MB%nAvailable cores: %6%nInstances: %7%nReaders per instance: %8%nPriority: %9%nIoThrottle: %10" />
+        <string id="DEDUP_EVENT_JOB_COMPLETED_OPTIMIZATION" value="%1 job has completed.%n%nVolume: %4 (%3)%nError code: %5%nError message: %6%nSavings rate (percent): %7%nSaved space (MB): %8%nVolume used space (MB): %9%nVolume free space (MB): %10%nOptimized file count: %11%nIn-policy file count: %12%nJob processed space (MB): %13%nJob elapsed time (seconds): %18%nJob throughput (MB/second): %19%nChurn processing throughput (MB/second): %20" />
+        <string id="DEDUP_EVENT_JOB_COMPLETED_DATAPORT" value="%1 job has completed.%n%nVolume: %4 (%3)%nError code: %5%nError message: %6%nSavings rate (percent): %7%nSaved space (MB): %8%nVolume used space (MB): %9%nVolume free space (MB): %10%nOptimized file count: %11%nChunk lookup count: %12%nInserted chunk count: %13%nInserted chunks logical data (MB): %14%nInserted chunks physical data (MB): %15%nCommitted stream count: %16%nCommitted stream entry count: %17%nCommitted stream logical data (MB): %18%nRetrieved chunks physical data (MB): %19%nRetrieved stream logical data (MB): %20%nDataPort time (seconds): %21%nJob elapsed time (seconds): %22%nIngress throughput (MB/second): %23%nEgress throughput (MB/second): %24" />
+        <string id="DEDUP_EVENT_JOB_STATISTICS_DATAPORT" value="DataPort status update.  %n%nVolume: %2%nSavings rate (percent): %3%nSaved space (MB): %4%nVolume used space (MB): %5%nVolume free space (MB): %6%nOptimized file count: %7%nChunk lookup count: %8%nInserted chunk count: %9%nInserted chunks logical data (MB): %10%nInserted chunks physical data (MB): %11%nCommitted stream count: %12%nCommitted stream entry count: %13%nCommitted stream logical data (MB): %14%nRetrieved chunks physical data (MB): %15%nRetrieved stream logical data (MB): %16%nDataPort time (seconds): %17%nJob elapsed time (seconds): %18%nIngress throughput (MB/second): %19%nEgress throughput (MB/second): %20" />
+        <string id="DEDUP_EVENT_JOB_COMPLETED" value="%1 job has completed.%n%nVolume: %4 (%3)%nError code: %5%nError message: %6" />
+        <string id="DEDUP_EVENT_JOB_COMPLETED_GC" value="%1 job has completed.%n%nFull: %2%nVolume: %5 (%4)%nError code: %6%nError message: %7%nFreed up space (MB): %8%nVolume free space (MB): %9%nJob elapsed time (seconds): %10%nJob throughput (MB/second): %11" />
+        <string id="DEDUP_EVENT_JOB_COMPLETED_SCRUBBING" value="%1 job has completed.%n%nFull: %2%nRead-only: %3%nVolume: %6 (%5)%nError code: %7%nError message: %8%nTotal corruption count: %9%nFixable corruption count: %10%n%nWhen corruptions are found, check more details in Scrubbing event channel." />
+        <string id="DEDUP_EVENT_JOB_COMPLETED_UNOPTIMIZE" value="%1 job has completed.%n%nVolume: %4 (%3)%nError code: %5%nError message: %6%nUnoptimized file count: %7%nJob processed space (MB): %8%nJob elapsed time (seconds): %9%nJob throughput (MB/second): %10" />
+        <string id="DEDUP_EVENT_JOB_MEMORY_ESTIMATION" value="%1 job memory requirements.%n%nVolume: %4 (%3)%nMinimum memory: %5 MB%nMaximum memory: %6 MB%nMinimum disk: %7 MB%nMaximum cores: %8" />
+        <string id="DEDUP_EVENT_JOB_QUEUED" value="%1 job has been queued.%n%nVolume: %4 (%3)%nSystem memory percent: %5 %nPriority: %6%nSchedule mode: %7" />
+        <string id="DEDUP_EVENT_RECONCILIATION_STARTED" value="%1 reconciliation has started.%n%nVolume: %4 (%3)" />
+        <string id="DEDUP_EVENT_RECONCILIATION_COMPLETED" value="%1 reconciliation has completed.%n%nGuidance: This event is expected when Reconciliation has completed, there is no recommended or required action. Reconciliation is an internal process that allows Optimization and DataPort jobs to run when the entire Deduplication chunk index cannot be loaded into memory. %n%nVolume: %4 (%3)%nReconciled containers: %5%nUnreconciled containers: %6%nCatchup references: %7%nCatchup containers: %8%nReconciled references: %9%nReconciled containers: %10%nCross-reconciled references: %11%nCross-reconciled containers: %12%nError code: %13%nError message: %14" />
+        <string id="DEDUP_EVENT_NON_CLUSTERED_CHUNK_INDEX_CACHE_VOLUME" value="Data Deduplication detected a non-clustered volume specified for the chunk index cache volume in a clustered deployment. The configuration is not recommended because it may result in job failures after failover.%n%nVolume: %3 (%2)" />
+        <string id="DEDUP_CHANGE_EVENT_PROVIDER" value="Data Deduplication Change Events" />
+        <string id="DEDUP_CHANGE_EVENT_CREATE_CHUNK_CONTAINER" value="Create chunk container (%1 - %2.%3.ccc)" />
+        <string id="DEDUP_CHANGE_EVENT_CREATE_CHUNK_CONTAINER_COMPLETION_STATUS" value="Create chunk container completed %1" />
+        <string id="DEDUP_CHANGE_EVENT_COPY_CHUNK_CONTAINER" value="Copy chunk container (%1 - %2.%3.ccc)" />
+        <string id="DEDUP_CHANGE_EVENT_COPY_CHUNK_CONTAINER_COMPLETION_STATUS" value="Copy chunk container completed %1" />
+        <string id="DEDUP_CHANGE_EVENT_DELETE_CHUNK_CONTAINER" value="Delete chunk container (%1 - %2.%3.ccc)" />
+        <string id="DEDUP_CHANGE_EVENT_DELETE_CHUNK_CONTAINER_COMPLETION_STATUS" value="Delete chunk container completed %1" />
+        <string id="DEDUP_CHANGE_EVENT_RENAME_CHUNK_CONTAINER" value="Rename chunk container (%1 - %2.%3.ccc%4)" />
+        <string id="DEDUP_CHANGE_EVENT_RENAME_CHUNK_CONTAINER_COMPLETION_STATUS" value="Rename chunk container completed %1" />
+        <string id="DEDUP_CHANGE_EVENT_FLUSH_CHUNK_CONTAINER" value="Flush chunk container (%1 - %2.%3.ccc)" />
+        <string id="DEDUP_CHANGE_EVENT_FLUSH_CHUNK_CONTAINER_COMPLETION_STATUS" value="Flush chunk container completed %1" />
+        <string id="DEDUP_CHANGE_EVENT_ROLLBACK_CHUNK_CONTAINER" value="Rollback chunk container (%1 - %2.%3.ccc)" />
+        <string id="DEDUP_CHANGE_EVENT_ROLLBACK_CHUNK_CONTAINER_COMPLETION_STATUS" value="Rollback chunk container completed %1" />
+        <string id="DEDUP_CHANGE_EVENT_MARK_CHUNK_CONTAINER_READONLY" value="Mark chunk container (%1 - %2.%3.ccc) read-only" />
+        <string id="DEDUP_CHANGE_EVENT_MARK_CHUNK_CONTAINER_READONLY_COMPLETION_STATUS" value="Mark chunk container read-only completed %1" />
+        <string id="DEDUP_CHANGE_EVENT_WRITE_CHUNK_CONTAINER_REDIRECTION_TABLE" value="Write chunk container (%1 - %2.%3.ccc) redirection table at offset %4 (Entries: StartIndex %5, Count %6)" />
+        <string id="DEDUP_CHANGE_EVENT_WRITE_CHUNK_CONTAINER_REDIRECTION_TABLE_COMPLETION_STATUS" value="Write chunk container redirection table completed %1" />
+        <string id="DEDUP_CHANGE_EVENT_WRITE_CHUNK_CONTAINER_HEADER" value="Write chunk container (%5 - %6.%7.ccc) header at offset %8 (Header: USN %9, VDL %10, #Chunk %11, NextLocalId %12, Flags %13, LastAppendTime %14, BackupRedirectionTableOfset %15, LastReconciliationLocalId %16)" />
+        <string id="DEDUP_CHANGE_EVENT_WRITE_CHUNK_CONTAINER_HEADER_COMPLETION_STATUS" value="Write chunk container header completed %1" />
+        <string id="DEDUP_CHANGE_EVENT_INSERT_DATA_CHUNK_HEADER" value="Insert data chunk header to chunk container (%1 - %2.%3.ccc) at offset %4 (Chunk: IsBatched %5 IsCorupted %6, DataSize %7)" />
+        <string id="DEDUP_CHANGE_EVENT_INSERT_DATA_CHUNK_HEADER_COMPLETION_STATUS" value="Insert data chunk header completed %1" />
+        <string id="DEDUP_CHANGE_EVENT_INSERT_DATA_CHUNK_BODY" value="Insert data chunk body to chunk container (%1 - %2.%3.ccc) at offset %4 (Chunk: IsBatched %5 IsCorrupted %6, DataSize %7)" />
+        <string id="DEDUP_CHANGE_EVENT_INSERT_DATA_CHUNK_BODY_COMPLETION_STATUS" value="Insert data chunk body completed %1 with ChunkId %2" />
+        <string id="DEDUP_CHANGE_EVENT_INSERT_HOTSPOT_CHUNK_HEADER" value="Insert hotspot chunk header to chunk container (%1 - %2.%3.ccc) at offset %4 (Chunk: IsBatched %5 IsCorrupted %6, DataSize %7)" />
+        <string id="DEDUP_CHANGE_EVENT_INSERT_HOTSPOT_CHUNK_HEADER_COMPLETION_STATUS" value="Insert hotspot chunk header completed %1" />
+        <string id="DEDUP_CHANGE_EVENT_INSERT_HOTSPOT_CHUNK_BODY" value="Insert hotspot chunk body to chunk container (%1 - %2.%3.ccc) at offset %4 (Chunk: IsBatched %5 IsCorrupted %6, DataSize %7)" />
+        <string id="DEDUP_CHANGE_EVENT_INSERT_HOTSPOT_CHUNK_BODY_COMPLETION_STATUS" value="Insert hotspot chunk body completed %1 with ChunkId %2" />
+        <string id="DEDUP_CHANGE_EVENT_INSERT_STREAM_MAP_CHUNK_HEADER" value="Insert stream map chunk header to chunk container (%1 - %2.%3.ccc) at offset %4 (Chunk: IsBatched %5 IsCorrupted %6, DataSize %7)" />
+        <string id="DEDUP_CHANGE_EVENT_INSERT_STREAM_MAP_CHUNK_HEADER_COMPLETION_STATUS" value="Insert stream map chunk header completed %1" />
+        <string id="DEDUP_CHANGE_EVENT_INSERT_STREAM_MAP_CHUNK_BODY" value="Insert stream map chunk body to chunk container (%1 - %2.%3.ccc) at offset %4 (Chunk: IsBatched %5 IsCorrupted %6, DataSize %7) (Entries: StartIndex %8, Count %9)" />
+        <string id="DEDUP_CHANGE_EVENT_INSERT_STREAM_MAP_CHUNK_BODY_COMPLETION_STATUS" value="Insert stream map chunk body completed %1 with ChunkId %2" />
+        <string id="DEDUP_CHANGE_EVENT_INSERT_PADDING_CHUNK_HEADER" value="Insert padding chunk header to chunk container (%1 - %2.%3.ccc) at offset %4 (Chunk: IsBatched %5 IsCorupted %6, DataSize %7)" />
+        <string id="DEDUP_CHANGE_EVENT_INSERT_PADDING_CHUNK_HEADER_COMPLETION_STATUS" value="Insert padding chunk header completed %1" />
+        <string id="DEDUP_CHANGE_EVENT_INSERT_PADDING_CHUNK_BODY" value="Insert padding chunk body to chunk container (%1 - %2.%3.ccc) at offset %4 (Chunk: IsBatched %5 IsCorrupted %6, DataSize %7)" />
+        <string id="DEDUP_CHANGE_EVENT_INSERT_PADDING_CHUNK_BODY_COMPLETION_STATUS" value="Insert padding chunk body completed %1 with ChunkId %2" />
+        <string id="DEDUP_CHANGE_EVENT_INSERT_CHUNK_BATCH" value="Insert batch of chunks to chunk container (%1 - %2.%3.ccc) at offset %4 (BatchChunkCount %5, BatchDataSize %6)" />
+        <string id="DEDUP_CHANGE_EVENT_INSERT_CHUNK_BATCH_COMPLETION_STATUS" value="Insert batch of chunks completed %1" />
+        <string id="DEDUP_CHANGE_EVENT_MAP_COMPRESSIONFORMAT_NONE" value="None" />
+        <string id="DEDUP_CHANGE_EVENT_MAP_COMPRESSIONFORMAT_LZNT1" value="LZNT1" />
+        <string id="DEDUP_CHANGE_EVENT_MAP_COMPRESSIONFORMAT_XPRESS" value="Xpress" />
+        <string id="DEDUP_CHANGE_EVENT_MAP_COMPRESSIONFORMAT_XPRESS_HUFF" value="Xpreff Huff" />
+        <string id="DEDUP_CHANGE_EVENT_MAP_COMPRESSIONENGINE_NONE" value="None" />
+        <string id="DEDUP_CHANGE_EVENT_MAP_COMPRESSIONENGINE_STD" value="Standard" />
+        <string id="DEDUP_CHANGE_EVENT_MAP_COMPRESSIONENGINE_MAX" value="Max" />
+        <string id="DEDUP_CHANGE_EVENT_MAP_COMPRESSIONENGINE_HYBRID" value="Hybrid" />
+        <string id="DEDUP_CHANGE_EVENT_WRITE_DELETE_LOG_HEADER" value="Write delete log (%5 - %6.%7.delete.log) header" />
+        <string id="DEDUP_CHANGE_EVENT_WRITE_DELETE_LOG_HEADER_COMPLETION_STATUS" value="Write delete log header completed %1" />
+        <string id="DEDUP_CHANGE_EVENT_APPEND_DELETE_LOG_ENTRIES" value="Append delete log (%1 - %2.%3.delete.log) entries at offset %4 (Entries: StartIndex %5, Count %6)" />
+        <string id="DEDUP_CHANGE_EVENT_APPEND_DELETE_LOG_ENTRIES_COMPLETION_STATUS" value="Append delete log entries completed %1" />
+        <string id="DEDUP_CHANGE_EVENT_DELETE_DELETE_LOG" value="Delete delete log (%1 - %2.%3.delete.log)" />
+        <string id="DEDUP_CHANGE_EVENT_DELETE_DELETE_LOG_COMPLETION_STATUS" value="Delete delete log completed %1" />
+        <string id="DEDUP_CHANGE_EVENT_RENAME_DELETE_LOG" value="Rename delete log (%1 - %2.%3.delete.log)" />
+        <string id="DEDUP_CHANGE_EVENT_RENAME_DELETE_LOG_COMPLETION_STATUS" value="Rename delete log completed %1" />
+        <string id="DEDUP_CHANGE_EVENT_WRITE_CHUNK_CONTAINER_BITMAP" value="Write chunk container bitmap (%1 - %2) for chunk container (%1 - %3.%4) (Bitmap: BitLength %5, StartIndex %6, Count %7)" />
+        <string id="DEDUP_CHANGE_EVENT_WRITE_CHUNK_CONTAINER_BITMAP_COMPLETION_STATUS" value="Write chunk container bitmap completed %1" />
+        <string id="DEDUP_CHANGE_EVENT_DELETE_CHUNK_CONTAINER_BITMAP" value="Delete chunk container bitmap (%1 - %2) for chunk container (%1 - %3.%4)" />
+        <string id="DEDUP_CHANGE_EVENT_DELETE_CHUNK_CONTAINER_BITMAP_COMPLETION_STATUS" value="Delete chunk container bitmap completed %1" />
+        <string id="DEDUP_CHANGE_EVENT_RENAME_CHUNK_CONTAINER_BITMAP" value="Rename chunk container bitmap (%1 - %2) for chunk container (%1 - %3.%4)" />
+        <string id="DEDUP_CHANGE_EVENT_RENAME_CHUNK_CONTAINER_BITMAP_COMPLETION_STATUS" value="Rename chunk container bitmap completed %1" />
+        <string id="DEDUP_CHANGE_EVENT_WRITE_CHUNK_CONTAINER_DIRECTORY" value="Write chunk container directory (%1 - %2) for chunk container (%1 - %3.%4) (Directory: EntryCount %5)" />
+        <string id="DEDUP_CHANGE_EVENT_WRITE_CHUNK_CONTAINER_DIRECTORY_COMPLETION_STATUS" value="Write chunk container directory completed %1" />
+        <string id="DEDUP_CHANGE_EVENT_DELETE_CHUNK_CONTAINER_DIRECTORY" value="Delete chunk container directory (%1 - %2) for chunk container (%1 - %3.%4)" />
+        <string id="DEDUP_CHANGE_EVENT_DELETE_CHUNK_CONTAINER_DIRECTORY_COMPLETION_STATUS" value="Delete chunk container directory completed %1" />
+        <string id="DEDUP_CHANGE_EVENT_RENAME_CHUNK_CONTAINER_DIRECTORY" value="Rename chunk container directory (%1 - %2) for chunk container (%1 - %3.%4)" />
+        <string id="DEDUP_CHANGE_EVENT_RENAME_CHUNK_CONTAINER_DIRECTORY_COMPLETION_STATUS" value="Rename chunk container directory completed %1" />
+        <string id="DEDUP_CHANGE_EVENT_WRITE_MERGE_LOG_HEADER" value="Write merge log (%5 - %6.%7.merge.log) header" />
+        <string id="DEDUP_CHANGE_EVENT_WRITE_MERGE_LOG_HEADER_COMPLETION_STATUS" value="Write merge log header completed %1" />
+        <string id="DEDUP_CHANGE_EVENT_APPEND_MERGE_LOG_ENTRIES" value="Append merge log (%1 - %2.%3.merge.log) entries at offset %4 (Entries: StartIndex %5, Count %6)" />
+        <string id="DEDUP_CHANGE_EVENT_APPEND_MERGE_LOG_ENTRIES_COMPLETION_STATUS" value="Append merge log entries completed %1" />
+        <string id="DEDUP_CHANGE_EVENT_DELETE_MERGE_LOG" value="Delete merge log (%1 - %2.%3.merge.log)" />
+        <string id="DEDUP_CHANGE_EVENT_DELETE_MERGE_LOG_COMPLETION_STATUS" value="Delete merge log completed %1" />
+        <string id="DEDUP_CHANGE_EVENT_FLUSH_MERGE_LOG" value="Flush merge log (%1 - %2.%3.merge.log)" />
+        <string id="DEDUP_CHANGE_EVENT_FLUSH_MERGE_LOG_COMPLETION_STATUS" value="Flush merge log completed %1" />
+        <string id="DEDUP_CHANGE_EVENT_UPDATE_FILE_LIST_ENTRIES" value="Update file list entries (Remove: %1, Add: %2)" />
+        <string id="DEDUP_CHANGE_EVENT_UPDATE_FILE_LIST_ENTRIES_COMPLETION_STATUS" value="Update file list entries completed %1" />
+        <string id="DEDUP_CHANGE_EVENT_SET_DEDUP_REPARSE_POINT" value="Set dedup reparse point on %2 (FileId %1) (ReparsePoint: SizeBackedByChunkStore %3, StreamMapInfoSize %4, StreamMapInfo %5)" />
+        <string id="DEDUP_CHANGE_EVENT_SET_DEDUP_REPARSE_POINT_COMPLETION_STATUS" value="Set dedup reparse point completed %1 (%2)" />
+        <string id="DEDUP_CHANGE_EVENT_SET_DEDUP_ZERO_DATA" value="Set dedup zero data on %2 (FileId %1)" />
+        <string id="DEDUP_CHANGE_EVENT_SET_DEDUP_ZERO_DATA_COMPLETION_STATUS" value="Set dedup zero data completed %1" />
+        <string id="DEDUP_CHANGE_EVENT_FLUSH_REPARSE_POINT_FILES" value="Flush reparse point files" />
+        <string id="DEDUP_CHANGE_EVENT_FLUSH_REPARSE_POINT_FILES_COMPLETION_STATUS" value="Flush reparse point files completed %1" />
+        <string id="DEDUP_CHANGE_EVENT_DEDUP_FILE_OP_SET_SPARSE" value="Set sparse on file id %1" />
+        <string id="DEDUP_CHANGE_EVENT_DEDUP_FILE_OP_SET_SPARSE_COMPLETION_STATUS" value="Set sparse completed %1" />
+        <string id="DEDUP_CHANGE_EVENT_SET_NTFS_ZERO_DATA" value="FSCTL_SET_ZERO_DATA on file id %1 at offset %2 and BeyondFinalZero %3" />
+        <string id="DEDUP_CHANGE_EVENT_SET_NTFS_ZERO_DATA_COMPLETION_STATUS" value="FSCTL_SET_ZERO_DATA completed %1" />
+        <string id="DEDUP_EVENT_STREAM_STORE_OPEN_STREAM" value="Open stream store stream (StartingChunkId %1, FileId %2)" />
+        <string id="DEDUP_EVENT_STREAM_STORE_OPEN_STREAM_COMPLETION_STATUS" value="Open stream store stream completed %1" />
+        <string id="DEDUP_EVENT_TASK_STREAM_STORE_OPEN_STREAM" value="Open stream store stream" />
+        <string id="DEDUP_EVENT_STREAM_STORE_PREPARE_FOR_PAGING_IO" value="Prepare for paging IO (Stream %1, FileId %2)" />
+        <string id="DEDUP_EVENT_STREAM_STORE_PREPARE_FOR_PAGING_IO_COMPLETION_STATUS" value="Prepare for paging IO completed %1" />
+        <string id="DEDUP_EVENT_TASK_STREAM_STORE_PREPARE_FOR_PAGING_IO" value="Prepare for paging IO" />
+        <string id="DEDUP_EVENT_STREAM_STORE_READ_STREAM_MAP" value="Read stream map (Stream %1, FileId %2, StartIndex %3, EntryCount %4)" />
+        <string id="DEDUP_EVENT_STREAM_STORE_READ_STREAM_MAP_COMPLETION_STATUS" value="Read stream map completed %1" />
+        <string id="DEDUP_EVENT_TASK_STREAM_STORE_READ_STREAM_MAP" value="Read stream map" />
+        <string id="DEDUP_EVENT_STREAM_STORE_READ_CHUNKS" value="Read chunks (Stream %1, FileId %2, IoType %3, FirstRequestChunkId %4, NextRequest %5)" />
+        <string id="DEDUP_EVENT_STREAM_STORE_READ_CHUNKS_COMPLETION_STATUS" value="Read chunks completed %1" />
+        <string id="DEDUP_EVENT_TASK_STREAM_STORE_READ_CHUNKS" value="Read chunks" />
+        <string id="DEDUP_EVENT_MAP_CHUNKSTOREIOTYPE_CACHE" value="Cache" />
+        <string id="DEDUP_EVENT_MAP_CHUNKSTOREIOTYPE_NONCACHE" value="Non-cache" />
+        <string id="DEDUP_EVENT_MAP_CHUNKSTOREIOTYPE_PAGING" value="Paging" />
+        <string id="DEDUP_EVENT_MAP_CHUNKSTOREIOTYPE_MEMORYMAP" value="Memory map" />
+        <string id="DEDUP_EVENT_MAP_CHUNKSTOREIOTYPE_PAGINGMEMORYMAP" value="Paging memory map" />
+        <string id="DEDUP_EVENT_CHUNK_STORE_COMPUTE_CHECKSUM" value="Compute checksum (ItemType %1, DataSize %2)" />
+        <string id="DEDUP_EVENT_CHUNK_STORE_COMPUTE_CHECKSUM_COMPLETION_STATUS" value="Compute checksum completed %1" />
+        <string id="DEDUP_EVENT_TASK_CHUNK_STORE_COMPUTE_CHECKSUM" value="Compute checksum" />
+        <string id="DEDUP_EVENT_CHUNK_STORE_GET_CONTAINER_ENTRY" value="Get container entry (ContainerId %1, Generation %2)" />
+        <string id="DEDUP_EVENT_CHUNK_STORE_GET_CONTAINER_ENTRY_COMPLETION_STATUS" value="Get container entry completed %1" />
+        <string id="DEDUP_EVENT_TASK_CHUNK_STORE_GET_CONTAINER_ENTRY" value="Get container entry" />
+        <string id="DEDUP_EVENT_CHUNK_STORE_GET_MAX_GENERATION_FOR_CONTAINER" value="Get maximum generation for container (ContainerId %1, Generation %2)" />
+        <string id="DEDUP_EVENT_CHUNK_STORE_GET_MAX_GENERATION_FOR_CONTAINER_COMPLETION_STATUS" value="Get maximum generation for container completed %1" />
+        <string id="DEDUP_EVENT_TASK_CHUNK_STORE_GET_MAX_GENERATION_FOR_CONTAINER" value="Get maximum generation for container" />
+        <string id="DEDUP_EVENT_CHUNK_CONTAINER_OPEN" value="Open chunk container (ContainerId %1, Generation %2, RootPath %4)" />
+        <string id="DEDUP_EVENT_CHUNK_CONTAINER_OPEN_COMPLETION_STATUS" value="Open chunk container completed %1" />
+        <string id="DEDUP_EVENT_TASK_CHUNK_CONTAINER_OPEN" value="Open chunk container" />
+        <string id="DEDUP_EVENT_CHUNK_CONTAINER_REDIRECTION_TABLE_INIT" value="Initialize chunk container redirection table (ContainerId %1, Generation %2)" />
+        <string id="DEDUP_EVENT_CHUNK_CONTAINER_REDIRECTION_TABLE_INIT_COMPLETION_STATUS" value="Initialize chunk container redirection table completed %1" />
+        <string id="DEDUP_EVENT_TASK_CHUNK_CONTAINER_REDIRECTION_TABLE_INIT" value="Initialize chunk container redirection table" />
+        <string id="DEDUP_EVENT_CHUNK_CONTAINER_REDIRECTION_TABLE_VALIDATE" value="Validate chunk container redirection table (ContainerId %1, Generation %2)" />
+        <string id="DEDUP_EVENT_CHUNK_CONTAINER_REDIRECTION_TABLE_VALIDATE_COMPLETION_STATUS" value="Validate chunk container redirection table completed %1" />
+        <string id="DEDUP_EVENT_TASK_CHUNK_CONTAINER_REDIRECTION_TABLE_VALIDATE" value="Validate chunk container redirection table" />
+        <string id="DEDUP_EVENT_CHUNK_CONTAINER_GET_VALID_DATA_LENGTH" value="Get chunk container valid data length (ContainerId %1, Generation %2)" />
+        <string id="DEDUP_EVENT_CHUNK_CONTAINER_GET_VALID_DATA_LENGTH_COMPLETION_STATUS" value="Get chunk container valid data length completed %1" />
+        <string id="DEDUP_EVENT_TASK_CHUNK_CONTAINER_GET_VALID_DATA_LENGTH" value="Get chunk container valid data length" />
+        <string id="DEDUP_EVENT_CHUNK_CONTAINER_REDIRECTION_TABLE_GET_OFFSET" value="Get offset from chunk container redirection table (ContainerId %1, Generation %2)" />
+        <string id="DEDUP_EVENT_CHUNK_CONTAINER_REDIRECTION_TABLE_GET_OFFSET_COMPLETION_STATUS" value="Get offset from chunk container redirection table completed %1" />
+        <string id="DEDUP_EVENT_TASK_CHUNK_CONTAINER_REDIRECTION_TABLE_GET_OFFSET" value="Get offset from chunk container redirection table" />
+        <string id="DEDUP_EVENT_CHUNK_CONTAINER_READ_BLOCK" value="Read chunk container block (ContainerId %1, Generation %2, Buffer %3, Offset %4, Length %5, IoType %6, Synchronous %7)" />
+        <string id="DEDUP_EVENT_CHUNK_CONTAINER_READ_BLOCK_COMPLETION_STATUS" value="Read chunk container block completed %1" />
+        <string id="DEDUP_EVENT_TASK_CHUNK_CONTAINER_READ_BLOCK" value="Read chunk container block" />
+        <string id="DEDUP_EVENT_MAP_CHUNKSTOREBUFFERTYPE_NONE" value="None" />
+        <string id="DEDUP_EVENT_MAP_CHUNKSTOREBUFFERTYPE_POOL" value="Pool" />
+        <string id="DEDUP_EVENT_MAP_CHUNKSTOREBUFFERTYPE_POOLALIGNED" value="PoolAligned" />
+        <string id="DEDUP_EVENT_MAP_CHUNKSTOREBUFFERTYPE_MDL" value="MDL" />
+        <string id="DEDUP_EVENT_MAP_CHUNKSTOREBUFFERTYPE_MAP" value="Map" />
+        <string id="DEDUP_EVENT_CHUNK_CONTAINER_CLEAR_BLOCK" value="Clear chunk container block (Buffer %1, Size %2, BufferType %3)" />
+        <string id="DEDUP_EVENT_CHUNK_CONTAINER_CLEAR_BLOCK_COMPLETION_STATUS" value="Clear chunk container block completed %1" />
+        <string id="DEDUP_EVENT_TASK_CHUNK_CONTAINER_CLEAR_BLOCK" value="Clear chunk container block" />
+        <string id="DEDUP_EVENT_CHUNK_CONTAINER_COPY_CHUNK" value="Copy chunk (Buffer %1, Size %2, BufferType %3, BufferOffset %4, OutputCapacity %5)" />
+        <string id="DEDUP_EVENT_CHUNK_CONTAINER_COPY_CHUNK_COMPLETION_STATUS" value="Copy chunk completed %1" />
+        <string id="DEDUP_EVENT_TASK_CHUNK_CONTAINER_COPY_CHUNK" value="Copy chunk" />
+        <string id="DEDUP_EVENT_FILE_CACHE_INITIALIZE" value="Initialize file cache (UnderlyingFileObject %1, CacheFileSize %2)" />
+        <string id="DEDUP_EVENT_FILE_CACHE_INITIALIZE_COMPLETION_STATUS" value="Initialize file cache completed %1" />
+        <string id="DEDUP_EVENT_TASK_FILE_CACHE_INITIALIZE" value="Initialize file cache" />
+        <string id="DEDUP_EVENT_FILE_CACHE_MAP_DATA" value="Map file cache data (CacheFileObject %1, Offset %2, Length %3)" />
+        <string id="DEDUP_EVENT_FILE_CACHE_MAP_DATA_COMPLETION_STATUS" value="Map file cache data completed %1" />
+        <string id="DEDUP_EVENT_TASK_FILE_CACHE_MAP_DATA" value="Map file cache data" />
+        <string id="DEDUP_EVENT_FILE_CACHE_UNPIN_DATA" value="Unpin file cache data(Bcb %1)" />
+        <string id="DEDUP_EVENT_FILE_CACHE_UNPIN_DATA_COMPLETION_STATUS" value="Unpin file cache data completed %1" />
+        <string id="DEDUP_EVENT_TASK_FILE_CACHE_UNPIN_DATA" value="Unpin file cache data" />
+        <string id="DEDUP_EVENT_FILE_CACHE_COPY_DATA" value="Copy file cache data (CacheFileObject %1, Offset %2, Length %3)" />
+        <string id="DEDUP_EVENT_FILE_CACHE_COPY_DATA_COMPLETION_STATUS" value="Copy file cache data completed %1" />
+        <string id="DEDUP_EVENT_TASK_FILE_CACHE_COPY_DATA" value="Copy file cache data" />
+        <string id="DEDUP_EVENT_FILE_CACHE_IRP_READ" value="Read underlying file cache data (CacheFileObject %1, UnderlyingFileObject %2, Offset %3, Length %4)" />
+        <string id="DEDUP_EVENT_FILE_CACHE_IRP_READ_COMPLETION_STATUS" value="Read underlying file cache data completed %1" />
+        <string id="DEDUP_EVENT_TASK_FILE_CACHE_IRP_READ" value="Read underlying file cache data" />
+        <string id="DEDUP_EVENT_CHUNK_CONTAINER_GET_FILE_SIZE" value="Get chunk container file size (ContainerId %1, Generation %2)" />
+        <string id="DEDUP_EVENT_CHUNK_CONTAINER_GET_FILE_SIZE_COMPLETION_STATUS" value="Get chunk container file size completed %1" />
+        <string id="DEDUP_EVENT_TASK_CHUNK_CONTAINER_GET_FILE_SIZE" value="Get chunk container file size" />
+        <string id="DEDUP_EVENT_STREAM_STORE_PIN_STREAM_MAP" value="Pin stream map (Stream %1, FileId %2, StartIndex %3, EntryCount %4)" />
+        <string id="DEDUP_EVENT_STREAM_STORE_PIN_STREAM_MAP_COMPLETION_STATUS" value="Pin stream map completed %1" />
+        <string id="DEDUP_EVENT_TASK_STREAM_STORE_PIN_STREAM_MAP" value="Pin stream map" />
+        <string id="DEDUP_EVENT_CHUNK_CONTAINER_PIN" value="Pin chunk container (ContainerId %1, Generation %2)" />
+        <string id="DEDUP_EVENT_CHUNK_CONTAINER_PIN_COMPLETION_STATUS" value="Pin chunk container completed %1" />
+        <string id="DEDUP_EVENT_TASK_CHUNK_CONTAINER_PIN" value="Pin chunk container" />
+        <string id="DEDUP_EVENT_CHUNK_CONTAINER_PIN_CHUNK" value="Pin chunk (ContainerId %1, Generation %2)" />
+        <string id="DEDUP_EVENT_CHUNK_CONTAINER_PIN_CHUNK_COMPLETION_STATUS" value="Pin chunk completed %1" />
+        <string id="DEDUP_EVENT_TASK_CHUNK_CONTAINER_PIN_CHUNK" value="Pin chunk" />
+        <string id="DEDUP_EVENT_CHUNK_CONTAINER_ALLOCATE_POOL_BUFFER" value="Allocate pool buffer (ReadLength %1, PagingIo %2)" />
+        <string id="DEDUP_EVENT_CHUNK_CONTAINER_ALLOCATE_POOL_BUFFER_COMPLETION_STATUS" value="Allocate pool buffer completed %1" />
+        <string id="DEDUP_EVENT_TASK_CHUNK_CONTAINER_ALLOCATE_POOL_BUFFER" value="Allocate pool buffer" />
+        <string id="DEDUP_EVENT_CHUNK_CONTAINER_UNPIN" value="Unpin chunk container (ContainerId %1, Generation %2)" />
+        <string id="DEDUP_EVENT_CHUNK_CONTAINER_UNPIN_COMPLETION_STATUS" value="Unpin chunk container completed %1" />
+        <string id="DEDUP_EVENT_TASK_CHUNK_CONTAINER_UNPIN" value="Unpin chunk container" />
+        <string id="DEDUP_EVENT_CHUNK_CONTAINER_UNPIN_CHUNK" value="Unpin chunk (ContainerId %1, Generation %2)" />
+        <string id="DEDUP_EVENT_CHUNK_CONTAINER_UNPIN_CHUNK_COMPLETION_STATUS" value="Unpin chunk completed %1" />
+        <string id="DEDUP_EVENT_TASK_CHUNK_CONTAINER_UNPIN_CHUNK" value="Unpin chunk" />
+        <string id="DEDUP_EVENT_FLT_DEDUP_READ_PROCESSING" value="Dedup read processing (FileObject %1, Offset %2, Length %3, IoType %4)" />
+        <string id="DEDUP_EVENT_FLT_DEDUP_READ_PROCESSING_COMPLETION_STATUS" value="Dedup read processing completed %1" />
+        <string id="DEDUP_EVENT_FLT_GET_FIRST_STREAM_MAP_ENTRY" value="Get first stream map entry (TlCache %1, Stream %2, RequestStartOffset %3, RequestEndOffset %4)" />
+        <string id="DEDUP_EVENT_FLT_GET_FIRST_STREAM_MAP_ENTRY_COMPLETION_STATUS" value="Get first stream map entry completed %1" />
+        <string id="DEDUP_EVENT_FLT_GET_CHUNK_REQUEST" value="Read chunk metadata (Stream %1, CurrentOffset %2, AdjustedFinalOffset %3, FirstChunkByteOffset %4, ChunkRequestsEndOffset %5, TlCache %6)" />
+        <string id="DEDUP_EVENT_FLT_GET_CHUNK_REQUEST_COMPLETION_STATUS" value="Read chunk metadata completed %1" />
+        <string id="DEDUP_EVENT_FLT_READ_CHUNKS" value="Read chunk data (TlCache %1, Stream %2, RequestStartOffset %3, RequestEndOffset %4)" />
+        <string id="DEDUP_EVENT_FLT_READ_CHUNKS_COMPLETION_STATUS" value="Read chunk data completed %1" />
+        <string id="DEDUP_EVENT_FLT_REF_TLCACHE_DATA" value="Reference TlCache data (TlCache %1, Stream %2)" />
+        <string id="DEDUP_EVENT_FLT_REF_TLCACHE_DATA_COMPLETION_STATUS" value="Reference TlCache data completed %1" />
+        <string id="DEDUP_EVENT_FLT_STRM_STORE_READ_CHUNKS" value="Read chunk data from stream store (Stream %1)" />
+        <string id="DEDUP_EVENT_FLT_STRM_STORE_READ_CHUNKS_COMPLETION_STATUS" value="Read chunk data from stream store completed %1" />
+        <string id="DEDUP_EVENT_FLT_ASSEMBLE_CHUNKS" value="Assemble chunk data" />
+        <string id="DEDUP_EVENT_FLT_ASSEMBLE_CHUNKS_COMPLETION_STATUS" value="Assemble chunk data completed %1" />
+        <string id="DEDUP_EVENT_FLT_DECOMPRESS_CHUNKS" value="Decompress chunk data" />
+        <string id="DEDUP_EVENT_FLT_DECOMPRESS_CHUNKS_COMPLETION_STATUS" value="Decompress chunk data completed %1" />
+        <string id="DEDUP_EVENT_FLT_COPY_DATA_TO_USER_BUFFER" value="Copy chunk data in to user buffer (BytesCopied %1)" />
+        <string id="DEDUP_EVENT_FLT_COPY_DATA_TO_USER_BUFFER_COMPLETION_STATUS" value="Copy chunk data in to user buffer completed %1" />
+        <string id="DEDUP_EVENT_FLT_INSERT_DATA_TO_TLCACHE" value="Insert chunk data in to tlcache" />
+        <string id="DEDUP_EVENT_FLT_INSERT_DATA_TO_TLCACHE_COMPLETION_STATUS" value="Insert chunk data in to tlcache completed %1" />
+        <string id="DEDUP_EVENT_FLT_FS_READ" value="Read data from dedup reparse point file (FileObject %1, Offset %2, Length %3)" />
+        <string id="DEDUP_EVENT_FLT_FS_READ_COMPLETION_STATUS" value="Read underlying file cache data completed %1" />
+        <string id="DEDUP_EVENT_FLT_PREPARE_STREAM_MAP" value="Prepare stream map (StreamContext %1)" />
+        <string id="DEDUP_EVENT_FLT_PREPARE_STREAM_MAP_COMPLETION_STATUS" value="Prepare stream map completed %1" />
+        <string id="DEDUP_EVENT_FLT_PATCH_CLEAN_RANGES" value="Patch clean ranges (FileObject %1, Offset %2, Length %3)" />
+        <string id="DEDUP_EVENT_FLT_PATCH_CLEAN_RANGES_COMPLETION_STATUS" value="Patch clean ranges completed %1" />
+        <string id="DEDUP_EVENT_FLT_WRITE_IRP" value="Writing data to dedup file (FileObject %1, Offset %2, Length %3, IoType %4)" />
+        <string id="DEDUP_EVENT_FLT_WRITE_IRP_COMPLETION_STATUS" value="Writing data to dedup file completed %1" />
+        <string id="DEDUP_EVENT_FLT_QUEUE_WRITE_IRP" value="Queue write request on dedup file (FileObject %1, Offset %2, Length %3)" />
+        <string id="DEDUP_EVENT_FLT_QUEUE_WRITE_IRP_COMPLETION_STATUS" value="Queue write request on dedup file completed %1" />
+        <string id="DEDUP_EVENT_FLT_DO_COW_WORK" value="Do copy on write work on dedup file (FileObject %1, Offset %2, Length %3)" />
+        <string id="DEDUP_EVENT_FLT_DO_COW_WORK_COMPLETION_STATUS" value="Do copy on write work on dedup file completed %1" />
+        <string id="DEDUP_EVENT_FLT_DO_FULL_RECALL" value="Do full recall on dedup file (FileObject %1, Offset %2, Length %3)" />
+        <string id="DEDUP_EVENT_FLT_DO_FULL_RECALL_COMPLETION_STATUS" value="Do full recall on dedup file completed %1" />
+        <string id="DEDUP_EVENT_FLT_DO_PARTIAL_RECALL" value="Do partial recall on dedup file (FileObject %1, Offset %2, Length %3)" />
+        <string id="DEDUP_EVENT_FLT_DO_PARTIAL_RECALL_COMPLETION_STATUS" value="Do partial recall on dedup file completed %1" />
+        <string id="DEDUP_EVENT_FLT_DUMMY_PAGING_READ" value="Do dummy paging read on dedup file (FileObject %1, Offset %2, Length %3)" />
+        <string id="DEDUP_EVENT_FLT_DUMMY_PAGING_READ_COMPLETION_STATUS" value="Do dummy paging read on dedup file completed %1" />
+        <string id="DEDUP_EVENT_FLT_READ_CLEAN_DEDUP_FILE_FOR_RECALL" value="Read clean data for recalling file (FileObject %1, Offset %2, Length %3)" />
+        <string id="DEDUP_EVENT_FLT_READ_CLEAN_DEDUP_FILE_FOR_RECALL_COMPLETION_STATUS" value="Read clean data for recalling file completed %1" />
+        <string id="DEDUP_EVENT_FLT_WRITE_CLEAN_DATA_NORMAL" value="Write clean data to dedup file normally (FileObject %1, Offset %2, Length %3)" />
+        <string id="DEDUP_EVENT_FLT_WRITE_CLEAN_DATA_NORMAL_COMPLETION_STATUS" value="Write clean data to dedup file completed %1" />
+        <string id="DEDUP_EVENT_FLT_WRITE_CLEAN_DATA_PAGED" value="Write clean data to dedup file paged (FileObject %1, Offset %2, Length %3)" />
+        <string id="DEDUP_EVENT_FLT_WRITE_CLEAN_DATA_PAGED_COMPLETION_STATUS" value="Write clean data to dedup file paged completed %1" />
+        <string id="DEDUP_EVENT_FLT_RECALL_USING_PAGINGIO" value="Recall dedup file using paging Io (FileObject %1, Offset %2, Length %3)" />
+        <string id="DEDUP_EVENT_FLT_RECALL_USING_PAGINGIO_COMPLETION_STATUS" value="Recall dedup file using paging Io completed %1" />
+        <string id="DEDUP_EVENT_FLT_FLUSH_AFTER_RECALL" value="Flush dedup file after recall (FileObject %1)" />
+        <string id="DEDUP_EVENT_FLT_FLUSH_AFTER_RECALL_COMPLETION_STATUS" value="Flush dedup file after recall completed %1" />
+        <string id="DEDUP_EVENT_FLT_UPDATE_BITMAP" value="Update bitmap after recall on dedup file (FileObject %1, Offset %2, Length %3)" />
+        <string id="DEDUP_EVENT_FLT_UPDATE_BITMAP_COMPLETION_STATUS" value="Update bitmap after recall on dedup file completed %1" />
+        <string id="DEDUP_EVENT_FLT_DELETE_REPARSE_POINT" value="Delete dedup reparse point (FileObject %1)" />
+        <string id="DEDUP_EVENT_FLT_DELETE_REPARSE_POINT_COMPLETION_STATUS" value="Delete dedup reparse point completed %1" />
+        <string id="DEDUP_EVENT_FLT_OPEN_FILE" value="Open dedup file (FilePath %1)" />
+        <string id="DEDUP_EVENT_FLT_OPEN_FILE_COMPLETION_STATUS" value="Open dedup file completed %1" />
+        <string id="DEDUP_EVENT_FLT_LOCK_BUFFER_FOR_READ" value="Locking user buffer for read" />
+        <string id="DEDUP_EVENT_FLT_LOCK_BUFFER_FOR_READ_COMPLETION_STATUS" value="Locking user buffer for read completed %1" />
+        <string id="DEDUP_EVENT_FLT_GET_SYSTEM_ADDRESS_FOR_MDL" value="Get system address for MDL" />
+        <string id="DEDUP_EVENT_FLT_GET_SYSTEM_ADDRESS_FOR_MDL_COMPLETION_STATUS" value="Get system address for MDL completed %1" />
+        <string id="DEDUP_EVENT_MAP_FLT_IO_CACHED" value="Cached" />
+        <string id="DEDUP_EVENT_MAP_FLT_IO_NONCACHED" value="NonCached" />
+        <string id="DEDUP_EVENT_MAP_FLT_IO_PAGED" value="Paged" />
+        <string id="DEDUP_EVENT_KEYWORD_FILTER" value="Filter" />
+        <string id="DEDUP_EVENT_KEYWORD_KM_STREAM_STORE" value="Kernel mode stream store" />
+        <string id="DEDUP_EVENT_KEYWORD_KM_CHUNK_STORE" value="Kernel mode chunk store" />
+        <string id="DEDUP_EVENT_KEYWORD_KM_CHUNK_CONTAINER" value="Kernel mode chunk container" />
+        <string id="DEDUP_EVENT_KEYWORD_KM_FILE_CACHE" value="Kernel mode file cache" />
+        <string id="DEDUP_EVENT_FLT_READ_CLEAN_DEDUP_FILE" value="Read clean dedup file (FileObject %1, Offset %2, Length %3)" />
+        <string id="DEDUP_EVENT_FLT_READ_CLEAN_DEDUP_FILE_COMPLETION_STATUS" value="Read clean dedup file completed %1" />
+        <string id="DEDUP_EVENT_FLT_GET_RANGE_STATE" value="Get range state (Offset %1, Length %2)" />
+        <string id="DEDUP_EVENT_FLT_GET_RANGE_STATE_COMPLETION_STATUS" value="Get range state completed %1" />
+        <string id="DEDUP_EVENT_STREAM_STORE_GET_CHUNK_BODY" value="Get chunk body" />
+        <string id="DEDUP_EVENT_STREAM_STORE_GET_CHUNK_BODY_COMPLETION_STATUS" value="Get chunk body completed %1" />
+        <string id="DEDUP_EVENT_TASK_STREAM_STORE_GET_CHUNK_BODY" value="Get chunk body" />
+        <string id="DEDUP_EVENT_STREAM_STORE_RELEASE_CHUNK" value="Release chunk" />
+        <string id="DEDUP_EVENT_STREAM_STORE_RELEASE_CHUNK_COMPLETION_STATUS" value="Release chunk completed %1" />
+        <string id="DEDUP_EVENT_TASK_STREAM_STORE_RELEASE_CHUNK" value="Release chunk" />
+        <string id="DEDUP_EVENT_FLT_RELEASE_DECOMPRESS_CHUNK_CONTEXT" value="Release decompress chunk context (BufferSize %1)" />
+        <string id="DEDUP_EVENT_FLT_RELEASE_DECOMPRESS_CHUNK_CONTEXT_COMPLETION_STATUS" value="Release decompress chunk context completed %1" />
+        <string id="DEDUP_EVENT_FLT_PREPARE_DECOMPRESS_CHUNK_CONTEXT" value="Prepare decompress chunk context (BufferSize %1)" />
+        <string id="DEDUP_EVENT_FLT_PREPARE_DECOMPRESS_CHUNK_CONTEXT_COMPLETION_STATUS" value="Prepare decompress chunk context completed %1" />
+        <string id="DEDUP_EVENT_FLT_COPY_DATA_TO_COMPRESSED_BUFFER" value="Copy data to compressed buffer (BufferSize %1)" />
+        <string id="DEDUP_EVENT_FLT_COPY_DATA_TO_COMPRESSED_BUFFER_COMPLETION_STATUS" value="Copy data to compressed buffer completed %1" />
+        <string id="DEDUP_EVENT_FLT_RELEASE_DATA_FROM_TLCACHE" value="Release data from TL Cache" />
+        <string id="DEDUP_EVENT_FLT_RELEASE_DATA_FROM_TLCACHE_COMPLETION_STATUS" value="Release data from TL Cache completed %1" />
+        <string id="DEDUP_EVENT_FLT_QUEUE_READ_IRP" value="Queue async read request (FileObject %1, Offset %2, Length %3)" />
+        <string id="DEDUP_EVENT_FLT_QUEUE_READ_IRP_COMPLETION_STATUS" value="Queue async read request complete %1" />
+        <string id="DEDUP_EVENT_INVALID_PHYSICAL_SECTOR_SIZE_DETECTED" value="Data Deduplication while running job on volume %1 detected invalid physical sector size %2. Using default value %3.%n%4" />
+        <string id="DEDUP_EVENT_UNSUPPORTED_CHUNKSTORE_CONTAINER_DETECTED" value="Data Deduplication detected an unsupported chunk store container.%n%1" />
+        <string id="DEDUP_EVENT_TASK_FLT_DEDUP_READ_PROCESSING" value="Dedup read processing" />
+        <string id="DEDUP_EVENT_TASK_FLT_GET_FIRST_STREAM_MAP_ENTRY" value="Get first stream map entry" />
+        <string id="DEDUP_EVENT_TASK_FLT_GET_CHUNK_REQUEST" value="Read chunk metadata" />
+        <string id="DEDUP_EVENT_TASK_FLT_READ_CHUNKS" value="Read chunk data" />
+        <string id="DEDUP_EVENT_TASK_FLT_REF_TLCACHE_DATA" value="Reference TlCache data" />
+        <string id="DEDUP_EVENT_TASK_FLT_STRM_STORE_READ_CHUNKS" value="Read chunk data from stream store" />
+        <string id="DEDUP_EVENT_TASK_FLT_ASSEMBLE_CHUNKS" value="Assemble chunk data" />
+        <string id="DEDUP_EVENT_TASK_FLT_DECOMPRESS_CHUNKS" value="Decompress chunk data" />
+        <string id="DEDUP_EVENT_TASK_FLT_COPY_DATA_TO_USER_BUFFER" value="Copy chunk data in to user buffer" />
+        <string id="DEDUP_EVENT_TASK_FLT_INSERT_DATA_TO_TLCACHE" value="Insert chunk data in to tlcache" />
+        <string id="DEDUP_EVENT_TASK_FLT_FS_READ" value="Read data from dedup reparse point file" />
+        <string id="DEDUP_EVENT_TASK_FLT_PREPARE_STREAM_MAP" value="Prepare stream map" />
+        <string id="DEDUP_EVENT_TASK_FLT_PATCH_CLEAN_RANGES" value="Patch clean ranges" />
+        <string id="DEDUP_EVENT_TASK_FLT_WRITE_IRP" value="Writing data to dedup file" />
+        <string id="DEDUP_EVENT_TASK_FLT_QUEUE_WRITE_IRP" value="Queue write request on dedup file" />
+        <string id="DEDUP_EVENT_TASK_FLT_DO_COW_WORK" value="Do copy on write work on dedup file" />
+        <string id="DEDUP_EVENT_TASK_FLT_DO_FULL_RECALL" value="Do full recall on dedup file" />
+        <string id="DEDUP_EVENT_TASK_FLT_DO_PARTIAL_RECALL" value="Do partial recall on dedup file" />
+        <string id="DEDUP_EVENT_TASK_FLT_DUMMY_PAGING_READ" value="Do dummy paging read on dedup file" />
+        <string id="DEDUP_EVENT_TASK_FLT_READ_CLEAN_DEDUP_FILE_FOR_RECALL" value="Read clean data for recalling file" />
+        <string id="DEDUP_EVENT_TASK_FLT_WRITE_CLEAN_DATA_NORMAL" value="Write clean data to dedup file normally" />
+        <string id="DEDUP_EVENT_TASK_FLT_WRITE_CLEAN_DATA_PAGED" value="Write clean data to dedup file paged" />
+        <string id="DEDUP_EVENT_TASK_FLT_RECALL_USING_PAGINGIO" value="Recall dedup file using paging Io" />
+        <string id="DEDUP_EVENT_TASK_FLT_FLUSH_AFTER_RECALL" value="Flush dedup file after recall" />
+        <string id="DEDUP_EVENT_TASK_FLT_UPDATE_BITMAP" value="Update bitmap after recall on dedup file" />
+        <string id="DEDUP_EVENT_TASK_FLT_DELETE_REPARSE_POINT" value="Delete dedup reparse point" />
+        <string id="DEDUP_EVENT_TASK_FLT_OPEN_FILE" value="Open dedup file" />
+        <string id="DEDUP_EVENT_TASK_FLT_LOCK_BUFFER_FOR_READ" value="Locking user buffer for read" />
+        <string id="DEDUP_EVENT_TASK_FLT_GET_SYSTEM_ADDRESS_FOR_MDL" value="Get system address for MDL" />
+        <string id="DEDUP_EVENT_TASK_FLT_READ_CLEAN_DEDUP_FILE" value="Read clean dedup file" />
+        <string id="DEDUP_EVENT_TASK_FLT_GET_RANGE_STATE" value="Get range state" />
+        <string id="DEDUP_EVENT_TASK_FLT_RELEASE_DECOMPRESS_CHUNK_CONTEXT" value="Release decompress chunk context" />
+        <string id="DEDUP_EVENT_TASK_FLT_PREPARE_DECOMPRESS_CHUNK_CONTEXT" value="Prepare decompress chunk context" />
+        <string id="DEDUP_EVENT_TASK_FLT_COPY_DATA_TO_COMPRESSED_BUFFER" value="Copy data to compressed buffer" />
+        <string id="DEDUP_EVENT_TASK_FLT_RELEASE_DATA_FROM_TLCACHE" value="Release data from TL Cache" />
+        <string id="DEDUP_EVENT_TASK_FLT_QUEUE_READ_IRP" value="Queue async read request" />
+        <string id="DEDUP_EVENT_UNSUPPORTED_CHUNKSTORE_DETECTED" value="Data Deduplication cannot run the job on volume %1 because the dedup store version compatiblity check failed with error %2.%n%3" />
+        <string id="DEDUP_EVENT_DDPCLI_WINDOW_CREATE" value="Data Deduplication could not create window to receive task scheduler stop message due to error %1. Task(s) may not stop after duration limit.%n%2" />
+        <string id="DEDUP_EVENT_DDPCLI_THREAD_CREATE" value="Data Deduplication could not create thread to poll for task scheduler stop message due to error %1. Task(s) may not stop after duration limit.%n%2" />
+        <string id="DEDUP_EVENT_DEEP_SCRUB_LOAD_REDIRECTION_TABLE_ERROR" value="Data Deduplication failed to read chunk container redirection table from file %1 with error %2.%n%3" />
+        <string id="DEDUP_EVENT_DEEP_SCRUB_INIT_RP_LOG_TABLE" value="Data Deduplication failed to initialize reparse point index table for deep scrubbing from file %1 with error %2.%n%3" />
+        <string id="DEDUP_EVENT_DEEP_SCRUB_CONTAINER_ERROR" value="Data Deduplication failed to deep scrub container file %1 on volume %2 with error %3.%n%4" />
+        <string id="DEDUP_EVENT_DEEP_SCRUB_SMDC_LOG_ERROR" value="Data Deduplication failed to load stream map log for deep scrubbing from file %1 with error %2.%n%3" />
+        <string id="DEDUP_EVENT_DEEP_SCRUB_LOG_APPEND_ERROR" value="Data Deduplication failed to append to deep scrubbing log file %1 with error %2.%n%3" />
+        <string id="DEDUP_EVENT_DEEP_SCRUB_LOG_MGR_ERROR" value="Data Deduplication encountered a failure during deep scrubbing on store %1 with error %2.%n%3" />
+        <string id="DEDUP_EVENT_DEEP_SCRUB_BAD_LOCAL_ID" value="Data Deduplication found a duplicate local chunk id %1 in container file %2.%n%3" />
+        <string id="DEDUP_EVENT_DEEP_SCRUB_SM_DELETED_REFERENCED" value="Data Deduplication found file %1 with a stream map id %2 in container file %3 marked for deletion.%n%4" />
+        <string id="DEDUP_EVENT_HASH_PROVIDER_USED" value="Data Deduplication configured to use BCrypt provider '%1' for hash algorithm %2.%n%3" />
+        <string id="DEDUP_EVENT_HASH_PROVIDER_FALLBACK" value="Data Deduplication could not use BCrypt provider '%1' for hash algorithm %2 due to an error in operation %3. Reverting to the Microsoft primitive CNG provider.%n%4" />
+        <string id="DEDUP_WC_EVENT_ANALYSIS_FILE_ERROR_NON_FATAL" value="Data Deduplication failed to include file &quot;%1&quot; in file metadata analysis calculations.%n%2" />
+        <string id="DEDUP_WC_EVENT_ANALYSIS_STREAM_MAP_ERROR_NON_FATAL" value="Data Deduplication failed to include stream map %1 in file metadata analysis calculations.%n%2" />
+        <string id="DEDUP_WC_EVENT_NAMESPACE_SCAN_ERROR" value="Data Deduplication encountered an error for file &quot;%1&quot; while scanning files and folders.%n%2" />
+        <string id="DEDUP_WC_EVENT_FILE_PIPELINE_CONTINUATION_RESUME_ERROR" value="Data Deduplication encountered an error while attempting to resume processing. Please consult the event log parameters for more details about the current file being processed.%n%1" />
+        <string id="DEDUP_WC_EVENT_USN_SCAN_ERROR" value="Data Deduplication encountered an error %1 whle scanning usn journal on volume %2 for updating hot range tracking.%n%3" />
+        <string id="DEDUP_WC_EVENT_SET_ZERO_DATA_FAILURE" value="Data Deduplication could not truncate the stream of an optimized file. No action is required. Error: %1%n%n%2" />
+        <string id="DEDUP_WC_EVENT_FSCTL_INVALID_FUNCTION" value="Data Deduplication encountered an unexpected error. If this is a cluster, verify Data Deduplication is enabled on all nodes of the cluster.%n%1" />
+        <string id="DEDUP_WC_EVENT_DISABLE_DATA_ACCESS" value="Attempted to disable data access for data deduplicated CSV volume &quot;%1&quot; without maintenance mode. Data access can only be disabled for a CSV volume when in maintenance mode. Place volume into maintenance mode and retry.%n%2" />
+        <string id="DEDUP_WC_EVENT_IO_DEVICE_ERROR" value="Data Deduplication encountered a IO device error while accessing a file on the volume. This is likely a hardware fault in the storage subsystem.%n%1" />
+        <string id="DEDUP_EVENT_PIPELINE_ABORT" value="Data Deduplication aborted the optimization pipeline.%nVolumePath: %1%nErrorCode: %2%nErrorMessage: %3Details: %4" />
+        <string id="DEDUP_EVENT_RANGE_ABORT" value="Data Deduplication aborted a file range.%nFileId: %1%nFilePath: %2%nRangeOffset: %3%nRangeLength: %4%nErrorCode: %5%nErrorMessage: %6Details: %7" />
+        <string id="DEDUP_EVENT_FILE_ABORT" value="Data Deduplication aborted a file.%nFileId: %1%nFilePath: %2%nFileSize: %3%nFlags: %4%nTotalRanges: %5%nSkippedRanges: %6%nAbortedRanges: %7%nCommittedRanges: %8%nErrorCode: %9%nErrorMessage: %10Details: %11" />
+        <string id="DEDUP_EVENT_SESSION_ABORT" value="Data Deduplication aborted a session.%nMaxSize: %1%nCurrentSize: %2%nRemainingRanges: %3%nErrorCode: %4%nErrorMessage: %5Details: %6" />
+        <string id="DEDUP_USN_JOURNAL_CREATED" value="USN journal created.%n%nVolume: %2 (%1)%nMaximum size %3 MB%nAllocation size %4 MB" />
+        <string id="DEDUP_EVENT_RECONCILIATION_MEMORY_PERCENTAGE" value="Reconciliation should be run to ensure optimal savings.%n%nGuidance: This event is expected when Reconciliation is turned off for the DataPort job. Reconciliation is an internal process that allows Optimization and DataPort jobs to run when the entire Deduplication chunk index cannot be loaded into memory. When Reconciliation would require 50% or more of the memory on the system, it is recommended that you (temporarily) cease running a DataPort job against this volume, and run an Optimization job. If Reconciliation is not run through an Optimization job before Reconciliation would require more than 100% of system memory, Reconciliation will not be able to be run again (unless more memory is added). This would result in permanent decreased space efficiency on this volume.%n%nVolume: %2 (%1)%nMemory percentage required: %3" />
+        <string id="DEDUP_EVENT_RECONCILIATION_WILL_NOT_RUN" value="Data Deduplication optimization job will not run the reconciliation step due to inadequate memory.%n%nGuidance: Deduplication savings will be suboptimal until the optimization job is provided more memory, or more more memory is added to the system.%n%nVolume: %2 (%1)%nMemory percentage required: %3" />
+      </stringTable>
+    </resources>
+  </localization>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="WRP_REGKEY_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;CI;GA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;CI;GR;;;SY)(A;CI;GR;;;BA)(A;CI;GR;;;BU)(A;CI;GR;;;S-1-15-2-1)(A;CI;GR;;;S-1-15-3-1024-1065365936-1281604716-3511738428-1654721687-432734479-3232135806-4053264122-3456934681)" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" description="Default SDDL for Windows Resource Protected file" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+</assembly>

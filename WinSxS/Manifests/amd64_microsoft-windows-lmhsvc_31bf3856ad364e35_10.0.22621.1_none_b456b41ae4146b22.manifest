@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-LMHSVC" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <dependency discoverable="no" resourceType="Resources">
+    <dependentAssembly>
+      <assemblyIdentity name="Microsoft-Windows-lmhsvc.Resources" version="10.0.22621.1" processorArchitecture="amd64" language="*" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </dependentAssembly>
+  </dependency>
+  <file name="lmhsvc.dll" destinationPath="$(runtime.system32)\" sourceName="lmhsvc.dll" importPath="$(build.nttree)\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>bedSTclbN/aodGtYypEj6X/iJGi7uygIvV0Ib1mN78M=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <file name="nrpsrv.dll" destinationPath="$(runtime.system32)\" sourceName="nrpsrv.dll" importPath="$(build.nttree)\">
+    <dependencies />
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>8Z5IZP69zySdqYZue9hgk3B2Xa0t/IwTHHIs0FIwluE=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <file name="lmhosts.sam" destinationPath="$(runtime.drivers)\etc\" sourceName="lmhosts.sam" importPath="$(build.nttree)\" sourcePath=".\" writeableType="systemData">
+    <securityDescriptor name="#MutableFileDefaultSecurityDescriptor" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>AA/pySS00VVHfK0VtM/TBhbDdSO0uEjW7L0ANQelXt8=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <registryKeys>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\SharedAccess\Parameters\FirewallPolicy\RestrictedServices\Static\System">
+      <registryValue name="LMHosts-1" valueType="REG_SZ" value="V2.0|Action=Allow|Dir=Out|RPort=53|Protocol=17|App=%SystemRoot%\system32\svchost.exe|Svc=lmhosts|Name=Allow outbound UDP traffic to LMHosts port 53|" />
+      <registryValue name="LMHosts-2" valueType="REG_SZ" value="V2.0|Action=Allow|Dir=Out|RPort=53|Protocol=6|App=%SystemRoot%\system32\svchost.exe|Svc=lmhosts|Name=Allow outbound TCP traffic to LMHosts port 53|" />
+      <registryValue name="LMHosts-3" valueType="REG_SZ" value="V2.0|Action=Block|Dir=Out|App=%SystemRoot%\system32\svchost.exe|Svc=lmhosts|Name=Block outbound traffic from LMHosts|" />
+      <registryValue name="LMHosts-4" valueType="REG_SZ" value="V2.0|Action=Block|Dir=In|App=%SystemRoot%\system32\svchost.exe|Svc=lmhosts|Name=Block inbound traffic to LMHosts|" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\System\CurrentControlSet\Services\lmhosts">
+      <overridable name="Start" scope="Microsoft" type="REG_DWORD" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\System\CurrentControlset\Services\lmhosts\Parameters">
+      <registryValue name="ServiceDll" valueType="REG_EXPAND_SZ" value="%SystemRoot%\System32\lmhsvc.dll" />
+      <registryValue name="ServiceDllUnloadOnStop" valueType="REG_DWORD" value="0x00000001" />
+      <securityDescriptor name="LMHOSTS_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\EventLog\System\LmHosts">
+      <registryValue name="EventMessageFile" valueType="REG_EXPAND_SZ" value="%SystemRoot%\System32\netevent.dll" />
+      <registryValue name="TypesSupported" valueType="REG_DWORD" value="0x00000007" />
+    </registryKey>
+  </registryKeys>
+  <memberships>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories.Services" version="10.0.22621.1" publicKeyToken="31bf3856ad364e35" typeName="Service" />
+      <categoryInstance>
+        <serviceData name="LmHosts" displayName="@%SystemRoot%\system32\lmhsvc.dll,-101" errorControl="normal" start="demand" type="win32ShareProcess" description="@%SystemRoot%\system32\lmhsvc.dll,-102" dependOnService="Afd" group="TDI" imagePath="%SystemRoot%\System32\svchost.exe -k LocalServiceNetworkRestricted -p" objectName="NT AUTHORITY\LocalService" requiredPrivileges="SeCreateGlobalPrivilege" sidType="unrestricted">
+          <serviceTrigger action="start" subtype="FIRST_IP_ADDRESS_ARRIVAL" type="IPAddressAvailability" />
+          <serviceTrigger action="stop" subtype="LAST_IP_ADDRESS_REMOVAL" type="IPAddressAvailability" />
+          <serviceTrigger action="start" subtype="{2D7904D8-5C90-4209-BA6A-4C08F409934C}" type="Custom" />
+          <failureActions resetPeriod="86400">
+            <actions>
+              <action delay="100" type="restartService" />
+              <action delay="100" type="restartService" />
+              <action delay="0" type="none" />
+            </actions>
+          </failureActions>
+        </serviceData>
+      </categoryInstance>
+    </categoryMembership>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories" version="1.0.0.0" publicKeyToken="365143bb27e7ac8b" typeName="SvcHost" />
+      <categoryInstance subcategory="LocalServiceNetworkRestricted">
+        <serviceGroup position="last" serviceName="LmHosts" />
+      </categoryInstance>
+    </categoryMembership>
+  </memberships>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="LMHOSTS_SDDL" sddl="D:P(A;CI;GA;;;BA)(A;CI;GA;;;SY)(A;;RCCCLCFRKRSW;;;S-1-5-80-172094073-716411664-54255058-185476446-2329512179)" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" description="Default SDDL for Windows Resource Protected file" />
+          <securityDescriptorDefinition name="#MutableFileDefaultSecurityDescriptor" sddl="O:SYG:SYD:AIS:" operationHint="replace" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string id="description9" value="LMHOSTS Service SD" />
+        <string id="displayName9" value="LMHOSTS_SDDL" />
+      </stringTable>
+    </resources>
+  </localization>
+</assembly>

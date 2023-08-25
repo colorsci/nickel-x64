@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved." xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <assemblyIdentity name="Microsoft-Windows-TabletPC-Platform-Input-Core" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <dependency discoverable="no" resourceType="Resources">
+    <dependentAssembly dependencyType="prerequisite">
+      <assemblyIdentity name="Microsoft-Windows-TabletPC-Platform-Input-Core.Resources" version="10.0.22621.1" processorArchitecture="amd64" language="*" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+    </dependentAssembly>
+  </dependency>
+  <file name="TabSvc.dll" destinationPath="$(runtime.system32)\" sourceName="TabSvc.dll" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>oYHwFQwYiM53iC+kdA9lYjtXmTEzTZVwAEs4mLrrzn4=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <asmv3:configuration xmlns:asmv3="urn:schemas-microsoft-com:asm.v3" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State">
+    <asmv3:configurationSchema>
+      <xsd:schema xmlns:app="Microsoft-Windows-TabletPC-Platform-Input-Core" targetNamespace="Microsoft-Windows-TabletPC-Platform-Input-Core">
+        <xsd:element default="0" name="TouchUI" type="xsd:unsignedInt" wcm:deprecated="This setting has been deprecated." wcm:description="This setting is deprecated. In Windows 8, the touch pointer is not available." wcm:displayName="TouchUI" wcm:handler="regkey('HKEY_CURRENT_USER\Software\Microsoft\Wisp\Touch')" wcm:passes="offlineServicing" wcm:scope="perUser" wcm:subScope="machineSpecific" wcm:visible="true" />
+        <xsd:element name="TouchUISize" type="xsd:unsignedInt" wcm:deprecated="This setting has been deprecated." wcm:description="This setting is deprecated. In Windows 8, the touch pointer is not available." wcm:displayName="TouchUISize" wcm:handler="regkey('HKEY_CURRENT_USER\Software\Microsoft\Wisp\Touch')" wcm:passes="offlineServicing" wcm:scope="perUser" wcm:subScope="machineSpecific" wcm:visible="true" />
+        <xsd:complexType name="DeviceSequence">
+          <xsd:sequence>
+            <xsd:element maxOccurs="unbounded" name="DeviceElement" type="xsd:hexBinary" />
+          </xsd:sequence>
+        </xsd:complexType>
+        <xsd:element name="LinearityData" type="app:DeviceSequence" wcm:description="LinearityData is a container for one or more instances of DeviceElement. This key is the parent key for calibration data for particular devices. You can create subkeys under this key to include calibration data for a particular digitizer. Run tabcal.exe -export to produce a device ID and a hexadecimal string containing calibration data. Insert the device ID and hexadecimal string under linearity data as a new subkey, using the device ID as a name and the calibration data as the value." wcm:displayName="LinearityData" wcm:handler="regkey('HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\TabletPC')" wcm:migrate="yes" wcm:passes="offlineServicing" wcm:scope="allUsers" wcm:subScope="machineSpecific" wcm:visible="true" />
+        <xsd:complexType name="AssociationSequence">
+          <xsd:sequence>
+            <xsd:element maxOccurs="unbounded" name="AssociationElement" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+        <xsd:element name="AssociationData" type="app:AssociationSequence" wcm:description="AssociationData contains one or more instances of AssociationElement. The AssociationElement specifies information to associate a Tablet PC monitor to the digitizer. Add a separate AssociationElement for each Tablet PC monitor that you want to associate to a digitizer." wcm:displayName="AssociationData" wcm:handler="regkey('HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\TabletPC')" wcm:migrate="yes" wcm:passes="offlineServicing" wcm:scope="allUsers" wcm:subScope="machineSpecific" wcm:visible="true" />
+        <xsd:element name="TouchGate" type="xsd:unsignedInt" wcm:description="TouchGate specifies whether touch input is turned on for the device." wcm:displayName="TouchGate" wcm:handler="regkey('HKEY_CURRENT_USER\Software\Microsoft\Wisp\Touch')" wcm:passes="offlineServicing" wcm:scope="perUser" wcm:subScope="machineSpecific" wcm:visible="true" />
+        <xsd:element name="PanningDisabled" type="xsd:boolean" wcm:description="PanningDisabled specifies whether panning is disabled on a Tablet PC. When panning is enabled users can scroll through a page by touching the screen and sliding their finger up or down." wcm:displayName="PanningDisabled" wcm:handler="regkey('HKEY_CURRENT_USER\Software\Microsoft\Wisp\Touch')" wcm:passes="offlineServicing" wcm:scope="perUser" wcm:subScope="machineSpecific" wcm:visible="true" />
+        <xsd:element name="MultiTouchEnabled" type="xsd:boolean" wcm:description="MultiTouchEnabled specifies whether multi-touch is enabled. With multi-touch, the computer can receive input from the touch surface from multiple points at the same time." wcm:displayName="MultiTouchEnabled" wcm:handler="regkey('HKEY_CURRENT_USER\Software\Microsoft\Wisp\MultiTouch')" wcm:passes="offlineServicing" wcm:scope="perUser" wcm:subScope="machineSpecific" wcm:visible="true" />
+        <xsd:element default="0" name="TabletSetup" type="xsd:unsignedInt" wcm:description="TabletSetup" wcm:displayName="TabletSetup" wcm:handler="regkey('HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\TabletPC\TabSetup')" wcm:scope="allUsers" wcm:subScope="machineSpecific" />
+        <xsd:element name="TabletSetup_hkcu" type="xsd:unsignedInt" wcm:description="TabletSetup" wcm:displayName="TabletSetup" wcm:handler="regkey('HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\TabletPC\TabSetup')" wcm:legacyName="TabletSetup" wcm:scope="perUser" wcm:subScope="machineIndependent" />
+        <xsd:element name="TouchKeyboardAutoInvokeEnabled" type="xsd:boolean" wcm:dataOnly="true" wcm:description="TouchKeyboardAutoInvokeEnabled specifies whether the touch keyboard auto-invokes by default when there is no hardware keyboard connected in non-tablet mode." wcm:displayName="TouchKeyboardAutoInvokeEnabled" wcm:handler="regkey('HKEY_LOCAL_MACHINE\Software\Microsoft\TabletTip\1.7')" wcm:legacyName="EnableDesktopModeAutoInvoke" wcm:legacyType="REG_DWORD" wcm:passes="offlineServicing specialize oobeSystem" wcm:scope="allUsers" wcm:subScope="machineSpecific" wcm:visible="true" />
+        <xsd:element name="HandwritingPanelDockedModeSet" type="xsd:boolean" wcm:dataOnly="true" wcm:description="HandwritingPanelDockedModeSet specifies whether the handwriting panel is docked by default." wcm:displayName="HandwritingPanelDockedModeSet" wcm:handler="regkey('HKEY_LOCAL_MACHINE\Software\Microsoft\TabletTip\1.7')" wcm:legacyName="TicDockedPreference" wcm:legacyType="REG_DWORD" wcm:passes="offlineServicing specialize oobeSystem" wcm:scope="allUsers" wcm:subScope="machineSpecific" wcm:visible="true" />
+      </xsd:schema>
+    </asmv3:configurationSchema>
+    <asmv3:metadata />
+  </asmv3:configuration>
+  <migration scope="Upgrade,MigWiz,USMT" settingsVersion="0">
+    <supportedComponents>
+      <supportedComponent>
+        <assemblyIdentity name="_" version="1.0.0.0" />
+        <supportedComponentIdentity buildType="release" language="neutral" name="Microsoft-Windows-TabletPC-Platform-Input-Core" processorArchitecture="*" publicKeyToken="31bf3856ad364e35" settingsVersionRange="0" versionScope="nonSxS" xmlns="urn:schemas-microsoft-com:asm.v3" />
+      </supportedComponent>
+      <supportedComponent>
+        <assemblyIdentity name="_" version="1.0.0.0" />
+        <supportedComponentIdentity buildType="release" language="*" name="Microsoft-Windows-TabletPC-Platform-Input-Core-DL" processorArchitecture="*" publicKeyToken="31bf3856ad364e35" settingsVersionRange="0" versionScope="nonSxS" xmlns="urn:schemas-microsoft-com:asm.v3" />
+        <migXml xmlns="">
+          <rules context="User">
+            <include>
+              <objectSet>
+                <pattern type="Registry">HKCU\Software\Microsoft\Windows\TabletPC\TabSetup [TabletSetup]</pattern>
+              </objectSet>
+            </include>
+            <merge script="MigXmlHelper.SourcePriority()">
+              <objectSet>
+                <pattern type="Registry">HKCU\Software\Microsoft\Windows\TabletPC\TabSetup [TabletSetup]</pattern>
+              </objectSet>
+            </merge>
+          </rules>
+        </migXml>
+      </supportedComponent>
+    </supportedComponents>
+    <migrationDisplayID>Tablet_PC_Settings\Tablet_PC_General_Options</migrationDisplayID>
+  </migration>
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string id="displayName43" value="TouchUI" />
+        <string id="description43" value="This setting is deprecated. In Windows 8, the touch pointer is not available." />
+        <string id="displayName44" value="TouchUISize" />
+        <string id="description44" value="This setting is deprecated. In Windows 8, the touch pointer is not available." />
+        <string id="displayName124" value="LinearityData" />
+        <string id="description124" value="LinearityData is a container for one or more instances of DeviceElement. This key is the parent key for calibration data for particular devices. You can create subkeys under this key to include calibration data for a particular digitizer. Run tabcal.exe -export to produce a device ID and a hexadecimal string containing calibration data. Insert the device ID and hexadecimal string under linearity data as a new subkey, using the device ID as a name and the calibration data as the value." />
+        <string id="displayName127" value="TabletSetup" />
+        <string id="description127" value="TabletSetup" />
+        <string id="displayName129" value="TouchGate" />
+        <string id="description129" value="TouchGate specifies whether touch input is turned on for the device." />
+        <string id="displayName138" value="MultiTouchEnabled" />
+        <string id="description138" value="MultiTouchEnabled specifies whether multi-touch is enabled. With multi-touch, the computer can receive input from the touch surface from multiple points at the same time." />
+        <string id="PanningDisabledDisplayName" value="PanningDisabled" />
+        <string id="PanningDisabledDescription" value="PanningDisabled specifies whether panning is disabled on a Tablet PC. When panning is enabled users can scroll through a page by touching the screen and sliding their finger up or down." />
+        <string id="EventProviderName" value="Microsoft-Windows-TabletPC-Platform-Input-Core" />
+        <string id="descriptionAssociationData" value="AssociationData contains one or more instances of AssociationElement. The AssociationElement specifies information to associate a Tablet PC monitor to the digitizer. Add a separate AssociationElement for each Tablet PC monitor that you want to associate to a digitizer." />
+        <string id="displayNameAssociationData" value="AssociationData" />
+        <string id="TouchKeyboardAutoInvokeEnabledDisplayName" value="TouchKeyboardAutoInvokeEnabled" />
+        <string id="TouchKeyboardAutoInvokeEnabledDescription" value="TouchKeyboardAutoInvokeEnabled specifies whether the touch keyboard auto-invokes by default when there is no hardware keyboard connected in non-tablet mode." />
+        <string id="HandwritingPanelDockedModeSetDisplayName" value="HandwritingPanelDockedModeSet" />
+        <string id="HandwritingPanelDockedModeSetDescription" value="HandwritingPanelDockedModeSet specifies whether the handwriting panel is docked by default." />
+      </stringTable>
+    </resources>
+  </localization>
+  <instrumentation xmlns:win="http://manifests.microsoft.com/win/2004/08/windows/events">
+    <events xmlns="http://schemas.microsoft.com/win/2004/08/events">
+      <provider guid="{b5fd844a-01d4-4b10-a57f-58b13b561582}" message="$(string.EventProviderName)" messageFileName="%SystemRoot%\system32\tabsvc.dll" name="Microsoft-Windows-TabletPC-Platform-Input-Core" resourceFileName="%SystemRoot%\system32\tabsvc.dll" symbol="Microsoft_Windows_TabletPC_Platform_Input_Core" />
+      <cmi />
+    </events>
+  </instrumentation>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" description="Default SDDL for Windows Resource Protected file" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+</assembly>

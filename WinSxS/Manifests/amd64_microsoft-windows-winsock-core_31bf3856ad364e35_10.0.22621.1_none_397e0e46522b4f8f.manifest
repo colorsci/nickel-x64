@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-Winsock-Core" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <dependency discoverable="no" resourceType="Resources">
+    <dependentAssembly>
+      <assemblyIdentity name="Microsoft-Windows-Winsock-Core.Resources" version="10.0.22621.1" processorArchitecture="amd64" language="*" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </dependentAssembly>
+  </dependency>
+  <file name="afd.sys" destinationPath="$(runtime.drivers)\" sourceName="afd.sys" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>bHCA481ZxrJv1sNSRYPA0dgZWj+gWgd/4wrKneMUlYU=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <instrumentation xmlns:ut="http://manifests.microsoft.com/win/2004/08/windows/networkevents" xmlns:win="http://manifests.microsoft.com/win/2004/08/windows/events" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <events xmlns="http://schemas.microsoft.com/win/2004/08/events">
+      <provider guid="{d5c25f9a-4d47-493e-9184-40dd397a004d}" message="$(string.eventProviderName.WS2HELP)" messageFileName="%SystemRoot%\system32\ws2_32.dll" name="Microsoft-Windows-Winsock-WS2HELP" resourceFileName="%SystemRoot%\system32\ws2_32.dll" symbol="WINSOCK_LSP">
+        <channels>
+          <channel chid="Winsock-WS2HELP" enabled="true" isolation="System" message="$(string.OperationalChannelName.WS2HELP)" name="Microsoft-Windows-Winsock-WS2HELP/Operational" symbol="CHAN_WINSOCK_WS2_32" type="Operational" />
+        </channels>
+      </provider>
+      <provider guid="{bde46aea-2357-51fe-7367-d5296f530bd1}" message="$(string.eventProviderName.WS2Sock)" messageFileName="%SystemRoot%\system32\ws2_32.dll" name="Microsoft-Windows-Winsock-Sockets" resourceFileName="%SystemRoot%\system32\ws2_32.dll" symbol="WINSOCK_SOCK" />
+      <provider guid="{e53c6823-7bb8-44bb-90dc-3f86090d48a6}" message="$(string.eventProviderName.AFD)" messageFileName="%SystemRoot%\system32\drivers\afd.sys" name="Microsoft-Windows-Winsock-AFD" resourceFileName="%SystemRoot%\system32\drivers\afd.sys" symbol="AFD_WINSOCK">
+        <channels>
+          <channel chid="Winsock-AFD" enabled="false" isolation="System" message="$(string.OperationalChannelName.AFD)" name="Microsoft-Windows-Winsock-AFD/Operational" symbol="CHAN_WINSOCK_AFD" type="Operational" />
+        </channels>
+      </provider>
+      <provider guid="{9b307223-4e4d-4bf5-9be8-995cd8e7420b}" messageFileName="%SystemRoot%\system32\drivers\afd.sys" name="Microsoft-Windows-NetworkManagerTriggerProvider" resourceFileName="%SystemRoot%\system32\drivers\afd.sys" symbol="Symbol_NetworkMgrTriggerProvider" />
+      <provider guid="{277c9237-51d8-5c1c-b089-f02c683e5ba7}" messageFileName="%SystemRoot%\system32\drivers\afd.sys" name="Microsoft-Windows-StartNameRes" resourceFileName="%SystemRoot%\system32\drivers\afd.sys" symbol="Symbol_StartNameRes" />
+      <provider guid="{093da50c-0bb9-4d7d-b95c-3bb9fcda5ee8}" messageFileName="%SystemRoot%\system32\drivers\afd.sys" name="Microsoft-Windows-Winsock-SQM" resourceFileName="%SystemRoot%\system32\drivers\afd.sys" symbol="WINSOCK_SQM" />
+      <provider guid="{55404E71-4DB9-4DEB-A5F5-8F86E46DDE56}" message="$(string.eventProviderName.winsockNameResolution)" messageFileName="%SystemRoot%\system32\ws2_32.dll" name="Microsoft-Windows-Winsock-NameResolution" resourceFileName="%SystemRoot%\system32\ws2_32.dll" symbol="WINSOCK_NAME_RESOLUTION">
+        <channels>
+          <channel chid="Winsock-NameResolution" enabled="false" message="$(string.OperationalChannelName.NameResolution)" name="Microsoft-Windows-Winsock-NameResolution/Operational" symbol="CHAN_WINSOCK_NAME_RESOLUTION" type="Operational" />
+        </channels>
+      </provider>
+      <cmi />
+    </events>
+    <counters xmlns="http://schemas.microsoft.com/win/2005/12/counters" schemaVersion="2.0">
+      <provider applicationIdentity="%SystemRoot%\system32\drivers\afd.sys" callback="custom" providerGuid="{cc629d13-f318-4c40-b1ed-d70bce524515}" providerName="AFDCounters" providerType="kernelMode">
+        <counterSet description="Global performance counters for Microsoft Winsock Base Service Provider" descriptionID="3" guid="{22ca1519-4394-4a5f-be88-84a5c853a4aa}" instances="single" name="Microsoft Winsock BSP" nameID="1" symbol="GlobalCounterSet" uri="Microsoft.Windows.System.PerfCounters.AFD.Global">
+          <structs>
+            <struct name="AFDGlobalPerfCounters" type="AFD_GLOBAL_PERF_COUNTERS" />
+          </structs>
+          <counter description="Dropped Datagrams/sec due to receive buffer limit on any datagram socket" descriptionID="7" detailLevel="standard" field="DroppedDatagrams" id="0" name="Dropped Datagrams/sec" nameID="5" struct="AFDGlobalPerfCounters" symbol="EV_DroppedDatagramsRate" type="perf_counter_counter" uri="Microsoft.Windows.System.PerfCounters.AFD.Global.DroppedDatagramsRate" />
+          <counter description="Dropped Datagrams due to receive buffer limit on any datagram socket" descriptionID="11" detailLevel="standard" field="DroppedDatagrams" id="1" name="Dropped Datagrams" nameID="9" struct="AFDGlobalPerfCounters" symbol="EV_DroppedDatagramsRaw" type="perf_counter_rawcount" uri="Microsoft.Windows.System.PerfCounters.AFD.Global.DroppedDatagramsRaw" />
+          <counter description="Rejected Connections/sec due to backlog limit on any TCP listening socket" descriptionID="15" detailLevel="standard" field="RejectedConnections" id="2" name="Rejected Connections/sec" nameID="13" struct="AFDGlobalPerfCounters" symbol="EV_RejectedConnectionsRate" type="perf_counter_counter" uri="Microsoft.Windows.System.PerfCounters.AFD.Global.RejectedConnectionsRate" />
+          <counter description="Rejected Connections due to backlog limit on any TCP listening socket" descriptionID="19" detailLevel="standard" field="RejectedConnections" id="3" name="Rejected Connections" nameID="17" struct="AFDGlobalPerfCounters" symbol="EV_RejectedConnectionsRaw" type="perf_counter_rawcount" uri="Microsoft.Windows.System.PerfCounters.AFD.Global.RejectedConnectionsRaw" />
+        </counterSet>
+      </provider>
+    </counters>
+  </instrumentation>
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string id="eventProviderName.WS2HELP" value="Microsoft-Windows-Winsock Catalog Change" />
+        <string id="OperationalChannelName.WS2HELP" value="Microsoft-Windows-Winsock Catalog Change/Operational" />
+        <string id="eventProviderName.AFD" value="Microsoft-Windows-Winsock Network Event" />
+        <string id="OperationalChannelName.AFD" value="Microsoft-Windows-Winsock Network Event/Operational" />
+        <string id="WINSOCK_OPCODE_OPEN.OpcodeMessage" value="Open" />
+        <string id="WINSOCK_OPCODE_BOUND.OpcodeMessage" value="Bound" />
+        <string id="WINSOCK_OPCODE_CONNECTED.OpcodeMessage" value="Connected" />
+        <string id="WINSOCK_OPCODE_DISCONNECTED.OpcodeMessage" value="Disconnected" />
+        <string id="WINSOCK_OPCODE_ABORTED.OpcodeMessage" value="Aborted" />
+        <string id="WINSOCK_OPCODE_CLOSED.OpcodeMessage" value="Closed" />
+        <string id="WINSOCK_OPCODE_FREED.OpcodeMessage" value="Freed" />
+        <string id="WINSOCK_OPCODE_MODIFIED.OpcodeMessage" value="Modified" />
+        <string id="WINSOCK_KEYWORD_DATAGRAM.KeywordMessage" value="Datagram socket" />
+        <string id="WINSOCK_KEYWORD_STREAM.KeywordMessage" value="Stream socket" />
+        <string id="WINSOCK_KEYWORD_SOURCE_WINSOCK.KeywordMessage" value="Winsock initiated event" />
+        <string id="WINSOCK_KEYWORD_SOURCE_TRANSPORT.KeywordMessage" value="Transport initiated event" />
+        <string id="WINSOCK_KEYWORD_FASTPATH.KeywordMessage" value="Fastpath I/O" />
+        <string id="WINSOCK_KEYWORD_BUFFERED.KeywordMessage" value="Buffered" />
+        <string id="WINSOCK_KEYWORD_RIO.KeywordMessage" value="RIO" />
+        <string id="WINSOCK_KEYWORD_NRT.KeywordMessage" value="NRT" />
+        <string id="AFD_EVENT_CREATE.EventMessage" value="socket: %1: Process %3 (%8), Endpoint %4, Family %5, Type %6, Protocol %7, Seq %2, Status %9" />
+        <string id="AFD_EVENT_CLOSE.EventMessage" value="closesocket: %1: Process %3, Endpoint %4, Seq %2, Status %5" />
+        <string id="AFD_EVENT_CLEANUP.EventMessage" value="socket cleanup: %1: Process %3, Endpoint %4, Seq %2, Status %5" />
+        <string id="AFD_EVENT_SEND.EventMessage" value="send: %1: Process %3, Endpoint %4, Buffer Count %5, Buffer %6, Length %7, Seq %2, Status %8" />
+        <string id="AFD_EVENT_RECV.EventMessage" value="recv: %1: Process %3, Endpoint %4, Buffer Count %5, Buffer %6, Length %7, Seq %2, Status %8" />
+        <string id="AFD_EVENT_SENDTO.EventMessage" value="sendto: %1: Process %3, Endpoint %4, Buffer Count %5, Buffer %6, Length %7, Seq %2, Status %8" />
+        <string id="AFD_EVENT_RECVFROM.EventMessage" value="recvfrom: %1: Process %3, Endpoint %4, Buffer Count %5, Buffer %6, Length %7, Seq %2, Status %8" />
+        <string id="AFD_EVENT_SENDTO_ADDR.EventMessage" value="sendto: %1: Process %3, Endpoint %4, Buffer Count %5, Buffer %6, Length %7, Addr %10, Seq %2, Status %8" />
+        <string id="AFD_EVENT_RECVFROM_ADDR.EventMessage" value="recvfrom: %1: Process %3, Endpoint %4, Buffer Count %5, Buffer %6, Length %7, Addr %10, Seq %2, Status %8" />
+        <string id="AFD_EVENT_SENDMSG.EventMessage" value="sendmsg: %1: Process %3, Endpoint %4, Buffer Count %5, Buffer %6, Length %7, Seq %2, Status %8" />
+        <string id="AFD_EVENT_RECVMSG.EventMessage" value="recvmsg: %1: Process %3, Endpoint %4, Buffer Count %5, Buffer %6, Length %7, Seq %2, Status %8" />
+        <string id="AFD_EVENT_SENDMSG_ADDR.EventMessage" value="sendmsg: %1: Process %3, Endpoint %4, Buffer Count %5, Buffer %6, Length %7, Addr %10, Seq %2, Status %8" />
+        <string id="AFD_EVENT_RECVMSG_ADDR.EventMessage" value="recvmsg: %1: Process %3, Endpoint %4, Buffer Count %5, Buffer %6, Length %7, Addr %10, Seq %2, Status %8" />
+        <string id="AFD_EVENT_CONNECT.EventMessage" value="connect: %1: Process %3, Endpoint %4, Seq %2, Status %5" />
+        <string id="AFD_EVENT_CONNECT_ADDR.EventMessage" value="connect: %1: Process %3, Endpoint %4, Address %9, Seq %2, Status %7" />
+        <string id="AFD_EVENT_CONNECTEX.EventMessage" value="ConnectEx: %1: Process %3, Endpoint %4, Seq %2, Status %5" />
+        <string id="AFD_EVENT_CONNECTEX_ADDR.EventMessage" value="ConnectEx: %1: Process %3, Endpoint %4, Buffer %5, Length %6, Address %9, Seq %2, Status %7" />
+        <string id="AFD_EVENT_ACCEPT.EventMessage" value="accept: %1: Process %3, Endpoint %4, Seq %2, Status %5" />
+        <string id="AFD_EVENT_ACCEPT_ADDR.EventMessage" value="accept: %1: Process %3, Endpoint %4, Address %9, Accept Endpoint %10, Current Backlog %11, Seq %2, Status %7" />
+        <string id="AFD_EVENT_ACCEPTEX.EventMessage" value="AcceptEx: %1: Process %3, Endpoint %4, Seq %2, Status %5" />
+        <string id="AFD_EVENT_ACCEPTEX_ADDR.EventMessage" value="AcceptEx: %1: Process %3, Endpoint %4, Buffer %5, Length %6, Address %9, Accept Endpoint %10, Current Backlog %11, Seq %2, Status %7" />
+        <string id="AFD_EVENT_BIND.EventMessage" value="bind: %1: Process %3, Endpoint %4, Seq %2, Status %5" />
+        <string id="AFD_EVENT_BIND_ADDR.EventMessage" value="bind: %1: Process %3, Endpoint %4, Address %7, Seq %2, Status %5" />
+        <string id="AFD_EVENT_ABORT.EventMessage" value="connection aborted: %1: Process %3, Endpoint %4, Seq %2, Reason %5" />
+        <string id="AFD_EVENT_DATAGRAM_DROP.EventMessage" value="datagram dropped: %1: Process %3, Endpoint %4, Buffer %5, Length %6, Address %8, Seq %2, Reason %9" />
+        <string id="AFD_EVENT_OPTION.EventMessage" value="Socket option: %1: Process %3, Endpoint %4, Option %5, Value %6, Seq %2, Status %7" />
+        <string id="AFD_EVENT_WAITFORLISTEN.EventMessage" value="Wait for listen: %1: Process %3, Endpoint %4, Seq %2, Status %5" />
+        <string id="AFD_EVENT_LISTEN.EventMessage" value="Listen: %1: Process %3, Endpoint %4, Backlog %5, Seq %2, Status %6" />
+        <string id="AFD_EVENT_ID_TO_MDL.EventMessage" value="Transfer from transport ID to MDL: Endpoint %1" />
+        <string id="AFD_EVENT_MDL_TO_IRP.EventMessage" value="Transfer from MDL to IRP: Endpoint %1" />
+        <string id="AFD_EVENT_ENDPOINT_TO_IRP.EventMessage" value="Transfer from Endpoint to IRP" />
+        <string id="AFD_EVENT_MDL_TO_MDL.EventMessage" value="Transfer from MDL to MDL" />
+        <string id="AFD_EVENT_CONNECT_INDICATION.EventMessage" value="Connect indication: %1: Process %3, Endpoint %4, Seq %2, Status %5" />
+        <string id="AFD_EVENT_CONNECT_INDICATION_ADDR.EventMessage" value="Connect indication: %1: Process %3, Endpoint %4, Address %7, Backlog Count %8, Seq %2, Status %5" />
+        <string id="AFD_EVENT_DATA_INDICATION.EventMessage" value="Data indication: %1: Process %3, Endpoint %4, Buffer %5, Length %6, Seq %2" />
+        <string id="AFD_EVENT_DATA_INDICATION_ADDR.EventMessage" value="Data indication: %1: Process %3, Endpoint %4, Buffer %5, Length %6, Address %8, Seq %2" />
+        <string id="AFD_EVENT_DISCONNECT.EventMessage" value="disconnect indicated: %1: Process %3, Endpoint %4, Seq %2" />
+        <string id="AFD_EVENT_SENDBACKLOG.EventMessage" value="Transport send backlog: Process %1, Endpoint %2, Send Backlog %5" />
+        <string id="AFD_EVENT_CREATE_REG_DOMAIN.EventMessage" value="Registration domain %1 create status %2" />
+        <string id="AFD_EVENT_CLOSE_REG_DOMAIN.EventMessage" value="Registration domain %1 closed" />
+        <string id="AFD_EVENT_CREATE_CQ.EventMessage" value="CQ %1 created with %3 entries, index %7 and notification type %8, status %13" />
+        <string id="AFD_EVENT_CLOSE_CQ.EventMessage" value="CQ %1 closed with %2 commit" />
+        <string id="AFD_EVENT_CLEANUP_CQ.EventMessage" value="CQ %1 cleaned up" />
+        <string id="AFD_EVENT_RESIZE_CQ.EventMessage" value="CQ %1 with %5 commit resized from %2 to %6, status %10" />
+        <string id="AFD_EVENT_CREATE_RQ.EventMessage" value="RQ %2 created on endpoint %1 with %8 receive and %4 send entries, using receive CQ %13 and send CQ %12, status %14" />
+        <string id="AFD_EVENT_CLOSE_RQ.EventMessage" value="RQ %1 closed, receive = (%2,%3) send = (%4,%5)" />
+        <string id="AFD_EVENT_CLEANUP_RQ.EventMessage" value="RQ %1 cleaned up" />
+        <string id="AFD_EVENT_RESIZE_RQ.EventMessage" value="RQ %1 resized from (%9,%2) to (%12,%5), status = %16" />
+        <string id="AFD_EVENT_REGISTER_BUFFER.EventMessage" value="Buffer %1 registered with address %3 and length %5, system address = %4, ID = %6, status = %7" />
+        <string id="AFD_EVENT_DEREGISTER_BUFFER.EventMessage" value="Buffer %1 deregistered with %2 references" />
+        <string id="AFD_EVENT_CLEANUP_BUFFER.EventMessage" value="Buffer %1 cleaned up" />
+        <string id="AFD_EVENT_INVALID_BUFFER_ID.EventMessage" value="RQ %2 using invalid buffer ID %3" />
+        <string id="AFD_EVENT_INVALID_BUFFER_RANGE.EventMessage" value="RQ %2 invalid use of buffer %3, offset = %4, length = %5" />
+        <string id="AFD_EVENT_INVALID_BUFFER_SIZE.EventMessage" value="RQ %1 using invalid buffer size for %2, specified = %3, required = %4" />
+        <string id="AFD_EVENT_NRT_CREATE.EventMessage" value="NRT Create: Handle = %1 Process = %2 Status = %3" />
+        <string id="AFD_EVENT_NRT_CLOSE.EventMessage" value="NRT Close: Handle = %1 Process = %2" />
+        <string id="WINSOCK_SocketType_ValueMap.1.Message" value="SOCK_STREAM" />
+        <string id="WINSOCK_SocketType_ValueMap.2.Message" value="SOCK_DGRAM" />
+        <string id="WINSOCK_SocketType_ValueMap.3.Message" value="SOCK_RAW" />
+        <string id="WINSOCK_SocketType_ValueMap.4.Message" value="SOCK_RDM" />
+        <string id="WINSOCK_SocketType_ValueMap.5.Message" value="SOCK_SEQPACKET" />
+        <string id="AFD_ABORT_ValueMap.1.Message" value="Attempt to flush pending receive requests failed" />
+        <string id="AFD_ABORT_ValueMap.2.Message" value="Abortive disconnect requested on endpoint" />
+        <string id="AFD_ABORT_ValueMap.3.Message" value="Shutdown with SD_RECEIVE posted with receive data pending" />
+        <string id="AFD_ABORT_ValueMap.4.Message" value="Transport indicated abortive disconnect" />
+        <string id="AFD_ABORT_ValueMap.5.Message" value="Error on accepted connection not associated with listening socket" />
+        <string id="AFD_ABORT_ValueMap.6.Message" value="Disconnect failed" />
+        <string id="AFD_ABORT_ValueMap.7.Message" value="Pending data on connection when disconnect called" />
+        <string id="AFD_ABORT_ValueMap.8.Message" value="Invalid buffer specified on fastio receive" />
+        <string id="AFD_ABORT_ValueMap.9.Message" value="Accept operation failed" />
+        <string id="AFD_ABORT_ValueMap.10.Message" value="Unable to allocate buffer" />
+        <string id="AFD_ABORT_ValueMap.11.Message" value="Counter overflow" />
+        <string id="AFD_ABORT_ValueMap.12.Message" value="Data arrives after shutting down receive path" />
+        <string id="AFD_ABORT_ValueMap.13.Message" value="Data arrives during endpoint cleanup" />
+        <string id="AFD_ABORT_ValueMap.14.Message" value="Receive request failed" />
+        <string id="AFD_ABORT_ValueMap.15.Message" value="Send request failed" />
+        <string id="AFD_ABORT_ValueMap.16.Message" value="Send request cancelled" />
+        <string id="AFD_ABORT_ValueMap.17.Message" value="TransmitPackets/TransmitFile request cancelled" />
+        <string id="AFD_ABORT_ValueMap.18.Message" value="Abort indicated during connection request" />
+        <string id="AFD_ABORT_ValueMap.19.Message" value="Plug and play event caused abort" />
+        <string id="AFD_DGRAM_DROP_ValueMap.1.Message" value="Datagram source address does not match connected address" />
+        <string id="AFD_DGRAM_DROP_ValueMap.2.Message" value="Insufficient local buffer space" />
+        <string id="AFD_DGRAM_DROP_ValueMap.3.Message" value="Buffer allocation failed" />
+        <string id="AFD_DGRAM_DROP_ValueMap.4.Message" value="Insufficient local buffer space - circular queueing enabled" />
+        <string id="AFD_DGRAM_DROP_ValueMap.5.Message" value="Indicated datagram too large - integer overflow" />
+        <string id="AFD_OPTION_ValueMap.1.Message" value="SO_OOBINLINE" />
+        <string id="AFD_OPTION_ValueMap.2.Message" value="FIONBIO" />
+        <string id="AFD_OPTION_ValueMap.6.Message" value="SO_RCVBUF" />
+        <string id="AFD_OPTION_ValueMap.7.Message" value="SO_SNDBUF" />
+        <string id="AFD_OPTION_ValueMap.9.Message" value="SIO_ENABLE_CIRCULAR_QUEUEING" />
+        <string id="AFD_OPTION_ValueMap.11.Message" value="SIO_UDP_CONNRESET" />
+        <string id="AFD_OPTION_ValueMap.13.Message" value="AFD_IPV6_V6ONLY" />
+        <string id="AFD_OPTION_ValueMap.15.Message" value="SIO_UDP_NETRESET" />
+        <string id="RIO_NOTIFICATION_TYPE_ValueMap.0.Message" value="None" />
+        <string id="RIO_NOTIFICATION_TYPE_ValueMap.1.Message" value="Event" />
+        <string id="RIO_NOTIFICATION_TYPE_ValueMap.2.Message" value="IOCP" />
+        <string id="RIO_BUFFER_TYPE_ValueMap.0.Message" value="source address" />
+        <string id="RIO_BUFFER_TYPE_ValueMap.1.Message" value="destination address" />
+        <string id="RIO_BUFFER_TYPE_ValueMap.2.Message" value="flags" />
+        <string id="RIO_BUFFER_TYPE_ValueMap.3.Message" value="control" />
+        <string id="RIO_QUEUE_TYPE_ValueMap.0.Message" value="send" />
+        <string id="RIO_QUEUE_TYPE_ValueMap.1.Message" value="receive" />
+        <string id="LspInst.EventMessage" value="LSP %1 was installed in the %2-bit catalog by %3 (GUID=%4, Category ID=%5)" />
+        <string id="LspDel.EventMessage" value="LSP %1 was removed from the %2-bit catalog by %3 (GUID=%4, Category ID=%5)" />
+        <string id="LspDisable.EventMessage" value="LSP %1 was disabled in the %2-bit catalog by %3 (GUID=%4, Category ID=%5)" />
+        <string id="LspReset.EventMessage" value="The %1-bit catalog was reset by the administrator" />
+        <string id="LspBypass.EventMessage" value="LSP %1 was bypassed as due to legacy technology bypass policy (GUID=%2)" />
+        <string id="displayName" value="Winsock core components" />
+        <string id="description" value="Winsock core components" />
+        <string id="AFD_EVENT_OLD_CREATE.EventMessage" value="Socket creation: %1 %2 %3 %4 %5" />
+        <string id="AFD_EVENT_OLD_BIND.EventMessage" value="Socket bind: %1 %2 %3 %4 %5" />
+        <string id="AFD_EVENT_OLD_BIND_ERR.EventMessage" value="Failed bind: %1 %2 %3" />
+        <string id="AFD_EVENT_OLD_CONNECT.EventMessage" value="Socket connect: %1 %2 %3 %4" />
+        <string id="AFD_EVENT_OLD_CONNECT_DONE.EventMessage" value="Connect completed: %1 %2 %3" />
+        <string id="AFD_EVENT_OLD_ABORT.EventMessage" value="AFD initiated abort: %1 %2 %3" />
+        <string id="AFD_EVENT_OLD_ABORT_IND.EventMessage" value="Transport initiated abort: %1 %2 %3" />
+        <string id="AFD_EVENT_OLD_SEND_ERR.EventMessage" value="Failed send request: %1 %2 %3" />
+        <string id="AFD_EVENT_OLD_SENDMSG_ERR.EventMessage" value="Failed WSASendMsg request: %1 %2 %3" />
+        <string id="AFD_EVENT_OLD_RECV_ERR.EventMessage" value="Failed recv request: %1 %2 %3" />
+        <string id="AFD_EVENT_OLD_RECVFROM_ERR.EventMessage" value="Failed recvfrom request: %1 %2 %3" />
+        <string id="AFD_EVENT_OLD_CLOSE.EventMessage" value="Socket close: %1 %2 %3" />
+        <string id="AFD_EVENT_OLD_CLEANUP.EventMessage" value="Socket cleanup (all references removed): %1 %2 %3" />
+        <string id="AFD_EVENT_OLD_ACCEPT.EventMessage" value="Socket accept: %1 %2 %3 %4 %5" />
+        <string id="AFD_EVENT_OLD_ACCEPT_ERR.EventMessage" value="Accept failed: %1 %2 %3" />
+        <string id="AFD_EVENT_OLD_SEND.EventMessage" value="Send posted: %1 %2 %3 %4 %5 %6" />
+        <string id="AFD_EVENT_OLD_SENDTO.EventMessage" value="SendTo posted: %1 %2 %3 %4 %5 %6 %7 %8" />
+        <string id="AFD_EVENT_OLD_RECV.EventMessage" value="Receive posted: %1 %2 %3 %4 %5 %6" />
+        <string id="AFD_EVENT_OLD_RECVFROM.EventMessage" value="RecvFrom posted: %1 %2 %3 %4 %5 %6" />
+        <string id="AFD_EVENT_OLD_RECV_DONE.EventMessage" value="Recv completed: %1 %2 %3 %4" />
+        <string id="AFD_EVENT_OLD_SEND_DONE.EventMessage" value="Send completed: %1 %2 %3 %4" />
+        <string id="AFD_EVENT_OLD_SENDTO_DONE.EventMessage" value="SendTo completed: %1 %2 %3 %4" />
+        <string id="AFD_EVENT_OLD_SENDMSG_DONE.EventMessage" value="SendMsg completed: %1 %2 %3 %4" />
+        <string id="AFD_EVENT_OLD_RECVFROM_DONE.EventMessage" value="RecvFrom completed: %1 %2 %3 %4 %5 %6 %7" />
+        <string id="AFD_EVENT_OLD_SOCKET_OPTION.EventMessage" value="Socket option set: %1 %2 %3 %4" />
+        <string id="AFD_EVENT_OLD_SELECT_POLL.EventMessage" value="Select/Poll posted: %1 %2 %3" />
+        <string id="AFD_EVENT_OLD_SELECT_POLL_DONE.EventMessage" value="Select/Poll completed: %1 %2 %3" />
+        <string id="AFD_EVENT_OLD_EVENTSELECT.EventMessage" value="WSAEventSelect: %1 %2 %3" />
+        <string id="AFD_EVENT_OLD_DROP_DGRAM.EventMessage" value="Datagram dropped: %1 %2 %3 %4 %5 %6" />
+        <string id="AFD_EVENT_OLD_CONNECT_EVENT.EventMessage" value="Connection indicated: %1 %2 %3 %4" />
+        <string id="AFD_EVENT_OLD_DATA_INDICATED.EventMessage" value="Data indicated from transport: %1 %2 %3" />
+        <string id="AFD_EVENT_OLD_DATAFROM_INDICATED.EventMessage" value="Data indicated from transport: %1 %2 %3 %4 %5" />
+        <string id="AFD_EVENT_OLD_DISCONNECT_INDICATED.EventMessage" value="Disconnect indicated from transport: %1 %2" />
+        <string id="eventProviderName.winsockNameResolution" value="Microsoft-Windows-Winsock NameResolution Event" />
+        <string id="OperationalChannelName.NameResolution" value="Microsoft-Windows-Winsock NameResolution Event/Operational" />
+        <string id="WINSOCK_GAI_START_EVENT.EventMessage" value="GetAddrInfoW is called for queryName %1, serviceName %2, flags %4, family %5, socketType %6, protocol %7 and seq %3" />
+        <string id="WINSOCK_GAI_COMPLETE_EVENT.EventMessage" value="GetAddrInfoW is completed for queryName %1 with status %2 and result %3" />
+        <string id="WINSOCK_GAIEX_START_EVENT.EventMessage" value="GetAddrInfoExW is called for queryName %1, serviceName %2, nameSpace %4, nameSpace GUID %5, flags %6, family %7, socketType %8, protocol %9, interface index %10, timeOut %11, asyncWithCallBack %12, asyncWithOverlapped %13 and seq %3" />
+        <string id="WINSOCK_GAIEX_INFO_EVENT.EventMessage" value="GetAddrInfoExW info.  queryName %1, serviceName %2, nameSpace %4, nameSpace GUID %5, flags %6, family %7, socketType %8, protocol %9, interface index %10, timeOut %11, asyncWithCallBack %12, asyncWithOverlapped %13, error %14 and seq %3" />
+        <string id="WINSOCK_GAIEX_ASYNC_PENDING_EVENT.EventMessage" value="GetAddrInfoExW asynchronous query is pending for queryName: %1 with cancel Handle %2" />
+        <string id="WINSOCK_GAIEX_COMPLETE_EVENT.EventMessage" value="GetAddrInfoExW is completed for queryName %1 with status %2 and result %3" />
+        <string id="WINSOCK_GAIEX_CANCEL_EVENT.EventMessage" value="GetAddrInfoExCancel is called for  query %1 and seq %2" />
+        <string id="WINSOCK_NSP_BEGIN_START_EVENT.EventMessage" value="NSPLookupServiceBegin is called for provider %1, queryName %2, serviceGUID %3, interface index %4 and control flags %5" />
+        <string id="WINSOCK_NSP_BEGIN_COMPLETE_EVENT.EventMessage" value="NSPLookupServiceBegin is completed for provider %1, queryName %2 serviceGUID %3, interface index %4, control flags %5 and lookup handle %6 with status %7" />
+        <string id="WINSOCK_NSP_NEXT_START_EVENT.EventMessage" value="NSPLookupServiceNext is called for provider %1, control Flags %2 and lookup handle %3" />
+        <string id="WINSOCK_NSP_NEXT_COMPLETE_EVENT.EventMessage" value="NSPLookupServiceNext is completed for provider %1, control Flags %2 and lookup Handle %3 with status %4 and result %5" />
+        <string id="WINSOCK_NSP_END_START_EVENT.EventMessage" value="NSPLookupServiceEnd is called for provider %1 and lookup handle %2" />
+        <string id="WINSOCK_NSP_END_COMPLETE_EVENT.EventMessage" value="NSPLookupServiceEnd completed for provider %1 and lookup handle %2 with status %3" />
+        <string id="WSA_STARTUP_INFO.EventMessage" value="Wsa Startup. seq: %1." />
+        <string id="WSA_CLEANUP_INFO.EventMessage" value="Wsa Cleanup. seq: %1.  Refcount: %2." />
+        <string id="NSJOB_INFO.EventMessage" value="NSJOB info.  seq %1.  Refcount: %2." />
+        <string id="eventProviderName.WS2Sock" value="Microsoft-Windows-Winsock-Sockets sockets provider" />
+        <string id="AFD_EVENT_NOTIFY_CQ.EventMessage" value="CQ %5 notify %1 Seq %2 Status %6" />
+        <string id="AFD_ACCEPT_PAUSE.EventMessage" value="accept %1 [1 = Pause, 0 = Unpause] %5 Seq %2 Endpoint %3 Process %4 TlBacklogCount %6." />
+        <string id="AFD_EVENT_INVALID_BUFFER_SHARING.EventMessage" value="RQ %2 invalid buffer sharing ID %3 sharing type %4" />
+      </stringTable>
+    </resources>
+  </localization>
+  <memberships>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories.Services" version="10.0.22621.1" publicKeyToken="31bf3856ad364e35" typeName="Service" />
+      <categoryInstance subcategory="AFD">
+        <serviceData name="AFD" displayName="@%systemroot%\system32\drivers\afd.sys,-1000" errorControl="normal" start="system" type="kernelDriver" description="@%systemroot%\system32\drivers\afd.sys,-1000" group="PNP_TDI" imagePath="\SystemRoot\system32\drivers\afd.sys" />
+      </categoryInstance>
+    </categoryMembership>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories" version="1.0.0.0" publicKeyToken="365143bb27e7ac8b" typeName="BootCritical" />
+    </categoryMembership>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories" version="1.0.0.0" publicKeyToken="365143bb27e7ac8b" typeName="BootRecovery" />
+    </categoryMembership>
+  </memberships>
+  <registryKeys>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\AFD">
+      <registryValue name="BootFlags" valueType="REG_DWORD" value="0x00000001" />
+      <overridable name="Start" scope="Microsoft" type="REG_DWORD" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Eventlog\System\AFD">
+      <registryValue name="EventMessageFile" valueType="REG_EXPAND_SZ" value="%SystemRoot%\System32\netevent.dll" />
+      <registryValue name="TypesSupported" valueType="REG_DWORD" value="0x00000007" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\AFD\Parameters" />
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\WMI\Autologger\UBPM\{9b307223-4e4d-4bf5-9be8-995cd8e7420b}">
+      <registryValue name="LoggerName" valueType="REG_SZ" value="UBPM" />
+      <registryValue name="Enabled" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="EnableLevel" valueType="REG_DWORD" value="0x00000000" />
+      <registryValue name="EnableFlags" valueType="REG_DWORD" value="0x00FFFFFF" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\WMI\Security">
+      <registryValue name="9b307223-4e4d-4bf5-9be8-995cd8e7420b" valueType="REG_BINARY" value="01000480300000003c000000000000001400000002001c000100000000001400ff0f1200010100000000000512000000010100000000000512000000010100000000000512000000" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\WMI\Autologger\SQMLogger\{093da50c-0bb9-4d7d-b95c-3bb9fcda5ee8}">
+      <registryValue name="LoggerName" valueType="REG_SZ" value="SQMLogger" />
+      <registryValue name="Enabled" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="EnableLevel" valueType="REG_DWORD" value="0x00000004" />
+      <registryValue name="MatchAnyKeyword" valueType="REG_QWORD" value="0000000000000800" />
+      <registryValue name="EnableProperty" valueType="REG_DWORD" value="0x00000002" />
+    </registryKey>
+  </registryKeys>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" description="Default SDDL for Windows Resource Protected file" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+</assembly>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-Serial-ClassExtension" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <file name="SerCx.sys" destinationPath="$(runtime.drivers)\" sourceName="SerCx.sys" importPath="$(build.nttree)\sercx\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>lWPZVNsitSO/Yxp9G7MqWAvAHnL5v3Q8XjvUSJp4Frs=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <memberships>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories" version="1.0.0.0" publicKeyToken="365143bb27e7ac8b" />
+      <categoryInstance subcategory="SerCx">
+        <serviceData name="SerCx" displayName="Serial UART Support Library" errorControl="normal" start="demand" type="kernelDriver" dependOnService="acpiex" imagePath="system32\drivers\SerCx.sys" />
+      </categoryInstance>
+    </categoryMembership>
+  </memberships>
+  <registryKeys>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\EventLog\System\sercx">
+      <registryValue name="EventMessageFile" valueType="REG_EXPAND_SZ" value="\SystemRoot\system32\drivers\SerCx.sys" />
+      <registryValue name="TypesSupported" valueType="REG_DWORD" value="0x00000007" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Wdf\Kmdf\SerCx\Versions\1\1">
+      <registryValue name="Service" valueType="REG_SZ" value="SerCx" />
+    </registryKey>
+  </registryKeys>
+  <instrumentation xmlns:sercx="http://manifests.microsoft.com/windows/sercx" xmlns:win="http://manifests.microsoft.com/win/2004/08/windows/events" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <events xmlns="http://schemas.microsoft.com/win/2004/08/events">
+      <provider guid="{47BC9477-A8BA-452e-B951-4F2ED3593CF9}" message="$(string.EventProvider.Name)" messageFileName="%SystemRoot%\system32\drivers\SerCx.sys" name="Microsoft-Windows-Serial-ClassExtension" resourceFileName="%SystemRoot%\system32\drivers\SerCx.sys" symbol="SERCX_PROVIDER">
+        <channels>
+          <channel chid="SerCxChannel" enabled="false" isolation="System" message="$(string.AnalyticChannel.Name)" name="Microsoft-Windows-Serial-ClassExtension/Analytic" symbol="SERCX_ANALYTIC_CHANNEL" type="Analytic" />
+          <importChannel chid="systemChannel" name="System" />
+        </channels>
+      </provider>
+      <cmi />
+    </events>
+  </instrumentation>
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string id="EventProvider.Name" value="Microsoft-Windows-Serial-ClassExtension" />
+        <string id="AnalyticChannel.Name" value="Analytic" />
+        <string id="Task.SerStartup" value="Startup of the serial class extension" />
+        <string id="Task.SerIoctl" value="IO Control received by the serial class extension" />
+        <string id="Task.SerTxRx" value="Request received by the serial class extension" />
+        <string id="Event.EventSerCxStartup" value="The Serial WDF class extension has started.  The control object name is %1." />
+        <string id="Event.EventSerCxStartupFailure" value="The Serial WDF class extension failed to start (error %2).  The control object name is %1." />
+        <string id="Event.EventSerCxIoctlReceived" value="Received request %1 for %2" />
+        <string id="Event.EventSerCxIoctlComplete" value="%1 Complete" />
+        <string id="Event.EventSerCxTransmitInit" value="Transmitting request %1 for %2 byte(s)" />
+        <string id="Event.EventSerCxReceiveInit" value="Receiving request %1 for %2 byte(s)" />
+        <string id="Event.EventSerCxTXRXComplete" value="Completed request %1 for %2 byte(s) with status %3" />
+        <string id="Event.EventSerCxTXRXPayload" value="%1" />
+        <string id="Event.EventSerCxTXRXEvtIoStop" value="EvtIoStop for request %1 in queue %2, invoke cancel" />
+        <string id="displayName" value="Serial Kernel-Mode Library" />
+        <string id="serviceDescription" value="Serial extension service" />
+      </stringTable>
+    </resources>
+  </localization>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" description="Default SDDL for Windows Resource Protected file" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+</assembly>

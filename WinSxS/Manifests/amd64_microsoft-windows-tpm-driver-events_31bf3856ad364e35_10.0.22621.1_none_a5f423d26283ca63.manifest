@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-TPM-Driver-Events" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <memberships>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories" version="1.0.0.0" publicKeyToken="365143bb27e7ac8b" typeName="BootCritical" />
+    </categoryMembership>
+  </memberships>
+  <registryKeys>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\WMI\Autologger\Tpm">
+      <registryValue name="GUID" valueType="REG_SZ" value="{3A8D6942-B034-48e2-B314-F69C2B4655A3}" />
+      <registryValue name="FileName" valueType="REG_SZ" value="%SystemRoot%\System32\LogFiles\WMI\Tpm.etl" />
+      <registryValue name="ClockType" valueType="REG_DWORD" value="0x00000002" />
+      <registryValue name="MaxFileSize" valueType="REG_DWORD" value="0x00000040" />
+      <registryValue name="LogFileMode" valueType="REG_DWORD" value="0x10000002" />
+      <registryValue name="FileMax" valueType="REG_DWORD" value="0x00000002" />
+      <overridable name="FileName" scope="Microsoft" type="REG_SZ" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\WMI\Autologger\Tpm\{3A8D6942-B034-48e2-B314-F69C2B4655A3}">
+      <registryValue name="Enabled" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="EnableLevel" valueType="REG_DWORD" value="0x00000006" />
+      <registryValue name="EnableFlags" valueType="REG_DWORD" value="0x0000FFFF" />
+    </registryKey>
+  </registryKeys>
+  <instrumentation xmlns:win="http://manifests.microsoft.com/win/2004/08/windows/events">
+    <events xmlns="http://schemas.microsoft.com/win/2004/08/events">
+      <provider guid="{1B6B0772-251B-4D42-917D-FACA166BC059}" message="$(string.TpmProviderName)" messageFileName="%SystemRoot%\System32\drivers\tpm.sys" name="TPM" resourceFileName="%SystemRoot%\System32\drivers\tpm.sys" symbol="S_WindowsTpm">
+        <channels>
+          <importChannel chid="System" name="System" />
+        </channels>
+      </provider>
+      <cmi />
+    </events>
+  </instrumentation>
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string id="TpmProviderName" value="TPM" />
+        <string id="event_TPM_SELF_TEST_FAILED" value="The TPM self test command failed." />
+        <string id="event_TPM_SAVE_STATE_FAILED_EX" value="The device driver for the Trusted Platform Module (TPM) encountered an error in the TPM hardware, which might prevent some applications using TPM services from operating correctly.  Please restart your computer to reset the TPM hardware.  For further assistance on this hardware issue, please contact the computer manufacturer for more information." />
+        <string id="event_TPM_HW_STATE_ERROR" value="The device driver for the Trusted Platform Module (TPM) encountered a non-recoverable error in the TPM hardware, which prevents TPM services (such as data encryption) from being used. For further help, please contact the computer manufacturer." />
+        <string id="event_TPM_HW_PROTOCOL_ERROR" value="The device driver for the Trusted Platform Module (TPM) encountered a non-recoverable error in the TPM hardware, which prevents TPM services (such as data encryption) from being used. For further help, please contact the computer manufacturer." />
+        <string id="event_TPM_HW_INCOMPATIBLE" value="A compatible TPM is not found." />
+        <string id="event_TPM_COMMAND_FAILED" value="The Trusted Platform Module (TPM) hardware failed to execute a TPM command." />
+        <string id="event_TPM_PROVISIONING_REQUIRED" value="This event triggers the Trusted Platform Module (TPM) provisioning/status check to run." />
+        <string id="event_TPM_MOR_BIT_DSM_FAILED" value="The system firmware failed to enable overwriting of system memory on restart. The ACPI request could not be interpreted by the firmware. The firmware should be upgraded." />
+        <string id="event_TPM_RESET_LOCKOUT_SUCCESS" value="A command was sent to the Trusted Platform Module (TPM) successfully resetting the TPM lockout logic. This event is generated when a successful command sent to the TPM resets the TPM lockout logic.  With this event, all prior standard user TPM authorization failures are ignored; allowing standard users to use the TPM normally again immediately." />
+        <string id="event_TPM_AUTH_FAILED" value="A standard user issued Trusted Platform Module (TPM) command returned an authorization failure. This event is generated when a command sent to the TPM by a standard user returns a response indicating an authorization failure.  If too many authorization failures occur, standard users may be temporarily prevented from sending TPM commands requiring authorization.  This helps prevent the TPM from entering a hardware lockout because of too many authorization failures. %nUser Security ID:%1. %nProcess Path %2." />
+        <string id="event_TPM_NO_RESOURCE_VIRTUALIZATION_MODE" value="TPM Base Services (TBS) has been configured in a test mode until the next full restart. The TBS will not perform TPM resource virtualization or TPM command blocking until the next full restart." />
+        <string id="event_TPM_USER_SW_LOCKED_OUT" value="A standard user Trusted Platform Module (TPM) command was blocked because the standard user has exceeded the maximum authorization failures permitted. This event is generated when too many recent TPM commands sent to the TPM by a standard user returned a response indicating an authorization failure.  The standard user is currently temporarily prevented from sending TPM commands requiring authorization.  This helps prevent the TPM from entering a hardware lockout because of too many authorization failures. %nUser Security ID:%1." />
+        <string id="event_TPM_REPORT_STATUS" value="The Trusted Platform Module (TPM) status: %1 and %2." />
+        <string id="TpmStatusActiveValueMap.Inactive" value="Inactive" />
+        <string id="TpmStatusActiveValueMap.Active" value="Active" />
+        <string id="TpmStatusEnabledValueMap.Disabled" value="Disabled" />
+        <string id="TpmStatusEnabledValueMap.Enabled" value="Enabled" />
+        <string id="event_TPM_WINDOWS_AIK_DIR_CREATE_FAILED" value="Creation of the Windows AIK directory failed." />
+        <string id="event_TPM_CREATE_PROVISIONING_EVENT_FAILED" value="Creation of provisioning event has failed." />
+        <string id="event_TPM_FAILURE_INFORMATION" value="The initialization of the Trusted Platform Module (TPM) failed. The TPM may be in failure mode. To allow diagnosis, contact the TPM manufacturer with the attached information." />
+        <string id="event_TPM_SRK_CREATION_INFORMATION" value="Information about the Storage Root Key creation." />
+        <string id="event_TPM_SRK_CREATION_ERROR" value="Creation of the Storage Root Key failed." />
+        <string id="event_TPM_HIBERNATE_RESUME" value="Reset and/or resume count do not match expected values after hibernate/resume." />
+        <string id="event_TPM_KSR_INFORMATION" value="Information about Kernel Soft Reboot." />
+        <string id="event_TPM_TPMAPI_ERROR" value="Encountered an error calling TpmApi." />
+        <string id="event_TPM_CLEAR_SUCCESS" value="The Trusted Platform Module (TPM) has been cleared as requested by %3. Keys previously created in the storage and endorsement hierarchies will no longer work." />
+        <string id="event_TPM_CLEAR_PENDING" value="A PPI request to clear the Trusted Platform Module (TPM) has been requested by %3." />
+      </stringTable>
+    </resources>
+  </localization>
+</assembly>

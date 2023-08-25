@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-OverlayFilter" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <dependency discoverable="no" resourceType="resources">
+    <dependentAssembly dependencyType="prerequisite">
+      <assemblyIdentity name="Microsoft-Windows-OverlayFilter.Resources" version="10.0.22621.1" processorArchitecture="amd64" language="*" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+    </dependentAssembly>
+  </dependency>
+  <file name="wof.sys" destinationPath="$(runtime.drivers)\" sourceName="wof.sys" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>DrH6aYec8LqV3OChBaOvNVVhEW3iADao3Ez6rB3MD+I=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <memberships>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories.Services" version="10.0.22621.1" publicKeyToken="31bf3856ad364e35" typeName="Service" />
+      <categoryInstance>
+        <serviceData name="Wof" displayName="Windows Overlay File System Filter Driver" errorControl="normal" start="boot" type="fileSystemDriver" dependOnService="FltMgr" group="FSFilter Compression" />
+      </categoryInstance>
+    </categoryMembership>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories" version="1.0.0.0" publicKeyToken="365143bb27e7ac8b" typeName="BootCritical" />
+    </categoryMembership>
+  </memberships>
+  <registryKeys>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlset\Services\Wof">
+      <registryValue name="SupportedFeatures" valueType="REG_DWORD" value="0x0000000f" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Wof\Instances">
+      <registryValue name="DefaultInstance" valueType="REG_SZ" value="Wof Instance" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Wof\Instances\Wof Instance">
+      <registryValue name="Altitude" valueType="REG_SZ" value="40700" />
+      <registryValue name="Flags" valueType="REG_DWORD" value="0x00000000" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Wof\Parameters" />
+  </registryKeys>
+  <instrumentation xmlns:win="http://manifests.microsoft.com/win/2004/08/windows/events" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <events xmlns="http://schemas.microsoft.com/win/2004/08/events">
+      <provider guid="{46C78E5C-A213-46A8-8A6B-622F6916201D}" message="$(string.OverlayProviderName)" messageFileName="%SystemRoot%\system32\drivers\wof.sys" name="Microsoft-Windows-OverlayFilter" resourceFileName="%SystemRoot%\system32\drivers\wof.sys" symbol="WofEventProviderId">
+        <channels>
+          <importChannel chid="System" name="System" />
+        </channels>
+      </provider>
+      <cmi />
+    </events>
+  </instrumentation>
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string id="description1" value="Windows Overlay Filter" />
+        <string id="description" value="Windows Overlay Filter." />
+        <string id="displayName" value="Windows Overlay Filter" />
+        <string id="displayName1" value="Windows Overlay Filter" />
+        <string id="OverlayProviderName" value="Microsoft-Windows-OverlayFilter" />
+        <string id="Task.IntegrityVerification" value="WIM integrity verification" />
+        <string id="Event.Integrity.FileOpen" value="The filter opened the integrity file for %2 (data source %3)." />
+        <string id="Event.Integrity.FileOpenFailure" value="The filter failed to open the integrity file for %2 (data source %3) with status %4." />
+        <string id="Event.Integrity.FileNotReady" value="The filter did not open the integrity file for %2 (data source %3) because it is not ready." />
+        <string id="Event.Integrity.BlockVerificationFailure" value="The filter failed to validate block %3 of length %4 from %2." />
+        <string id="Event.Integrity.InvalidBlock" value="The filter failed to validate a read from %2 at file offset %3 of length %4." />
+        <string id="Task.WofTask" value="The Windows Overlay Task" />
+        <string id="Event.WofTask.EnumVolume" value="The task is enumerating Volume %1" />
+        <string id="Event.WofTask.CreateHashFile" value="The task has created integrity file %1 for file %2" />
+        <string id="Event.WofTask.CompleteHashFile" value="The task has completed generation of integrity file %1 for file %2" />
+        <string id="Event.WofTask.DeleteHashFile" value="The task has deleted integrity file %1 for file %2" />
+        <string id="Event.WofTask.ResumeHashFile" value="The task is resuming generation of integrity file %1 at file offset %2" />
+        <string id="Event.WofTask.PauseHashFile" value="The task has paused generation of integrity file %1 at file offset %2" />
+        <string id="Event.WofTask.TaskActionError" value="The task has failed to identify encryption/decryption state. HRESULT = %1" />
+        <string id="Event.WofTask.GenerateHashFileError" value="The task has failed to generate integrity file %1 for file %2. HRESULT = %3" />
+        <string id="Event.WofTask.DeleteHashFileError" value="The task has failed to delete integrity file %1 for file %2. HRESULT = %3" />
+        <string id="Event.WofTask.FileReadError" value="The task has failed to read file at %1. HRESULT = %3" />
+        <string id="Event.WofTask.FileWriteError" value="The task has failed to write file at %1. HRESULT = %3" />
+        <string id="Event.WofTask.ActionGenerateHashes" value="The task is generating integrity files" />
+        <string id="Event.WofTask.ActionDeleteHashes" value="The task is deleting integrity files" />
+        <string id="Event.WofTask.ReportHashGenerationToBitlockerError" value="The task has failed to report integrity file generation completion to BitLocker. HRESULT = %1" />
+      </stringTable>
+    </resources>
+  </localization>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" description="Default SDDL for Windows Resource Protected file" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+</assembly>

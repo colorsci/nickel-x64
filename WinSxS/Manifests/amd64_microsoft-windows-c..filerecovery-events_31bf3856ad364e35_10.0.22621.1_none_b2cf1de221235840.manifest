@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-CorruptedFileRecovery-Events" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <instrumentation xmlns:win="http://manifests.microsoft.com/win/2004/08/windows/events" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <events xmlns="http://schemas.microsoft.com/win/2004/08/events">
+      <provider guid="{d6f68875-cdf5-43a5-a3e3-53ffd683311c}" message="$(string.CfrDmProviderName)" messageFileName="%SystemRoot%\system32\cofiredm.dll" name="Microsoft-Windows-CorruptedFileRecovery-Server" resourceFileName="%SystemRoot%\system32\cofiredm.dll" symbol="CFR_DM_ETW_PROVIDER">
+        <channels>
+          <importChannel chid="System" name="System" />
+          <channel chid="Microsoft-Windows-CorruptedFileRecovery-Server/Operational" enabled="true" isolation="System" message="$(string.CfrDmOperationalChannelName)" name="Microsoft-Windows-CorruptedFileRecovery-Server/Operational" symbol="CFR_DM_ETW_CHANNEL_OPERATIONAL" type="Operational" />
+        </channels>
+      </provider>
+      <provider guid="{ba093605-3909-4345-990b-26b746adee0a}" message="$(string.CfrClientProviderName)" messageFileName="%SystemRoot%\system32\cofiredm.dll" name="Microsoft-Windows-CorruptedFileRecovery-Client" resourceFileName="%SystemRoot%\system32\cofiredm.dll" symbol="CFR_CLIENT_ETW_PROVIDER">
+        <channels>
+          <importChannel chid="System" name="System" />
+          <channel chid="Microsoft-Windows-CorruptedFileRecovery-Client/Operational" enabled="true" isolation="Application" message="$(string.CfrClientOperationalChannelName)" name="Microsoft-Windows-CorruptedFileRecovery-Client/Operational" symbol="CFR_CLIENT_ETW_CHANNEL_OPERATIONAL" type="Operational" />
+        </channels>
+      </provider>
+      <cmi />
+    </events>
+    <counters />
+  </instrumentation>
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string id="CFR_CLIENT_ETW_EVENT_FAILED.message" value="The system file %1 may be corrupted, which may have caused the application %2 to stop working. Windows could not repair this file automatically (error code %3). Run the command &quot;sfc /scannow&quot; at an administrative command prompt to check for errors and to repair the file if necessary." />
+        <string id="CFR_CLIENT_ETW_EVENT_SCENARIO_DISABLED.message" value="The system file %1 may be corrupted, which may have caused the application %2 to stop working. Windows attempted to repair the file, but the operation was disabled by group policy.  Run the command &quot;sfc /scannow&quot; at an administrative command prompt to check for errors and to repair the file if necessary." />
+        <string id="CFR_CLIENT_ETW_EVENT_RESOLUTION_DISABLED.message" value="The system file %1 is corrupted, which may have caused the application %2 to stop working. Windows could not attempt to repair %1 because the operation was disabled by group policy.  Run the command &quot;sfc /scannow&quot; at an administrative command prompt to check for errors and to repair the file if necessary." />
+        <string id="CFR_DM_ETW_EVENT_REPAIR_SUCCEEDED_REBOOT.message" value="The system file %1 was corrupted, which may have caused the application %2 to stop working. Windows attempted to repair the file. A reboot is required to finish this repair." />
+        <string id="CFR_DM_ETW_EVENT_REPAIR_SUCCEEDED_NO_REBOOT.message" value="The system file %1 was corrupted, which may have caused the application %2 to stop working. Windows successfully repaired the damaged file." />
+        <string id="CFR_DM_ETW_EVENT_REPAIR_FAILED.message" value="The system file %1 was corrupted, which may have caused the application %2 to stop working. Windows was unable to repair this file (error code %3).  Run the command &quot;sfc /scannow&quot; at an administrative command prompt to check for errors and to repair the file if necessary." />
+        <string id="CFR_DM_ETW_EVENT_DIAGNOSE_FAILED.message" value="The system file %1 may be corrupted, but Windows could not determine if the file was actually damaged (error code %3). No repair action was taken. Run the command &quot;sfc /scannow&quot; at an administrative command prompt to check for errors and to repair the file if necessary." />
+        <string id="CFR_DM_ETW_EVENT_FILE_NOT_CORRUPTED.message" value="The system file %1 was reported as being corrupted but Windows determined that the file is not actually damaged. It may have been repaired already." />
+        <string id="CFR_DM_ETW_EVENT_THROTTLED_REPAIR_IN_PROCESS.message" value="The system file %1 is corrupted, which may have caused the application %2 to stop working. Windows did not attempt to repair this file because a repair attempt is already underway for the same file." />
+        <string id="CFR_DM_ETW_EVENT_THROTTLED_REPEATED_INVOCATION.message" value="The system file %1 may be corrupted, which may have caused the application %2 to stop working. Windows did not attempt to repair this file because the same file has been repaired too many times over a recent period of time." />
+        <string id="CFR_DM_ETW_EVENT_THROTTLED_FREQUENT_INVOCATION.message" value="The system file %1 is corrupted, which may have caused the application %2 to stop working. Windows will not attempt to repair %1 because too many corrupted files have been detected recently.  Frequent corruptions may indicate a problem with the disk on this computer." />
+        <string id="CFR_DM_ETW_EVENT_CANCELED.message" value="The system file %1 may be corrupted, which may have caused the application %2 to stop working. Windows attempted to repair the file, but the operation was cancelled before it could be completed.  Run the command &quot;sfc /scannow&quot; at an administrative command prompt to check for errors and to repair the file if necessary." />
+        <string id="CFR_DM_ETW_EVENT_FILE_SKIPPED.message" value="The file %1 may be corrupted, which may have caused the application %2 to stop working. Windows did not attempt to repair %1 because it is not a protected system file." />
+        <string id="CFR_DM_ETW_EVENT_REPAIR_PENDED.message" value="The system file %1 is corrupted, which may have caused the application %2 to stop working. Windows could not attempt to repair %1 because a previous repair operation was pended.  Reboot the computer and run the command &quot;sfc /scannow&quot; at an administrative command prompt to check for errors and to repair the file if necessary." />
+        <string id="MSIRE_DM_ETW_EVENT_REINSTALL_RECOMMENDED.message" value="Windows detected that program file %1 is corrupted, causing application %2 to stop working. To restore the file, reinstall %3 version %4." />
+        <string id="MSIRE_DM_ETW_EVENT_FILE_NOT_CORRUPTED.message" value="The program file %1 was reported as being possibly corrupted, causing application %2 to stop working. Windows performed additional diagnostics and determined that the file is not actually damaged." />
+        <string id="MSIRE_DM_ETW_EVENT_FILE_SKIPPED.message" value="The file %1 may be corrupted, which may have caused the application %2 to stop working. Windows did not attempt to repair %1 because it could not find its corresponding installer package." />
+        <string id="MSIRE_DM_ETW_EVENT_THROTTLED_REPEATED_PRODUCT_INVOCATION.message" value="Windows detected that program file %1 is corrupted, causing application %2 to stop working. Reinstalling %3 version %4 may repair the file. However, Windows is not launching a %3 reinstallation because that product has already been reinstalled too many times recently." />
+        <string id="MSIRE_DM_ETW_EVENT_THROTTLED_FREQUENT_PRODUCT_INVOCATION.message" value="Windows detected that program file %1 is corrupted, causing application %2 to stop working. Reinstalling %3 version %4 may repair the file. However, Windows is not launching a %3 reinstallation because too many product reinstalls have run recently." />
+        <string id="MSIRE_DM_ETW_EVENT_FILE_NOT_PE_IMAGE.message" value="The program file %1 was reported as being possibly corrupted, causing application %2 to stop working. Windows performed additional diagnostics and determined that the file is not an executable image. To avoid potential user data loss, Windows will not attempt to repair the file." />
+        <string id="CfrDmProviderName" value="Microsoft-Windows-CorruptedFileRecovery-Server" />
+        <string id="CfrClientProviderName" value="Microsoft-Windows-CorruptedFileRecovery-Client" />
+        <string id="CfrDmOperationalChannelName" value="Microsoft-Windows-CorruptedFileRecovery-Server/Operational" />
+        <string id="CfrClientOperationalChannelName" value="Microsoft-Windows-CorruptedFileRecovery-Client/Operational" />
+      </stringTable>
+    </resources>
+  </localization>
+</assembly>

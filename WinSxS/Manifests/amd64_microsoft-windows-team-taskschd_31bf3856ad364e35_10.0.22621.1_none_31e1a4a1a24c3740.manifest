@@ -1,0 +1,1725 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-Team-TaskSchd" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <taskScheduler>
+    <Task xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task">
+      <RegistrationInfo>
+        <URI>Microsoft\Windows\Team\PPIActiveSyncHealthCheck</URI>
+        <SecurityDescriptor>D:P(A;;FRFX;;;BA)(A;;FA;;;SY)</SecurityDescriptor>
+      </RegistrationInfo>
+      <Triggers />
+      <Principals>
+        <Principal id="InteractiveUsers">
+          <GroupId>S-1-5-4</GroupId>
+          <RunLevel>HighestAvailable</RunLevel>
+        </Principal>
+      </Principals>
+      <Settings>
+        <DisallowStartIfOnBatteries>false</DisallowStartIfOnBatteries>
+        <StopIfGoingOnBatteries>false</StopIfGoingOnBatteries>
+        <MultipleInstancesPolicy>IgnoreNew</MultipleInstancesPolicy>
+        <StartWhenAvailable>true</StartWhenAvailable>
+        <RunOnlyIfNetworkAvailable>true</RunOnlyIfNetworkAvailable>
+        <UseUnifiedSchedulingEngine>true</UseUnifiedSchedulingEngine>
+        <IdleSettings>
+          <Duration>PT10M</Duration>
+          <WaitTimeout>PT1H</WaitTimeout>
+          <StopOnIdleEnd>true</StopOnIdleEnd>
+          <RestartOnIdle>true</RestartOnIdle>
+        </IdleSettings>
+      </Settings>
+      <Actions Context="InteractiveUsers">
+        <Exec>
+          <Command>%WINDIR%\System32\ppimansvc.exe</Command>
+          <Arguments>CheckActiveSyncHealth</Arguments>
+        </Exec>
+      </Actions>
+    </Task>
+    <Task xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task">
+      <RegistrationInfo>
+        <URI>microsoft\windows\team\ppiupdatepensmanager\ppiupm_logonafterupdatepens</URI>
+      </RegistrationInfo>
+      <Principals>
+        <Principal id="InteractiveUsers">
+          <UserId>S-1-5-18</UserId>
+          <RunLevel>HighestAvailable</RunLevel>
+        </Principal>
+      </Principals>
+      <Settings>
+        <DisallowStartIfOnBatteries>false</DisallowStartIfOnBatteries>
+        <StopIfGoingOnBatteries>false</StopIfGoingOnBatteries>
+        <MultipleInstancesPolicy>Parallel</MultipleInstancesPolicy>
+        <StartWhenAvailable>true</StartWhenAvailable>
+        <RunOnlyIfNetworkAvailable>true</RunOnlyIfNetworkAvailable>
+        <UseUnifiedSchedulingEngine>true</UseUnifiedSchedulingEngine>
+        <IdleSettings>
+          <Duration>PT10M</Duration>
+          <WaitTimeout>PT1H</WaitTimeout>
+          <StopOnIdleEnd>true</StopOnIdleEnd>
+          <RestartOnIdle>false</RestartOnIdle>
+        </IdleSettings>
+      </Settings>
+      <Triggers>
+        <LogonTrigger>
+          <Delay>PT3M</Delay>
+        </LogonTrigger>
+      </Triggers>
+      <Actions Context="InteractiveUsers">
+        <Exec>
+          <Command>%windir%\system32\ppiupdatepens.exe</Command>
+          <Arguments>LogonAfterUpdatePens</Arguments>
+        </Exec>
+      </Actions>
+    </Task>
+    <Task xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task">
+      <RegistrationInfo>
+        <URI>microsoft\windows\team\ppiupdatepensmanager\ppiupm_readcalendar</URI>
+      </RegistrationInfo>
+      <Principals>
+        <Principal id="InteractiveUsers">
+          <UserId>S-1-5-18</UserId>
+        </Principal>
+      </Principals>
+      <Settings>
+        <DisallowStartIfOnBatteries>false</DisallowStartIfOnBatteries>
+        <StopIfGoingOnBatteries>false</StopIfGoingOnBatteries>
+        <ExecutionTimeLimit>PT10M</ExecutionTimeLimit>
+        <MultipleInstancesPolicy>Parallel</MultipleInstancesPolicy>
+        <StartWhenAvailable>true</StartWhenAvailable>
+        <RunOnlyIfNetworkAvailable>true</RunOnlyIfNetworkAvailable>
+        <UseUnifiedSchedulingEngine>true</UseUnifiedSchedulingEngine>
+        <IdleSettings>
+          <Duration>PT10M</Duration>
+          <WaitTimeout>PT1H</WaitTimeout>
+          <StopOnIdleEnd>true</StopOnIdleEnd>
+          <RestartOnIdle>false</RestartOnIdle>
+        </IdleSettings>
+      </Settings>
+      <Triggers />
+      <Actions Context="InteractiveUsers">
+        <Exec>
+          <Command>%windir%\system32\ppiupdatepens.exe</Command>
+          <Arguments>ReadCalendar $(Arg0)</Arguments>
+        </Exec>
+      </Actions>
+    </Task>
+    <Task xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task">
+      <RegistrationInfo>
+        <URI>microsoft\windows\team\ppiupdatepensmanager\ppiupm_resumeinstall</URI>
+      </RegistrationInfo>
+      <Principals>
+        <Principal id="InteractiveUsers">
+          <UserId>S-1-5-18</UserId>
+        </Principal>
+      </Principals>
+      <Settings>
+        <DisallowStartIfOnBatteries>false</DisallowStartIfOnBatteries>
+        <StopIfGoingOnBatteries>false</StopIfGoingOnBatteries>
+        <ExecutionTimeLimit>PT10M</ExecutionTimeLimit>
+        <MultipleInstancesPolicy>Parallel</MultipleInstancesPolicy>
+        <StartWhenAvailable>true</StartWhenAvailable>
+        <RunOnlyIfNetworkAvailable>true</RunOnlyIfNetworkAvailable>
+        <UseUnifiedSchedulingEngine>true</UseUnifiedSchedulingEngine>
+        <WakeToRun>true</WakeToRun>
+        <IdleSettings>
+          <Duration>PT10M</Duration>
+          <WaitTimeout>PT1H</WaitTimeout>
+          <StopOnIdleEnd>true</StopOnIdleEnd>
+          <RestartOnIdle>false</RestartOnIdle>
+        </IdleSettings>
+      </Settings>
+      <Triggers>
+        <TimeTrigger>
+          <StartBoundary>2020-02-12T04:07:00-08:00</StartBoundary>
+        </TimeTrigger>
+      </Triggers>
+      <Actions Context="InteractiveUsers">
+        <Exec>
+          <Command>%windir%\system32\ppiupdatepens.exe</Command>
+          <Arguments>ResumeInstall</Arguments>
+        </Exec>
+      </Actions>
+    </Task>
+    <Task xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task">
+      <RegistrationInfo>
+        <URI>microsoft\windows\team\ppiupdatepensmanager\ppiupm_retry</URI>
+      </RegistrationInfo>
+      <Principals>
+        <Principal id="InteractiveUsers">
+          <UserId>S-1-5-18</UserId>
+        </Principal>
+      </Principals>
+      <Settings>
+        <DisallowStartIfOnBatteries>false</DisallowStartIfOnBatteries>
+        <StopIfGoingOnBatteries>false</StopIfGoingOnBatteries>
+        <Enabled>false</Enabled>
+        <ExecutionTimeLimit>PT10M</ExecutionTimeLimit>
+        <MultipleInstancesPolicy>Parallel</MultipleInstancesPolicy>
+        <StartWhenAvailable>true</StartWhenAvailable>
+        <RunOnlyIfNetworkAvailable>true</RunOnlyIfNetworkAvailable>
+        <UseUnifiedSchedulingEngine>true</UseUnifiedSchedulingEngine>
+        <IdleSettings>
+          <Duration>PT10M</Duration>
+          <WaitTimeout>PT1H</WaitTimeout>
+          <StopOnIdleEnd>true</StopOnIdleEnd>
+          <RestartOnIdle>false</RestartOnIdle>
+        </IdleSettings>
+      </Settings>
+      <Triggers>
+        <TimeTrigger>
+          <StartBoundary>2020-02-11T13:34:10-08:00</StartBoundary>
+        </TimeTrigger>
+      </Triggers>
+      <Actions Context="InteractiveUsers">
+        <Exec>
+          <Command>%windir%\system32\ppiupdatepens.exe</Command>
+          <Arguments>Retry</Arguments>
+        </Exec>
+      </Actions>
+    </Task>
+    <Task xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task">
+      <RegistrationInfo>
+        <URI>microsoft\windows\team\ppiupdatepensmanager\ppiupm_unlock</URI>
+      </RegistrationInfo>
+      <Principals>
+        <Principal id="InteractiveUsers">
+          <UserId>S-1-5-18</UserId>
+        </Principal>
+      </Principals>
+      <Settings>
+        <DisallowStartIfOnBatteries>false</DisallowStartIfOnBatteries>
+        <StopIfGoingOnBatteries>false</StopIfGoingOnBatteries>
+        <ExecutionTimeLimit>PT10M</ExecutionTimeLimit>
+        <MultipleInstancesPolicy>Parallel</MultipleInstancesPolicy>
+        <StartWhenAvailable>true</StartWhenAvailable>
+        <RunOnlyIfNetworkAvailable>true</RunOnlyIfNetworkAvailable>
+        <UseUnifiedSchedulingEngine>true</UseUnifiedSchedulingEngine>
+        <IdleSettings>
+          <Duration>PT10M</Duration>
+          <WaitTimeout>PT1H</WaitTimeout>
+          <StopOnIdleEnd>true</StopOnIdleEnd>
+          <RestartOnIdle>false</RestartOnIdle>
+        </IdleSettings>
+      </Settings>
+      <Triggers>
+        <SessionStateChangeTrigger>
+          <Delay>PT1M</Delay>
+          <StateChange>SessionUnlock</StateChange>
+        </SessionStateChangeTrigger>
+      </Triggers>
+      <Actions Context="InteractiveUsers">
+        <Exec>
+          <Command>%windir%\system32\ppiupdatepens.exe</Command>
+          <Arguments>Unlock</Arguments>
+        </Exec>
+      </Actions>
+    </Task>
+    <Task xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task">
+      <RegistrationInfo>
+        <URI>microsoft\windows\team\ppiupdatepensmanager\ppiupm_watcher</URI>
+      </RegistrationInfo>
+      <Principals>
+        <Principal id="InteractiveUsers">
+          <UserId>S-1-5-18</UserId>
+        </Principal>
+      </Principals>
+      <Settings>
+        <DisallowStartIfOnBatteries>false</DisallowStartIfOnBatteries>
+        <StopIfGoingOnBatteries>false</StopIfGoingOnBatteries>
+        <ExecutionTimeLimit>PT10M</ExecutionTimeLimit>
+        <MultipleInstancesPolicy>IgnoreNew</MultipleInstancesPolicy>
+        <StartWhenAvailable>true</StartWhenAvailable>
+        <RunOnlyIfNetworkAvailable>true</RunOnlyIfNetworkAvailable>
+        <UseUnifiedSchedulingEngine>true</UseUnifiedSchedulingEngine>
+        <IdleSettings>
+          <Duration>PT10M</Duration>
+          <WaitTimeout>PT1H</WaitTimeout>
+          <StopOnIdleEnd>true</StopOnIdleEnd>
+          <RestartOnIdle>false</RestartOnIdle>
+        </IdleSettings>
+      </Settings>
+      <Triggers>
+        <CalendarTrigger>
+          <StartBoundary>2020-02-12T04:09:00-08:00</StartBoundary>
+          <Repetition>
+            <Interval>PT6M</Interval>
+            <Duration>PT6M</Duration>
+          </Repetition>
+          <ScheduleByDay>
+            <DaysInterval>1</DaysInterval>
+          </ScheduleByDay>
+        </CalendarTrigger>
+      </Triggers>
+      <Actions Context="InteractiveUsers">
+        <Exec>
+          <Command>%windir%\system32\ppiupdatepens.exe</Command>
+          <Arguments>Watcher</Arguments>
+        </Exec>
+      </Actions>
+    </Task>
+    <Task xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task">
+      <RegistrationInfo>
+        <URI>microsoft\windows\team\ppipwdrotationmanager\ppipr_logonafterreboot</URI>
+      </RegistrationInfo>
+      <Principals>
+        <Principal id="InteractiveUsers">
+          <UserId>S-1-5-18</UserId>
+          <RunLevel>HighestAvailable</RunLevel>
+        </Principal>
+      </Principals>
+      <Settings>
+        <DisallowStartIfOnBatteries>false</DisallowStartIfOnBatteries>
+        <StopIfGoingOnBatteries>false</StopIfGoingOnBatteries>
+        <MultipleInstancesPolicy>Parallel</MultipleInstancesPolicy>
+        <StartWhenAvailable>true</StartWhenAvailable>
+        <RunOnlyIfNetworkAvailable>true</RunOnlyIfNetworkAvailable>
+        <UseUnifiedSchedulingEngine>true</UseUnifiedSchedulingEngine>
+        <IdleSettings>
+          <Duration>PT10M</Duration>
+          <WaitTimeout>PT1H</WaitTimeout>
+          <StopOnIdleEnd>true</StopOnIdleEnd>
+          <RestartOnIdle>false</RestartOnIdle>
+        </IdleSettings>
+      </Settings>
+      <Triggers>
+        <LogonTrigger>
+          <Delay>PT3M</Delay>
+        </LogonTrigger>
+      </Triggers>
+      <Actions Context="InteractiveUsers">
+        <Exec>
+          <Command>%windir%\system32\ppipwdrotation.exe</Command>
+          <Arguments>LogonAfterReboot</Arguments>
+        </Exec>
+      </Actions>
+    </Task>
+    <Task xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task">
+      <RegistrationInfo>
+        <URI>microsoft\windows\team\ppipwdrotationmanager\ppipr_readcalendar</URI>
+      </RegistrationInfo>
+      <Principals>
+        <Principal id="InteractiveUsers">
+          <UserId>S-1-5-18</UserId>
+        </Principal>
+      </Principals>
+      <Settings>
+        <DisallowStartIfOnBatteries>false</DisallowStartIfOnBatteries>
+        <StopIfGoingOnBatteries>false</StopIfGoingOnBatteries>
+        <ExecutionTimeLimit>PT10M</ExecutionTimeLimit>
+        <MultipleInstancesPolicy>Parallel</MultipleInstancesPolicy>
+        <StartWhenAvailable>true</StartWhenAvailable>
+        <RunOnlyIfNetworkAvailable>true</RunOnlyIfNetworkAvailable>
+        <UseUnifiedSchedulingEngine>true</UseUnifiedSchedulingEngine>
+        <IdleSettings>
+          <Duration>PT10M</Duration>
+          <WaitTimeout>PT1H</WaitTimeout>
+          <StopOnIdleEnd>true</StopOnIdleEnd>
+          <RestartOnIdle>false</RestartOnIdle>
+        </IdleSettings>
+      </Settings>
+      <Triggers />
+      <Actions Context="InteractiveUsers">
+        <Exec>
+          <Command>%windir%\system32\ppipwdrotation.exe</Command>
+          <Arguments>ReadCalendar $(Arg0)</Arguments>
+        </Exec>
+      </Actions>
+    </Task>
+    <Task xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task">
+      <RegistrationInfo>
+        <URI>microsoft\windows\team\ppipwdrotationmanager\ppipr_resumeinstall</URI>
+      </RegistrationInfo>
+      <Principals>
+        <Principal id="InteractiveUsers">
+          <UserId>S-1-5-18</UserId>
+        </Principal>
+      </Principals>
+      <Settings>
+        <DisallowStartIfOnBatteries>false</DisallowStartIfOnBatteries>
+        <StopIfGoingOnBatteries>false</StopIfGoingOnBatteries>
+        <ExecutionTimeLimit>PT10M</ExecutionTimeLimit>
+        <MultipleInstancesPolicy>Parallel</MultipleInstancesPolicy>
+        <StartWhenAvailable>true</StartWhenAvailable>
+        <RunOnlyIfNetworkAvailable>true</RunOnlyIfNetworkAvailable>
+        <UseUnifiedSchedulingEngine>true</UseUnifiedSchedulingEngine>
+        <WakeToRun>true</WakeToRun>
+        <IdleSettings>
+          <Duration>PT10M</Duration>
+          <WaitTimeout>PT1H</WaitTimeout>
+          <StopOnIdleEnd>true</StopOnIdleEnd>
+          <RestartOnIdle>false</RestartOnIdle>
+        </IdleSettings>
+      </Settings>
+      <Triggers>
+        <TimeTrigger>
+          <StartBoundary>2020-02-12T04:07:00-08:00</StartBoundary>
+        </TimeTrigger>
+      </Triggers>
+      <Actions Context="InteractiveUsers">
+        <Exec>
+          <Command>%windir%\system32\ppipwdrotation.exe</Command>
+          <Arguments>ResumeInstall</Arguments>
+        </Exec>
+      </Actions>
+    </Task>
+    <Task xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task">
+      <RegistrationInfo>
+        <URI>microsoft\windows\team\ppipwdrotationmanager\ppipr_retry</URI>
+      </RegistrationInfo>
+      <Principals>
+        <Principal id="InteractiveUsers">
+          <UserId>S-1-5-18</UserId>
+        </Principal>
+      </Principals>
+      <Settings>
+        <DisallowStartIfOnBatteries>false</DisallowStartIfOnBatteries>
+        <StopIfGoingOnBatteries>false</StopIfGoingOnBatteries>
+        <Enabled>false</Enabled>
+        <ExecutionTimeLimit>PT10M</ExecutionTimeLimit>
+        <MultipleInstancesPolicy>Parallel</MultipleInstancesPolicy>
+        <StartWhenAvailable>true</StartWhenAvailable>
+        <RunOnlyIfNetworkAvailable>true</RunOnlyIfNetworkAvailable>
+        <UseUnifiedSchedulingEngine>true</UseUnifiedSchedulingEngine>
+        <IdleSettings>
+          <Duration>PT10M</Duration>
+          <WaitTimeout>PT1H</WaitTimeout>
+          <StopOnIdleEnd>true</StopOnIdleEnd>
+          <RestartOnIdle>false</RestartOnIdle>
+        </IdleSettings>
+      </Settings>
+      <Triggers>
+        <TimeTrigger>
+          <StartBoundary>2020-02-11T13:34:10-08:00</StartBoundary>
+        </TimeTrigger>
+      </Triggers>
+      <Actions Context="InteractiveUsers">
+        <Exec>
+          <Command>%windir%\system32\ppipwdrotation.exe</Command>
+          <Arguments>Retry</Arguments>
+        </Exec>
+      </Actions>
+    </Task>
+    <Task xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task">
+      <RegistrationInfo>
+        <URI>microsoft\windows\team\ppipwdrotationmanager\ppipr_unlock</URI>
+      </RegistrationInfo>
+      <Principals>
+        <Principal id="InteractiveUsers">
+          <UserId>S-1-5-18</UserId>
+        </Principal>
+      </Principals>
+      <Settings>
+        <DisallowStartIfOnBatteries>false</DisallowStartIfOnBatteries>
+        <StopIfGoingOnBatteries>false</StopIfGoingOnBatteries>
+        <ExecutionTimeLimit>PT10M</ExecutionTimeLimit>
+        <MultipleInstancesPolicy>Parallel</MultipleInstancesPolicy>
+        <StartWhenAvailable>true</StartWhenAvailable>
+        <RunOnlyIfNetworkAvailable>true</RunOnlyIfNetworkAvailable>
+        <UseUnifiedSchedulingEngine>true</UseUnifiedSchedulingEngine>
+        <IdleSettings>
+          <Duration>PT10M</Duration>
+          <WaitTimeout>PT1H</WaitTimeout>
+          <StopOnIdleEnd>true</StopOnIdleEnd>
+          <RestartOnIdle>false</RestartOnIdle>
+        </IdleSettings>
+      </Settings>
+      <Triggers>
+        <SessionStateChangeTrigger>
+          <Delay>PT1M</Delay>
+          <StateChange>SessionUnlock</StateChange>
+        </SessionStateChangeTrigger>
+      </Triggers>
+      <Actions Context="InteractiveUsers">
+        <Exec>
+          <Command>%windir%\system32\ppipwdrotation.exe</Command>
+          <Arguments>Unlock</Arguments>
+        </Exec>
+      </Actions>
+    </Task>
+    <Task xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task">
+      <RegistrationInfo>
+        <URI>microsoft\windows\team\ppipwdrotationmanager\ppipr_watcher</URI>
+      </RegistrationInfo>
+      <Principals>
+        <Principal id="InteractiveUsers">
+          <UserId>S-1-5-18</UserId>
+        </Principal>
+      </Principals>
+      <Settings>
+        <DisallowStartIfOnBatteries>false</DisallowStartIfOnBatteries>
+        <StopIfGoingOnBatteries>false</StopIfGoingOnBatteries>
+        <ExecutionTimeLimit>PT10M</ExecutionTimeLimit>
+        <MultipleInstancesPolicy>IgnoreNew</MultipleInstancesPolicy>
+        <StartWhenAvailable>true</StartWhenAvailable>
+        <RunOnlyIfNetworkAvailable>true</RunOnlyIfNetworkAvailable>
+        <UseUnifiedSchedulingEngine>true</UseUnifiedSchedulingEngine>
+        <IdleSettings>
+          <Duration>PT10M</Duration>
+          <WaitTimeout>PT1H</WaitTimeout>
+          <StopOnIdleEnd>true</StopOnIdleEnd>
+          <RestartOnIdle>false</RestartOnIdle>
+        </IdleSettings>
+      </Settings>
+      <Triggers>
+        <CalendarTrigger>
+          <StartBoundary>2020-02-12T04:09:00-08:00</StartBoundary>
+          <Repetition>
+            <Interval>PT6M</Interval>
+            <Duration>PT6M</Duration>
+          </Repetition>
+          <ScheduleByDay>
+            <DaysInterval>1</DaysInterval>
+          </ScheduleByDay>
+        </CalendarTrigger>
+      </Triggers>
+      <Actions Context="InteractiveUsers">
+        <Exec>
+          <Command>%windir%\system32\ppipwdrotation.exe</Command>
+          <Arguments>Watcher</Arguments>
+        </Exec>
+      </Actions>
+    </Task>
+    <Task xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task">
+      <RegistrationInfo>
+        <URI>microsoft\windows\team\ppirebootmanager\ppirm_logonafterreboot</URI>
+      </RegistrationInfo>
+      <Principals>
+        <Principal id="InteractiveUsers">
+          <UserId>S-1-5-18</UserId>
+          <RunLevel>HighestAvailable</RunLevel>
+        </Principal>
+      </Principals>
+      <Settings>
+        <DisallowStartIfOnBatteries>false</DisallowStartIfOnBatteries>
+        <StopIfGoingOnBatteries>false</StopIfGoingOnBatteries>
+        <MultipleInstancesPolicy>Parallel</MultipleInstancesPolicy>
+        <StartWhenAvailable>true</StartWhenAvailable>
+        <RunOnlyIfNetworkAvailable>true</RunOnlyIfNetworkAvailable>
+        <UseUnifiedSchedulingEngine>true</UseUnifiedSchedulingEngine>
+        <IdleSettings>
+          <Duration>PT10M</Duration>
+          <WaitTimeout>PT1H</WaitTimeout>
+          <StopOnIdleEnd>true</StopOnIdleEnd>
+          <RestartOnIdle>false</RestartOnIdle>
+        </IdleSettings>
+      </Settings>
+      <Triggers>
+        <LogonTrigger>
+          <Delay>PT3M</Delay>
+        </LogonTrigger>
+      </Triggers>
+      <Actions Context="InteractiveUsers">
+        <Exec>
+          <Command>%windir%\system32\ppireboot.exe</Command>
+          <Arguments>LogonAfterReboot</Arguments>
+        </Exec>
+      </Actions>
+    </Task>
+    <Task xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task">
+      <RegistrationInfo>
+        <URI>microsoft\windows\team\ppirebootmanager\ppirm_readcalendar</URI>
+      </RegistrationInfo>
+      <Principals>
+        <Principal id="InteractiveUsers">
+          <UserId>S-1-5-18</UserId>
+        </Principal>
+      </Principals>
+      <Settings>
+        <DisallowStartIfOnBatteries>false</DisallowStartIfOnBatteries>
+        <StopIfGoingOnBatteries>false</StopIfGoingOnBatteries>
+        <ExecutionTimeLimit>PT10M</ExecutionTimeLimit>
+        <MultipleInstancesPolicy>Parallel</MultipleInstancesPolicy>
+        <StartWhenAvailable>true</StartWhenAvailable>
+        <RunOnlyIfNetworkAvailable>true</RunOnlyIfNetworkAvailable>
+        <UseUnifiedSchedulingEngine>true</UseUnifiedSchedulingEngine>
+        <IdleSettings>
+          <Duration>PT10M</Duration>
+          <WaitTimeout>PT1H</WaitTimeout>
+          <StopOnIdleEnd>true</StopOnIdleEnd>
+          <RestartOnIdle>false</RestartOnIdle>
+        </IdleSettings>
+      </Settings>
+      <Triggers />
+      <Actions Context="InteractiveUsers">
+        <Exec>
+          <Command>%windir%\system32\ppireboot.exe</Command>
+          <Arguments>ReadCalendar $(Arg0)</Arguments>
+        </Exec>
+      </Actions>
+    </Task>
+    <Task xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task">
+      <RegistrationInfo>
+        <URI>microsoft\windows\team\ppirebootmanager\ppirm_resumeinstall</URI>
+      </RegistrationInfo>
+      <Principals>
+        <Principal id="InteractiveUsers">
+          <UserId>S-1-5-18</UserId>
+        </Principal>
+      </Principals>
+      <Settings>
+        <DisallowStartIfOnBatteries>false</DisallowStartIfOnBatteries>
+        <StopIfGoingOnBatteries>false</StopIfGoingOnBatteries>
+        <ExecutionTimeLimit>PT10M</ExecutionTimeLimit>
+        <MultipleInstancesPolicy>Parallel</MultipleInstancesPolicy>
+        <StartWhenAvailable>true</StartWhenAvailable>
+        <RunOnlyIfNetworkAvailable>true</RunOnlyIfNetworkAvailable>
+        <UseUnifiedSchedulingEngine>true</UseUnifiedSchedulingEngine>
+        <WakeToRun>true</WakeToRun>
+        <IdleSettings>
+          <Duration>PT10M</Duration>
+          <WaitTimeout>PT1H</WaitTimeout>
+          <StopOnIdleEnd>true</StopOnIdleEnd>
+          <RestartOnIdle>false</RestartOnIdle>
+        </IdleSettings>
+      </Settings>
+      <Triggers>
+        <TimeTrigger>
+          <StartBoundary>2020-02-12T04:07:00-08:00</StartBoundary>
+        </TimeTrigger>
+      </Triggers>
+      <Actions Context="InteractiveUsers">
+        <Exec>
+          <Command>%windir%\system32\ppireboot.exe</Command>
+          <Arguments>ResumeInstall</Arguments>
+        </Exec>
+      </Actions>
+    </Task>
+    <Task xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task">
+      <RegistrationInfo>
+        <URI>microsoft\windows\team\ppirebootmanager\ppirm_retry</URI>
+      </RegistrationInfo>
+      <Principals>
+        <Principal id="InteractiveUsers">
+          <UserId>S-1-5-18</UserId>
+        </Principal>
+      </Principals>
+      <Settings>
+        <DisallowStartIfOnBatteries>false</DisallowStartIfOnBatteries>
+        <StopIfGoingOnBatteries>false</StopIfGoingOnBatteries>
+        <Enabled>false</Enabled>
+        <ExecutionTimeLimit>PT10M</ExecutionTimeLimit>
+        <MultipleInstancesPolicy>Parallel</MultipleInstancesPolicy>
+        <StartWhenAvailable>true</StartWhenAvailable>
+        <RunOnlyIfNetworkAvailable>true</RunOnlyIfNetworkAvailable>
+        <UseUnifiedSchedulingEngine>true</UseUnifiedSchedulingEngine>
+        <IdleSettings>
+          <Duration>PT10M</Duration>
+          <WaitTimeout>PT1H</WaitTimeout>
+          <StopOnIdleEnd>true</StopOnIdleEnd>
+          <RestartOnIdle>false</RestartOnIdle>
+        </IdleSettings>
+      </Settings>
+      <Triggers>
+        <TimeTrigger>
+          <StartBoundary>2020-02-11T13:34:10-08:00</StartBoundary>
+        </TimeTrigger>
+      </Triggers>
+      <Actions Context="InteractiveUsers">
+        <Exec>
+          <Command>%windir%\system32\ppireboot.exe</Command>
+          <Arguments>Retry</Arguments>
+        </Exec>
+      </Actions>
+    </Task>
+    <Task xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task">
+      <RegistrationInfo>
+        <URI>microsoft\windows\team\ppirebootmanager\ppirm_unlock</URI>
+      </RegistrationInfo>
+      <Principals>
+        <Principal id="InteractiveUsers">
+          <UserId>S-1-5-18</UserId>
+        </Principal>
+      </Principals>
+      <Settings>
+        <DisallowStartIfOnBatteries>false</DisallowStartIfOnBatteries>
+        <StopIfGoingOnBatteries>false</StopIfGoingOnBatteries>
+        <ExecutionTimeLimit>PT10M</ExecutionTimeLimit>
+        <MultipleInstancesPolicy>Parallel</MultipleInstancesPolicy>
+        <StartWhenAvailable>true</StartWhenAvailable>
+        <RunOnlyIfNetworkAvailable>true</RunOnlyIfNetworkAvailable>
+        <UseUnifiedSchedulingEngine>true</UseUnifiedSchedulingEngine>
+        <IdleSettings>
+          <Duration>PT10M</Duration>
+          <WaitTimeout>PT1H</WaitTimeout>
+          <StopOnIdleEnd>true</StopOnIdleEnd>
+          <RestartOnIdle>false</RestartOnIdle>
+        </IdleSettings>
+      </Settings>
+      <Triggers>
+        <SessionStateChangeTrigger>
+          <Delay>PT1M</Delay>
+          <StateChange>SessionUnlock</StateChange>
+        </SessionStateChangeTrigger>
+      </Triggers>
+      <Actions Context="InteractiveUsers">
+        <Exec>
+          <Command>%windir%\system32\ppireboot.exe</Command>
+          <Arguments>Unlock</Arguments>
+        </Exec>
+      </Actions>
+    </Task>
+    <Task xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task">
+      <RegistrationInfo>
+        <URI>microsoft\windows\team\ppirebootmanager\ppirm_watcher</URI>
+      </RegistrationInfo>
+      <Principals>
+        <Principal id="InteractiveUsers">
+          <UserId>S-1-5-18</UserId>
+        </Principal>
+      </Principals>
+      <Settings>
+        <DisallowStartIfOnBatteries>false</DisallowStartIfOnBatteries>
+        <StopIfGoingOnBatteries>false</StopIfGoingOnBatteries>
+        <ExecutionTimeLimit>PT10M</ExecutionTimeLimit>
+        <MultipleInstancesPolicy>IgnoreNew</MultipleInstancesPolicy>
+        <StartWhenAvailable>true</StartWhenAvailable>
+        <RunOnlyIfNetworkAvailable>true</RunOnlyIfNetworkAvailable>
+        <UseUnifiedSchedulingEngine>true</UseUnifiedSchedulingEngine>
+        <IdleSettings>
+          <Duration>PT10M</Duration>
+          <WaitTimeout>PT1H</WaitTimeout>
+          <StopOnIdleEnd>true</StopOnIdleEnd>
+          <RestartOnIdle>false</RestartOnIdle>
+        </IdleSettings>
+      </Settings>
+      <Triggers>
+        <CalendarTrigger>
+          <StartBoundary>2020-02-12T04:09:00-08:00</StartBoundary>
+          <Repetition>
+            <Interval>PT6M</Interval>
+            <Duration>PT6M</Duration>
+          </Repetition>
+          <ScheduleByDay>
+            <DaysInterval>1</DaysInterval>
+          </ScheduleByDay>
+        </CalendarTrigger>
+      </Triggers>
+      <Actions Context="InteractiveUsers">
+        <Exec>
+          <Command>%windir%\system32\ppireboot.exe</Command>
+          <Arguments>Watcher</Arguments>
+        </Exec>
+      </Actions>
+    </Task>
+    <Task xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task">
+      <RegistrationInfo>
+        <URI>microsoft\windows\team\ppiupdatemanager\ppium_logonafterreboot</URI>
+      </RegistrationInfo>
+      <Principals>
+        <Principal id="InteractiveUsers">
+          <UserId>S-1-5-18</UserId>
+          <RunLevel>HighestAvailable</RunLevel>
+        </Principal>
+      </Principals>
+      <Settings>
+        <DisallowStartIfOnBatteries>false</DisallowStartIfOnBatteries>
+        <StopIfGoingOnBatteries>false</StopIfGoingOnBatteries>
+        <ExecutionTimeLimit>PT10M</ExecutionTimeLimit>
+        <MultipleInstancesPolicy>Parallel</MultipleInstancesPolicy>
+        <StartWhenAvailable>true</StartWhenAvailable>
+        <RunOnlyIfNetworkAvailable>true</RunOnlyIfNetworkAvailable>
+        <UseUnifiedSchedulingEngine>true</UseUnifiedSchedulingEngine>
+        <IdleSettings>
+          <Duration>PT10M</Duration>
+          <WaitTimeout>PT1H</WaitTimeout>
+          <StopOnIdleEnd>true</StopOnIdleEnd>
+          <RestartOnIdle>false</RestartOnIdle>
+        </IdleSettings>
+      </Settings>
+      <Triggers>
+        <LogonTrigger>
+          <Delay>PT3M</Delay>
+        </LogonTrigger>
+      </Triggers>
+      <Actions Context="InteractiveUsers">
+        <Exec>
+          <Command>windir%\system32\ppiupdatemanager.exe</Command>
+          <Arguments>LogonAfterReboot</Arguments>
+        </Exec>
+      </Actions>
+    </Task>
+    <Task xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task">
+      <RegistrationInfo>
+        <URI>microsoft\windows\team\ppiupdatemanager\ppium_unlock</URI>
+      </RegistrationInfo>
+      <Principals>
+        <Principal id="InteractiveUsers">
+          <UserId>S-1-5-18</UserId>
+        </Principal>
+      </Principals>
+      <Settings>
+        <DisallowStartIfOnBatteries>false</DisallowStartIfOnBatteries>
+        <StopIfGoingOnBatteries>false</StopIfGoingOnBatteries>
+        <ExecutionTimeLimit>PT10M</ExecutionTimeLimit>
+        <MultipleInstancesPolicy>Parallel</MultipleInstancesPolicy>
+        <StartWhenAvailable>true</StartWhenAvailable>
+        <RunOnlyIfNetworkAvailable>true</RunOnlyIfNetworkAvailable>
+        <UseUnifiedSchedulingEngine>true</UseUnifiedSchedulingEngine>
+        <IdleSettings>
+          <Duration>PT10M</Duration>
+          <WaitTimeout>PT1H</WaitTimeout>
+          <StopOnIdleEnd>true</StopOnIdleEnd>
+          <RestartOnIdle>false</RestartOnIdle>
+        </IdleSettings>
+      </Settings>
+      <Triggers>
+        <SessionStateChangeTrigger>
+          <Delay>PT1M</Delay>
+          <StateChange>SessionUnlock</StateChange>
+        </SessionStateChangeTrigger>
+      </Triggers>
+      <Actions Context="InteractiveUsers">
+        <Exec>
+          <Command>%windir%\system32\ppiupdatemanager.exe</Command>
+          <Arguments>Unlock</Arguments>
+        </Exec>
+      </Actions>
+    </Task>
+    <Task xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task">
+      <RegistrationInfo>
+        <URI>microsoft\windows\team\ppiupdatemanager\ppium_resumeinstall</URI>
+      </RegistrationInfo>
+      <Principals>
+        <Principal id="InteractiveUsers">
+          <UserId>S-1-5-18</UserId>
+        </Principal>
+      </Principals>
+      <Settings>
+        <DisallowStartIfOnBatteries>false</DisallowStartIfOnBatteries>
+        <StopIfGoingOnBatteries>false</StopIfGoingOnBatteries>
+        <Enabled>false</Enabled>
+        <ExecutionTimeLimit>PT10M</ExecutionTimeLimit>
+        <MultipleInstancesPolicy>Parallel</MultipleInstancesPolicy>
+        <StartWhenAvailable>true</StartWhenAvailable>
+        <RunOnlyIfNetworkAvailable>true</RunOnlyIfNetworkAvailable>
+        <UseUnifiedSchedulingEngine>true</UseUnifiedSchedulingEngine>
+        <WakeToRun>true</WakeToRun>
+        <IdleSettings>
+          <Duration>PT10M</Duration>
+          <WaitTimeout>PT1H</WaitTimeout>
+          <StopOnIdleEnd>true</StopOnIdleEnd>
+          <RestartOnIdle>false</RestartOnIdle>
+        </IdleSettings>
+      </Settings>
+      <Triggers>
+        <TimeTrigger>
+          <StartBoundary>2020-02-12T04:07:00-08:00</StartBoundary>
+        </TimeTrigger>
+      </Triggers>
+      <Actions Context="InteractiveUsers">
+        <Exec>
+          <Command>%windir%\system32\ppiupdatemanager.exe</Command>
+          <Arguments>ResumeInstall</Arguments>
+        </Exec>
+      </Actions>
+    </Task>
+    <Task xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task">
+      <RegistrationInfo>
+        <URI>microsoft\windows\team\ppiupdatemanager\ppium_retry</URI>
+      </RegistrationInfo>
+      <Principals>
+        <Principal id="InteractiveUsers">
+          <UserId>S-1-5-18</UserId>
+        </Principal>
+      </Principals>
+      <Settings>
+        <DisallowStartIfOnBatteries>false</DisallowStartIfOnBatteries>
+        <StopIfGoingOnBatteries>false</StopIfGoingOnBatteries>
+        <Enabled>false</Enabled>
+        <ExecutionTimeLimit>PT10M</ExecutionTimeLimit>
+        <MultipleInstancesPolicy>Parallel</MultipleInstancesPolicy>
+        <StartWhenAvailable>true</StartWhenAvailable>
+        <RunOnlyIfNetworkAvailable>true</RunOnlyIfNetworkAvailable>
+        <UseUnifiedSchedulingEngine>true</UseUnifiedSchedulingEngine>
+        <IdleSettings>
+          <Duration>PT10M</Duration>
+          <WaitTimeout>PT1H</WaitTimeout>
+          <StopOnIdleEnd>true</StopOnIdleEnd>
+          <RestartOnIdle>false</RestartOnIdle>
+        </IdleSettings>
+      </Settings>
+      <Triggers>
+        <TimeTrigger>
+          <StartBoundary>2020-02-11T13:34:10-08:00</StartBoundary>
+        </TimeTrigger>
+      </Triggers>
+      <Actions Context="InteractiveUsers">
+        <Exec>
+          <Command>%windir%\system32\ppiupdatemanager.exe</Command>
+          <Arguments>Retry</Arguments>
+        </Exec>
+      </Actions>
+    </Task>
+    <Task xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task">
+      <RegistrationInfo>
+        <URI>microsoft\windows\team\ppiupdatemanager\ppium_watcher</URI>
+      </RegistrationInfo>
+      <Principals>
+        <Principal id="InteractiveUsers">
+          <UserId>S-1-5-18</UserId>
+        </Principal>
+      </Principals>
+      <Settings>
+        <DisallowStartIfOnBatteries>false</DisallowStartIfOnBatteries>
+        <StopIfGoingOnBatteries>false</StopIfGoingOnBatteries>
+        <ExecutionTimeLimit>PT10M</ExecutionTimeLimit>
+        <MultipleInstancesPolicy>IgnoreNew</MultipleInstancesPolicy>
+        <StartWhenAvailable>true</StartWhenAvailable>
+        <RunOnlyIfNetworkAvailable>true</RunOnlyIfNetworkAvailable>
+        <UseUnifiedSchedulingEngine>true</UseUnifiedSchedulingEngine>
+        <IdleSettings>
+          <Duration>PT10M</Duration>
+          <WaitTimeout>PT1H</WaitTimeout>
+          <StopOnIdleEnd>true</StopOnIdleEnd>
+          <RestartOnIdle>false</RestartOnIdle>
+        </IdleSettings>
+      </Settings>
+      <Triggers>
+        <CalendarTrigger>
+          <StartBoundary>2020-02-12T04:09:00-08:00</StartBoundary>
+          <Repetition>
+            <Interval>PT6M</Interval>
+            <Duration>PT1H6M</Duration>
+          </Repetition>
+          <ScheduleByDay>
+            <DaysInterval>1</DaysInterval>
+          </ScheduleByDay>
+        </CalendarTrigger>
+      </Triggers>
+      <Actions Context="InteractiveUsers">
+        <Exec>
+          <Command>%windir%\system32\ppiupdatemanager.exe</Command>
+          <Arguments>Watcher</Arguments>
+        </Exec>
+      </Actions>
+    </Task>
+    <Task xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task">
+      <RegistrationInfo>
+        <URI>microsoft\windows\team\ppiupdatemanager\ppium_readCalendar</URI>
+      </RegistrationInfo>
+      <Principals>
+        <Principal id="InteractiveUsers">
+          <UserId>S-1-5-18</UserId>
+        </Principal>
+      </Principals>
+      <Settings>
+        <DisallowStartIfOnBatteries>false</DisallowStartIfOnBatteries>
+        <StopIfGoingOnBatteries>false</StopIfGoingOnBatteries>
+        <ExecutionTimeLimit>PT10M</ExecutionTimeLimit>
+        <MultipleInstancesPolicy>Parallel</MultipleInstancesPolicy>
+        <StartWhenAvailable>true</StartWhenAvailable>
+        <RunOnlyIfNetworkAvailable>true</RunOnlyIfNetworkAvailable>
+        <UseUnifiedSchedulingEngine>true</UseUnifiedSchedulingEngine>
+        <IdleSettings>
+          <Duration>PT10M</Duration>
+          <WaitTimeout>PT1H</WaitTimeout>
+          <StopOnIdleEnd>true</StopOnIdleEnd>
+          <RestartOnIdle>false</RestartOnIdle>
+        </IdleSettings>
+      </Settings>
+      <Triggers />
+      <Actions Context="InteractiveUsers">
+        <Exec>
+          <Command>%windir%\system32\ppiupdatemanager.exe</Command>
+          <Arguments>ReadCalendar $(Arg0)</Arguments>
+        </Exec>
+      </Actions>
+    </Task>
+    <Task xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task">
+      <RegistrationInfo>
+        <URI>microsoft\windows\team\ppiupdatemanager\ppium_process</URI>
+      </RegistrationInfo>
+      <Principals>
+        <Principal id="InteractiveUsers">
+          <UserId>S-1-5-18</UserId>
+        </Principal>
+      </Principals>
+      <Settings>
+        <DisallowStartIfOnBatteries>false</DisallowStartIfOnBatteries>
+        <StopIfGoingOnBatteries>false</StopIfGoingOnBatteries>
+        <ExecutionTimeLimit>PT10M</ExecutionTimeLimit>
+        <MultipleInstancesPolicy>Parallel</MultipleInstancesPolicy>
+        <StartWhenAvailable>true</StartWhenAvailable>
+        <RunOnlyIfNetworkAvailable>true</RunOnlyIfNetworkAvailable>
+        <WakeToRun>true</WakeToRun>
+        <UseUnifiedSchedulingEngine>true</UseUnifiedSchedulingEngine>
+        <IdleSettings>
+          <Duration>PT10M</Duration>
+          <WaitTimeout>PT1H</WaitTimeout>
+          <StopOnIdleEnd>true</StopOnIdleEnd>
+          <RestartOnIdle>false</RestartOnIdle>
+        </IdleSettings>
+      </Settings>
+      <Triggers>
+        <TimeTrigger>
+          <StartBoundary>2020-02-12T04:07:00-08:00</StartBoundary>
+          <Repetition>
+            <Interval>PT3H</Interval>
+            <StopAtDurationEnd>false</StopAtDurationEnd>
+          </Repetition>
+          <RandomDelay>PT1H</RandomDelay>
+        </TimeTrigger>
+      </Triggers>
+      <Actions Context="InteractiveUsers">
+        <Exec>
+          <Command>%windir%\system32\ppiupdatemanager.exe</Command>
+          <Arguments>Process</Arguments>
+        </Exec>
+      </Actions>
+    </Task>
+    <Task xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task">
+      <RegistrationInfo>
+        <URI>microsoft\windows\ppiupdatemanager\ppium_logonafterreboot</URI>
+      </RegistrationInfo>
+      <Triggers>
+        <TimeTrigger>
+          <Enabled>true</Enabled>
+          <StartBoundary>2001-01-01T01:00:00</StartBoundary>
+          <EndBoundary>2001-01-01T02:00:00</EndBoundary>
+        </TimeTrigger>
+      </Triggers>
+      <Principals>
+        <Principal id="Users">
+          <GroupId>S-1-5-18</GroupId>
+        </Principal>
+      </Principals>
+      <Settings>
+        <DeleteExpiredTaskAfter>PT0S</DeleteExpiredTaskAfter>
+        <UseUnifiedSchedulingEngine>true</UseUnifiedSchedulingEngine>
+      </Settings>
+      <Actions Context="Users">
+        <Exec>
+          <Command>cmd</Command>
+        </Exec>
+      </Actions>
+    </Task>
+    <Task xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task">
+      <RegistrationInfo>
+        <URI>microsoft\windows\ppiupdatemanager\ppium_process</URI>
+      </RegistrationInfo>
+      <Triggers>
+        <TimeTrigger>
+          <Enabled>true</Enabled>
+          <StartBoundary>2001-01-01T01:00:00</StartBoundary>
+          <EndBoundary>2001-01-01T02:00:00</EndBoundary>
+        </TimeTrigger>
+      </Triggers>
+      <Principals>
+        <Principal id="Users">
+          <GroupId>S-1-5-18</GroupId>
+        </Principal>
+      </Principals>
+      <Settings>
+        <DeleteExpiredTaskAfter>PT0S</DeleteExpiredTaskAfter>
+        <UseUnifiedSchedulingEngine>true</UseUnifiedSchedulingEngine>
+      </Settings>
+      <Actions Context="Users">
+        <Exec>
+          <Command>cmd</Command>
+        </Exec>
+      </Actions>
+    </Task>
+    <Task xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task">
+      <RegistrationInfo>
+        <URI>microsoft\windows\ppiupdatemanager\ppium_readCalendar</URI>
+      </RegistrationInfo>
+      <Triggers>
+        <TimeTrigger>
+          <Enabled>true</Enabled>
+          <StartBoundary>2001-01-01T01:00:00</StartBoundary>
+          <EndBoundary>2001-01-01T02:00:00</EndBoundary>
+        </TimeTrigger>
+      </Triggers>
+      <Principals>
+        <Principal id="Users">
+          <GroupId>S-1-5-4</GroupId>
+        </Principal>
+      </Principals>
+      <Settings>
+        <DeleteExpiredTaskAfter>PT0S</DeleteExpiredTaskAfter>
+        <UseUnifiedSchedulingEngine>true</UseUnifiedSchedulingEngine>
+      </Settings>
+      <Actions Context="Users">
+        <Exec>
+          <Command>cmd</Command>
+        </Exec>
+      </Actions>
+    </Task>
+    <Task xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task">
+      <RegistrationInfo>
+        <URI>microsoft\windows\ppiupdatemanager\ppium_resumeInstall</URI>
+      </RegistrationInfo>
+      <Triggers>
+        <TimeTrigger>
+          <Enabled>true</Enabled>
+          <StartBoundary>2001-01-01T01:00:00</StartBoundary>
+          <EndBoundary>2001-01-01T02:00:00</EndBoundary>
+        </TimeTrigger>
+      </Triggers>
+      <Principals>
+        <Principal id="Users">
+          <GroupId>S-1-5-18</GroupId>
+        </Principal>
+      </Principals>
+      <Settings>
+        <DeleteExpiredTaskAfter>PT0S</DeleteExpiredTaskAfter>
+        <UseUnifiedSchedulingEngine>true</UseUnifiedSchedulingEngine>
+      </Settings>
+      <Actions Context="Users">
+        <Exec>
+          <Command>cmd</Command>
+        </Exec>
+      </Actions>
+    </Task>
+    <Task xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task">
+      <RegistrationInfo>
+        <URI>microsoft\windows\ppiupdatemanager\ppium_retry</URI>
+      </RegistrationInfo>
+      <Triggers>
+        <TimeTrigger>
+          <Enabled>true</Enabled>
+          <StartBoundary>2001-01-01T01:00:00</StartBoundary>
+          <EndBoundary>2001-01-01T02:00:00</EndBoundary>
+        </TimeTrigger>
+      </Triggers>
+      <Principals>
+        <Principal id="Users">
+          <GroupId>S-1-5-18</GroupId>
+        </Principal>
+      </Principals>
+      <Settings>
+        <DeleteExpiredTaskAfter>PT0S</DeleteExpiredTaskAfter>
+        <UseUnifiedSchedulingEngine>true</UseUnifiedSchedulingEngine>
+      </Settings>
+      <Actions Context="Users">
+        <Exec>
+          <Command>cmd</Command>
+        </Exec>
+      </Actions>
+    </Task>
+    <Task xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task">
+      <RegistrationInfo>
+        <URI>microsoft\windows\ppiupdatemanager\ppium_unlock</URI>
+      </RegistrationInfo>
+      <Triggers>
+        <TimeTrigger>
+          <Enabled>true</Enabled>
+          <StartBoundary>2001-01-01T01:00:00</StartBoundary>
+          <EndBoundary>2001-01-01T02:00:00</EndBoundary>
+        </TimeTrigger>
+      </Triggers>
+      <Principals>
+        <Principal id="Users">
+          <GroupId>S-1-5-18</GroupId>
+        </Principal>
+      </Principals>
+      <Settings>
+        <DeleteExpiredTaskAfter>PT0S</DeleteExpiredTaskAfter>
+        <UseUnifiedSchedulingEngine>true</UseUnifiedSchedulingEngine>
+      </Settings>
+      <Actions Context="Users">
+        <Exec>
+          <Command>cmd</Command>
+        </Exec>
+      </Actions>
+    </Task>
+    <Task xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task">
+      <RegistrationInfo>
+        <URI>microsoft\windows\ppiupdatemanager\ppium_watcher</URI>
+      </RegistrationInfo>
+      <Triggers>
+        <TimeTrigger>
+          <Enabled>true</Enabled>
+          <StartBoundary>2001-01-01T01:00:00</StartBoundary>
+          <EndBoundary>2001-01-01T02:00:00</EndBoundary>
+        </TimeTrigger>
+      </Triggers>
+      <Principals>
+        <Principal id="Users">
+          <GroupId>S-1-5-18</GroupId>
+        </Principal>
+      </Principals>
+      <Settings>
+        <DeleteExpiredTaskAfter>PT0S</DeleteExpiredTaskAfter>
+        <UseUnifiedSchedulingEngine>true</UseUnifiedSchedulingEngine>
+      </Settings>
+      <Actions Context="Users">
+        <Exec>
+          <Command>cmd</Command>
+        </Exec>
+      </Actions>
+    </Task>
+    <Task xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task">
+      <RegistrationInfo>
+        <URI>\PPIActiveSyncHealthCheck</URI>
+      </RegistrationInfo>
+      <Triggers>
+        <TimeTrigger>
+          <Enabled>true</Enabled>
+          <StartBoundary>2001-01-01T01:00:00</StartBoundary>
+          <EndBoundary>2001-01-01T02:00:00</EndBoundary>
+        </TimeTrigger>
+      </Triggers>
+      <Principals>
+        <Principal id="Users">
+          <GroupId>S-1-5-4</GroupId>
+        </Principal>
+      </Principals>
+      <Settings>
+        <DeleteExpiredTaskAfter>PT0S</DeleteExpiredTaskAfter>
+        <UseUnifiedSchedulingEngine>true</UseUnifiedSchedulingEngine>
+      </Settings>
+      <Actions Context="Users">
+        <Exec>
+          <Command>cmd</Command>
+        </Exec>
+      </Actions>
+    </Task>
+    <Task xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task">
+      <RegistrationInfo>
+        <URI>\PPIProxyMigration</URI>
+      </RegistrationInfo>
+      <Triggers>
+        <TimeTrigger>
+          <Enabled>true</Enabled>
+          <StartBoundary>2001-01-01T01:00:00</StartBoundary>
+          <EndBoundary>2001-01-01T02:00:00</EndBoundary>
+        </TimeTrigger>
+      </Triggers>
+      <Principals>
+        <Principal id="Users">
+          <GroupId>S-1-5-4</GroupId>
+        </Principal>
+      </Principals>
+      <Settings>
+        <DeleteExpiredTaskAfter>PT0S</DeleteExpiredTaskAfter>
+        <UseUnifiedSchedulingEngine>true</UseUnifiedSchedulingEngine>
+      </Settings>
+      <Actions Context="Users">
+        <Exec>
+          <Command>cmd</Command>
+        </Exec>
+      </Actions>
+    </Task>
+    <Task xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task">
+      <RegistrationInfo>
+        <URI>\PPIQosSetup</URI>
+      </RegistrationInfo>
+      <Triggers>
+        <TimeTrigger>
+          <Enabled>true</Enabled>
+          <StartBoundary>2001-01-01T01:00:00</StartBoundary>
+          <EndBoundary>2001-01-01T02:00:00</EndBoundary>
+        </TimeTrigger>
+      </Triggers>
+      <Principals>
+        <Principal id="Users">
+          <GroupId>S-1-5-4</GroupId>
+        </Principal>
+      </Principals>
+      <Settings>
+        <DeleteExpiredTaskAfter>PT0S</DeleteExpiredTaskAfter>
+        <UseUnifiedSchedulingEngine>true</UseUnifiedSchedulingEngine>
+      </Settings>
+      <Actions Context="Users">
+        <Exec>
+          <Command>cmd</Command>
+        </Exec>
+      </Actions>
+    </Task>
+    <Task xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task">
+      <RegistrationInfo>
+        <URI>\PPIRoomAccountCalendarSetup</URI>
+      </RegistrationInfo>
+      <Triggers>
+        <TimeTrigger>
+          <Enabled>true</Enabled>
+          <StartBoundary>2001-01-01T01:00:00</StartBoundary>
+          <EndBoundary>2001-01-01T02:00:00</EndBoundary>
+        </TimeTrigger>
+      </Triggers>
+      <Principals>
+        <Principal id="Users">
+          <GroupId>S-1-5-4</GroupId>
+        </Principal>
+      </Principals>
+      <Settings>
+        <DeleteExpiredTaskAfter>PT0S</DeleteExpiredTaskAfter>
+        <UseUnifiedSchedulingEngine>true</UseUnifiedSchedulingEngine>
+      </Settings>
+      <Actions Context="Users">
+        <Exec>
+          <Command>cmd</Command>
+        </Exec>
+      </Actions>
+    </Task>
+    <Task xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task">
+      <RegistrationInfo>
+        <URI>microsoft\windows\ppipwdrotationmanager\ppipr_logonafterreboot</URI>
+      </RegistrationInfo>
+      <Triggers>
+        <TimeTrigger>
+          <Enabled>true</Enabled>
+          <StartBoundary>2001-01-01T01:00:00</StartBoundary>
+          <EndBoundary>2001-01-01T02:00:00</EndBoundary>
+        </TimeTrigger>
+      </Triggers>
+      <Principals>
+        <Principal id="Users">
+          <GroupId>S-1-5-18</GroupId>
+        </Principal>
+      </Principals>
+      <Settings>
+        <DeleteExpiredTaskAfter>PT0S</DeleteExpiredTaskAfter>
+        <UseUnifiedSchedulingEngine>true</UseUnifiedSchedulingEngine>
+      </Settings>
+      <Actions Context="Users">
+        <Exec>
+          <Command>cmd</Command>
+        </Exec>
+      </Actions>
+    </Task>
+    <Task xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task">
+      <RegistrationInfo>
+        <URI>microsoft\windows\ppipwdrotationmanager\ppipr_readcalendar</URI>
+      </RegistrationInfo>
+      <Triggers>
+        <TimeTrigger>
+          <Enabled>true</Enabled>
+          <StartBoundary>2001-01-01T01:00:00</StartBoundary>
+          <EndBoundary>2001-01-01T02:00:00</EndBoundary>
+        </TimeTrigger>
+      </Triggers>
+      <Principals>
+        <Principal id="Users">
+          <GroupId>S-1-5-4</GroupId>
+        </Principal>
+      </Principals>
+      <Settings>
+        <DeleteExpiredTaskAfter>PT0S</DeleteExpiredTaskAfter>
+        <UseUnifiedSchedulingEngine>true</UseUnifiedSchedulingEngine>
+      </Settings>
+      <Actions Context="Users">
+        <Exec>
+          <Command>cmd</Command>
+        </Exec>
+      </Actions>
+    </Task>
+    <Task xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task">
+      <RegistrationInfo>
+        <URI>microsoft\windows\ppipwdrotationmanager\ppipr_resumeinstall</URI>
+      </RegistrationInfo>
+      <Triggers>
+        <TimeTrigger>
+          <Enabled>true</Enabled>
+          <StartBoundary>2001-01-01T01:00:00</StartBoundary>
+          <EndBoundary>2001-01-01T02:00:00</EndBoundary>
+        </TimeTrigger>
+      </Triggers>
+      <Principals>
+        <Principal id="Users">
+          <GroupId>S-1-5-18</GroupId>
+        </Principal>
+      </Principals>
+      <Settings>
+        <DeleteExpiredTaskAfter>PT0S</DeleteExpiredTaskAfter>
+        <UseUnifiedSchedulingEngine>true</UseUnifiedSchedulingEngine>
+      </Settings>
+      <Actions Context="Users">
+        <Exec>
+          <Command>cmd</Command>
+        </Exec>
+      </Actions>
+    </Task>
+    <Task xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task">
+      <RegistrationInfo>
+        <URI>microsoft\windows\ppipwdrotationmanager\ppipr_retry</URI>
+      </RegistrationInfo>
+      <Triggers>
+        <TimeTrigger>
+          <Enabled>true</Enabled>
+          <StartBoundary>2001-01-01T01:00:00</StartBoundary>
+          <EndBoundary>2001-01-01T02:00:00</EndBoundary>
+        </TimeTrigger>
+      </Triggers>
+      <Principals>
+        <Principal id="Users">
+          <GroupId>S-1-5-18</GroupId>
+        </Principal>
+      </Principals>
+      <Settings>
+        <DeleteExpiredTaskAfter>PT0S</DeleteExpiredTaskAfter>
+        <UseUnifiedSchedulingEngine>true</UseUnifiedSchedulingEngine>
+      </Settings>
+      <Actions Context="Users">
+        <Exec>
+          <Command>cmd</Command>
+        </Exec>
+      </Actions>
+    </Task>
+    <Task xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task">
+      <RegistrationInfo>
+        <URI>microsoft\windows\ppipwdrotationmanager\ppipr_unlock</URI>
+      </RegistrationInfo>
+      <Triggers>
+        <TimeTrigger>
+          <Enabled>true</Enabled>
+          <StartBoundary>2001-01-01T01:00:00</StartBoundary>
+          <EndBoundary>2001-01-01T02:00:00</EndBoundary>
+        </TimeTrigger>
+      </Triggers>
+      <Principals>
+        <Principal id="Users">
+          <GroupId>S-1-5-18</GroupId>
+        </Principal>
+      </Principals>
+      <Settings>
+        <DeleteExpiredTaskAfter>PT0S</DeleteExpiredTaskAfter>
+        <UseUnifiedSchedulingEngine>true</UseUnifiedSchedulingEngine>
+      </Settings>
+      <Actions Context="Users">
+        <Exec>
+          <Command>cmd</Command>
+        </Exec>
+      </Actions>
+    </Task>
+    <Task xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task">
+      <RegistrationInfo>
+        <URI>microsoft\windows\ppipwdrotationmanager\ppipr_watcher</URI>
+      </RegistrationInfo>
+      <Triggers>
+        <TimeTrigger>
+          <Enabled>true</Enabled>
+          <StartBoundary>2001-01-01T01:00:00</StartBoundary>
+          <EndBoundary>2001-01-01T02:00:00</EndBoundary>
+        </TimeTrigger>
+      </Triggers>
+      <Principals>
+        <Principal id="Users">
+          <GroupId>S-1-5-18</GroupId>
+        </Principal>
+      </Principals>
+      <Settings>
+        <DeleteExpiredTaskAfter>PT0S</DeleteExpiredTaskAfter>
+        <UseUnifiedSchedulingEngine>true</UseUnifiedSchedulingEngine>
+      </Settings>
+      <Actions Context="Users">
+        <Exec>
+          <Command>cmd</Command>
+        </Exec>
+      </Actions>
+    </Task>
+    <Task xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task">
+      <RegistrationInfo>
+        <URI>microsoft\windows\ppirebootmanager\ppirm_logonafterreboot</URI>
+      </RegistrationInfo>
+      <Triggers>
+        <TimeTrigger>
+          <Enabled>true</Enabled>
+          <StartBoundary>2001-01-01T01:00:00</StartBoundary>
+          <EndBoundary>2001-01-01T02:00:00</EndBoundary>
+        </TimeTrigger>
+      </Triggers>
+      <Principals>
+        <Principal id="Users">
+          <GroupId>S-1-5-18</GroupId>
+        </Principal>
+      </Principals>
+      <Settings>
+        <DeleteExpiredTaskAfter>PT0S</DeleteExpiredTaskAfter>
+        <UseUnifiedSchedulingEngine>true</UseUnifiedSchedulingEngine>
+      </Settings>
+      <Actions Context="Users">
+        <Exec>
+          <Command>cmd</Command>
+        </Exec>
+      </Actions>
+    </Task>
+    <Task xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task">
+      <RegistrationInfo>
+        <URI>microsoft\windows\ppirebootmanager\ppirm_readcalendar</URI>
+      </RegistrationInfo>
+      <Triggers>
+        <TimeTrigger>
+          <Enabled>true</Enabled>
+          <StartBoundary>2001-01-01T01:00:00</StartBoundary>
+          <EndBoundary>2001-01-01T02:00:00</EndBoundary>
+        </TimeTrigger>
+      </Triggers>
+      <Principals>
+        <Principal id="Users">
+          <GroupId>S-1-5-4</GroupId>
+        </Principal>
+      </Principals>
+      <Settings>
+        <DeleteExpiredTaskAfter>PT0S</DeleteExpiredTaskAfter>
+        <UseUnifiedSchedulingEngine>true</UseUnifiedSchedulingEngine>
+      </Settings>
+      <Actions Context="Users">
+        <Exec>
+          <Command>cmd</Command>
+        </Exec>
+      </Actions>
+    </Task>
+    <Task xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task">
+      <RegistrationInfo>
+        <URI>microsoft\windows\ppirebootmanager\ppirm_resumeinstall</URI>
+      </RegistrationInfo>
+      <Triggers>
+        <TimeTrigger>
+          <Enabled>true</Enabled>
+          <StartBoundary>2001-01-01T01:00:00</StartBoundary>
+          <EndBoundary>2001-01-01T02:00:00</EndBoundary>
+        </TimeTrigger>
+      </Triggers>
+      <Principals>
+        <Principal id="Users">
+          <GroupId>S-1-5-18</GroupId>
+        </Principal>
+      </Principals>
+      <Settings>
+        <DeleteExpiredTaskAfter>PT0S</DeleteExpiredTaskAfter>
+        <UseUnifiedSchedulingEngine>true</UseUnifiedSchedulingEngine>
+      </Settings>
+      <Actions Context="Users">
+        <Exec>
+          <Command>cmd</Command>
+        </Exec>
+      </Actions>
+    </Task>
+    <Task xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task">
+      <RegistrationInfo>
+        <URI>microsoft\windows\ppirebootmanager\ppirm_retry</URI>
+      </RegistrationInfo>
+      <Triggers>
+        <TimeTrigger>
+          <Enabled>true</Enabled>
+          <StartBoundary>2001-01-01T01:00:00</StartBoundary>
+          <EndBoundary>2001-01-01T02:00:00</EndBoundary>
+        </TimeTrigger>
+      </Triggers>
+      <Principals>
+        <Principal id="Users">
+          <GroupId>S-1-5-18</GroupId>
+        </Principal>
+      </Principals>
+      <Settings>
+        <DeleteExpiredTaskAfter>PT0S</DeleteExpiredTaskAfter>
+        <UseUnifiedSchedulingEngine>true</UseUnifiedSchedulingEngine>
+      </Settings>
+      <Actions Context="Users">
+        <Exec>
+          <Command>cmd</Command>
+        </Exec>
+      </Actions>
+    </Task>
+    <Task xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task">
+      <RegistrationInfo>
+        <URI>microsoft\windows\ppirebootmanager\ppirm_unlock</URI>
+      </RegistrationInfo>
+      <Triggers>
+        <TimeTrigger>
+          <Enabled>true</Enabled>
+          <StartBoundary>2001-01-01T01:00:00</StartBoundary>
+          <EndBoundary>2001-01-01T02:00:00</EndBoundary>
+        </TimeTrigger>
+      </Triggers>
+      <Principals>
+        <Principal id="Users">
+          <GroupId>S-1-5-18</GroupId>
+        </Principal>
+      </Principals>
+      <Settings>
+        <DeleteExpiredTaskAfter>PT0S</DeleteExpiredTaskAfter>
+        <UseUnifiedSchedulingEngine>true</UseUnifiedSchedulingEngine>
+      </Settings>
+      <Actions Context="Users">
+        <Exec>
+          <Command>cmd</Command>
+        </Exec>
+      </Actions>
+    </Task>
+    <Task xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task">
+      <RegistrationInfo>
+        <URI>microsoft\windows\ppirebootmanager\ppirm_watcher</URI>
+      </RegistrationInfo>
+      <Triggers>
+        <TimeTrigger>
+          <Enabled>true</Enabled>
+          <StartBoundary>2001-01-01T01:00:00</StartBoundary>
+          <EndBoundary>2001-01-01T02:00:00</EndBoundary>
+        </TimeTrigger>
+      </Triggers>
+      <Principals>
+        <Principal id="Users">
+          <GroupId>S-1-5-18</GroupId>
+        </Principal>
+      </Principals>
+      <Settings>
+        <DeleteExpiredTaskAfter>PT0S</DeleteExpiredTaskAfter>
+        <UseUnifiedSchedulingEngine>true</UseUnifiedSchedulingEngine>
+      </Settings>
+      <Actions Context="Users">
+        <Exec>
+          <Command>cmd</Command>
+        </Exec>
+      </Actions>
+    </Task>
+    <Task xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task">
+      <RegistrationInfo>
+        <URI>microsoft\windows\ppiupdatepensmanager\ppiupm_logonafterupdatepens</URI>
+      </RegistrationInfo>
+      <Triggers>
+        <TimeTrigger>
+          <Enabled>true</Enabled>
+          <StartBoundary>2001-01-01T01:00:00</StartBoundary>
+          <EndBoundary>2001-01-01T02:00:00</EndBoundary>
+        </TimeTrigger>
+      </Triggers>
+      <Principals>
+        <Principal id="Users">
+          <GroupId>S-1-5-18</GroupId>
+        </Principal>
+      </Principals>
+      <Settings>
+        <DeleteExpiredTaskAfter>PT0S</DeleteExpiredTaskAfter>
+        <UseUnifiedSchedulingEngine>true</UseUnifiedSchedulingEngine>
+      </Settings>
+      <Actions Context="Users">
+        <Exec>
+          <Command>cmd</Command>
+        </Exec>
+      </Actions>
+    </Task>
+    <Task xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task">
+      <RegistrationInfo>
+        <URI>microsoft\windows\ppiupdatepensmanager\ppiupm_readcalendar</URI>
+      </RegistrationInfo>
+      <Triggers>
+        <TimeTrigger>
+          <Enabled>true</Enabled>
+          <StartBoundary>2001-01-01T01:00:00</StartBoundary>
+          <EndBoundary>2001-01-01T02:00:00</EndBoundary>
+        </TimeTrigger>
+      </Triggers>
+      <Principals>
+        <Principal id="Users">
+          <GroupId>S-1-5-4</GroupId>
+        </Principal>
+      </Principals>
+      <Settings>
+        <DeleteExpiredTaskAfter>PT0S</DeleteExpiredTaskAfter>
+        <UseUnifiedSchedulingEngine>true</UseUnifiedSchedulingEngine>
+      </Settings>
+      <Actions Context="Users">
+        <Exec>
+          <Command>cmd</Command>
+        </Exec>
+      </Actions>
+    </Task>
+    <Task xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task">
+      <RegistrationInfo>
+        <URI>microsoft\windows\ppiupdatepensmanager\ppiupm_resumeinstall</URI>
+      </RegistrationInfo>
+      <Triggers>
+        <TimeTrigger>
+          <Enabled>true</Enabled>
+          <StartBoundary>2001-01-01T01:00:00</StartBoundary>
+          <EndBoundary>2001-01-01T02:00:00</EndBoundary>
+        </TimeTrigger>
+      </Triggers>
+      <Principals>
+        <Principal id="Users">
+          <GroupId>S-1-5-18</GroupId>
+        </Principal>
+      </Principals>
+      <Settings>
+        <DeleteExpiredTaskAfter>PT0S</DeleteExpiredTaskAfter>
+        <UseUnifiedSchedulingEngine>true</UseUnifiedSchedulingEngine>
+      </Settings>
+      <Actions Context="Users">
+        <Exec>
+          <Command>cmd</Command>
+        </Exec>
+      </Actions>
+    </Task>
+    <Task xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task">
+      <RegistrationInfo>
+        <URI>microsoft\windows\ppiupdatepensmanager\ppiupm_retry</URI>
+      </RegistrationInfo>
+      <Triggers>
+        <TimeTrigger>
+          <Enabled>true</Enabled>
+          <StartBoundary>2001-01-01T01:00:00</StartBoundary>
+          <EndBoundary>2001-01-01T02:00:00</EndBoundary>
+        </TimeTrigger>
+      </Triggers>
+      <Principals>
+        <Principal id="Users">
+          <GroupId>S-1-5-18</GroupId>
+        </Principal>
+      </Principals>
+      <Settings>
+        <DeleteExpiredTaskAfter>PT0S</DeleteExpiredTaskAfter>
+        <UseUnifiedSchedulingEngine>true</UseUnifiedSchedulingEngine>
+      </Settings>
+      <Actions Context="Users">
+        <Exec>
+          <Command>cmd</Command>
+        </Exec>
+      </Actions>
+    </Task>
+    <Task xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task">
+      <RegistrationInfo>
+        <URI>microsoft\windows\ppiupdatepensmanager\ppiupm_unlock</URI>
+      </RegistrationInfo>
+      <Triggers>
+        <TimeTrigger>
+          <Enabled>true</Enabled>
+          <StartBoundary>2001-01-01T01:00:00</StartBoundary>
+          <EndBoundary>2001-01-01T02:00:00</EndBoundary>
+        </TimeTrigger>
+      </Triggers>
+      <Principals>
+        <Principal id="Users">
+          <GroupId>S-1-5-18</GroupId>
+        </Principal>
+      </Principals>
+      <Settings>
+        <DeleteExpiredTaskAfter>PT0S</DeleteExpiredTaskAfter>
+        <UseUnifiedSchedulingEngine>true</UseUnifiedSchedulingEngine>
+      </Settings>
+      <Actions Context="Users">
+        <Exec>
+          <Command>cmd</Command>
+        </Exec>
+      </Actions>
+    </Task>
+    <Task xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task">
+      <RegistrationInfo>
+        <URI>microsoft\windows\ppiupdatepensmanager\ppiupm_watcher</URI>
+      </RegistrationInfo>
+      <Triggers>
+        <TimeTrigger>
+          <Enabled>true</Enabled>
+          <StartBoundary>2001-01-01T01:00:00</StartBoundary>
+          <EndBoundary>2001-01-01T02:00:00</EndBoundary>
+        </TimeTrigger>
+      </Triggers>
+      <Principals>
+        <Principal id="Users">
+          <GroupId>S-1-5-18</GroupId>
+        </Principal>
+      </Principals>
+      <Settings>
+        <DeleteExpiredTaskAfter>PT0S</DeleteExpiredTaskAfter>
+        <UseUnifiedSchedulingEngine>true</UseUnifiedSchedulingEngine>
+      </Settings>
+      <Actions Context="Users">
+        <Exec>
+          <Command>cmd</Command>
+        </Exec>
+      </Actions>
+    </Task>
+  </taskScheduler>
+</assembly>

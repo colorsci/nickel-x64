@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-WiFiDisplay" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <dependency discoverable="no" resourceType="Resources">
+    <dependentAssembly dependencyType="prerequisite">
+      <assemblyIdentity name="Microsoft-Windows-WiFiDisplay.Resources" version="10.0.22621.1" processorArchitecture="amd64" language="*" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+    </dependentAssembly>
+  </dependency>
+  <file name="WiFiDisplay.dll" destinationPath="$(runtime.system32)\" sourceName="WiFiDisplay.dll" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>owLpeY/+MuOx2E1bPOyDO7V73sGJ79qt0EW3J/azbQU=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <registryKeys>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\WlanSvc\Parameters\VendorSpecificIEProviders">
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\WlanSvc\Parameters\VendorSpecificIEProviders\B7D94B4D-5DB1-4E70-B5C3-DD003EEEBE66">
+      <registryValue name="Path" valueType="REG_EXPAND_SZ" value="%SYSTEMROOT%\System32\WiFiDisplay.dll" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+  </registryKeys>
+  <firewallRule Action="Allow" Active="True" Binary="%systemroot%\system32\WUDFHost.exe" Desc="@wifidisplay.dll,-10201" Dir="In" Group="@wifidisplay.dll,-100" InternalName="WirelessDisplay-In-TCP" LUAuth="O:LSD:(A;;CC;;;S-1-5-84-0-0-0-0-0)" Name="@wifidisplay.dll,-10200" Profile="Domain, Private, Public" Protocol="TCP" TTK="WFDDisplay" />
+  <firewallRule Action="Allow" Active="True" Binary="%systemroot%\system32\WUDFHost.exe" Desc="@wifidisplay.dll,-10203" Dir="Out" Group="@wifidisplay.dll,-100" InternalName="WirelessDisplay-Out-TCP" LUAuth="O:LSD:(A;;CC;;;S-1-5-84-0-0-0-0-0)" Name="@wifidisplay.dll,-10202" Profile="Domain, Private, Public" Protocol="TCP" TTK="WFDDisplay" />
+  <firewallRule Action="Allow" Active="True" Binary="%systemroot%\system32\WUDFHost.exe" Desc="@wifidisplay.dll,-10205" Dir="Out" Group="@wifidisplay.dll,-100" InternalName="WirelessDisplay-Out-UDP" LUAuth="O:LSD:(A;;CC;;;S-1-5-84-0-0-0-0-0)" Name="@wifidisplay.dll,-10204" Profile="Domain, Private, Public" Protocol="UDP" TTK="WFDDisplay" />
+  <firewallRule Action="Allow" Active="True" Binary="%systemroot%\system32\CastSrv.exe" Desc="@wifidisplay.dll,-10207" Dir="In" Group="@wifidisplay.dll,-100" InternalName="WirelessDisplay-Infra-In-TCP" LPort="7250" Name="@wifidisplay.dll,-10206" Profile="Domain, Private, Public" Protocol="TCP" />
+  <instrumentation xmlns:win="http://manifests.microsoft.com/win/2004/08/windows/events">
+    <events xmlns="http://schemas.microsoft.com/win/2004/08/events">
+      <provider guid="{712880E9-7813-41A3-8E4C-E4E0C4F6580A}" messageFileName="%windir%\system32\wifidisplay.dll" name="Microsoft-Windows-WiFiDisplay" resourceFileName="%windir%\system32\wifidisplay.dll" symbol="WIFIDISPLAY_ETW_PROVIDER_GUID">
+        <channels>
+          <channel name="Microsoft-Windows-WiFiDisplay/Analytic" type="Analytic" />
+        </channels>
+      </provider>
+      <cmi />
+    </events>
+  </instrumentation>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="WRP_REGKEY_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;CI;GA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;CI;GR;;;SY)(A;CI;GR;;;BA)(A;CI;GR;;;BU)(A;CI;GR;;;S-1-15-2-1)(A;CI;GR;;;S-1-15-3-1024-1065365936-1281604716-3511738428-1654721687-432734479-3232135806-4053264122-3456934681)" operationHint="replace" />
+          <securityDescriptorDefinition name="WIFIDISPLAY_REGKEY_CUSTOM_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:PAI(A;OICI;KA;;;SY)(A;OICI;KA;;;BA)(A;OICI;KR;;;BU)(A;OICI;KA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;OICI;KR;;;AC)" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" description="Default SDDL for Windows Resource Protected file" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+</assembly>

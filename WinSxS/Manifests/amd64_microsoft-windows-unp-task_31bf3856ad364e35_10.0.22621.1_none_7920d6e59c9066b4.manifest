@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-UNP-Task" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <taskScheduler>
+    <Task xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task">
+      <RegistrationInfo>
+        <URI>\Microsoft\Windows\UNP\RunUpdateNotificationMgr</URI>
+        <SecurityDescriptor>O:SYD:P(A;;GA;;;SY)(A;;FRFX;;;LS)(A;;FRFX;;;BA)(A;;FRFX;;;AU)</SecurityDescriptor>
+      </RegistrationInfo>
+      <Triggers>
+        <CalendarTrigger>
+          <StartBoundary>2016-06-02T10:30:00</StartBoundary>
+          <ScheduleByDay>
+            <DaysInterval>1</DaysInterval>
+          </ScheduleByDay>
+          <RandomDelay>PT6H</RandomDelay>
+        </CalendarTrigger>
+        <RegistrationTrigger>
+          <Enabled>true</Enabled>
+          <Delay>PT1M</Delay>
+        </RegistrationTrigger>
+      </Triggers>
+      <Principals>
+        <Principal id="Author">
+          <UserId>S-1-5-18</UserId>
+          <RunLevel>HighestAvailable</RunLevel>
+        </Principal>
+      </Principals>
+      <Settings>
+        <UseUnifiedSchedulingEngine>true</UseUnifiedSchedulingEngine>
+        <MultipleInstancesPolicy>IgnoreNew</MultipleInstancesPolicy>
+        <DisallowStartIfOnBatteries>false</DisallowStartIfOnBatteries>
+        <AllowHardTerminate>true</AllowHardTerminate>
+        <StartWhenAvailable>true</StartWhenAvailable>
+        <RunOnlyIfNetworkAvailable>true</RunOnlyIfNetworkAvailable>
+        <AllowStartOnDemand>true</AllowStartOnDemand>
+        <Enabled>false</Enabled>
+        <Hidden>false</Hidden>
+        <RunOnlyIfIdle>false</RunOnlyIfIdle>
+        <WakeToRun>false</WakeToRun>
+        <ExecutionTimeLimit>P3D</ExecutionTimeLimit>
+        <Priority>7</Priority>
+      </Settings>
+      <Actions Context="Author">
+        <Exec>
+          <Command>%windir%\System32\UNP\UpdateNotificationMgr.exe</Command>
+        </Exec>
+      </Actions>
+    </Task>
+  </taskScheduler>
+</assembly>

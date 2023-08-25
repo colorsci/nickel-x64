@@ -1,0 +1,485 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-PowerShell-Instrumentation" version="10.0.22621.1" processorArchitecture="msil" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <instrumentation xmlns:trace="http://schemas.microsoft.com/win/2004/08/events/trace" xmlns:win="http://manifests.microsoft.com/win/2004/08/windows/events" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <events xmlns="http://schemas.microsoft.com/win/2004/08/events">
+      <provider guid="{A0C1853B-5C40-4b15-8766-3CF1C58F985A}" messageFileName="%windir%\system32\WindowsPowerShell\v1.0\PSEvents.dll" name="Microsoft-Windows-PowerShell" resourceFileName="%windir%\system32\WindowsPowerShell\v1.0\PSEvents.dll" symbol="PS_PROVIDER">
+        <channels>
+          <channel chid="C_OPERATIONAL" enabled="true" isolation="Application" message="$(string.PS_CHANNEL_OPERATIONAL.ChannelMessage)" name="Microsoft-Windows-PowerShell/Operational" symbol="C_OPERATIONAL" type="Operational">
+            <logging>
+              <retention>false</retention>
+              <maxSize>15728640</maxSize>
+            </logging>
+          </channel>
+          <channel chid="C_ANALYTIC" enabled="false" isolation="Application" message="$(string.PS_CHANNEL_ANALYTIC.ChannelMessage)" name="Microsoft-Windows-PowerShell/Analytic" symbol="C_ANALYTIC" type="Analytic">
+            <logging>
+              <retention>true</retention>
+              <maxSize>1048985600</maxSize>
+            </logging>
+            <publishing>
+              <bufferSize>64</bufferSize>
+            </publishing>
+          </channel>
+          <channel chid="C_DEBUG" enabled="false" isolation="Application" message="$(string.PS_CHANNEL_DEBUG.ChannelMessage)" name="Microsoft-Windows-PowerShell/Debug" symbol="C_DEBUG" type="Debug">
+            <logging>
+              <retention>true</retention>
+              <maxSize>1048985600</maxSize>
+            </logging>
+            <publishing>
+              <bufferSize>64</bufferSize>
+            </publishing>
+          </channel>
+          <channel chid="C_ADMIN" enabled="true" isolation="Application" message="$(string.PS_CHANNEL_ADMIN.ChannelMessage)" name="Microsoft-Windows-PowerShell/Admin" symbol="C_ADMIN" type="Admin">
+            <logging>
+              <retention>true</retention>
+              <maxSize>1048985600</maxSize>
+            </logging>
+          </channel>
+        </channels>
+      </provider>
+      <cmi />
+    </events>
+    <counters xmlns="http://schemas.microsoft.com/win/2005/12/counters" schemaVersion="1.0">
+      <provider applicationIdentity="%windir%\system32\WindowsPowerShell\v1.0\PSEvents.dll" providerGuid="{5db760bc-64b2-4da7-b4ef-7dab105fbb8c}" providerType="userMode" symbol="PowershellM3PRes">
+        <counterSet description="Displays performance counters for PowerShell Workflow engine." descriptionID="100" guid="{faa17411-9025-4b86-8b5e-ce2f32b06e13}" instances="multiple" name="PowerShell Workflow" nameID="102" symbol="PowershellM3PRes" uri="Microsoft.Windows.System.PerfCounters.PowershellM3PCounterSet">
+          <counter defaultScale="0" description="Displays the number of terminated workflow jobs that failed since the start of PowerShell Workflow engine. This counter displays the last observed value." descriptionID="104" detailLevel="standard" id="1" name="# of failed workflow jobs" nameID="106" type="perf_counter_rawcount" uri="Microsoft.Windows.System.PerfCounters.PowershellM3PCounterSet.FailedWorkflowJobsCount">
+            <counterAttributes>
+              <counterAttribute name="reference" />
+            </counterAttributes>
+          </counter>
+          <counter defaultScale="0" description="Displays the number of workflow jobs that have failed. This counter is not an average over time; it displays the difference between the values observed in the last two samples divided by the duration of the sample interval." descriptionID="108" detailLevel="standard" id="2" name="# of failed workflow jobs/sec" nameID="110" type="perf_counter_counter" uri="Microsoft.Windows.System.PerfCounters.PowershellM3PCounterSet.FailedWorkflowJobsPerSec">
+            <counterAttributes>
+              <counterAttribute name="reference" />
+            </counterAttributes>
+          </counter>
+          <counter defaultScale="0" description="Displays the number of workflow jobs that got resumed (following suspension) since the start of PowerShell Workflow engine. This counter displays the last observed value." descriptionID="112" detailLevel="standard" id="3" name="# of resumed workflow jobs" nameID="114" type="perf_counter_rawcount" uri="Microsoft.Windows.System.PerfCounters.PowershellM3PCounterSet.ResumedWorkflowJobsCount">
+            <counterAttributes>
+              <counterAttribute name="reference" />
+            </counterAttributes>
+          </counter>
+          <counter defaultScale="0" description="Displays the number of workflow jobs that have been resumed. This counter is not an average over time; it displays the difference between the values observed in the last two samples divided by the duration of the sample interval." descriptionID="116" detailLevel="standard" id="4" name="# of resumed workflow jobs/sec" nameID="118" type="perf_counter_counter" uri="Microsoft.Windows.System.PerfCounters.PowershellM3PCounterSet.ResumedWorkflowJobsPerSec">
+            <counterAttributes>
+              <counterAttribute name="reference" />
+            </counterAttributes>
+          </counter>
+          <counter defaultScale="0" description="Displays the number of jobs that are currently being serviced. This counter displays the last observed value." descriptionID="120" detailLevel="standard" id="5" name="# of running workflow jobs" nameID="122" type="perf_counter_rawcount" uri="Microsoft.Windows.System.PerfCounters.PowershellM3PCounterSet.RunningWorkflowJobsCount">
+            <counterAttributes>
+              <counterAttribute name="reference" />
+            </counterAttributes>
+          </counter>
+          <counter defaultScale="0" description="Displays the number of workflow jobs that are being serviced. This counter is not an average over time; it displays the difference between the values observed in the last two samples divided by the duration of the sample interval." descriptionID="124" detailLevel="standard" id="6" name="# of running workflow jobs / sec" nameID="126" type="perf_counter_counter" uri="Microsoft.Windows.System.PerfCounters.PowershellM3PCounterSet.RunningWorkflowJobsPerSec">
+            <counterAttributes>
+              <counterAttribute name="reference" />
+            </counterAttributes>
+          </counter>
+          <counter defaultScale="0" description="Displays the number of terminated workflow jobs that were stopped since the start of PowerShell Workflow engine. This counter displays the last observed value." descriptionID="128" detailLevel="standard" id="7" name="# of stopped workflow jobs" nameID="130" type="perf_counter_rawcount" uri="Microsoft.Windows.System.PerfCounters.PowershellM3PCounterSet.StoppedWorkflowJobsCount">
+            <counterAttributes>
+              <counterAttribute name="reference" />
+            </counterAttributes>
+          </counter>
+          <counter defaultScale="0" description="Displays the number of workflow jobs that have been stopped. This counter is not an average over time; it displays the difference between the values observed in the last two samples divided by the duration of the sample interval." descriptionID="132" detailLevel="standard" id="8" name="# of stopped workflow jobs / sec" nameID="134" type="perf_counter_counter" uri="Microsoft.Windows.System.PerfCounters.PowershellM3PCounterSet.StoppedWorkflowJobsPerSec">
+            <counterAttributes>
+              <counterAttribute name="reference" />
+            </counterAttributes>
+          </counter>
+          <counter defaultScale="0" description="Displays the number of terminated workflow jobs that were successfully completed since the start of PowerShell Workflow engine. This counter displays the last observed value." descriptionID="136" detailLevel="standard" id="9" name="# of succeeded workflow jobs" nameID="138" type="perf_counter_rawcount" uri="Microsoft.Windows.System.PerfCounters.PowershellM3PCounterSet.SucceededWorkflowJobsCount">
+            <counterAttributes>
+              <counterAttribute name="reference" />
+            </counterAttributes>
+          </counter>
+          <counter defaultScale="0" description="Displays the number of workflow jobs that have been successfully completed. This counter is not an average over time; it displays the difference between the values observed in the last two samples divided by the duration of the sample interval." descriptionID="140" detailLevel="standard" id="10" name="# of succeeded workflow jobs/sec" nameID="142" type="perf_counter_counter" uri="Microsoft.Windows.System.PerfCounters.PowershellM3PCounterSet.SucceededWorkflowJobsPerSec">
+            <counterAttributes>
+              <counterAttribute name="reference" />
+            </counterAttributes>
+          </counter>
+          <counter defaultScale="0" description="Displays the number of terminated workflow jobs that were suspended since the start of PowerShell Workflow engine. This counter displays the last observed value." descriptionID="144" detailLevel="standard" id="11" name="# of suspended workflow jobs" nameID="146" type="perf_counter_rawcount" uri="Microsoft.Windows.System.PerfCounters.PowershellM3PCounterSet.SuspendedWorkflowJobsCount">
+            <counterAttributes>
+              <counterAttribute name="reference" />
+            </counterAttributes>
+          </counter>
+          <counter defaultScale="0" description="Displays the number of workflow jobs that have been suspended. This counter is not an average over time; it displays the difference between the values observed in the last two samples divided by the duration of the sample interval." descriptionID="148" detailLevel="standard" id="12" name="# of suspended workflow jobs/sec" nameID="150" type="perf_counter_counter" uri="Microsoft.Windows.System.PerfCounters.PowershellM3PCounterSet.SuspendedWorkflowJobsPerSec">
+            <counterAttributes>
+              <counterAttribute name="reference" />
+            </counterAttributes>
+          </counter>
+          <counter defaultScale="0" description="Displays the number of terminated workflow jobs since the start of PowerShell Workflow engine. This counter displays the last observed value." descriptionID="152" detailLevel="standard" id="13" name="# of terminated workflow jobs" nameID="154" type="perf_counter_rawcount" uri="Microsoft.Windows.System.PerfCounters.PowershellM3PCounterSet.TerminatedWorkflowJobsCount">
+            <counterAttributes>
+              <counterAttribute name="reference" />
+            </counterAttributes>
+          </counter>
+          <counter defaultScale="0" description="Displays the number of workflow jobs that have been terminated. This counter is not an average over time; it displays the difference between the values observed in the last two samples divided by the duration of the sample interval." descriptionID="156" detailLevel="standard" id="14" name="# of terminated workflow jobs / sec" nameID="158" type="perf_counter_counter" uri="Microsoft.Windows.System.PerfCounters.PowershellM3PCounterSet.TerminatedWorkflowJobsPerSec">
+            <counterAttributes>
+              <counterAttribute name="reference" />
+            </counterAttributes>
+          </counter>
+          <counter defaultScale="0" description="Displays the number of jobs that are pending execution and waiting in the PowerShell Workflow job queue. This counter displays the last observed value." descriptionID="164" detailLevel="standard" id="15" name="# of waiting workflow jobs" nameID="166" type="perf_counter_rawcount" uri="Microsoft.Windows.System.PerfCounters.PowershellM3PCounterSet.WaitingWorkflowJobsCount">
+            <counterAttributes>
+              <counterAttribute name="reference" />
+            </counterAttributes>
+          </counter>
+          <counter defaultScale="0" description="Displays the number of activity host processes which are busy servicing the requests (incoming / failed). This counter displays the last observed value." descriptionID="168" detailLevel="standard" id="16" name="Activity Host Manager: # of busy host processes" nameID="170" type="perf_counter_rawcount" uri="Microsoft.Windows.System.PerfCounters.PowershellM3PCounterSet.ActivityHostMgrBusyProcessesCount">
+            <counterAttributes>
+              <counterAttribute name="reference" />
+            </counterAttributes>
+          </counter>
+          <counter defaultScale="0" description="Displays the number of requests that were re-i nserted into the Activity Host Manager queue's because of failure due to process crash. This counter is not an average over time; it displays the difference between the values observed in the last two samples divided by the duration of the sample interval." descriptionID="172" detailLevel="standard" id="17" name="Activity Host Manager: # of failed requests/sec" nameID="174" type="perf_counter_counter" uri="Microsoft.Windows.System.PerfCounters.PowershellM3PCounterSet.ActivityHostMgrFailedRequestsPerSec">
+            <counterAttributes>
+              <counterAttribute name="reference" />
+            </counterAttributes>
+          </counter>
+          <counter defaultScale="0" description="Displays the number of failed requests (because of activity host process crash) that are pending execution and waiting in the Activity Host Manager's queue. This counter displays the last observed value." descriptionID="176" detailLevel="standard" id="18" name="Activity Host Manager: # of failed requests in queue" nameID="178" type="perf_counter_rawcount" uri="Microsoft.Windows.System.PerfCounters.PowershellM3PCounterSet.ActivityHostMgrFailedRequestsQueueLength">
+            <counterAttributes>
+              <counterAttribute name="reference" />
+            </counterAttributes>
+          </counter>
+          <counter defaultScale="0" description="Displays the number of requests that are arrived in the Activity Host Manager queue. This counter is not an average over time; it displays the difference between the values observed in the last two samples divided by the duration of the sample interval." descriptionID="180" detailLevel="standard" id="19" name="Activity Host Manager: # of incoming requests/sec" nameID="182" type="perf_counter_counter" uri="Microsoft.Windows.System.PerfCounters.PowershellM3PCounterSet.ActivityHostMgrIncomingRequestsPerSec">
+            <counterAttributes>
+              <counterAttribute name="reference" />
+            </counterAttributes>
+          </counter>
+          <counter defaultScale="0" description="Displays the number of requests that are pending execution and waiting in the Activity Host Manager's queue. This counter displays the last observed value." descriptionID="184" detailLevel="standard" id="20" name="Activity Host Manager: # of pending requests in queue" nameID="186" type="perf_counter_rawcount" uri="Microsoft.Windows.System.PerfCounters.PowershellM3PCounterSet.ActivityHostMgrPendingRequestsQueueLength">
+            <counterAttributes>
+              <counterAttribute name="reference" />
+            </counterAttributes>
+          </counter>
+          <counter defaultScale="0" description="Displays the number of activity host processes that have been created since the start of PowerShell Workflow engine. This counter displays the last observed value." descriptionID="188" detailLevel="standard" id="21" name="Activity Host Manager: # of created host processes" nameID="190" type="perf_counter_rawcount" uri="Microsoft.Windows.System.PerfCounters.PowershellM3PCounterSet.ActivityHostMgrCreatedProcessesCount">
+            <counterAttributes>
+              <counterAttribute name="reference" />
+            </counterAttributes>
+          </counter>
+          <counter defaultScale="0" description="Displays the number of activity host processes that have been disposed since the start of PowerShell Workflow engine. This counter displays the last observed value." descriptionID="192" detailLevel="standard" id="22" name="Activity Host Manager: # of disposed host processes" nameID="194" type="perf_counter_rawcount" uri="Microsoft.Windows.System.PerfCounters.PowershellM3PCounterSet.ActivityHostMgrDisposedProcessesCount">
+            <counterAttributes>
+              <counterAttribute name="reference" />
+            </counterAttributes>
+          </counter>
+          <counter defaultScale="0" description="Displays the size of the activity host processes pool. This counter displays the last observed value." descriptionID="196" detailLevel="standard" id="23" name="Activity Host Manager: host processes pool size" nameID="198" type="perf_counter_rawcount" uri="Microsoft.Windows.System.PerfCounters.PowershellM3PCounterSet.ActivityHostMgrProcessesPoolSize">
+            <counterAttributes>
+              <counterAttribute name="reference" />
+            </counterAttributes>
+          </counter>
+          <counter defaultScale="0" description="Displays the number of requests that are pending execution and waiting in the PowerShell Remoting queue. This counter displays the last observed value." descriptionID="200" detailLevel="standard" id="24" name="PowerShell Remoting: # of pending requests in queue" nameID="202" type="perf_counter_rawcount" uri="Microsoft.Windows.System.PerfCounters.PowershellM3PCounterSet.PSRemotingPendingRequestsQueueLength">
+            <counterAttributes>
+              <counterAttribute name="reference" />
+            </counterAttributes>
+          </counter>
+          <counter defaultScale="0" description="Displays the number of requests that are being serviced. This counter is not an average over time; it displays the difference between the values observed in the last two samples divided by the duration of the sample interval." descriptionID="204" detailLevel="standard" id="25" name="PowerShell Remoting: # of requests being serviced" nameID="206" type="perf_counter_counter" uri="Microsoft.Windows.System.PerfCounters.PowershellM3PCounterSet.PSRemotingRequestsBeingServicedCount">
+            <counterAttributes>
+              <counterAttribute name="reference" />
+            </counterAttributes>
+          </counter>
+          <counter defaultScale="0" description="Displays the number of requests that were forced to wait and waiting in the PowerShell Remoting queue. This counter displays the last observed value." descriptionID="208" detailLevel="standard" id="26" name="PowerShell Remoting: # of forced to wait requests in queue" nameID="210" type="perf_counter_rawcount" uri="Microsoft.Windows.System.PerfCounters.PowershellM3PCounterSet.PSRemotingForcedToWaitRequestsQueueLength">
+            <counterAttributes>
+              <counterAttribute name="reference" />
+            </counterAttributes>
+          </counter>
+          <counter defaultScale="0" description="Displays the number of PowerShell Remoting connections that have been created since the start of PowerShell Workflow engine. This counter displays the last observed value." descriptionID="212" detailLevel="standard" id="27" name="PowerShell Remoting: # of created connections" nameID="214" type="perf_counter_rawcount" uri="Microsoft.Windows.System.PerfCounters.PowershellM3PCounterSet.PSRemotingConnectionsCreatedCount">
+            <counterAttributes>
+              <counterAttribute name="reference" />
+            </counterAttributes>
+          </counter>
+          <counter defaultScale="0" description="Displays the number of PowerShell Remoting connections that have been disposed since the start of PowerShell Workflow engine. This counter displays the last observed value." descriptionID="216" detailLevel="standard" id="28" name="PowerShell Remoting: # of disposed connections" nameID="218" type="perf_counter_rawcount" uri="Microsoft.Windows.System.PerfCounters.PowershellM3PCounterSet.PSRemotingConnectionsDisposedCount">
+            <counterAttributes>
+              <counterAttribute name="reference" />
+            </counterAttributes>
+          </counter>
+          <counter defaultScale="0" description="Displays the number of PowerShell Remoting connections that were closed and reopened since the start of PowerShell Workflow engine. This counter displays the last observed value." descriptionID="220" detailLevel="standard" id="29" name="PowerShell Remoting: # of connections closed-reopened" nameID="222" type="perf_counter_rawcount" uri="Microsoft.Windows.System.PerfCounters.PowershellM3PCounterSet.PSRemotingConnectionsClosedReopendCount">
+            <counterAttributes>
+              <counterAttribute name="reference" />
+            </counterAttributes>
+          </counter>
+        </counterSet>
+      </provider>
+    </counters>
+  </instrumentation>
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string id="SerializationMethod.AllPublicProperties" value="AllPublicProperties" />
+        <string id="SerializationMethod.String" value="String" />
+        <string id="SerializationMethod.SpecificProperties" value="SpecificProperties" />
+        <string id="WSManAuthenticationMechanism.WSMAN_FLAG_NO_AUTHENTICATION" value="WSMAN_FLAG_NO_AUTHENTICATION" />
+        <string id="WSManAuthenticationMechanism.WSMAN_FLAG_AUTH_DIGEST" value="WSMAN_FLAG_AUTH_DIGEST" />
+        <string id="WSManAuthenticationMechanism.WSMAN_FLAG_AUTH_NEGOTIATE" value="WSMAN_FLAG_AUTH_NEGOTIATE" />
+        <string id="WSManAuthenticationMechanism.WSMAN_FLAG_AUTH_BASIC" value="WSMAN_FLAG_AUTH_BASIC" />
+        <string id="WSManAuthenticationMechanism.WSMAN_FLAG_AUTH_KERBEROS" value="WSMAN_FLAG_AUTH_KERBEROS" />
+        <string id="WSManAuthenticationMechanism.WSMAN_FLAG_AUTH_CLIENT_CERTIFICATE" value="WSMAN_FLAG_AUTH_CLIENT_CERTIFICATE" />
+        <string id="WSManAuthenticationMechanism.WSMAN_FLAG_AUTH_CREDSSP" value="WSMAN_FLAG_AUTH_CREDSSP" />
+        <string id="RemotingDestination.Client" value="Client" />
+        <string id="RemotingDestination.Server" value="Server" />
+        <string id="RemotingDestination.Listener" value="Listener" />
+        <string id="RemotingTargetInterface.InvalidTargetInterface" value="InvalidTargetInterface" />
+        <string id="RemotingTargetInterface.Session" value="Session" />
+        <string id="RemotingTargetInterface.RunspacePool" value="RunspacePool" />
+        <string id="RemotingTargetInterface.PowerShell" value="PowerShell" />
+        <string id="RemotingDataType.InvalidDataType" value="InvalidDataType" />
+        <string id="RemotingDataType.ExceptionAsErrorRecord" value="ExceptionAsErrorRecord" />
+        <string id="RemotingDataType.SessionConfiguration" value="SessionConfiguration" />
+        <string id="RemotingDataType.SessionConfigurationRequest" value="SessionConfigurationRequest" />
+        <string id="RemotingDataType.SessionCapability" value="SessionCapability" />
+        <string id="RemotingDataType.CloseSession" value="CloseSession" />
+        <string id="RemotingDataType.CreateRunspacePool" value="CreateRunspacePool" />
+        <string id="RemotingDataType.SetMaxRunspaces" value="SetMaxRunspaces" />
+        <string id="RemotingDataType.SetMinRunspaces" value="SetMinRunspaces" />
+        <string id="RemotingDataType.RunspacePoolOperationResponse" value="RunspacePoolOperationResponse" />
+        <string id="RemotingDataType.RunspacePoolStateInfo" value="RunspacePoolStateInfo" />
+        <string id="RemotingDataType.CreatePowerShell" value="CreatePowerShell" />
+        <string id="RemotingDataType.AvailableRunspaces" value="AvailableRunspaces" />
+        <string id="RemotingDataType.PSEventArgs" value="PSEventArgs" />
+        <string id="RemotingDataType.RemoteHostCallUsingRunspaceHost" value="RemoteHostCallUsingRunspaceHost" />
+        <string id="RemotingDataType.RemoteRunspaceHostResponseData" value="RemoteRunspaceHostResponseData" />
+        <string id="RemotingDataType.PowerShellInput" value="PowerShellInput" />
+        <string id="RemotingDataType.PowerShellInputEnd" value="PowerShellInputEnd" />
+        <string id="RemotingDataType.PowerShellOutput" value="PowerShellOutput" />
+        <string id="RemotingDataType.PowerShellErrorRecord" value="PowerShellErrorRecord" />
+        <string id="RemotingDataType.PowerShellStateInfo" value="PowerShellStateInfo" />
+        <string id="RemotingDataType.PowerShellDebug" value="PowerShellDebug" />
+        <string id="RemotingDataType.PowerShellVerbose" value="PowerShellVerbose" />
+        <string id="RemotingDataType.PowerShellWarning" value="PowerShellWarning" />
+        <string id="RemotingDataType.PowerShellProgress" value="PowerShellProgress" />
+        <string id="RemotingDataType.StopPowerShell" value="StopPowerShell" />
+        <string id="RemotingDataType.RemoteHostCallUsingPowerShellHost" value="RemoteHostCallUsingPowerShellHost" />
+        <string id="RemotingDataType.RemotePowerShellHostResponseData" value="RemotePowerShellHostResponseData" />
+        <string id="PS_PROVIDER.event.E_A_RUNSPACE_TEST.message" value="Test analytic message" />
+        <string id="PS_PROVIDER.event.E_A_RUNSPACE_SCHEME.message" value="Scheme is %1" />
+        <string id="PS_PROVIDER.event.E_A_RUNSPACE_COMPUTERNAME.message" value="ComputerName resolved to %1" />
+        <string id="PS_PROVIDER.event.E_A_RUNSPACE_APPNAME.message" value="AppName resolved to %1" />
+        <string id="PS_PROVIDER.event.E_A_RUNSPACE_PORT.message" value="Port resolved to %1" />
+        <string id="PS_PROVIDER.event.E_A_RUNSPACE_WSMANCONNECTIONINFO.message" value="Connection Paramters are %n Connection URI: %1 %n Resource URI: %2 %n User: %3 %n OpenTimeout: %4 %n IdleTimeout: %5 %n CancelTimeout: %6 %n AuthenticationMechanism: %7 %n Thumb Print: %8 %n MaxUriRedirectionCount: %9 %n MaxReceivedDataSizePerCommand: %10 %n MaxReceivedObjectSize: %11" />
+        <string id="PS_PROVIDER.event.E_O_RUNSPACE_CONSTRUCTOR.message" value="Creating Runspace object %n %t Instance Id: %1" />
+        <string id="PS_PROVIDER.event.E_O_RUNSPACEPOOL_OPEN.message" value="Opening RunspacePool" />
+        <string id="PS_PROVIDER.event.E_O_RUNSPACEPOOL_CONSTRUCTOR.message" value="Creating RunspacePool object %n %t InstanceId %1 %n %t MinRunspaces %2 %n %t MaxRunspaces %3" />
+        <string id="PS_PROVIDER.event.E_O_RUNSPACEPOOL_TRANSFER.message" value="Modifying activity Id and correlating" />
+        <string id="PS_PROVIDER.event.E_O_RUNSPACE_STATE_CHANGE.message" value="Runspace state changed to %1" />
+        <string id="PS_PROVIDER.event.E_O_REMOTE_RUNSPACE_CREATE_RETRY.message" value="Attempting session creation retry %1 for error code %2 on session Id %3" />
+        <string id="PS_PROVIDER.event.E_A_APPDOMAIN_UNHANDLED_EXCEPTION.message" value="An unhandled exception occurred in the appdomain. %nException Type: %1 %nException Message: %2 %nException StackTrace: %3" />
+        <string id="PS_PROVIDER.event.E_O_APPDOMAIN_UNHANDLED_EXCEPTION.message" value="An unhandled exception occurred in the appdomain. %nException Type: %1 %nException Message: %2 %nException StackTrace: %3" />
+        <string id="PS_PROVIDER.event.E_A_TRANSPORT_ERROR.message" value="Runspace Id: %1 Pipeline Id: %2. WSMan reported an error with error code: %3. %n Error message: %4 %n StackTrace: %5" />
+        <string id="PS_PROVIDER.event.E_O_TRANSPORT_ERROR.message" value="Runspace Id: %1 Pipeline Id: %2. WSMan reported an error with error code: %3. %n Error message: %4 %n StackTrace: %5" />
+        <string id="PS_PROVIDER.event.E_A_TRANSPORT_CONNECT.message" value="Runspace Id %1. Establishing a connection using WSMan Create Shell" />
+        <string id="PS_PROVIDER.event.E_A_TRANSPORT_SHELL_CONNECT_CALLBACK.message" value="Runspace Id %1. Callback received for WSMan Create Shell" />
+        <string id="PS_PROVIDER.event.E_A_TRANSPORT_URI_REDIRECTION.message" value="Runspace Id: %1. Connection is getting redirected to Uri: %2" />
+        <string id="PS_PROVIDER.event.E_A_TRANSPORT_SHELL_CLOSE.message" value="Runspace Id: %1. Closing shell using WSManCloseShell" />
+        <string id="PS_PROVIDER.event.E_A_TRANSPORT_SHELL_CLOSE_CALLBACK.message" value="Runspace Id: %1. Callback received for WSManCloseShell" />
+        <string id="PS_PROVIDER.event.E_A_TRANSPORT_CMD_CONNECT.message" value="Runspace Id %1 Pipeline Id %2. Establishing a command connection using WSManRunShellCommandEx" />
+        <string id="PS_PROVIDER.event.E_A_TRANSPORT_CMD_CONNECT_CALLBACK.message" value="Runspace Id %1 Pipeline Id %2. Callback received for command connection" />
+        <string id="PS_PROVIDER.event.E_A_TRANSPORT_CMD_CLOSE.message" value="Runspace Id: %1 Pipeline Id %2. Closing transport for command" />
+        <string id="PS_PROVIDER.event.E_A_TRANSPORT_CMD_CLOSE_CALLBACK.message" value="Runspace Id: %1 Pipeline Id %2. Callback received for command close" />
+        <string id="PS_PROVIDER.event.E_A_TRANSPORT_SIGNAL.message" value="Runspace Id: %1 Pipeline Id %2. Sending signal with code %3 using WSManSignalShellEx" />
+        <string id="PS_PROVIDER.event.E_A_TRANSPORT_SIGNAL_CALLBACK.message" value="Runspace Id: %1 Pipeline Id %2. Callback received for WSManSignalShellEx" />
+        <string id="PS_PROVIDER.event.E_A_TRANSPORT_SEND_DATA.message" value="Runspace Id: %1 Pipeline Id: %2. Sending data of size %3" />
+        <string id="PS_PROVIDER.event.E_A_TRANSPORT_SEND_DATA_CALLBACK.message" value="Runspace Id: %1 Pipeline Id: %2. Callback received for WSManSendShellInputEx" />
+        <string id="PS_PROVIDER.event.E_A_TRANSPORT_SERVER_SEND_DATA.message" value="Runspace Id: %1 Pipeline Id: %2. Server is sending data of size %3 to client. DataType: %4 TargetInterface: %5" />
+        <string id="PS_PROVIDER.event.E_A_TRANSPORT_RECEIVE_DATA.message" value="Runspace Id: %1 Pipeline Id: %2. Placing Receive request using WSManReceiveShellOutputEx" />
+        <string id="PS_PROVIDER.event.E_A_TRANSPORT_RECEIVE_DATA_CALLBACK.message" value="Runspace Id: %1 Pipeline Id: %2. Received Data of size %3." />
+        <string id="PS_PROVIDER.event.E_A_TRANSPORT_RCVDOBJ.message" value="Received object with Runspace Id: %1 Command Id: %2 Destination: %3 DataType: %4 TargetInterface: %5" />
+        <string id="PS_PROVIDER.event.E_A_CREATE_SERVER_REMOTESESSION.message" value="Request %1. Creating a server remote session. UserName: %2 Custome Shell Id: %3" />
+        <string id="PS_PROVIDER.event.E_A_REPORT_CONTEXT.message" value="Reporting context for request: %1 Context Reported: %1" />
+        <string id="PS_PROVIDER.event.E_A_REPORT_OPERATION_COMPLETE.message" value="Reporting operation complete for request: %1 %n Error Code: %2 %n Error Message: %3 %n StackTrace: %4" />
+        <string id="PS_PROVIDER.event.E_A_CREATE_COMMAND_REMOTESESSION.message" value="Shell Context %1. Request Id %2. Creating a commonad session for running a command." />
+        <string id="PS_PROVIDER.event.E_A_STOP_COMMAND.message" value="Shell Context %1 Command Context %2 Request Id %3. Stopping command." />
+        <string id="PS_PROVIDER.event.E_A_SERVER_RECEIVED_DATA.message" value="Shell Context %1 Command Context %2 Request Id %3. Received data from client." />
+        <string id="PS_PROVIDER.event.E_A_SERVER_RECEIVE_REQUEST.message" value="Shell Context %1 Command Context %2 Request Id %3. Client sent a receive request so that server can send data." />
+        <string id="PS_PROVIDER.event.E_A_SERVER_CLOSE_OPERATION.message" value="Shell Context %1 Command Context %2 IsReceiveOperation %3. Got close operation request." />
+        <string id="PS_PROVIDER.event.E_A_LOAD_PSCUSTOMSHELL_ASSEMBLY.message" value="Loading assembly %1 for custom shell with shell Id %2" />
+        <string id="PS_PROVIDER.event.E_A_LOAD_PSCUSTOMSHELL_TYPE.message" value="Loading type %1 for custom shell with shell Id %2" />
+        <string id="PS_PROVIDER.event.E_A_RECEIVED_FRAGMENT.message" value="Received remoting fragment. %n %t Object Id: %1 %n %t Fragment Id: %2 %n %t Start Flag: %3 %n %t End Flag: %4 %n %t Payload Length: %5 %n %t Payload Data: %6" />
+        <string id="PS_PROVIDER.event.E_A_SENT_FRAGMENT.message" value="Sent remoting fragment. %n %t Object Id: %1 %n %t Fragment Id: %2 %n %t Start Flag: %3 %n %t End Flag: %4 %n %t Payload Length: %5 %n %t Payload Data: %6" />
+        <string id="PS_PROVIDER.event.E_A_SHUTTING_DOWN.message" value="Shutting down winrm service." />
+        <string id="PS_PROVIDER.event.E_A_SERIALIZER_REHYDRATION_SUCCESS.message" value="Successfully rehydrated an object. %n %t Deserialized type name: %1 %n %t Rehydrated by casting to type: %2 %n %t Rehydrated object is of type: %3" />
+        <string id="PS_PROVIDER.event.E_A_SERIALIZER_REHYDRATION_FAILURE.message" value="Failed to rehydrated an object. %n %t Deserialized type name: %1 %n %t Rehydrated by casting to type: %2 %n %t Type cast exception: %3 %n %t Type cast inner exception: %4" />
+        <string id="PS_PROVIDER.event.E_A_SERIALIZER_DEPTH_OVERRIDE.message" value="Serialization depth has been overriden. %n %t Serialized type name: %1 %n %t Original depth: %2 %n %t Overriden depth: %3 %n %t Current depth below top level: %4" />
+        <string id="PS_PROVIDER.event.E_A_SERIALIZER_MODE_OVERRIDE.message" value="Serialization mode has been overriden. %n %t Serialized type name: %1 %n %t Overriden mode: %2" />
+        <string id="PS_PROVIDER.event.E_A_SERIALIZER_SCRIPT_PROPERTY_WITHOUT_RUNSPACE.message" value="Serialization of a script property has been skipped, because there is no runspace to use for evaluation of the property. %n %t Property name: %1 %n %t Property owner's type name: %2 %n %t Getter script: %3" />
+        <string id="PS_PROVIDER.event.E_A_SERIALIZER_PROPERTY_GETTER_FAILED.message" value="Serialization of a property has been skipped, because property getter failed. %n %t Property name: %1 %n %t Property owner's type name: %2 %n %t Exception from property getter: %3 %n %t Inner exception from property getter: %4" />
+        <string id="PS_PROVIDER.event.E_A_SERIALIZER_ENUMERATION_FAILED.message" value="Serialization of an enumerable object might not be complete, because object being enumerated threw an exception. %n %t Type of object being enumerated: %1 %n %t Exception: %2" />
+        <string id="PS_PROVIDER.event.E_A_SERIALIZER_TOSTRING_FAILED.message" value="Serialization called object's ToString method which failed. %n %t Type of object: %1 %n %t Exception: %2" />
+        <string id="PS_PROVIDER.event.E_A_SERIALIZER_MAX_DEPTH_WHEN_SERIALIZING.message" value="Maximum depth below top level has been reached, forcing object to be serialized as strings. %n %t Object type at max depth: %1 %n %t Property name at max depth: %2 %n %t Depth: %3" />
+        <string id="PS_PROVIDER.event.E_A_SERIALIZER_XMLEXCEPTION_WHEN_DESERIALIZING.message" value="XmlException has been thrown by the deserializer (most likely indicating incorrect clixml format). %n %t Line number: %1 Line position: %2 %n %t Exception: %3" />
+        <string id="PS_PROVIDER.event.E_A_SERIALIZER_SPECIFIC_PROPERTY_MISSING.message" value="Serialization of specified properties failed, because one of the specified properties was missing. %n %t Type of object: %1 %n %t Property name: %2" />
+        <string id="PS_PROVIDER.event.E_O_CMDLETS_SHELLRESOLVE.message" value="Remote shell name resolved to default Microsoft.PowerShell" />
+        <string id="PS_PROVIDER.event.E_O_CMDLETS_SCHEMERESOLVE.message" value="Resolving to default scheme http" />
+        <string id="PS_PROVIDER.event.E_O_CMDLETS_HOSTNAMERESOLVE.message" value="Computer Name $null or . resolve to LocalHost" />
+        <string id="PS_PROVIDER.event.E_O_M3PWorkflowPluginStarted.message" value="Workflow plugin loaded. %n %t EndpointName: %1 %n %t User: %2 %n %t HostingMode: %3 %n %t Protocol: %4 %n %t Configuration: %n %5" />
+        <string id="PS_PROVIDER.event.E_O_M3PWorkflowExecutionStarted.message" value="Workflow execution started. %n %t WorkflowId: %1 %n %t ManagedNodes: %2" />
+        <string id="PS_PROVIDER.event.E_O_M3PEndpointRegistered.message" value="A new PowerShell endpoint was registered. %n %t EndpointName: %1 %n %t EndpointType: %2 %n %t RegisteredBy: %3" />
+        <string id="PS_PROVIDER.event.E_O_M3PEndpointModified.message" value="Endpoint configuration modified. %n %t EndpointName: %1 %n %t ModifiedBy: %2" />
+        <string id="PS_PROVIDER.event.E_O_M3PEndpointDisabled.message" value="Endpoint configuration disabled. %n %t EndpointName: %1 %n %t DisabledBy: %2" />
+        <string id="PS_PROVIDER.event.E_O_M3PWorkflowEngineStarted.message" value="Workflow engine started. %n %t EndpointName: %1" />
+        <string id="PS_PROVIDER.event.E_D_M3PWORKFLOW_MANAGER_CHECKPOINTPATH.message" value="Workflow manager instantiated with %n %t CheckpointPath: %1 %n %t ConfigProviderId: %2 %n %t UserName: %3 %n %t Path: %4" />
+        <string id="PS_PROVIDER.event.E_O_M3PParameterSplattingWasPerformed.message" value="Parameter splatting was performed during workflow execution. %n %t Parameters: %1 %n %t Computers: %2" />
+        <string id="PS_PROVIDER.event.E_O_M3POutOfProcessRunspaceStarted.message" value="Out of process runspace started. %n %t Command: %1" />
+        <string id="PS_PROVIDER.event.E_O_M3PEndpointEnabled.message" value="Endpoint configuration enabled. %n %t EndpointName: %1 %n %t EnabledBy: %2" />
+        <string id="PS_PROVIDER.event.E_O_M3PEndpointUnregistered.message" value="Endpoint configuration unregistered. %n %t EndpointName: %1 %n %t UnregisteredBy: %2" />
+        <string id="PS_PROVIDER.event.E_O_M3PWorkflowExecutionError.message" value="Workflow execution error. %n %t WorkflowId: %1 %n %t ErrorDescription: %2" />
+        <string id="PS_PROVIDER.event.E_O_M3PWorkflowStateChanged.message" value="Workflow state changed. %n %t WorkflowId: %1 %n %t NewState: %2 %n %t OldState: %3" />
+        <string id="PS_PROVIDER.event.E_O_M3PWorkflowPluginRequestedToShutdown.message" value="Workflow plugin has been requested for a shutdown. %n %t EndpointName: %1" />
+        <string id="PS_PROVIDER.event.E_O_M3PWorkflowPluginRestarted.message" value="Workflow plugin restarted. %n %t EndpointName: %1" />
+        <string id="PS_PROVIDER.event.E_O_M3PWorkflowWorkflowsResuming.message" value="Workflow is resuming. %n %t WorkflowId: %1" />
+        <string id="PS_PROVIDER.event.E_O_M3PWorkflowWorkflowsResumed.message" value="Workflow has resumed. %n %t WorkflowId: %1" />
+        <string id="PS_PROVIDER.event.E_O_M3PWorkflowQuotaViolationDetected.message" value="A quota limit that was set for the endpoint was exceeded. %n %t EndpointName: %1 %n %t ConfigName: %2 %n %t AllowedValue: %3 %n %t ValueInQuestion: %4" />
+        <string id="PS_PROVIDER.event.E_O_M3PWorkflowRunspacePoolCreated.message" value="Workflow runspace pool was created. %n %t WorkflowId: %1 %n %t ManagedNode: %2" />
+        <string id="PS_PROVIDER.event.E_O_M3PWorkflowActivityExecutionQueued.message" value="Activity was queued for execution. %n %t WorkflowId: %1 %n %t ActivityName: %2" />
+        <string id="PS_PROVIDER.event.E_O_M3PWorkflowActivityExecutionFinished.message" value="Activity execution finished. %n %t ActivityName: %1" />
+        <string id="PS_PROVIDER.event.E_O_M3PWorkflowActivityExecutionStarted.message" value="Activity execution started. %n %t ActivityName: %1 %n %t ActivityTypeName: %2" />
+        <string id="PS_PROVIDER.event.E_O_M3PWorkflowImportingFromXaml.message" value="Workflow is being imported from a XAML file. %n %t WorkflowId: %1 %n %t XamlFile: %2" />
+        <string id="PS_PROVIDER.event.E_O_M3PWorkflowImportedFromXaml.message" value="Workflow has been imported from a XAML file. %n %t WorkflowId: %1 %n %t XamlFile: %2" />
+        <string id="PS_PROVIDER.event.E_O_M3PWorkflowImportFromXamlError.message" value="Workflow could not be imported from a XAML file because of an error. %n %t WorkflowId: %1 %n %t ErrorDescription: %2" />
+        <string id="PS_PROVIDER.event.E_O_M3PWorkflowImportFromXamlValidationStarted.message" value="Workflow validation started. %n %t WorkflowId: %1" />
+        <string id="PS_PROVIDER.event.E_O_M3PWorkflowImportFromXamlValidationFinishedSuccessfully.message" value="Workflow validation succeeded. %n %t WorkflowId: %1" />
+        <string id="PS_PROVIDER.event.E_O_M3PWorkflowImportFromXamlValidationFinishedWithError.message" value="Workflow validation failed with error. %n %t WorkflowId: %1" />
+        <string id="PS_PROVIDER.event.E_O_M3PWorkflowImportFromXamlActivityValidated.message" value="Workflow activity validated. %n %t WorkflowId: %1 %n %t ActivityDisplayName: %2 %n %t ActivityTypeName: %3" />
+        <string id="PS_PROVIDER.event.E_O_M3PWorkflowActivityExecutionFailed.message" value="Activity execution failed. %n %t WorkflowId: %1 %n %t ActivityName: %2 %n %t FailureDescription: %3" />
+        <string id="PS_PROVIDER.event.E_O_M3PWorkflowImportFromXamlActivityValidationFailed.message" value="Workflow activity could not be validated. %n %t WorkflowId: %1 %n %t ActivityDisplayName: %2 %n %t ActivityTypeName: %3" />
+        <string id="PS_PROVIDER.event.E_O_M3PWorkflowRunspaceAvailabilityChanged.message" value="Runspace availability changed. %n %t RunspaceId: %1 %n %t Availability: %2" />
+        <string id="PS_PROVIDER.event.E_O_M3PWorkflowLoadedForExecution.message" value="Workflow loaded for execution. %n %t WorkflowId: %1" />
+        <string id="PS_PROVIDER.event.E_O_M3PWorkflowExecutionFinished.message" value="Workflow execution finished. %n %t WorkflowId: %1" />
+        <string id="PS_PROVIDER.event.E_O_M3PLoadingWorkflowForExecution.message" value="Loading workflow for execution. %n %t WorkflowId: %1" />
+        <string id="PS_PROVIDER.event.E_O_M3PForcedWorkflowShutdownStarted.message" value="Forced workflow shutdown started. %n %t WorkflowId: %1" />
+        <string id="PS_PROVIDER.event.E_O_M3PForcedWorkflowShutdownFinished.message" value="Forced workflow shutdown finished. %n %t WorkflowId: %1" />
+        <string id="PS_PROVIDER.event.E_O_M3PForcedWorkflowShutdownError.message" value="An error occurred while forcefully shutting down a workflow. %n %t WorkflowId: %1 %n %t ErrorDescription: %2" />
+        <string id="PS_PROVIDER.event.E_O_M3PPersistingWorkflow.message" value="Persisting workflow to disk. %n %t WorkflowId: %1 %n %t PersistPath: %2" />
+        <string id="PS_PROVIDER.event.E_O_M3PWorkflowPersisted.message" value="Workflow persisted to disk. %n %t WorkflowId: %1" />
+        <string id="PS_PROVIDER.event.E_O_M3PUnloadingWorkflow.message" value="Unloading workflow. %n %t WorkflowId: %1" />
+        <string id="PS_PROVIDER.event.E_O_M3PWorkflowUnloaded.message" value="Workflow unloaded. %n %t WorkflowId: %1" />
+        <string id="PS_PROVIDER.event.E_O_M3PCancellingWorkflowExecution.message" value="Cancelling workflow execution. %n %t WorkflowId: %1" />
+        <string id="PS_PROVIDER.event.E_O_M3PWorkflowCancelled.message" value="Workflow execution cancelled. %n %t WorkflowId: %1" />
+        <string id="PS_PROVIDER.event.E_O_M3PAbortingWorkflowExecution.message" value="Aborting workflow execution. %n %t WorkflowId: %1 %n %t Reason: %2" />
+        <string id="PS_PROVIDER.event.E_O_M3PWorkflowAborted.message" value="Workflow execution aborted. %n %t WorkflowId: %1" />
+        <string id="PS_PROVIDER.event.E_O_M3PWorkflowLoadedFromDisk.message" value="Persisted workflow loaded from disk. %n %t WorkflowId: %1 %n %t Path: %2" />
+        <string id="PS_PROVIDER.event.E_O_M3PRemoveJobStarted.message" value="Starting remove job. %n %t JobId: %1" />
+        <string id="PS_PROVIDER.event.E_O_M3PJobError.message" value="Job error. %n %t JobId: %1 %n %t WorkflowId: %2 %n %t ErrorDescription: %3" />
+        <string id="PS_PROVIDER.event.E_O_M3PWorkflowJobCreated.message" value="Job created for workflow (child job). %n %t ParentJobId: %1 %n %t ChildJobId: %2 %n %t ChildWorkflowId: %3" />
+        <string id="PS_PROVIDER.event.E_O_M3PParentJobCreated.message" value="Parent job created for workflow. %n %t JobId: %1" />
+        <string id="PS_PROVIDER.event.E_O_M3PJobRemoveError.message" value="An error occurred while removing job. %n %t ParentJobId: %1 %n %t ChildJobId: %2 %n %t WorkflowId: %3 %n %t Error: %4" />
+        <string id="PS_PROVIDER.event.E_O_M3PJobRemoved.message" value="Child job removed for workflow. %n %t ParentJobId: %1 %n %t ChildJobId: %2 %n %t WorkflowId: %3" />
+        <string id="PS_PROVIDER.event.E_O_M3PJobCreationCompleted.message" value="All required jobs were created for workflow execution. %n %t JobId: %1 %n %t WorkflowId: %2" />
+        <string id="PS_PROVIDER.event.E_O_M3PJobStateChanged.message" value="Job state changed. %n %t JobId: %1 %n %t WorkflowId: %2 %n %t NewState: %3 %n %t OldState: %4" />
+        <string id="PS_PROVIDER.event.E_O_M3PWorkflowDeletedFromDisk.message" value="Workflow data was deleted from disk. %n %t WorkflowId: %1 %n %t Path: %2" />
+        <string id="PS_PROVIDER.event.E_O_M3PWorkflowCleanup.message" value="Workflow cleanup operation executed. %n %t WorkflowId: %1" />
+        <string id="PS_PROVIDER.event.E_O_M3PWorkflowRunspaceStateChanged.message" value="Runspace state changed. %n %t RunspaceId: %1 %n %t NewState: %2 %n %t OldState: %3" />
+        <string id="PS_PROVIDER.event.E_A_RUNSPACEPOOL_TRANSFER.message" value="Modifying activity Id and correlating" />
+        <string id="PS_PROVIDER.channel.C_ANALYTIC.message" value="Channel used for writing high volume high performance trace messages" />
+        <string id="PS_PROVIDER.channel.C_OPERATIONAL.message" value="Channel used for writing diagnostic messages" />
+        <string id="PS_PROVIDER.level.L_DEBUG.message" value="Debug level defined by PowerShell (which is above Informational defined by system)" />
+        <string id="PS_PROVIDER.task.T_SERIALIZATION.message" value="Serialize or deserialize remoting payload" />
+        <string id="PS_PROVIDER.task.T_Powershell-Console-Startup.message" value="PowerShell Console Startup" />
+        <string id="PS_PROVIDER.task.T_M3P-WorkflowHostingTask.message" value="Workflow Hosting" />
+        <string id="PS_PROVIDER.task.T_M3P-WorkflowExecutionTask.message" value="Workflow Execution" />
+        <string id="PS_PROVIDER.task.T_M3P-WorkflowPersistenceTask.message" value="Workflow Persistence" />
+        <string id="PS_PROVIDER.task.T_M3P-ConfiguarationTask.message" value="Configuration" />
+        <string id="PS_PROVIDER.task.T_M3P-WorkflowValidationTask.message" value="Workflow Validation" />
+        <string id="PS_PROVIDER.event.E_O_Powershell-Console-Startup-Start.message" value="PowerShell console is starting up" />
+        <string id="PS_PROVIDER.event.E_O_Powershell-Console-Startup-Stop.message" value="PowerShell console is ready for user input" />
+        <string id="PS_PROVIDER.event.E_D_Powershell_ErrorRecord.message" value="Tracing ErrorRecord: %n Message: %1 %n CategoryInfo.Category: %2 %n CategoryInfo.Reason : %3 %n CategoryInfo.TargetName : %4 %n FullyQualifiedErrorId: %5 %n Exception Details: %n Message : %6 %n Stack Trace: %7 %n InnerException %8 %n" />
+        <string id="PS_PROVIDER.event.E_D_Powershell_Exception.message" value="Exception: %n Message: %1 %n StackTrace: %2 %n InnerException : %3 %n" />
+        <string id="PS_PROVIDER.event.E_O_Powershell_PSObject.message" value="Tracing PSObject" />
+        <string id="PS_PROVIDER.event.E_D_Powershell_Job.message" value="Tracing Job: %n Id: %1 %n InstanceId: %2 %n Name: %3 %n Location: %4 %n State: %5 %n Command: %6 %n" />
+        <string id="PS_PROVIDER.event.E_D_MESSAGE.message" value="Trace Information: %n %1" />
+        <string id="PS_PROVIDER.event.E_D_MESSAGE2.message" value="Trace Information: %n %1 %2" />
+        <string id="PS_PROVIDER.event.E_D_DebugMessage.message" value="%1" />
+        <string id="PS_PROVIDER.event.E_O_COMMAND_HEALTH.message" value="%3%n%nContext:%n%1%n%nUser Data:%n%2%n" />
+        <string id="PS_PROVIDER.event.E_O_ENGINE_HEALTH.message" value="%3%n%nContext:%n%1%n%nUser Data:%n%2%n" />
+        <string id="PS_PROVIDER.event.E_O_PROVIDER_HEALTH.message" value="%3%n%nContext:%n%1%n%nUser Data:%n%2%n" />
+        <string id="PS_PROVIDER.event.E_O_PIPELINE_DETAIL.message" value="%3%n%nContext:%n%1%n%nUser Data:%n%2%n" />
+        <string id="PS_PROVIDER.event.E_A_COMMAND_LIFECYCLE.message" value="%3%n%nContext:%n%1%n%nUser Data:%n%2%n" />
+        <string id="PS_PROVIDER.event.E_A_ENGINE_LIFECYCLE.message" value="%3%n%nContext:%n%1%n%nUser Data:%n%2%n" />
+        <string id="PS_PROVIDER.event.E_A_PROVIDER_LIFECYCLE.message" value="%3%n%nContext:%n%1%n%nUser Data:%n%2%n" />
+        <string id="PS_PROVIDER.task.T_ENGINE_START.message" value="Starting Engine" />
+        <string id="PS_PROVIDER.task.T_ENGINE_STOP.message" value="Stopping Engine" />
+        <string id="PS_PROVIDER.task.T_COMMAND_START.message" value="Starting Command" />
+        <string id="PS_PROVIDER.task.T_COMMAND_STOP.message" value="Stopping Command" />
+        <string id="PS_PROVIDER.task.T_PROVIDER_START.message" value="Starting Provider" />
+        <string id="PS_PROVIDER.task.T_PROVIDER_STOP.message" value="Stopping Provider" />
+        <string id="PS_PROVIDER.task.T_EXECUTE_PIPELINE.message" value="Executing Pipeline" />
+        <string id="PS_PROVIDER.task.T_EXECUTE_SCRIPTBLOCK.message" value="Executing ScriptBlock" />
+        <string id="PS_PROVIDER.event.E_O_SCRIPTBLOCK_CREATE_DETAIL.message" value="Creating Scriptblock text (%1 of %2):%n%3%n%nScriptBlock ID: %4%nPath: %5" />
+        <string id="PS_PROVIDER.event.E_O_SCRIPTBLOCK_INVOKE_START_DETAIL.message" value="Started invocation of ScriptBlock ID: %1%nRunspace ID: %2" />
+        <string id="PS_PROVIDER.event.E_O_SCRIPTBLOCK_INVOKE_COMPLETE_DETAIL.message" value="Completed invocation of ScriptBlock ID: %1%nRunspace ID: %2" />
+        <string id="PS_PROVIDER.event.E_A_WriteTransferEvent.message" value="Correlating activity id's. %n %t CurrentActivityId: %1 %n %t ParentActivityId: %2" />
+        <string id="PS_PROVIDER.event.E_A_SETTINGS.message" value="%3%n%nContext:%n%1%n%nUser Data:%n%2%n" />
+        <string id="PS_PROVIDER.event.E_A_ENGINE_TRACE.message" value="Class Name = %1%nMethod Name = %2%nWorkflow GUID = %3%nMessage = %4%n%5%nActivity Name = %6%nActivity GUID = %7%nParameters = %8" />
+        <string id="PS_PROVIDER.task.T_EXECUTECOMMAND.message" value="Execute a Remote Command" />
+        <string id="PS_PROVIDER.task.T_CREATERUNSPACE.message" value="Connect" />
+        <string id="PS_PROVIDER.opcode.O_DISCONNECT.message" value="Disconnect" />
+        <string id="PS_PROVIDER.opcode.O_METHOD.message" value="To be used when operation is just executing a method" />
+        <string id="PS_PROVIDER.opcode.O_EXCEPTION.message" value="To be used when an exception is raised" />
+        <string id="PS_PROVIDER.opcode.O_EVENTHANDLER.message" value="To be used when an event handler is raised" />
+        <string id="PS_PROVIDER.opcode.O_DISPOSE.message" value="To be used when an object is disposed" />
+        <string id="PS_PROVIDER.opcode.O_REHYDRATION.message" value="Rehydration" />
+        <string id="PS_PROVIDER.opcode.O_SERIALIZATION_SETTINGS.message" value="Serialization settings" />
+        <string id="PS_PROVIDER.opcode.O_SHUTTING_DOWN.message" value="Shutting down" />
+        <string id="PS_PROVIDER.opcode.O_CONSTRUCTOR.message" value="to be used when an object is constructed" />
+        <string id="PS_PROVIDER.opcode.O_CREATE.message" value="On create calls" />
+        <string id="PS_PROVIDER.opcode.O_NEGOTIATE.message" value="Negotiate" />
+        <string id="PS_PROVIDER.opcode.O_CONNECT.message" value="connect" />
+        <string id="PS_PROVIDER.opcode.O_CLOSE.message" value="Close (Async)" />
+        <string id="PS_PROVIDER.opcode.O_OPEN.message" value="Open (async)" />
+        <string id="PS_PROVIDER.opcode.O_SEND.message" value="Send (Async)" />
+        <string id="PS_PROVIDER.opcode.O_RECEIVE.message" value="Receive (Async)" />
+        <string id="PS_PROVIDER.keyword.K_PLUGIN.message" value="The managed PowerShell plugin worker" />
+        <string id="PS_PROVIDER.keyword.K_PSWORKFLOW.message" value="PSWorkflow Hosting And Execution Layer" />
+        <string id="PS_PROVIDER.keyword.K_SESSION.message" value="All session layer" />
+        <string id="PS_PROVIDER.keyword.K_SERIALIZER.message" value="The serialization layer" />
+        <string id="PS_PROVIDER.keyword.K_CMDLETS.message" value="All remoting cmdlets" />
+        <string id="PS_PROVIDER.keyword.K_HOST.message" value="PowerShell remoting host proxy calls" />
+        <string id="PS_PROVIDER.keyword.K_TRANSPORT.message" value="PowerShell remoting transport" />
+        <string id="PS_PROVIDER.keyword.K_PROTOCOL.message" value="PowerShell remoting protocol" />
+        <string id="PS_PROVIDER.keyword.K_PIPELINE.message" value="Pipeline of Commands" />
+        <string id="PS_PROVIDER.keyword.K_RUNSPACE.message" value="PowerShell Runspace" />
+        <string id="PS_CHANNEL_OPERATIONAL.ChannelMessage" value="Microsoft-Windows-PowerShell/Operational" />
+        <string id="PS_CHANNEL_ANALYTIC.ChannelMessage" value="Microsoft-Windows-PowerShell/Analytic" />
+        <string id="PS_CHANNEL_DEBUG.ChannelMessage" value="Microsoft-Windows-PowerShell/Debug" />
+        <string id="PS_CHANNEL_ADMIN.ChannelMessage" value="Microsoft-Windows-PowerShell/Admin" />
+        <string id="PS_PROVIDER.event.E_O_ScheduledJobStarted.message" value="Scheduled Job %1 started at %2 %n" />
+        <string id="PS_PROVIDER.event.E_O_ScheduledJobCompleted.message" value="Scheduled Job %1 completed at %2 with state %3 %n" />
+        <string id="PS_PROVIDER.event.E_O_ScheduledJobException.message" value="Scheduled Job Exception %1: %n Message: %2 %n StackTrace: %3 %n InnerException: %4 %n" />
+        <string id="PS_PROVIDER.task.T_ScheduledJob.message" value="PowerShell Scheduled Jobs" />
+        <string id="PS_PROVIDER.task.T_NamedPipe.message" value="PowerShell Named Pipe IPC" />
+        <string id="PS_PROVIDER.event.E_D_M3PBeginStartWorkflowApplication.message" value="BEGIN ImportWorkflowCommand::StartWorkflowApplication. Starting invocation of workflow function. Tracking Guid %1" />
+        <string id="PS_PROVIDER.event.E_D_M3PEndStartWorkflowApplication.message" value="END ImportWorkflowCommand::StartWorkflowApplication. Ending invocation of workflow function. Tracking Guid %1" />
+        <string id="PS_PROVIDER.event.E_D_M3PBeginCreateNewJob.message" value="BEGIN Creating new job in ImportWorkflowCommand::StartWorkflowApplication. Tracking Guid %1" />
+        <string id="PS_PROVIDER.event.E_D_M3PEndCreateNewJob.message" value="END Creating new job in ImportWorkflowCommand::StartWorkflowApplication. Tracking Guid %1" />
+        <string id="PS_PROVIDER.event.E_D_M3PTrackingGuidContainerParentJobCorrelation.message" value="END Creating new job in ImportWorkflowCommand::StartWorkflowApplication. Tracking Guid %1 : ContainerParentJob Guid %2" />
+        <string id="PS_PROVIDER.event.E_D_M3PBeginJobLogic.message" value="BEGIN JobLogic ContainerParentJob Guid %1" />
+        <string id="PS_PROVIDER.event.E_D_M3PEndJobLogic.message" value="END JobLogic ContainerParentJob Guid %1" />
+        <string id="PS_PROVIDER.event.E_D_M3PBeginWorkflowExecution.message" value="BEGIN WorkflowExecution ContainerParentJob Guid %1" />
+        <string id="PS_PROVIDER.event.E_D_M3PEndWorkflowExecution.message" value="END WorkflowExecution ContainerParentJob Guid %1" />
+        <string id="PS_PROVIDER.event.E_D_M3PChildWorkflowJobAddition.message" value="WorkflowJob with Guid %1 added to ContainerParentJob with Guid %2" />
+        <string id="PS_PROVIDER.event.E_D_M3PProxyJobRemoteJobAssociation.message" value="ProxyJob with Guid %1 associated with remote ContainerParentJob with Guid %2" />
+        <string id="PS_PROVIDER.event.E_D_M3PBeginContainerParentJobExecution.message" value="BEGIN Execution of ContainerParentJob with Guid %1" />
+        <string id="PS_PROVIDER.event.E_D_M3PEndContainerParentJobExecution.message" value="END Execution of ContainerParentJob with Guid %1" />
+        <string id="PS_PROVIDER.event.E_D_M3PBeginProxyJobExecution.message" value="BEGIN Execution of Proxy Job with Guid %1" />
+        <string id="PS_PROVIDER.event.E_D_M3PEndProxyJobExecution.message" value="END Execution of Proxy Job with Guid %1" />
+        <string id="PS_PROVIDER.event.E_D_M3PBeginProxyJobEventHandler.message" value="BEGIN StateChanged event handler for Proxy Job with Guid %1" />
+        <string id="PS_PROVIDER.event.E_D_M3PEndProxyJobEventHandler.message" value="END StateChanged event handler for Proxy Job with Guid %1" />
+        <string id="PS_PROVIDER.event.E_D_M3PBeginProxyChildJobEventHandler.message" value="BEGIN StateChanged event handler for Proxy Child Job with Guid %1" />
+        <string id="PS_PROVIDER.event.E_D_M3PEndProxyChildJobEventHandler.message" value="END StateChanged event handler for Proxy Child Job with Guid %1" />
+        <string id="PS_PROVIDER.event.E_D_M3PBeginRunGarbageCollection.message" value="BEGIN Running garbage collection" />
+        <string id="PS_PROVIDER.event.E_D_M3PEndRunGarbageCollection.message" value="END Running garbage collection" />
+        <string id="PS_PROVIDER.event.E_O_M3PPERSISTENCE_STORE_MAXSIZE_REACHED.message" value="Persistence store has reached its maximum specified size" />
+        <string id="PS_PROVIDER.task.T_ISEOperation.message" value="PowerShell ISE Operation" />
+        <string id="PS_PROVIDER.event.E_O_ISEExecuteScript.message" value="Windows PowerShell ISE has started to run script file %1." />
+        <string id="PS_PROVIDER.event.E_O_ISEExecuteSelection.message" value="Windows PowerShell ISE has started to run a user-selected script from file %1." />
+        <string id="PS_PROVIDER.event.E_O_ISEStopCommand.message" value="Windows PowerShell ISE is stopping the current command." />
+        <string id="PS_PROVIDER.event.E_O_ISEResumeDebugger.message" value="Windows PowerShell ISE is resuming the debugger." />
+        <string id="PS_PROVIDER.event.E_O_ISEStopDebugger.message" value="Windows PowerShell ISE is stopping the debugger." />
+        <string id="PS_PROVIDER.event.E_O_ISEDebuggerStepInto.message" value="Windows PowerShell ISE is stepping into debugging." />
+        <string id="PS_PROVIDER.event.E_O_ISEDebuggerStepOver.message" value="Windows PowerShell ISE is stepping over debugging." />
+        <string id="PS_PROVIDER.event.E_O_ISEDebuggerStepOut.message" value="Windows PowerShell ISE is stepping out of debugging." />
+        <string id="PS_PROVIDER.event.E_O_ISEEnableAllBreakpoints.message" value="Windows PowerShell ISE is enabling all breakpoints." />
+        <string id="PS_PROVIDER.event.E_O_ISEDisableAllBreakpoints.message" value="Windows PowerShell ISE is disabling all breakpoints." />
+        <string id="PS_PROVIDER.event.E_O_ISERemoveAllBreakpoints.message" value="Windows PowerShell ISE is removing all breakpoints." />
+        <string id="PS_PROVIDER.event.E_O_ISESetBreakpoint.message" value="Windows PowerShell ISE is setting the breakpoint at line #: %1 of file %2." />
+        <string id="PS_PROVIDER.event.E_O_ISERemoveBreakpoint.message" value="Windows PowerShell ISE is removing the breakpoint on line #: %1 of file %2." />
+        <string id="PS_PROVIDER.event.E_O_ISEEnableBreakpoint.message" value="Windows PowerShell ISE is enabling the breakpoint on line #: %1 of file %2." />
+        <string id="PS_PROVIDER.event.E_O_ISEDisableBreakpoint.message" value="Windows PowerShell ISE is disabling the breakpoint on line #: %1 of file %2." />
+        <string id="PS_PROVIDER.event.E_O_ISEHitBreakpoint.message" value="Windows PowerShell ISE has hit a breakpoint on line #: %1 of file %2." />
+        <string id="PS_PROVIDER.event.E_O_REMOTE_NAMEDPIPE_LISTENER_START.message" value="Windows PowerShell has started an IPC listening thread on process: %1 in AppDomain: %2." />
+        <string id="PS_PROVIDER.event.E_O_REMOTE_NAMEDPIPE_LISTENER_END.message" value="Windows PowerShell has ended an IPC listening thread on process: %1 in AppDomain: %2." />
+        <string id="PS_PROVIDER.event.E_O_REMOTE_NAMEDPIPE_LISTENER_ERROR.message" value="An error has occurred in Windows PowerShell IPC listening thread on process: %1 in AppDomain: %2.  Error Message: %3." />
+        <string id="PS_PROVIDER.event.E_O_REMOTE_NAMEDPIPE_CONNECT.message" value="Windows PowerShell IPC connect on process: %1 in AppDomain: %2 for User: %3." />
+        <string id="PS_PROVIDER.event.E_O_REMOTE_NAMEDPIPE_DISCONNECT.message" value="Windows PowerShell IPC disconnect on process: %1 in AppDomain: %2 for User: %3." />
+      </stringTable>
+    </resources>
+  </localization>
+</assembly>

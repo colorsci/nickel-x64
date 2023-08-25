@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-EventLog-RequiredConfiguration" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <directories>
+    <directory destinationPath="$(runtime.system32)\winevt\Logs">
+      <securityDescriptor name="WinEVT-FS-Logs-Security" offline="true" />
+    </directory>
+  </directories>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="WinEVT-FS-Logs-Security" sddl="D:P(A;CIOI;FA;;;S-1-5-80-880578595-1860270145-482643319-2788375705-1540778122)(A;CIOI;FA;;;SY)(A;CIOI;FA;;;BA)(A;CI;FR;;;AU)" operationHint="replace" />
+          <securityDescriptorDefinition name="WinEVT-REG-EVENTLOG-SECURITY-Security" sddl="D:P(A;CI;GA;;;BA)(A;CI;GA;;;SY)(A;CI;GR;;;S-1-5-80-880578595-1860270145-482643319-2788375705-1540778122)S:AR(AU;OICISAFA;DCLCSDWDWO;;;WD)" operationHint="replace" />
+          <securityDescriptorDefinition name="WinEVT-REG-EVENTLOG-CORE-AUTOLOGGER-Security" sddl="O:BAG:SYD:P(A;CI;GR;;;AU)(A;CI;GA;;;SO)(A;CI;GA;;;BA)(A;CI;GA;;;SY)(A;CI;GA;;;S-1-5-80-880578595-1860270145-482643319-2788375705-1540778122)S:AR(AU;OICISAFA;DCLCSDWDWO;;;WD)" operationHint="replace" />
+          <securityDescriptorDefinition name="WinEVT-REG-EVENTLOG-SECURITY-AUTOLOGGER-Security" sddl="O:BAG:SYD:P(A;CI;GR;;;AU)(A;CI;GR;;;SO)(A;CI;GR;;;BA)(A;CI;GA;;;SY)(A;CI;GR;;;S-1-5-80-880578595-1860270145-482643319-2788375705-1540778122)S:AR(AU;OICISAFA;DCLCSDWDWO;;;WD)" operationHint="replace" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+  <registryKeys>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Winevt" />
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Winevt\Publishers" />
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Winevt\Channels" />
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Winevt\Filters" />
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Winevt\Policies">
+      <securityDescriptor name="WinEVT-REG-EVENTLOG-SECURITY-AUTOLOGGER-Security" offline="true" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Eventlog\Security\">
+      <securityDescriptor name="WinEVT-REG-EVENTLOG-SECURITY-Security" offline="true" />
+      <registryValue name="DisplayNameFile" valueType="REG_EXPAND_SZ" value="%SystemRoot%\system32\wevtapi.dll" />
+      <registryValue name="DisplayNameID" valueType="REG_DWORD" value="0x00000101" />
+      <registryValue name="Isolation" valueType="REG_DWORD" value="0x00000002" />
+      <registryValue name="PrimaryModule" valueType="REG_SZ" value="Security" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Eventlog\System\">
+      <registryValue name="DisplayNameFile" valueType="REG_EXPAND_SZ" value="%SystemRoot%\system32\wevtapi.dll" />
+      <registryValue name="DisplayNameID" valueType="REG_DWORD" value="0x00000102" />
+      <registryValue name="PrimaryModule" valueType="REG_SZ" value="System" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\EventLog\System\EventLog">
+      <registryValue name="EventMessageFile" valueType="REG_EXPAND_SZ" value="%SystemRoot%\System32\netevent.dll" />
+      <registryValue name="TypesSupported" valueType="REG_DWORD" value="0x00000007" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Eventlog\System\System">
+      <registryValue name="CategoryCount" valueType="REG_DWORD" value="0x00000007" />
+      <registryValue name="CategoryMessageFile" valueType="REG_EXPAND_SZ" value="%SystemRoot%\system32\wevtapi.dll" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Eventlog\Application\">
+      <registryValue name="DisplayNameFile" valueType="REG_EXPAND_SZ" value="%SystemRoot%\system32\wevtapi.dll" />
+      <registryValue name="DisplayNameID" valueType="REG_DWORD" value="0x00000100" />
+      <registryValue name="PrimaryModule" valueType="REG_SZ" value="Application" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Eventlog\Application\Application">
+      <registryValue name="CategoryCount" valueType="REG_DWORD" value="0x00000007" />
+      <registryValue name="CategoryMessageFile" valueType="REG_EXPAND_SZ" value="%SystemRoot%\system32\wevtapi.dll" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\WMI\Autologger\EventLog-Application">
+      <securityDescriptor name="WinEVT-REG-EVENTLOG-CORE-AUTOLOGGER-Security" offline="true" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\WMI\Autologger\EventLog-System">
+      <securityDescriptor name="WinEVT-REG-EVENTLOG-CORE-AUTOLOGGER-Security" offline="true" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\WMI\Autologger\EventLog-Security">
+      <securityDescriptor name="WinEVT-REG-EVENTLOG-SECURITY-AUTOLOGGER-Security" offline="true" />
+    </registryKey>
+  </registryKeys>
+</assembly>

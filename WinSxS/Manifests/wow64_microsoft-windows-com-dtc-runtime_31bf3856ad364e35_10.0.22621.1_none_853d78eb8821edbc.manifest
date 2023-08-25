@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved." xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <assemblyIdentity name="Microsoft-Windows-COM-DTC-Runtime" version="10.0.22621.1" processorArchitecture="wow64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <dependency discoverable="no" resourceType="Resources">
+    <dependentAssembly dependencyType="prerequisite">
+      <assemblyIdentity name="Microsoft-Windows-COM-DTC-Runtime.Resources" version="10.0.22621.1" processorArchitecture="wow64" language="*" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+    </dependentAssembly>
+  </dependency>
+  <directories>
+    <directory destinationPath="$(runtime.system32)\Msdtc\">
+      <securityDescriptor name="WRP_PARENT_DIR_MSDTC_ADD_DTC_KTMRM_SERVICES_SDDL" />
+    </directory>
+  </directories>
+  <registryKeys>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\MSDTC\Security" perUserVirtualization="DisableRecurse">
+      <securityDescriptor name="MSDTC_SECURITY_REG_KEY_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\MSDTC\Setup" perUserVirtualization="DisableRecurse">
+      <registryValue name="MajorVersion" valueType="REG_DWORD" value="0x00060000" />
+      <registryValue name="Progman Folder" valueType="REG_SZ" value="Microsoft Distributed Transaction Coordinator" />
+      <registryValue name="Install Path" valueType="REG_EXPAND_SZ" value="%SystemRoot%\System32" />
+      <securityDescriptor name="MSDTC_SETUP_REG_KEY_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\MSDTC\KtmRm" perUserVirtualization="DisableRecurse">
+      <securityDescriptor name="KTMRM_REG_KEY_SDDL" />
+    </registryKey>
+  </registryKeys>
+  <configuration xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State">
+    <configurationSchema>
+      <xsd:schema xmlns="Microsoft-Windows-COM-DTC-Runtime" targetNamespace="Microsoft-Windows-COM-DTC-Runtime">
+        <xsd:element default="512" name="MaxLogSize" type="xsd:unsignedInt" wcm:description="Maximum log file size" wcm:handler="regkey('HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\MSDTC')" wcm:legacyName="MaxLogSize" wcm:legacyType="REG_DWORD" wcm:scope="allUsers" />
+        <xsd:element default="0" name="TurnOffRpcSecurity" type="xsd:unsignedInt" wcm:description="Turn off Rpc Security Flag" wcm:handler="regkey('HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\MSDTC')" wcm:legacyName="TurnOffRpcSecurity" wcm:legacyType="REG_DWORD" wcm:scope="allUsers" />
+        <xsd:element default="1" name="AllowOnlySecureRpcCalls" type="xsd:unsignedInt" wcm:description="Allow only secure Rpc Flag" wcm:handler="regkey('HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\MSDTC')" wcm:legacyName="AllowOnlySecureRpcCalls" wcm:legacyType="REG_DWORD" wcm:scope="allUsers" />
+        <xsd:element default="0" name="FallbackToUnsecureRPCIfNecessary" type="xsd:unsignedInt" wcm:description="Fallback to unsecure RPC Flag" wcm:handler="regkey('HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\MSDTC')" wcm:legacyName="FallbackToUnsecureRPCIfNecessary" wcm:legacyType="REG_DWORD" wcm:scope="allUsers" />
+        <xsd:element default="0" name="NetworkDtcAccess" type="xsd:unsignedInt" wcm:description="Network DTC Access Flag" wcm:handler="regkey('HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\MSDTC\Security')" wcm:legacyName="NetworkDtcAccess" wcm:legacyType="REG_DWORD" wcm:scope="allUsers" />
+        <xsd:element default="0" name="NetworkDtcAccessAdmin" type="xsd:unsignedInt" wcm:description="Network DTC Access Admin Flag" wcm:handler="regkey('HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\MSDTC\Security')" wcm:legacyName="NetworkDtcAccessAdmin" wcm:legacyType="REG_DWORD" wcm:scope="allUsers" />
+        <xsd:element default="0" name="NetworkDtcAccessClients" type="xsd:unsignedInt" wcm:description="Network DTC Access Clients Flag" wcm:handler="regkey('HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\MSDTC\Security')" wcm:legacyName="NetworkDtcAccessClients" wcm:legacyType="REG_DWORD" wcm:scope="allUsers" />
+        <xsd:element default="0" name="NetworkDtcAccessTransactions" type="xsd:unsignedInt" wcm:description="Network DTC Access Transactions Flag" wcm:handler="regkey('HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\MSDTC\Security')" wcm:legacyName="NetworkDtcAccessTransactions" wcm:legacyType="REG_DWORD" wcm:scope="allUsers" />
+        <xsd:element default="0" name="NetworkDtcAccessTip" type="xsd:unsignedInt" wcm:description="Network DTC Access TIP Flag" wcm:handler="regkey('HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\MSDTC\Security')" wcm:legacyName="NetworkDtcAccessTip" wcm:legacyType="REG_DWORD" wcm:scope="allUsers" />
+        <xsd:element default="0" name="XaTransactions" type="xsd:unsignedInt" wcm:description="XA Transactions Flag" wcm:handler="regkey('HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\MSDTC\Security')" wcm:legacyName="XaTransactions" wcm:legacyType="REG_DWORD" wcm:scope="allUsers" />
+        <xsd:element default="1" name="LuTransactions" type="xsd:unsignedInt" wcm:description="LU Transactions Flag" wcm:handler="regkey('HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\MSDTC\Security')" wcm:legacyName="LuTransactions" wcm:legacyType="REG_DWORD" wcm:scope="allUsers" />
+        <xsd:element default="0" name="DomainControllerState" type="xsd:unsignedInt" wcm:description="Domain Controller State Value" wcm:handler="regkey('HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\MSDTC\Security')" wcm:legacyName="DomainControllerState" wcm:legacyType="REG_DWORD" wcm:scope="allUsers" />
+        <xsd:element default="NT AUTHORITY\NetworkService" name="AccountName" type="xsd:string" wcm:description="Service Account Name" wcm:handler="regkey('HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\MSDTC\Security')" wcm:legacyName="AccountName" wcm:legacyType="REG_SZ" wcm:scope="allUsers" />
+        <xsd:element default="0" name="NetworkDtcAccessOutbound" type="xsd:unsignedInt" wcm:description="Network DTC Access Outbound Flag" wcm:handler="regkey('HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\MSDTC\Security')" wcm:legacyName="NetworkDtcAccessOutbound" wcm:legacyType="REG_DWORD" wcm:scope="allUsers" />
+        <xsd:element default="0" name="NetworkDtcAccessInbound" type="xsd:unsignedInt" wcm:description="Network DTC Access Inbound Flag" wcm:handler="regkey('HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\MSDTC\Security')" wcm:legacyName="NetworkDtcAccessInbound" wcm:legacyType="REG_DWORD" wcm:scope="allUsers" />
+      </xsd:schema>
+    </configurationSchema>
+  </configuration>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="WRP_PARENT_DIR_MSDTC_ADD_DTC_KTMRM_SERVICES_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;CI;GA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;0x1301bf;;;SY)(A;OICIIO;GA;;;SY)(A;;0x1301bf;;;BA)(A;IOCIOI;GA;;;BA)(A;;0x1201bf;;;S-1-5-80-3960419045-2460139048-4046793004-1809597027-2250574426)(A;OICIIO;GA;;;S-1-5-80-3960419045-2460139048-4046793004-1809597027-2250574426)(A;;0x1201bf;;;S-1-5-80-2818357584-3387065753-4000393942-342927828-138088443)(A;OICIIO;GA;;;S-1-5-80-2818357584-3387065753-4000393942-342927828-138088443)(A;OICIIO;GA;;;CO)" operationHint="replace" />
+          <securityDescriptorDefinition name="MSDTC_LOG_FILE_SDDL" sddl="D:AI(A;;FA;;;BA)(A;ID;FA;;;SY)(A;ID;FA;;;BA)(A;ID;0x1201bf;;;S-1-5-80-3960419045-2460139048-4046793004-1809597027-2250574426)" operationHint="replace" />
+          <securityDescriptorDefinition name="MSDTC_SERVICE_SDDL" sddl="D:(A;;CCLCSWRPLORC;;;S-1-2-0)(A;;CCDCLCSWRPWPDTLORC;;;SY)(A;;CCDCLCSWRPWPDTLOSDRCWDWO;;;BA)(A;;CCLCSWRPLORC;;;IU)(A;;CCLCSWLORC;;;AU)(A;;CCLCSWRPLORC;;;SU)(A;;CCLCSWLORC;;;S-1-5-80-3960419045-2460139048-4046793004-1809597027-2250574426)S:(AU;FA;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;WD)" operationHint="replace" />
+          <securityDescriptorDefinition name="KTMRM_SERVICE_SDDL" sddl="D:(A;;CCLCSWRPLORCCR;;;S-1-2-0)(A;;CCLCSWRPWPDTLORCCR;;;SY)(A;;CCDCLCSWRPWPDTLOSDRCWDWOCR;;;BA)(A;;CCLCSWRPLORCCR;;;IU)(A;;CCLCSWLORC;;;AU)(A;;CCLCSWRPLORCCR;;;SU)(A;;CCLCSWLORC;;;S-1-5-80-2818357584-3387065753-4000393942-342927828-138088443)S:(AU;FA;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;WD)" operationHint="replace" />
+          <securityDescriptorDefinition name="MSDTC_SECURITY_REG_KEY_SDDL" sddl="D:PAI(A;;KR;;;BU)(A;;KA;;;BA)(A;OICIIO;0x101fffff;;;BA)(A;;KA;;;SY)(A;OICIIO;0x101fffff;;;SY)(A;;CCDCLCSWRPRC;;;S-1-5-80-3960419045-2460139048-4046793004-1809597027-2250574426)(A;OICIIO;GXGWGR;;;S-1-5-80-3960419045-2460139048-4046793004-1809597027-2250574426)(A;;CCDCLCSWRPRC;;;S-1-5-80-2818357584-3387065753-4000393942-342927828-138088443)(A;OICIIO;GXGWGR;;;S-1-5-80-2818357584-3387065753-4000393942-342927828-138088443)" operationHint="replace" />
+          <securityDescriptorDefinition name="CID_REG_KEY_SDDL" sddl="D:PAI(A;;KRKWSD;;;S-1-5-80-3960419045-2460139048-4046793004-1809597027-2250574426)(A;OICIIO;KRKWSD;;;S-1-5-80-3960419045-2460139048-4046793004-1809597027-2250574426)(A;;KA;;;SY)(A;OICIIO;0x101fffff;;;SY)(A;;KA;;;BA)(A;OICIIO;0x101fffff;;;BA)(A;;KR;;;WD)(A;OICIIO;GR;;;WD)(A;;KR;;;S-1-5-80-2818357584-3387065753-4000393942-342927828-138088443)(A;OICIIO;GR;;;S-1-5-80-2818357584-3387065753-4000393942-342927828-138088443)" operationHint="replace" />
+          <securityDescriptorDefinition name="MSDTC_OLETXTM_REG_KEY_SDDL" sddl="D:AI(A;ID;KR;;;BU)(A;CIIOID;GR;;;BU)(A;ID;KA;;;BA)(A;CIIOID;GA;;;BA)(A;ID;KA;;;SY)(A;CIIOID;GA;;;SY)(A;CIIOID;GA;;;CO)" operationHint="replace" />
+          <securityDescriptorDefinition name="MSDTC_SETUP_REG_KEY_SDDL" sddl="D:AI(A;ID;KA;;;SY)(A;OICIIOID;0x101fffff;;;SY)(A;ID;KA;;;BA)(A;OICIIOID;0x101fffff;;;BA)" operationHint="replace" />
+          <securityDescriptorDefinition name="KTMRM_REG_KEY_SDDL" sddl="D:AI(A;;KW;;;S-1-5-80-2818357584-3387065753-4000393942-342927828-138088443)(A;;KR;;;WD)" operationHint="replace" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+  <imaging>
+    <sysprepInformation>
+      <sysprepProvider stage="cleanup">
+        <sysprepOrder order="0x1100" />
+        <sysprepModule methodName="SysPrepDtcCleanup" moduleName="$(runtime.windows)\system32\msdtcprx.dll" />
+      </sysprepProvider>
+      <sysprepProvider stage="generalize">
+        <sysprepOrder order="0x2200" />
+        <sysprepModule methodName="SysPrepDtcGeneralize" moduleName="$(runtime.windows)\system32\msdtcprx.dll" />
+      </sysprepProvider>
+      <sysprepProvider stage="specialize">
+        <sysprepOrder order="0x1300" />
+        <sysprepModule methodName="SysPrepDtcSpecialize" moduleName="$(runtime.windows)\system32\msdtcprx.dll" moduleType="online" />
+        <sysprepModule methodName="SysPrepDtcOfflineSpecialize" moduleName="$(runtime.windows)\system32\msdtcspoffln.dll" moduleType="offline" />
+      </sysprepProvider>
+    </sysprepInformation>
+  </imaging>
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string id="displayName" value="DTC Runtime" />
+        <string id="description" value="This component supplies the base DTC service" />
+        <string id="displayName2" value="WRP_FILE_DEFAULT_SDDL" />
+        <string id="displayName3" value="WRP_PARENT_DIR_MSDTC_ADD_DTC_KTMRM_SERVICES_SDDL" />
+        <string id="displayName4" value="Msdtc log file" />
+        <string id="description5" value="Default SDDL for Windows Resource Protected file" />
+        <string id="description6" value="SDDL for MSDTC folder" />
+        <string id="description7" value="SDDL for MSDTC log file" />
+        <string id="displayName10" value="MSDTC_SERVICE_SDDL" />
+        <string id="description11" value="SDDL for MSDTC service running under NetworkService" />
+        <string id="displayName16" value="MSDTC_SECURITY_REG_KEY_SDDL" />
+        <string id="description17" value="SDDL for HKLM\Software\Microsoft\MSDTC\Security" />
+        <string id="displayName20" value="MSDTC_SETUP_REG_KEY_SDDL" />
+        <string id="description21" value="SDDL for HKLM\Software\Microsoft\MSDTC\Setup" />
+        <string id="displayName24" value="KTMRM_SERVICE_SDDL" />
+        <string id="description25" value="SDDL for KtmRm service running under NetworkService" />
+      </stringTable>
+    </resources>
+  </localization>
+</assembly>

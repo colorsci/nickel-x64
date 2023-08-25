@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="HyperV-IntegrationServices" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <dependency discoverable="no" resourceType="Resources">
+    <dependentAssembly>
+      <assemblyIdentity name="HyperV-IntegrationServices.resources" version="10.0.22621.1" processorArchitecture="amd64" language="*" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+    </dependentAssembly>
+  </dependency>
+  <file name="icsvc.dll" destinationPath="$(runtime.system32)\" sourceName="icsvc.dll" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>9bjXbjxUYHt+RJF1FOurSkKUFpjeGal+DTk1tjcW+As=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <file name="vmictimeprovider.dll" destinationPath="$(runtime.system32)\" sourceName="vmictimeprovider.dll" importPath="$(build.nttree)\vm\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>6cUq6MVPpvz/zn9nt7g9s1fJeisg2+r8FcgkbE8WEsw=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <file name="VmApplicationHealthMonitorProxy.dll" destinationPath="$(runtime.system32)\" sourceName="VmApplicationHealthMonitorProxy.dll" importPath="$(build.nttree)\vm\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>dk6Usvw+yldxz0wBj69L7quLLGolFVaPLB8/fx40fxY=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <memberships>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories.Services" version="1.0.0.0" publicKeyToken="31bf3856ad364e35" typeName="Service" />
+      <categoryInstance>
+        <serviceData name="vmicheartbeat" displayName="@%systemroot%\system32\icsvc.dll,-101" errorControl="normal" start="demand" type="win32ShareProcess" description="@%systemroot%\system32\icsvc.dll,-102" imagePath="%systemroot%\system32\svchost.exe -k ICService -p" objectName="LocalSystem" requiredPrivileges="SeChangeNotifyPrivilege" sidType="unrestricted">
+          <failureActions resetPeriod="3600">
+            <actions>
+              <action delay="60000" type="restartService" />
+              <action delay="120000" type="restartService" />
+              <action delay="0" type="none" />
+            </actions>
+          </failureActions>
+          <serviceTrigger action="start" subtype="{57164F39-9115-4E78-AB55-382F3BD5422D}" type="DeviceInterfaceArrival" />
+        </serviceData>
+      </categoryInstance>
+      <categoryInstance>
+        <serviceData name="vmickvpexchange" displayName="@%systemroot%\system32\icsvc.dll,-201" errorControl="normal" start="demand" type="win32ShareProcess" description="@%systemroot%\system32\icsvc.dll,-202" imagePath="%systemroot%\system32\svchost.exe -k LocalSystemNetworkRestricted -p" objectName="LocalSystem" requiredPrivileges="SeChangeNotifyPrivilege" sidType="unrestricted">
+          <failureActions resetPeriod="14400">
+            <actions>
+              <action delay="60000" type="restartService" />
+              <action delay="120000" type="restartService" />
+              <action delay="0" type="none" />
+            </actions>
+          </failureActions>
+          <serviceTrigger action="start" subtype="{A9A0F4E7-5A45-4d96-B827-8A841E8C03E6}" type="DeviceInterfaceArrival" />
+        </serviceData>
+      </categoryInstance>
+      <categoryInstance>
+        <serviceData name="vmicshutdown" displayName="@%systemroot%\system32\icsvc.dll,-301" errorControl="normal" start="demand" type="win32ShareProcess" description="@%systemroot%\system32\icsvc.dll,-302" imagePath="%systemroot%\system32\svchost.exe -k LocalSystemNetworkRestricted -p" objectName="LocalSystem" requiredPrivileges="SeChangeNotifyPrivilege,SeShutdownPrivilege,SeTcbPrivilege,SeImpersonatePrivilege" sidType="unrestricted">
+          <failureActions resetPeriod="3600">
+            <actions>
+              <action delay="60000" type="restartService" />
+              <action delay="120000" type="restartService" />
+              <action delay="0" type="none" />
+            </actions>
+          </failureActions>
+          <serviceTrigger action="start" subtype="{0E0B6031-5213-4934-818B-38D90CED39DB}" type="DeviceInterfaceArrival" />
+        </serviceData>
+      </categoryInstance>
+      <categoryInstance>
+        <serviceData name="vmictimesync" displayName="@%systemroot%\system32\icsvc.dll,-401" errorControl="normal" start="demand" type="win32ShareProcess" description="@%systemroot%\system32\icsvc.dll,-402" dependOnService="VmGid" imagePath="%systemroot%\system32\svchost.exe -k LocalServiceNetworkRestricted -p" objectName="NT AUTHORITY\LocalService" requiredPrivileges="SeChangeNotifyPrivilege,SeSystemtimePrivilege,SeCreateGlobalPrivilege" sidType="unrestricted">
+          <failureActions resetPeriod="14400">
+            <actions>
+              <action delay="60000" type="restartService" />
+              <action delay="120000" type="restartService" />
+              <action delay="0" type="none" />
+            </actions>
+          </failureActions>
+          <serviceTrigger action="start" subtype="{9527E630-D0AE-497b-ADCE-E80AB0175CAF}" type="DeviceInterfaceArrival" />
+        </serviceData>
+      </categoryInstance>
+      <categoryInstance>
+        <serviceData name="vmicguestinterface" displayName="@%systemroot%\system32\icsvc.dll,-801" errorControl="normal" start="demand" type="win32ShareProcess" description="@%systemroot%\system32\icsvc.dll,-802" imagePath="%systemroot%\system32\svchost.exe -k LocalSystemNetworkRestricted -p" objectName="LocalSystem" requiredPrivileges="SeChangeNotifyPrivilege" sidType="unrestricted">
+          <serviceTrigger action="start" subtype="{34D14BE3-DEE4-41c8-9AE7-6B174977C192}" type="DeviceInterfaceArrival" />
+        </serviceData>
+      </categoryInstance>
+      <categoryInstance>
+        <serviceData name="vmicvmsession" displayName="@%systemroot%\system32\icsvc.dll,-901" errorControl="normal" start="demand" type="win32ShareProcess" description="@%systemroot%\system32\icsvc.dll,-902" imagePath="%systemroot%\system32\svchost.exe -k LocalSystemNetworkRestricted -p" objectName="LocalSystem" requiredPrivileges="SeChangeNotifyPrivilege,SeBackupPrivilege,SeRestorePrivilege,SeDebugPrivilege,SeImpersonatePrivilege,SeTcbPrivilege,SeIncreaseQuotaPrivilege,SeAssignPrimaryTokenPrivilege" sidType="unrestricted">
+          <serviceTrigger action="start" subtype="{999E53D4-3D5C-4C3E-8779-BED06EC056E1}" type="DeviceInterfaceArrival" />
+        </serviceData>
+      </categoryInstance>
+    </categoryMembership>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories" version="1.0.0.0" publicKeyToken="365143bb27e7ac8b" typeName="SvcHost" />
+      <categoryInstance subcategory="ICService">
+        <serviceGroup position="last" serviceName="vmicheartbeat" />
+      </categoryInstance>
+      <categoryInstance subcategory="LocalSystemNetworkRestricted">
+        <serviceGroup position="last" serviceName="vmickvpexchange" />
+      </categoryInstance>
+      <categoryInstance subcategory="LocalSystemNetworkRestricted">
+        <serviceGroup position="last" serviceName="vmicshutdown" />
+      </categoryInstance>
+      <categoryInstance subcategory="LocalServiceNetworkRestricted">
+        <serviceGroup position="last" serviceName="vmictimesync" />
+      </categoryInstance>
+      <categoryInstance subcategory="LocalSystemNetworkRestricted">
+        <serviceGroup position="last" serviceName="vmicguestinterface" />
+      </categoryInstance>
+      <categoryInstance subcategory="LocalSystemNetworkRestricted">
+        <serviceGroup position="last" serviceName="vmicvmsession" />
+      </categoryInstance>
+    </categoryMembership>
+  </memberships>
+  <registryKeys>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\vmicguestinterface">
+      <overridable name="Start" scope="Microsoft" type="REG_DWORD" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\vmicheartbeat">
+      <overridable name="Start" scope="Microsoft" type="REG_DWORD" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\vmickvpexchange">
+      <overridable name="Start" scope="Microsoft" type="REG_DWORD" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\vmicshutdown">
+      <overridable name="Start" scope="Microsoft" type="REG_DWORD" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\vmicheartbeat\Parameters">
+      <registryValue name="ServiceDll" valueType="REG_EXPAND_SZ" value="%SystemRoot%\System32\icsvc.dll" />
+      <registryValue name="ServiceMain" valueType="REG_SZ" value="HeartbeatServiceMain" />
+      <registryValue name="ServiceDllUnloadOnStop" valueType="REG_DWORD" value="0x00000001" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\HyperV.AppHealthMonitor">
+      <registryValue name="" valueType="REG_SZ" value="Hyper-V Application Health Monitor" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\HyperV.AppHealthMonitor\Clsid">
+      <registryValue name="" valueType="REG_SZ" value="{397a2e5f-348c-482d-b9a3-57d383b483cd}" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{397a2e5f-348c-482d-b9a3-57d383b483cd}">
+      <registryValue name="" valueType="REG_SZ" value="Hyper-V Application Health Monitor" />
+      <registryValue name="AppId" valueType="REG_SZ" value="{be0fc7f0-f248-4091-a123-34ca29a6901b}" />
+      <registryValue name="LocalizedString" valueType="REG_EXPAND_SZ" value="@%systemroot%\system32\icsvc.dll,-103" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{397a2e5f-348c-482d-b9a3-57d383b483cd}\ProgID">
+      <registryValue name="" valueType="REG_SZ" value="HyperV.AppHealthMonitor" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{397a2e5f-348c-482d-b9a3-57d383b483cd}\TypeLib">
+      <registryValue name="" valueType="REG_SZ" value="{132b42fb-871b-4077-ae2e-bf7fd772385e}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{397a2e5f-348c-482d-b9a3-57d383b483cd}\Version">
+      <registryValue name="" valueType="REG_SZ" value="1.0" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{397a2e5f-348c-482d-b9a3-57d383b483cd}\Programmable" />
+    <registryKey keyName="HKEY_CLASSES_ROOT\AppID\{be0fc7f0-f248-4091-a123-34ca29a6901b}">
+      <registryValue name="" valueType="REG_SZ" value="VM IC Heartbeat Service" />
+      <registryValue name="LocalService" valueType="REG_SZ" value="vmicheartbeat" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\TypeLib\{132b42fb-871b-4077-ae2e-bf7fd772385e}">
+      <registryValue name="" valueType="REG_SZ" value="" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\TypeLib\{132b42fb-871b-4077-ae2e-bf7fd772385e}\1.0">
+      <registryValue name="" valueType="REG_SZ" value="Hyper-V Application Health Monitor Type Library" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\TypeLib\{132b42fb-871b-4077-ae2e-bf7fd772385e}\1.0\FLAGS">
+      <registryValue name="" valueType="REG_SZ" value="0" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\TypeLib\{132b42fb-871b-4077-ae2e-bf7fd772385e}\1.0\0\win64">
+      <registryValue name="" valueType="REG_SZ" value="$(runtime.system32)\icsvc.dll" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{267a0284-848f-447e-a096-5e10a1a76bca}">
+      <registryValue name="" valueType="REG_SZ" value="IVmApplicationHealthMonitor" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{267a0284-848f-447e-a096-5e10a1a76bca}\ProxyStubClsid32">
+      <registryValue name="" valueType="REG_SZ" value="{087798c4-3c0a-48d4-abc9-ed60912fa139}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{f7c4122f-6e32-4075-99d4-3d2b080b204e}">
+      <registryValue name="" valueType="REG_SZ" value="IVmApplicationHealthQuery" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{f7c4122f-6e32-4075-99d4-3d2b080b204e}\ProxyStubClsid32">
+      <registryValue name="" valueType="REG_SZ" value="{087798c4-3c0a-48d4-abc9-ed60912fa139}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{087798c4-3c0a-48d4-abc9-ed60912fa139}">
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{087798c4-3c0a-48d4-abc9-ed60912fa139}\InprocServer32">
+      <registryValue name="" valueType="REG_EXPAND_SZ" value="%systemroot%\system32\VmApplicationHealthMonitorProxy.dll" />
+      <registryValue name="ThreadingModel" valueType="REG_SZ" value="Both" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Svchost\ICService">
+      <registryValue name="CoInitializeSecurityParam" valueType="REG_DWORD" value="0x00000001" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\vmickvpexchange\Parameters">
+      <registryValue name="ServiceDll" valueType="REG_EXPAND_SZ" value="%SystemRoot%\System32\icsvc.dll" />
+      <registryValue name="ServiceMain" valueType="REG_SZ" value="KvpexchangeServiceMain" />
+      <registryValue name="ServiceDllUnloadOnStop" valueType="REG_DWORD" value="0x00000001" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Virtual Machine">
+      <securityDescriptor name="VmIcKvpExchangeRegKeySd" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\vmicshutdown\Parameters">
+      <registryValue name="ServiceDll" valueType="REG_EXPAND_SZ" value="%SystemRoot%\System32\icsvc.dll" />
+      <registryValue name="ServiceMain" valueType="REG_SZ" value="ShutdownServiceMain" />
+      <registryValue name="ServiceDllUnloadOnStop" valueType="REG_DWORD" value="0x00000001" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\vmictimesync\Parameters">
+      <registryValue name="ServiceDll" valueType="REG_EXPAND_SZ" value="%SystemRoot%\System32\icsvc.dll" />
+      <registryValue name="ServiceMain" valueType="REG_SZ" value="TimesyncServiceMain" />
+      <registryValue name="ServiceDllUnloadOnStop" valueType="REG_DWORD" value="0x00000001" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\W32Time\TimeProviders\VMICTimeProvider">
+      <registryValue name="Enabled" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="InputProvider" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="DllName" valueType="REG_EXPAND_SZ" value="%SystemRoot%\System32\vmictimeprovider.dll" />
+      <securityDescriptor name="VmIcTimesyncRegKeySd" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\W32Time\TimeProviders\VMICTimeProvider\Parameters">
+      <securityDescriptor name="VmIcTimesyncRegKeySd" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\vmicguestinterface\Parameters">
+      <registryValue name="ServiceDll" valueType="REG_EXPAND_SZ" value="%SystemRoot%\System32\icsvc.dll" />
+      <registryValue name="ServiceMain" valueType="REG_SZ" value="GuestInterfaceServiceMain" />
+      <registryValue name="ServiceDllUnloadOnStop" valueType="REG_DWORD" value="0x00000001" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\vmicvmsession\Parameters">
+      <registryValue name="ServiceDll" valueType="REG_EXPAND_SZ" value="%SystemRoot%\System32\icsvc.dll" />
+      <registryValue name="ServiceMain" valueType="REG_SZ" value="VMSessionServiceMain" />
+      <registryValue name="ServiceDllUnloadOnStop" valueType="REG_DWORD" value="0x00000001" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\SharedAccess\Parameters\FirewallPolicy\RestrictedServices\Static\System">
+      <registryValue name="vmicheartbeat-allow-in" valueType="REG_SZ" value="V2.0|Action=Allow|Dir=In|LPort=389|LPort=636|Protocol=6|App=%SystemRoot%\System32\svchost.exe|Svc=vmicheartbeat|Name=Allow inbound TCP ports 389 and 636 traffic for vmicheartbeat|" />
+      <registryValue name="vmicheartbeat-allow-out" valueType="REG_SZ" value="V2.10|Action=Allow|Dir=Out|RPort2_10=1-65535|Protocol=6|App=%SystemRoot%\System32\svchost.exe|Svc=vmicheartbeat|Name=Allow all outbound TCP ports traffic for vmicheartbeat|" />
+      <registryValue name="vmicheartbeat-block-in" valueType="REG_SZ" value="V2.0|Action=Block|Dir=In|App=%SystemRoot%\System32\svchost.exe|Svc=vmicheartbeat|Name=Block any other inbound traffic for vmicheartbeat|" />
+      <registryValue name="vmicheartbeat-block-out" valueType="REG_SZ" value="V2.0|Action=Block|Dir=Out|App=%SystemRoot%\System32\svchost.exe|Svc=vmicheartbeat|Name=Block any other outbound traffic for vmicheartbeat|" />
+      <registryValue name="vmickvpexchange-block-in" valueType="REG_SZ" value="V2.0|Action=Block|Dir=In|App=%SystemRoot%\System32\svchost.exe|Svc=vmickvpexchange|Name=Block any inbound traffic for vmickvpexchange|" />
+      <registryValue name="vmickvpexchange-block-out" valueType="REG_SZ" value="V2.0|Action=Block|Dir=Out|App=%SystemRoot%\System32\svchost.exe|Svc=vmickvpexchange|Name=Block any outbound traffic for vmickvpexchange|" />
+      <registryValue name="vmicshutdown-block-in" valueType="REG_SZ" value="V2.0|Action=Block|Dir=In|App=%SystemRoot%\System32\svchost.exe|Svc=vmicshutdown|Name=Block any inbound traffic for vmicshutdown|" />
+      <registryValue name="vmicshutdown-block-out" valueType="REG_SZ" value="V2.0|Action=Block|Dir=Out|App=%SystemRoot%\System32\svchost.exe|Svc=vmicshutdown|Name=Block any outbound traffic for vmicshutdown|" />
+      <registryValue name="vmictimesync-block-in" valueType="REG_SZ" value="V2.0|Action=Block|Dir=In|App=%SystemRoot%\System32\svchost.exe|Svc=vmictimesync|Name=Block any inbound traffic for vmictimesync|" />
+      <registryValue name="vmictimesync-block-out" valueType="REG_SZ" value="V2.0|Action=Block|Dir=Out|App=%SystemRoot%\System32\svchost.exe|Svc=vmictimesync|Name=Block any outbound traffic for vmictimesync|" />
+      <registryValue name="vmicguestinterface-block-in" valueType="REG_SZ" value="V2.0|Action=Block|Dir=In|App=%SystemRoot%\System32\svchost.exe|Svc=vmicguestinterface|Name=Block any inbound traffic for vmicguestinterface|" />
+      <registryValue name="vmicguestinterface-block-out" valueType="REG_SZ" value="V2.0|Action=Block|Dir=Out|App=%SystemRoot%\System32\svchost.exe|Svc=vmicguestinterface|Name=Block any outbound traffic for vmicguestinterface|" />
+      <registryValue name="vmicvmsession-block-in" valueType="REG_SZ" value="V2.0|Action=Block|Dir=In|App=%SystemRoot%\System32\svchost.exe|Svc=vmicvmsession|Name=Block any inbound traffic for vmicvmsession|" />
+      <registryValue name="vmicvmsession-block-out" valueType="REG_SZ" value="V2.0|Action=Block|Dir=Out|App=%SystemRoot%\System32\svchost.exe|Svc=vmicvmsession|Name=Block any outbound traffic for vmicvmsession|" />
+    </registryKey>
+  </registryKeys>
+  <firewallRule Action="Allow" Active="FALSE" Binary="System" Desc="@%SystemRoot%\system32\icsvc.dll,-702" Dir="In" Group="@%SystemRoot%\system32\icsvc.dll,-700" InternalName="vm-monitoring-icmpv4" Name="@%SystemRoot%\system32\icsvc.dll,-701" Protocol="1" />
+  <firewallRule Action="Allow" Active="FALSE" Binary="System" Desc="@%SystemRoot%\system32\icsvc.dll,-704" Dir="In" Group="@%SystemRoot%\system32\icsvc.dll,-700" InternalName="vm-monitoring-icmpv6" Name="@%SystemRoot%\system32\icsvc.dll,-703" Protocol="58" />
+  <firewallRule Action="Allow" Active="FALSE" Binary="System" Desc="@%SystemRoot%\system32\icsvc.dll,-706" Dir="In" Group="@%SystemRoot%\system32\icsvc.dll,-700" InternalName="vm-monitoring-nb-session" LPort="139" Name="@%SystemRoot%\system32\icsvc.dll,-705" Protocol="6" />
+  <firewallRule Action="Allow" Active="FALSE" Binary="%SystemRoot%\system32\svchost.exe" Desc="@%SystemRoot%\system32\icsvc.dll,-708" Dir="In" Group="@%SystemRoot%\system32\icsvc.dll,-700" InternalName="vm-monitoring-rpc" LPort="RPC" Name="@%SystemRoot%\system32\icsvc.dll,-707" Protocol="6" Svc="Schedule" />
+  <firewallRule Action="Allow" Active="FALSE" Binary="%SystemRoot%\system32\svchost.exe" Desc="@%SystemRoot%\system32\icsvc.dll,-710" Dir="In" Group="@%SystemRoot%\system32\icsvc.dll,-700" InternalName="vm-monitoring-dcom" LPort="135" Name="@%SystemRoot%\system32\icsvc.dll,-709" Protocol="6" Svc="RpcSs" />
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="WRP_REGKEY_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;CI;GA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;CI;GR;;;SY)(A;CI;GR;;;BA)(A;CI;GR;;;BU)(A;CI;GR;;;S-1-15-2-1)(A;CI;GR;;;S-1-15-3-1024-1065365936-1281604716-3511738428-1654721687-432734479-3232135806-4053264122-3456934681)" operationHint="replace" />
+          <securityDescriptorDefinition name="VmIcKvpExchangeRegKeySd" sddl="D:P(A;OICI;GA;;;SY)(A;OICI;GA;;;BA)(A;OICI;GA;;;S-1-5-80-1877308096-3090306141-3032871208-3115266146-1400827410)(A;OICI;GA;;;S-1-5-80-123231216-2592883651-3715271367-3753151631-4175906628)(A;OICI;GR;;;AU)" operationHint="replace" />
+          <securityDescriptorDefinition name="VmIcTimesyncRegKeySd" sddl="D:P(A;CI;GR;;;BU)(A;CI;GA;;;BA)(A;CI;GA;;;SY)(A;CI;GR;;;NS)(A;CI;GRGWSD;;;S-1-5-80-4267341169-2882910712-659946508-2704364837-2204554466)(A;CI;GR;;;NO)(A;;GA;;;S-1-5-80-3098585136-2538892366-1097114017-2832417424-2016953023)" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" description="Default SDDL for Windows Resource Protected file" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+</assembly>

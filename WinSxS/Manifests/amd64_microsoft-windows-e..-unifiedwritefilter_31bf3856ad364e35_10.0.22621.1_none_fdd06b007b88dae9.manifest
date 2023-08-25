@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved." xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <assemblyIdentity name="Microsoft-Windows-Embedded-UnifiedWriteFilter" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <dependency discoverable="no" resourceType="Resources">
+    <dependentAssembly>
+      <assemblyIdentity name="Microsoft-Windows-Embedded-UnifiedWriteFilter.Resources" version="10.0.22621.1" processorArchitecture="amd64" language="*" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </dependentAssembly>
+  </dependency>
+  <configuration xmlns:app="uwfSchema" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State">
+    <configurationSchema>
+      <xsd:schema xmlns="Microsoft-Windows-Embedded-UnifiedWriteFilter" targetNamespace="Microsoft-Windows-Embedded-UnifiedWriteFilter">
+        <xsd:simpleType name="BootStatusPolicyTypeEnum" wcm:description="Possible values for BootStatusPolicy">
+          <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="DisplayAllFailures" />
+            <xsd:enumeration value="IgnoreAllFailures" />
+            <xsd:enumeration value="IgnoreShutdownFailures" />
+            <xsd:enumeration value="IgnoreBootFailures" />
+          </xsd:restriction>
+        </xsd:simpleType>
+        <xsd:simpleType name="OverlayTypeEnum" wcm:description="Possible values for OverlayType">
+          <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="RAM overlay" />
+            <xsd:enumeration value="Disk overlay" />
+          </xsd:restriction>
+        </xsd:simpleType>
+        <xsd:simpleType name="BooleanTypeEnum" wcm:description="Possible values for Boolean type">
+          <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="True" />
+            <xsd:enumeration value="False" />
+          </xsd:restriction>
+        </xsd:simpleType>
+        <xsd:simpleType name="BindingTypeEnum" wcm:description="Possible values for Binding">
+          <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="Tight Binding" />
+            <xsd:enumeration value="Loose Binding" />
+          </xsd:restriction>
+        </xsd:simpleType>
+        <xsd:simpleType name="DriveLetterTypeEnum" wcm:description="Possible values for DriveLetter">
+          <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="C:" />
+            <xsd:enumeration value="D:" />
+            <xsd:enumeration value="E:" />
+            <xsd:enumeration value="F:" />
+            <xsd:enumeration value="G:" />
+            <xsd:enumeration value="H:" />
+            <xsd:enumeration value="I:" />
+            <xsd:enumeration value="J:" />
+            <xsd:enumeration value="K:" />
+            <xsd:enumeration value="L:" />
+            <xsd:enumeration value="M:" />
+            <xsd:enumeration value="N:" />
+            <xsd:enumeration value="O:" />
+            <xsd:enumeration value="P:" />
+            <xsd:enumeration value="Q:" />
+            <xsd:enumeration value="R:" />
+            <xsd:enumeration value="S:" />
+            <xsd:enumeration value="T:" />
+            <xsd:enumeration value="U:" />
+            <xsd:enumeration value="V:" />
+            <xsd:enumeration value="W:" />
+            <xsd:enumeration value="X:" />
+            <xsd:enumeration value="Y:" />
+            <xsd:enumeration value="Z:" />
+          </xsd:restriction>
+        </xsd:simpleType>
+        <xsd:complexType name="ProtectedVolumeEntryType" wcm:description="Specify settings specific to each protected volume">
+          <xsd:sequence>
+            <xsd:element name="DriveLetter" type="xsd:string" wcm:description="Specify drive letter that identifies this volume with a colon (e.g. C:)" />
+            <xsd:element name="FileExceptionsUserDefined" type="wcm:multiString" wcm:description="Specify files and folders to be persisted" />
+          </xsd:sequence>
+        </xsd:complexType>
+        <xsd:complexType name="ProtectedVolumeListType" wcm:description="List of protected volumes">
+          <xsd:sequence>
+            <xsd:element maxOccurs="unbounded" minOccurs="1" name="ProtectedVolumeEntry" type="ProtectedVolumeEntryType" wcm:key="DriveLetter" />
+          </xsd:sequence>
+        </xsd:complexType>
+        <xsd:element default="1024" name="OverlayCriticalThreshold" type="xsd:int" wcm:description="Specify overlay critical threshold value in MB" wcm:handler="regkey('HKLM\Software\Microsoft\Windows NT\CurrentVersion\UnattendSettings\Embedded\UWF')" wcm:passes="specialize" wcm:visible="true" />
+        <xsd:element default="512" name="OverlayWarningThreshold" type="xsd:int" wcm:description="Specify overlay warning threshold value in MB" wcm:handler="regkey('HKLM\Software\Microsoft\Windows NT\CurrentVersion\UnattendSettings\Embedded\UWF')" wcm:passes="specialize" wcm:visible="true" />
+        <xsd:element default="RAM overlay" name="OverlayType" type="OverlayTypeEnum" wcm:description="Specify where overlay is stored" wcm:handler="regkey('HKLM\Software\Microsoft\Windows NT\CurrentVersion\UnattendSettings\Embedded\UWF')" wcm:passes="specialize" wcm:visible="true" />
+        <xsd:element default="0" name="OverlayFlags" type="xsd:int" wcm:description="Specify overlay flags" wcm:handler="regkey('HKLM\Software\Microsoft\Windows NT\CurrentVersion\UnattendSettings\Embedded\UWF')" wcm:passes="specialize" wcm:visible="true" />
+        <xsd:element default="1" name="ResetPersistentStateSavedMode" type="xsd:int" wcm:description="Specify saved persistent overlay reset mode to be used when requested (rollback or commit)" wcm:handler="regkey('HKLM\Software\Microsoft\Windows NT\CurrentVersion\UnattendSettings\Embedded\UWF')" wcm:passes="specialize" wcm:visible="false" />
+        <xsd:element default="1024" name="OverlayMaximumSize" type="xsd:int" wcm:description="Specify the maximum allowed size for the overlay in MB" wcm:handler="regkey('HKLM\Software\Microsoft\Windows NT\CurrentVersion\UnattendSettings\Embedded\UWF')" wcm:passes="specialize" wcm:visible="true" />
+        <xsd:element default="True" name="DomainSecretKeyPersisted" type="BooleanTypeEnum" wcm:description="Specify whether domain secret registry key must be persisted" wcm:handler="regkey('HKLM\Software\Microsoft\Windows NT\CurrentVersion\UnattendSettings\Embedded\UWF')" wcm:passes="specialize" wcm:visible="true" />
+        <xsd:element default="True" name="TSCALPersisted" type="BooleanTypeEnum" wcm:description="Specify whether TACAL registry key must be persisted" wcm:handler="regkey('HKLM\Software\Microsoft\Windows NT\CurrentVersion\UnattendSettings\Embedded\UWF')" wcm:passes="specialize" wcm:visible="true" />
+        <xsd:element name="RegistryExceptionsUserDefined" type="wcm:multiString" wcm:description="Specify other registry keys to be persisted" wcm:handler="regkey('HKLM\Software\Microsoft\Windows NT\CurrentVersion\UnattendSettings\Embedded\UWF')" wcm:passes="specialize" wcm:visible="true" />
+        <xsd:element default="Tight Binding" name="Binding" type="BindingTypeEnum" wcm:description="Specify binding type for all volumes" wcm:handler="regkey('HKLM\Software\Microsoft\Windows NT\CurrentVersion\UnattendSettings\Embedded\UWF')" wcm:passes="specialize" wcm:visible="true" />
+        <xsd:element default="False" name="AddAllVolumes" type="BooleanTypeEnum" wcm:description="Specify whether all volume should be added to UWF configuration with default settings" wcm:handler="regkey('HKLM\Software\Microsoft\Windows NT\CurrentVersion\UnattendSettings\Embedded\UWF')" wcm:passes="specialize" wcm:visible="true" />
+        <xsd:element name="ProtectedVolumeList" type="ProtectedVolumeListType" wcm:description="Specify any other volume specific configuration" wcm:handler="regkey('HKLM\Software\Microsoft\Windows NT\CurrentVersion\UnattendSettings\Embedded\UWF')" wcm:passes="specialize" wcm:visible="true" />
+        <xsd:element default="IgnoreAllFailures" name="BootStatusPolicy" type="BootStatusPolicyTypeEnum" wcm:description="Specify the boot status policy" wcm:handler="regkey('HKLM\Software\Microsoft\Windows NT\CurrentVersion\UnattendSettings\Embedded\UWF')" wcm:passes="specialize" wcm:visible="true" />
+        <xsd:element default="True" name="DisableAutoDefrag" type="BooleanTypeEnum" wcm:description="Specify whether auto defragmentation service should be disabled" wcm:handler="regkey('HKLM\Software\Microsoft\Windows NT\CurrentVersion\UnattendSettings\Embedded\UWF')" wcm:passes="specialize" wcm:visible="true" />
+      </xsd:schema>
+    </configurationSchema>
+  </configuration>
+  <unattendActions>
+    <unattendAction arguments="unattend" executableName="$(runtime.system32)\uwfmgr.exe" passes="specialize" />
+  </unattendActions>
+  <imaging>
+    <sysprepInformation>
+      <sysprepProvider stage="generalize">
+        <sysprepOrder order="0x3000" />
+        <sysprepModule methodName="UwfSysprepGeneralize" moduleName="$(runtime.system32)\wbem\uwfwmi.dll" />
+      </sysprepProvider>
+      <sysprepProvider stage="specialize">
+        <sysprepOrder order="0x1c00" />
+        <sysprepModule methodName="UwfSysprepSpecialize" moduleName="$(runtime.system32)\wbem\uwfwmi.dll" />
+      </sysprepProvider>
+    </sysprepInformation>
+  </imaging>
+  <file name="uwfservicingscr.scr" destinationPath="$(runtime.system32)\" sourceName="uwfservicingscr.scr" importPath="$(build.nttree)\Embedded\sys\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>miH1UN5tyWjRPExpVhRQdA7WhuWx2ffc6h9lQsAq3MU=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <file name="UwfServicingShell.exe" destinationPath="$(runtime.system32)\" sourceName="UwfServicingShell.exe" importPath="$(build.nttree)\Embedded\sys\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>qsqLSlHoUQ131X75A7rQmN9CCzhOU4UfnEhpF3xusZc=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <file name="UwfServicingSvc.exe" destinationPath="$(runtime.system32)\" sourceName="UwfServicingSvc.exe" importPath="$(build.nttree)\Embedded\sys\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>bV7RzBVZK0tT4M4vky+WWNrIyrBh0G364kY4KMvin64=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <file name="UwfServicingMasterScript.cmd" destinationPath="$(runtime.system32)\" sourceName="UwfServicingMasterScript.cmd" importPath="$(build.nttree)\Embedded\sys\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>JuhBgH2yIyjGmAga2ZMI7woupLSe69Q2d5oW0Wd4LKg=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <file name="uwfwmi.dll" destinationPath="$(runtime.wbem)\" sourceName="uwfwmi.dll" importPath="$(build.nttree)\Embedded\sys\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>hJWOaueimXfX9Z+EKP6W1mpXDeurd/5yHEYBBFq6V6M=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <file name="uwfwmi.mof" destinationPath="$(runtime.wbem)\" sourceName="uwfwmi.mof" importPath="$(build.nttree)\Embedded\sys\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>ih9clE0bVdGHtZKd0gErRLf4agHz9em1iSra2xk4WRk=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <file name="uwfwmi_uninstall.mof" destinationPath="$(runtime.wbem)\" sourceName="uwfwmi_uninstall.mof" importPath="$(build.nttree)\Embedded\sys\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>SfKk4bbxtBDhcgDmxmc+k26Tl+I5ZOZH3uV+B3M04UE=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <mof name="$(runtime.wbem)\uwfwmi.mof" uninstallmof="$(runtime.wbem)\uwfwmi_uninstall.mof" />
+  <memberships>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories.Services" version="10.0.22621.1" publicKeyToken="31bf3856ad364e35" typeName="Service" />
+      <categoryInstance>
+        <serviceData name="UwfServicingSvc" displayName="@%SystemRoot%\system32\UwfServicingSvc.exe,-100" errorControl="normal" start="disabled" type="win32OwnProcess" description="@%SystemRoot%\system32\UwfServicingSvc.exe,-100" group="ProfSvc_Group" imagePath="system32\UwfServicingSvc.exe" objectName="LocalSystem" />
+      </categoryInstance>
+    </categoryMembership>
+  </memberships>
+  <registryKeys>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{946531FF-05F8-4633-B44C-DCE38A24B2FD}\">
+      <registryValue name="" valueType="REG_SZ" value="UWF" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{946531FF-05F8-4633-B44C-DCE38A24B2FD}\InprocServer32\">
+      <registryValue name="" valueType="REG_EXPAND_SZ" value="%SystemRoot%\system32\wbem\uwfwmi.dll" />
+      <registryValue name="ThreadingModel" valueType="REG_SZ" value="Both" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\System\CurrentControlset\Services\UwfServicingSvc\Servicing\Config\UpdateAgent">
+      <registryValue name="Categories" valueType="REG_MULTI_SZ" value="&quot;*&quot;" />
+      <registryValue name="Severity" valueType="REG_MULTI_SZ" value="&quot;Critical&quot;,&quot;Important&quot;" />
+      <registryValue name="Type" valueType="REG_MULTI_SZ" value=" " />
+      <registryValue name="KBNumber" valueType="REG_MULTI_SZ" value=" " />
+    </registryKey>
+  </registryKeys>
+  <migration settingsVersion="1">
+    <migXml xmlns="">
+      <rules context="System">
+        <include>
+          <objectSet>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\UwfServicingSvc\Servicing\* [*]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows Embedded\ServicingScreenSaver [*]</pattern>
+          </objectSet>
+        </include>
+      </rules>
+    </migXml>
+    <supportedComponents>
+      <supportedComponent>
+        <assemblyIdentity name="_" version="1.0.0.0" />
+        <supportedComponentIdentity language="neutral" name="Microsoft-Windows-Embedded-UnifiedWriteFilter" processorArchitecture="*" settingsVersionRange="1" xmlns="urn:schemas-microsoft-com:asm.v3" />
+      </supportedComponent>
+    </supportedComponents>
+  </migration>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_REGKEY_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;CI;GA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;CI;GR;;;SY)(A;CI;GR;;;BA)(A;CI;GR;;;BU)(A;CI;GR;;;S-1-15-2-1)(A;CI;GR;;;S-1-15-3-1024-1065365936-1281604716-3511738428-1654721687-432734479-3232135806-4053264122-3456934681)" operationHint="replace" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+  <instrumentation xmlns:win="http://manifests.microsoft.com/win/2004/08/windows/events" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <events xmlns="http://schemas.microsoft.com/win/2004/08/events">
+      <provider guid="{F20B126E-6999-42E7-9E63-1852D35E3C80}" messageFileName="%SystemRoot%\system32\uwfresources.dll" name="Microsoft-Windows-UnifiedWriteFilter" resourceFileName="%SystemRoot%\system32\uwfresources.dll" symbol="UWF_ETW_PROVIDER">
+        <channels>
+          <channel chid="chid.admin" enabled="true" isolation="System" name="Microsoft-Windows-UnifiedWriteFilter/Admin" type="Admin" />
+          <channel chid="chid.operational" enabled="true" name="Microsoft-Windows-UnifiedWriteFilter/Operational" type="Operational" />
+        </channels>
+      </provider>
+      <cmi />
+    </events>
+  </instrumentation>
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string id="tsk.uwfwmi" value="uwfwmi" />
+        <string id="tsk.uwfservicing" value="uwfservicing" />
+        <string id="UwfWmiFilterEnable" value="Unified Write Filter will be enabled." />
+        <string id="UwfWmiFilterDisable" value="unified write filter will be disabled." />
+        <string id="UwfWmiFilterEnableHorm" value="unified write filter HORM will be enabled." />
+        <string id="UwfWmiFilterDisableHorm" value="unified write filter HORM will be disabled." />
+        <string id="UwfWmiFilterResetSetting" value="unified write filter settings will be reset." />
+        <string id="UwfWmiFilterEnableFailure" value="Unified Write Filter fail to be enabled, exit code:%2  %1." />
+        <string id="UwfWmiFilterDisableFailure" value="unified write filter fail to be disabled, exit code:%2 %1." />
+        <string id="UwfWmiFilterEnableHormFailure" value="unified write filter HORM fail to  be enabled, exit code:%2 %1." />
+        <string id="UwfWmiFilterDisableHormFailure" value="unified write filter HORM fail to  be disabled, exit code:%2 %1." />
+        <string id="UwfWmiFilterResetSettingFailure" value="unified write filter settings fail to  be reset, exit code:%2 %1." />
+        <string id="UwfWmiOverlaySetWarningThreshold" value="unified write filter begin set warning threshold." />
+        <string id="UwfWmiOverlaySetWarningThresholdFailure" value="unified write filter set warning threshold failed with exit code:%2 %1." />
+        <string id="UwfWmiOverlaySetCriticalThreshold" value="unified write filter begin set CriticalThreshold." />
+        <string id="UwfWmiOverlaySetCriticalThresholdFailure" value="unified write filter set critical threshold failed with exit code:%2 %1." />
+        <string id="UwfWmiOverlayConfigSetType" value="unified write filter begin set type." />
+        <string id="UwfWmiOverlayConfigSetTypeFailure" value="unified write filter set type failed with exit code:%2 %1." />
+        <string id="UwfWmiOverlayConfigSetMaximumSize" value="unified write filter begin set maximum size." />
+        <string id="UwfWmiOverlayConfigSetMaximumSizeFailure" value="unified write filter set maximum size failed with exit code:%2 %1." />
+        <string id="UwfWmiRegistryAddExclusion" value="unified write filter begin add registry exclusion." />
+        <string id="UwfWmiRegistryAddExclusionFailure" value="unified write filter add registry exclusion failed with exit code:%2 %1." />
+        <string id="UwfWmiRegistryRemoveExclusion" value="unified write filter begin remove registry exclusion." />
+        <string id="UwfWmiRegistryRemoveExclusionFailure" value="unified write filter remove registry exclusion failed with exit code:%2 %1." />
+        <string id="UwfWmiRegistryCommitRegistry" value="unified write filter begin commit registry." />
+        <string id="UwfWmiRegistryCommitRegistryFailure" value="unified write filter commit registry failed with exit code:%2 %1." />
+        <string id="UwfWmiVolumeCommitFile" value="unified write filter begin commit file." />
+        <string id="UwfWmiVolumeCommitFileFailure" value="unified write filter commit file failed with exit code:%2 %1." />
+        <string id="UwfWmiVolumeProtect" value="unified write filter begin protect volume." />
+        <string id="UwfWmiVolumeProtectFailure" value="unified write filter protect volume failed with exit code:%2 %1." />
+        <string id="UwfWmiVolumeUnProtect" value="unified write filter begin unprotect volume." />
+        <string id="UwfWmiVolumeUnProtectFailure" value="unified write filter unprotect volume failed with exit code:%2 %1." />
+        <string id="UwfWmiVolumeAddExclusionFile" value="unified write filter begin add exclusion file." />
+        <string id="UwfWmiVolumeAddExclusionFileFailure" value="unified write filter add exclusion file failed with exit code:%2 %1." />
+        <string id="UwfWmiVolumeRemoveExclusionFile" value="unified write filter begin remove exclusion file." />
+        <string id="UwfWmiVolumeRemoveExclusionFileFailure" value="unified write filter remove exclusion file failed with exit code:%2 %1." />
+        <string id="UwfServicingScreenSaverStart" value="unified write filter screen saver has started: %1, %2." />
+        <string id="UwfServicingScreenSaverStop" value="unified write filter screen saver has closed." />
+        <string id="UwfServicingXmgrGenError" value="UWF servicing Transition Manager error :%1 %2 %3 %4." />
+        <string id="UwfServicingXmgrGenInfo" value="UWF servicing Transition Manager info :%1 %2 %3 %4." />
+        <string id="UwfServicingWinUpdtGenError" value="UWF servicing Update Agent error :%1 %2 %3 %4." />
+        <string id="UwfServicingWinUpdtGenInfo" value="UWF servicing Update Agent info :%1 %2 %3 %4." />
+        <string id="UwfServicingShellGenError" value="UWF servicing Shell error :%1 %2 %3 %4." />
+        <string id="UwfServicingShellGenInfo" value="UWF servicing Shell info :%1 %2 %3 %4." />
+        <string id="UwfServicingSvcGenError" value="UWF servicing Helper Service error :%1 %2 %3 %4." />
+        <string id="UwfServicingSvcGenInfo" value="UWF servicing Helper Service info :%1 %2 %3 %4." />
+        <string id="UwfServicingScrGenError" value="UWF servicing Screen Saver error :%1 %2 %3 %4." />
+        <string id="UwfServicingScrGenInfo" value="UWF servicing Screen Saver info :%1 %2 %3 %4." />
+      </stringTable>
+    </resources>
+  </localization>
+</assembly>

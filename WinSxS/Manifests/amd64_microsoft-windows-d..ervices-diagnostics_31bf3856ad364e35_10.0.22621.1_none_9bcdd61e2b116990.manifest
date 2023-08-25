@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-Deployment-Services-Diagnostics" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <dependency discoverable="no" resourceType="Resources">
+    <dependentAssembly dependencyType="prerequisite">
+      <assemblyIdentity name="Microsoft-Windows-Deployment-Services-Diagnostics.Resources" version="10.0.22621.1" processorArchitecture="amd64" language="*" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+    </dependentAssembly>
+  </dependency>
+  <file name="WdsDiag.dll" destinationPath="$(runtime.system32)\" sourceName="WdsDiag.dll" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>InTU1KJmkjSOm3BM6kIIXotVKCpzsJFDeXqOp3smLBA=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <registryKeys>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\WDS\Diagnostics" />
+  </registryKeys>
+  <migration settingsVersion="0">
+    <supportedComponents>
+      <supportedComponent>
+        <assemblyIdentity name="_" version="1.0.0.0" />
+        <supportedComponentIdentity buildType="release" language="neutral" name="Microsoft-Windows-Deployment-Services-Diagnostics" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" settingsVersionRange="0" versionScope="nonSxS" xmlns="urn:schemas-microsoft-com:asm.v3" />
+      </supportedComponent>
+    </supportedComponents>
+  </migration>
+  <instrumentation>
+    <events xmlns="http://schemas.microsoft.com/win/2004/08/events" xmlns:win="http://manifests.microsoft.com/win/2004/08/windows/events">
+      <provider guid="{22b7d623-566b-47b6-9ba0-bc9da3c9d646}" message="$(string.eventProviderName)" messageFileName="%SystemRoot%\system32\WdsDiag.dll" name="Microsoft-Windows-Deployment-Services-Diagnostics" resourceFileName="%SystemRoot%\system32\WdsDiag.dll" symbol="MICROSOFT_WINDOWS_DEPLOYMENT_SERVICES_DIAGNOSTICS">
+        <channels>
+          <channel chid="WdsDiagOper" enabled="true" isolation="System" message="$(string.operChannel)" name="Microsoft-Windows-Deployment-Services-Diagnostics/Operational" symbol="WDS_DIAGNOSTICS_OPERATIONAL" type="Operational" />
+          <channel chid="WdsDiagAdmin" enabled="true" isolation="System" message="$(string.adminChannel)" name="Microsoft-Windows-Deployment-Services-Diagnostics/Admin" symbol="WDS_DIAGNOSTICS_ADMIN" type="Admin" />
+          <channel chid="WdsDiagVerbose" enabled="false" isolation="System" message="$(string.verboseChannel)" name="Microsoft-Windows-Deployment-Services-Diagnostics/Verbose" symbol="WDS_DIAGNOSTICS_VERBOSE" type="Operational" />
+          <channel chid="WdsDiagPacket" enabled="false" isolation="System" message="$(string.packetChannel)" name="Microsoft-Windows-Deployment-Services-Diagnostics/Packet" symbol="WDS_DIAGNOSTICS_PACKET" type="Operational" />
+          <channel chid="WdsDiagDebug" enabled="false" isolation="System" message="$(string.debugChannel)" name="Microsoft-Windows-Deployment-Services-Diagnostics/Debug" symbol="WDS_DIAGNOSTICS_DEBUG" type="Operational" />
+          <channel chid="WdsDiagMetadata" enabled="false" isolation="System" message="$(string.metadataChannel)" name="Microsoft-Windows-Deployment-Services-Diagnostics/Metadata" symbol="WDS_DIAGNOSTICS_METADATA" type="Operational" />
+        </channels>
+      </provider>
+      <cmi />
+    </events>
+  </instrumentation>
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string id="eventProviderName" value="Microsoft-Windows-Deployment-Services-Diagnostics" />
+        <string id="operChannel" value="Microsoft-Windows-Deployment-Services-Diagnostics/Operational" />
+        <string id="adminChannel" value="Microsoft-Windows-Deployment-Services-Diagnostics/Admin" />
+        <string id="verboseChannel" value="Microsoft-Windows-Deployment-Services-Diagnostics/Verbose" />
+        <string id="packetChannel" value="Microsoft-Windows-Deployment-Services-Diagnostics/Packet" />
+        <string id="debugChannel" value="Microsoft-Windows-Deployment-Services-Diagnostics/Debug" />
+        <string id="metadataChannel" value="Microsoft-Windows-Deployment-Services-Diagnostics/Metadata" />
+        <string id="PXEBoot.Done" value="The following client booted from PXE: %n%nHardware Address: %1%nIP: %2%nDevice ID: %3%nClientArchitecture: %4%nPrestaged: %5" />
+        <string id="PXEBoot.UnknownClientIgnored" value="The following client attempted to boot from PXE but was ignored because it is not recognized: %n%nHardware Address: %1%nIP: %2%nDevice ID: %3%nClientArchitecture: %4%nPrestaged: %5" />
+        <string id="TFTP.DownloadStarted" value="The Following Client started TFTP Download: %n%nClient IP: %1%nFilename: %2%nFile Size: %3%nClient Port: %4%nServer Port: %5%nVariable Window: %6" />
+        <string id="TFTP.DownloadCompleted" value="The Following Client completed TFTP Download: %n%nClient IP: %1%nFilename: %2%nFile Size: %3%nClient Port: %4%nServer Port: %5%nVariable Window: %6" />
+        <string id="TFTP.DownloadFailed" value="The Following Client failed TFTP Download: %n%nClient IP: %1%nFilename: %2%nErrorCode: %3%nFile Size: %4%nClient Port: %5%nServer Port: %6%nVariable Window: %7" />
+        <string id="WDSClient.Started" value="The following WDS Client has started: %n%nSessionGuid: %1%nMAC: %2%nIP: %3%nClientDeviceID: %4%nClientArchitecture: %5%nClientVer: %6%nWinPEVer: %7" />
+        <string id="WDSClient.Unattend" value="The following WDS Client has processed unattend mode: %n%nSessionGuid: %1%nMAC: %2%nIP: %3%nClientDeviceID: %4%nClientArchitecture: %5%nUnattendMode: %6" />
+        <string id="WDSClient.ImageSelected" value="The following WDS Client has selected Image: %n%nSessionGuid: %1%nMAC: %2%nIP: %3%nClientDeviceID: %4%nClientArchitecture: %5%nImageGroup: %6%nImageName: %7%nFullUserName: %8" />
+        <string id="WDSClient.ImageSelected2" value="The following WDS Client has selected Image: %n%nSessionGuid: %1%nMAC: %2%nIP: %3%nClientDeviceID: %4%nClientArchitecture: %5%nImageGroup: %6%nImageName: %7%nImageLanguage: %8%nImageArchitecture: %10%nFullUserName: %9" />
+        <string id="WDSClient.ImageTransferStart" value="The following WDS Client has started Image Transfer: %n%nSessionGuid: %1%nMAC: %2%nIP: %3%nClientDeviceID: %4%nClientArchitecture: %5%nImageGroup: %6%nImageName: %7%nMulticastNamespace: %8" />
+        <string id="WDSClient.ImageTransferEnd" value="The following WDS Client has ended Image Transfer: %n%nSessionGuid: %1%nMAC: %2%nIP: %3%nClientDeviceID: %4%nClientArchitecture: %5%nImageGroup: %6%nImageName: %7%nMulticastNamespace: %8" />
+        <string id="WDSClient.ImageTransferDowngrade" value="The following WDS Client has downgraded Image Transfer: %n%nSessionGuid: %1%nMAC: %2%nIP: %3%nClientDeviceID: %4%nClientArchitecture: %5%nImageGroup: %6%nImageName: %7%nMulticastNamespace: %8" />
+        <string id="WDSClient.ImageApplyStart" value="The following WDS Client has started Image Apply: %n%nSessionGuid: %1%nMAC: %2%nIP: %3%nClientDeviceID: %4%nClientArchitecture: %5%nImageGroup: %6%nImageName: %7" />
+        <string id="WDSClient.ImageApplyEnd" value="The following WDS Client has ended Image Apply: %n%nSessionGuid: %1%nMAC: %2%nIP: %3%nClientDeviceID: %4%nClientArchitecture: %5%n%nImageGroup: %6%nImageName: %7" />
+        <string id="WDSClient.PostApplyActionsStart" value="The following WDS Client has started Post Apply Actions: %n%nSessionGuid: %1%nMAC: %2%nIP: %3%nClientDeviceID: %4%nClientArchitecture: %5" />
+        <string id="WDSClient.PostApplyActionsEnd" value="The following WDS Client has ended Post Apply Actions: %n%nSessionGuid: %1%nMAC: %2%nIP: %3%nClientDeviceID: %4%nClientArchitecture: %5" />
+        <string id="WDSClient.End" value="The following WDS Client has ended: %n%nSessionGuid: %1%nMAC: %2%nIP: %3%nClientDeviceID: %4%nClientArchitecture: %5" />
+        <string id="WDSClient.DomainJoinError" value="The following WDS Client has encountered Domain Join Error: %n%nSessionGuid: %1%nMAC: %2%nIP: %3%nClientDeviceID: %4%nClientArchitecture: %5%nMachineName: %6%nMachineOU: %7%nErrorCode: %8" />
+        <string id="WDSClient.FatalError" value="The following WDS Client has encountered Fatal Error: %n%nSessionGuid: %1%nMAC: %2%nIP: %3%nClientDeviceID: %4%nClientArchitecture: %5%nErrorMessage: %6" />
+        <string id="WDSClient.GenericMessage" value="The following WDS Client has this message: %n%nSessionGuid: %1%nMAC: %2%nIP: %3%nClientDeviceID: %4%nClientArchitecture: %5%nMessage: %6" />
+        <string id="Multicast.NamespaceRegistered" value="Namespace Registered: %n%nNamespaceName: %1%nContentProvider: %2%nNamespaceType: %3" />
+        <string id="Multicast.NamespaceUnRegistered" value="Namespace Unregistered: %n%nNamespaceName: %1%nContentProvider: %2" />
+        <string id="Multicast.SessionStarted" value="Multicast Session Started: %n%nNamespaceName: %1%nObjectName: %2" />
+        <string id="Multicast.SessionEnded" value="Multicast Session Ended: %n%nNamespaceName: %1%nObjectName: %2" />
+        <string id="Multicast.ClientJoined" value="Client joined Multicast Session: %n%nClientMAC: %1%nClientIP: %2%nNamespaceName: %3%nObjectName: %4" />
+        <string id="Multicast.ClientExited" value="Client exited Multicast Session: %n%nClientMAC: %1%nClientIP: %2%nNamespaceName: %3%nObjectName: %4" />
+        <string id="Multicast.ClientForcedOut" value="Client forced out of Multicast Session: %n%nClientMAC: %1%nClientIP: %2%nNamespaceName: %3%nObjectName: %4%nReason: %5" />
+        <string id="Multicast.ClientDemoted" value="Client demoted to slower Multicast Session: %n%nClientMAC: %1%nClientIP: %2%nNamespaceName: %3%nObjectName: %4" />
+        <string id="WDSClient.DriverPackageInAccessible" value="The following WDS Client has encountered an inaccessible driver package: %n%nSessionGuid: %1%nMAC: %2%nIP: %3%nClientDeviceID: %4%nClientArchitecture: %5%nDriverPackage: %6%nErrorCode: %7" />
+        <string id="WDSClient.OfflineDriverInjectionStart" value="The following WDS Client has started offline driver injection: %n%nSessionGuid: %1%nMAC: %2%nIP: %3%nClientDeviceID: %4%nClientArchitecture: %5" />
+        <string id="WDSClient.OfflineDriverInjectionEnd" value="The following WDS Client has ended offline driver injection: %n%nSessionGuid: %1%nMAC: %2%nIP: %3%nClientDeviceID: %4%nClientArchitecture: %5" />
+        <string id="WDSClient.OfflineDriverInjectionFailure" value="The following WDS Client has encountered a failure while performing offline driver injection: %n%nSessionGuid: %1%nMAC: %2%nIP: %3%nClientDeviceID: %4%nClientArchitecture: %5%nDriverPackage: %6%nErrorCode: %7" />
+        <string id="Ddp.RequestReceived" value="Ddp request received for the following client: %n%nMAC: %1%nIP: %2" />
+        <string id="Ddp.RequestFailure" value="Ddp request failed for the following client: %n%nMAC: %1%nIP: %2%nErrorCode: %3" />
+        <string id="Ddp.RequestSuccess" value="Ddp request successfully completed for the following client: %n%nMAC: %1%nIP: %2%nNumDriverPackages: %3" />
+        <string id="WDS.TraceEvent" value="[%1] %3" />
+        <string id="WDS.ProviderTraceEvent" value="[%1/%2] %4" />
+        <string id="WDS.SubProviderTraceEvent" value="[%1/%2/%3] %5" />
+        <string id="VHDX.ApplyStarted" value="The following VHDX apply has started: %n%nSourceFile: %1%nSourceFileSize: %2%nSourceDiskSize: %3 bytes%nDestinationPath: %4%nDestinationDiskSize:%5 bytes" />
+        <string id="VHDX.ApplyCompleted" value="The following VHDX apply has completed: %n%nSourceFile: %1%nSourceFileSize: %2%nSourceDiskSize: %3 bytes%nDestinationPath: %4%nDestinationDiskSize:%5 bytes" />
+        <string id="VHDX.ApplyFailed" value="The following VHDX apply has failed: %n%nSourceFile: %1%nSourceFileSize: %2%nSourceDiskSize: %3 bytes%nDestinationPath: %4%nDestinationDiskSize:%5 bytes" />
+        <string id="WDS.MetadataQuery" value="A device query was successfully processed (status %3):%n%nInput:%n%1%n%nOutput:%n%2%n" />
+        <string id="WDS.MetadataQueryFailed" value="A device query failed with status %3:%n%nInput:%n%1%n%nOutput:%n%2%n" />
+        <string id="WDS.ProviderMetadataQuery" value="Provider [%1] processed a device query with status %5, response type %4:%n%nInput:%n%2%n%nOutput:%n%3%n" />
+        <string id="WDS.ProviderMetadataQueryFailed" value="Provider [%1] failed to process a device query with status %5, response type %4:%n%nInput:%n%2%n%nOutput:%n%3%n" />
+        <string id="WDS.DeviceAdded" value="Provider [%1] successfully added a device with status %5:%n%nDevice Name: %2%n%nInitial Metadata:%n%3%n" />
+        <string id="WDS.DeviceAddFailed" value="Provider [%1] failed to add a device with status %5:%n%nDevice Name: %2%n%n" />
+        <string id="WDS.DeviceDeleted" value="Provider [%1] successfully deleted device [%2]; status code %5." />
+        <string id="WDS.DeviceDeleteFailed" value="Provider [%1] failed to delete device [%2]; status code %5." />
+        <string id="WDS.DeviceModified" value="Provider [%1] successfully modified a device with status code %5:%n%nDevice Name: %2%n%nNew Metadata:%n%3%n" />
+        <string id="WDS.DeviceModifyFailed" value="Provider [%1] failed to modify a device with status code %5:%n%nDevice Name: %2%n%nNew Metadata:%n%3%n%nNote that the device may or may not be modified with the New Metadata; this is at the discretion of the Provider.%n" />
+        <string id="WDS.DeviceLookup" value="Provider [%1] successfully retrieved metadata for a device with status code %5:%n%nDevice Name: %2%n%nMetadata:%n%3%n" />
+        <string id="WDS.DeviceLookupFailed" value="Provider [%1] failed to retrieve metadata for a device with status code %5:%n%nDevice Name: %2%n" />
+        <string id="WDS.QueryControllers" value="The server successfully processed a request for available providers with status code %5; %4 providers available." />
+        <string id="WDS.QueryControllersFailed" value="The server failed to process a request for available providers with status code %5." />
+        <string id="WDS.ObjectMatchRequest" value="The server processed a metadata match request:%n%nObject ID: %1%n%nObject Metadata:%n%2%n%nRequest Metadata:%n%3%n%nMatch Result: %4%n" />
+        <string id="WDS.ObjectMetadataWriteProtected" value="There was an attempt to overwrite an object's metadata which failed because the request did not pass the internal filter for this object.%n%nObject ID: %1%n5nObject Filter:%n%2%n%nRequest Metadata:%n%3%n%n" />
+        <string id="WDS.ObjectMetadataLookup" value="The server successfully retrieved metadata for an object with status code %3:%n%nObject ID: %1%n%nObject Metadata:%n%2%n" />
+        <string id="WDS.ObjectMetadataLookupFailed" value="The server failed to retrieve metadata for an object with status code %3:%n%nObject ID: %1%n" />
+        <string id="WDS.ObjectMetadataModified" value="The server successfully modified metadata for an object with status code %3:%n%nObject ID: %1%n%nNew Metadata:%n%2%n" />
+        <string id="WDS.ObjectMetadataModificationFailed" value="The server failed to modify metadata for an object with status code %3:%n%nObject ID: %1%n%nNew Metadata:%n%2%n" />
+        <string id="WDS.ObjectMetadataRegistered" value="A new metadata object was successfully registered in the server with status code %3:%n%nObject ID: %1%n%nObject Metadata:%n%2%n%nParent: %4%n" />
+        <string id="WDS.ObjectMetadataRegistrationFailed" value="The server failed to register a new metadata object with status code %3:%n%nObject ID: %1%n%nObject Metadata:%n%2%n%nParent: %4%n" />
+        <string id="WDS.ObjectDeleted" value="An object was successfully deleted with status code %3:%n%nObject ID: %1%n" />
+        <string id="WDS.ObjectDeleteFailed" value="The server failed to delete an object with status code %3:%n%nObject ID: %1%n" />
+        <string id="WDS.ObjectParentModified" value="An object's parenting relationship was successfully modified with status code %3:%n%nObject ID: %1%n%nNew Parent: %4%n" />
+        <string id="WDS.ObjectParentModificationFailed" value="The server failed to modify an object's parenting relationship with status code %3:%n%nObject ID: %1%n%nNew Parent: %4%n" />
+        <string id="WdsUtil.CommandStarted" value="WdsUtil.exe was run with the following command line:%n%n%1" />
+        <string id="WdsUtil.CommandCompleted" value="A WdsUtil.exe command was successfully executed.%n%nCommand Line: %1%n%nStatus Code: %2" />
+        <string id="WdsUtil.CommandFailed" value="A WdsUtil.exe command failed.%n%nCommand Line: %1%n%nStatus Code: %2" />
+        <string id="Event.PXE.MissingBootImagesForArchitecture" value="The PXE server processed a request from a client of architecture %1.  However there were no boot images installed for this architecture.  PXE clients of this architecture will not be able to complete the boot process successfully.  To resolve this problem, add at least one boot image for this architecture." />
+        <string id="Event.TptReadFileBufferCreated" value="A %3 buffer was created for reading file %1." />
+        <string id="Event.TptReadFileBufferDeleted" value="A %3 buffer created for reading file %1 was deleted." />
+        <string id="Event.EndpointOpened" value="An endpoint was opened by provider %2.%n%nType: %1%nAddress: %3" />
+        <string id="Event.EndpointClosed" value="An endpoint was closed by provider %2.%n%nType: %1%nAddress: %3" />
+        <string id="Map.TraceSeverity.Verbose" value="Verbose" />
+        <string id="Map.TraceSeverity.Info" value="Informational" />
+        <string id="Map.TraceSeverity.Warning" value="Warning" />
+        <string id="Map.TraceSeverity.Error" value="Error" />
+        <string id="Map.TraceSeverity.Fatal" value="Fatal" />
+        <string id="Map.TraceSeverity.Internal" value="Internal" />
+        <string id="Map.TraceSeverity.Packet" value="Packet" />
+        <string id="Map.ProcessorArchitecture.x86" value="x86" />
+        <string id="Map.ProcessorArchitecture.x64" value="x64" />
+        <string id="Map.ProcessorArchitecture.arm64" value="arm64" />
+        <string id="Map.ProcessorArchitecture.arm" value="arm" />
+        <string id="Map.ProcessorArchitecture.unknown" value="unknown" />
+        <string id="Map.ProcessorArchitecture.notavailable" value="not available" />
+        <string id="Map.DeviceQueryControllerResponseType.Partial" value="Partial" />
+        <string id="Map.DeviceQueryControllerResponseType.Complete" value="Complete" />
+        <string id="Map.TptReadFileBufferType.Unshared" value="Non-Shared" />
+        <string id="Map.TptReadFileBufferType.Shared" value="Shared" />
+        <string id="Map.EndpointType.Udp" value="UDP" />
+        <string id="Map.EndpointType.Rpc" value="RPC" />
+        <string id="WdsCim.CommandStarted" value="WdsCim was invoked with the following command line:%n%n%1" />
+        <string id="WdsCim.CommandCompleted" value="A WdsCim method was successfully executed.%n%nCommand Line: %1%n%nStatus Code: %2" />
+        <string id="WdsCim.CommandFailed" value="A WdsCim method failed.%n%nCommand Line: %1%n%nStatus Code: %2" />
+      </stringTable>
+    </resources>
+  </localization>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" description="Default SDDL for Windows Resource Protected file" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+</assembly>

@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved." xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <assemblyIdentity name="Microsoft-Windows-NetworkBridge" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <dependency discoverable="no" resourceType="Resources">
+    <dependentAssembly>
+      <assemblyIdentity name="Microsoft-Windows-NetworkBridge.Resources" version="10.0.22621.1" processorArchitecture="amd64" language="*" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </dependentAssembly>
+  </dependency>
+  <file name="bridge.sys" destinationPath="$(runtime.drivers)\" sourceName="bridge.sys" importPath="$(build.nttree)\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>Js2F4smqJcRMwjCE78ErKQxt1CKrzjqgKSpJyWsYiKo=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <file name="bridgeunattend.exe" destinationPath="$(runtime.system32)\" sourceName="bridgeunattend.exe" importPath="$(build.nttree)\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>OsggQ72zeIFWw6zwP23qSWfZS/GcJ91zfSzGkdtwHXc=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <file name="bridgeres.dll" destinationPath="$(runtime.system32)\" sourceName="bridgeres.dll" importPath="$(build.nttree)\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>XPp4wnu9rM27F3TmeX0lrl1mYY/DKzqy3Dd7jg7igJA=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <file name="bridgemigplugin.dll" destinationPath="$(runtime.system32)\migration\" sourceName="bridgemigplugin.dll" importPath="$(build.nttree)\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>t7xDTIGWxLB3qVZUeFNxXQgXYfZPI6of5lP7unNj8VU=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <memberships>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories" version="1.0.0.0" publicKeyToken="365143bb27e7ac8b" typeName="BootCritical" />
+    </categoryMembership>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories" version="1.0.0.0" publicKeyToken="365143bb27e7ac8b" typeName="BootRecovery" />
+    </categoryMembership>
+  </memberships>
+  <registryKeys>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\services\MsBridge">
+      <registryValue name="NdisImPlatformProviderClass" valueType="REG_DWORD" value="0x00000001" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\EventLog\System\MsBridge">
+      <registryValue name="EventMessageFile" valueType="REG_EXPAND_SZ" value="%SystemRoot%\System32\netevent.dll" />
+      <registryValue name="TypesSupported" valueType="REG_DWORD" value="0x00000007" />
+    </registryKey>
+  </registryKeys>
+  <memberships>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories.Services" version="10.0.22621.1" publicKeyToken="31bf3856ad364e35" typeName="Service" />
+      <categoryInstance>
+        <serviceData name="MsBridge" displayName="@%SystemRoot%\system32\bridgeres.dll,-1" errorControl="normal" start="demand" type="kernelDriver" description="@%SystemRoot%\system32\bridgeres.dll,-1" group="NDIS" imagePath="System32\drivers\bridge.sys" />
+      </categoryInstance>
+    </categoryMembership>
+  </memberships>
+  <networkComponents>
+    <filterDriver bindGuid="{171c5016-3d19-4cb2-9556-63e586ee5010}" displayDescription="@%SystemRoot%\system32\bridgeres.dll,-2" displayName="@%SystemRoot%\system32\bridgeres.dll,-2" filterClass="ms_implatform" identifier="ms_bridge" mandatory="true" type="modifying">
+      <bind keyword="ms_implatform" ruleType="bottom" />
+      <property name="NETSETUPPKEY_Driver_NtServiceName" type="string" value="MsBridge" />
+      <property name="NETSETUPPKEY_INF_Name" type="string" value="netbrdg.inf" />
+      <property name="NETSETUPPKEY_INF_Section" type="string" value="Install" />
+      <property name="NETSETUPPKEY_Driver_NtServicesToAutoStartWhenBound" type="stringList" value="MsBridge" />
+      <property name="NETSETUPPKEY_Driver_NtServicesToDemandStartWhenUnbound" type="stringList" value="MsBridge" />
+      <property name="NETSETUPPKEY_MUX_ProviderOfMuxType" type="stringList" value="Bridge" />
+    </filterDriver>
+  </networkComponents>
+  <migration settingsVersion="0">
+    <machineSpecific>
+      <migXml xmlns="">
+        <rules context="System">
+          <include>
+            <objectSet>
+              <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\MsBridge\Parameters\NdisAdapters\* [ForceCompatibilityMode]</pattern>
+              <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\MsBridge\Parameters\NdisAdapters\* [BridgeMode]</pattern>
+            </objectSet>
+          </include>
+        </rules>
+        <plugin classId="{ee036dc0-f9b7-4d2d-bb94-3dd3102c5804}" file="%windir%\system32\migration\BridgeMigPlugin.dll" offlineApply="yes" />
+      </migXml>
+    </machineSpecific>
+    <supportedComponents>
+      <supportedComponent>
+        <assemblyIdentity name="_" version="1.0.0.0" />
+        <supportedComponentIdentity buildType="release" language="neutral" name="Microsoft-Windows-NetworkBridge" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" settingsVersionRange="0" versionScope="nonSxS" xmlns="urn:schemas-microsoft-com:asm.v3" />
+      </supportedComponent>
+    </supportedComponents>
+  </migration>
+  <instrumentation xmlns:ut="http://manifests.microsoft.com/win/2004/08/windows/networkevents" xmlns:win="http://manifests.microsoft.com/win/2004/08/windows/events" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <events xmlns="http://schemas.microsoft.com/win/2004/08/events">
+      <provider guid="{A67075C2-3E39-4109-B6CD-6D750058A731}" message="$(string.EventProviderName)" messageFileName="%windir%\system32\drivers\bridge.sys" name="Microsoft-Windows-NetworkBridge" resourceFileName="%windir%\system32\drivers\bridge.sys" symbol="NETBRIDGE">
+        <channels>
+          <importChannel chid="System" name="System" />
+          <channel chid="NetBridgeChannel" enabled="false" name="Microsoft-Windows-NetworkBridge/Diagnostic" type="Analytic" />
+        </channels>
+      </provider>
+      <cmi />
+    </events>
+  </instrumentation>
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string id="displayName" value="Network Bridge" />
+        <string id="description" value="The network bridge connects network segments.  It can also create connections between different types of network media (e.g. 802.11 to 802.3.)" />
+        <string id="EventProviderName" value="Microsoft-Windows-NetworkBridge" />
+        <string id="Keyword.DebugTrace" value="DebugTrace" />
+        <string id="Opcode.DebugTrace" value="DebugTrace" />
+        <string id="Task.DebugTrace" value="DebugTrace" />
+        <string id="evtNetBridgeDebugTrace" value="%1" />
+        <string id="EVENT_NETWORK_BRIDGE_BAD_ROUTER.Message" value="Network Bridge:  Detected a router that is not DHCP compliant. This can cause connectivity issues on the machine. If the problem persists, please replace the router or configure static IP addresses" />
+      </stringTable>
+    </resources>
+  </localization>
+  <unattendActions>
+    <unattendAction executableName="$(runtime.system32)\bridgeunattend.exe" passes="generalize" />
+  </unattendActions>
+  <configuration xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State">
+    <configurationSchema>
+      <xsd:schema xmlns="Microsoft-Windows-NetworkBridge" targetNamespace="Microsoft-Windows-NetworkBridge">
+        <xsd:element name="Bridge" type="xsd:string" wcm:dataOnly="false" wcm:description="Bridge specifies the adapters to bridge together to form a home network. This entry requires at least two adapters." wcm:displayName="Bridge" wcm:handler="regkey('HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion\UnattendSettings')" wcm:passes="generalize" wcm:scope="allUsers" wcm:visible="true" />
+      </xsd:schema>
+    </configurationSchema>
+  </configuration>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" description="Default SDDL for Windows Resource Protected file" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+</assembly>

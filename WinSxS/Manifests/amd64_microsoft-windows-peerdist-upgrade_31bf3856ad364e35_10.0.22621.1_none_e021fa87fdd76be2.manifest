@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-PeerDist-Upgrade" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <migration scope="Upgrade" settingsVersion="2">
+    <migXml xmlns="">
+      <rules context="System">
+        <include>
+          <objectSet>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\PeerDist\* [*]</pattern>
+            <pattern type="File">%WINDIR%\ServiceProfiles\NetworkService\AppData\Local\PeerDistPub\* [*]</pattern>
+            <pattern type="File">%WINDIR%\ServiceProfiles\NetworkService\AppData\Local\PeerDistRepub\* [*]</pattern>
+          </objectSet>
+        </include>
+        <merge script="MigXmlHelper.SourcePriority()">
+          <objectSet>
+            <pattern type="File">%WINDIR%\ServiceProfiles\NetworkService\AppData\Local\PeerDistPub\* [*]</pattern>
+            <pattern type="File">%WINDIR%\ServiceProfiles\NetworkService\AppData\Local\PeerDistRepub\* [*]</pattern>
+          </objectSet>
+        </merge>
+      </rules>
+    </migXml>
+    <supportedComponents>
+      <supportedComponent>
+        <assemblyIdentity name="_" version="1.0.0.0" />
+        <supportedComponentIdentity language="*" name="Microsoft-Windows-PeerDist-Upgrade" processorArchitecture="*" settingsVersionRange="1-2" xmlns="urn:schemas-microsoft-com:asm.v3" />
+        <migXml xmlns="">
+          <rules context="System">
+            <merge script="MigXmlHelper.SourcePriority()">
+              <objectSet>
+                <pattern type="File">%WINDIR%\ServiceProfiles\NetworkService\AppData\Local\PeerDistPub\* [*]</pattern>
+                <pattern type="File">%WINDIR%\ServiceProfiles\NetworkService\AppData\Local\PeerDistRepub\* [*]</pattern>
+              </objectSet>
+            </merge>
+          </rules>
+        </migXml>
+      </supportedComponent>
+    </supportedComponents>
+  </migration>
+</assembly>

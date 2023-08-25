@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-Update-Ux-MusScnHandlers" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <registryKeys>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings\">
+      <securityDescriptor name="REGKEY_UPDATEUX_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\UpdatePlatform\UX\Configurations">
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+      <registryValue name="SmartActiveHoursState" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="SmartSchedulerDurationInMinutes" valueType="REG_DWORD" value="0x000000B4" />
+      <registryValue name="RestartNoisyNotificationsAllowed" valueType="REG_DWORD" value="0x00000000" />
+      <registryValue name="ActiveHoursStartBufferInMinutes" valueType="REG_DWORD" value="0x00000041" />
+      <registryValue name="UpdateUxAllowed" valueType="REG_DWORD" value="0x00000001" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{A43139B3-BDF5-4497-9DCF-6C7AADC1A5D0}">
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+      <registryValue name="" valueType="REG_SZ" value="MusDialogHandler" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{A43139B3-BDF5-4497-9DCF-6C7AADC1A5D0}\InProcServer32">
+      <registryValue name="" valueType="REG_SZ" value="$(runtime.windows)\UUS\amd64\musdialoghandlers.dll" />
+      <registryValue name="ThreadingModel" valueType="REG_SZ" value="Both" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{1D8507B9-1D21-42D9-99F6-19D79434CA2E}">
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+      <registryValue name="" valueType="REG_SZ" value="MusIntrusiveNotificationHandler" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{1D8507B9-1D21-42D9-99F6-19D79434CA2E}\InProcServer32">
+      <registryValue name="" valueType="REG_SZ" value="$(runtime.windows)\UUS\amd64\musdialoghandlers.dll" />
+      <registryValue name="ThreadingModel" valueType="REG_SZ" value="Both" />
+    </registryKey>
+  </registryKeys>
+  <migration scope="Upgrade,Data" settingsVersion="1">
+    <migXml xmlns="">
+      <rules context="System">
+        <include>
+          <objectSet>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings [UxOption]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings [ExcludeWUDriversInQualityUpdate]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings [DeferUpgrade]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings [ActiveHoursStart]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings [ActiveHoursEnd]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings [SmartActiveHoursState]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings [SmartActiveHoursSuggestionState]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings [SmartActiveHoursStart]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings [SmartActiveHoursEnd]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings [UserChoiceActiveHoursStart]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings [UserChoiceActiveHoursEnd]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings [LastToastAction]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings [RestartNotificationsAllowed2]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings [FlightCommitted]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings [AllowAutoWindowsUpdateDownloadOverMeteredNetwork]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings [IsExpedited]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings [RestartNoisyNotificationsAllowed]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\StateVariables [*]</pattern>
+          </objectSet>
+        </include>
+        <exclude>
+          <objectSet>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings [RestartNotificationsAllowed]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings [BranchReadinessLevel]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings [DeferUpgrade]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\StateVariables [RebootRequired]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\StateVariables [ScheduledRebootTime]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\StateVariables [RebootScheduledByUser]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\StateVariables [RebootConfirmedByUser]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\StateVariables [RebootScheduledBySmartScheduler]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\StateVariables [AutoAcceptShownToUser]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\StateVariables [AutoScheduledRebootFailed]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\StateVariables [ScheduledRebootFailed]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\StateVariables [LastAttemptedRebootTime]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\StateVariables [FairWarningLastDismissTime]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\StateVariables [ForcedReminderDisplayed]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\StateVariables [ForceRebootReminderNeeded]</pattern>
+          </objectSet>
+        </exclude>
+        <locationModify script="MigXmlHelper.ExactMove('HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings [RestartNotificationsAllowed2]')">
+          <objectSet>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings [RestartNotificationsAllowed]</pattern>
+          </objectSet>
+        </locationModify>
+      </rules>
+    </migXml>
+    <supportedComponents>
+      <supportedComponent>
+        <assemblyIdentity name="_" version="1.0.0.0" />
+        <supportedComponentIdentity language="neutral" name="Microsoft-Windows-Update-Ux-MusScnHandlers" processorArchitecture="amd64" settingsVersionRange="0-1" xmlns="urn:schemas-microsoft-com:asm.v3" />
+        <migXml xmlns="">
+          <rules context="System">
+            <locationModify script="MigXmlHelper.ExactMove('HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings [BranchReadinessLevel]')">
+              <objectSet>
+                <pattern type="Registry">HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings [DeferUpgrade]</pattern>
+              </objectSet>
+            </locationModify>
+            <contentModify script="MigXmlHelper.SetValueByTable('0,1', '16,32', '16')">
+              <objectSet>
+                <pattern type="Registry">HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings [DeferUpgrade]</pattern>
+              </objectSet>
+            </contentModify>
+            <locationModify script="MigXmlHelper.ExactMove('HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings [RestartNotificationsAllowed2]')">
+              <objectSet>
+                <pattern type="Registry">HKLM\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings [RestartNotificationsAllowed]</pattern>
+              </objectSet>
+            </locationModify>
+          </rules>
+        </migXml>
+      </supportedComponent>
+    </supportedComponents>
+  </migration>
+  <file name="musdialoghandlers.dll" destinationPath="$(runtime.windows)\UUS\amd64\" sourceName="musdialoghandlers.dll" importPath="$(build.nttree)\UndockedUpdateStack\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>+wCA4YBG901UdVRIHKqIupDUIIz16FLye+vkAmRv35c=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="REGKEY_UPDATEUX_SDDL" sddl="O:BAD:P(A;OICI;GA;;;SY)(A;OICI;GA;;;BA)(A;OICI;GRGW;;;BU)" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_PARENT_DIR_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;CI;GA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;0x1301bf;;;SY)(A;IOCIOI;GA;;;SY)(A;;0x1301bf;;;BA)(A;IOCIOI;GA;;;BA)(A;CIOI;GRGX;;;BU)(A;OICIIO;GA;;;CO)(A;CIOI;GRGX;;;S-1-15-2-1)(A;CIOI;GRGX;;;S-1-15-2-2)" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_REGKEY_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;CI;GA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;CI;GR;;;SY)(A;CI;GR;;;BA)(A;CI;GR;;;BU)(A;CI;GR;;;S-1-15-2-1)(A;CI;GR;;;S-1-15-3-1024-1065365936-1281604716-3511738428-1654721687-432734479-3232135806-4053264122-3456934681)" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" description="Default SDDL for Windows Resource Protected file" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+</assembly>

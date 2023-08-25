@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-FamilySafety-RefreshTask" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <dependency discoverable="no" resourceType="Resources">
+    <dependentAssembly dependencyType="prerequisite">
+      <assemblyIdentity name="Microsoft-Windows-ParentalControlsRefreshTask.Resources" version="10.0.22621.1" processorArchitecture="amd64" language="*" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+    </dependentAssembly>
+  </dependency>
+  <file name="WpcRefreshTask.dll" destinationPath="$(runtime.system32)\" sourceName="WpcRefreshTask.dll" importPath="$(build.nttree)\FamilySafety\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>BbELUQQXfBg4lxGb/cBo/qYGYhtwQLOv28/N/Vcb9y4=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <file name="WpcTok.exe" destinationPath="$(runtime.system32)\" sourceName="WpcTok.exe" importPath="$(build.nttree)\FamilySafety\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>ILt8qUApuF82NWmetIz7p/uN1Dslph1LSjQjgnt+jrE=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <file name="wpcmon.png" destinationPath="$(runtime.system32)\" sourceName="wpcmon.png" importPath="$(build.nttree)\FamilySafety\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>UBwcsrTJwVBag93cFZ09yrLXV0Kngv4ecl3KOUJnt10=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <directories>
+    <directory destinationPath="$(runtime.programData)\Microsoft\Windows\Parental Controls" owner="true">
+      <securityDescriptor name="WRP_PARENT_DIR_DEFAULT_SDDL" />
+    </directory>
+    <directory destinationPath="$(runtime.programData)\Microsoft\Windows\Parental Controls\Settings" owner="true">
+      <securityDescriptor name="WRP_PARENT_DIR_DEFAULT_SDDL" />
+    </directory>
+  </directories>
+  <migration settingsVersion="0">
+    <migXml xmlns="">
+      <rules context="system">
+        <include>
+          <objectSet>
+            <pattern type="File">%programData%\Microsoft\Windows\Parental Controls\Settings\* [*]</pattern>
+          </objectSet>
+        </include>
+        <merge script="MigXmlHelper.DestinationPriority()">
+          <objectSet>
+            <pattern type="File">%programData%\Microsoft\Windows\Parental Controls\Settings\* [*]</pattern>
+          </objectSet>
+        </merge>
+      </rules>
+    </migXml>
+    <supportedComponents>
+      <supportedComponent>
+        <assemblyIdentity name="_" version="1.0.0.0" />
+        <supportedComponentIdentity buildType="release" language="neutral" name="Microsoft-Windows-FamilySafety-RefreshTask" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" settingsVersionRange="0" versionScope="nonSxS" xmlns="urn:schemas-microsoft-com:asm.v3" />
+        <migXml xmlns="">
+          <rules context="system">
+            <include>
+              <objectSet>
+                <pattern type="File">%programData%\Microsoft\Windows\Parental Controls\Settings\* [*]</pattern>
+              </objectSet>
+            </include>
+            <merge script="MigXmlHelper.DestinationPriority()">
+              <objectSet>
+                <pattern type="File">%programData%\Microsoft\Windows\Parental Controls\Settings\* [*]</pattern>
+              </objectSet>
+            </merge>
+          </rules>
+        </migXml>
+      </supportedComponent>
+    </supportedComponents>
+  </migration>
+  <taskScheduler>
+    <Task xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task">
+      <RegistrationInfo>
+        <URI>\Microsoft\Windows\Shell\FamilySafetyRefreshTask</URI>
+        <Source>$(@%SystemRoot%\System32\WpcRefreshTask.dll,-32010)</Source>
+        <Author>$(@%SystemRoot%\System32\WpcRefreshTask.dll,-32011)</Author>
+        <Description>$(@%SystemRoot%\System32\WpcRefreshTask.dll,-32012)</Description>
+        <SecurityDescriptor>D:(A;OICI;FA;;;BA)(A;OICI;FA;;;LA)(A;OICI;FA;;;SY)(A;OICI;FRFX;;;AU)(A;;FRFX;;;LS)</SecurityDescriptor>
+      </RegistrationInfo>
+      <Triggers>
+        <WnfStateChangeTrigger>
+          <StateName>7508BCA33A089541</StateName>
+        </WnfStateChangeTrigger>
+      </Triggers>
+      <Settings>
+        <UseUnifiedSchedulingEngine>true</UseUnifiedSchedulingEngine>
+        <AllowStartOnDemand>true</AllowStartOnDemand>
+        <MultipleInstancesPolicy>Queue</MultipleInstancesPolicy>
+        <RunOnlyIfNetworkAvailable>true</RunOnlyIfNetworkAvailable>
+        <DisallowStartIfOnBatteries>false</DisallowStartIfOnBatteries>
+        <StopIfGoingOnBatteries>false</StopIfGoingOnBatteries>
+        <ExecutionTimeLimit>PT10M</ExecutionTimeLimit>
+        <Enabled>true</Enabled>
+      </Settings>
+      <Principals>
+        <Principal id="System">
+          <GroupId>S-1-5-18</GroupId>
+          <RunLevel>HighestAvailable</RunLevel>
+        </Principal>
+      </Principals>
+      <Actions Context="System">
+        <ComHandler>
+          <ClassId>{C844C79D-AED8-4DCE-AB25-4D359BED84F8}</ClassId>
+          <Data>$(Arg0)</Data>
+        </ComHandler>
+      </Actions>
+    </Task>
+  </taskScheduler>
+  <registryKeys>
+    <registryKey keyName="HKEY_CLASSES_ROOT\AppId\{B3AADFEA-8404-4CBE-A62E-B0B715412C9E}">
+      <registryValue name="" valueType="REG_SZ" value="AppActivationFailedHandler" />
+      <registryValue name="DllSurrogate" valueType="REG_SZ" value="" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\AppId\{C844C79D-AED8-4DCE-AB25-4D359BED84F8}">
+      <registryValue name="" valueType="REG_SZ" value="FamilySafetyRefreshTask" />
+      <registryValue name="AccessPermission" valueType="REG_BINARY" value="01000480c4000000d400000000000000140000000200b0000800000000031800ff011f000102000000000005200000002002000000031400ff011f0001010000000000051200000000031400ff011f0001010000000000050b00000000001400a90012000101000000000005130000000000180003000000010200000000000520000000200200000000140003000000010100000000000512000000000014000300000001010000000000050b00000000001400030000000101000000000005130000000102000000000005200000002002000001020000000000052000000020020000" />
+      <registryValue name="DllSurrogate" valueType="REG_SZ" value="" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{B3AADFEA-8404-4CBE-A62E-B0B715412C9E}">
+      <registryValue name="" valueType="REG_SZ" value="AppActivationFailedHandler" />
+      <registryValue name="AppID" valueType="REG_SZ" value="{B3AADFEA-8404-4CBE-A62E-B0B715412C9E}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{C844C79D-AED8-4DCE-AB25-4D359BED84F8}">
+      <registryValue name="" valueType="REG_SZ" value="FamilySafetyRefreshTask" />
+      <registryValue name="AppID" valueType="REG_SZ" value="{C844C79D-AED8-4DCE-AB25-4D359BED84F8}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{B3AADFEA-8404-4CBE-A62E-B0B715412C9E}\InProcServer32">
+      <registryValue name="" valueType="REG_EXPAND_SZ" value="%SystemRoot%\System32\WpcRefreshTask.dll" />
+      <registryValue name="ThreadingModel" valueType="REG_SZ" value="Both" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{C844C79D-AED8-4DCE-AB25-4D359BED84F8}\InProcServer32">
+      <registryValue name="" valueType="REG_EXPAND_SZ" value="%SystemRoot%\System32\WpcRefreshTask.dll" />
+      <registryValue name="ThreadingModel" valueType="REG_SZ" value="Both" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\AppModel\AppActivationErrorHandlers">
+      <registryValue name="8007015a" valueType="REG_SZ" value="{B3AADFEA-8404-4CBE-A62E-B0B715412C9E}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\AppUserModelId\Microsoft.Windows.ParentalControls">
+      <registryValue name="DisplayName" valueType="REG_EXPAND_SZ" value="@%SystemRoot%\system32\WpcRefreshTask.dll,-32000" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Ubpm">
+      <registryValue name="CriticalTask_FamilySafetyRefreshTask" valueType="REG_SZ" value="NT TASK\Microsoft\Windows\Shell\FamilySafetyRefreshTask" />
+    </registryKey>
+  </registryKeys>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="WRP_PARENT_DIR_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;CI;GA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;0x1301bf;;;SY)(A;IOCIOI;GA;;;SY)(A;;0x1301bf;;;BA)(A;IOCIOI;GA;;;BA)(A;CIOI;GRGX;;;BU)(A;OICIIO;GA;;;CO)(A;CIOI;GRGX;;;S-1-15-2-1)(A;CIOI;GRGX;;;S-1-15-2-2)" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_REGKEY_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;CI;GA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;CI;GR;;;SY)(A;CI;GR;;;BA)(A;CI;GR;;;BU)(A;CI;GR;;;S-1-15-2-1)(A;CI;GR;;;S-1-15-3-1024-1065365936-1281604716-3511738428-1654721687-432734479-3232135806-4053264122-3456934681)" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" description="Default SDDL for Windows Resource Protected file" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+</assembly>

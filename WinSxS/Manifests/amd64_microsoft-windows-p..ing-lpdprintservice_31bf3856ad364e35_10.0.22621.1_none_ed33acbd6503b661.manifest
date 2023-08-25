@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-Printing-LPDPrintService" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <dependency discoverable="no" resourceType="Resources">
+    <dependentAssembly dependencyType="prerequisite">
+      <assemblyIdentity name="Microsoft-Windows-Printing-LPDPrintService.Resources" version="10.0.22621.1" processorArchitecture="amd64" language="*" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+    </dependentAssembly>
+  </dependency>
+  <file name="lpdsvc.dll" destinationPath="$(runtime.system32)\" sourceName="lpdsvc.dll" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>Bh+L76OtfG8MLu4nPyRSujmjLXdN2B5hYnDKm699rP8=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <memberships>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories" version="1.0.0.0" publicKeyToken="365143bb27e7ac8b" typeName="SvcHost" />
+      <categoryInstance subcategory="LPDService">
+        <serviceGroup position="last" serviceName="LPDSVC" />
+      </categoryInstance>
+    </categoryMembership>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories.Services" version="10.0.22621.1" publicKeyToken="31bf3856ad364e35" typeName="Service" />
+      <categoryInstance subcategory="LPDSVC">
+        <serviceData name="LPDSVC" displayName="@%systemroot%\system32\lpdsvc.dll,-500" errorControl="normal" start="auto" type="win32ShareProcess" description="@%systemroot%\system32\lpdsvc.dll,-501" dependOnService="Tcpip,Spooler" imagePath="%SystemRoot%\System32\svchost.exe -k LPDService" objectName="LocalSystem" sidType="unrestricted" startAfterInstall="synchronous">
+          <securityDescriptor name="LPDSVCSecurity" />
+          <failureActions resetPeriod="86400">
+            <actions>
+              <action delay="120000" type="restartService" />
+              <action delay="300000" type="restartService" />
+              <action delay="0" type="none" />
+            </actions>
+          </failureActions>
+        </serviceData>
+      </categoryInstance>
+    </categoryMembership>
+  </memberships>
+  <registryKeys>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\EventLog\System\LPDSVC">
+      <registryValue name="ProviderGuid" valueType="REG_EXPAND_SZ" value="{9F44821F-1FD9-46BF-A09A-C7F751159AAF}" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\Software\Microsoft\Print\Components">
+      <registryValue name="LPDPrintService" valueType="REG_DWORD" value="0x00000001" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\System\CurrentControlSet\Services\LPDSVC\Parameters">
+      <registryValue name="ServiceDll" valueType="REG_EXPAND_SZ" value="%systemroot%\system32\lpdsvc.dll" />
+      <registryValue name="ServiceDllUnloadOnStop" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="AllowJobRemoval" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="AllowPrinterResume" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="MaxConcurrentUsers" valueType="REG_DWORD" value="0x00000064" />
+    </registryKey>
+  </registryKeys>
+  <firewallRule action="allow" active="true" binary="%SystemRoot%\System32\svchost.exe" desc="@%systemroot%\system32\FirewallAPI.dll,-53901" dir="in" group="@%systemroot%\system32\FirewallAPI.dll,-53900" internalName="LPDPrinterServer-TCP-In" lport="515" name="@%systemroot%\system32\FirewallAPI.dll,-53900" protocol="tcp" svc="LPDSVC" />
+  <instrumentation xmlns:win="http://manifests.microsoft.com/win/2004/08/windows/events">
+    <events xmlns="http://schemas.microsoft.com/win/2004/08/events">
+      <provider guid="{9F44821F-1FD9-46BF-A09A-C7F751159AAF}" message="$(string.eventProviderName)" messageFileName="%SystemRoot%\system32\lpdsvc.dll" name="Microsoft-Windows-Spooler-LPDSVC" resourceFileName="%SystemRoot%\system32\lpdsvc.dll" symbol="S_lpdmsg">
+        <channels>
+          <importChannel chid="System" name="System" />
+        </channels>
+      </provider>
+      <cmi />
+    </events>
+  </instrumentation>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="LPDSVCSecurity" sddl="D:(A;;CCLCSWRPWPDTLOCRRC;;;SY)(A;;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;BA)(A;;CCLCSWLOCRRC;;;IU)(A;;CCLCSWLOCRRC;;;SU)(A;;CR;;;AU)S:(AU;FA;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;WD)" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" description="Default SDDL for Windows Resource Protected file" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string id="displayName0" value="LPD Print Service" />
+        <string id="description1" value="This component contains the files needed for a computer to receive jobs from LPR clients via the Line Printer Daemon print prototocl." />
+        <string id="displayName2" value="LPDSVC Security ACL" />
+        <string id="displayName3" value="WRP_FILE_DEFAULT_SDDL" />
+        <string id="description4" value="This specifies the service ACL for Print Service for UNIX" />
+        <string id="description5" value="Default SDDL for Windows Resource Protected file" />
+        <string id="eventProviderName" value="Microsoft-Windows-Spooler-LPDSVC" />
+        <string id="event_LPDLOG_LPD_DIDNT_START" value="The Line Printer Daemon (LPD) service failed to start. This can occur if the LPD service cannot gain access to system resources such as memory or the registry. Check the windows error returned by this event to determine the cause and then restart the LPD service." />
+        <string id="event_LPDLOG_OUT_OF_RESOURCES" value="The Line Printer Daemon (LPD) service refused a request from a client because the system is out of resources. This can occur if the LPD service cannot gain access to system resources such as memory or the registry." />
+        <string id="event_LPDLOG_MISBEHAVED_CLIENT" value="The Line Printer Daemon (LPD) service received an improper sequence of commands from %1 and refused the print job." />
+        <string id="event_LPDLOG_UNSUPPORTED_PRINT" value="The Line Printer Daemon (LPD) service received a print job from %1 in an unsupported print format. This can occur if the printer driver on the client is configured to use a print data type that is unsupported by this printer. The document may not print correctly as a result." />
+        <string id="event_LPDLOG_UNAUTHORIZED_REQUEST" value="%1 on %2 could not remove the print job submitted by %3 on %4 because the user does not have the Manage Documents permission." />
+        <string id="event_LPDLOG_BAD_FORMAT" value="The Line Printer Daemon (LPD) service received commands in an invalid format from %1 and refused the print job. This can occur if the Line Printer Remote (LPR) client is incompatible with the Windows LPD service and Request for Comments (RFC) 1179. Try printing using a different LPR client." />
+        <string id="event_LPDLOG_NONEXISTENT_PRINTER" value="The Line Printer Daemon (LPD) service refused a print job from %2 for printer %1 because the specified printer does not exist on this computer. Retry printing from the client using the correct printer name." />
+        <string id="event_LPDLOG_PRINTER_RESUMED" value="%1 successfully resumed printer %2. No user action is required." />
+        <string id="event_LPDLOG_DIDNT_WORK" value="The Line Printer Daemon (LPD) service could not satisfy the request from %1, most likely because of network problems. Check network connectivity between the two computers." />
+      </stringTable>
+    </resources>
+  </localization>
+</assembly>

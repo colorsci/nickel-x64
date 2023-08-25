@@ -1,0 +1,745 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-OneCore-Cellcore-WwanSvcEtw-Events" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <dependency discoverable="no" resourceType="Resources">
+    <dependentAssembly dependencyType="prerequisite">
+      <assemblyIdentity name="Microsoft-Windows-WwanSvc.Resources" version="10.0.22621.1" processorArchitecture="amd64" language="*" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+    </dependentAssembly>
+  </dependency>
+  <instrumentation xmlns:ut="http://manifests.microsoft.com/win/2004/08/windows/networkevents" xmlns:win="http://manifests.microsoft.com/win/2004/08/windows/events" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <events xmlns="http://schemas.microsoft.com/win/2004/08/events">
+      <provider guid="{3CB40AAA-1145-4FB8-B27B-7E30F0454316}" message="$(string.WwanEventProviderName)" messageFileName="%SystemRoot%\system32\wwansvc.dll" name="Microsoft-Windows-WWAN-SVC-EVENTS" resourceFileName="%SystemRoot%\system32\wwansvc.dll" symbol="WWAN_EVT_GUID">
+        <channels>
+          <channel chid="c1" enabled="false" message="$(string.WWanDiagnosticChannel)" name="Microsoft-Windows-WWAN-SVC-Events/Diagnostic" type="Analytic" />
+          <channel chid="cOperational" enabled="true" message="$(string.WWanOperationalChannel)" name="Microsoft-Windows-WWAN-SVC-Events/Operational" type="Operational" />
+        </channels>
+      </provider>
+      <provider guid="{7839BB2A-2EA3-4ECA-A00F-B558BA678BEC}" message="$(string.WwanMMEventProviderName)" messageFileName="%SystemRoot%\system32\wwansvc.dll" name="Microsoft-Windows-WWAN-MM-EVENTS" resourceFileName="%SystemRoot%\system32\wwansvc.dll" symbol="WWAN_EVT_MM_GUID">
+        <channels>
+          <channel chid="c1" enabled="false" message="$(string.WWanMMDiagnosticChannel)" name="Microsoft-Windows-WWAN-MM-Events/Diagnostic" type="Analytic" />
+        </channels>
+      </provider>
+      <provider controlGuid="{accfd0da-d325-5532-2f78-d52f7851d177}" guid="{63b898b4-cb6f-373b-e029-7c41cb660be6}" messageFileName="%SYSTEMROOT%\system32\wwanprotdim.dll" name="Microsoft-Windows-WwanProtDim_63b898b4cb6f373be0297c41cb660be6" resourceFileName="%SYSTEMROOT%\system32\wwanprotdim.dll" symbol="WwanProtDim" />
+      <provider controlGuid="{0011695f-3d5c-5f4d-6812-370f805290eb}" guid="{78a296b2-2cdd-39e3-fbd8-75649b1791b6}" messageFileName="%SYSTEMROOT%\system32\wwapi.dll" name="Microsoft-Windows-WwanClient_78a296b22cdd39e3fbd875649b1791b6" resourceFileName="%SYSTEMROOT%\system32\wwapi.dll" symbol="WwanClient" />
+      <cmi />
+    </events>
+  </instrumentation>
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string id="displayName0" value="WRP_FILE_DEFAULT_SDDL" />
+        <string id="description0" value="Default SDDL for Windows Resource Protected file" />
+        <string id="displayName1" value="WRP_REGKEY_DEFAULT_SDDL" />
+        <string id="description1" value="Default SDDL for Windows Resource Protected registry key" />
+        <string id="displayName2" value="ALLOW_LOCALSYSTEM_AND_ADMIN_WRITE" />
+        <string id="description2" value="Grant all access to builtin Admins and Local System" />
+        <string id="UT.stateStart" value="State Start" />
+        <string id="UT.stateEnd" value="State End" />
+        <string id="StateNotStarted" value="Not started state" />
+        <string id="StateStarted" value="Started State" />
+        <string id="evWwanEnumerateStart" value="WWAN Service event: Interface(Device) enumerator starts picking up arrived devices" />
+        <string id="evWwanEnumerateError" value="WWAN Service event: Error(%4) occurs during Interface(Device) enumeration" />
+        <string id="evWwanInterfaceAdded" value="WWAN Service event: Interface is added to WwanManager successfully" />
+        <string id="WwanEventProviderName" value="Microsoft-Windows-WWAN-SVC-EVENTS" />
+        <string id="WWanDiagnosticChannel" value="WWAN Diagnostic Channel" />
+        <string id="taskRegister" value="Register Task" />
+        <string id="taskAttach" value="Attach Task" />
+        <string id="taskActivate" value="Activate Task" />
+        <string id="taskConnect" value="Connect Task" />
+        <string id="taskDisconnect" value="Disconnect Task" />
+        <string id="taskScan" value="Scan Task" />
+        <string id="taskSvcStartup" value="WWAN Service Startup" />
+        <string id="taskSvcShutdown" value="WWAN Service Shutdown" />
+        <string id="taskIntfInit" value="Interface Initialization Task" />
+        <string id="taskSvcResume" value="WWAN Service Resume" />
+        <string id="taskSvcSuspend" value="WWAN Service Suspend" />
+        <string id="APIPinInfo" value="Pin Info API" />
+        <string id="APIPinList" value="Pin List API" />
+        <string id="APIScan" value="Scan API" />
+        <string id="APIRegister" value="Register API" />
+        <string id="APIAttach" value="Attach API" />
+        <string id="APIDetach" value="Detach API" />
+        <string id="APIActivate" value="Activate API" />
+        <string id="APIDeactivate" value="Deactivate API" />
+        <string id="APIConnect" value="Connect API" />
+        <string id="APIDisconnect" value="Disconnect API" />
+        <string id="evWwanWilFallback" value="[FallbackError] %6, wilFailureType:%2, hresult:%1" />
+        <string id="evWwanError" value="WWAN Service event: [Error] %1: %2" />
+        <string id="evWwanGeneralError" value="%1 Failed with Error Code %3 in %2" />
+        <string id="evWwanWarning" value="WWAN Service event: [Warning] %1: %2" />
+        <string id="evWwanInfo" value="WWAN Service event: [Info] %1: %2" />
+        <string id="evWwanVerbose" value="WWAN Service event: [Verbose] %1: %2" />
+        <string id="evWwanErrorWithGuid" value="WWAN Service event: [Error] %1: %3 Interface: {%2}" />
+        <string id="evWwanWarningWithGuid" value="WWAN Service event: [Warning] %1: %3 Interface: {%2}" />
+        <string id="evWwanInfoWithGuid" value="WWAN Service event: [Info] %1: %3 Interface: {%2}" />
+        <string id="evWwanVerboseWithGuid" value="WWAN Service event: [Verbose] %1: %3 Interface: {%2}" />
+        <string id="evStartRegistering" value="WWAN Service event: Start Registering" />
+        <string id="evCompleteRegistering" value="WWAN Service event: Complete Registering" />
+        <string id="evStartConnecting" value="WWAN Service event: Start Connecting" />
+        <string id="evCompleteConnecting" value="WWAN Service event: Complete Connecting" />
+        <string id="evStartScanning" value="WWAN Service event: Start Scanning" />
+        <string id="evCompleteScanning" value="WWAN Service event: Complete Scanning" />
+        <string id="evServiceStartup" value="WWAN Service event: WWAN Service startup" />
+        <string id="evServiceShutdown" value="WWAN Service event: WWAN Service shutdown" />
+        <string id="evInterfaceArrived" value="WWAN Service event: WWAN Interface arrived" />
+        <string id="evInterfaceRemoved" value="WWAN Service event: WWAN Interface removed" />
+        <string id="evInterfaceDiscarded" value="WWAN Service event: WWAN Interface discarded" />
+        <string id="evInterfaceInfo" value="WWAN Service event: WWAN Interface information" />
+        <string id="evAPIRequest" value="WWAN Service event: WWAN API Request" />
+        <string id="evWwanRpcApiRequest" value="WWAN RPC API %1 Call on Interface {%2}" />
+        <string id="evRegisterSucceeded" value="WWAN Service event: Register happened. Either automatically or by some request" />
+        <string id="evRegisterFailed" value="WWAN Service event: Register request failed" />
+        <string id="evDeregistered" value="WWAN Service event: Deregister happened" />
+        <string id="evAttachSucceeded" value="WWAN Service event: Packet attach happened. Either automatically or by some request" />
+        <string id="evDetachSucceeded" value="WWAN Service event: Packet Detach happened. Either automatically or by some request" />
+        <string id="evActivateSucceeded" value="WWAN Service event: Context Activate happened. Either automatically or by some request" />
+        <string id="evDeactivateSucceeded" value="WWAN Service event: Context Deactivate happened. Either automatically or by some request" />
+        <string id="evConnectSucceeded" value="WWAN Service event: Connect happened. Either automatically or by some request" />
+        <string id="evConnectFailed" value="WWAN Service event: Connect request failed" />
+        <string id="evDisconnectSucceeded" value="WWAN Service event: Disconnect happened. Either automatically or by some request" />
+        <string id="evDisconnectFailed" value="WWAN Service event: Disconnect request failed" />
+        <string id="evOnIpAddressChange" value="WWAN Service event: IP%1 address {%2} obtained" />
+        <string id="evSignalInformation" value="WWAN Service event: Signal Notification recieved" />
+        <string id="evPinInfo" value="WWAN Service event: Pin Information Notification recieved" />
+        <string id="evPinList" value="WWAN Service event: Pin List Notification recieved" />
+        <string id="evPinActionCompleted" value="WWAN Service event: Pin Action Completion Notification recieved" />
+        <string id="evRadioState" value="WWAN Service event: Radio state change Notification recieved" />
+        <string id="evProfileUpdate" value="WWAN Service event: Profile Update Notification recieved" />
+        <string id="evStartSvcStartup" value="WWAN Service event: Start WWAN Service Startup" />
+        <string id="evCompleteSvcStartup" value="WWAN Service event: Complete WWAN Service Startup" />
+        <string id="evStartInterfaceInit" value="WWAN Service event: Start Interface Initialization" />
+        <string id="evCompleteInterfaceInit" value="WWAN Service event: Complete Interface Initialization" />
+        <string id="evStartSvcShutdown" value="WWAN Service event: Start Service Shutdown" />
+        <string id="evCompleteSvcShutdown" value="WWAN Service event: Complete Service Shutdown" />
+        <string id="evStartSvcResume" value="WWAN Service event: Start Service Resume" />
+        <string id="evCompleteSvcResume" value="WWAN Service event: Complete Service Resume" />
+        <string id="evStartSvcSuspend" value="WWAN Service event: Start Service Suspend" />
+        <string id="evCompleteSvcSuspend" value="WWAN Service event: Complete Service Suspend" />
+        <string id="taskShutdown" value="Shutdown" />
+        <string id="taskInit" value="Initialization" />
+        <string id="taskConnection" value="WWAN Connection" />
+        <string id="taskCellularState" value="WWAN Cellular State" />
+        <string id="opInitialize" value="Initialize" />
+        <string id="opCleanup" value="Cleanup" />
+        <string id="opRegistrationState" value="RegistrationState" />
+        <string id="opPacketServiceState" value="PacketServiceState" />
+        <string id="opIWLANAvailabilityState" value="IWLANAvailabilityState" />
+        <string id="opUiccPresence" value="UiccPresence" />
+        <string id="opPolicy" value="ConnectionPolicy" />
+        <string id="opProfile" value="ConnectionProfile" />
+        <string id="opAutoConnect" value="AutoConnect" />
+        <string id="mapModem" value="Modem" />
+        <string id="mapExecutor" value="Executor" />
+        <string id="mapInterface" value="Interface" />
+        <string id="evCleanup" value="%2 Cleanup: Unique Identifier=%1" />
+        <string id="evInit" value="%2 Initialization Complete: Unique Identifier=%1" />
+        <string id="evPacketServiceState" value="Interface %1 Packet Service State is %2" />
+        <string id="evIWLANAvailabilityState" value="Interface %1 IWLAN Availability State is %2" />
+        <string id="opOIDHandling" value="OID_Handling" />
+        <string id="WwanMMEventProviderName" value="Microsoft-Windows-WWAN-MM-EVENTS" />
+        <string id="WWanMMDiagnosticChannel" value="WWAN MM Diagnose Channel" />
+        <string id="taskInterfaceArrival" value="WWAN MM Interface Arrival task" />
+        <string id="taskWWanMMConnect" value="WWAN MM Connect task" />
+        <string id="taskWWanMMWrite" value="WWAN MM Write to UCM space task" />
+        <string id="evStartWWanMM" value="WWAN MM Event : WWAN MM module started" />
+        <string id="evStopWWanMM" value="WWAN MM Event : WWAN MM module stopped" />
+        <string id="evWWANMMError" value="WWAN MM Event : Error occurred in WWAN MM Module" />
+        <string id="evStartInterfaceArrival" value="WWAN MM Event : New WWAN Interface is arrived to the WWAN MM" />
+        <string id="evCompleteInterfaceArrival" value="WWAN MM Event : WWAN MM got notification of Interface initialization of a new interface" />
+        <string id="evStartWWanMMConnect" value="WWAN MM Event : Connect request issued by the WWAN MM module" />
+        <string id="evCompleteWWanMMConnect" value="WWAN MM Event : Connect completion response received by the WWAN MM Module" />
+        <string id="evWriteStartToUCMNameSpace" value="WWAN MM Event : WWAN MM Module writing start into UCM namepspace" />
+        <string id="evWriteCompleteToUCMNameSpace" value="WWAN MM Event : WWAN MM Module writing complete into UCM namepspace" />
+        <string id="OpCodeWithdoutData" value="Without Data State" />
+        <string id="taskWwanResumeReconnect" value="Measure Wwan Resume Reconnect task" />
+        <string id="evCompleteProfileUI" value="Display of Profile UI completed" />
+        <string id="WWanOperationalChannel" value="WWAN Operational Channel" />
+        <string id="evReadyStateInitialized" value="Interface %1 is ready to be used for mobile broadband operations" />
+        <string id="UT.registeredTypeHome" value="Home" />
+        <string id="UT.registeredTypeRoaming" value="Roaming" />
+        <string id="UT.registeredTypePartner" value="Partner" />
+        <string id="evRegisterStateRegistered" value="Interface %1 mobile broadband is registered as %2" />
+        <string id="UT.costSourceGroupPolicy" value="Group Policy" />
+        <string id="UT.costSourceUser" value="User" />
+        <string id="UT.costSourcePublic" value="Public" />
+        <string id="UT.costSourceOperator" value="Operator" />
+        <string id="UT.costValueUnrestricted" value="Unrestricted" />
+        <string id="UT.costValueFixed" value="Fixed" />
+        <string id="UT.costValueVariable" value="Variable" />
+        <string id="UT.costValueOverDataLimit" value="Over Data Limit" />
+        <string id="UT.costValueCongested" value="Congested" />
+        <string id="UT.costValueRoaming" value="Roaming" />
+        <string id="taskCost" value="Connection Cost" />
+        <string id="taskAccountManagement" value="Account Management" />
+        <string id="evCostChanged" value="WWAN Service event: %1 Cost is changed to %2 for profile %4 on interface %3" />
+        <string id="evClearedCost" value="WWAN Service event: %1 Cost is cleared for profile %3 on interface %2" />
+        <string id="evGroupPolicyCostChanged" value="Group Policy Cost is changed to %1" />
+        <string id="evGroupPolicyClearedCost" value="Group Policy Cost is cleared" />
+        <string id="evStartWwanResumeReconnect" value="Wwan Resume Reconnect Started" />
+        <string id="evCancelWwanResumeReconnect" value="Wwan Resume Reconnect Cancelled" />
+        <string id="evMbaeUpdaterInitFailed" value="Account Management: Error initializing network account updater.%nError is %1: %2" />
+        <string id="evMbaeUpdaterErrorGettingMbnProp" value="Account Management: Error retrieving mobile broadband property &quot;%2&quot; from network interface %1.%nError is %3: %4" />
+        <string id="evMbaeUpdaterUnsupportedCellularClass" value="Account Management: Skipping network interface %1 with unsupported cellular class %2." />
+        <string id="evMbaeUpdaterErrorInvalidProviderOrSubscriber" value="Account Management: Provider or subscriber ID reported by mobile broadband device is malformed." />
+        <string id="evMbaeUpdaterNewAccount" value="Account Management: Network identity not recognized, assigning new network account ID." />
+        <string id="evMbaeUpdaterExistingAccount" value="Account Management: Network identity recognized, assigning existing network account ID." />
+        <string id="evMbaeUpdaterErrorUpdatingBindingDevnode" value="Account Management: Error updating network account device node.%nError is %1: %2" />
+        <string id="evMbaeUpdaterErrorUpdatingSmsDevnode" value="Account Management: Error updating SMS device node.%nError is %1: %2" />
+        <string id="evMbaeUpdaterErrorUpdatingMbaeData" value="Account Management: Error updating mobile broadband account data store.%nError is %1: %2" />
+        <string id="evMbaeUpdaterGettingProviderIdFromIdentityModule" value="Account Management: Getting home provider ID from hardware device for network interface %1.%nProvider ID is &quot;%2&quot;." />
+        <string id="evMbaeUpdaterGettingProviderNameFromIdentityModule" value="Account Management: Getting home provider name from hardware device for network interface %1.%nProvider name is &quot;%2&quot;." />
+        <string id="evMbaeUpdaterGettingProviderIdFromHomeNetwork" value="Account Management: Getting home provider ID from home network for network interface %1.%nProvider ID is &quot;%2&quot;." />
+        <string id="evMbaeUpdaterGettingProviderNameFromHomeNetwork" value="Account Management: Getting home provider name from home network for network interface %1.%nProvider name is &quot;%2&quot;." />
+        <string id="evMbaeUpdaterCannotGetProviderIdFromAnywhere" value="Account Management: Cannot get home provider ID for network interface %1 because the hardware device does not have it, and the network adapter is not in its home network. This is normal under some conditions." />
+        <string id="evMbaeUpdaterCannotGetProviderNameFromAnywhere" value="Account Management: Cannot get home provider name for network interface %1 because the hardware device does not have it, and the network adapter is not in its home network. This is normal under some conditions." />
+        <string id="evMbaeUpdaterErrorNeedHomeProviderInfo" value="Account Management: Metadata cannot be downloaded for network interface %1 because required information about the home service provider is not available." />
+        <string id="evMbaeUpdaterErrorNeedSubscriberInfo" value="Account Management: Metadata cannot be downloaded for network interface %1 because required information about the subscriber is not available." />
+        <string id="evMbaeUpdaterSimRemovalDetected" value="Account Management: Detected removal of SIM from device bound to network interface %1." />
+        <string id="evMbaeUpdaterErrorHandlingSimRemoval" value="Account Management: Error handling SIM removal from device bound to network interface %1.%nError is %2: %3" />
+        <string id="evMbaeUpdaterStart" value="Account Management: Account updater started for network interface %1." />
+        <string id="evMbaeUpdaterStop" value="Account Management: Account updater finished for network interface %1." />
+        <string id="evMbaeUpdaterCreateUpdateDevNodeStart" value="Account Management: Devnode create/update started." />
+        <string id="evMbaeUpdaterCreateUpdateDevNodeStop" value="Account Management: Devnode create/update finished." />
+        <string id="evMbaeUpdaterCreateUpdatePropertyBagStart" value="Account Management: Data store create/update started." />
+        <string id="evMbaeUpdaterCreateUpdatePropertyBagStop" value="Account Management: Data store create/update finished." />
+        <string id="taskUssd" value="USSD" />
+        <string id="UT.ussdRequestInitiate" value="Initiate session" />
+        <string id="UT.ussdRequestContinue" value="Continue session" />
+        <string id="UT.ussdRequestCancel" value="Cancel session" />
+        <string id="UT.ussdEventNoActionRequired" value="No action required" />
+        <string id="UT.ussdEventActionRequired" value="Action required" />
+        <string id="UT.ussdEventTerminated" value="Terminated" />
+        <string id="UT.ussdEventOtherLocalClient" value="Other local client" />
+        <string id="UT.ussdEventOperationNotSupported" value="Operation not supported" />
+        <string id="UT.ussdEventNetworkTimeOut" value="Network timeout" />
+        <string id="UT.ussdSessionStateNew" value="New session" />
+        <string id="UT.ussdSessionStateExisting" value="Existing session" />
+        <string id="evUssdRequest" value="USSD request" />
+        <string id="evUssdEventSucceeded" value="USSD event" />
+        <string id="evUssdEventFailed" value="USSD event with failure" />
+        <string id="UT.registeredTypeDeregistered" value="Deregistered" />
+        <string id="UT.registeredTypeSearching" value="Searching" />
+        <string id="UT.registeredTypeDenied" value="Denied" />
+        <string id="UT.registerModeAutomatic" value="Automatic" />
+        <string id="UT.registerModeManual" value="Manual" />
+        <string id="WWAN_STATUS_SUCCESS" value="WWAN_STATUS_SUCCESS" />
+        <string id="WWAN_STATUS_BUSY" value="WWAN_STATUS_BUSY" />
+        <string id="WWAN_STATUS_FAILURE" value="WWAN_STATUS_FAILURE" />
+        <string id="WWAN_STATUS_SIM_NOT_INSERTED" value="WWAN_STATUS_SIM_NOT_INSERTED" />
+        <string id="WWAN_STATUS_BAD_SIM" value="WWAN_STATUS_BAD_SIM" />
+        <string id="WWAN_STATUS_PIN_REQUIRED" value="WWAN_STATUS_PIN_REQUIRED" />
+        <string id="WWAN_STATUS_PIN_DISABLED" value="WWAN_STATUS_PIN_DISABLED" />
+        <string id="WWAN_STATUS_NOT_REGISTERED" value="WWAN_STATUS_NOT_REGISTERED" />
+        <string id="WWAN_STATUS_PROVIDERS_NOT_FOUND" value="WWAN_STATUS_PROVIDERS_NOT_FOUND" />
+        <string id="WWAN_STATUS_NO_DEVICE_SUPPORT" value="WWAN_STATUS_NO_DEVICE_SUPPORT" />
+        <string id="WWAN_STATUS_PROVIDER_NOT_VISIBLE" value="WWAN_STATUS_PROVIDER_NOT_VISIBLE" />
+        <string id="WWAN_STATUS_DATA_CLASS_NOT_AVAILABLE" value="WWAN_STATUS_DATA_CLASS_NOT_AVAILABLE" />
+        <string id="WWAN_STATUS_PACKET_SVC_DETACHED" value="WWAN_STATUS_PACKET_SVC_DETACHED" />
+        <string id="WWAN_STATUS_MAX_ACTIVATED_CONTEXTS" value="WWAN_STATUS_MAX_ACTIVATED_CONTEXTS" />
+        <string id="WWAN_STATUS_NOT_INITIALIZED" value="WWAN_STATUS_NOT_INITIALIZED" />
+        <string id="WWAN_STATUS_VOICE_CALL_IN_PROGRESS" value="WWAN_STATUS_VOICE_CALL_IN_PROGRESS" />
+        <string id="WWAN_STATUS_CONTEXT_NOT_ACTIVATED" value="WWAN_STATUS_CONTEXT_NOT_ACTIVATED" />
+        <string id="WWAN_STATUS_SERVICE_NOT_ACTIVATED" value="WWAN_STATUS_SERVICE_NOT_ACTIVATED" />
+        <string id="WWAN_STATUS_INVALID_ACCESS_STRING" value="WWAN_STATUS_INVALID_ACCESS_STRING" />
+        <string id="WWAN_STATUS_INVALID_USER_NAME_PWD" value="WWAN_STATUS_INVALID_USER_NAME_PWD" />
+        <string id="WWAN_STATUS_RADIO_POWER_OFF" value="WWAN_STATUS_RADIO_POWER_OFF" />
+        <string id="WWAN_STATUS_INVALID_PARAMETERS" value="WWAN_STATUS_INVALID_PARAMETERS" />
+        <string id="WWAN_STATUS_READ_FAILURE" value="WWAN_STATUS_READ_FAILURE" />
+        <string id="WWAN_STATUS_WRITE_FAILURE" value="WWAN_STATUS_WRITE_FAILURE" />
+        <string id="WWAN_STATUS_DENIED_POLICY" value="WWAN_STATUS_DENIED_POLICY" />
+        <string id="WWAN_STATUS_INVALID_DEVICE_SERVICE_OPERATION" value="WWAN_STATUS_INVALID_DEVICE_SERVICE_OPERATION" />
+        <string id="WWAN_STATUS_MORE_DATA" value="WWAN_STATUS_MORE_DATA" />
+        <string id="WWAN_STATUS_SMS_OPERATION_NOT_ALLOWED" value="WWAN_STATUS_SMS_OPERATION_NOT_ALLOWED" />
+        <string id="WWAN_STATUS_SMS_MEMORY_FAILURE" value="WWAN_STATUS_SMS_MEMORY_FAILURE" />
+        <string id="WWAN_STATUS_SMS_INVALID_MEMORY_INDEX" value="WWAN_STATUS_SMS_INVALID_MEMORY_INDEX" />
+        <string id="WWAN_STATUS_SMS_UNKNOWN_SMSC_ADDRESS" value="WWAN_STATUS_SMS_UNKNOWN_SMSC_ADDRESS" />
+        <string id="WWAN_STATUS_SMS_NETWORK_TIMEOUT" value="WWAN_STATUS_SMS_NETWORK_TIMEOUT" />
+        <string id="WWAN_STATUS_SMS_MEMORY_FULL" value="WWAN_STATUS_SMS_MEMORY_FULL" />
+        <string id="WWAN_STATUS_SMS_UNKNOWN_ERROR" value="WWAN_STATUS_SMS_UNKNOWN_ERROR" />
+        <string id="WWAN_STATUS_SMS_FILTER_NOT_SUPPORTED" value="WWAN_STATUS_SMS_FILTER_NOT_SUPPORTED" />
+        <string id="WWAN_STATUS_SMS_MORE_DATA" value="WWAN_STATUS_SMS_MORE_DATA" />
+        <string id="WWAN_STATUS_SMS_LANG_NOT_SUPPORTED" value="WWAN_STATUS_SMS_LANG_NOT_SUPPORTED" />
+        <string id="WWAN_STATUS_SMS_ENCODING_NOT_SUPPORTED" value="WWAN_STATUS_SMS_ENCODING_NOT_SUPPORTED" />
+        <string id="WWAN_STATUS_SMS_FORMAT_NOT_SUPPORTED" value="WWAN_STATUS_SMS_FORMAT_NOT_SUPPORTED" />
+        <string id="WWAN_STATUS_AUTH_INCORRECT_AUTN" value="WWAN_STATUS_AUTH_INCORRECT_AUTN" />
+        <string id="WWAN_STATUS_AUTH_SYNC_FAILURE" value="WWAN_STATUS_AUTH_SYNC_FAILURE" />
+        <string id="WWAN_STATUS_AUTH_AMF_NOT_SET" value="WWAN_STATUS_AUTH_AMF_NOT_SET" />
+        <string id="WWAN_STATUS_SHAREABILITY_CONDITION_ERROR" value="WWAN_STATUS_SHAREABILITY_CONDITION_ERROR" />
+        <string id="WWAN_STATUS_PIN_FAILURE" value="WWAN_STATUS_PIN_FAILURE" />
+        <string id="WWAN_STATUS_NO_LTE_ATTACH_CONFIG" value="WWAN_STATUS_NO_LTE_ATTACH_CONFIG" />
+        <string id="OID_WWAN_DRIVER_CAPS" value="OID_WWAN_DRIVER_CAPS" />
+        <string id="OID_WWAN_DEVICE_CAPS" value="OID_WWAN_DEVICE_CAPS" />
+        <string id="OID_WWAN_READY_INFO" value="OID_WWAN_READY_INFO" />
+        <string id="OID_WWAN_RADIO_STATE" value="OID_WWAN_RADIO_STATE" />
+        <string id="OID_WWAN_PIN" value="OID_WWAN_PIN" />
+        <string id="OID_WWAN_PIN_LIST" value="OID_WWAN_PIN_LIST" />
+        <string id="OID_WWAN_HOME_PROVIDER" value="OID_WWAN_HOME_PROVIDER" />
+        <string id="OID_WWAN_PREFERRED_PROVIDERS" value="OID_WWAN_PREFERRED_PROVIDERS" />
+        <string id="OID_WWAN_VISIBLE_PROVIDERS" value="OID_WWAN_VISIBLE_PROVIDERS" />
+        <string id="OID_WWAN_REGISTER_STATE" value="OID_WWAN_REGISTER_STATE" />
+        <string id="OID_WWAN_PACKET_SERVICE" value="OID_WWAN_PACKET_SERVICE" />
+        <string id="OID_WWAN_SIGNAL_STATE" value="OID_WWAN_SIGNAL_STATE" />
+        <string id="OID_WWAN_CONNECT" value="OID_WWAN_CONNECT" />
+        <string id="OID_WWAN_PROVISIONED_CONTEXTS" value="OID_WWAN_PROVISIONED_CONTEXTS" />
+        <string id="OID_WWAN_SERVICE_ACTIVATION" value="OID_WWAN_SERVICE_ACTIVATION" />
+        <string id="OID_WWAN_SMS_CONFIGURATION" value="OID_WWAN_SMS_CONFIGURATION" />
+        <string id="OID_WWAN_SMS_READ" value="OID_WWAN_SMS_READ" />
+        <string id="OID_WWAN_SMS_SEND" value="OID_WWAN_SMS_SEND" />
+        <string id="OID_WWAN_SMS_DELETE" value="OID_WWAN_SMS_DELETE" />
+        <string id="OID_WWAN_SMS_STATUS" value="OID_WWAN_SMS_STATUS" />
+        <string id="OID_WWAN_VENDOR_SPECIFIC" value="OID_WWAN_VENDOR_SPECIFIC" />
+        <string id="OID_WWAN_AUTH_CHALLENGE" value="OID_WWAN_AUTH_CHALLENGE" />
+        <string id="OID_WWAN_ENUMERATE_DEVICE_SERVICES" value="OID_WWAN_ENUMERATE_DEVICE_SERVICES" />
+        <string id="OID_WWAN_SUBSCRIBE_DEVICE_SERVICE_EVENTS" value="OID_WWAN_SUBSCRIBE_DEVICE_SERVICE_EVENTS" />
+        <string id="OID_WWAN_DEVICE_SERVICE_COMMAND" value="OID_WWAN_DEVICE_SERVICE_COMMAND" />
+        <string id="OID_WWAN_USSD" value="OID_WWAN_USSD" />
+        <string id="OID_WWAN_PIN_EX" value="OID_WWAN_PIN_EX" />
+        <string id="OID_WWAN_ENUMERATE_DEVICE_SERVICE_COMMANDS" value="OID_WWAN_ENUMERATE_DEVICE_SERVICE_COMMANDS" />
+        <string id="OID_WWAN_DEVICE_SERVICE_SESSION" value="OID_WWAN_DEVICE_SERVICE_SESSION" />
+        <string id="OID_WWAN_DEVICE_SERVICE_SESSION_WRITE" value="OID_WWAN_DEVICE_SERVICE_SESSION_WRITE" />
+        <string id="OID_WWAN_PREFERRED_MULTICARRIER_PROVIDERS" value="OID_WWAN_PREFERRED_MULTICARRIER_PROVIDERS" />
+        <string id="OID_WWAN_CREATE_MAC" value="OID_WWAN_CREATE_MAC" />
+        <string id="OID_WWAN_DELETE_MAC" value="OID_WWAN_DELETE_MAC" />
+        <string id="OID_WWAN_UICC_FILE_STATUS" value="OID_WWAN_UICC_FILE_STATUS" />
+        <string id="OID_WWAN_UICC_ACCESS_BINARY" value="OID_WWAN_UICC_ACCESS_BINARY" />
+        <string id="OID_WWAN_UICC_ACCESS_RECORD" value="OID_WWAN_UICC_ACCESS_RECORD" />
+        <string id="OID_WWAN_PIN_EX2" value="OID_WWAN_PIN_EX2" />
+        <string id="OID_WWAN_MBIM_VERSION" value="OID_WWAN_MBIM_VERSION" />
+        <string id="OID_WWAN_SYS_CAPS" value="OID_WWAN_SYS_CAPS" />
+        <string id="OID_WWAN_DEVICE_CAPS_EX" value="OID_WWAN_DEVICE_CAPS_EX" />
+        <string id="OID_WWAN_SYS_SLOTMAPPINGS" value="OID_WWAN_SYS_SLOTMAPPINGS" />
+        <string id="OID_WWAN_SLOT_INFO_STATUS" value="OID_WWAN_SLOT_INFO_STATUS" />
+        <string id="OID_WWAN_DEVICE_BINDINGS" value="OID_WWAN_DEVICE_BINDINGS" />
+        <string id="OID_WWAN_REGISTER_STATE_EX" value="OID_WWAN_REGISTER_STATE_EX" />
+        <string id="OID_WWAN_IMS_VOICE_STATE" value="OID_WWAN_IMS_VOICE_STATE" />
+        <string id="OID_WWAN_SIGNAL_STATE_EX" value="OID_WWAN_SIGNAL_STATE_EX" />
+        <string id="OID_WWAN_LOCATION_STATE" value="OID_WWAN_LOCATION_STATE" />
+        <string id="OID_WWAN_NITZ" value="OID_WWAN_NITZ" />
+        <string id="OID_WWAN_NETWORK_IDLE_HINT" value="OID_WWAN_NETWORK_IDLE_HINT" />
+        <string id="OID_WWAN_PRESHUTDOWN" value="OID_WWAN_PRESHUTDOWN" />
+        <string id="OID_WWAN_UICC_ATR" value="OID_WWAN_UICC_ATR" />
+        <string id="OID_WWAN_UICC_OPEN_CHANNEL" value="OID_WWAN_UICC_OPEN_CHANNEL" />
+        <string id="OID_WWAN_UICC_CLOSE_CHANNEL" value="OID_WWAN_UICC_CLOSE_CHANNEL" />
+        <string id="OID_WWAN_UICC_APDU" value="OID_WWAN_UICC_APDU" />
+        <string id="OID_WWAN_UICC_TERMINAL_CAPABILITY" value="OID_WWAN_UICC_TERMINAL_CAPABILITY" />
+        <string id="OID_WWAN_PS_MEDIA_CONFIG" value="OID_WWAN_PS_MEDIA_CONFIG" />
+        <string id="OID_WWAN_SAR_CONFIG" value="OID_WWAN_SAR_CONFIG" />
+        <string id="OID_WWAN_SAR_TRANSMISSION_STATUS" value="OID_WWAN_SAR_TRANSMISSION_STATUS" />
+        <string id="OID_WWAN_NETWORK_BLACKLIST" value="OID_WWAN_NETWORK_BLACKLIST" />
+        <string id="OID_WWAN_LTE_ATTACH_CONFIG" value="OID_WWAN_LTE_ATTACH_CONFIG" />
+        <string id="OID_WWAN_LTE_ATTACH_STATUS" value="OID_WWAN_LTE_ATTACH_STATUS" />
+        <string id="OID_WWAN_MODEM_CONFIG_INFO" value="OID_WWAN_MODEM_CONFIG_INFO" />
+        <string id="OID_WWAN_PCO" value="OID_WWAN_PCO" />
+        <string id="OID_WWAN_UICC_RESET" value="OID_WWAN_UICC_RESET" />
+        <string id="OID_WWAN_DEVICE_RESET" value="OID_WWAN_DEVICE_RESET" />
+        <string id="OID_WWAN_BASE_STATIONS_INFO" value="OID_WWAN_BASE_STATIONS_INFO" />
+        <string id="OID_WWAN_UICC_APP_LIST" value="OID_WWAN_UICC_APP_LIST" />
+        <string id="OID_WWAN_MODEM_LOGGING_CONFIG" value="OID_WWAN_MODEM_LOGGING_CONFIG" />
+        <string id="OID_WWAN_REGISTER_PARAMS" value="OID_WWAN_REGISTER_PARAMS" />
+        <string id="OID_WWAN_NETWORK_PARAMS" value="OID_WWAN_NETWORK_PARAMS" />
+        <string id="OID_WWAN_UE_POLICY" value="OID_WWAN_UE_POLICY" />
+        <string id="RegistrationFlags.ManualReg" value="WWAN_REG_FLAGS_NO_MANUAL_REG" />
+        <string id="RegistrationFlags.PacketServiceAutoAttach" value="WWAN_REG_FLAGS_PS_AUTO_ATTACH" />
+        <string id="NDIS_STATUS_WWAN_DEVICE_CAPS" value="NDIS_STATUS_WWAN_DEVICE_CAPS" />
+        <string id="NDIS_STATUS_WWAN_READY_INFO" value="NDIS_STATUS_WWAN_READY_INFO" />
+        <string id="NDIS_STATUS_WWAN_RADIO_STATE" value="NDIS_STATUS_WWAN_RADIO_STATE" />
+        <string id="NDIS_STATUS_WWAN_PIN_INFO" value="NDIS_STATUS_WWAN_PIN_INFO" />
+        <string id="NDIS_STATUS_WWAN_PIN_LIST" value="NDIS_STATUS_WWAN_PIN_LIST" />
+        <string id="NDIS_STATUS_WWAN_HOME_PROVIDER" value="NDIS_STATUS_WWAN_HOME_PROVIDER" />
+        <string id="NDIS_STATUS_WWAN_PREFERRED_PROVIDERS" value="NDIS_STATUS_WWAN_PREFERRED_PROVIDERS" />
+        <string id="NDIS_STATUS_WWAN_VISIBLE_PROVIDERS" value="NDIS_STATUS_WWAN_VISIBLE_PROVIDERS" />
+        <string id="NDIS_STATUS_WWAN_REGISTER_STATE" value="NDIS_STATUS_WWAN_REGISTER_STATE" />
+        <string id="NDIS_STATUS_WWAN_PACKET_SERVICE" value="NDIS_STATUS_WWAN_PACKET_SERVICE" />
+        <string id="NDIS_STATUS_WWAN_SIGNAL_STATE" value="NDIS_STATUS_WWAN_SIGNAL_STATE" />
+        <string id="NDIS_STATUS_WWAN_CONTEXT_STATE" value="NDIS_STATUS_WWAN_CONTEXT_STATE" />
+        <string id="NDIS_STATUS_WWAN_PROVISIONED_CONTEXTS" value="NDIS_STATUS_WWAN_PROVISIONED_CONTEXTS" />
+        <string id="NDIS_STATUS_WWAN_SERVICE_ACTIVATION" value="NDIS_STATUS_WWAN_SERVICE_ACTIVATION" />
+        <string id="NDIS_STATUS_WWAN_SMS_CONFIGURATION" value="NDIS_STATUS_WWAN_SMS_CONFIGURATION" />
+        <string id="NDIS_STATUS_WWAN_SMS_RECEIVE" value="NDIS_STATUS_WWAN_SMS_RECEIVE" />
+        <string id="NDIS_STATUS_WWAN_SMS_SEND" value="NDIS_STATUS_WWAN_SMS_SEND" />
+        <string id="NDIS_STATUS_WWAN_SMS_DELETE" value="NDIS_STATUS_WWAN_SMS_DELETE" />
+        <string id="NDIS_STATUS_WWAN_SMS_STATUS" value="NDIS_STATUS_WWAN_SMS_STATUS" />
+        <string id="NDIS_STATUS_WWAN_DNS_ADDRESS" value="NDIS_STATUS_WWAN_DNS_ADDRESS" />
+        <string id="NDIS_STATUS_WWAN_VENDOR_SPECIFIC" value="NDIS_STATUS_WWAN_VENDOR_SPECIFIC" />
+        <string id="NDIS_STATUS_WWAN_SET_HOME_PROVIDER_COMPLETE" value="NDIS_STATUS_WWAN_SET_HOME_PROVIDER_COMPLETE" />
+        <string id="NDIS_STATUS_WWAN_AUTH_RESPONSE" value="NDIS_STATUS_WWAN_AUTH_RESPONSE" />
+        <string id="NDIS_STATUS_WWAN_SUPPORTED_DEVICE_SERVICES" value="NDIS_STATUS_WWAN_SUPPORTED_DEVICE_SERVICES" />
+        <string id="NDIS_STATUS_WWAN_DEVICE_SERVICE_SUBSCRIPTION" value="NDIS_STATUS_WWAN_DEVICE_SERVICE_SUBSCRIPTION" />
+        <string id="NDIS_STATUS_WWAN_DEVICE_SERVICE_RESPONSE" value="NDIS_STATUS_WWAN_DEVICE_SERVICE_RESPONSE" />
+        <string id="NDIS_STATUS_WWAN_DEVICE_SERVICE_EVENT" value="NDIS_STATUS_WWAN_DEVICE_SERVICE_EVENT" />
+        <string id="NDIS_STATUS_WWAN_USSD" value="NDIS_STATUS_WWAN_USSD" />
+        <string id="NDIS_STATUS_WWAN_DEVICE_SERVICE_SUPPORTED_COMMANDS" value="NDIS_STATUS_WWAN_DEVICE_SERVICE_SUPPORTED_COMMANDS" />
+        <string id="NDIS_STATUS_WWAN_DEVICE_SERVICE_SESSION" value="NDIS_STATUS_WWAN_DEVICE_SERVICE_SESSION" />
+        <string id="NDIS_STATUS_WWAN_DEVICE_SERVICE_SESSION_WRITE_COMPLETE" value="NDIS_STATUS_WWAN_DEVICE_SERVICE_SESSION_WRITE_COMPLETE" />
+        <string id="NDIS_STATUS_WWAN_DEVICE_SERVICE_SESSION_READ" value="NDIS_STATUS_WWAN_DEVICE_SERVICE_SESSION_READ" />
+        <string id="NDIS_STATUS_WWAN_PREFERRED_MULTICARRIER_PROVIDERS" value="NDIS_STATUS_WWAN_PREFERRED_MULTICARRIER_PROVIDERS" />
+        <string id="NDIS_STATUS_WWAN_RESERVED_1" value="NDIS_STATUS_WWAN_RESERVED_1" />
+        <string id="NDIS_STATUS_WWAN_RESERVED_2" value="NDIS_STATUS_WWAN_RESERVED_2" />
+        <string id="NDIS_STATUS_WWAN_IP_ADDRESS_STATE" value="NDIS_STATUS_WWAN_IP_ADDRESS_STATE" />
+        <string id="NDIS_STATUS_WWAN_DEVICE_POWER_STATE_D3_EXIT" value="NDIS_STATUS_WWAN_DEVICE_POWER_STATE_D3_EXIT" />
+        <string id="NDIS_STATUS_WWAN_PRESHUTDOWN_STATE" value="NDIS_STATUS_WWAN_PRESHUTDOWN_STATE" />
+        <string id="NDIS_STATUS_WWAN_PS_MEDIA_CONFIG_STATE" value="NDIS_STATUS_WWAN_PS_MEDIA_CONFIG_STATE" />
+        <string id="NDIS_STATUS_WWAN_DEVICE_CAPS_EX" value="NDIS_STATUS_WWAN_DEVICE_CAPS_EX" />
+        <string id="NDIS_STATUS_WWAN_MODEM_CONFIG_INFO" value="NDIS_STATUS_WWAN_MODEM_CONFIG_INFO" />
+        <string id="NDIS_STATUS_WWAN_NITZ_INFO" value="NDIS_STATUS_WWAN_NITZ_INFO" />
+        <string id="NDIS_STATUS_WWAN_UICC_APP_LIST" value="NDIS_STATUS_WWAN_UICC_APP_LIST" />
+        <string id="NDIS_STATUS_WWAN_UICC_FILE_STATUS" value="NDIS_STATUS_WWAN_UICC_FILE_STATUS" />
+        <string id="NDIS_STATUS_WWAN_UICC_BINARY_RESPONSE" value="NDIS_STATUS_WWAN_UICC_BINARY_RESPONSE" />
+        <string id="NDIS_STATUS_WWAN_UICC_RECORD_RESPONSE" value="NDIS_STATUS_WWAN_UICC_RECORD_RESPONSE" />
+        <string id="NDIS_STATUS_WWAN_MODEM_LOGGING_CONFIG" value="NDIS_STATUS_WWAN_MODEM_LOGGING_CONFIG" />
+        <string id="WwanActivationState.Activated" value="WwanActivationStateActivated" />
+        <string id="WwanActivationState.Activating" value="WwanActivationStateActivating" />
+        <string id="WwanActivationState.Deactivated" value="WwanActivationStateDeactivated" />
+        <string id="WwanActivationState.Deactivating" value="WwanActivationStateDeactivating" />
+        <string id="WwanVoiceCallState.None" value="WwanVoiceCallStateNone" />
+        <string id="WwanVoiceCallState.InProgress" value="WwanVoiceCallStateInProgress" />
+        <string id="WwanVoiceCallState.HangUp" value="WwanVoiceCallStateHangUp" />
+        <string id="WwanIPType.Default" value="WwanIPTypeDefault" />
+        <string id="WwanIPType.IPv4" value="WwanIPTypeIPv4" />
+        <string id="WwanIPType.IPv6" value="WwanIPTypeIPv6" />
+        <string id="WwanIPType.IPv4v6" value="WwanIPTypeIpv4v6" />
+        <string id="WwanIPType.Xlat" value="WwanIPTypeXlat" />
+        <string id="WwanIPType.Ethernet" value="WwanSessionTypeEthernet" />
+        <string id="WwanIPType.Unstructured" value="WwanSessionTypeUnstructured" />
+        <string id="WwanActivationCommand.Deactivate" value="WwanActivationCommandDeactivate" />
+        <string id="WwanActivationCommand.Activate" value="WwanActivationCommandActivate" />
+        <string id="WwanActivationCommand.Cancel" value="WwanActivationCommandCancel" />
+        <string id="WwanCompression.None" value="WwanCompressionNone" />
+        <string id="WwanCompression.Enable" value="WwanCompressionEnable" />
+        <string id="WwanAuthProtocol.None" value="WwanAuthProtocolNone" />
+        <string id="WwanAuthProtocol.Pap" value="WwanAuthProtocolPap" />
+        <string id="WwanAuthProtocol.Chap" value="WwanAuthProtocolChap" />
+        <string id="WwanAuthProtocol.MsChapV2" value="WwanAuthProtocolMsChapV2" />
+        <string id="WwanPsmediaPreference.WwanPsMediaPreferenceNone" value="WwanPsMediaPreferenceNone" />
+        <string id="WwanPsmediaPreference.WwanPsMediaPreferenceCellularOnly" value="WwanPsMediaPreferenceCellularOnly" />
+        <string id="WwanPsmediaPreference.WwanPsMediaPreferenceCellularPreferred" value="WwanPsMediaPreferenceCellularPreferred" />
+        <string id="WwanPsmediaPreference.WwanPsMediaPreferenceWiFiOnly" value="WwanPsMediaPreferenceWiFiOnly" />
+        <string id="WwanPsmediaPreference.WwanPsMediaPreferenceWiFiPreferred" value="WwanPsMediaPreferenceWiFiPreferred" />
+        <string id="WwanPsmediaPreference.WwanPsMediaPreferenceMax" value="WwanPsMediaPreferenceMax" />
+        <string id="WwanConfigurationSource.WwanUserProvisioned" value="WwanUserProvisioned" />
+        <string id="WwanConfigurationSource.WwanAdminProvisioned" value="WwanAdminProvisioned" />
+        <string id="WwanConfigurationSource.WwanOperatorProvisioned" value="WwanOperatorProvisioned" />
+        <string id="WwanConfigurationSource.WwanDeviceProvisioned" value="WwanDeviceProvisioned" />
+        <string id="WwanConfigurationSource.WwanModemProvisioned" value="WwanModemProvisioned" />
+        <string id="WwanConfigurationSource.WwanMaxProvisionSource" value="WwanMaxProvisionSource" />
+        <string id="WwanProfileCreationType.WwanProfileUserProvisioned" value="WwanProfileUserProvisioned" />
+        <string id="WwanProfileCreationType.WwanProfileAdminProvisioned" value="WwanProfileAdminProvisioned" />
+        <string id="WwanProfileCreationType.WwanProfileOperatorProvisioned" value="WwanProfileOperatorProvisioned" />
+        <string id="WwanProfileCreationType.WwanProfileDeviceProvisioned" value="WwanProfileDeviceProvisioned" />
+        <string id="WwanProfileCreationType.WwanProfileModemProvisioned" value="WwanProfileModemProvisioned" />
+        <string id="WwanConnectionMode.WwanConnectionModeProfile" value="WwanConnectionModeProfile" />
+        <string id="WwanConnectionMode.WwanConnectionModeTmpProfile" value="WwanConnectionModeTmpProfile" />
+        <string id="WwanConnectionMode.WwanConnectionModeNoProfile" value="WwanConnectionModeNoProfile" />
+        <string id="WwanReadyState.Off" value="WwanReadyStateOff" />
+        <string id="WwanReadyState.Initialized" value="WwanReadyStateInitialized" />
+        <string id="WwanReadyState.SimNotInserted" value="WwanReadyStateSimNotInserted" />
+        <string id="WwanReadyState.BadSim" value="WwanReadyStateBadSim" />
+        <string id="WwanReadyState.Failure" value="WwanReadyStateFailure" />
+        <string id="WwanReadyState.NotActivated" value="WwanReadyStateNotActivated" />
+        <string id="WwanReadyState.DeviceLocked" value="WwanReadyStateDeviceLocked" />
+        <string id="WwanEmergencyMode.Off" value="WwanEmergencyModeOff" />
+        <string id="WwanEmergencyMode.On" value="WwanEmergencyModeOn" />
+        <string id="WwanProviderState.Home" value="WWAN_PROVIDER_STATE_HOME" />
+        <string id="WwanProviderState.Forbidden" value="WWAN_PROVIDER_STATE_FORBIDDEN" />
+        <string id="WwanProviderState.Preferred" value="WWAN_PROVIDER_STATE_PREFERRED" />
+        <string id="WwanProviderState.Visible" value="WWAN_PROVIDER_STATE_VISIBLE" />
+        <string id="WwanProviderState.Registered" value="WWAN_PROVIDER_STATE_REGISTERED" />
+        <string id="WwanProviderState.PreferredMulticarrier" value="WWAN_PROVIDER_STATE_PREFERRED_MULTICARRIER" />
+        <string id="WwanDeviceType.Embedded" value="WwanDeviceTypeEmbedded" />
+        <string id="WwanDeviceType.Removable" value="WwanDeviceTypeRemovable" />
+        <string id="WwanDeviceType.Remote" value="WwanDeviceTypeRemote" />
+        <string id="WwanAuthAlgoCaps.Sim" value="WWAN_AUTH_ALGO_CAPS_SIM" />
+        <string id="WwanAuthAlgoCaps.Aka" value="WWAN_AUTH_ALGO_CAPS_AKA" />
+        <string id="WwanAuthAlgoCaps.AkaPrime" value="WWAN_AUTH_ALGO_CAPS_AKAPRIME" />
+        <string id="WwanSmsCaps.PduReceive" value="WWAN_SMS_CAPS_PDU_RECEIVE" />
+        <string id="WwanSmsCaps.PduSend" value="WWAN_SMS_CAPS_PDU_SEND" />
+        <string id="WwanSmsCaps.TextReceive" value="WWAN_SMS_CAPS_TEXT_RECEIVE" />
+        <string id="WwanSmsCaps.TextSend" value="WWAN_SMS_CAPS_TEXT_SEND" />
+        <string id="WwanCtrlCaps.RegManual" value="WWAN_CTRL_CAPS_REG_MANUAL" />
+        <string id="WwanCtrlCaps.HwRadioSwitch" value="WWAN_CTRL_CAPS_HW_RADIO_SWITCH" />
+        <string id="WwanCtrlCaps.CdmaMobileIP" value="WWAN_CTRL_CAPS_CDMA_MOBILE_IP" />
+        <string id="WwanCtrlCaps.CdmaSimpleIP" value="WWAN_CTRL_CAPS_CDMA_SIMPLE_IP" />
+        <string id="WwanCtrlCaps.ProtectUniqueID" value="WWAN_CTRL_CAPS_PROTECT_UNIQUEID" />
+        <string id="WwanCtrlCaps.Multicarrier" value="WWAN_CTRL_CAPS_MODEL_MULTI_CARRIER" />
+        <string id="WwanCtrlCaps.Ussd" value="WWAN_CTRL_CAPS_USSD" />
+        <string id="WwanCtrlCaps.Multimode" value="WWAN_CTRL_CAPS_MULTI_MODE" />
+        <string id="WwanSimClass.Logical" value="WwanSimClassLogical" />
+        <string id="WwanSimClass.Removable" value="WwanSimClassRemovable" />
+        <string id="WwanSimClass.Remote" value="WwanSimClassRemote" />
+        <string id="WwanVoiceClass.NoVoice" value="WwanVoiceClassNoVoice" />
+        <string id="WwanVoiceClass.SeparateVoiceData" value="WwanVoiceClassSeparateVoiceData" />
+        <string id="WwanVoiceClass.SimultaneousVoiceData" value="WwanVoiceClassSimultaneousVoiceData" />
+        <string id="WwanCellularClass.Gsm" value="WwanCellularClassGsm" />
+        <string id="WwanCellularClass.Cdma" value="WwanCellularClassCdma" />
+        <string id="WwanRegisterAction.Automatic" value="WwanRegisterActionAutomatic" />
+        <string id="WwanRegisterAction.Manual" value="WwanRegisterActionManual" />
+        <string id="WwanRadio.Off" value="WwanRadioOff" />
+        <string id="WwanRadio.On" value="WwanRadioOn" />
+        <string id="WwanPinType.Custom" value="WwanPinTypeCustom" />
+        <string id="WwanPinType.Pin1" value="WwanPinTypePin1" />
+        <string id="WwanPinType.Pin2" value="WwanPinTypePin2" />
+        <string id="WwanPinType.DeviceSimPin" value="WwanPinTypeDeviceSimPin" />
+        <string id="WwanPinType.DeviceFirstSimPin" value="WwanPinTypeDeviceFirstSimPin" />
+        <string id="WwanPinType.NetworkPin" value="WwanPinTypeNetworkPin" />
+        <string id="WwanPinType.NetworkSubsetPin" value="WwanPinTypeNetworkSubsetPin" />
+        <string id="WwanPinType.SvcProviderPin" value="WwanPinTypeSvcProviderPin" />
+        <string id="WwanPinType.CorporatePin" value="WwanPinTypeCorporatePin" />
+        <string id="WwanPinType.SubsidyLock" value="WwanPinTypeSubsidyLock" />
+        <string id="WwanPinType.Puk1" value="WwanPinTypePuk1" />
+        <string id="WwanPinType.Puk2" value="WwanPinTypePuk2" />
+        <string id="WwanPinType.DeviceFirstSimPuk" value="WwanPinTypeDeviceFirstSimPuk" />
+        <string id="WwanPinType.NetworkPuk" value="WwanPinTypeNetworkPuk" />
+        <string id="WwanPinType.NetworkSubsetPuk" value="WwanPinTypeNetworkSubsetPuk" />
+        <string id="WwanPinType.SvcProviderPuk" value="WwanPinTypeSvcProviderPuk" />
+        <string id="WwanPinType.CorporatePuk" value="WwanPinTypeCorporatePuk" />
+        <string id="WwanPinState.None" value="WwanPinStateNone" />
+        <string id="WwanPinState.Enter" value="WwanPinStateEnter" />
+        <string id="WwanPinOperation.Enter" value="WwanPinOperationEnter" />
+        <string id="WwanPinOperation.Enable" value="WwanPinOperationEnable" />
+        <string id="WwanPinOperation.Disable" value="WwanPinOperationDisable" />
+        <string id="WwanPinOperation.Change" value="WwanPinOperationChange" />
+        <string id="WwanPacketServiceState.Attaching" value="WwanPacketServiceStateAttaching" />
+        <string id="WwanPacketServiceState.Attached" value="WwanPacketServiceStateAttached" />
+        <string id="WwanPacketServiceState.Detaching" value="WwanPacketServiceStateDetaching" />
+        <string id="WwanPacketServiceState.Detached" value="WwanPacketServiceStateDetached" />
+        <string id="Wwan5GFrequencyRange.Wwan5GFrequencyRange1" value="Wwan5GFrequencyRange1" />
+        <string id="Wwan5GFrequencyRange.Wwan5GFrequencyRange2" value="Wwan5GFrequencyRange2" />
+        <string id="Wwan5GFrequencyRange.Wwan5GFrequencyRange1AndRange2" value="Wwan5GFrequencyRange1AndRange2" />
+        <string id="WwanPacketServiceAction.Attach" value="WwanPacketServiceActionAttach" />
+        <string id="WwanPacketServiceAction.Detach" value="WwanPacketServiceActionDetach" />
+        <string id="WwanOptServiceCaps.LteAttach" value="WwanOptServiceCapsLteAttach" />
+        <string id="WwanOptServiceCaps.ProvContextMgmt" value="WwanOptServiceCapsProvContextMgmt" />
+        <string id="WwanOptServiceCaps.MultiSim" value="WwanOptServiceCapsMultiSim" />
+        <string id="WwanOptServiceCaps.Sar" value="WwanOptServiceCapsSar" />
+        <string id="WwanOptServiceCaps.NetworkBlacklist" value="WwanOptServiceCapsNetworkBlacklist" />
+        <string id="WwanOptServiceCaps.ModemBulkConfig" value="WwanOptServiceCapsModemBulkConfig" />
+        <string id="WwanModemConfigMode.Unknown" value="WwanModemConfigModeUnknown" />
+        <string id="WwanModemConfigMode.ModemCentric" value="WwanModemConfigModeModemCentric" />
+        <string id="WwanModemConfigMode.HostCentric" value="WwanModemConfigModeHostCentric" />
+        <string id="WwanModemConfigState.Unknown" value="WwanModemConfigStateUnknown" />
+        <string id="WwanModemConfigState.Pending" value="WwanModemConfigStatePending" />
+        <string id="WwanModemConfigState.Completed" value="WwanModemConfigStateCompleted" />
+        <string id="WwanModemConfigReason.None" value="WwanModemConfigReasonNone" />
+        <string id="WwanModemConfigReason.SIMDetected" value="WwanModemConfigReasonSIMDetected" />
+        <string id="WwanModemConfigReason.SIMRemoved" value="WwanModemConfigReasonSIMRemoved" />
+        <string id="WwanModemConfigReason.NOSIM" value="WwanModemConfigReasonNOSIM" />
+        <string id="WwanModemConfigReason.IMSIReset" value="WwanModemConfigReasonIMSIReset" />
+        <string id="WwanModemConfigReason.ActivationFailure" value="WwanModemConfigReasonActivationFailure" />
+        <string id="WwanModemConfigReason.ConfigFileUpdate" value="WwanModemConfigReasonConfigFileUpdate" />
+        <string id="WwanModemConfigReason.ModemReset" value="WwanModemConfigReasonModemReset" />
+        <string id="WwanModemConfigReason.ModemRecovery" value="WwanModemConfigReasonModemRecovery" />
+        <string id="EvWwanOid.DeviceCapsIndication" value="[Request=%2] Received DeviceCaps, status=%3, IMEI=%14 Mfg=%15 Model=%16 Fw=%17, miniport=%1" />
+        <string id="EvWwanOid.DeviceCapsExIndication" value="[Request=%2] Received DeviceCapsEx, status=%3, DeviceType=%4, CellularClass=%5, VoiceClass=%6, SimClass=%7, DataClass=%8, CustomDataClass=%9, BandClass=%10, CustomBandClass=%11, SmsCaps=%12, CtrlCaps=%13, IMEI=%14, Mfg=%15, Model=%16, Fw=%17, MaxActvdCtxts=%18, AuthAlgoCaps=%19, ExecId=%20, SO=%21, miniport=%1" />
+        <string id="EvWwanOid.SysCapsIndication" value="[Request=%2] Received SysCaps, status=%3, ModemID=%4 NumberOfExecutors=%5 NumberOfSlots=%6 Concurrency=%7, miniport=%1" />
+        <string id="EvWwanOid.ReadyInfoIndication" value="[Request=%2] Received ReadyInfo, state=%3 IMSI=%5 ICCID=%6 Slot=%7, miniport=%1" />
+        <string id="EvWwanOid.RadioStateIndication" value="[Request=%2] Received RadioState, status=%3, Hw=%4 Sw=%5, miniport=%1" />
+        <string id="EvWwanOid.RadioStateSet" value="[Request=%2] Sent SET RadioState, Action=%3, miniport=%1, ErrorCode=%4" />
+        <string id="EvWwanOid.RegisterStateIndication" value="[Request=%2] Received RegisterState, status=%3, State=%5, ProviderId=%7, ProviderName=%8, PreferredDataClasses=%11, miniport=%1" />
+        <string id="EvWwanOid.RegisterStateSet" value="[Request=%2] Sent SET RegisterState, ProviderId=%3, Action=%4, miniport=%1, ErrorCode=%5" />
+        <string id="EvWwanOid.PacketServiceIndication" value="[Request=%2] Received PacketService, status=%3, state=%5, miniport=%1, 5G Frequency Range=%6" />
+        <string id="EvWwanOid.PacketServiceSet" value="[Request=%2] Sent SET PacketService, Action=%3, miniport=%1, ErrorCode=%4" />
+        <string id="EvWwanOid.ContextStateIndication" value="[Request=%2] Received ContextState, status=%3, State=%6, ConnectionId=%5, miniport=%1" />
+        <string id="EvWwanOid.ContextStateSet" value="[Request=%2] Sent SET ContextState, Command=%4, ConnectionId=%3, APN=%5, miniport=%1, ErrorCode=%11" />
+        <string id="EvWwanOid.PinInfoIndication" value="[Request=%2] Received PinInfo, status=%3, Type=%4 State=%5 Attempts=%6, miniport=%1" />
+        <string id="EvWwanOid.PinInfoSet" value="[Request=%2] Sent SET PinAction, Type=%3, Operation=%4, miniport=%1, ErrorCode=%5" />
+        <string id="EvWwanOid.HomeProviderIndication" value="[Request=%2] Received HomeProvider, status=%3, ProviderId=%4, ProviderName=%6, miniport=%1" />
+        <string id="EvWwanOid.HomeProviderSet" value="[Request=%2] Sent SET HomeProvider, ProviderId=%3, miniport=%1, ErrorCode=%4" />
+        <string id="EvWwanOid.ModemConfigInfo" value="[Request=%2] Received ModemConfigInfo, status=%3, configmode=%4, configstate=%5, configreason=%6, PreviousConfigIDLen=%7, PreviousConfigID=%8, CurrentConfigIDLen=%9, CurrentConfigID=%10, IsCurrentConfigDefault=%11, miniport=%1" />
+        <string id="EvWwanOid.NitzInfoIndication" value="[Request=%2] Received NitzInfo, status=%3, UTC System Time(MM/DD/YYYY:hh:mm:ss)=%4, TimeZoneOffsetMinutes=%5, DaylightSavingTimeOffsetMinutes=%6, DataClasses=%7, miniport=%1" />
+        <string id="EvWwanOid.UiccAppList" value="[Request=%2] Received UiccAppList, status=%3, Version=%4, AppCount=%5, ActiveAppIndex=%6, AppListSize=%7, miniport=%1" />
+        <string id="EvWwanOid.UiccFileStatus" value="[Request=%2] Received UiccFileStatus, status=%3, Version=%4, StatusWord1=%5, StatusWord2=%6, FileAccessibility=%7, FileType=%8, FileStructure=%9, ItemCount=%10, ItemSize=%11, miniport=%1" />
+        <string id="EvWwanOid.UiccResponse" value="[Request=%2] Received UiccResponse, status=%3, Version=%4, StatusWord1=%5, StatusWord2=%6, ResponseDataSize=%7, miniport=%1" />
+        <string id="EvWwanOid.ModemLoggingConfig" value="[Request=%2] Received ModemLoggingConfig, status=%3, Version=%4, SegmentSize=%5, MaxFlushTime=%6, LevelConfig=%7, miniport=%1" />
+        <string id="EvWwanOid.RegistrationParams" value="[Request=%2] Received RegistrationParams, status=%3, MicoMode=%4, DRXParam=%5, LADNInfo=%6, miniport=%1" />
+        <string id="EvWwanOid.NwParams" value="[Request=%2] Received NetworkParams, status=%3, CurrentMicoIndication=%4, CurrentDRXParams=%5, miniport=%1" />
+        <string id="EvWwanOid.RegParamsSet" value="[Request=%2] Sent SET Registration Params, MicoMode=%3, DRXParam=%4, LADNInfo=%5, ReRegisterIfNeeded=%6, DefaultPDUSessionHint=%7, ListElementType=%8, ListElementCount=%9, miniport=%1, ErrorCode=%10" />
+        <string id="EvWwanOid.CatchAllSet" value="[Request=%2] Sent SET with OID=%3, miniport=%1, ErrorCode=%6, payload length=%4, payload=%5" />
+        <string id="EvWwanOid.CatchAllQuery" value="[Request=%2] Sent QUERY with OID=%3, miniport=%1, ErrorCode=%6, payload length=%4, payload=%5" />
+        <string id="EvWwanOid.CatchAllIndication" value="[Request=%2] Received indication with NDIS WWAN Indication=%3, miniport=%1, payload length=%4, payload=%5" />
+        <string id="WwanApiSetRegisterMode" value="WwanApiSetRegisterMode" />
+        <string id="WwanApiPinUnblock" value="WwanApiPinUnblock" />
+        <string id="WwanApiSetNetworkQuietMode" value="WwanApiSetNetworkQuietMode" />
+        <string id="WwanApiDeleteDMConfigProfile" value="WwanApiDeleteDMConfigProfile" />
+        <string id="WwanApiGetDMConfigProfile" value="WwanApiGetDMConfigProfile" />
+        <string id="WwanApiSetDMConfigProfile" value="WwanApiSetDMConfigProfile" />
+        <string id="WwanApiGetDMConfigProfileList" value="WwanApiGetDMConfigProfileList" />
+        <string id="WwanApiGetProfileState" value="WwanApiGetProfileState" />
+        <string id="WwanApiSearchProfile" value="WwanApiSearchProfile" />
+        <string id="WwanApiConnectAdditionalPdpContext" value="WwanApiConnectAdditionalPdpContext" />
+        <string id="Wwan2ApiSubscribePowerStateEvents" value="Wwan2ApiSubscribePowerStateEvents" />
+        <string id="Wwan2ApiDeleteDeviceServiceSubscription" value="Wwan2ApiDeleteDeviceServiceSubscription" />
+        <string id="WwanApiPinChange" value="WwanApiPinChange" />
+        <string id="Wwan2ApiAddDeviceServiceSubscription" value="Wwan2ApiAddDeviceServiceSubscription" />
+        <string id="Wwan2ApiCloseDeviceServiceCommandSession" value="Wwan2ApiCloseDeviceServiceCommandSession" />
+        <string id="Wwan2ApiOpenDeviceServiceCommandSession" value="Wwan2ApiOpenDeviceServiceCommandSession" />
+        <string id="Wwan2ApiWriteDeviceServiceData" value="Wwan2ApiWriteDeviceServiceData" />
+        <string id="Wwan2ApiCloseDeviceServiceDataSession" value="Wwan2ApiCloseDeviceServiceDataSession" />
+        <string id="Wwan2ApiOpenDeviceServiceDataSession" value="Wwan2ApiOpenDeviceServiceDataSession" />
+        <string id="Wwan2ApiQueryDeviceServiceSupportedCommands" value="Wwan2ApiQueryDeviceServiceSupportedCommands" />
+        <string id="Wwan2ApiQueryInterfaces" value="Wwan2ApiQueryInterfaces" />
+        <string id="WwanApiSetSecurity" value="WwanApiSetSecurity" />
+        <string id="WwanApiGetSecurity" value="WwanApiGetSecurity" />
+        <string id="WwanApiPinEnter" value="WwanApiPinEnter" />
+        <string id="Wwan2ApiSendDeviceServiceCommand" value="Wwan2ApiSendDeviceServiceCommand" />
+        <string id="Wwan2ApiCloseAllDeviceServiceCommandSessions" value="Wwan2ApiCloseAllDeviceServiceCommandSessions" />
+        <string id="Wwan2ApiRegisterNotification" value="Wwan2ApiRegisterNotification" />
+        <string id="Wwan2ApiEnumerateDeviceServices" value="Wwan2ApiEnumerateDeviceServices" />
+        <string id="Wwan2ApiCloseHandle" value="Wwan2ApiCloseHandle" />
+        <string id="Wwan2ApiOpenHandle" value="Wwan2ApiOpenHandle" />
+        <string id="WwanApiScanMultiCarrier" value="WwanApiScanMultiCarrier" />
+        <string id="WwanApiUssdRequest" value="WwanApiUssdRequest" />
+        <string id="WwanApiSetProfileMetaData" value="WwanApiSetProfileMetaData" />
+        <string id="WwanApiGetProfileMetaData" value="WwanApiGetProfileMetaData" />
+        <string id="WwanApiPinDisable" value="WwanApiPinDisable" />
+        <string id="WwanApiAuthChallenge" value="WwanApiAuthChallenge" />
+        <string id="WwanApiGetProfileIstream" value="WwanApiGetProfileIstream" />
+        <string id="WwanApiRenameProfile" value="WwanApiRenameProfile" />
+        <string id="WwanApiGetProfileList" value="WwanApiGetProfileList" />
+        <string id="WwanApiGetProfile" value="WwanApiGetProfile" />
+        <string id="WwanApiDeleteProfile" value="WwanApiDeleteProfile" />
+        <string id="WwanApiSetProfile" value="WwanApiSetProfile" />
+        <string id="WwanApiSmsQueryStatus" value="WwanApiSmsQueryStatus" />
+        <string id="WwanApiGetSmsConfiguration" value="WwanApiGetSmsConfiguration" />
+        <string id="WwanApiDeactivate" value="WwanApiDeactivate" />
+        <string id="WwanApiPinEnable" value="WwanApiPinEnable" />
+        <string id="WwanApiActivate" value="WwanApiActivate" />
+        <string id="WwanApiDetach" value="WwanApiDetach" />
+        <string id="WwanApiAttach" value="WwanApiAttach" />
+        <string id="WwanApiRegister" value="WwanApiRegister" />
+        <string id="WwanApiGetVisibleNetworkList" value="WwanApiGetVisibleNetworkList" />
+        <string id="WwanApiQueryInterface" value="WwanApiQueryInterface" />
+        <string id="WwanApiQueryInterfaceEx" value="WwanApiQueryInterfaceEx" />
+        <string id="WwanApiSetIntfOpcodeHomeProvider" value="WwanApiSetIntfOpcodeHomeProvider" />
+        <string id="WwanApiSetIntfOpcodeActivateUserAccount" value="WwanApiSetIntfOpcodeActivateUserAccount" />
+        <string id="WwanApiSetIntfOpcodeProvisionedContexts" value="WwanApiSetIntfOpcodeProvisionedContexts" />
+        <string id="WwanApiSetIntfOpcodePreferredProviders" value="WwanApiSetIntfOpcodePreferredProviders" />
+        <string id="WwanApiScan" value="WwanApiScan" />
+        <string id="WwanApiSetIntfOpcodeAce" value="WwanApiSetIntfOpcodeAce" />
+        <string id="WwanApiSetIntfOpcodeRadioState" value="WwanApiSetIntfOpcodeRadioState" />
+        <string id="WwanApiSetIntfOpcodePin" value="WwanApiSetIntfOpcodePin" />
+        <string id="WwanApiSetInterface" value="WwanApiSetInterface" />
+        <string id="WwanApiGetInterfaceCapability" value="WwanApiGetInterfaceCapability" />
+        <string id="WwanApiEnumerateInterfaces" value="WwanApiEnumerateInterfaces" />
+        <string id="WwanApiRegisterNotification" value="WwanApiRegisterNotification" />
+        <string id="WwanApiCloseHandle" value="WwanApiCloseHandle" />
+        <string id="WwanApiOpenHandle" value="WwanApiOpenHandle" />
+        <string id="WwanApiSetVendorSpecific" value="WwanApiSetVendorSpecific" />
+        <string id="WwanApiSetPreferredProviders" value="WwanApiSetPreferredProviders" />
+        <string id="WwanApiQueryVendorSpecific" value="WwanApiQueryVendorSpecific" />
+        <string id="WwanApiSetHomeProvider" value="WwanApiSetHomeProvider" />
+        <string id="WwanApiServiceActivate" value="WwanApiServiceActivate" />
+        <string id="WwanApiSmsDelete" value="WwanApiSmsDelete" />
+        <string id="WwanApiSmsRead" value="WwanApiSmsRead" />
+        <string id="WwanApiSmsSend" value="WwanApiSmsSend" />
+        <string id="WwanApiSmsSetConfiguration" value="WwanApiSmsSetConfiguration" />
+        <string id="WwanApiDisconnect" value="WwanApiDisconnect" />
+        <string id="WwanApiConnect" value="WwanApiConnect" />
+        <string id="WwanApiSetProvisionedContext" value="WwanApiSetProvisionedContext" />
+        <string id="WwanApiGetPinState" value="WwanApiGetPinState" />
+        <string id="WwanApiSetDMConfigBinary" value="WwanApiSetDMConfigBinary" />
+        <string id="WwanApiGetDMConfigBinary" value="WwanApiGetDMConfigBinary" />
+        <string id="WwanApiGetProfileListByPurpose" value="WwanApiGetProfileListByPurpose" />
+        <string id="evAutoConnectState" value="Auto Connect Token %2 on Interface {%1}" />
+        <string id="evConnectionPolicy" value="%2Policy %3 on Interface {%1}" />
+        <string id="evAutoConnectNotPossible" value="AutoConnect is not possible on Interface {%1}" />
+        <string id="evDeleteProfile" value="[M:%2][E:%3] Profile deletion via PM: Name [%4]" />
+        <string id="evCreateUpdateProfileBeforeICCIDArrive" value="[M:%2][E:%3] Profile creation/Update via PM before ICCID arrives: Name [%4]" />
+        <string id="evProfileComesToWrongExecutor" value="[M:%2][E:%3] Profile creation/Update comes to a wrong executor: Name [%4] ICCID [%5]" />
+        <string id="evPMAddProfile" value="[M:%2][E:%3] Profile addition via PM: Name [%4] ICCID [%5] connnection mode: %6 source: %8" />
+        <string id="evPMUpdateProfile" value="[M:%2][E:%3] Profile update via PM:: Name [%4] ICCID [%5] connnection mode: %6 source: %8" />
+        <string id="evSelectProfilesOnICCIDArrival" value="[M:%2][E:%3] Profile selection upon ICCID [%4] arrival:  Got %5 profiles" />
+        <string id="evPHAddProfile" value="ICCID [%1] Name [%2] connnection mode: %3 isadditional %4 creation type %5" />
+        <string id="evPHDeleteProfile" value="ICCID [%1] Name [%2]" />
+        <string id="evPHUpdateProfile" value="ICCID [%1] Name [%2]" />
+        <string id="evAddProfileOnICCIDArrival" value="[M:%2][E:%3] Add profile upon ICCID arrival: Name [%4] ICCID [%5] connnection mode: %6 source: %8" />
+        <string id="evWwanDefaultManualConnect" value="[M:%2][E:%3] WwanDefaultManualConnect started with profile [%4] source [%5]" />
+        <string id="evWwanDefaultManualConnectError" value="[M:%2][E:%3] WwanDefaultManualConnect failed" />
+        <string id="evWwanAdditionalManualConnect" value="[M:%2][E:%3] WwanAdditionalManualConnect started with profile [%4] source [%5]" />
+        <string id="evWwanAdditionalManualConnectError" value="[M:%2][E:%3] WwanAdditionalManualConnect failed" />
+        <string id="evWwanModemCreated" value="[M:%2][E:%3] Modem Object (Type %4) created" />
+        <string id="evWwanModemCreateFailed" value="[M:%2][E:%3] Modem Object (Type %4) creation failed" />
+        <string id="evWwanExecutorObjAdded" value="[M:%2][E:%3] New Executor Object is added to the modem (guid:%4)" />
+        <string id="evWwanExecutorObjRemoved" value="[M:%2][E:%3] Removed Executor Object from the modem (guid:%4)" />
+        <string id="evWwanUICCOperation" value="[M:%2][E:%3][Req:%4] ExecutorType(%5) %6 Succeeded" />
+        <string id="evWwanUICCOperationError" value="[M:%2][E:%3][Req:%4] ExecutorType(%5) %6 Failed" />
+        <string id="evAsyncCellularCmdCallback" value="[M:%2][E:%3][Req:%4] Callback of command[%5] Succeeded in CellManager" />
+        <string id="evAsyncCellularCmdCallbackError" value="[M:%2][E:%3][Req:%4] Callback of command[%5] Failed in CellManager" />
+        <string id="evWwanSysCapsSupport" value="[M:%2][E:%3] Interface support SysCaps? (%4)" />
+        <string id="evWwanInterfaceCapsUpdated" value="[M:%2][E:%3] Updated interface with receivced %4" />
+        <string id="EvWwanOid.WwanDeviceServiceCommandQuery" value="[Request=%2] Querying Device Service %3 with Command %4 on Interface {%1}" />
+        <string id="EvWwanOid.WwanDeviceServiceEvent" value="[Request=%2] Received Device Service %3 with Event %4 on Interface {%1}" />
+        <string id="EvWwanOid.WwanDeviceServiceResponse" value="[Request=%2] Received Device Service %3 with Response %4 on Interface {%1}" />
+        <string id="EvWwanOid.WwanDeviceServiceRspModemExecutorId" value="[Request=%2] Received Device Service %3 with Response %4 [ModemNumber %5 ExecutorID %6] on Interface {%1}" />
+        <string id="EvWwanOid.WwanDeviceServiceRspMaxContextCount" value="[Request=%2] Received Device Service %3 with Response %4 [MaxContextCount %5] on Interface {%1}" />
+        <string id="EvWwanOid.WwanDeviceServiceRspModemDualSIMCaps" value="[Request=%2] Received Device Service %3 with Response %4 [ExecutorCount %5 ActiveExecutors %6 ActiveDataExecutors %7] on Interface {%1}" />
+        <string id="mapDeviceServiceCmdRspDataSuspensionState" value="DataSuspensionState" />
+        <string id="mapDeviceServiceCmdRspLTEINFO" value="LTEINFO" />
+        <string id="mapDeviceServiceCmdRspActivationOption" value="ActivationOption" />
+        <string id="mapDeviceServiceCmdRspDataDormancyHint" value="DataDormancyHint" />
+        <string id="mapDeviceServiceCmdRspModemExecutorNumber" value="ModemExecutorNumber" />
+        <string id="mapDeviceServiceCmdRspDMConnConfig" value="DMConnConfig" />
+        <string id="mapDeviceServiceCmdRspIPV6eHRPDConfig" value="IPV6eHRPDConfig" />
+        <string id="mapDeviceServiceCmdRspModemDualSIMCaps" value="ModemDualSIMCaps" />
+        <string id="mapDeviceServiceCmdRspMaxContextNumber" value="MaxContextNumber" />
+        <string id="mapDeviceServiceCmdRspDMConnConfigV2" value="DMConnConfigV2" />
+        <string id="mapDeviceServiceEventDataSuspensionState" value="DataSuspensionState" />
+        <string id="mapDeviceServiceEventInternalError" value="InternalError" />
+        <string id="mapDeviceServiceEventLTEAttachDefaultBearer" value="DLTEAttachDefaultBearer" />
+        <string id="mapDeviceServiceEventDefaultBearerBridging" value="DefaultBearerBridging" />
+        <string id="mapDeviceServiceEventDualSimCaps" value="DualSimCaps" />
+        <string id="taskAuth" value="AUTH" />
+        <string id="AuthMethodSim" value="WwanAuthSim" />
+        <string id="AuthMethodAka" value="WwanAuthAka" />
+        <string id="AuthMethodAkaPrime" value="WwanAuthAkaPrime" />
+        <string id="AuthMethodMax" value="WwanAuthMethodMax" />
+        <string id="MdmDataPolicyTypeLegacyBlockRoaming" value="MdmDataPolicyTypeLegacyBlockRoaming" />
+        <string id="MdmDataPolicyTypeEnablement" value="MdmDataPolicyTypeEnablement" />
+        <string id="MdmDataPolicyTypeRoaming" value="MdmDataPolicyTypeRoaming" />
+        <string id="MdmDataEnablementPolicyOffEnforced" value="MdmDataEnablementPolicyOffEnforced" />
+        <string id="MdmDataEnablementPolicyNoPolicyEnforced" value="MdmDataEnablementPolicyNoPolicyEnforced" />
+        <string id="MdmDataEnablementPolicyOnEnforced" value="MdmDataEnablementPolicyOnEnforced" />
+        <string id="MdmRoamingPolicyDisabledEnforced" value="MdmRoamingPolicyDisabledEnforced" />
+        <string id="MdmRoamingPolicyNoPolicyEnforced" value="MdmRoamingPolicyNoPolicyEnforced" />
+        <string id="MdmRoamingPolicyEnabledEnforced" value="MdmRoamingPolicyEnabledEnforced" />
+        <string id="evAuthChallengeRequest" value="Auth Challenge request send" />
+        <string id="evMdmDataEnablementPolicy" value="MdmDataEnablementPolicy is set to %2 on Interface{%1}" />
+        <string id="evMdmDataRoamingPolicy" value="MdmDataRoamingPolicy is set to %3 on Interface{%1} for policyType %2" />
+        <string id="taskXLATEnableDisable" value="XLATEnableDisable" />
+        <string id="evWriteEnableSoftXLATFailed" value="EnableSoftXLAT failed with Error %2 on Interface{%1}" />
+        <string id="evWriteEnableSoftXLATSucceeded" value="EnableSoftXLAT succeeded with return value %2 on Interface{%1}" />
+        <string id="evWriteDisableSoftXLATFailed" value="DisableSoftXLAT failed with Error %2 on Interface{%1}" />
+        <string id="evWriteDisableSoftXLATSucceeded" value="DisableSoftXLAT succeeded with return value %2 on Interface{%1}" />
+        <string id="WwanIntfTypeUnknown" value="WWAN_INTF_TYPE_UNKNOWN" />
+        <string id="WwanIntfTypeGenericMB" value="WWAN_INTF_TYPE_GENERIC_MB" />
+        <string id="WwanIntfTypeRilStatic" value="WWAN_INTF_TYPE_RIL_STATIC" />
+        <string id="WwanIntfTypeRilVmini" value="WWAN_INTF_TYPE_RIL_VMINI" />
+        <string id="WwanIntfTypeMbim1" value="WWAN_INTF_TYPE_MBIM_1" />
+        <string id="WwanIntfTypeRilMbim1" value="WWAN_INTF_TYPE_RIL_MBIM_1" />
+        <string id="WwanIntfTypeMbim2" value="WWAN_INTF_TYPE_MBIM_2" />
+        <string id="WwanIntfTypeMax" value="WWAN_INTF_TYPE_MAX" />
+        <string id="AsyncCellularCmdGetRegStatus" value="ASYNC_CELLULARCMD_GETREGSTATUS" />
+        <string id="AsyncCellularCmdGetIMSCapabilities" value="ASYNC_CELLULARCMD_GETIMSCAPABILITIES" />
+        <string id="AsyncCellularCmdResetModem" value="ASYNC_CELLULARCMD_RESETMODEM" />
+        <string id="AsyncCellularCmdSoftSwap" value="ASYNC_CELLULARCMD_SOFTSWAP" />
+        <string id="AsyncCellularCmdVendorSpecific" value="ASYNC_CELLULARCMD_VENDORSPECIFIC" />
+        <string id="AsyncCellularCmdGetUICCCInfo" value="ASYNC_CELLULARCMD_GETUICCCINFO" />
+        <string id="AsyncCellularCmdGetUICCRecordStatus" value="ASYNC_CELLULARCMD_GETUICCRECORDSTATUS" />
+        <string id="AsyncCellularCmdUICCReadFilePath" value="ASYNC_CELLULARCMD_UICCREADFILEPATH" />
+        <string id="AsyncCellularCmdUICCReadFilePathwLineId" value="ASYNC_CELLULARCMD_UICCREADFILEPATH_wLINEID" />
+        <string id="AsyncCellularCmdGetPositionInfo" value="ASYNC_CELLULARCMD_GETPOSITIONINFO" />
+        <string id="AsyncCellularCmdSetImsRoaming" value="ASYNC_CELLULARCMD_SETIMSROAMING" />
+        <string id="AsyncCellularCmdReloadMVSettings" value="ASYNC_CELLULARCMD_RELOADMVSETTINGS" />
+        <string id="AsyncCellularCmdVerifyUiccPin" value="ASYNC_CELLULARCMD_VERIFY_UICC_PIN" />
+        <string id="AsyncCellularCmdEnableUiccPin" value="ASYNC_CELLULARCMD_ENABLE_UICC_PIN" />
+        <string id="AsyncCellularCmdDisableUiccPin" value="ASYNC_CELLULARCMD_DISABLE_UICC_PIN" />
+        <string id="AsyncCellularCmdChangeUiccPin" value="ASYNC_CELLULARCMD_CHANGE_UICC_PIN" />
+        <string id="AsyncCellularCmdGetLockStatePin" value="ASYNC_CELLULARCMD_GETLOCKSTATE_PIN" />
+        <string id="AsyncCellularCmdDeactivatePerso" value="ASYNC_CELLULARCMD_DEACTIVATEPERSO" />
+        <string id="wilException" value="Exception" />
+        <string id="wilReturn" value="Return" />
+        <string id="wilLog" value="Log" />
+        <string id="wilFailFast" value="FailFast" />
+      </stringTable>
+    </resources>
+  </localization>
+</assembly>

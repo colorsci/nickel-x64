@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved." xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <assemblyIdentity name="Microsoft-Windows-PeerToPeerGrouping" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <dependency discoverable="no" resourceType="Resources">
+    <dependentAssembly dependencyType="prerequisite">
+      <assemblyIdentity name="Microsoft-Windows-PeerToPeerGrouping.Resources" version="10.0.22621.1" processorArchitecture="amd64" language="*" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </dependentAssembly>
+  </dependency>
+  <memberships>
+    <categoryMembership>
+      <id name="Microsoft-Windows-Networking-Protocols" version="10.0.22621.1" publicKeyToken="31bf3856ad364e35" buildType="release" language="neutral" processorArchitecture="amd64" />
+    </categoryMembership>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories.Services" version="10.0.22621.1" publicKeyToken="31bf3856ad364e35" typeName="Service" />
+      <categoryInstance subcategory="p2psvc">
+        <serviceData name="p2psvc" displayName="@%SystemRoot%\system32\p2psvc.dll,-8006" errorControl="normal" start="demand" type="win32ShareProcess" description="@%SystemRoot%\system32\p2psvc.dll,-8007" dependOnService="p2pimsvc,PNRPSvc" imagePath="%SystemRoot%\System32\svchost.exe -k LocalServicePeerNet" objectName="NT AUTHORITY\LocalService" requiredPrivileges="SeChangeNotifyPrivilege,SeCreateGlobalPrivilege,SeImpersonatePrivilege" sidType="unrestricted">
+          <failureActions resetPeriod="86400">
+            <actions>
+              <action delay="300000" type="restartService" />
+              <action delay="300000" type="restartService" />
+              <action delay="0" type="none" />
+            </actions>
+          </failureActions>
+          <securityDescriptor name="Grouping service SD" />
+        </serviceData>
+      </categoryInstance>
+    </categoryMembership>
+  </memberships>
+  <file name="p2psvc.dll" destinationPath="$(runtime.system32)\" sourceName="p2psvc.dll" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>ljVp35yEVhB/yjz/wb2PiSNTfvYnOH+BvS8E/qpdGJc=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <registryKeys>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\System\CurrentControlSet\Services\SharedAccess\Parameters\FirewallPolicy\RestrictedServices\Static\System">
+      <registryValue name="P2P Grouping Allow In" valueType="REG_SZ" value="v2.0|Action=Allow|Dir=In|App=%SystemRoot%\system32\svchost.exe|Svc=P2PSvc|LPort=3587|Protocol=6|Name=Allow Grouping to receive from port 3587|" />
+      <registryValue name="P2P Grouping Allow Out" valueType="REG_SZ" value="v2.0|Action=Allow|Dir=Out|App=%SystemRoot%\system32\svchost.exe|Svc=P2PSvc|RPort=3587|Protocol=6|Name=Allow Grouping to send to port 3587|" />
+      <registryValue name="P2P Grouping Block In" valueType="REG_SZ" value="v2.0|Action=Block|Dir=In|App=%SystemRoot%\system32\svchost.exe|Svc=p2psvc|Name=Block Grouping from all other ports|" />
+      <registryValue name="P2P Grouping Block Out" valueType="REG_SZ" value="v2.0|Action=Block|Dir=out|App=%SystemRoot%\system32\svchost.exe|Svc=p2psvc|Name=Block Grouping from all other ports|" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\System\CurrentControlSet\Services\p2psvc\Parameters">
+      <registryValue name="ServiceDll" valueType="REG_EXPAND_SZ" value="%SystemRoot%\system32\p2psvc.dll" />
+      <registryValue name="ServiceMain" valueType="REG_SZ" value="GroupServiceMain" />
+      <registryValue name="ServiceDllUnloadOnStop" valueType="REG_DWORD" value="0x00000001" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+  </registryKeys>
+  <migration settingsVersion="0">
+    <supportedComponents>
+      <supportedComponent>
+        <assemblyIdentity name="_" version="1.0.0.0" />
+        <supportedComponentIdentity buildType="release" language="neutral" name="Microsoft-Windows-PeerToPeerGrouping" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" settingsVersionRange="0" versionScope="nonSxS" xmlns="urn:schemas-microsoft-com:asm.v3" />
+        <migXml xmlns="">
+          <rules context="User">
+            <merge script="MigXmlHelper.DestinationPriority()">
+              <objectSet>
+                <pattern type="Registry">HKCU\Software\Microsoft\PeerNet\Grouping\* [*]</pattern>
+              </objectSet>
+            </merge>
+          </rules>
+          <rules context="System">
+            <merge script="MigXmlHelper.DestinationPriority()">
+              <objectSet>
+                <pattern type="Registry">HKU\S-1-5-19\Software\Microsoft\Peernet\Grouping\* [*]</pattern>
+              </objectSet>
+            </merge>
+          </rules>
+        </migXml>
+      </supportedComponent>
+    </supportedComponents>
+    <migXml xmlns="">
+      <rules context="User">
+        <include>
+          <objectSet>
+            <pattern type="Registry">HKCU\Software\Microsoft\PeerNet\Grouping\* [*]</pattern>
+          </objectSet>
+        </include>
+        <merge script="MigXmlHelper.DestinationPriority()">
+          <objectSet>
+            <pattern type="Registry">HKCU\Software\Microsoft\PeerNet\Grouping\* [*]</pattern>
+          </objectSet>
+        </merge>
+      </rules>
+      <rules context="System">
+        <include>
+          <objectSet>
+            <pattern type="Registry">HKU\S-1-5-19\Software\Microsoft\PeerNet\Grouping\* [*]</pattern>
+          </objectSet>
+        </include>
+        <merge script="MigXmlHelper.DestinationPriority()">
+          <objectSet>
+            <pattern type="Registry">HKU\S-1-5-19\Software\Microsoft\Peernet\grouping\* [*]</pattern>
+          </objectSet>
+        </merge>
+      </rules>
+    </migXml>
+  </migration>
+  <asmv3:configuration xmlns:asmv3="urn:schemas-microsoft-com:asm.v3" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State">
+    <asmv3:configurationSchema>
+      <xsd:schema xmlns="Microsoft-Windows-PeerToPeerGrouping" targetNamespace="Microsoft-Windows-PeerToPeerGrouping">
+        <xsd:element name="MaxEventQueueBound" type="xsd:unsignedInt" wcm:description="d__os_obj_amd64fre_temp_f2351bc578ceb24026c04f3bfce89696_w5ipxihsmh_peertopeergrouping.man.temp1.missingResource.description14" wcm:displayName="d__os_obj_amd64fre_temp_f2351bc578ceb24026c04f3bfce89696_w5ipxihsmh_peertopeergrouping.man.temp1.missingResource.displayName13" wcm:handler="regkey('HKEY_CURRENT_USER\Software\Microsoft\PeerNet\Event_Config')" wcm:legacyType="REG_DWORD" wcm:migrate="yes" wcm:scope="perUser" />
+      </xsd:schema>
+    </asmv3:configurationSchema>
+  </asmv3:configuration>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="Grouping service SD" sddl="O:SYG:SYD:(D;;GA;;;BG)(A;;GA;;;SY)(A;;GA;;;BA)(A;;GRLODTWPRPLCCC;;;SO)(A;;GRRP;;;IU)(A;;GRRP;;;RD)(A;;GRRP;;;BU)" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_REGKEY_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;CI;GA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;CI;GR;;;SY)(A;CI;GR;;;BA)(A;CI;GR;;;BU)(A;CI;GR;;;S-1-15-2-1)(A;CI;GR;;;S-1-15-3-1024-1065365936-1281604716-3511738428-1654721687-432734479-3232135806-4053264122-3456934681)" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" description="Default SDDL for Windows Resource Protected file" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string id="description1" value="Provides Network Authentication for Peer Group Members." />
+        <string id="displayName2" value="Grouping service SD" />
+        <string id="description" value="Provides Peer networking Grouping support" />
+        <string id="description2" value="Provides Peer Networking Grouping services" />
+        <string id="displayName" value="Peer networking Grouping support" />
+        <string id="description3" value="Grouping service SD" />
+        <string id="displayName1" value="Peer Networking Grouping Service" />
+        <string id="displayName7" value="Peer Networking Group Authentication" />
+        <string id="description8" value="Provides Network Authentication for Peer Group Members" />
+        <string id="displayName9" value="WRP_FILE_DEFAULT_SDDL" />
+        <string id="displayName10" value="WRP_REGKEY_DEFAULT_SDDL" />
+        <string id="description11" value="Default SDDL for Windows Resource Protected file" />
+        <string id="description12" value="Default SDDL for Windows Resource Protected registry key" />
+      </stringTable>
+    </resources>
+  </localization>
+</assembly>

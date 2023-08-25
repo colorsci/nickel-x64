@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-NetJoin" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <dependency discoverable="no" resourceType="resources">
+    <dependentAssembly>
+      <assemblyIdentity name="Microsoft-Windows-NetJoin.Resources" version="10.0.22621.1" processorArchitecture="amd64" language="*" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </dependentAssembly>
+  </dependency>
+  <file name="netjoin.dll" destinationPath="$(runtime.system32)\" sourceName="netjoin.dll" importPath="$(build.nttree)\" sourcePath=".\">
+    <signatureInfo>
+      <signatureDescriptor PETrust="true" pageHash="true" />
+    </signatureInfo>
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>HzqsrQad2xlPr1Jax8ITcoqFfCyhfL6S1vtN736pu6I=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <registryKeys>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\NetProvision\Providers\Phased\1\JoinProvider">
+      <registryValue name="Path" valueType="REG_EXPAND_SZ" value="%systemroot%\system32\netjoin.dll" />
+      <registryValue name="Initialize" valueType="REG_SZ" value="NetpJoinProviderInitialize" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\NetProvision\Providers\Phased\1\JoinProvider2">
+      <registryValue name="Path" valueType="REG_EXPAND_SZ" value="%systemroot%\system32\netjoin.dll" />
+      <registryValue name="Initialize" valueType="REG_SZ" value="NetpJoinProvider2Initialize" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\NetProvision\Providers\Phased\1\JoinProvider3">
+      <registryValue name="Path" valueType="REG_EXPAND_SZ" value="%systemroot%\system32\netjoin.dll" />
+      <registryValue name="Initialize" valueType="REG_SZ" value="NetpJoinProvider3Initialize" />
+    </registryKey>
+  </registryKeys>
+  <instrumentation>
+    <events xmlns="http://schemas.microsoft.com/win/2004/08/events" xmlns:win="http://manifests.microsoft.com/win/2004/08/windows/events">
+      <provider guid="{9741fd4e-3757-479f-a3c6-fc49f6d5edd0}" messageFileName="%windir%\System32\netjoin.dll" name="NetJoin" resourceFileName="%windir%\System32\netjoin.dll" symbol="S_Microsoft_Windows_NetJoin">
+        <channels>
+          <importChannel chid="System" name="System" />
+        </channels>
+      </provider>
+      <messageTable>
+        <message message="$(string.event_NJEVENT_JOIN_SUCCESS)" value="0x1000" />
+        <message message="$(string.event_NJEVENT_JOIN_FAIL)" value="0x1001" />
+      </messageTable>
+      <cmi />
+    </events>
+  </instrumentation>
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string id="displayName" value="NetJoin APIs" />
+        <string id="description" value="Provides support for joining and leaving domains." />
+        <string id="event_NJEVENT_JOIN_SUCCESS" value="The machine %2 successfully joined the domain %1." />
+        <string id="event_NJEVENT_JOIN_FAIL" value="The machine %2 attempted to join the domain %1 but failed. The error code was %3." />
+      </stringTable>
+    </resources>
+  </localization>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" description="Default SDDL for Windows Resource Protected file" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+</assembly>

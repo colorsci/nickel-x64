@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved." xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <assemblyIdentity name="Microsoft-Windows-EventCollector" version="10.0.22621.1" processorArchitecture="wow64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <dependency discoverable="no" resourceType="Resources">
+    <dependentAssembly dependencyType="prerequisite">
+      <assemblyIdentity name="Microsoft-Windows-EventCollector.Resources" version="10.0.22621.1" processorArchitecture="wow64" language="*" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+    </dependentAssembly>
+  </dependency>
+  <file name="wecutil.exe" destinationPath="$(runtime.system32)\" sourceName="wecutil.exe" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>HPGvnYGax26lq2i/kaoRgjrOGP9qQNQx4Rmy+6pLtxg=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <file name="wecapi.dll" destinationPath="$(runtime.system32)\" sourceName="wecapi.dll" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>g+JJYv5JXjjyf5+oNzuoQpZyjKWS4BNvE4+Ck/tdczI=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <memberships>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories" version="1.0.0.0" publicKeyToken="365143bb27e7ac8b" typeName="SvcHost" />
+      <categoryInstance subcategory="NetworkService">
+        <serviceGroup position="last" serviceName="WECSVC" />
+      </categoryInstance>
+    </categoryMembership>
+  </memberships>
+  <registryKeys>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\EventCollector">
+      <securityDescriptor name="WECSVC_REGISTRY_SECURITY" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\EventCollector\Subscriptions" />
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\EventCollector\Globals" />
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\EventCollector\ConfigurationModes\Normal" />
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\EventCollector\ConfigurationModes\MinLatency" />
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\EventCollector\ConfigurationModes\MinBandwidth" />
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\EventCollector\ConfigurationModes\Custom" />
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Eventlog\HardwareEvents" />
+  </registryKeys>
+  <configuration xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State">
+    <configurationSchema>
+      <xsd:schema xmlns="Microsoft-Windows-EventCollector" targetNamespace="Microsoft-Windows-EventCollector">
+        <xsd:complexType name="GlobalSettingsType">
+          <xsd:sequence>
+            <xsd:element default="300000" name="RetryIntervalStart" type="xsd:unsignedInt" wcm:legacyType="REG_DWORD" />
+            <xsd:element default="3600000" name="RetryInterval" type="xsd:unsignedInt" wcm:legacyType="REG_DWORD" />
+            <xsd:element default="720" name="RetryCount" type="xsd:unsignedInt" wcm:legacyType="REG_DWORD" />
+            <xsd:element default="0" name="InactiveESCleanupMaxMinute" type="xsd:unsignedInt" wcm:legacyType="REG_DWORD" />
+            <xsd:element default="5001 0x1389 5004" name="InactiveErrorList" type="wcm:multiString" wcm:legacyType="REG_MULTI_SZ" />
+            <xsd:element default="5" name="LastErrorRetryCount" type="xsd:unsignedInt" wcm:legacyType="REG_DWORD" />
+          </xsd:sequence>
+        </xsd:complexType>
+        <xsd:complexType name="ConfigurationModeNormalType">
+          <xsd:sequence>
+            <xsd:element default="Pull" name="DeliveryMode" type="xsd:string" wcm:legacyType="REG_SZ" />
+            <xsd:element default="900000" name="HeartBeatInterval" type="xsd:unsignedInt" wcm:legacyType="REG_DWORD" />
+            <xsd:element default="900000" name="MaxLatencyTime" type="xsd:unsignedInt" wcm:legacyType="REG_DWORD" />
+          </xsd:sequence>
+        </xsd:complexType>
+        <xsd:complexType name="ConfigurationModeMinLatencyType">
+          <xsd:sequence>
+            <xsd:element default="Push" name="DeliveryMode" type="xsd:string" wcm:legacyType="REG_SZ" />
+            <xsd:element default="3600000" name="HeartBeatInterval" type="xsd:unsignedInt" wcm:legacyType="REG_DWORD" />
+            <xsd:element default="30000" name="MaxLatencyTime" type="xsd:unsignedInt" wcm:legacyType="REG_DWORD" />
+          </xsd:sequence>
+        </xsd:complexType>
+        <xsd:complexType name="ConfigurationModeMinBandwidthType">
+          <xsd:sequence>
+            <xsd:element default="Push" name="DeliveryMode" type="xsd:string" wcm:legacyType="REG_SZ" />
+            <xsd:element default="21600000" name="HeartBeatInterval" type="xsd:unsignedInt" wcm:legacyType="REG_DWORD" />
+            <xsd:element default="21600000" name="MaxLatencyTime" type="xsd:unsignedInt" wcm:legacyType="REG_DWORD" />
+          </xsd:sequence>
+        </xsd:complexType>
+        <xsd:complexType name="ConfigurationModeCustomType">
+          <xsd:sequence>
+            <xsd:element default="3600000" name="HeartBeatInterval" type="xsd:unsignedInt" wcm:legacyType="REG_DWORD" />
+            <xsd:element default="Pull" name="DeliveryMode" type="xsd:string" wcm:legacyType="REG_SZ" />
+            <xsd:element default="900000" name="MaxLatencyTime" type="xsd:unsignedInt" wcm:legacyType="REG_DWORD" />
+          </xsd:sequence>
+        </xsd:complexType>
+        <xsd:complexType name="HardwareEventsLogType">
+          <xsd:sequence>
+            <xsd:element default="%systemroot%\system32\winevt\logs\HardwareEvents.evtx" name="File" type="xsd:string" wcm:legacyType="REG_EXPAND_SZ" />
+            <xsd:element default="20971520" name="MaxSize" type="xsd:unsignedInt" wcm:legacyType="REG_DWORD" />
+            <xsd:element default="0" name="Retention" type="xsd:unsignedInt" wcm:legacyType="REG_DWORD" />
+          </xsd:sequence>
+        </xsd:complexType>
+        <xsd:element name="GlobalSettings" type="GlobalSettingsType" wcm:description="Global Settings Description" wcm:displayName="Global Settings" wcm:handler="regkey(&quot;HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\EventCollector&quot;)" wcm:legacyName="Globals" wcm:scope="allUsers" />
+        <xsd:element name="ConfigurationModeNormal" type="ConfigurationModeNormalType" wcm:description="Configuration Mode Normal Description" wcm:displayName="Configuration Mode Normal" wcm:handler="regkey(&quot;HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\EventCollector\ConfigurationModes&quot;)" wcm:legacyName="Normal" wcm:scope="allUsers" />
+        <xsd:element name="ConfigurationModeMinLatency" type="ConfigurationModeMinLatencyType" wcm:description="Configuration Mode Min Latency Description" wcm:displayName="Configuration Mode Min Latency Name" wcm:handler="regkey(&quot;HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\EventCollector\ConfigurationModes&quot;)" wcm:legacyName="MinLatency" wcm:scope="allUsers" />
+        <xsd:element name="ConfigurationModeMinBandwidth" type="ConfigurationModeMinBandwidthType" wcm:description="Configuration Mode Min Bandwidth Description" wcm:displayName="Configuration Mode Min Bandwidth Name" wcm:handler="regkey(&quot;HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\EventCollector\ConfigurationModes&quot;)" wcm:legacyName="MinBandwidth" wcm:scope="allUsers" />
+        <xsd:element name="ConfigurationModeCustom" type="ConfigurationModeCustomType" wcm:description="Configuration Mode Custom Description" wcm:displayName="Configuration Mode Custom Name" wcm:handler="regkey(&quot;HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\EventCollector\ConfigurationModes&quot;)" wcm:legacyName="Custom" wcm:scope="allUsers" />
+        <xsd:element name="HardwareEventsLog" type="HardwareEventsLogType" wcm:description="Hardware Events Log Description" wcm:displayName="Hardware EventsLog Name" wcm:handler="regkey(&quot;HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Eventlog&quot;)" wcm:legacyName="HardwareEvents" wcm:scope="allUsers" />
+      </xsd:schema>
+    </configurationSchema>
+  </configuration>
+  <migration settingsVersion="0">
+    <supportedComponents>
+      <supportedComponent>
+        <assemblyIdentity name="_" version="1.0.0.0" />
+        <supportedComponentIdentity buildType="release" language="*" name="Microsoft-Windows-EventCollector" processorArchitecture="*" publicKeyToken="31bf3856ad364e35" settingsVersionRange="0" versionScope="nonSxS" xmlns="urn:schemas-microsoft-com:asm.v3" />
+        <migXml xmlns="">
+          <rules context="System">
+            <merge script="MigXmlHelper.SourcePriority()">
+              <objectSet>
+                <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\Wecsvc\ [Start]</pattern>
+                <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\EventCollector\Globals\* [*]</pattern>
+                <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\EventCollector\Subscriptions\* [*]</pattern>
+              </objectSet>
+            </merge>
+          </rules>
+        </migXml>
+      </supportedComponent>
+    </supportedComponents>
+    <migXml xmlns="">
+      <rules context="System">
+        <include>
+          <objectSet>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\Wecsvc\ [Start]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\EventCollector\Globals\* [*]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\EventCollector\Subscriptions\* [*]</pattern>
+          </objectSet>
+        </include>
+        <merge script="MigXmlHelper.SourcePriority()">
+          <objectSet>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\Wecsvc\ [Start]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\EventCollector\Globals\* [*]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\EventCollector\Subscriptions\* [*]</pattern>
+          </objectSet>
+        </merge>
+      </rules>
+    </migXml>
+  </migration>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="WECSVC_REGISTRY_SECURITY" sddl="D:(A;CIOI;GA;;;BA)(A;CIOI;KRKWSD;;;S-1-5-80-4059739203-877974739-1245631912-527174227-2996563517)" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_REGKEY_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;CI;GA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;CI;GR;;;SY)(A;CI;GR;;;BA)(A;CI;GR;;;BU)(A;CI;GR;;;S-1-15-2-1)(A;CI;GR;;;S-1-15-3-1024-1065365936-1281604716-3511738428-1654721687-432734479-3232135806-4053264122-3456934681)" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" description="Default SDDL for Windows Resource Protected file" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string id="Settings.GlobalSettings.Name" value="Global Settings" />
+        <string id="Settings.GlobalSettings.Description" value="Global Settings Description" />
+        <string id="Settings.ConfigurationModeNormal.Name" value="Configuration Mode Normal" />
+        <string id="Settings.ConfigurationModeNormal.Description" value="Configuration Mode Normal Description" />
+        <string id="Settings.ConfigurationModeMinLatency.Name" value="Configuration Mode Min Latency Name" />
+        <string id="Settings.ConfigurationModeMinLatency.Description" value="Configuration Mode Min Latency Description" />
+        <string id="Settings.ConfigurationModeMinBandwidth.Name" value="Configuration Mode Min Bandwidth Name" />
+        <string id="Settings.ConfigurationModeMinBandwidth.Description" value="Configuration Mode Min Bandwidth Description" />
+        <string id="Settings.ConfigurationModeCustom.Name" value="Configuration Mode Custom Name" />
+        <string id="Settings.ConfigurationModeCustom.Description" value="Configuration Mode Custom Description" />
+        <string id="Settings.HardwareEventsLog.Name" value="Hardware EventsLog Name" />
+        <string id="Settings.HardwareEventsLog.Description" value="Hardware Events Log Description" />
+        <string id="displayName0" value="Windows Event Collector." />
+        <string id="description1" value="Windows Event Collector service." />
+        <string id="displayName2" value="Registry Security." />
+        <string id="description3" value="Security settings for registry access." />
+        <string id="displayName4" value="WRP_FILE_DEFAULT_SDDL" />
+        <string id="description5" value="Default SDDL for Windows Resource Protected file." />
+        <string id="displayName6" value="WRP_REGKEY_DEFAULT_SDDL" />
+        <string id="description7" value="Default SDDL for Windows Resource Protected registry." />
+        <string id="Event.EventSourceUnavailable" value="The Subscription %1 could not be activated on target machine %2 due to communication error.  Error Code is %3.  All retries have been performed before reaching this point and so the subscription will remain inactive on this target until subscription is resubmitted / reset. Additional fault message:%4" />
+        <string id="Event.SubscriptionActivationFailure" value="The Subscription %1 could not be activated on machine %2 due to an error. Error Code is %3. Subscription will remain inactive on this target until subscription is resubmitted / reset." />
+        <string id="Event.SubscriptionExpired" value="The Subscription %1 has expired and will no longer be serviced." />
+        <string id="Event.SubscriptionFirstFailure" value="The Subscription %1 could not be activated on target machine %2 due to communication error.  Error Code is %3.  The subscription will be in retrying state until the subscription becomes active or all retries have been performed. Additional fault message:%4" />
+        <string id="Event.SubscriptionActive" value="The Subscription %1 was activated successfully on target machine %2." />
+        <string id="Event.EventSourceInactiveCleanup" value="The Subscription %1 could not be activated on target machine %2 due to communication error.  Error Code is %3. The EventSource is removed from the subscription. reason: %4" />
+        <string id="Event.SubscriptionEventLost" value="The Subscription %1 has a lost event. An event from target machine %2 is lost and could not be delivered. Error Code is %3. Event data is:%4" />
+        <string id="Event.SubscriptionEventDropped" value="The Subscription %1 detects dropped events. Some events are dropped during transmission from target machine %2. The number of dropped events are %3." />
+        <string id="Channel.HardwareEvents" value="Hardware Events" />
+        <string id="Channel.ForwardedEvents" value="Forwarded Events" />
+        <string id="Channel.Operational" value="Operational" />
+        <string id="Channel.Debug" value="Debug" />
+        <string id="Publisher.Name" value="Microsoft-Windows-EventCollector" />
+        <string id="Event.PublishingFailure" value="The Subscription %1 could not publisher events from target machine %2 to the log file of this subscription.  Error Code is %3.  All retries have been performed before reaching this point and so the subscription will remain inactive on this target until subscription is resubmitted / reset." />
+      </stringTable>
+    </resources>
+  </localization>
+</assembly>

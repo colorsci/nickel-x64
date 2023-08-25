@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-Feedback-DeploymentMgrClient-Desktop-TaskSch" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <taskScheduler>
+    <Task xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task">
+      <RegistrationInfo>
+        <Author>$(@%systemRoot%\system32\dmclient.exe,-200)</Author>
+        <Source>$(@%systemRoot%\system32\dmclient.exe,-201)</Source>
+        <Description>$(@%systemRoot%\system32\dmclient.exe,-202)</Description>
+        <URI>\Microsoft\Windows\Feedback\Siuf\DmClient</URI>
+      </RegistrationInfo>
+      <Triggers />
+      <Principals>
+        <Principal id="LocalSystem">
+          <UserId>S-1-5-18</UserId>
+          <RunLevel>HighestAvailable</RunLevel>
+        </Principal>
+      </Principals>
+      <Settings>
+        <AllowStartOnDemand>true</AllowStartOnDemand>
+        <DisallowStartIfOnBatteries>false</DisallowStartIfOnBatteries>
+        <Enabled>true</Enabled>
+        <MultipleInstancesPolicy>IgnoreNew</MultipleInstancesPolicy>
+        <ExecutionTimeLimit>PT5M</ExecutionTimeLimit>
+        <RunOnlyIfIdle>false</RunOnlyIfIdle>
+        <RunOnlyIfNetworkAvailable>true</RunOnlyIfNetworkAvailable>
+        <StartWhenAvailable>true</StartWhenAvailable>
+        <StopIfGoingOnBatteries>false</StopIfGoingOnBatteries>
+        <UseUnifiedSchedulingEngine>true</UseUnifiedSchedulingEngine>
+        <WakeToRun>false</WakeToRun>
+        <MaintenanceSettings>
+          <Period>P1D</Period>
+          <Deadline>P3D</Deadline>
+        </MaintenanceSettings>
+      </Settings>
+      <Actions Context="LocalSystem">
+        <Exec>
+          <Command>%windir%\system32\dmclient.exe</Command>
+        </Exec>
+      </Actions>
+    </Task>
+    <Task xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task">
+      <RegistrationInfo>
+        <Author>$(@%systemRoot%\system32\dmclient.exe,-200)</Author>
+        <Source>$(@%systemRoot%\system32\dmclient.exe,-201)</Source>
+        <Description>$(@%systemRoot%\system32\dmclient.exe,-202)</Description>
+        <URI>\Microsoft\Windows\Feedback\Siuf\DmClientOnScenarioDownload</URI>
+      </RegistrationInfo>
+      <Triggers>
+        <WnfStateChangeTrigger>
+          <StateName>7518BEA3390B8A41</StateName>
+        </WnfStateChangeTrigger>
+      </Triggers>
+      <Principals>
+        <Principal id="LocalSystem">
+          <UserId>S-1-5-18</UserId>
+          <RunLevel>HighestAvailable</RunLevel>
+        </Principal>
+      </Principals>
+      <Settings>
+        <AllowStartOnDemand>true</AllowStartOnDemand>
+        <DisallowStartIfOnBatteries>false</DisallowStartIfOnBatteries>
+        <Enabled>true</Enabled>
+        <MultipleInstancesPolicy>IgnoreNew</MultipleInstancesPolicy>
+        <ExecutionTimeLimit>PT5M</ExecutionTimeLimit>
+        <RunOnlyIfIdle>false</RunOnlyIfIdle>
+        <RunOnlyIfNetworkAvailable>true</RunOnlyIfNetworkAvailable>
+        <StartWhenAvailable>true</StartWhenAvailable>
+        <StopIfGoingOnBatteries>false</StopIfGoingOnBatteries>
+        <UseUnifiedSchedulingEngine>true</UseUnifiedSchedulingEngine>
+        <WakeToRun>false</WakeToRun>
+      </Settings>
+      <Actions Context="LocalSystem">
+        <Exec>
+          <Command>%windir%\system32\dmclient.exe</Command>
+          <Arguments>utcwnf</Arguments>
+        </Exec>
+      </Actions>
+    </Task>
+  </taskScheduler>
+</assembly>

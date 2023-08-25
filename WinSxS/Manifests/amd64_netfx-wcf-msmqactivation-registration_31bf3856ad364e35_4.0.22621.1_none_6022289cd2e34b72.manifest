@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="NetFx-WCF-MsmqActivation-Registration" version="4.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="NetMsmqActivatorSddl" sddl="D:(A;;CCLCSWRPWPDTLOCRRC;;;SY)(A;;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;BA)(A;;CCLCSWLOCRRC;;;AU)(A;;LCRP;;;IU)(A;;LCRP;;;SU)" operationHint="replace" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+  <memberships>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories.Services" version="10.0.22621.1" publicKeyToken="31bf3856ad364e35" typeName="Service" />
+      <categoryInstance>
+        <serviceData name="NetMsmqActivator" displayName="@%systemroot%\Microsoft.NET\Framework64\v4.0.30319\ServiceModelInstallRC.dll,-8195" errorControl="normal" start="disabled" type="win32ShareProcess" description="@%systemroot%\Microsoft.NET\Framework64\v4.0.30319\ServiceModelInstallRC.dll,-8194" dependOnService="was,msmq" imagePath="&quot;%systemroot%\Microsoft.NET\Framework64\v4.0.30319\SMSvcHost.exe&quot; -NetMsmqActivator" objectName="NT AUTHORITY\NetworkService" requiredPrivileges="SeCreateGlobalPrivilege" sidType="restricted">
+          <failureActions resetPeriod="900">
+            <actions>
+              <action delay="120000" type="restartService" />
+              <action delay="300000" type="restartService" />
+              <action delay="0" type="none" />
+            </actions>
+          </failureActions>
+          <securityDescriptor name="NetMsmqActivatorSddl" />
+        </serviceData>
+      </categoryInstance>
+    </categoryMembership>
+  </memberships>
+  <serviceModelReg component="MsmqActivation" frameworkVersion="4.0.30319" />
+  <migration settingsVersion="0">
+    <machineSpecific>
+      <migXml xmlns="">
+        <rules context="System">
+          <include>
+            <objectSet>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\NetMsmqActivator [Start]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\NetMsmqActivator [FailureActions]</pattern>
+            </objectSet>
+          </include>
+          <merge script="MigXmlHelper.SourcePriority()">
+            <objectSet>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\NetMsmqActivator [Start]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\NetMsmqActivator [FailureActions]</pattern>
+            </objectSet>
+          </merge>
+        </rules>
+      </migXml>
+    </machineSpecific>
+    <supportedComponents>
+      <supportedComponent>
+        <assemblyIdentity name="_" version="1.0.0.0" />
+        <supportedComponentIdentity language="neutral" name="NetFx-WCF-MsmqActivation-Registration" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" settingsVersionRange="0" versionScope="nonSxS" xmlns="urn:schemas-microsoft-com:asm.v3" />
+        <machineSpecific>
+          <migXml xmlns="">
+            <rules context="System">
+              <merge script="MigXmlHelper.SourcePriority()">
+                <objectSet>
+                  <pattern type="Registry">HKLM\System\CurrentControlSet\Services\NetMsmqActivator [Start]</pattern>
+                  <pattern type="Registry">HKLM\System\CurrentControlSet\Services\NetMsmqActivator [FailureActions]</pattern>
+                </objectSet>
+              </merge>
+            </rules>
+          </migXml>
+        </machineSpecific>
+      </supportedComponent>
+      <supportedComponent>
+        <assemblyIdentity name="_" version="1.0.0.0" />
+        <supportedComponentIdentity language="*" name="NetFx-WCF-MsmqActivation-Registration-DL" processorArchitecture="*" publicKeyToken="31bf3856ad364e35" version="0.0.*.*" versionScope="nonSxS" xmlns="urn:schemas-microsoft-com:asm.v3" />
+        <machineSpecific>
+          <migXml xmlns="">
+            <rules context="System">
+              <merge script="MigXmlHelper.SourcePriority()">
+                <objectSet>
+                  <pattern type="Registry">HKLM\System\CurrentControlSet\Services\NetMsmqActivator [Start]</pattern>
+                  <pattern type="Registry">HKLM\System\CurrentControlSet\Services\NetMsmqActivator [FailureActions]</pattern>
+                </objectSet>
+              </merge>
+            </rules>
+          </migXml>
+        </machineSpecific>
+      </supportedComponent>
+    </supportedComponents>
+  </migration>
+</assembly>

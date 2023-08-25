@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved." xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <assemblyIdentity name="Microsoft-Windows-NetBT" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <dependency discoverable="no" resourceType="Resources">
+    <dependentAssembly dependencyType="prerequisite">
+      <assemblyIdentity name="Microsoft-Windows-NetBT.Resources" version="10.0.22621.1" processorArchitecture="amd64" language="*" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+    </dependentAssembly>
+  </dependency>
+  <file name="netbtugc.exe" destinationPath="$(runtime.system32)\" sourceName="netbtugc.exe" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>QhtDaJwCp2aOEgNYoDTNvjuxT2Zx+RG8mYzsZIOwpB4=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <unattendActions>
+    <unattendAction executableName="$(runtime.system32)\netbtugc.exe" passes="specialize" />
+  </unattendActions>
+  <asmv2:configuration xmlns:asmv2="urn:schemas-microsoft-com:asm.v3" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State">
+    <asmv2:configurationSchema>
+      <xsd:schema xmlns="Microsoft-Windows-NetBT" targetNamespace="Microsoft-Windows-NetBT">
+        <xsd:simpleType name="InterfaceIdentifierType">
+          <xsd:restriction base="xsd:string">
+            <xsd:maxLength value="256" />
+          </xsd:restriction>
+        </xsd:simpleType>
+        <xsd:simpleType name="IpAddressType">
+          <xsd:restriction base="xsd:string">
+            <xsd:maxLength value="15" />
+          </xsd:restriction>
+        </xsd:simpleType>
+        <xsd:complexType name="IpAddressCollectionType">
+          <xsd:sequence>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="IpAddress" type="IpAddressType" />
+          </xsd:sequence>
+        </xsd:complexType>
+        <xsd:complexType name="InterfaceType">
+          <xsd:sequence>
+            <xsd:element maxOccurs="1" minOccurs="1" name="Identifier" type="InterfaceIdentifierType" />
+            <xsd:element maxOccurs="1" minOccurs="0" name="NetbiosOptions" type="xsd:integer" />
+            <xsd:element maxOccurs="1" minOccurs="0" name="NameServerList" type="IpAddressCollectionType" />
+          </xsd:sequence>
+        </xsd:complexType>
+        <xsd:complexType name="InterfaceCollectionType">
+          <xsd:sequence>
+            <xsd:element maxOccurs="unbounded" minOccurs="0" name="Interface" type="InterfaceType" wcm:key="Identifier" />
+          </xsd:sequence>
+        </xsd:complexType>
+        <xsd:element default="1500" name="NameSrvQueryTimeout" type="xsd:unsignedInt" wcm:description="NameSrvQueryTimeout" wcm:displayName="NameSrvQueryTimeout" wcm:handler="regkey('HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\NetBT\Parameters')" wcm:legacyType="REG_DWORD" wcm:scope="allUsers" />
+        <xsd:element default="600000" name="CacheTimeout" type="xsd:unsignedInt" wcm:description="CacheTimeout" wcm:displayName="CacheTimeout" wcm:handler="regkey('HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\NetBT\Parameters')" wcm:legacyType="REG_DWORD" wcm:scope="allUsers" />
+        <xsd:element default="3" name="NameSrvQueryCount" type="xsd:unsignedInt" wcm:description="NameSrvQueryCount" wcm:displayName="NameSrvQueryCount" wcm:handler="regkey('HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\NetBT\Parameters')" wcm:legacyType="REG_DWORD" wcm:scope="allUsers" />
+        <xsd:element default="1" name="Size_Small_Medium_Large" type="xsd:unsignedInt" wcm:description="Size_Small_Medium_Large" wcm:displayName="Size_Small_Medium_Large" wcm:handler="regkey('HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\NetBT\Parameters')" wcm:legacyName="Size/Small/Medium/Large" wcm:legacyType="REG_DWORD" wcm:scope="allUsers" />
+        <xsd:element default="3600000" name="SessionKeepAlive" type="xsd:unsignedInt" wcm:description="SessionKeepAlive" wcm:displayName="SessionKeepAlive" wcm:handler="regkey('HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\NetBT\Parameters')" wcm:legacyType="REG_DWORD" wcm:scope="allUsers" />
+        <xsd:element default="1" name="EnableLMHOSTS" type="xsd:unsignedInt" wcm:description="EnableLMHOSTS" wcm:displayName="EnableLMHOSTS" wcm:handler="regkey('HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\NetBT\Parameters')" wcm:legacyType="REG_DWORD" wcm:scope="allUsers" />
+        <xsd:element default="_tcp" name="NbProvider" type="xsd:string" wcm:description="NbProvider" wcm:displayName="NbProvider" wcm:handler="regkey('HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\NetBT\Parameters')" wcm:legacyType="REG_SZ" wcm:scope="allUsers" />
+        <xsd:element default="750" name="BcastQueryTimeout" type="xsd:unsignedInt" wcm:description="BcastQueryTimeout" wcm:displayName="BcastQueryTimeout" wcm:handler="regkey('HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\NetBT\Parameters')" wcm:legacyType="REG_DWORD" wcm:scope="allUsers" />
+        <xsd:element default="3" name="BcastNameQueryCount" type="xsd:unsignedInt" wcm:description="BcastNameQueryCount" wcm:displayName="BcastNameQueryCount" wcm:handler="regkey('HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\NetBT\Parameters')" wcm:legacyType="REG_DWORD" wcm:scope="allUsers" />
+        <xsd:element default="\Device\" name="TransportBindName" type="xsd:string" wcm:description="TransportBindName" wcm:displayName="TransportBindName" wcm:handler="regkey('HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\NetBT\Parameters')" wcm:legacyType="REG_SZ" wcm:scope="allUsers" />
+        <xsd:element default="137" name="NameServerPort" type="xsd:unsignedInt" wcm:description="NameServerPort" wcm:displayName="NameServerPort" wcm:handler="regkey('HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\NetBT\Parameters')" wcm:legacyType="REG_DWORD" wcm:scope="allUsers" />
+        <xsd:element name="Interfaces" type="InterfaceCollectionType" wcm:dataOnly="false" wcm:description="Interfaces is a container for DNS interface settings." wcm:handler="regkey('HKLM\Software\Microsoft\Windows NT\CurrentVersion\UnattendSettings\NetBT')" wcm:passes="specialize" wcm:visible="true" />
+      </xsd:schema>
+    </asmv2:configurationSchema>
+    <asmv2:metadata />
+  </asmv2:configuration>
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string id="description9" value="NbProvider" />
+        <string id="displayName8" value="NbProvider" />
+        <string id="description5" value="CacheTimeout" />
+        <string id="displayName9" value="SessionKeepAlive" />
+        <string id="description4" value="NameSrvQueryTimeout" />
+        <string id="displayName6" value="NameSrvQueryCount" />
+        <string id="description7" value="NameSrvQueryCount" />
+        <string id="description10" value="SessionKeepAlive" />
+        <string id="description11" value="EnableLMHOSTS" />
+        <string id="description12" value="TransportBindName" />
+        <string id="description13" value="BcastNameQueryCount" />
+        <string id="description14" value="BcastQueryTimeout" />
+        <string id="description15" value="Size_Small_Medium_Large" />
+        <string id="description16" value="NameServerPort" />
+        <string id="displayName3" value="NameSrvQueryTimeout" />
+        <string id="displayName14" value="Size_Small_Medium_Large" />
+        <string id="displayName15" value="NameServerPort" />
+        <string id="displayName10" value="EnableLMHOSTS" />
+        <string id="displayName11" value="TransportBindName" />
+        <string id="displayName12" value="BcastNameQueryCount" />
+        <string id="displayName13" value="BcastQueryTimeout" />
+        <string id="displayName4" value="CacheTimeout" />
+      </stringTable>
+    </resources>
+  </localization>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" description="Default SDDL for Windows Resource Protected file" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+</assembly>

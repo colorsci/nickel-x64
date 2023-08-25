@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-DeviceSetupManagerService" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <dependency discoverable="no" resourceType="Resources">
+    <dependentAssembly dependencyType="prerequisite">
+      <assemblyIdentity name="Microsoft-Windows-DeviceSetupManagerService.Resources" version="10.0.22621.1" processorArchitecture="amd64" language="*" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+    </dependentAssembly>
+  </dependency>
+  <file name="DeviceSetupManager.dll" destinationPath="$(runtime.system32)\" sourceName="DeviceSetupManager.dll" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>d6sDF1lbmsEySTNPgRIGi/BmQT7OMVL9HtF8hyCt5lE=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <memberships>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories.Services" version="10.0.22621.1" publicKeyToken="31bf3856ad364e35" typeName="Service" />
+      <categoryInstance subcategory="DsmSvc">
+        <serviceData name="DsmSvc" displayName="@%SystemRoot%\system32\DeviceSetupManager.dll,-1000" errorControl="normal" start="demand" type="win32ShareProcess" description="@%SystemRoot%\system32\DeviceSetupManager.dll,-1001" dependOnService="RpcSs" imagePath="%SystemRoot%\system32\svchost.exe -k netsvcs -p" objectName="LocalSystem" requiredPrivileges="SeChangeNotifyPrivilege,SeImpersonatePrivilege,SeAuditPrivilege,SeTcbPrivilege,SeCreatePermanentPrivilege,SeAssignPrimaryTokenPrivilege,SeLoadDriverPrivilege" sidType="unrestricted">
+          <serviceTrigger action="start" subtype="WNF_STATE_CHANGE" type="WnfStateEvent">
+            <triggerData type="binary" value="7518bca33d009602" />
+          </serviceTrigger>
+          <failureActions resetPeriod="3600">
+            <actions>
+              <action delay="60000" type="restartService" />
+              <action delay="120000" type="restartService" />
+              <action delay="0" type="none" />
+            </actions>
+          </failureActions>
+          <securityDescriptor name="DSMSVC_SDDL" />
+        </serviceData>
+      </categoryInstance>
+    </categoryMembership>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories" version="1.0.0.0" publicKeyToken="365143bb27e7ac8b" typeName="SvcHost" />
+      <categoryInstance subcategory="netsvcs">
+        <serviceGroup position="last" serviceName="DsmSvc" />
+      </categoryInstance>
+    </categoryMembership>
+  </memberships>
+  <registryKeys>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\system\currentcontrolset\services\DsmSvc\Parameters">
+      <registryValue name="ServiceDll" valueType="REG_EXPAND_SZ" value="%SystemRoot%\System32\DeviceSetupManager.dll" />
+      <registryValue name="ServiceDllUnloadOnStop" valueType="REG_DWORD" value="0x00000001" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\SharedAccess\Parameters\FirewallPolicy\RestrictedServices\Static\System">
+      <registryValue name="dsmsvc-1" valueType="REG_SZ" value="V2.0|Action=Allow|Dir=Out|RPort=80|Protocol=6|App=%SystemRoot%\system32\svchost.exe|Svc=DSMSVC|Name=Device Metadata Retrieval|Desc=Allow dmrc communication with WMIS|" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\DeviceContainerPropertyUpdateEvents\DeviceSetupManager">
+      <registryValue name="{540B947E-8B40-45BC-A8A2-6A0B894CBDA2} 4" valueType="REG_DWORD" value="0x00000000" />
+      <registryValue name="{78C34FC8-104A-4ACA-9EA4-524D52996E57} 84" valueType="REG_DWORD" value="0x00000000" />
+      <registryValue name="{78C34FC8-104A-4ACA-9EA4-524D52996E57} 90" valueType="REG_DWORD" value="0x00000000" />
+      <registryValue name="{78C34FC8-104A-4ACA-9EA4-524D52996E57} 101" valueType="REG_DWORD" value="0x00000000" />
+      <registryValue name="{80D81EA6-7473-4B0C-8216-EFC11A2C4C8B} 2" valueType="REG_DWORD" value="0x00000000" />
+      <registryValue name="{A45C254E-DF1C-4EFD-8020-67D146A850E0} 2" valueType="REG_DWORD" value="0x00000000" />
+      <registryValue name="{A45C254E-DF1C-4EFD-8020-67D146A850E0} 3" valueType="REG_DWORD" value="0x00000000" />
+      <registryValue name="{A45C254E-DF1C-4EFD-8020-67D146A850E0} 12" valueType="REG_DWORD" value="0x00000000" />
+      <registryValue name="{A45C254E-DF1C-4EFD-8020-67D146A850E0} 14" valueType="REG_DWORD" value="0x00000000" />
+      <registryValue name="{CF73BB51-3ABF-44A2-85E0-9A3DC7A12132} 2" valueType="REG_DWORD" value="0x00000000" />
+      <registryValue name="{A8B865DD-2E3D-4094-AD97-E593A70C75D6} 24" valueType="REG_DWORD" value="0x00000001" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\DeviceSetup" />
+  </registryKeys>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="WRP_REGKEY_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;CI;GA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;CI;GR;;;SY)(A;CI;GR;;;BA)(A;CI;GR;;;BU)(A;CI;GR;;;S-1-15-2-1)(A;CI;GR;;;S-1-15-3-1024-1065365936-1281604716-3511738428-1654721687-432734479-3232135806-4053264122-3456934681)" operationHint="replace" />
+          <securityDescriptorDefinition name="DSMSVC_SDDL" sddl="D:(A;;CCLCSWRPWPDTLOCRRC;;;SY)(A;;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;BA)(A;;CCLCSWLOCRRC;;;IU)(A;;CCLCSWLOCRRC;;;SU)(A;;RP;;;BU)S:(AU;FA;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;WD)" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" description="Default SDDL for Windows Resource Protected file" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string id="description" value="Manifest for DeviceSetupManagerService components" />
+        <string id="displayName" value="DeviceSetupManager Service" />
+      </stringTable>
+    </resources>
+  </localization>
+  <migration settingsVersion="0">
+    <migXml xmlns="">
+      <rules context="System">
+        <include>
+          <objectSet>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows\CurrentVersion\DeviceSetup [*]</pattern>
+          </objectSet>
+        </include>
+        <exclude>
+          <objectSet>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows\CurrentVersion\DeviceSetup\InstalledPfns [*]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows\CurrentVersion\DeviceSetup\DeviceSoftware [*]</pattern>
+          </objectSet>
+        </exclude>
+      </rules>
+    </migXml>
+    <supportedComponents>
+      <supportedComponent>
+        <assemblyIdentity name="_" version="1.0.0.0" />
+        <supportedComponentIdentity language="neutral" name="Microsoft-Windows-DeviceSetupManagerService" processorArchitecture="*" settingsVersionRange="0" xmlns="urn:schemas-microsoft-com:asm.v3" />
+      </supportedComponent>
+    </supportedComponents>
+  </migration>
+</assembly>

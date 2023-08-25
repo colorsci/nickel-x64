@@ -1,0 +1,768 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved." xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <assemblyIdentity name="Microsoft-Windows-PerformanceCounterInfrastructureConsumer" version="10.0.22621.1" processorArchitecture="wow64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <file name="pla.dll" destinationPath="$(runtime.system32)\" sourceName="pla.dll" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>zGXslkmVM7RDQt5QE/5tcBkk01M+wFaGLEKsP1lBcPw=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <taskScheduler>
+    <Task xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task">
+      <RegistrationInfo>
+        <Version>1.0</Version>
+        <URI>\Microsoft\Windows\PLA\System\ConvertLogEntries</URI>
+        <SecurityDescriptor>O:SYD:P(A;;FA;;;BA)(A;;FA;;;SY)</SecurityDescriptor>
+      </RegistrationInfo>
+      <Triggers>
+        <EventTrigger id="295b821f-3ef2-4803-ba8e-4735e6d3537c">
+          <Enabled>true</Enabled>
+          <Subscription>&lt;QueryList&gt;&lt;Query Id="0" Path="Microsoft-Windows-TaskScheduler/Operational"&gt;&lt;Select Path="Microsoft-Windows-TaskScheduler/Operational"&gt;*[EventData[@Name='TaskStartFailedEvent']/Data[@Name='TaskName']!='\Microsoft\Windows\PLA\System\ConvertLogEntries']&lt;/Select&gt;&lt;/Query&gt;&lt;/QueryList&gt;</Subscription>
+          <StartBoundary>2001-01-01T00:00:00</StartBoundary>
+          <EndBoundary>2001-01-01T00:00:01</EndBoundary>
+        </EventTrigger>
+      </Triggers>
+      <Principals>
+        <Principal id="LocalService">
+          <UserId>S-1-5-19</UserId>
+        </Principal>
+      </Principals>
+      <Settings>
+        <IdleSettings>
+          <StopOnIdleEnd>true</StopOnIdleEnd>
+          <RestartOnIdle>false</RestartOnIdle>
+        </IdleSettings>
+        <UseUnifiedSchedulingEngine>true</UseUnifiedSchedulingEngine>
+        <MultipleInstancesPolicy>Queue</MultipleInstancesPolicy>
+        <DisallowStartIfOnBatteries>false</DisallowStartIfOnBatteries>
+        <StopIfGoingOnBatteries>true</StopIfGoingOnBatteries>
+        <AllowHardTerminate>false</AllowHardTerminate>
+        <StartWhenAvailable>false</StartWhenAvailable>
+        <DeleteExpiredTaskAfter>PT0S</DeleteExpiredTaskAfter>
+        <RunOnlyIfNetworkAvailable>false</RunOnlyIfNetworkAvailable>
+        <AllowStartOnDemand>false</AllowStartOnDemand>
+        <Enabled>true</Enabled>
+        <Hidden>true</Hidden>
+        <RunOnlyIfIdle>false</RunOnlyIfIdle>
+        <WakeToRun>false</WakeToRun>
+        <ExecutionTimeLimit>PT0S</ExecutionTimeLimit>
+        <Priority>7</Priority>
+      </Settings>
+      <Actions Context="LocalService">
+        <Exec>
+          <Command>%windir%\system32\rundll32.exe</Command>
+          <Arguments>%windir%\system32\pla.dll</Arguments>
+        </Exec>
+      </Actions>
+    </Task>
+  </taskScheduler>
+  <memberships>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories" version="1.0.0.0" publicKeyToken="365143bb27e7ac8b" typeName="SvcHost" />
+      <categoryInstance subcategory="LocalServiceNoNetwork">
+        <serviceGroup position="last" serviceName="PLA" />
+      </categoryInstance>
+    </categoryMembership>
+  </memberships>
+  <registryKeys>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{ff679da1-8ff2-4474-9c9e-52bbd409b557}">
+      <registryValue name="" valueType="REG_SZ" value="PlaTaskHost" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{ff679da1-8ff2-4474-9c9e-52bbd409b557}\InProcServer32">
+      <registryValue name="" valueType="REG_EXPAND_SZ" value="%SystemRoot%\system32\pla.dll" />
+      <registryValue name="ThreadingModel" valueType="REG_SZ" value="Both" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\TypeLib\{03837500-098B-11D8-9414-505054503030}\1.0\0" />
+    <registryKey keyName="HKEY_CLASSES_ROOT\TypeLib\{03837500-098B-11D8-9414-505054503030}\1.0\0\win32">
+      <registryValue name="" valueType="REG_EXPAND_SZ" value="%systemroot%\system32\pla.dll" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{038374FF-098B-11D8-9414-505054503030}">
+      <registryValue name="" valueType="REG_SZ" value="IDataCollector" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{038374FF-098B-11D8-9414-505054503030}\ProxyStubClsid">
+      <registryValue name="" valueType="REG_SZ" value="{00020424-0000-0000-C000-000000000046}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{038374FF-098B-11D8-9414-505054503030}\ProxyStubClsid32">
+      <registryValue name="" valueType="REG_SZ" value="{00020424-0000-0000-C000-000000000046}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{038374FF-098B-11D8-9414-505054503030}\TypeLib">
+      <registryValue name="" valueType="REG_SZ" value="{03837500-098B-11D8-9414-505054503030}" />
+      <registryValue name="Version" valueType="REG_SZ" value="1.0" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{03837502-098B-11D8-9414-505054503030}">
+      <registryValue name="" valueType="REG_SZ" value="IDataCollectorCollection" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{03837502-098B-11D8-9414-505054503030}\ProxyStubClsid">
+      <registryValue name="" valueType="REG_SZ" value="{00020424-0000-0000-C000-000000000046}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{03837502-098B-11D8-9414-505054503030}\ProxyStubClsid32">
+      <registryValue name="" valueType="REG_SZ" value="{00020424-0000-0000-C000-000000000046}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{03837502-098B-11D8-9414-505054503030}\TypeLib">
+      <registryValue name="" valueType="REG_SZ" value="{03837500-098B-11D8-9414-505054503030}" />
+      <registryValue name="Version" valueType="REG_SZ" value="1.0" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{03837506-098B-11D8-9414-505054503030}">
+      <registryValue name="" valueType="REG_SZ" value="IPerformanceCounterDataCollector" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{03837506-098B-11D8-9414-505054503030}\ProxyStubClsid">
+      <registryValue name="" valueType="REG_SZ" value="{00020424-0000-0000-C000-000000000046}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{03837506-098B-11D8-9414-505054503030}\ProxyStubClsid32">
+      <registryValue name="" valueType="REG_SZ" value="{00020424-0000-0000-C000-000000000046}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{03837506-098B-11D8-9414-505054503030}\TypeLib">
+      <registryValue name="" valueType="REG_SZ" value="{03837500-098B-11D8-9414-505054503030}" />
+      <registryValue name="Version" valueType="REG_SZ" value="1.0" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{0383750B-098B-11D8-9414-505054503030}">
+      <registryValue name="" valueType="REG_SZ" value="ITraceDataCollector" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{0383750B-098B-11D8-9414-505054503030}\ProxyStubClsid">
+      <registryValue name="" valueType="REG_SZ" value="{00020424-0000-0000-C000-000000000046}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{0383750B-098B-11D8-9414-505054503030}\ProxyStubClsid32">
+      <registryValue name="" valueType="REG_SZ" value="{00020424-0000-0000-C000-000000000046}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{0383750B-098B-11D8-9414-505054503030}\TypeLib">
+      <registryValue name="" valueType="REG_SZ" value="{03837500-098B-11D8-9414-505054503030}" />
+      <registryValue name="Version" valueType="REG_SZ" value="1.0" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{03837510-098B-11D8-9414-505054503030}">
+      <registryValue name="" valueType="REG_SZ" value="ITraceDataProviderCollection" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{03837510-098B-11D8-9414-505054503030}\ProxyStubClsid">
+      <registryValue name="" valueType="REG_SZ" value="{00020424-0000-0000-C000-000000000046}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{03837510-098B-11D8-9414-505054503030}\ProxyStubClsid32">
+      <registryValue name="" valueType="REG_SZ" value="{00020424-0000-0000-C000-000000000046}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{03837510-098B-11D8-9414-505054503030}\TypeLib">
+      <registryValue name="" valueType="REG_SZ" value="{03837500-098B-11D8-9414-505054503030}" />
+      <registryValue name="Version" valueType="REG_SZ" value="1.0" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{03837512-098B-11D8-9414-505054503030}">
+      <registryValue name="" valueType="REG_SZ" value="ITraceDataProvider" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{03837512-098B-11D8-9414-505054503030}\ProxyStubClsid">
+      <registryValue name="" valueType="REG_SZ" value="{00020424-0000-0000-C000-000000000046}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{03837512-098B-11D8-9414-505054503030}\ProxyStubClsid32">
+      <registryValue name="" valueType="REG_SZ" value="{00020424-0000-0000-C000-000000000046}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{03837512-098B-11D8-9414-505054503030}\TypeLib">
+      <registryValue name="" valueType="REG_SZ" value="{03837500-098B-11D8-9414-505054503030}" />
+      <registryValue name="Version" valueType="REG_SZ" value="1.0" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{03837514-098B-11D8-9414-505054503030}">
+      <registryValue name="" valueType="REG_SZ" value="IConfigurationDataCollector" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{03837514-098B-11D8-9414-505054503030}\ProxyStubClsid">
+      <registryValue name="" valueType="REG_SZ" value="{00020424-0000-0000-C000-000000000046}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{03837514-098B-11D8-9414-505054503030}\ProxyStubClsid32">
+      <registryValue name="" valueType="REG_SZ" value="{00020424-0000-0000-C000-000000000046}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{03837514-098B-11D8-9414-505054503030}\TypeLib">
+      <registryValue name="" valueType="REG_SZ" value="{03837500-098B-11D8-9414-505054503030}" />
+      <registryValue name="Version" valueType="REG_SZ" value="1.0" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{03837516-098B-11D8-9414-505054503030}">
+      <registryValue name="" valueType="REG_SZ" value="IAlertDataCollector" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{03837516-098B-11D8-9414-505054503030}\ProxyStubClsid">
+      <registryValue name="" valueType="REG_SZ" value="{00020424-0000-0000-C000-000000000046}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{03837516-098B-11D8-9414-505054503030}\ProxyStubClsid32">
+      <registryValue name="" valueType="REG_SZ" value="{00020424-0000-0000-C000-000000000046}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{03837516-098B-11D8-9414-505054503030}\TypeLib">
+      <registryValue name="" valueType="REG_SZ" value="{03837500-098B-11D8-9414-505054503030}" />
+      <registryValue name="Version" valueType="REG_SZ" value="1.0" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{0383751a-098b-11d8-9414-505054503030}">
+      <registryValue name="" valueType="REG_SZ" value="IApiTracingDataCollector" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{0383751a-098b-11d8-9414-505054503030}\ProxyStubClsid">
+      <registryValue name="" valueType="REG_SZ" value="{00020424-0000-0000-C000-000000000046}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{0383751a-098b-11d8-9414-505054503030}\ProxyStubClsid32">
+      <registryValue name="" valueType="REG_SZ" value="{00020424-0000-0000-C000-000000000046}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{0383751a-098b-11d8-9414-505054503030}\TypeLib">
+      <registryValue name="" valueType="REG_SZ" value="{03837500-098B-11D8-9414-505054503030}" />
+      <registryValue name="Version" valueType="REG_SZ" value="1.0" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{03837541-098b-11d8-9414-505054503030}">
+      <registryValue name="" valueType="REG_SZ" value="IDataManager" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{03837541-098b-11d8-9414-505054503030}\ProxyStubClsid">
+      <registryValue name="" valueType="REG_SZ" value="{00020424-0000-0000-C000-000000000046}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{03837541-098b-11d8-9414-505054503030}\ProxyStubClsid32">
+      <registryValue name="" valueType="REG_SZ" value="{00020424-0000-0000-C000-000000000046}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{03837541-098b-11d8-9414-505054503030}\TypeLib">
+      <registryValue name="" valueType="REG_SZ" value="{03837500-098B-11D8-9414-505054503030}" />
+      <registryValue name="Version" valueType="REG_SZ" value="1.0" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{03837543-098b-11d8-9414-505054503030}">
+      <registryValue name="" valueType="REG_SZ" value="IFolderAction" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{03837543-098b-11d8-9414-505054503030}\ProxyStubClsid">
+      <registryValue name="" valueType="REG_SZ" value="{00020424-0000-0000-C000-000000000046}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{03837543-098b-11d8-9414-505054503030}\ProxyStubClsid32">
+      <registryValue name="" valueType="REG_SZ" value="{00020424-0000-0000-C000-000000000046}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{03837543-098b-11d8-9414-505054503030}\TypeLib">
+      <registryValue name="" valueType="REG_SZ" value="{03837500-098B-11D8-9414-505054503030}" />
+      <registryValue name="Version" valueType="REG_SZ" value="1.0" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{03837544-098b-11d8-9414-505054503030}">
+      <registryValue name="" valueType="REG_SZ" value="IFolderActionCollection" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{03837544-098b-11d8-9414-505054503030}\ProxyStubClsid">
+      <registryValue name="" valueType="REG_SZ" value="{00020424-0000-0000-C000-000000000046}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{03837544-098b-11d8-9414-505054503030}\ProxyStubClsid32">
+      <registryValue name="" valueType="REG_SZ" value="{00020424-0000-0000-C000-000000000046}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{03837544-098b-11d8-9414-505054503030}\TypeLib">
+      <registryValue name="" valueType="REG_SZ" value="{03837500-098B-11D8-9414-505054503030}" />
+      <registryValue name="Version" valueType="REG_SZ" value="1.0" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{03837520-098B-11D8-9414-505054503030}">
+      <registryValue name="" valueType="REG_SZ" value="IDataCollectorSet" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{03837520-098B-11D8-9414-505054503030}\ProxyStubClsid">
+      <registryValue name="" valueType="REG_SZ" value="{00020424-0000-0000-C000-000000000046}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{03837520-098B-11D8-9414-505054503030}\ProxyStubClsid32">
+      <registryValue name="" valueType="REG_SZ" value="{00020424-0000-0000-C000-000000000046}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{03837520-098B-11D8-9414-505054503030}\TypeLib">
+      <registryValue name="" valueType="REG_SZ" value="{03837500-098B-11D8-9414-505054503030}" />
+      <registryValue name="Version" valueType="REG_SZ" value="1.0" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{03837524-098B-11D8-9414-505054503030}">
+      <registryValue name="" valueType="REG_SZ" value="IDataCollectorSetCollection" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{03837524-098B-11D8-9414-505054503030}\ProxyStubClsid">
+      <registryValue name="" valueType="REG_SZ" value="{00020424-0000-0000-C000-000000000046}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{03837524-098B-11D8-9414-505054503030}\ProxyStubClsid32">
+      <registryValue name="" valueType="REG_SZ" value="{00020424-0000-0000-C000-000000000046}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{03837524-098B-11D8-9414-505054503030}\TypeLib">
+      <registryValue name="" valueType="REG_SZ" value="{03837500-098B-11D8-9414-505054503030}" />
+      <registryValue name="Version" valueType="REG_SZ" value="1.0" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{03837533-098B-11D8-9414-505054503030}">
+      <registryValue name="" valueType="REG_SZ" value="IValueMapItem" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{03837533-098B-11D8-9414-505054503030}\ProxyStubClsid">
+      <registryValue name="" valueType="REG_SZ" value="{00020424-0000-0000-C000-000000000046}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{03837533-098B-11D8-9414-505054503030}\ProxyStubClsid32">
+      <registryValue name="" valueType="REG_SZ" value="{00020424-0000-0000-C000-000000000046}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{03837533-098B-11D8-9414-505054503030}\TypeLib">
+      <registryValue name="" valueType="REG_SZ" value="{03837500-098B-11D8-9414-505054503030}" />
+      <registryValue name="Version" valueType="REG_SZ" value="1.0" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{03837534-098B-11D8-9414-505054503030}">
+      <registryValue name="" valueType="REG_SZ" value="IValueMap" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{03837534-098B-11D8-9414-505054503030}\ProxyStubClsid">
+      <registryValue name="" valueType="REG_SZ" value="{00020424-0000-0000-C000-000000000046}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{03837534-098B-11D8-9414-505054503030}\ProxyStubClsid32">
+      <registryValue name="" valueType="REG_SZ" value="{00020424-0000-0000-C000-000000000046}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{03837534-098B-11D8-9414-505054503030}\TypeLib">
+      <registryValue name="" valueType="REG_SZ" value="{03837500-098B-11D8-9414-505054503030}" />
+      <registryValue name="Version" valueType="REG_SZ" value="1.0" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{0383753A-098B-11D8-9414-505054503030}">
+      <registryValue name="" valueType="REG_SZ" value="ISchedule" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{0383753A-098B-11D8-9414-505054503030}\ProxyStubClsid">
+      <registryValue name="" valueType="REG_SZ" value="{00020424-0000-0000-C000-000000000046}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{0383753A-098B-11D8-9414-505054503030}\ProxyStubClsid32">
+      <registryValue name="" valueType="REG_SZ" value="{00020424-0000-0000-C000-000000000046}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{0383753A-098B-11D8-9414-505054503030}\TypeLib">
+      <registryValue name="" valueType="REG_SZ" value="{03837500-098B-11D8-9414-505054503030}" />
+      <registryValue name="Version" valueType="REG_SZ" value="1.0" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{0383753D-098B-11D8-9414-505054503030}">
+      <registryValue name="" valueType="REG_SZ" value="IScheduleCollection" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{0383753D-098B-11D8-9414-505054503030}\ProxyStubClsid">
+      <registryValue name="" valueType="REG_SZ" value="{00020424-0000-0000-C000-000000000046}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{0383753D-098B-11D8-9414-505054503030}\ProxyStubClsid32">
+      <registryValue name="" valueType="REG_SZ" value="{00020424-0000-0000-C000-000000000046}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{0383753D-098B-11D8-9414-505054503030}\TypeLib">
+      <registryValue name="" valueType="REG_SZ" value="{03837500-098B-11D8-9414-505054503030}" />
+      <registryValue name="Version" valueType="REG_SZ" value="1.0" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{03837521-098B-11D8-9414-505054503030}">
+      <registryValue name="" valueType="REG_SZ" value="DataCollectorSet" />
+      <registryValue name="AppID" valueType="REG_SZ" value="{03837503-098b-11d8-9414-505054503030}" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{03837521-098B-11D8-9414-505054503030}\LocalServer32">
+      <registryValue name="" valueType="REG_EXPAND_SZ" value="%SystemRoot%\system32\plasrv.exe" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{03837521-098B-11D8-9414-505054503030}\InprocServer32">
+      <registryValue name="" valueType="REG_EXPAND_SZ" value="%SystemRoot%\System32\pla.dll" />
+      <registryValue name="ThreadingModel" valueType="REG_SZ" value="both" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{03837521-098B-11D8-9414-505054503030}\ProgID">
+      <registryValue name="" valueType="REG_SZ" value="PLA.DataCollectorSet.1" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{03837521-098B-11D8-9414-505054503030}\TypeLib">
+      <registryValue name="" valueType="REG_SZ" value="{03837500-098B-11D8-9414-505054503030}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{03837521-098B-11D8-9414-505054503030}\Version">
+      <registryValue name="" valueType="REG_SZ" value="1.0" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{03837521-098B-11D8-9414-505054503030}\VersionIndependentProgID">
+      <registryValue name="" valueType="REG_SZ" value="PLA.DataCollectorSet" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{0383751C-098B-11D8-9414-505054503030}">
+      <registryValue name="" valueType="REG_SZ" value="TraceSession" />
+      <registryValue name="AppID" valueType="REG_SZ" value="{03837503-098b-11d8-9414-505054503030}" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{0383751C-098B-11D8-9414-505054503030}\LocalServer32">
+      <registryValue name="" valueType="REG_EXPAND_SZ" value="%SystemRoot%\system32\plasrv.exe" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{0383751C-098B-11D8-9414-505054503030}\InprocServer32">
+      <registryValue name="" valueType="REG_EXPAND_SZ" value="%SystemRoot%\System32\pla.dll" />
+      <registryValue name="ThreadingModel" valueType="REG_SZ" value="both" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{0383751C-098B-11D8-9414-505054503030}\ProgID">
+      <registryValue name="" valueType="REG_SZ" value="PLA.TraceSession.1" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{0383751C-098B-11D8-9414-505054503030}\TypeLib">
+      <registryValue name="" valueType="REG_SZ" value="{03837500-098B-11D8-9414-505054503030}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{0383751C-098B-11D8-9414-505054503030}\Version">
+      <registryValue name="" valueType="REG_SZ" value="1.0" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{0383751C-098B-11D8-9414-505054503030}\VersionIndependentProgID">
+      <registryValue name="" valueType="REG_SZ" value="PLA.TraceSession" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{03837530-098B-11D8-9414-505054503030}">
+      <registryValue name="" valueType="REG_SZ" value="TraceSessionCollection" />
+      <registryValue name="AppID" valueType="REG_SZ" value="{03837503-098b-11d8-9414-505054503030}" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{03837530-098B-11D8-9414-505054503030}\LocalServer32">
+      <registryValue name="" valueType="REG_EXPAND_SZ" value="%SystemRoot%\system32\plasrv.exe" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{03837530-098B-11D8-9414-505054503030}\InprocServer32">
+      <registryValue name="" valueType="REG_EXPAND_SZ" value="%SystemRoot%\System32\pla.dll" />
+      <registryValue name="ThreadingModel" valueType="REG_SZ" value="both" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{03837530-098B-11D8-9414-505054503030}\ProgID">
+      <registryValue name="" valueType="REG_SZ" value="PLA.TraceSessionCollection.1" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{03837530-098B-11D8-9414-505054503030}\TypeLib">
+      <registryValue name="" valueType="REG_SZ" value="{03837500-098B-11D8-9414-505054503030}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{03837530-098B-11D8-9414-505054503030}\Version">
+      <registryValue name="" valueType="REG_SZ" value="1.0" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{03837530-098B-11D8-9414-505054503030}\VersionIndependentProgID">
+      <registryValue name="" valueType="REG_SZ" value="PLA.TraceSessionCollection" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{03837538-098B-11D8-9414-505054503030}">
+      <registryValue name="" valueType="REG_SZ" value="BootTraceSession" />
+      <registryValue name="AppID" valueType="REG_SZ" value="{03837503-098b-11d8-9414-505054503030}" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{03837538-098B-11D8-9414-505054503030}\LocalServer32">
+      <registryValue name="" valueType="REG_EXPAND_SZ" value="%SystemRoot%\system32\plasrv.exe" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{03837538-098B-11D8-9414-505054503030}\InprocServer32">
+      <registryValue name="" valueType="REG_EXPAND_SZ" value="%SystemRoot%\System32\pla.dll" />
+      <registryValue name="ThreadingModel" valueType="REG_SZ" value="both" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{03837538-098B-11D8-9414-505054503030}\ProgID">
+      <registryValue name="" valueType="REG_SZ" value="PLA.BootTraceSession.1" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{03837538-098B-11D8-9414-505054503030}\TypeLib">
+      <registryValue name="" valueType="REG_SZ" value="{03837500-098B-11D8-9414-505054503030}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{03837538-098B-11D8-9414-505054503030}\Version">
+      <registryValue name="" valueType="REG_SZ" value="1.0" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{03837538-098B-11D8-9414-505054503030}\VersionIndependentProgID">
+      <registryValue name="" valueType="REG_SZ" value="PLA.BootTraceSession" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{03837539-098B-11D8-9414-505054503030}">
+      <registryValue name="" valueType="REG_SZ" value="BootTraceSessionCollection" />
+      <registryValue name="AppID" valueType="REG_SZ" value="{03837503-098b-11d8-9414-505054503030}" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{03837539-098B-11D8-9414-505054503030}\LocalServer32">
+      <registryValue name="" valueType="REG_EXPAND_SZ" value="%SystemRoot%\system32\plasrv.exe" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{03837539-098B-11D8-9414-505054503030}\InprocServer32">
+      <registryValue name="" valueType="REG_EXPAND_SZ" value="%SystemRoot%\System32\pla.dll" />
+      <registryValue name="ThreadingModel" valueType="REG_SZ" value="both" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{03837539-098B-11D8-9414-505054503030}\ProgID">
+      <registryValue name="" valueType="REG_SZ" value="PLA.BootTraceSessionCollection.1" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{03837539-098B-11D8-9414-505054503030}\TypeLib">
+      <registryValue name="" valueType="REG_SZ" value="{03837500-098B-11D8-9414-505054503030}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{03837539-098B-11D8-9414-505054503030}\Version">
+      <registryValue name="" valueType="REG_SZ" value="1.0" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{03837539-098B-11D8-9414-505054503030}\VersionIndependentProgID">
+      <registryValue name="" valueType="REG_SZ" value="PLA.BootTraceSessionCollection" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{03837513-098B-11D8-9414-505054503030}">
+      <registryValue name="" valueType="REG_SZ" value="TraceDataProvider" />
+      <registryValue name="AppID" valueType="REG_SZ" value="{03837503-098b-11d8-9414-505054503030}" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{03837513-098B-11D8-9414-505054503030}\LocalServer32">
+      <registryValue name="" valueType="REG_EXPAND_SZ" value="%SystemRoot%\system32\plasrv.exe" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{03837513-098B-11D8-9414-505054503030}\InprocServer32">
+      <registryValue name="" valueType="REG_EXPAND_SZ" value="%SystemRoot%\System32\pla.dll" />
+      <registryValue name="ThreadingModel" valueType="REG_SZ" value="both" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{03837513-098B-11D8-9414-505054503030}\ProgID">
+      <registryValue name="" valueType="REG_SZ" value="PLA.TraceDataProvider.1" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{03837513-098B-11D8-9414-505054503030}\TypeLib">
+      <registryValue name="" valueType="REG_SZ" value="{03837500-098B-11D8-9414-505054503030}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{03837513-098B-11D8-9414-505054503030}\Version">
+      <registryValue name="" valueType="REG_SZ" value="1.0" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{03837513-098B-11D8-9414-505054503030}\VersionIndependentProgID">
+      <registryValue name="" valueType="REG_SZ" value="PLA.TraceDataProvider" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{03837511-098B-11D8-9414-505054503030}">
+      <registryValue name="" valueType="REG_SZ" value="TraceDataProviderCollection" />
+      <registryValue name="AppID" valueType="REG_SZ" value="{03837503-098b-11d8-9414-505054503030}" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{03837511-098B-11D8-9414-505054503030}\LocalServer32">
+      <registryValue name="" valueType="REG_EXPAND_SZ" value="%SystemRoot%\system32\plasrv.exe" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{03837511-098B-11D8-9414-505054503030}\InprocServer32">
+      <registryValue name="" valueType="REG_EXPAND_SZ" value="%SystemRoot%\System32\pla.dll" />
+      <registryValue name="ThreadingModel" valueType="REG_SZ" value="both" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{03837511-098B-11D8-9414-505054503030}\ProgID">
+      <registryValue name="" valueType="REG_SZ" value="PLA.TraceDataProviderCollection.1" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{03837511-098B-11D8-9414-505054503030}\TypeLib">
+      <registryValue name="" valueType="REG_SZ" value="{03837500-098B-11D8-9414-505054503030}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{03837511-098B-11D8-9414-505054503030}\Version">
+      <registryValue name="" valueType="REG_SZ" value="1.0" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{03837511-098B-11D8-9414-505054503030}\VersionIndependentProgID">
+      <registryValue name="" valueType="REG_SZ" value="PLA.TraceDataProviderCollection" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{03837525-098B-11D8-9414-505054503030}">
+      <registryValue name="" valueType="REG_SZ" value="DataCollectorSetCollection" />
+      <registryValue name="AppID" valueType="REG_SZ" value="{03837503-098b-11d8-9414-505054503030}" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{03837525-098B-11D8-9414-505054503030}\LocalServer32">
+      <registryValue name="" valueType="REG_EXPAND_SZ" value="%SystemRoot%\system32\plasrv.exe" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{03837525-098B-11D8-9414-505054503030}\InprocServer32">
+      <registryValue name="" valueType="REG_EXPAND_SZ" value="%SystemRoot%\System32\pla.dll" />
+      <registryValue name="ThreadingModel" valueType="REG_SZ" value="both" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{03837525-098B-11D8-9414-505054503030}\ProgID">
+      <registryValue name="" valueType="REG_SZ" value="PLA.DataCollectorSetCollection.1" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{03837525-098B-11D8-9414-505054503030}\TypeLib">
+      <registryValue name="" valueType="REG_SZ" value="{03837500-098B-11D8-9414-505054503030}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{03837525-098B-11D8-9414-505054503030}\Version">
+      <registryValue name="" valueType="REG_SZ" value="1.0" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{03837525-098B-11D8-9414-505054503030}\VersionIndependentProgID">
+      <registryValue name="" valueType="REG_SZ" value="PLA.DataCollectorSetCollection" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{03837531-098B-11D8-9414-505054503030}">
+      <registryValue name="" valueType="REG_SZ" value="ServerDataCollectorSet" />
+      <registryValue name="AppID" valueType="REG_SZ" value="{03837503-098b-11d8-9414-505054503030}" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{03837531-098B-11D8-9414-505054503030}\LocalServer32">
+      <registryValue name="" valueType="REG_EXPAND_SZ" value="%SystemRoot%\system32\plasrv.exe" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{03837531-098B-11D8-9414-505054503030}\InprocServer32">
+      <registryValue name="" valueType="REG_EXPAND_SZ" value="%SystemRoot%\System32\pla.dll" />
+      <registryValue name="ThreadingModel" valueType="REG_SZ" value="both" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{03837531-098B-11D8-9414-505054503030}\ProgID">
+      <registryValue name="" valueType="REG_SZ" value="PLA.ServerDataCollectorSet.1" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{03837531-098B-11D8-9414-505054503030}\TypeLib">
+      <registryValue name="" valueType="REG_SZ" value="{03837500-098B-11D8-9414-505054503030}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{03837531-098B-11D8-9414-505054503030}\Version">
+      <registryValue name="" valueType="REG_SZ" value="1.0" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{03837531-098B-11D8-9414-505054503030}\VersionIndependentProgID">
+      <registryValue name="" valueType="REG_SZ" value="PLA.ServerDataCollectorSet" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{03837532-098B-11D8-9414-505054503030}">
+      <registryValue name="" valueType="REG_SZ" value="ServerDataCollectorSetCollection" />
+      <registryValue name="AppID" valueType="REG_SZ" value="{03837503-098b-11d8-9414-505054503030}" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{03837532-098B-11D8-9414-505054503030}\LocalServer32">
+      <registryValue name="" valueType="REG_EXPAND_SZ" value="%SystemRoot%\system32\plasrv.exe" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{03837532-098B-11D8-9414-505054503030}\InprocServer32">
+      <registryValue name="" valueType="REG_EXPAND_SZ" value="%SystemRoot%\System32\pla.dll" />
+      <registryValue name="ThreadingModel" valueType="REG_SZ" value="both" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{03837532-098B-11D8-9414-505054503030}\ProgID">
+      <registryValue name="" valueType="REG_SZ" value="PLA.ServerDataCollectorSetCollection.1" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{03837532-098B-11D8-9414-505054503030}\TypeLib">
+      <registryValue name="" valueType="REG_SZ" value="{03837500-098B-11D8-9414-505054503030}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{03837532-098B-11D8-9414-505054503030}\Version">
+      <registryValue name="" valueType="REG_SZ" value="1.0" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{03837532-098B-11D8-9414-505054503030}\VersionIndependentProgID">
+      <registryValue name="" valueType="REG_SZ" value="PLA.ServerDataCollectorSetCollection" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{03837546-098B-11D8-9414-505054503030}">
+      <registryValue name="" valueType="REG_SZ" value="ServerDataCollectorSet" />
+      <registryValue name="AppID" valueType="REG_SZ" value="{03837503-098b-11d8-9414-505054503030}" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{03837546-098B-11D8-9414-505054503030}\LocalServer32">
+      <registryValue name="" valueType="REG_EXPAND_SZ" value="%SystemRoot%\system32\plasrv.exe" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{03837546-098B-11D8-9414-505054503030}\InprocServer32">
+      <registryValue name="" valueType="REG_EXPAND_SZ" value="%SystemRoot%\System32\pla.dll" />
+      <registryValue name="ThreadingModel" valueType="REG_SZ" value="both" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{03837546-098B-11D8-9414-505054503030}\ProgID">
+      <registryValue name="" valueType="REG_SZ" value="PLA.SystemDataCollectorSet.1" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{03837546-098B-11D8-9414-505054503030}\TypeLib">
+      <registryValue name="" valueType="REG_SZ" value="{03837500-098B-11D8-9414-505054503030}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{03837546-098B-11D8-9414-505054503030}\Version">
+      <registryValue name="" valueType="REG_SZ" value="1.0" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{03837546-098B-11D8-9414-505054503030}\VersionIndependentProgID">
+      <registryValue name="" valueType="REG_SZ" value="PLA.SystemDataCollectorSet" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{03837547-098B-11D8-9414-505054503030}">
+      <registryValue name="" valueType="REG_SZ" value="SystemDataCollectorSetCollection" />
+      <registryValue name="AppID" valueType="REG_SZ" value="{03837503-098b-11d8-9414-505054503030}" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{03837547-098B-11D8-9414-505054503030}\LocalServer32">
+      <registryValue name="" valueType="REG_EXPAND_SZ" value="%SystemRoot%\system32\plasrv.exe" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{03837547-098B-11D8-9414-505054503030}\InprocServer32">
+      <registryValue name="" valueType="REG_EXPAND_SZ" value="%SystemRoot%\System32\pla.dll" />
+      <registryValue name="ThreadingModel" valueType="REG_SZ" value="both" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{03837547-098B-11D8-9414-505054503030}\ProgID">
+      <registryValue name="" valueType="REG_SZ" value="PLA.SystemDataCollectorSetCollection.1" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{03837547-098B-11D8-9414-505054503030}\TypeLib">
+      <registryValue name="" valueType="REG_SZ" value="{03837500-098B-11D8-9414-505054503030}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{03837547-098B-11D8-9414-505054503030}\Version">
+      <registryValue name="" valueType="REG_SZ" value="1.0" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{03837547-098B-11D8-9414-505054503030}\VersionIndependentProgID">
+      <registryValue name="" valueType="REG_SZ" value="PLA.SystemDataCollectorSetCollection" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{03837526-098B-11D8-9414-505054503030}">
+      <registryValue name="" valueType="REG_SZ" value="LegacyDataCollectorSet" />
+      <registryValue name="AppID" valueType="REG_SZ" value="{03837503-098b-11d8-9414-505054503030}" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{03837526-098B-11D8-9414-505054503030}\LocalServer32">
+      <registryValue name="" valueType="REG_EXPAND_SZ" value="%SystemRoot%\system32\plasrv.exe" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{03837526-098B-11D8-9414-505054503030}\InprocServer32">
+      <registryValue name="" valueType="REG_EXPAND_SZ" value="%SystemRoot%\System32\pla.dll" />
+      <registryValue name="ThreadingModel" valueType="REG_SZ" value="both" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{03837526-098B-11D8-9414-505054503030}\ProgID">
+      <registryValue name="" valueType="REG_SZ" value="PLA.LegacyDataCollectorSet.1" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{03837526-098B-11D8-9414-505054503030}\TypeLib">
+      <registryValue name="" valueType="REG_SZ" value="{03837500-098B-11D8-9414-505054503030}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{03837526-098B-11D8-9414-505054503030}\Version">
+      <registryValue name="" valueType="REG_SZ" value="1.0" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{03837526-098B-11D8-9414-505054503030}\VersionIndependentProgID">
+      <registryValue name="" valueType="REG_SZ" value="PLA.LegacyDataCollectorSet" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{03837527-098B-11D8-9414-505054503030}">
+      <registryValue name="" valueType="REG_SZ" value="LegacyDataCollectorSetCollection" />
+      <registryValue name="AppID" valueType="REG_SZ" value="{03837503-098b-11d8-9414-505054503030}" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{03837527-098B-11D8-9414-505054503030}\LocalServer32">
+      <registryValue name="" valueType="REG_EXPAND_SZ" value="%SystemRoot%\system32\plasrv.exe" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{03837527-098B-11D8-9414-505054503030}\InprocServer32">
+      <registryValue name="" valueType="REG_EXPAND_SZ" value="%SystemRoot%\System32\pla.dll" />
+      <registryValue name="ThreadingModel" valueType="REG_SZ" value="both" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{03837527-098B-11D8-9414-505054503030}\ProgID">
+      <registryValue name="" valueType="REG_SZ" value="PLA.LegacyDataCollectorSetCollection.1" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{03837527-098B-11D8-9414-505054503030}\TypeLib">
+      <registryValue name="" valueType="REG_SZ" value="{03837500-098B-11D8-9414-505054503030}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{03837527-098B-11D8-9414-505054503030}\Version">
+      <registryValue name="" valueType="REG_SZ" value="1.0" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{03837527-098B-11D8-9414-505054503030}\VersionIndependentProgID">
+      <registryValue name="" valueType="REG_SZ" value="PLA.LegacyDataCollectorSetCollection" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{03837528-098B-11D8-9414-505054503030}">
+      <registryValue name="" valueType="REG_SZ" value="LegacyTraceSession" />
+      <registryValue name="AppID" valueType="REG_SZ" value="{03837503-098b-11d8-9414-505054503030}" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{03837528-098B-11D8-9414-505054503030}\LocalServer32">
+      <registryValue name="" valueType="REG_EXPAND_SZ" value="%SystemRoot%\system32\plasrv.exe" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{03837528-098B-11D8-9414-505054503030}\InprocServer32">
+      <registryValue name="" valueType="REG_EXPAND_SZ" value="%SystemRoot%\System32\pla.dll" />
+      <registryValue name="ThreadingModel" valueType="REG_SZ" value="both" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{03837528-098B-11D8-9414-505054503030}\ProgID">
+      <registryValue name="" valueType="REG_SZ" value="PLA.LegacyTraceSession.1" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{03837528-098B-11D8-9414-505054503030}\TypeLib">
+      <registryValue name="" valueType="REG_SZ" value="{03837500-098B-11D8-9414-505054503030}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{03837528-098B-11D8-9414-505054503030}\Version">
+      <registryValue name="" valueType="REG_SZ" value="1.0" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{03837528-098B-11D8-9414-505054503030}\VersionIndependentProgID">
+      <registryValue name="" valueType="REG_SZ" value="PLA.LegacyTraceSession" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{03837529-098B-11D8-9414-505054503030}">
+      <registryValue name="" valueType="REG_SZ" value="LegacyTraceSessionCollection" />
+      <registryValue name="AppID" valueType="REG_SZ" value="{03837503-098b-11d8-9414-505054503030}" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{03837529-098B-11D8-9414-505054503030}\LocalServer32">
+      <registryValue name="" valueType="REG_EXPAND_SZ" value="%SystemRoot%\system32\plasrv.exe" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{03837529-098B-11D8-9414-505054503030}\InprocServer32">
+      <registryValue name="" valueType="REG_EXPAND_SZ" value="%SystemRoot%\System32\pla.dll" />
+      <registryValue name="ThreadingModel" valueType="REG_SZ" value="both" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{03837529-098B-11D8-9414-505054503030}\ProgID">
+      <registryValue name="" valueType="REG_SZ" value="PLA.LegacyTraceSessionCollection.1" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{03837529-098B-11D8-9414-505054503030}\TypeLib">
+      <registryValue name="" valueType="REG_SZ" value="{03837500-098B-11D8-9414-505054503030}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{03837529-098B-11D8-9414-505054503030}\Version">
+      <registryValue name="" valueType="REG_SZ" value="1.0" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{03837529-098B-11D8-9414-505054503030}\VersionIndependentProgID">
+      <registryValue name="" valueType="REG_SZ" value="PLA.LegacyTraceSessionCollection" />
+    </registryKey>
+  </registryKeys>
+  <asmv3:configuration xmlns:asmv3="urn:schemas-microsoft-com:asm.v3" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State">
+    <asmv3:configurationSchema>
+      <xsd:schema xmlns="Microsoft-Windows-PerformanceCounterInfrastructureConsumer" targetNamespace="Microsoft-Windows-PerformanceCounterInfrastructureConsumer" />
+    </asmv3:configurationSchema>
+  </asmv3:configuration>
+  <directories>
+    <directory destinationPath="$(runtime.system32)\Tasks\Microsoft\Windows\PLA">
+      <securityDescriptor name="JobsDir" />
+    </directory>
+    <directory destinationPath="$(runtime.system32)\Tasks\Microsoft\Windows\PLA\System">
+      <securityDescriptor name="SystemTemporaryTasksFolder" />
+    </directory>
+  </directories>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="PLAServiceACL" sddl="D:(A;;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;BA)(A;;CCLCSWRPWPDTLOCR;;;SO)(A;;CCLCSWRPWPDTLOCRRC;;;SY)(A;;CCLCRPLOCR;;;WD)S:(AU;FA;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;WD)" operationHint="replace" />
+          <securityDescriptorDefinition name="PLAServiceConfigACL" sddl="D:(A;;FR;;;WD)(A;;FRFW;;;S-1-5-80-2661322625-712705077-2999183737-3043590567-590698655)" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_REGKEY_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;CI;GA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;CI;GR;;;SY)(A;CI;GR;;;BA)(A;CI;GR;;;BU)(A;CI;GR;;;S-1-15-2-1)(A;CI;GR;;;S-1-15-3-1024-1065365936-1281604716-3511738428-1654721687-432734479-3232135806-4053264122-3456934681)" operationHint="replace" />
+          <securityDescriptorDefinition name="JobsDir" sddl="D:(A;OICI;FA;;;SY)(A;OICI;FA;;;BA)(A;OICI;0x1200ab;;;LU)" operationHint="replace" />
+          <securityDescriptorDefinition name="SystemTemporaryTasksFolder" sddl="D:(A;OICI;FA;;;SY)(A;OICI;FA;;;BA)(A;OICI;0x1200ab;;;WD)" operationHint="replace" />
+          <securityDescriptorDefinition name="PlaFolder" sddl="D:(A;OICI;FA;;;SY)(A;OICI;FA;;;BA)(A;OICIIO;0x1301ff;;;S-1-5-80-2661322625-712705077-2999183737-3043590567-590698655)" operationHint="replace" />
+          <securityDescriptorDefinition name="PlaSystemAcl" sddl="D:P(A;;FRFX;;;SY)(A;;FRFX;;;BA)(A;;0x1301ff;;;S-1-5-80-2661322625-712705077-2999183737-3043590567-590698655)(A;;FRFX;;;LU)" operationHint="replace" />
+          <securityDescriptorDefinition name="PlaData" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;CI;GA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;0x1301bf;;;SY)(A;IOCIOI;GA;;;SY)(A;;0x1301bf;;;BA)(A;IOCIOI;GA;;;BA)(A;OICIIO;GA;;;CO)(A;OICI;0x1200ab;;;LU)" operationHint="replace" />
+          <securityDescriptorDefinition name="PerfLogsDir" sddl="D:P(A;OICI;FA;;;SY)(A;OICI;FA;;;BA)(A;OI;0x1200af;;;LU)" operationHint="replace" />
+          <securityDescriptorDefinition name="PerfLogsAdminDir" sddl="D:P(A;OICI;FA;;;SY)(A;OICI;FA;;;BA)" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" description="Default SDDL for Windows Resource Protected file" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string id="description" value="This is the component for Windows performance counter consumer infrastructure. It contains performance logs and alerts service. It depends on PerformanceCounterInfrastructure to query performance counter data." />
+        <string id="displayName" value="Windows Performance Counter Consumer Infrastructure" />
+        <string id="description2" value="Service ACL" />
+        <string id="displayName2" value="PLA" />
+        <string id="displayName6" value="Jobs directory" />
+        <string id="description7" value="ACL for the PLA's jobs directory" />
+        <string id="displayName8" value="PLAServiceConfigACL" />
+        <string id="displayName9" value="WRP_FILE_DEFAULT_SDDL" />
+        <string id="description10" value="Default SDDL for Windows Resource Protected file" />
+      </stringTable>
+    </resources>
+  </localization>
+</assembly>

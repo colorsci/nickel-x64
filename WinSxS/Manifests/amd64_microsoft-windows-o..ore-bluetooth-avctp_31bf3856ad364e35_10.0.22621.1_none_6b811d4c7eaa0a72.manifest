@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-OneCore-Bluetooth-Avctp" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <dependency discoverable="no" resourceType="Resources">
+    <dependentAssembly dependencyType="prerequisite">
+      <assemblyIdentity name="Microsoft-Windows-OneCore-Bluetooth-Avctp.Resources" version="10.0.22621.1" processorArchitecture="amd64" language="*" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </dependentAssembly>
+  </dependency>
+  <file name="BthAvctpSvc.dll" destinationPath="$(runtime.system32)\" sourceName="BthAvctpSvc.dll" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>W/vKaRPo4wtIJvqG6mvt1ROqp4+Cn9+ASVOTRKLd/fw=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <memberships>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories" version="10.0.22621.1" publicKeyToken="31bf3856ad364e35" typeName="Service" />
+      <categoryInstance subcategory="bthavctpsvc">
+        <serviceData name="bthavctpsvc" displayName="@%SystemRoot%\system32\BthAvctpSvc.dll,-101" errorControl="normal" start="demand" type="win32ShareProcess" description="@%SystemRoot%\system32\BthAvctpSvc.dll,-102" dependOnService="rpcss" imagePath="%SystemRoot%\system32\svchost.exe -k LocalService -p" objectName="NT AUTHORITY\LocalService" requiredPrivileges="SeChangeNotifyPrivilege,SeIncreaseWorkingSetPrivilege,SeCreateGlobalPrivilege,SeImpersonatePrivilege" sidType="unrestricted">
+          <failureActions resetPeriod="86400">
+            <actions>
+              <action delay="100" type="restartService" />
+              <action delay="200" type="restartService" />
+              <action delay="200" type="none" />
+            </actions>
+          </failureActions>
+          <serviceTrigger action="start" subtype="{0850302A-B344-4fda-9BE9-90576B8D46F0}" type="DeviceInterfaceArrival" />
+        </serviceData>
+      </categoryInstance>
+    </categoryMembership>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories" version="1.0.0.0" publicKeyToken="365143bb27e7ac8b" typeName="SvcHost" />
+      <categoryInstance subcategory="LocalService">
+        <serviceGroup position="last" serviceName="bthavctpsvc" />
+      </categoryInstance>
+    </categoryMembership>
+  </memberships>
+  <registryKeys>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\System\CurrentControlSet\Services\BthAvctpSvc\Parameters">
+      <securityDescriptor name="AVCTP_SDDL" />
+      <registryValue name="ServiceDll" valueType="REG_EXPAND_SZ" value="%SystemRoot%\System32\BthAvctpSvc.dll" />
+      <registryValue name="ServiceDllUnloadOnStop" valueType="REG_DWORD" value="0x00000001" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\Bluetooth\Audio\AVRCP\CT">
+      <securityDescriptor name="AVRCP_OVERRIDE_SDDL" />
+      <registryValue name="DisableAbsoluteVolume" valueType="REG_DWORD" value="0x00000000" mutable="true" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{5FF37438-0FBA-4480-A202-E1804F2D05BB}">
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+      <registryValue name="" valueType="REG_SZ" value="IBthAvrcpMediaBridge" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{5FF37438-0FBA-4480-A202-E1804F2D05BB}\ProxyStubClsid32">
+      <registryValue name="" valueType="REG_SZ" value="{516346F3-9E52-4DBF-B0A8-ADF1843BE5FB}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\AppId\{B98C6EB5-6AA7-471E-B5C5-D04FD677DB3B}">
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+      <registryValue name="" valueType="REG_SZ" value="Bluetooth AVCTP Service" />
+      <registryValue name="AccessPermission" valueType="REG_BINARY" value="010014807400000080000000140000003000000002001c00010000001100140004000000010100000000001000100000020044000300000000001400030000000101000000000005040000000000140003000000010100000000000513000000000014000300000001010000000000051200000001010000000000050a00000001020000000000052000000021020000" />
+      <registryValue name="LaunchPermission" valueType="REG_BINARY" value="010014807400000080000000140000003000000002001c000100000011001400040000000101000000000010001000000200440003000000000014000b000000010100000000000504000000000014000b000000010100000000000513000000000014000b00000001010000000000051200000001010000000000050a00000001020000000000052000000021020000" />
+      <registryValue name="LocalService" valueType="REG_SZ" value="BthAvctpSvc" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{6E1F7F3E-760E-45F3-AA8F-5761ABDA272A}">
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+      <registryValue name="" valueType="REG_SZ" value="BthAvrcpMediaBridge" />
+      <registryValue name="AppID" valueType="REG_SZ" value="{B98C6EB5-6AA7-471E-B5C5-D04FD677DB3B}" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{516346F3-9E52-4DBF-B0A8-ADF1843BE5FB}">
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+      <registryValue name="" valueType="REG_SZ" value="BthAvctpSvc Proxy" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{516346F3-9E52-4DBF-B0A8-ADF1843BE5FB}\InProcServer32">
+      <registryValue name="" valueType="REG_SZ" value="$(runtime.system32)\BthAvctpSvc.dll" />
+      <registryValue name="ThreadingModel" valueType="REG_SZ" value="Both" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\Software\Microsoft\WindowsRuntime\Server\BthAvctpsvc">
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+      <registryValue name="ServerType" valueType="REG_DWORD" value="0x00000002" />
+      <registryValue name="Permissions" valueType="REG_BINARY" value="010014806400000070000000140000003000000002001c000100000011001400040000000101000000000010001000000200340002000000000014000b000000010100000000000100000000000018000b000000010200000000000f020000000100000001010000000000050a00000001020000000000052000000021020000" />
+      <registryValue name="ServiceName" valueType="REG_SZ" value="BthAvctpsvc" />
+      <registryValue name="IdentityType" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="Identity" valueType="REG_SZ" value="nt authority\localservice" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\Software\Microsoft\WindowsRuntime\ActivatableClassId\Microsoft.Bluetooth.Profiles.A2dp.Private.A2dpSinkPlaybackConnection">
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+      <registryValue name="TrustLevel" valueType="REG_DWORD" value="0x00000000" />
+      <registryValue name="ActivationType" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="Server" valueType="REG_SZ" value="BthAvctpsvc" />
+    </registryKey>
+  </registryKeys>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="WRP_REGKEY_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;CI;GA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;CI;GR;;;SY)(A;CI;GR;;;BA)(A;CI;GR;;;BU)(A;CI;GR;;;S-1-15-2-1)(A;CI;GR;;;S-1-15-3-1024-1065365936-1281604716-3511738428-1654721687-432734479-3232135806-4053264122-3456934681)" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" />
+          <securityDescriptorDefinition name="AVCTP_SDDL" sddl="O:S-1-5-80-1264790548-4164306546-4160824920-750804445-3452039388G:S-1-5-80-1264790548-4164306546-4160824920-750804445-3452039388D:(A;CI;GA;;;S-1-5-80-1264790548-4164306546-4160824920-750804445-3452039388)" operationHint="replace" />
+          <securityDescriptorDefinition name="AVRCP_OVERRIDE_SDDL" sddl="D:(A;;GA;;;AU)" operationHint="replace" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+</assembly>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-CoreSystem-Sirep-TSP" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <file name="TestSirepSvc.dll" destinationPath="$(runtime.system32)\" sourceName="TestSirepSvc.dll" importPath="$(build.nttree)\Connectivity\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>uGf/qz+8dMD16Gc2ICdJisp4J+j3QoSdWbW2ZK4Fbys=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <memberships>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories.Services" version="10.0.22621.1" publicKeyToken="31bf3856ad364e35" typeName="Service" />
+      <categoryInstance subcategory="TestSirepSvc">
+        <serviceData name="TestSirepSvc" displayName="Sirep Test Service" errorControl="normal" start="auto" type="win32ShareProcess" dependOnService="Tcpip" imagePath="%SystemRoot%\System32\svchost.exe -k WPTCBNetForSirep" objectName="LocalSystem" requiredPrivileges="SeAssignPrimaryTokenPrivilege,SeAuditPrivilege,SeSecurityPrivilege,SeChangeNotifyPrivilege,SeCreateGlobalPrivilege,SeDebugPrivilege,SeImpersonatePrivilege,SeIncreaseQuotaPrivilege,SeTcbPrivilege,SeBackupPrivilege,SeRestorePrivilege,SeShutdownPrivilege,SeLoadDriverPrivilege,SeTakeOwnershipPrivilege,SeSystemProfilePrivilege,SeSystemtimePrivilege,SeProfileSingleProcessPrivilege,SeTimeZonePrivilege,SeLockMemoryPrivilege,SeCreatePagefilePrivilege,SeIncreaseBasePriorityPrivilege,SeCreatePermanentPrivilege,SeSystemEnvironmentPrivilege,SeManageVolumePrivilege,SeIncreaseWorkingSetPrivilege,SeCreateSymbolicLinkPrivilege">
+          <failureActions resetPeriod="86400">
+            <actions>
+              <action delay="60000" type="restartService" />
+              <action delay="60000" type="restartService" />
+              <action delay="0" type="none" />
+            </actions>
+          </failureActions>
+        </serviceData>
+      </categoryInstance>
+    </categoryMembership>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories" version="1.0.0.0" publicKeyToken="365143bb27e7ac8b" typeName="SvcHost" />
+      <categoryInstance subcategory="WPTCBNetForSirep">
+        <serviceGroup position="last" serviceName="TestSirepSvc" />
+      </categoryInstance>
+    </categoryMembership>
+  </memberships>
+  <registryKeys>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\TestSirepSvc\Parameters">
+      <registryValue name="ServiceDllUnloadOnStop" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="ServiceDll" valueType="REG_EXPAND_SZ" value="%SystemRoot%\System32\TestSirepSvc.dll" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Svchost\WPTCBNetForSirep">
+      <registryValue name="AuthenticationCapabilities" valueType="REG_DWORD" value="0x00003020" />
+      <registryValue name="CoInitializeSecurityAllowLowBox" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="CoInitializeSecurityParam" valueType="REG_DWORD" value="0x00000001" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\TestSirepSvc">
+      <registryValue name="Start" valueType="REG_DWORD" value="0x00000002" mutable="true" />
+    </registryKey>
+  </registryKeys>
+  <firewallRule action="allow" active="true" binary="%systemroot%\system32\svchost.exe" desc="@%SystemRoot%\system32\firewallapi.dll,-53613" dir="in" group="@%SystemRoot%\system32\firewallapi.dll,-53611" internalName="Sirep-Server-Service" lport="29817" name="@%SystemRoot%\system32\firewallapi.dll,-53612" protocol="TCP" />
+  <firewallRule action="allow" active="true" binary="%systemroot%\System32\svchost.exe" desc="@%SystemRoot%\system32\firewallapi.dll,-53615" dir="in" group="@%SystemRoot%\system32\firewallapi.dll,-53611" internalName="Sirep-Server-Ping" lport="29819" name="@%SystemRoot%\system32\firewallapi.dll,-53614" protocol="TCP" />
+  <firewallRule action="allow" active="true" binary="%systemroot%\System32\svchost.exe" desc="@%SystemRoot%\system32\firewallapi.dll,-53617" dir="in" group="@%SystemRoot%\system32\firewallapi.dll,-53611" internalName="Sirep-Server-Protocol2" lport="29820" name="@%SystemRoot%\system32\firewallapi.dll,-53616" protocol="TCP" />
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" description="Default SDDL for Windows Resource Protected file" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+</assembly>

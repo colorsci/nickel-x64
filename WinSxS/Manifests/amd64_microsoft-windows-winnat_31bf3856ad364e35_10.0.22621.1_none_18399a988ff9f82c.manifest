@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-WinNat" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <dependency discoverable="no" resourceType="Resources">
+    <dependentAssembly dependencyType="prerequisite">
+      <assemblyIdentity name="Microsoft-Windows-WinNat.Resources" version="10.0.22621.1" processorArchitecture="amd64" language="*" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </dependentAssembly>
+  </dependency>
+  <file name="winnat.sys" destinationPath="$(runtime.drivers)\" sourceName="winnat.sys" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>nM5MEiPlVPa9MYxqybtpFWPJ4C/lWGgb9XXwFdd3tcU=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <memberships>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories.Services" version="10.0.22621.1" publicKeyToken="31bf3856ad364e35" typeName="Service" />
+      <categoryInstance>
+        <serviceData name="WinNat" displayName="@%SystemRoot%\system32\drivers\winnat.sys,-10001" errorControl="normal" start="demand" type="kernelDriver" description="@%SystemRoot%\system32\drivers\winnat.sys,-10002" dependOnService="Tcpip" imagePath="system32\drivers\winnat.sys">
+          <securityDescriptor name="WinnatServiceACL" />
+        </serviceData>
+      </categoryInstance>
+    </categoryMembership>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories" version="1.0.0.0" publicKeyToken="365143bb27e7ac8b" typeName="BootCritical" />
+    </categoryMembership>
+  </memberships>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="WinnatServiceACL" sddl="D:(A;;CCLCSWRPWPDTLOCRRC;;;SY)(A;;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;BA)(A;;CCLCSWLOCRRC;;;IU)(A;;CCLCSWLOCRRC;;;SU)S:(AU;FA;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;WD)" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" description="Default SDDL for Windows Resource Protected file" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+  <migration settingsVersion="1">
+    <supportedComponents>
+      <supportedComponent>
+        <assemblyIdentity name="_" version="1.0.0.0" />
+        <supportedComponentIdentity buildType="release" language="*" name="Microsoft-Windows-WinNat" processorArchitecture="*" publicKeyToken="31bf3856ad364e35" settingsVersionRange="0-1" versionScope="nonSxS" xmlns="urn:schemas-microsoft-com:asm.v3" />
+        <machineSpecific>
+          <migXml xmlns="">
+            <rules context="System">
+              <merge script="MigXmlHelper.SourcePriority()">
+                <objectSet>
+                  <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\Winnat\ [Start]</pattern>
+                </objectSet>
+              </merge>
+            </rules>
+          </migXml>
+        </machineSpecific>
+      </supportedComponent>
+    </supportedComponents>
+    <machineSpecific>
+      <migXml xmlns="">
+        <rules context="System">
+          <include>
+            <objectSet>
+              <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\Winnat\ [Start]</pattern>
+            </objectSet>
+          </include>
+          <merge script="MigXmlHelper.SourcePriority()">
+            <objectSet>
+              <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\Winnat\ [Start]</pattern>
+            </objectSet>
+          </merge>
+        </rules>
+      </migXml>
+    </machineSpecific>
+  </migration>
+  <instrumentation xmlns:ut="http://manifests.microsoft.com/win/2004/08/windows/networkevents" xmlns:win="http://manifests.microsoft.com/win/2004/08/windows/events" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <events xmlns="http://schemas.microsoft.com/win/2004/08/events">
+      <provider guid="{66c07ecd-6667-43fc-93f8-05cf07f446ec}" messageFileName="%WinDir%\system32\drivers\winnat.sys" name="Microsoft-Windows-WinNat" resourceFileName="%WinDir%\system32\drivers\winnat.sys" symbol="MICROSOFT_WINNAT_ETW_PROVIDER">
+        <channels>
+          <channel chid="CHID_WINNAT" enabled="false" isolation="System" name="Microsoft-Windows-WinNat/Trace" symbol="CHANNEL_WINNAT" type="Analytic">
+            <publishing>
+              <level>0xFF</level>
+            </publishing>
+          </channel>
+          <channel chid="CHID_WINNAT_OPERATIONAL" enabled="false" isolation="System" message="$(string.WINNAT_OPERATION_LOG.ChannelMessage)" name="Microsoft-Windows-WinNat/Oper" symbol="CHANNEL_WINNAT_OPERATIONAL" type="Operational" />
+        </channels>
+      </provider>
+      <cmi />
+    </events>
+    <events xmlns="http://schemas.microsoft.com/win/2004/08/events" />
+    <counters xmlns="http://schemas.microsoft.com/win/2005/12/counters" schemaVersion="2.0">
+      <provider applicationIdentity="%SystemRoot%\system32\drivers\winnat.sys" callback="custom" providerGuid="{62706b23-4f66-4c53-b6cc-c6600ccc2752}" providerName="WinNatCounters" providerType="kernelMode">
+        <counterSet description="WinNat TCP counter set measures network activity for network address translated TCP packets." descriptionID="3" guid="{60aa43c9-c1b7-41bf-9b4c-b7f6cc1d93b9}" instances="single" name="WinNAT TCP" nameID="1" symbol="TcpGlobalCounterSet" uri="Microsoft.Windows.System.PerfCounters.WinNat.TCPCounters">
+          <structs>
+            <struct name="TCPGlobalCounterSet" type="WINNAT_TCP_TRANSLATION_COUNTERS" />
+          </structs>
+          <counter description="Total number of TCP sessions." descriptionID="25" detailLevel="standard" field="NumberOfSessions" id="2" name="NumberOfSessions" nameID="5" struct="GlobalCounterSet" type="perf_counter_rawcount" uri="Microsoft.Windows.System.PerfCounters.WinNat.TCPCounters.NumberOfSessions" />
+          <counter description="Total number of TCP bindings." descriptionID="27" detailLevel="standard" field="NumberOfBindings" id="3" name="NumberOfBindings" nameID="7" struct="GlobalCounterSet" type="perf_counter_rawcount" uri="Microsoft.Windows.System.PerfCounters.WinNat.TCPCounters.NumberOfBindings" />
+          <counter description="Total number of TCP packets translated from internal to external." descriptionID="29" detailLevel="standard" field="NumIntToExtTranslations" id="4" name="NumIntToExtTranslations" nameID="9" struct="GlobalCounterSet" type="perf_counter_rawcount" uri="Microsoft.Windows.System.PerfCounters.WinNat.TCPCounters.NumIntToExtTranslations" />
+          <counter description="Total number of TCP packets translated from external to internal." descriptionID="31" detailLevel="standard" field="NumExtToIntTranslations" id="5" name="NumExtToIntTranslations" nameID="11" struct="GlobalCounterSet" type="perf_counter_rawcount" uri="Microsoft.Windows.System.PerfCounters.WinNat.TCPCounters.NumExtToIntTranslations" />
+          <counter description="Total number of TCP packets dropped due to absence of binding." descriptionID="33" detailLevel="standard" field="NumPacketsDropped" id="6" name="NumPacketsDropped" nameID="13" struct="GlobalCounterSet" type="perf_counter_rawcount" uri="Microsoft.Windows.System.PerfCounters.WinNat.TCPCounters.NumPacketsDropped" />
+          <counter description="Total number of TCP sessions timed out due to inactivity." descriptionID="37" detailLevel="standard" field="NumSessionsTimedOut" id="8" name="NumSessionsTimedOut" nameID="17" struct="GlobalCounterSet" type="perf_counter_rawcount" uri="Microsoft.Windows.System.PerfCounters.WinNat.TCPCounters.NumSessionsTimedOut" />
+        </counterSet>
+        <counterSet description="WinNat UDP counter set measures network activity for network address translated UDP packets." descriptionID="39" guid="{c0df9671-a0ea-4576-9f81-853127cf8d28}" instances="single" name="WinNAT UDP" nameID="69" symbol="UdpGlobalCounterSet" uri="Microsoft.Windows.System.PerfCounters.WinNat.UDPCounters">
+          <structs>
+            <struct name="UDPGlobalCounterSet" type="WINNAT_UDP_TRANSLATION_COUNTERS" />
+          </structs>
+          <counter description="Total number of UDP sessions." descriptionID="41" detailLevel="standard" field="NumberOfSessions" id="2" name="NumberOfSessions" nameID="43" struct="GlobalCounterSet" type="perf_counter_rawcount" uri="Microsoft.Windows.System.PerfCounters.WinNat.UDPCounters.NumberOfSessions" />
+          <counter description="Total number of UDP bindings." descriptionID="45" detailLevel="standard" field="NumberOfBindings" id="3" name="NumberOfBindings" nameID="47" struct="GlobalCounterSet" type="perf_counter_rawcount" uri="Microsoft.Windows.System.PerfCounters.WinNat.UDPCounters.NumberOfBindings" />
+          <counter description="Total number of UDP packets translated from internal to external." descriptionID="49" detailLevel="standard" field="NumIntToExtTranslations" id="4" name="NumIntToExtTranslations" nameID="51" struct="GlobalCounterSet" type="perf_counter_rawcount" uri="Microsoft.Windows.System.PerfCounters.WinNat.UDPCounters.NumIntToExtTranslations" />
+          <counter description="Total number of UDP packets translated from external to internal." descriptionID="53" detailLevel="standard" field="NumExtToIntTranslations" id="5" name="NumExtToIntTranslations" nameID="55" struct="GlobalCounterSet" type="perf_counter_rawcount" uri="Microsoft.Windows.System.PerfCounters.WinNat.UDPCounters.NumExtToIntTranslations" />
+          <counter description="Total number of UDP packets dropped due to absence of binding." descriptionID="57" detailLevel="standard" field="NumPacketsDropped" id="6" name="NumPacketsDropped" nameID="59" struct="GlobalCounterSet" type="perf_counter_rawcount" uri="Microsoft.Windows.System.PerfCounters.WinNat.UDPCounters.NumPacketsDropped" />
+          <counter description="Total number of UDP sessions timed out due to inactivity." descriptionID="65" detailLevel="standard" field="NumSessionsTimedOut" id="8" name="NumSessionsTimedOut" nameID="67" struct="GlobalCounterSet" type="perf_counter_rawcount" uri="Microsoft.Windows.System.PerfCounters.WinNat.UDPCounters.NumSessionsTimedOut" />
+        </counterSet>
+        <counterSet description="WinNat ICMP counter set measures network activity for network address translated ICMP packets." descriptionID="99" guid="{08fb768b-1e55-4040-b153-e0ddbedd8042}" instances="single" name="WinNAT ICMP" nameID="101" symbol="IcmpGlobalCounterSet" uri="Microsoft.Windows.System.PerfCounters.WinNat.ICMPCounters">
+          <structs>
+            <struct name="ICMPGlobalCounterSet" type="WINNAT_ICMP_TRANSLATION_COUNTERS" />
+          </structs>
+          <counter description="Total number of ICMP sessions." descriptionID="71" detailLevel="standard" field="NumberOfSessions" id="2" name="NumberOfSessions" nameID="73" struct="GlobalCounterSet" type="perf_counter_rawcount" uri="Microsoft.Windows.System.PerfCounters.WinNat.ICMPCounters.NumberOfSessions" />
+          <counter description="Total number of ICMP bindings." descriptionID="75" detailLevel="standard" field="NumberOfBindings" id="3" name="NumberOfBindings" nameID="77" struct="GlobalCounterSet" type="perf_counter_rawcount" uri="Microsoft.Windows.System.PerfCounters.WinNat.ICMPCounters.NumberOfBindings" />
+          <counter description="Total number of ICMP packets translated from internal to external." descriptionID="79" detailLevel="standard" field="NumIntToExtTranslations" id="4" name="NumIntToExtTranslations" nameID="81" struct="GlobalCounterSet" type="perf_counter_rawcount" uri="Microsoft.Windows.System.PerfCounters.WinNat.ICMPCounters.NumIntToExtTranslations" />
+          <counter description="Total number of ICMP packets translated from external to internal." descriptionID="83" detailLevel="standard" field="NumExtToIntTranslations" id="5" name="NumExtToIntTranslations" nameID="85" struct="GlobalCounterSet" type="perf_counter_rawcount" uri="Microsoft.Windows.System.PerfCounters.WinNat.ICMPCounters.NumExtToIntTranslations" />
+          <counter description="Total number of ICMP packets dropped due to absence of binding." descriptionID="87" detailLevel="standard" field="NumPacketsDropped" id="6" name="NumPacketsDropped" nameID="89" struct="GlobalCounterSet" type="perf_counter_rawcount" uri="Microsoft.Windows.System.PerfCounters.WinNat.ICMPCounters.NumPacketsDropped" />
+          <counter description="Total number of ICMP sessions timed out due to inactivity." descriptionID="95" detailLevel="standard" field="NumSessionsTimedOut" id="8" name="NumSessionsTimedOut" nameID="97" struct="GlobalCounterSet" type="perf_counter_rawcount" uri="Microsoft.Windows.System.PerfCounters.WinNat.ICMPCounters.NumSessionsTimedOut" />
+        </counterSet>
+        <counterSet description="WinNAT general counter set measures network activity for all network address translated packets." descriptionID="105" guid="{21a64f86-6cbe-47e1-a497-261226ca12f7}" instances="single" name="WinNAT" nameID="103" symbol="GeneralCounterSet" uri="Microsoft.Windows.System.PerfCounters.WinNat.GeneralCounterSet">
+          <structs>
+            <struct name="GeneralCounterSet" type="WINNAT_GENERAL_COUNTERS" />
+          </structs>
+          <counter description="Number of new sessions established per second" descriptionID="109" detailLevel="standard" field="SessionsCreated" id="0" name="Sessions/sec" nameID="107" struct="GeneralCounterSet" type="perf_counter_counter" uri="Microsoft.Windows.System.PerfCounters.WinNat.GeneralCounterSet.SessionsPerSecond" />
+          <counter description="Total number of current sessions" descriptionID="113" detailLevel="standard" field="CurrentSessions" id="1" name="Current Session Count" nameID="111" struct="GeneralCounterSet" type="perf_counter_rawcount" uri="Microsoft.Windows.System.PerfCounters.WinNat.GeneralCounterSet.CurrentSessions" />
+          <counter description="Number of packets translated per second from internal to external" descriptionID="117" detailLevel="standard" field="PacketsIntToExt" id="2" name="Packets/sec Internal to External" nameID="115" struct="GeneralCounterSet" type="perf_counter_counter" uri="Microsoft.Windows.System.PerfCounters.WinNat.GeneralCounterSet.PacketsPerSecondInternalToExternal" />
+          <counter description="Total number of packets translated from internal to external" descriptionID="121" detailLevel="standard" field="PacketsIntToExt" id="3" name="Packets Internal to External" nameID="119" struct="GeneralCounterSet" type="perf_counter_rawcount" uri="Microsoft.Windows.System.PerfCounters.WinNat.GeneralCounterSet.PacketsInternalToExternal" />
+          <counter description="Number of packets translated per second from external to internal" descriptionID="125" detailLevel="standard" field="PacketsExtToInt" id="4" name="Packets/sec External to Internal" nameID="123" struct="GeneralCounterSet" type="perf_counter_counter" uri="Microsoft.Windows.System.PerfCounters.WinNat.GeneralCounterSet.PacketsPerSecondExternalToInternal" />
+          <counter description="Total number of packets translated from external to internal" descriptionID="129" detailLevel="standard" field="PacketsExtToInt" id="5" name="Packets External to Internal" nameID="127" struct="GeneralCounterSet" type="perf_counter_rawcount" uri="Microsoft.Windows.System.PerfCounters.WinNat.GeneralCounterSet.PacketsExternalToInternal" />
+          <counter description="Number of packets dropped per second" descriptionID="133" detailLevel="standard" field="DroppedPackets" id="6" name="Dropped Packets/sec" nameID="131" struct="GeneralCounterSet" type="perf_counter_counter" uri="Microsoft.Windows.System.PerfCounters.WinNat.GeneralCounterSet.DroppedPacketsPerSecond" />
+          <counter description="Total number of dropped packets" descriptionID="137" detailLevel="standard" field="DroppedPackets" id="7" name="Dropped Packets" nameID="135" struct="GeneralCounterSet" type="perf_counter_rawcount" uri="Microsoft.Windows.System.PerfCounters.WinNat.GeneralCounterSet.DroppedPackets" />
+          <counter description="Number of ICMP error packets dropped per second due to inner IP packet parsing or validation failure" descriptionID="141" detailLevel="standard" field="DroppedIcmpErrorPackets" id="8" name="Dropped ICMP error packets/sec" nameID="139" struct="GeneralCounterSet" type="perf_counter_counter" uri="Microsoft.Windows.System.PerfCounters.WinNat.GeneralCounterSet.DroppedIcmpErrorPacketsPerSecond" />
+          <counter description="Total number of ICMP error packets dropped due to inner IP packet parsing or validation failure" descriptionID="145" detailLevel="standard" field="DroppedIcmpErrorPackets" id="9" name="Dropped ICMP error packets" nameID="143" struct="GeneralCounterSet" type="perf_counter_rawcount" uri="Microsoft.Windows.System.PerfCounters.WinNat.GeneralCounterSet.DroppedIcmpErrorPackets" />
+          <counter description="Number of packets hairpinned per second between different routing domains" descriptionID="149" detailLevel="standard" field="InterRDHairpinnedPackets" id="10" name="Inter-RoutingDomain Hairpinned Packets/sec" nameID="147" struct="GeneralCounterSet" type="perf_counter_counter" uri="Microsoft.Windows.System.PerfCounters.WinNat.GeneralCounterSet.InterRDHairpinnedPacketsPerSecond" />
+          <counter description="Total number of packets hairpinned between different routing domains" descriptionID="153" detailLevel="standard" field="InterRDHairpinnedPackets" id="11" name="Inter-RoutingDomain Hairpinned Packets" nameID="151" struct="GeneralCounterSet" type="perf_counter_rawcount" uri="Microsoft.Windows.System.PerfCounters.WinNat.GeneralCounterSet.InterRDHairpinnedPackets" />
+          <counter description="Number of packets hairpinned per second back to originating routing domains" descriptionID="157" detailLevel="standard" field="IntraRDHairpinnedPackets" id="12" name="Intra-RoutingDomain Hairpinned Packets/sec" nameID="155" struct="GeneralCounterSet" type="perf_counter_counter" uri="Microsoft.Windows.System.PerfCounters.WinNat.GeneralCounterSet.IntraRDHairpinnedPacketsPerSecond" />
+          <counter description="Total number of packets hairpinned back to originating routing domains" descriptionID="161" detailLevel="standard" field="IntraRDHairpinnedPackets" id="13" name="Intra-RoutingDomain Hairpinned Packets" nameID="159" struct="GeneralCounterSet" type="perf_counter_rawcount" uri="Microsoft.Windows.System.PerfCounters.WinNat.GeneralCounterSet.IntraRDHairpinnedPackets" />
+        </counterSet>
+        <counterSet description="WinNAT instance counterset provides resource usage information per NAT instance." descriptionID="165" guid="{65faa5f0-141d-4f38-acf0-c79bb0c7be2d}" instances="multiple" name="WinNAT Instance" nameID="163" symbol="InstanceCounterSet" uri="Microsoft.Windows.System.PerfCounters.WinNat.InstanceCounterSet">
+          <structs>
+            <struct name="InstanceCounterSet" type="WINNAT_INSTANCE_COUNTERS" />
+          </structs>
+          <counter description="Number of TCP ports in use" descriptionID="169" detailLevel="standard" field="TCPPortsInUse" id="0" name="TCP Ports In Use" nameID="167" struct="InstanceCounterSet" type="perf_counter_rawcount" uri="Microsoft.Windows.System.PerfCounters.WinNat.InstanceCounterSet.TCPPortsInUse" />
+          <counter description="Number of TCP ports available" descriptionID="173" detailLevel="standard" field="TCPPortsAvailable" id="1" name="TCP Ports Available" nameID="171" struct="InstanceCounterSet" type="perf_counter_rawcount" uri="Microsoft.Windows.System.PerfCounters.WinNat.InstanceCounterSet.TCPPortsAvailable" />
+          <counter description="Number of UDP ports in use" descriptionID="177" detailLevel="standard" field="UDPPortsInUse" id="2" name="UDP Ports In Use" nameID="175" struct="InstanceCounterSet" type="perf_counter_rawcount" uri="Microsoft.Windows.System.PerfCounters.WinNat.InstanceCounterSet.UDPPortsInUse" />
+          <counter description="Number of UDP ports available" descriptionID="181" detailLevel="standard" field="UDPPortsAvailable" id="3" name="UDP Ports Available" nameID="179" struct="InstanceCounterSet" type="perf_counter_rawcount" uri="Microsoft.Windows.System.PerfCounters.WinNat.InstanceCounterSet.UDPPortsAvailable" />
+        </counterSet>
+      </provider>
+    </counters>
+  </instrumentation>
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string id="description" value="This component provides network address translation functionality" />
+        <string id="displayName0" value="Windows NAT Driver" />
+        <string id="WinNatSessionCreateV0.EventMessage" value="%7 session created. Internal source transport addr: %2, Internal dest transport addr: %3, External source transport addr %5, External dest transport addr %6, Lifetime: %8 seconds, TcpState:%9" />
+        <string id="WinNatSessionCreate.EventMessage" value="%7 session created. Internal source transport addr: %2 (CompartmentId %10), Internal dest transport addr: %3, External source transport addr %5, External dest transport addr %6, Lifetime: %8 seconds, TcpState:%9" />
+        <string id="WinNatSessionTimerUpdateV0.EventMessage" value="%7 session lifetime updated. Internal source transport addr: %2, Internal dest transport addr: %3, External source transport addr %5, External dest transport addr %6, Lifetime: %8 seconds, TcpState: %9" />
+        <string id="WinNatSessionTimerUpdate.EventMessage" value="%7 session lifetime updated. Internal source transport addr: %2 (CompartmentId %10), Internal dest transport addr: %3, External source transport addr %5, External dest transport addr %6, Lifetime: %8 seconds, TcpState: %9" />
+        <string id="WinNatSessionTcpStateUpdateV0.EventMessage" value="%7 session state updated. Internal source transport addr: %2, Internal dest transport addr: %3, External source transport addr %5, External dest transport addr %6, Lifetime: %8 seconds, TcpState: %9" />
+        <string id="WinNatSessionTcpStateUpdate.EventMessage" value="%7 session state updated. Internal source transport addr: %2 (CompartmentId %10), Internal dest transport addr: %3, External source transport addr %5, External dest transport addr %6, Lifetime: %8 seconds, TcpState: %9" />
+        <string id="WinNatSessionTimeoutV0.EventMessage" value="%7 session timedout. Internal source transport addr: %2, Internal dest transport addr: %3, External source transport addr %5, External dest transport addr %6, Lifetime: %8 seconds, TcpState: %9" />
+        <string id="WinNatSessionTimeout.EventMessage" value="%7 session timedout. Internal source transport addr: %2 (CompartmentId %10), Internal dest transport addr: %3, External source transport addr %5, External dest transport addr %6, Lifetime: %8 seconds, TcpState: %9" />
+        <string id="WinNatSessionDeleteV0.EventMessage" value="%7 session deleted. Internal source transport addr: %2, Internal dest transport addr: %3, External source transport addr %5, External dest transport addr %6, Lifetime: %8 seconds, TcpState: %9" />
+        <string id="WinNatSessionDelete.EventMessage" value="%7 session deleted. Internal source transport addr: %2 (CompartmentId %10), Internal dest transport addr: %3, External source transport addr %5, External dest transport addr %6, Lifetime: %8 seconds, TcpState: %9" />
+        <string id="WinNatBindingCreateV0.EventMessage" value="%5 binding created. Internal transport addr: %2, External transport addr %4, SessionCount: %6, Configured: %7" />
+        <string id="WinNatBindingCreate.EventMessage" value="%5 binding created. Internal transport addr: %2 (CompartmentId %8), External transport addr %4, SessionCount: %6, Configured: %7" />
+        <string id="WinNatBindingDeleteV0.EventMessage" value="%5 binding deleted. Internal transport addr: %2, External transport addr %4, SessionCount: %6, Configured: %7" />
+        <string id="WinNatBindingDelete.EventMessage" value="%5 binding deleted. Internal transport addr: %2 (CompartmentId %8), External transport addr %4, SessionCount: %6, Configured: %7" />
+        <string id="WinNatBindingSessionCountV0.EventMessage" value="%5 binding session count updated. Internal transport addr: %2, External transport addr %4, SessionCount: %6, Configured: %7" />
+        <string id="WinNatBindingSessionCount.EventMessage" value="%5 binding session count updated. Internal transport addr: %2 (CompartmentId %8), External transport addr %4, SessionCount: %6, Configured: %7" />
+        <string id="WinNatTranslation.EventMessage" value="Translating %8 packet from %2:%3 to %5:%6, IPID:%7. Status: %9, IcmpType: %10, IcmpCode: %11, IcmpErrorPayload: %12" />
+        <string id="WinNatInstanceEvent.EventMessage" value="Nat Instance %1 %11 Status: %10.UdpIdleSessionTimeout: %2 sec, TcpTransientConnectionTimeout: %3, TcpEstablishedConnectionTimeout: %4, IcmpQueryTimeout: %5, TcpFilteringBehavior: %6, UdpFilteringBehavior: %7, UdpInboundRefresh: %8, Enabled: %9" />
+        <string id="WinNatPacketFilterEvent.EventMessage" value="Packet filter %12 Status: %13. Instance: %1, SrcPrefix: %3, SrcPrefixLength: %4, DstPrefix: %5, DstPrefixLength: %6, Ipv4Prefix: %7, Ipv4PrefixLength: %8, Nat64: %9, InterfaceLuid: %10" />
+        <string id="WinNatWFPFilterEvent.EventMessage" value="WFP filter %12 Status: %13. Instance: %1, FilterId: %11, SrcPrefix: %3, SrcPrefixLength: %4, DstPrefix: %5, DstPrefixLength: %6, Ipv4Prefix: %7, Ipv4PrefixLength: %8, Nat64: %9, InterfaceLuid: %10" />
+        <string id="WinNatAddressPoolConfig.EventMessage" value="Address pool %6 Status: %7. Instance: %1, Address: %2, StartingPort: %3, EndingPort: %4, InterfaceLuid: %5 " />
+        <string id="WinNatAddressChangeNotify.EventMessage" value="Address %6 notification. Address: %2, InterfaceLuid: %5 " />
+        <string id="WinNatStaticBindingEvent.EventMessage" value="Static binding %6 Status: %7. Internal Source: %2, External Source: %4, Protocol: %5" />
+        <string id="WinNatMemoryAllocationFailure.EventMessage" value="Memory allocation failure: %1" />
+        <string id="WinNatSessionCreateOperational.EventMessage" value="%7 session created. Internal source transport addr: %2, Internal dest transport addr: %3, External source transport addr %5, External dest transport addr %6" />
+        <string id="WinNatSessionDeleteOperational.EventMessage" value="%7 session deleted. Internal source transport addr: %2, Internal dest transport addr: %3, External source transport addr %5, External dest transport addr %6" />
+        <string id="WinNatMInstanceCreation_V0.EventMessage" value="Created NAT instance %1 for RoutingDomainId %2 (CompartmentId %5) with external interface prefix %4/%3" />
+        <string id="WinNatMInstanceModification.EventMessage" value="Modified NAT instance %1 properties" />
+        <string id="WinNatMInstanceExternalInterfaceAssociation.EventMessage" value="NAT instance %1 external interface index is %6 for prefix %4/%3" />
+        <string id="WinNatMInstanceDeletion.EventMessage" value="Deleted NAT instance %1" />
+        <string id="WinNatMInstanceRundown_V0.EventMessage" value="NAT instance %1: RoutingDomainId %2 (CompartmentId %5), external interface index %6 (%4/%3)" />
+        <string id="WinNatMExternalAddressAddition.EventMessage" value="Added external address %3:%4-%5 to NAT instance %1" />
+        <string id="WinNatMExternalAddressRemoval.EventMessage" value="Removed external address %3:%4-%5 from NAT instance %1" />
+        <string id="WinNatMExternalAddressRundown.EventMessage" value="NAT instance %1: external address %3:%4-%5" />
+        <string id="WinNatMStaticMappingAddition.EventMessage" value="Added static mapping %2 %5 &gt; %6 (CompartmentId %8) to NAT instance %1 (%3 %9/%10)" />
+        <string id="WinNatMStaticMappingRemoval.EventMessage" value="Removed static mapping %2 %5 &gt; %6 (CompartmentId %8) from NAT instance %1 (%3 %9/%10)" />
+        <string id="WinNatMStaticMappingRundown.EventMessage" value="NAT instance %1: static mapping %2 %5 &gt; %6 (CompartmentId %8) (%3 %9/%10)" />
+        <string id="WinNatMDroppedIPv4Packet.EventMessage" value="NAT dropped IPv4 %5 packet which arrived over %4 interface %3 in compartment %2 with reason: %1." />
+        <string id="WinNatMImproperDefaultRoute.EventMessage" value="NAT detected a default route in compartment %1 interface %2. Default routes in internal compartments will prevent NAT operation for those compartments." />
+        <string id="WinNatMOutOfPorts.EventMessage" value="NAT instance %1 failed to allocate a %2 port dynamically because all ports in the instance's external address pool are in use." />
+        <string id="WinNatMSkippedIPv4Packet.EventMessage" value="NAT left processing of IPv4 %5 packet to the host network stack over %4 interface %3 in compartment %2 with reason: %1." />
+        <string id="WinNatMUnmatchedPrefix_V0.EventMessage" value="NAT Instance %1 created with no matching prefix %4/%3." />
+        <string id="WinNatMForwardedIPv4Packet.EventMessage" value="NAT translated and forwarded IPv4 %5 packet which arrived over %4 interface %3 in compartment %2 to interface %7 in compartment %6." />
+        <string id="WINNAT_ADDRESS_FAMILY_TYPE_ValueMap.2.Message" value="IPV4" />
+        <string id="WINNAT_ADDRESS_FAMILY_TYPE_ValueMap.23.Message" value="IPV6" />
+        <string id="WINNAT_FILTERING_BEHAVIOR_ValueMap.0.Message" value="Endpoint independent" />
+        <string id="WINNAT_FILTERING_BEHAVIOR_ValueMap.1.Message" value="Adress dependent" />
+        <string id="WINNAT_OBJECT_ACTION_ValueMap.0.Message" value="modify" />
+        <string id="WINNAT_OBJECT_ACTION_ValueMap.1.Message" value="create" />
+        <string id="WINNAT_OBJECT_ACTION_ValueMap.2.Message" value="createandmodify" />
+        <string id="WINNAT_OBJECT_ACTION_ValueMap.3.Message" value="delete" />
+        <string id="WINNAT_TRANSPORT_PROTOCOL_ValueMap.1.Message" value="ICMPv4" />
+        <string id="WINNAT_TRANSPORT_PROTOCOL_ValueMap.6.Message" value="TCP" />
+        <string id="WINNAT_TRANSPORT_PROTOCOL_ValueMap.17.Message" value="UDP" />
+        <string id="WINNAT_TRANSPORT_PROTOCOL_ValueMap.58.Message" value="ICMPv6" />
+        <string id="WINNAT_TCPSTATE_ValueMap.0.Message" value="Closed/NA" />
+        <string id="WINNAT_TCPSTATE_ValueMap.1.Message" value="Internal SYN received" />
+        <string id="WINNAT_TCPSTATE_ValueMap.2.Message" value="External SYN received" />
+        <string id="WINNAT_TCPSTATE_ValueMap.3.Message" value="Established" />
+        <string id="WINNAT_TCPSTATE_ValueMap.4.Message" value="Internal FIN received" />
+        <string id="WINNAT_TCPSTATE_ValueMap.5.Message" value="External FIN received" />
+        <string id="WINNAT_TCPSTATE_ValueMap.6.Message" value="Both FIN received" />
+        <string id="WINNAT_TCPSTATE_ValueMap.7.Message" value="4 minute timewait" />
+        <string id="WINNAT_OPERATION_LOG.ChannelMessage" value="Operational" />
+        <string id="WINNAT_STATIC_MAPPING_TYPE_ValueMap.1.Message" value="one-to-one" />
+        <string id="WINNAT_STATIC_MAPPING_TYPE_ValueMap.2.Message" value="one-to-many with remote IP prefix" />
+        <string id="WINNATM_PACKET_ACTION_REASON_ValueMap.0.Message" value="None" />
+        <string id="WINNATM_PACKET_ACTION_REASON_ValueMap.1.Message" value="Parsing failure" />
+        <string id="WINNATM_PACKET_ACTION_REASON_ValueMap.2.Message" value="First packet for the fragmented datagram is not at offset 0" />
+        <string id="WINNATM_PACKET_ACTION_REASON_ValueMap.3.Message" value="Failed to parse or validate the IP packet contained in the ICMP error message payload" />
+        <string id="WINNATM_PACKET_ACTION_REASON_ValueMap.4.Message" value="IP packet contained in the ICMP error message payload does not match any existing session" />
+        <string id="WINNATM_PACKET_ACTION_REASON_ValueMap.5.Message" value="Failed to find a nexthop for external hairpinning" />
+        <string id="WINNATM_PACKET_ACTION_REASON_ValueMap.6.Message" value="No matching static mapping exists to let the packet in" />
+        <string id="WINNATM_PACKET_ACTION_REASON_ValueMap.7.Message" value="Failed to acquire a reference on the nexthop object" />
+        <string id="WINNATM_PACKET_ACTION_REASON_ValueMap.8.Message" value="Failed to clone the packet" />
+        <string id="WINNATM_PACKET_ACTION_REASON_ValueMap.9.Message" value="Failed to translate the packet" />
+        <string id="WINNATM_PACKET_ACTION_REASON_ValueMap.10.Message" value="Hop limit exceeded" />
+        <string id="WINNATM_PACKET_ACTION_REASON_ValueMap.11.Message" value="Packet is larger than nexthop MTU and cannot be fragmented" />
+        <string id="WINNATM_PACKET_ACTION_REASON_ValueMap.12.Message" value="Unexpected route look-up failure" />
+        <string id="WINNATM_PACKET_ACTION_REASON_ValueMap.13.Message" value="No route to the packet's (translated) destination was found" />
+        <string id="WINNATM_PACKET_ACTION_REASON_ValueMap.14.Message" value="Failed to create a session object" />
+        <string id="WINNATM_PACKET_ACTION_REASON_ValueMap.15.Message" value="The interface over which the packet is to be routed is not a NAT external interface" />
+        <string id="WINNATM_PACKET_ACTION_REASON_ValueMap.16.Message" value="The interface over which the packet is to be routed does not have a matching NAT instance" />
+        <string id="WINNATM_PACKET_ACTION_REASON_ValueMap.17.Message" value="NAT device itself is not allowed to be an internal host at the same time" />
+        <string id="WINNATM_PACKET_ACTION_REASON_ValueMap.18.Message" value="Packet is routable in its own arrival compartment" />
+        <string id="WINNATM_PACKET_ACTION_REASON_ValueMap.19.Message" value="Packet's transport protocol is not supported by NAT" />
+        <string id="WINNATM_PACKET_ACTION_REASON_ValueMap.20.Message" value="Packet is destined to NAT itself" />
+        <string id="WINNATM_PACKET_ACTION_REASON_ValueMap.21.Message" value="Packet's destination address and port do not fall within any NAT external address port range" />
+        <string id="WINNATM_PACKET_ACTION_REASON_ValueMap.22.Message" value="Winnat MUX rejected the packet" />
+        <string id="WINNATM_PACKET_ACTION_REASON_ValueMap.23.Message" value="Winnat MUX failed to find the VIP/DIP configuration" />
+        <string id="WINNATM_PACKET_ACTION_REASON_ValueMap.24.Message" value="Winnat MUX failed to send the encapsulated packet" />
+        <string id="WINNATM_PACKET_SOURCE_ValueMap.1.Message" value="INTERNAL" />
+        <string id="WINNATM_PACKET_SOURCE_ValueMap.2.Message" value="EXTERNAL" />
+        <string id="WinNatIPxlatInstanceCreation.EventMessage" value="Added IPxlat instance for interface %1" />
+        <string id="WinNatIPxlatInstanceModification.EventMessage" value="Modified IPxlat instance for interface %1" />
+        <string id="WinNatIPxlatInstanceDeletion.EventMessage" value="Deleted IPxlat instance for interface %1" />
+        <string id="WinNatMGeneralError.EventMessage" value="NAT ERROR %1: %2 (%3) Status %4" />
+        <string id="WinNatMGenericEvent.EventMessage" value="%1" />
+        <string id="WinNatIPxlatGenericTrace.EventMessage" value="XLAT: %1" />
+        <string id="WINNATM_PACKET_ACTION_REASON_ValueMap.25.Message" value="The interface over which the packet has arrived does not have a matching NAT instance" />
+        <string id="WINNATM_INSTANCE_TYPE_ValueMap.1.Message" value="InternalPrefixInstance" />
+        <string id="WINNATM_INSTANCE_TYPE_ValueMap.2.Message" value="ExternalPrefixInstance" />
+        <string id="WinNatMInstanceCreation.EventMessage" value="Created %14 NAT %1 for RoutingDomainId %2 (CompartmentId %5) with prefix %4/%3" />
+        <string id="WinNatMUnmatchedPrefix.EventMessage" value="%14 NAT %1 created with no matching prefix %4/%3." />
+        <string id="WinNatMInstanceRundown.EventMessage" value="%14 NAT %1, Prefix %4/%3 RoutingDomainId %2 (CompartmentId %5), external interface index %6" />
+        <string id="WinNatMInternalAddressAddition.EventMessage" value="Added internal address %3, IfIndex %4 to NAT instance %1" />
+        <string id="WinNatMInternalAddressRemoval.EventMessage" value="Removed internal address %3: IfIndex %4 from NAT instance %1" />
+      </stringTable>
+    </resources>
+  </localization>
+  <registryKeys>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\EventLog\System\WinNat">
+      <registryValue name="TypesSupported" valueType="REG_DWORD" value="0x00000007" />
+      <registryValue name="EventMessageFile" valueType="REG_EXPAND_SZ" value="%SystemRoot%\System32\netevent.dll" />
+    </registryKey>
+  </registryKeys>
+</assembly>

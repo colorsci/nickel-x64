@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-DeviceEnroller" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <file name="DeviceEnroller.exe" destinationPath="$(runtime.system32)\" sourceName="DeviceEnroller.exe" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>9+xWlnLKoZcgVAsyAZp5mM4DYszaKaGkTSCnK/2vF/M=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <firewallRule Action="Allow" Active="TRUE" Binary="%SystemRoot%\system32\deviceenroller.exe" Desc="@FirewallAPI.dll,-37510" Dir="Out" Group="@FirewallAPI.dll,-37502" LPort="49152-65535" Name="@FirewallAPI.dll,-37509" Protocol="TCP" Rport="80,443" internalName="Microsoft-Windows-DeviceManagement-deviceenroller-TCP-Out" />
+  <registryKeys>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\SharedAccess\Parameters\FirewallPolicy\RestrictedServices\Static\System">
+      <registryValue name="DeviceManagement-10" valueType="REG_SZ" value="V2.0|Action=Block|Dir=in|App=%SystemRoot%\System32\deviceenroller.exe|Name=Block inbound traffic to deviceenroller.exe|" />
+      <registryValue name="DeviceManagement-11" valueType="REG_SZ" value="V2.0|Action=Block|Dir=out|App=%SystemRoot%\System32\deviceenroller.exe|Name=Block outbound traffic from deviceenroller.exe|" />
+      <registryValue name="DeviceManagement-12" valueType="REG_SZ" value="V2.0|Action=Allow|Dir=out|App=%SystemRoot%\System32\deviceenroller.exe|Protocol=6|Name=Allow outbound TCP traffic from deviceenroller.exe|" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{98BB952B-B23E-4737-8ABD-B553E7484B38}">
+      <registryValue name="" valueType="REG_SZ" value="AutoMdmNotificationCallback" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{98BB952B-B23E-4737-8ABD-B553E7484B38}\LocalServer32">
+      <registryValue name="" valueType="REG_EXPAND_SZ" value="%SystemRoot%\system32\DeviceEnroller.exe" />
+    </registryKey>
+  </registryKeys>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" description="Default SDDL for Windows Resource Protected file" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+</assembly>

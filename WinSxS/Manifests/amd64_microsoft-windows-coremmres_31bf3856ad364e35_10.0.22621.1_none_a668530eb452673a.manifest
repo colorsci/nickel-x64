@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved." xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <assemblyIdentity name="Microsoft-Windows-CoreMmRes" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <file name="CoreMmRes.dll" destinationPath="$(runtime.system32)\" sourceName="CoreMmRes.dll" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>ZvjgG49RzCr1O/Rdvf6Ajs01TIgV6flvBqsPH+zt9VA=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <asmv3:configuration xmlns:app="Microsoft-Windows-CoreMmRes" xmlns:asmv3="urn:schemas-microsoft-com:asm.v3" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State">
+    <asmv3:configurationSchema>
+      <xsd:schema xmlns="Microsoft-Windows-CoreMmRes" targetNamespace="Microsoft-Windows-CoreMmRes">
+        <xsd:simpleType name="typeCameraSoundLevel">
+          <xsd:restriction base="xsd:integer">
+            <xsd:minInclusive value="0" />
+            <xsd:maxInclusive value="100" />
+          </xsd:restriction>
+        </xsd:simpleType>
+        <xsd:simpleType name="typeNoPhysicalCameraLED">
+          <xsd:restriction base="xsd:integer">
+            <xsd:minInclusive value="0" />
+            <xsd:maxInclusive value="1" />
+          </xsd:restriction>
+        </xsd:simpleType>
+        <xsd:element default="0" name="CameraSoundLevel" type="typeCameraSoundLevel" wcm:dataOnly="true" wcm:description="CameraSoundLevel specifies the sound volume that a camera will play when a photo is taken, when a series of photos are taken, or while a video is recorded." wcm:handler="regkey('HKLM\Software\Microsoft\Photos\OEM\RegionalSettings\Camera')" wcm:migrate="no" wcm:passes="auditUser auditSystem specialize oobeSystem generalize" wcm:scope="allUsers" wcm:visible="true" />
+        <xsd:element default="0" name="NoPhysicalCameraLED" type="typeNoPhysicalCameraLED" wcm:dataOnly="true" wcm:description="NoPhysicalCameraLED indicates that there is no physical LED for the device’s camera. An example of a physical LED for a camera is the small blue light that turns on whenever the camera is streaming video. This setting is used to indicate to the shell component that it will need to provide a small indicator in the user interface (UI) to show when video frames are streaming or not streaming to replace the notification by physical LED." wcm:handler="regkey('HKLM\Software\Microsoft\OEM\Device\Capture')" wcm:migrate="no" wcm:passes="auditUser auditSystem specialize oobeSystem generalize" wcm:scope="allUsers" wcm:visible="true" />
+      </xsd:schema>
+    </asmv3:configurationSchema>
+    <asmv3:metadata>
+      <asmv3:elements />
+    </asmv3:metadata>
+  </asmv3:configuration>
+  <migration ignoreConfigurationSection="Yes" settingsVersion="2">
+    <migXml xmlns="">
+      <rules context="System">
+        <include>
+          <objectSet>
+            <pattern type="Registry">HKLM\Software\Microsoft\Photos\OEM\RegionalSettings\Camera [CameraSoundLevel]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\OEM\Device\Capture [NoPhysicalCameraLED]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\OEM\Device\Capture [AllowTorchControlSharing]</pattern>
+          </objectSet>
+        </include>
+      </rules>
+    </migXml>
+    <supportedComponents>
+      <supportedComponent>
+        <assemblyIdentity name="_" version="1.0.0.0" />
+        <supportedComponentIdentity buildType="release" language="neutral" name="Microsoft-Windows-CoreMmRes" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" settingsVersionRange="0-2" versionScope="nonSxS" xmlns="urn:schemas-microsoft-com:asm.v3" />
+      </supportedComponent>
+    </supportedComponents>
+  </migration>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" description="Default SDDL for Windows Resource Protected file" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+</assembly>

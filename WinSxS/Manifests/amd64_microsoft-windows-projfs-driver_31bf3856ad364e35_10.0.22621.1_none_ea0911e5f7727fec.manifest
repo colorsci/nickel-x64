@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-ProjFS-Driver" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <directories>
+    <directory destinationPath="$(runtime.system32)\LogFiles\PrjFlt" owner="true" />
+  </directories>
+  <file name="prjflt.sys" destinationPath="$(runtime.drivers)\" sourceName="prjflt.sys" importPath="$(build.nttree)\bldtools\ProjFS\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>WsB55E1T132kfzQSVIBIxgH8xXUIlNTS3+QZa3xvSpM=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <memberships>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories.Services" version="10.0.22621.1" publicKeyToken="31bf3856ad364e35" typeName="Service" />
+      <categoryInstance>
+        <serviceData name="PrjFlt" displayName="@%systemroot%\system32\drivers\prjflt.sys,-100" errorControl="normal" start="auto" type="fileSystemDriver" description="@%systemroot%\system32\drivers\prjflt.sys,-101" dependOnService="FltMgr" group="FSFilter HSM" imagePath="\SystemRoot\system32\drivers\prjflt.sys" startAfterInstall="asynchronous" />
+      </categoryInstance>
+    </categoryMembership>
+  </memberships>
+  <registryKeys>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\System\CurrentControlSet\Services\PrjFlt">
+      <registryValue name="SupportedFeatures" valueType="REG_DWORD" value="0x0000000F" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\System\CurrentControlSet\Services\PrjFlt\Instances">
+      <registryValue name="DefaultInstance" valueType="REG_SZ" value="PrjFlt Instance" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\PrjFlt\Instances\PrjFlt Instance">
+      <registryValue name="Altitude" valueType="REG_SZ" value="189800" />
+      <registryValue name="Flags" valueType="REG_DWORD" value="0x00000000" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\System\CurrentControlSet\Services\PrjFlt\Parameters">
+      <registryValue name="DebugOptions" valueType="REG_DWORD" value="0x0000000c" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\WMI\Autologger\Microsoft-Windows-ProjFS-Filter-Log">
+      <registryValue name="GUID" valueType="REG_SZ" value="{ee4206ff-4a4d-452f-be56-6bd0ed272b44}" />
+      <registryValue name="BufferSize" valueType="REG_DWORD" value="0x00000040" />
+      <registryValue name="FileName" valueType="REG_SZ" value="%SystemRoot%\System32\LogFiles\PrjFlt\Microsoft-Windows-ProjFS-Filter.etl" />
+      <registryValue name="LogFileMode" valueType="REG_DWORD" value="0x80008202" />
+      <registryValue name="FileMax" valueType="REG_DWORD" value="0x00000003" />
+      <registryValue name="MaxFileSize" valueType="REG_DWORD" value="0x0000001E" />
+      <registryValue name="Start" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="ClockType" valueType="REG_DWORD" value="0x00000002" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\WMI\Autologger\Microsoft-Windows-ProjFs-Filter-Log\{32f63487-712d-4324-a29f-cbf4940c8c0c}">
+      <registryValue name="_Description" valueType="REG_SZ" value="PrjFlt Trace Provider" />
+      <registryValue name="Enabled" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="EnableLevel" valueType="REG_DWORD" value="0x00000003" />
+      <registryValue name="EnableFlags" valueType="REG_DWORD" value="0x0007ffff" />
+    </registryKey>
+  </registryKeys>
+  <instrumentation xmlns:ms="http://manifests.microsoft.com/win/2004/08/windows/events" xmlns:win="http://manifests.microsoft.com/win/2004/08/windows/events">
+    <events xmlns="http://schemas.microsoft.com/win/2004/08/events">
+      <provider guid="{B6D7DC51-78CF-4E85-8BAC-488A9F47A0BB}" message="$(string.Provider.Name)" messageFileName="%SystemRoot%\system32\drivers\prjflt.sys" name="Microsoft-Windows-ProjFS-Filter" parameterFileName="%SystemRoot%\system32\drivers\prjflt.sys" resourceFileName="%SystemRoot%\system32\drivers\prjflt.sys" symbol="PROV_PROJFS">
+        <channels>
+          <channel chid="OpChannel" enabled="true" isolation="System" name="Microsoft-Windows-ProjFS-Filter/Operational" type="Operational" />
+          <channel chid="DbgChannel" enabled="false" isolation="System" name="Microsoft-Windows-ProjFS-Filter/Debug" type="Debug" />
+        </channels>
+      </provider>
+      <cmi />
+    </events>
+  </instrumentation>
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string id="PROJFS_DRIVER_ENTRY_SUCCESS.EventMessage" value="ProjFS filter registration succeeded" />
+        <string id="PROJFS_UNLOAD_SUCCESSFUL.EventMessage" value="ProjFS filter unload succeeded" />
+        <string id="PROJFS_DRIVER_ENTRY_FAILURE.EventMessage" value="ProjFS filter registratiion failed with error message: %1" />
+        <string id="PROJFS_INSTANCE_ATTACH_FAILURE.EventMessage" value="ProjFS filter failed to attach to volume '%3' with error message: %1" />
+        <string id="PROJFS_MARK_DIRECTORY_NESTED_VIRTUALIZATION_ROOT_FAILURE.EventMessage" value="A ProjFS provider could not create a new virtualization root at '%3' because a conflicting virtualization root already exists at '%3'.%n%nA virtualization root cannot be an ancestor or a descendant of another virtualization root.%n%nError: %1" />
+        <string id="PROJFS_START_VIRTUALIZING_NESTED_VIRTUALIZATION_ROOT_FAILURE.EventMessage" value="A ProjFS provider could not start a virtualization instance because its virtualization root at '%3' conflicts with a virtualization root at '%5'.%n%nA virtualization root cannot be an ancestor or a descendant of another virtualization root.%n%nError:%1" />
+        <string id="Provider.Name" value="Microsoft-Windows-ProjFS-Filter" />
+      </stringTable>
+    </resources>
+  </localization>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" description="Default SDDL for Windows Resource Protected file" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+</assembly>

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-AppManagement-UEVService" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <dependency discoverable="no" resourceType="Resources">
+    <dependentAssembly dependencyType="prerequisite">
+      <assemblyIdentity name="Microsoft-Windows-AppManagement-UEVService.Resources" version="10.0.22621.1" processorArchitecture="amd64" language="*" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </dependentAssembly>
+  </dependency>
+  <file name="Microsoft.Uev.AgentDriverEvents.dll" destinationPath="$(runtime.system32)\" sourceName="Microsoft.Uev.AgentDriverEvents.dll" importPath="$(build.nttree)\uev\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>B/DCwc21GF3B4+doVxfO0x/OEgAP7nNaVm5fKlrfIiY=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <file name="UevAgentDriver.sys" destinationPath="$(runtime.drivers)\" sourceName="UevAgentDriver.sys" importPath="$(build.nttree)\uev\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>IAyEddX7yebyALSbbpQXcT3EqLFUVGHD/SqSPYk4uSs=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <file name="AgentService.exe" destinationPath="$(runtime.system32)\" sourceName="AgentService.exe" importPath="$(build.nttree)\uev\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>K5vwQT/RC/8TOO93xZH2ay0kTytZ6TP/UCToQb/BKFE=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <memberships>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories" version="1.0.0.0" publicKeyToken="365143bb27e7ac8b" typeName="BootCritical" />
+    </categoryMembership>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories.Services" version="10.0.22621.1" publicKeyToken="31bf3856ad364e35" typeName="Service" />
+      <categoryInstance subcategory="UevAgentService">
+        <serviceData name="UevAgentService" displayName="@%systemroot%\system32\AgentService.exe,-102" errorControl="normal" start="disabled" type="win32OwnProcess" description="@%systemroot%\system32\AgentService.exe,-101" group="ProfSvc_Group" imagePath="%systemroot%\system32\AgentService.exe" objectName="LocalSystem" requiredPrivileges="SeTcbPrivilege,SeCreateGlobalPrivilege,SeAssignPrimaryTokenPrivilege">
+          <securityDescriptor name="UEV-SDDL" />
+        </serviceData>
+      </categoryInstance>
+      <categoryInstance>
+        <serviceData name="UevAgentDriver" displayName="@%systemroot%\system32\drivers\UevAgentDriver.sys,-101" errorControl="normal" start="disabled" type="fileSystemDriver" description="@%systemroot%\system32\drivers\UevAgentDriver.sys,-102" dependOnService="FltMgr" group="FSFilter Top" imagePath="\SystemRoot\system32\drivers\UevAgentDriver.sys" />
+      </categoryInstance>
+    </categoryMembership>
+  </memberships>
+  <registryKeys>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\UevAgentDriver\Instances">
+      <registryValue name="DefaultInstance" valueType="REG_SZ" value="UE-V Instance" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\UevAgentDriver\Instances\UE-V Instance">
+      <registryValue name="Altitude" valueType="REG_SZ" value="404710" />
+      <registryValue name="Flags" valueType="REG_DWORD" value="0x00000001" />
+    </registryKey>
+  </registryKeys>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="UEV-SDDL" sddl="D:(A;;CCLCSWRPLORC;;;AU)(A;;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;BA)(A;;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;SY)S:(AU;FA;CCDCLCSWRPWPDTLOSDRCWDWO;;;WD)" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" description="Default SDDL for Windows Resource Protected file" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+  <instrumentation xmlns:win="http://manifests.microsoft.com/win/2004/08/windows/events" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <events xmlns="http://schemas.microsoft.com/win/2004/08/events">
+      <provider guid="{DE29CF61-5EE6-43FF-9AAC-959C4E13CC6C}" messageFileName="%SystemRoot%\system32\Microsoft.Uev.AgentDriverEvents.dll" name="Microsoft-User Experience Virtualization-Agent Driver" resourceFileName="%SystemRoot%\system32\Microsoft.Uev.AgentDriverEvents.dll" symbol="UevAgentDriver">
+        <channels>
+          <channel chid="Microsoft-User Experience Virtualization-Agent Driver/Operational" enabled="true" isolation="System" message="$(string.Microsoft-User Experience Virtualization-Agent Driver.channel.OperationalChannel.message)" name="Microsoft-User Experience Virtualization-Agent Driver/Operational" symbol="OperationalChannel" type="Operational" />
+          <channel chid="Microsoft-User Experience Virtualization-Agent Driver/Debug" enabled="false" isolation="System" message="$(string.Microsoft-User Experience Virtualization-Agent Driver.channel.DebugChannel.message)" name="Microsoft-User Experience Virtualization-Agent Driver/Debug" symbol="DebugChannel" type="Debug" />
+        </channels>
+      </provider>
+      <cmi />
+    </events>
+  </instrumentation>
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string id="level.Critical" value="Critical" />
+        <string id="level.Error" value="Error" />
+        <string id="level.Informational" value="Information" />
+        <string id="level.LogAlways" value="Log Always" />
+        <string id="level.Verbose" value="Verbose" />
+        <string id="level.Warning" value="Warning" />
+        <string id="Microsoft-User Experience Virtualization-Agent Driver.channel.DebugChannel.message" value="Debug" />
+        <string id="Microsoft-User Experience Virtualization-Agent Driver.channel.OperationalChannel.message" value="Operational" />
+        <string id="Microsoft-User Experience Virtualization-Agent Driver.event.0.message" value="%1" />
+        <string id="Microsoft-User Experience Virtualization-Agent Driver.event.1.message" value="%1" />
+        <string id="Microsoft-User Experience Virtualization-Agent Driver.event.100.message" value="The Agent Driver has been successfully loaded." />
+        <string id="Microsoft-User Experience Virtualization-Agent Driver.event.101.message" value="The Agent Driver has been unloaded." />
+        <string id="Microsoft-User Experience Virtualization-Agent Driver.event.102.message" value="The Agent Driver trapped the start of process %1 (ID %2)." />
+        <string id="Microsoft-User Experience Virtualization-Agent Driver.event.103.message" value="The Agent Driver was unable to create the communication port to the Agent Service.%nReason: %1%nError code: 0x%2." />
+        <string id="Microsoft-User Experience Virtualization-Agent Driver.event.104.message" value="The Agent Driver was unable to validate the client session to the Agent Service.%nReason: %1%nError code: 0x%2" />
+        <string id="Microsoft-User Experience Virtualization-Agent Driver.event.105.message" value="The Agent Driver was unable to accept a port connection from the Agent Service.%nReason: %1" />
+        <string id="Microsoft-User Experience Virtualization-Agent Driver.event.106.message" value="The Agent Driver was unable to send a request to the Agent Service.%nReason: %1" />
+        <string id="Microsoft-User Experience Virtualization-Agent Driver.event.107.message" value="The Agent Driver was unable to initialize the communication port to the Agent Service.%nReason: %1%nError code: 0x%2" />
+        <string id="Microsoft-User Experience Virtualization-Agent Driver.event.108.message" value="The Agent Driver was unable to successfully handle a process start event. The program will start, but its settings (in the event that it has a matching settings location template) will not be synchronized.%nReason: %1" />
+        <string id="Microsoft-User Experience Virtualization-Agent Driver.event.109.message" value="The Agent Driver trapped the start of process %2 (ID %3)." />
+        <string id="Microsoft-User Experience Virtualization-Agent Driver.event.2.message" value="%1" />
+        <string id="Microsoft-User Experience Virtualization-Agent Driver.event.3.message" value="%1" />
+        <string id="Microsoft-User Experience Virtualization-Agent Driver.event.4.message" value="%1" />
+        <string id="Microsoft-User Experience Virtualization-Agent Driver.event.5.message" value="%1" />
+        <string id="Microsoft-User Experience Virtualization-Agent Driver.opcode.DefaultOpcode.message" value="Default Opcode." />
+        <string id="Microsoft-User Experience Virtualization-Agent Driver.task.DefaultTask.message" value="Default Task." />
+      </stringTable>
+    </resources>
+  </localization>
+</assembly>

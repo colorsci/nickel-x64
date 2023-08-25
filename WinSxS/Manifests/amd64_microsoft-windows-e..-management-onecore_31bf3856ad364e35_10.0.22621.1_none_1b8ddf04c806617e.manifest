@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-Enterprise-Management-Onecore" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <dependency discoverable="no" resourceType="Resources">
+    <dependentAssembly dependencyType="prerequisite">
+      <assemblyIdentity name="Microsoft-Windows-Enterprise-Management-Onecore.Resources" version="10.0.22621.1" processorArchitecture="amd64" language="*" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </dependentAssembly>
+  </dependency>
+  <memberships>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories.Services" version="10.0.22621.1" publicKeyToken="31bf3856ad364e35" typeName="Service" />
+      <categoryInstance subcategory="EntAppSvc">
+        <serviceData name="EntAppSvc" displayName="@EnterpriseAppMgmtSvc.dll,-1" errorControl="normal" start="demand" type="win32ShareProcess" description="@EnterpriseAppMgmtSvc.dll,-2" dependOnService="rpcss" imagePath="%systemroot%\system32\svchost.exe -k appmodel -p" objectName="LocalSystem" requiredPrivileges="SeTcbPrivilege,SeChangeNotifyPrivilege,SeImpersonatePrivilege" sidType="unrestricted">
+          <failureActions resetPeriod="900">
+            <actions>
+              <action delay="120000" type="restartService" />
+              <action delay="300000" type="restartService" />
+              <action delay="0" type="none" />
+            </actions>
+          </failureActions>
+          <securityDescriptor name="ENTERPRISE_SERVICE_SDDL" />
+        </serviceData>
+      </categoryInstance>
+    </categoryMembership>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories" version="1.0.0.0" publicKeyToken="365143bb27e7ac8b" typeName="SvcHost" />
+      <categoryInstance subcategory="appmodel">
+        <serviceGroup position="last" serviceName="EntAppSvc" />
+      </categoryInstance>
+    </categoryMembership>
+  </memberships>
+  <file name="EnterpriseAppMgmtSvc.dll" destinationPath="$(runtime.system32)\" sourceName="EnterpriseAppMgmtSvc.dll" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>lvALadwa/SDW6fC4ov7gIapAaIgYJLivm04dXX0aY2k=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <file name="EnterpriseAppMgmtClient.dll" destinationPath="$(runtime.system32)\" sourceName="EnterpriseAppMgmtClient.dll" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>nZ5Nefy03qRdMWYpjuii+gMb3HLtHb5Wv1dFS27xrDM=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <registryKeys>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\System\CurrentControlSet\services\EntAppSvc\parameters">
+      <registryValue name="ServiceDll" valueType="REG_EXPAND_SZ" value="%SystemRoot%\system32\EnterpriseAppMgmtSvc.dll" />
+      <registryValue name="ServiceDllUnloadOnStop" valueType="REG_DWORD" value="0x00000001" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\AppID\{FFE1E5FE-F1F0-48C8-953E-72BA272F2744}">
+      <registryValue name="" valueType="REG_SZ" value="EntAppSvc" />
+      <registryValue name="LocalService" valueType="REG_SZ" value="EntAppSvc" />
+      <registryValue name="LaunchPermission" valueType="REG_BINARY" value="010004807000000080000000000000001400000002005C0004000000000014001F000000010100000000000512000000000018001F00000001020000000000052000000020020000000014001F000000010100000000000100000000000014001F0000000101000000000005040000000102000000000005200000002002000001020000000000052000000020020000" />
+      <registryValue name="AccessPermission" valueType="REG_BINARY" value="010004807000000080000000000000001400000002005C00040000000000140007000000010100000000000100000000000014000700000001010000000000050A00000000001400030000000101000000000005120000000000180007000000010200000000000520000000200200000102000000000005200000002002000001020000000000052000000020020000" />
+      <securityDescriptor name="WRP_REGISTRYKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\AppID\{42C21DF5-FB58-4102-90E9-96A213DC7CE8}">
+      <registryValue name="" valueType="REG_SZ" value="EntAppSvc" />
+      <registryValue name="LocalService" valueType="REG_SZ" value="EntAppSvc" />
+      <registryValue name="LaunchPermission" valueType="REG_BINARY" value="010004807000000080000000000000001400000002005C0004000000000014001F000000010100000000000512000000000018001F00000001020000000000052000000020020000000014001F000000010100000000000100000000000014001F0000000101000000000005040000000102000000000005200000002002000001020000000000052000000020020000" />
+      <registryValue name="AccessPermission" valueType="REG_BINARY" value="010004807000000080000000000000001400000002005C00040000000000140007000000010100000000000100000000000014000700000001010000000000050A00000000001400030000000101000000000005120000000000180007000000010200000000000520000000200200000102000000000005200000002002000001020000000000052000000020020000" />
+      <securityDescriptor name="WRP_REGISTRYKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\AppID\{C63261E4-6052-41FF-B919-496FECF4C4E5}">
+      <registryValue name="" valueType="REG_SZ" value="EntAppSvc" />
+      <registryValue name="LocalService" valueType="REG_SZ" value="EntAppSvc" />
+      <registryValue name="LaunchPermission" valueType="REG_BINARY" value="010004807000000080000000000000001400000002005C0004000000000014001F000000010100000000000512000000000018001F00000001020000000000052000000020020000000014001F000000010100000000000100000000000014001F0000000101000000000005040000000102000000000005200000002002000001020000000000052000000020020000" />
+      <registryValue name="AccessPermission" valueType="REG_BINARY" value="010004807000000080000000000000001400000002005C00040000000000140007000000010100000000000100000000000014000700000001010000000000050A00000000001400030000000101000000000005120000000000180007000000010200000000000520000000200200000102000000000005200000002002000001020000000000052000000020020000" />
+      <securityDescriptor name="WRP_REGISTRYKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{A12E5BCB-9758-4FBE-9B85-F50C822E6B5E}">
+      <registryValue name="" valueType="REG_SZ" value="EnterpriseAppMgmtClient" />
+      <securityDescriptor name="WRP_REGISTRYKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{A12E5BCB-9758-4FBE-9B85-F50C822E6B5E}\InProcServer32">
+      <registryValue name="" valueType="REG_EXPAND_SZ" value="%SystemRoot%\system32\EnterpriseAppMgmtClient.dll" />
+      <registryValue name="ThreadingModel" valueType="REG_SZ" value="Both" />
+      <securityDescriptor name="WRP_REGISTRYKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{42C21DF5-FB58-4102-90E9-96A213DC7CE8}">
+      <registryValue name="" valueType="REG_SZ" value="EntAppSvc" />
+      <registryValue name="AppId" valueType="REG_SZ" value="{42C21DF5-FB58-4102-90E9-96A213DC7CE8}" />
+      <securityDescriptor name="WRP_REGISTRYKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{C63261E4-6052-41FF-B919-496FECF4C4E5}">
+      <registryValue name="" valueType="REG_SZ" value="EntAppSvc" />
+      <registryValue name="AppId" valueType="REG_SZ" value="{C63261E4-6052-41FF-B919-496FECF4C4E5}" />
+      <securityDescriptor name="WRP_REGISTRYKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{FFE1E5FE-F1F0-48C8-953E-72BA272F2744}">
+      <registryValue name="" valueType="REG_SZ" value="EntAppSvc" />
+      <registryValue name="AppId" valueType="REG_SZ" value="{FFE1E5FE-F1F0-48C8-953E-72BA272F2744}" />
+      <securityDescriptor name="WRP_REGISTRYKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{091230C9-E7F4-4A69-976F-F8F51684039C}">
+      <registryValue name="" valueType="REG_SZ" value="IEnterpriseAppInfo" />
+      <securityDescriptor name="WRP_REGISTRYKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{091230C9-E7F4-4A69-976F-F8F51684039C}\NumMethods">
+      <registryValue name="" valueType="REG_SZ" value="6" />
+      <securityDescriptor name="WRP_REGISTRYKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{091230C9-E7F4-4A69-976F-F8F51684039C}\ProxyStubClsid32">
+      <registryValue name="" valueType="REG_SZ" value="{A12E5BCB-9758-4FBE-9B85-F50C822E6B5E}" />
+      <securityDescriptor name="WRP_REGISTRYKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{9B1F8523-0514-4E30-BB07-F14875026F15}">
+      <registryValue name="" valueType="REG_SZ" value="IEnterpriseAppInstallStatus" />
+      <securityDescriptor name="WRP_REGISTRYKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{9B1F8523-0514-4E30-BB07-F14875026F15}\NumMethods">
+      <registryValue name="" valueType="REG_SZ" value="9" />
+      <securityDescriptor name="WRP_REGISTRYKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{9B1F8523-0514-4E30-BB07-F14875026F15}\ProxyStubClsid32">
+      <registryValue name="" valueType="REG_SZ" value="{A12E5BCB-9758-4FBE-9B85-F50C822E6B5E}" />
+      <securityDescriptor name="WRP_REGISTRYKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{A9E02E90-5C54-46E5-AFDC-2EFF9EF436E6}">
+      <registryValue name="" valueType="REG_SZ" value="IEnterpriseAppManager" />
+      <securityDescriptor name="WRP_REGISTRYKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{A9E02E90-5C54-46E5-AFDC-2EFF9EF436E6}\NumMethods">
+      <registryValue name="" valueType="REG_SZ" value="9" />
+      <securityDescriptor name="WRP_REGISTRYKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{A9E02E90-5C54-46E5-AFDC-2EFF9EF436E6}\ProxyStubClsid32">
+      <registryValue name="" valueType="REG_SZ" value="{A12E5BCB-9758-4FBE-9B85-F50C822E6B5E}" />
+      <securityDescriptor name="WRP_REGISTRYKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{EF9385C0-1FAE-4280-9DD8-9DC45E7CBA6E}">
+      <registryValue name="" valueType="REG_SZ" value="IEnterpriseAppEnrollmentInfo" />
+      <securityDescriptor name="WRP_REGISTRYKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{EF9385C0-1FAE-4280-9DD8-9DC45E7CBA6E}\NumMethods">
+      <registryValue name="" valueType="REG_SZ" value="13" />
+      <securityDescriptor name="WRP_REGISTRYKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{EF9385C0-1FAE-4280-9DD8-9DC45E7CBA6E}\ProxyStubClsid32">
+      <registryValue name="" valueType="REG_SZ" value="{A12E5BCB-9758-4FBE-9B85-F50C822E6B5E}" />
+      <securityDescriptor name="WRP_REGISTRYKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{D52EE9F5-41DA-4DF2-8C6E-B19A23654C93}">
+      <registryValue name="" valueType="REG_SZ" value="IEnterpriseAppEnrollmentManager" />
+      <securityDescriptor name="WRP_REGISTRYKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{D52EE9F5-41DA-4DF2-8C6E-B19A23654C93}\NumMethods">
+      <registryValue name="" valueType="REG_SZ" value="12" />
+      <securityDescriptor name="WRP_REGISTRYKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{D52EE9F5-41DA-4DF2-8C6E-B19A23654C93}\ProxyStubClsid32">
+      <registryValue name="" valueType="REG_SZ" value="{A12E5BCB-9758-4FBE-9B85-F50C822E6B5E}" />
+      <securityDescriptor name="WRP_REGISTRYKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{FA90BE90-D2D8-45F4-963B-D93AE231F6B7}">
+      <registryValue name="" valueType="REG_SZ" value="IEnterpriseModernAppManager" />
+      <securityDescriptor name="WRP_REGISTRYKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{FA90BE90-D2D8-45F4-963B-D93AE231F6B7}\NumMethods">
+      <registryValue name="" valueType="REG_SZ" value="4" />
+      <securityDescriptor name="WRP_REGISTRYKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\Interface\{FA90BE90-D2D8-45F4-963B-D93AE231F6B7}\ProxyStubClsid32">
+      <registryValue name="" valueType="REG_SZ" value="{A12E5BCB-9758-4FBE-9B85-F50C822E6B5E}" />
+      <securityDescriptor name="WRP_REGISTRYKEY_DEFAULT_SDDL" />
+    </registryKey>
+  </registryKeys>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="WRP_REGISTRYKEY_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;CI;GA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;CI;GR;;;SY)(A;CI;GR;;;BA)(A;CI;GR;;;BU)(A;CI;GR;;;S-1-15-2-1)(A;CI;GR;;;S-1-15-3-1024-1065365936-1281604716-3511738428-1654721687-432734479-3232135806-4053264122-3456934681)" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" />
+          <securityDescriptorDefinition name="ENTERPRISE_SERVICE_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:(A;;LCRP;;;AC)(A;;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;CCLCSWRPWPDTLOCRRC;;;SY)(A;;CCLCSWRPWPDTLOCRRC;;;BA)(A;;CCLCSWRPLOCRRC;;;IU)(A;;CCLCSWRPLOCRRC;;;SU)S:(AU;FA;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;WD)" operationHint="replace" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+</assembly>

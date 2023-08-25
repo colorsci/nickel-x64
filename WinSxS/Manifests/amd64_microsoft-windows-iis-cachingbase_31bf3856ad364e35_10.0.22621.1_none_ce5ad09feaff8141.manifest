@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-IIS-CachingBase" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <dependency discoverable="no" resourceType="Resources">
+    <dependentAssembly dependencyType="prerequisite">
+      <assemblyIdentity name="Microsoft-Windows-IIS-CachingBase.Resources" version="10.0.22621.1" processorArchitecture="amd64" language="*" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+    </dependentAssembly>
+  </dependency>
+  <dependency discoverable="no" name="SharedLibraries">
+    <dependentAssembly dependencyType="prerequisite">
+      <assemblyIdentity name="Microsoft-Windows-IIS-SharedLibraries-ServerCommon" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+    </dependentAssembly>
+  </dependency>
+  <genericCommands>
+    <genericCommand arguments="/install CachingBase" executableName="$(runtime.system32)\inetsrv\iissetup.exe" />
+    <genericCommand arguments="/install CachingBaseBinaries" executableName="$(runtime.system32)\inetsrv\iissetup.exe" />
+    <genericCommand arguments="/launch $(runtime.system32)\inetsrv\appcmd.exe install module -name:UriCacheModule -image:$(runtime.system32)\inetsrv\cachuri.dll -add:false -lock:true" executableName="$(runtime.system32)\inetsrv\iissetup.exe" />
+    <genericCommand arguments="/launch $(runtime.system32)\inetsrv\appcmd.exe install module -name:FileCacheModule -image:$(runtime.system32)\inetsrv\cachfile.dll -add:false -lock:true" executableName="$(runtime.system32)\inetsrv\iissetup.exe" />
+    <genericCommand arguments="/launch $(runtime.system32)\inetsrv\appcmd.exe install module -name:TokenCacheModule -image:$(runtime.system32)\inetsrv\cachtokn.dll -add:false -lock:true" executableName="$(runtime.system32)\inetsrv\iissetup.exe" />
+    <genericCommand arguments="/uninstall CachingBase" executableName="$(dependentAssembly.SharedLibraries.path)\iissetup.exe" install="false" />
+    <genericCommand arguments="/uninstall CachingBaseBinaries" executableName="$(dependentAssembly.SharedLibraries.path)\iissetup.exe" install="false" />
+    <genericCommand arguments="/launch_uninstall $(runtime.system32)\inetsrv\appcmd.exe uninstall module UriCacheModule" executableName="$(dependentAssembly.SharedLibraries.path)\iissetup.exe" install="false" />
+    <genericCommand arguments="/launch_uninstall $(runtime.system32)\inetsrv\appcmd.exe uninstall module FileCacheModule" executableName="$(dependentAssembly.SharedLibraries.path)\iissetup.exe" install="false" />
+    <genericCommand arguments="/launch_uninstall $(runtime.system32)\inetsrv\appcmd.exe uninstall module TokenCacheModule" executableName="$(dependentAssembly.SharedLibraries.path)\iissetup.exe" install="false" />
+  </genericCommands>
+</assembly>

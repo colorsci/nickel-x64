@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved." xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <assemblyIdentity name="Microsoft-Windows-Network-QoS-Pacer" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <dependency discoverable="no" resourceType="Resources">
+    <dependentAssembly dependencyType="prerequisite">
+      <assemblyIdentity name="Microsoft-Windows-Network-QoS-Pacer.Resources" version="10.0.22621.1" processorArchitecture="amd64" language="*" buildType="release" publicKeyToken="31bf3856ad364e35" />
+    </dependentAssembly>
+  </dependency>
+  <file name="pacer.sys" destinationPath="$(runtime.drivers)\" sourceName="pacer.sys" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>tjLB3r1EWHds8/GUib22xccRBJbrQYg5/nt8bwSo6Do=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <file name="wshqos.dll" destinationPath="$(runtime.system32)\" sourceName="wshqos.dll" importPath="$(build.nttree)\" sourcePath=".\">
+    <signatureInfo>
+      <signatureDescriptor PETrust="true" />
+    </signatureInfo>
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>A3R7mbjD5xFTxzuOIVfVJhkh8j4fNd86d3UMI2Am+AU=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <memberships>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories" version="1.0.0.0" publicKeyToken="365143bb27e7ac8b" typeName="BootCritical" />
+    </categoryMembership>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories" version="1.0.0.0" publicKeyToken="365143bb27e7ac8b" typeName="BootRecovery" />
+    </categoryMembership>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories.Services" version="10.0.22621.1" publicKeyToken="31bf3856ad364e35" typeName="Service" />
+      <categoryInstance>
+        <serviceData name="Psched" displayName="@%windir%\System32\drivers\pacer.sys,-101" errorControl="normal" start="system" type="kernelDriver" description="@%windir%\System32\drivers\pacer.sys,-101" group="NDIS" imagePath="System32\drivers\pacer.sys" />
+      </categoryInstance>
+    </categoryMembership>
+  </memberships>
+  <WinsockTransportOnlineInstall HelperDllName="%SystemRoot%\system32\wshqos.dll" MaxSockAddrLength="28" MinSockAddrLength="16" ProviderGuid="{9d60a9e0-337a-11d0-bd88-0000c082e69a}" TransportService="Psched">
+    <mappingRow addressFamily="AF_INET6" protocol="IPPROTO_TCP" socketType="SOCK_STREAM" />
+    <mappingRow addressFamily="AF_INET6" protocol="NULL" socketType="SOCK_STREAM" />
+    <mappingRow addressFamily="AF_INET6" protocol="IPPROTO_TCP" socketType="NULL" />
+    <mappingRow addressFamily="AF_INET" protocol="IPPROTO_TCP" socketType="SOCK_STREAM" />
+    <mappingRow addressFamily="AF_INET" protocol="NULL" socketType="SOCK_STREAM" />
+    <mappingRow addressFamily="AF_INET" protocol="IPPROTO_TCP" socketType="NULL" />
+    <mappingRow addressFamily="AF_INET6" protocol="IPPROTO_UDP" socketType="SOCK_DGRAM" />
+    <mappingRow addressFamily="AF_INET6" protocol="NULL" socketType="SOCK_DGRAM" />
+    <mappingRow addressFamily="AF_INET6" protocol="IPPROTO_UDP" socketType="NULL" />
+    <mappingRow addressFamily="AF_INET" protocol="IPPROTO_UDP" socketType="SOCK_DGRAM" />
+    <mappingRow addressFamily="AF_INET" protocol="NULL" socketType="SOCK_DGRAM" />
+    <mappingRow addressFamily="AF_INET" protocol="IPPROTO_UDP" socketType="NULL" />
+    <protocol addressFamily="AF_INET6" byteOrder="BIG_ENDIAN" maxSockAddrLength="28" messageSize="0" minSockAddrLength="28" protocol="IPPROTO_TCP" protocolMaxOffset="0" protocolName="@%SystemRoot%\System32\wshqos.dll,-100" socketType="SOCK_STREAM" version="2">
+      <providerFlag value="PFL_MATCHES_PROTOCOL_ZERO" />
+      <serviceFlag value="XP1_GUARANTEED_DELIVERY" />
+      <serviceFlag value="XP1_GUARANTEED_ORDER" />
+      <serviceFlag value="XP1_GRACEFUL_CLOSE" />
+      <serviceFlag value="XP1_EXPEDITED_DATA" />
+      <serviceFlag value="XP1_IFS_HANDLES" />
+      <serviceFlag value="XP1_QOS_SUPPORTED" />
+    </protocol>
+    <protocol addressFamily="AF_INET" byteOrder="BIG_ENDIAN" maxSockAddrLength="16" messageSize="0" minSockAddrLength="16" protocol="IPPROTO_TCP" protocolMaxOffset="0" protocolName="@%SystemRoot%\System32\wshqos.dll,-101" socketType="SOCK_STREAM" version="2">
+      <providerFlag value="PFL_MATCHES_PROTOCOL_ZERO" />
+      <serviceFlag value="XP1_GUARANTEED_DELIVERY" />
+      <serviceFlag value="XP1_GUARANTEED_ORDER" />
+      <serviceFlag value="XP1_GRACEFUL_CLOSE" />
+      <serviceFlag value="XP1_EXPEDITED_DATA" />
+      <serviceFlag value="XP1_IFS_HANDLES" />
+      <serviceFlag value="XP1_QOS_SUPPORTED" />
+    </protocol>
+    <protocol addressFamily="AF_INET6" byteOrder="BIG_ENDIAN" maxSockAddrLength="28" messageSize="65527" minSockAddrLength="28" protocol="IPPROTO_UDP" protocolMaxOffset="0" protocolName="@%SystemRoot%\System32\wshqos.dll,-102" socketType="SOCK_DGRAM" version="2">
+      <providerFlag value="PFL_MATCHES_PROTOCOL_ZERO" />
+      <serviceFlag value="XP1_CONNECTIONLESS" />
+      <serviceFlag value="XP1_MESSAGE_ORIENTED" />
+      <serviceFlag value="XP1_SUPPORT_BROADCAST" />
+      <serviceFlag value="XP1_SUPPORT_MULTIPOINT" />
+      <serviceFlag value="XP1_IFS_HANDLES" />
+      <serviceFlag value="XP1_QOS_SUPPORTED" />
+    </protocol>
+    <protocol addressFamily="AF_INET" byteOrder="BIG_ENDIAN" maxSockAddrLength="16" messageSize="65527" minSockAddrLength="16" protocol="IPPROTO_UDP" protocolMaxOffset="0" protocolName="@%SystemRoot%\System32\wshqos.dll,-103" socketType="SOCK_DGRAM" version="2">
+      <providerFlag value="PFL_MATCHES_PROTOCOL_ZERO" />
+      <serviceFlag value="XP1_CONNECTIONLESS" />
+      <serviceFlag value="XP1_MESSAGE_ORIENTED" />
+      <serviceFlag value="XP1_SUPPORT_BROADCAST" />
+      <serviceFlag value="XP1_SUPPORT_MULTIPOINT" />
+      <serviceFlag value="XP1_IFS_HANDLES" />
+      <serviceFlag value="XP1_QOS_SUPPORTED" />
+    </protocol>
+  </WinsockTransportOnlineInstall>
+  <asmv3:configuration xmlns:asmv3="urn:schemas-microsoft-com:asm.v3" xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State">
+    <asmv3:configurationSchema>
+      <xsd:schema xmlns="Microsoft-Windows-QoS" targetNamespace="Microsoft-Windows-QoS" />
+    </asmv3:configurationSchema>
+    <asmv3:metadata />
+  </asmv3:configuration>
+  <networkComponents>
+    <filterDriver bindGuid="{b5f4d659-7daa-4565-8e41-be220ed60542}" displayDescription="@%windir%\System32\drivers\pacer.sys,-100" displayName="@%windir%\System32\drivers\pacer.sys,-101" filterClass="scheduler" hidden="false" identifier="ms_pacer" mandatory="false" type="modifying">
+      <bind keyword="cp_tunnel" ruleType="bottom" />
+      <bind keyword="ethernet" ruleType="bottom" />
+      <bind keyword="wan" ruleType="bottom" />
+      <property name="NETSETUPPKEY_Driver_NtServiceName" type="string" value="Psched" />
+      <property name="NETSETUPPKEY_INF_Name" type="string" value="netpacer.inf" />
+      <property name="NETSETUPPKEY_INF_Section" type="string" value="Install" />
+      <property name="NETSETUPPKEY_INF_Characteristics" type="uint32" value="0x40000" />
+      <property name="NETSETUPPKEY_FilterDriver_SkipNdisAdaptersKeyGeneration" type="boolean" value="true" />
+    </filterDriver>
+  </networkComponents>
+  <instrumentation>
+    <events xmlns="http://schemas.microsoft.com/win/2004/08/events" xmlns:ut="http://manifests.microsoft.com/win/2004/08/windows/networkevents" xmlns:win="http://manifests.microsoft.com/win/2004/08/windows/events" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <provider guid="{914ED502-B70D-4add-B758-95692854F8A3}" messageFileName="%SystemRoot%\system32\drivers\pacer.sys" name="Microsoft-Windows-QoS-Pacer" resourceFileName="%SystemRoot%\system32\drivers\pacer.sys" symbol="QOS_EVENT_PROVIDER_PACER">
+        <channels>
+          <channel chid="CHID_PACER" enabled="false" isolation="System" name="Microsoft-Windows-QoS-Pacer/Diagnostic" symbol="CHANNEL_PACER" type="Analytic">
+            <publishing>
+              <level>0xFF</level>
+            </publishing>
+          </channel>
+        </channels>
+      </provider>
+      <cmi />
+    </events>
+    <counters xmlns="http://schemas.microsoft.com/win/2005/12/counters" schemaVersion="2.0">
+      <provider applicationIdentity="%SystemRoot%\system32\drivers\pacer.sys" providerGuid="{F25A20A5-FD7A-417b-AFC3-76295EBAC77C}" providerType="kernelMode">
+        <counterSet description="The Pacer Flow performance counter set consists of flow statistics from the packet scheduler." descriptionID="1002" guid="{811BBCE5-7327-4ad9-AB62-A8B955F61EEF}" instances="multiple" name="Pacer Flow" nameID="1000" symbol="PacerFlowCounterSet" uri="Microsoft.Windows.QoS.PacerFlow">
+          <structs>
+            <struct name="PacerFlowCounters" type="PC_FLOW_COUNTERS" />
+          </structs>
+          <counter defaultScale="0" description="The number of packets dropped by the packet scheduler." descriptionID="1006" detailLevel="standard" field="FlowPacketsDropped" id="0" name="Packets dropped" nameID="1004" struct="PacerFlowCounters" type="perf_counter_rawcount" uri="Microsoft.Windows.QoS.PacerFlow.FlowPacketsDropped" />
+          <counter defaultScale="-3" description="The number of packets which got scheduled in some way (rather than just being directly sent to the underlying miniport)." descriptionID="1010" detailLevel="standard" field="FlowPacketsScheduled" id="1" name="Packets scheduled" nameID="1008" struct="PacerFlowCounters" type="perf_counter_rawcount" uri="Microsoft.Windows.QoS.PacerFlow.FlowPacketsScheduled" />
+          <counter defaultScale="-3" description="The number of packets from this flow which have been sent." descriptionID="1014" detailLevel="standard" field="FlowPacketsTransmitted" id="2" name="Packets transmitted" nameID="1012" struct="PacerFlowCounters" type="perf_counter_rawcount" uri="Microsoft.Windows.QoS.PacerFlow.FlowPacketsTransmitted" />
+          <counter defaultScale="-6" description="The number of bytes which got scheduled in some way (rather than just being directly sent to the underlying miniport)." descriptionID="1018" detailLevel="standard" field="FlowBytesScheduled" id="3" name="Bytes scheduled" nameID="1016" struct="PacerFlowCounters" type="perf_counter_large_rawcount" uri="Microsoft.Windows.QoS.PacerFlow.FlowBytesScheduled" />
+          <counter defaultScale="-6" description="The number of bytes from this flow which have been sent." descriptionID="1022" detailLevel="standard" field="FlowBytesTransmitted" id="4" name="Bytes transmitted" nameID="1020" struct="PacerFlowCounters" type="perf_counter_large_rawcount" uri="Microsoft.Windows.QoS.PacerFlow.FlowBytesTransmitted" />
+          <counter defaultScale="-3" description="The number of bytes per second from this flow which have been sent." descriptionID="1026" detailLevel="standard" field="FlowBytesTransmittedPersec" id="5" name="Bytes transmitted/sec" nameID="1024" struct="PacerFlowCounters" type="perf_counter_bulk_count" uri="Microsoft.Windows.QoS.PacerFlow.FlowBytesTransmittedPersec" />
+          <counter defaultScale="-3" description="The number of bytes per second from this flow which have been scheduled." descriptionID="1030" detailLevel="standard" field="FlowBytesScheduledPersec" id="6" name="Bytes scheduled/sec" nameID="1028" struct="PacerFlowCounters" type="perf_counter_bulk_count" uri="Microsoft.Windows.QoS.PacerFlow.FlowBytesScheduledPersec" />
+          <counter defaultScale="-3" description="The number of packets per second from this flow which have been sent." descriptionID="1034" detailLevel="standard" field="FlowPacketsTransmittedPersec" id="7" name="Packets transmitted/sec" nameID="1032" struct="PacerFlowCounters" type="perf_counter_counter" uri="Microsoft.Windows.QoS.PacerFlow.FlowPacketsTransmittedPersec" />
+          <counter defaultScale="-3" description="The number of packets per second from this flow which have been scheduled." descriptionID="1038" detailLevel="standard" field="FlowPacketsScheduledPersec" id="8" name="Packets scheduled/sec" nameID="1036" struct="PacerFlowCounters" type="perf_counter_counter" uri="Microsoft.Windows.QoS.PacerFlow.FlowPacketsScheduledPersec" />
+          <counter defaultScale="0" description="The number of packets dropped by the packet scheduler from this flow per second." descriptionID="1042" detailLevel="standard" field="FlowPacketsDroppedPersec" id="9" name="Packets dropped/sec" nameID="1040" struct="PacerFlowCounters" type="perf_counter_counter" uri="Microsoft.Windows.QoS.PacerFlow.FlowPacketsDroppedPersec" />
+          <counter defaultScale="0" description="The number of packets that have entered the packet scheduler at a rate which exceeded the flow parameters." descriptionID="1046" detailLevel="standard" field="FlowNonconfPacketsScheduled" id="10" name="Nonconforming packets scheduled" nameID="1044" struct="PacerFlowCounters" type="perf_counter_rawcount" uri="Microsoft.Windows.QoS.PacerFlow.FlowNonconfPacketsScheduled" />
+          <counter defaultScale="0" description="The rate at which nonconforming packets have entered the packet scheduler." descriptionID="1050" detailLevel="standard" field="FlowNonconfPacketsScheduledPersec" id="11" name="Nonconforming packets scheduled/sec" nameID="1048" struct="PacerFlowCounters" type="perf_counter_counter" uri="Microsoft.Windows.QoS.PacerFlow.FlowNonconfPacketsScheduledPersec" />
+          <counter defaultScale="0" description="The average number of packets in the shaper over the last sampling period." descriptionID="1054" detailLevel="standard" field="FlowAvePacketsInShaper" id="12" name="Average packets in shaper" nameID="1052" struct="PacerFlowCounters" type="perf_counter_rawcount" uri="Microsoft.Windows.QoS.PacerFlow.FlowAvePacketsInShaper" />
+          <counter defaultScale="0" description="The maximum number of packets that have ever simultaneously been in the shaper." descriptionID="1058" detailLevel="standard" field="FlowMaxPacketsInShaper" id="13" name="Max packets in shaper" nameID="1056" struct="PacerFlowCounters" type="perf_counter_rawcount" uri="Microsoft.Windows.QoS.PacerFlow.FlowMaxPacketsInShaper" />
+          <counter defaultScale="0" description="The average number of packets in the sequencer over the last sampling period." descriptionID="1062" detailLevel="standard" field="FlowAvePacketsInSeq" id="14" name="Average packets in sequencer" nameID="1060" struct="PacerFlowCounters" type="perf_counter_rawcount" uri="Microsoft.Windows.QoS.PacerFlow.FlowAvePacketsInSeq" />
+          <counter defaultScale="0" description="The maximum number of packets that have ever simultaneously been in the sequencer." descriptionID="1066" detailLevel="standard" field="FlowMaxPacketsInSeq" id="15" name="Max packets in sequencer" nameID="1064" struct="PacerFlowCounters" type="perf_counter_rawcount" uri="Microsoft.Windows.QoS.PacerFlow.FlowMaxPacketsInSeq" />
+          <counter defaultScale="0" description="The maximum number of packets that have been queued in the netcard by this flow." descriptionID="1070" detailLevel="standard" field="FlowMaxPacketsInNetcard" id="16" name="Maximum packets in netcard" nameID="1068" struct="PacerFlowCounters" type="perf_counter_rawcount" uri="Microsoft.Windows.QoS.PacerFlow.FlowMaxPacketsInNetcard" />
+          <counter defaultScale="0" description="The average number of packets that have been queued in the netcard by this flow." descriptionID="1074" detailLevel="standard" field="FlowAvePacketsInNetcard" id="17" name="Average packets in netcard" nameID="1072" struct="PacerFlowCounters" type="perf_counter_rawcount" uri="Microsoft.Windows.QoS.PacerFlow.FlowAvePacketsInNetcard" />
+          <counter defaultScale="0" description="The number of packets that have been sent by the packet scheduler at a rate which exceeded the flow parameters." descriptionID="1078" detailLevel="standard" field="FlowNonconfPacketsTransmitted" id="18" name="Nonconforming packets transmitted" nameID="1076" struct="PacerFlowCounters" type="perf_counter_rawcount" uri="Microsoft.Windows.QoS.PacerFlow.FlowNonconfPacketsTransmitted" />
+          <counter defaultScale="0" description="The rate at which nonconforming packets have been sent by the packet scheduler." descriptionID="1082" detailLevel="standard" field="FlowNonconfPacketsTransmittedPersec" id="19" name="Nonconforming packets transmitted/sec" nameID="1080" struct="PacerFlowCounters" type="perf_counter_counter" uri="Microsoft.Windows.QoS.PacerFlow.FlowNonconfPacketsTransmittedPersec" />
+        </counterSet>
+        <counterSet description="The Pacer Pipe performance counter set consists of pipe statistics from the packet scheduler." descriptionID="1086" guid="{51BDA498-67CB-479f-B898-57D2D73788F0}" instances="multiple" name="Pacer Pipe" nameID="1084" symbol="PacerPipeCounterSet" uri="Microsoft.Windows.QoS.PacerPipe">
+          <structs>
+            <struct name="PacerPipeCounters" type="PC_PIPE_COUNTERS" />
+          </structs>
+          <counter defaultScale="0" description="The number of times Pacer has been unable to allocate a packet." descriptionID="1090" detailLevel="standard" field="PipeOutOfPackets" id="0" name="Out of packets" nameID="1088" struct="PacerPipeCounters" type="perf_counter_rawcount" uri="Microsoft.Windows.QoS.PacerPipe.PipeOutOfPackets" />
+          <counter defaultScale="0" description="The number of flows opened on this pipe (some of which may now be closed)." descriptionID="1094" detailLevel="standard" field="PipeFlowsOpened" id="1" name="Flows opened" nameID="1092" struct="PacerPipeCounters" type="perf_counter_rawcount" uri="Microsoft.Windows.QoS.PacerPipe.PipeFlowsOpened" />
+          <counter defaultScale="0" description="The number of flows that have been closed." descriptionID="1098" detailLevel="standard" field="PipeFlowsClosed" id="2" name="Flows closed" nameID="1096" struct="PacerPipeCounters" type="perf_counter_rawcount" uri="Microsoft.Windows.QoS.PacerPipe.PipeFlowsClosed" />
+          <counter defaultScale="0" description="The number of flow creations that were rejected." descriptionID="1102" detailLevel="standard" field="PipeFlowsRejected" id="3" name="Flows rejected" nameID="1100" struct="PacerPipeCounters" type="perf_counter_rawcount" uri="Microsoft.Windows.QoS.PacerPipe.PipeFlowsRejected" />
+          <counter defaultScale="0" description="The number of times a flow has been modified." descriptionID="1106" detailLevel="standard" field="PipeFlowsModified" id="4" name="Flows modified" nameID="1104" struct="PacerPipeCounters" type="perf_counter_rawcount" uri="Microsoft.Windows.QoS.PacerPipe.PipeFlowsModified" />
+          <counter defaultScale="0" description="The number of times a flow modification has been rejected." descriptionID="1110" detailLevel="standard" field="PipeFlowModsRejected" id="5" name="Flow mods rejected" nameID="1108" struct="PacerPipeCounters" type="perf_counter_rawcount" uri="Microsoft.Windows.QoS.PacerPipe.PipeFlowModsRejected" />
+          <counter defaultScale="0" description="The maximum number of flows that have been simultaneously open on this pipe." descriptionID="1114" detailLevel="standard" field="PipeMaxSimultaneousFlows" id="6" name="Max simultaneous flows" nameID="1112" struct="PacerPipeCounters" type="perf_counter_rawcount" uri="Microsoft.Windows.QoS.PacerPipe.PipeMaxSimultaneousFlows" />
+          <counter defaultScale="0" description="The number of packets that have entered the packet scheduler at a rate which exceeded that packet's flow parameters." descriptionID="1118" detailLevel="standard" field="PipeNonconfPacketsScheduled" id="7" name="Nonconforming packets scheduled" nameID="1116" struct="PacerPipeCounters" type="perf_counter_rawcount" uri="Microsoft.Windows.QoS.PacerPipe.PipeNonconfPacketsScheduled" />
+          <counter defaultScale="0" description="The rate at which nonconforming packets have entered the packet scheduler." descriptionID="1122" detailLevel="standard" field="PipeNonconfPacketsScheduledPersec" id="8" name="Nonconforming packets scheduled/sec" nameID="1120" struct="PacerPipeCounters" type="perf_counter_counter" uri="Microsoft.Windows.QoS.PacerPipe.PipeNonconfPacketsScheduledPersec" />
+          <counter defaultScale="0" description="The average number of packets in the shaper over the last sampling period." descriptionID="1126" detailLevel="standard" field="PipeAvePacketsInShaper" id="9" name="Average packets in shaper" nameID="1124" struct="PacerPipeCounters" type="perf_counter_rawcount" uri="Microsoft.Windows.QoS.PacerPipe.PipeAvePacketsInShaper" />
+          <counter defaultScale="0" description="The maximum number of packets that have ever simultaneously been in the shaper." descriptionID="1130" detailLevel="standard" field="PipeMaxPacketsInShaper" id="10" name="Max packets in shaper" nameID="1128" struct="PacerPipeCounters" type="perf_counter_rawcount" uri="Microsoft.Windows.QoS.PacerPipe.PipeMaxPacketsInShaper" />
+          <counter defaultScale="0" description="The average number of packets in the sequencer over the last sampling period." descriptionID="1134" detailLevel="standard" field="PipeAvePacketsInSeq" id="11" name="Average packets in sequencer" nameID="1132" struct="PacerPipeCounters" type="perf_counter_rawcount" uri="Microsoft.Windows.QoS.PacerPipe.PipeAvePacketsInSeq" />
+          <counter defaultScale="0" description="The maximum number of packets that have ever simultaneously been in the sequencer." descriptionID="1138" detailLevel="standard" field="PipeMaxPacketsInSeq" id="12" name="Max packets in sequencer" nameID="1136" struct="PacerPipeCounters" type="perf_counter_rawcount" uri="Microsoft.Windows.QoS.PacerPipe.PipeMaxPacketsInSeq" />
+          <counter defaultScale="0" description="The maximum number of packets ever simultaneously in the network card." descriptionID="1142" detailLevel="standard" field="PipeMaxPacketsInNetcard" id="13" name="Max packets in netcard" nameID="1140" struct="PacerPipeCounters" type="perf_counter_rawcount" uri="Microsoft.Windows.QoS.PacerPipe.PipeMaxPacketsInNetcard" />
+          <counter defaultScale="0" description="The average number of packets in the network card over the last sampling period." descriptionID="1146" detailLevel="standard" field="PipeAvePacketsInNetcard" id="14" name="Average packets in netcard" nameID="1144" struct="PacerPipeCounters" type="perf_counter_rawcount" uri="Microsoft.Windows.QoS.PacerPipe.PipeAvePacketsInNetcard" />
+          <counter defaultScale="0" description="The number of packets that have been sent by the packet scheduler at a rate which exceeded that packet's flow parameters." descriptionID="1150" detailLevel="standard" field="PipeNonconfPacketsTransmitted" id="15" name="Nonconforming packets transmitted" nameID="1148" struct="PacerPipeCounters" type="perf_counter_rawcount" uri="Microsoft.Windows.QoS.PacerPipe.PipeNonconfPacketsTransmitted" />
+          <counter defaultScale="0" description="The rate at which nonconforming packets have been sent by the packet scheduler." descriptionID="1154" detailLevel="standard" field="PipeNonconfPacketsTransmittedPersec" id="16" name="Nonconforming packets transmitted/sec" nameID="1152" struct="PacerPipeCounters" type="perf_counter_counter" uri="Microsoft.Windows.QoS.PacerPipe.PipeNonconfPacketsTransmittedPersec" />
+        </counterSet>
+      </provider>
+    </counters>
+  </instrumentation>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="WRP_PARENT_DIR_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;CI;GA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;0x1301bf;;;SY)(A;IOCIOI;GA;;;SY)(A;;0x1301bf;;;BA)(A;IOCIOI;GA;;;BA)(A;CIOI;GRGX;;;BU)(A;OICIIO;GA;;;CO)(A;CIOI;GRGX;;;S-1-15-2-1)(A;CIOI;GRGX;;;S-1-15-2-2)" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" description="Default SDDL for Windows Resource Protected file" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string id="valuemap_flowtype.0.Message" value="GQoS" />
+        <string id="valuemap_flowtype.1.Message" value="TC" />
+        <string id="valuemap_flowtype.2.Message" value="EQoS" />
+        <string id="valuemap_flowtype.3.Message" value="Full" />
+        <string id="valuemap_flowtype.4.Message" value="IDP" />
+        <string id="valuemap_dropreason.0.Message" value="Non-conformance" />
+        <string id="valuemap_dropreason.1.Message" value="Excessive delay" />
+        <string id="valuemap_dropreason.2.Message" value="Allocation failure" />
+        <string id="valuemap_dropreason.3.Message" value="Packet assembly failure" />
+        <string id="valuemap_dropreason.4.Message" value="Send NBL failure" />
+        <string id="valuemap_dropreason.5.Message" value="Process Queue failure" />
+        <string id="valuemap_dropreason.6.Message" value="Update Flow failure" />
+        <string id="valuemap_dropreason.7.Message" value="Rate match" />
+        <string id="valuemap_servicetype.0.Message" value="NOTRAFFIC" />
+        <string id="valuemap_servicetype.1.Message" value="BESTEFFORT" />
+        <string id="valuemap_servicetype.2.Message" value="CONTROLLEDLOAD" />
+        <string id="valuemap_servicetype.3.Message" value="GUARANTEED" />
+        <string id="valuemap_servicetype.4.Message" value="NETWORK_UNAVAILABLE" />
+        <string id="valuemap_servicetype.5.Message" value="GENERAL_INFORMATION" />
+        <string id="valuemap_servicetype.6.Message" value="NOCHANGE" />
+        <string id="valuemap_servicetype.9.Message" value="NONCONFORMING" />
+        <string id="valuemap_servicetype.10.Message" value="NETWORK_CONTROL" />
+        <string id="valuemap_servicetype.13.Message" value="QUALITATIVE" />
+        <string id="createflow_v0.EventMessage" value="Create %2 at %3 bytes/sec with status %1" />
+        <string id="createflow_v1.EventMessage" value="PACER: Flow created with status %1 (type=%2, rate=%3Bps, service=%8, dscp=%11, 802.1p=%12, system=%15)" />
+        <string id="updateflow_failure_v0.EventMessage" value="Update %2 from %3 to %11 with status %1" />
+        <string id="updateflow_success_v0.EventMessage" value="Update %1 from %2 to %10" />
+        <string id="updateflow_v1.EventMessage" value="PACER: Flow updated with status %1 (rate=%3Bps, service=%8, dscp=%11, 802.1p=%12)" />
+        <string id="cleanupflow.EventMessage" value="PACER: Flow deleted (dropped=%1, scheduled=%2/%4, transmitted=%3/%5, nbl=%7/%6)" />
+        <string id="pacerstart_v0.EventMessage" value="Start Pacer on NetLuid=%1 (%3)" />
+        <string id="pacerstart_v1.EventMessage" value="PACER: Starting adapter %4 (luid=%1)" />
+        <string id="pacerstop_v0.EventMessage" value="Stop Pacer on NetLuid=%1 (%3)" />
+        <string id="pacerstop_v1.EventMessage" value="PACER: Stopping adapter %4 (luid=%1)" />
+        <string id="packetdrop.EventMessage" value="PACER: Packet dropped, reason=%1" />
+        <string id="nonconfqtc.EventMessage" value="PACER: Non-conformance marking, dscp=%1, 802.1p=%2, WMM=%3" />
+        <string id="allowappdscpmarking.EventMessage" value="PACER: Application-based DSCP marking policy state=%1" />
+        <string id="flowcontrolinterval.EventMessage" value="PACER: CurrentTime= %1 BytesSent= %2 BytesDropped= %3 NewSendWindow= %4 MinSendWindow= %5" />
+        <string id="linecontrolinterval.EventMessage" value="PACER: NetLuid= %1 CurrentTime= %2 ActiveFlows= %3 ActiveWeight= %4 NewSendWindow= %5" />
+        <string id="valuemap_flowconformance.0.Message" value="Recompute" />
+        <string id="valuemap_flowconformance.1.Message" value="Update" />
+        <string id="valuemap_flowconformance.2.Message" value="Set" />
+        <string id="valuemap_flowconformance.3.Message" value="PreSend" />
+        <string id="valuemap_flowconformance.4.Message" value="PostSend" />
+        <string id="flowconformance.EventMessage" value="PACER: FlowConformanceEventId= %1 CurrentTime= %2 LastConformanceTime= %3 PeakConformanceTime= %4 Tokens= %5 MaxTokens= %6 Rate= %7 LastConformanceCredits= %8" />
+        <string id="valuemap_flowsendqueue.0.Message" value="Idle" />
+        <string id="valuemap_flowsendqueue.1.Message" value="SendRequest" />
+        <string id="valuemap_flowsendqueue.2.Message" value="DelayedSend" />
+        <string id="flowsendqueue.EventMessage" value="PACER: FlowSendQueueEventId= %1 CurrentTime= %2 IdleTime= %3 DelayTime= %4 BytesRequested= %5 BytesSent= %6 BytesQueued= %7" />
+        <string id="valuemap_timer.0.Message" value="TimerSet" />
+        <string id="valuemap_timer.1.Message" value="TimerExpired" />
+        <string id="valuemap_timer.2.Message" value="TimerStopped" />
+        <string id="timer.EventMessage" value="PACER: TimerId= %1 EventId= %2 CurrentTime= %3 SetTime= %4 RunTime= %5 FlowsProcessed= %6 NblsSent= %7 NblsDropped= %8 Flags= %9" />
+        <string id="linebuffersample.EventMessage" value="PACER: NetLuid= %1 CurrentTime= %2 BytesRequested= %3 BytesCompleted= %4 BytesInQueue= %5 BufferAvailable= %6 AlphaTerm= %8 BetaTerm= %7 DeltaSendWindow= %9 NewSendWindow= %10" />
+      </stringTable>
+    </resources>
+  </localization>
+</assembly>

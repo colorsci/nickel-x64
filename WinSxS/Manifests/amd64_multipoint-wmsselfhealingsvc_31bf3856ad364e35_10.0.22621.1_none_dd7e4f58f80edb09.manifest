@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="MultiPoint-WmsSelfHealingSvc" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <file name="WmsConfigTasks.dll" destinationPath="$(runtime.programFiles)\Windows MultiPoint Server\" sourceName="WmsConfigTasks.dll" importPath="$(build.nttree)\WMS\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>nf7z1Cbt0QaihrxiBrBKJyDhS2sWigqxtYWVD9+zZLQ=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <file name="WmsSelfHealingSvc.exe" destinationPath="$(runtime.programFiles)\Windows MultiPoint Server\" sourceName="WmsSelfHealingSvc.exe" importPath="$(build.nttree)\WMS\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>+FGB+KuoIXwFWG4zSgMFr7oeeO7sB3Cu/gVhwFUd2nQ=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <memberships>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories.Services" version="10.0.22621.1" publicKeyToken="31bf3856ad364e35" typeName="Service" />
+      <categoryInstance>
+        <serviceData name="WmsRepair" displayName="@%ProgramFiles%\Windows MultiPoint Server\SrcRes.dll,-1402" errorControl="normal" start="auto" type="win32OwnProcess" description="@%ProgramFiles%\Windows MultiPoint Server\SrcRes.dll,-1403" dependOnService="rpcss,winmgmt" group="UIGroup" imagePath="%ProgramFiles%\Windows MultiPoint Server\WmsSelfHealingSvc.exe" objectName="LocalSystem" sidType="unrestricted" startAfterInstall="asynchronous">
+          <failureActions resetPeriod="7200">
+            <actions>
+              <action delay="60000" type="restartService" />
+              <action delay="60000" type="restartService" />
+              <action delay="0" type="none" />
+            </actions>
+          </failureActions>
+        </serviceData>
+      </categoryInstance>
+    </categoryMembership>
+  </memberships>
+  <registryKeys>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{1D69FF1D-564D-442B-9702-17E202A972C3}\">
+      <registryValue name="" valueType="REG_SZ" value="Wms Config" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{1D69FF1D-564D-442B-9702-17E202A972C3}\InprocServer32\">
+      <registryValue name="" valueType="REG_SZ" value="$(runtime.programFiles)\Windows MultiPoint Server\WmsConfigTasks.dll" />
+      <registryValue name="ThreadingModel" valueType="REG_SZ" value="Both" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{6A2578F4-0501-4DD1-9356-CCAD8221AB59}\">
+      <registryValue name="" valueType="REG_SZ" value="WmsConfigUserSettings" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{6A2578F4-0501-4DD1-9356-CCAD8221AB59}\InprocServer32\">
+      <registryValue name="" valueType="REG_SZ" value="$(runtime.programFiles)\Windows MultiPoint Server\WmsConfigTasks.dll" />
+      <registryValue name="ThreadingModel" valueType="REG_SZ" value="Both" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{52F7C348-F7A2-4353-AADD-4D37FFE698ED}\">
+      <registryValue name="" valueType="REG_SZ" value="WmsConfigMonitor" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+    <registryKey keyName="HKEY_CLASSES_ROOT\CLSID\{52F7C348-F7A2-4353-AADD-4D37FFE698ED}\InprocServer32\">
+      <registryValue name="" valueType="REG_SZ" value="$(runtime.programFiles)\Windows MultiPoint Server\WmsConfigTasks.dll" />
+      <registryValue name="ThreadingModel" valueType="REG_SZ" value="Both" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\SafeBoot\Minimal\WmsSelfHealing">
+      <registryValue name="" valueType="REG_SZ" value="Service" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\SafeBoot\Network\WmsSelfHealing">
+      <registryValue name="" valueType="REG_SZ" value="Service" />
+    </registryKey>
+  </registryKeys>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="WRP_REGKEY_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;CI;GA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;CI;GR;;;SY)(A;CI;GR;;;BA)(A;CI;GR;;;BU)(A;CI;GR;;;S-1-15-2-1)(A;CI;GR;;;S-1-15-3-1024-1065365936-1281604716-3511738428-1654721687-432734479-3232135806-4053264122-3456934681)" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" description="Default SDDL for Windows Resource Protected file" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+</assembly>

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-Crypto-RNG-instrumentation" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <registryKeys>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\EventLog\Application\Microsoft-Windows-Crypto-RNG">
+      <registryValue name="providerGuid" valueType="REG_SZ" value="{54d5ac20-e14f-4fda-92da-ebf7556ff176}" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\EventLog\Application\Microsoft-Windows-Crypto-CNG">
+      <registryValue name="providerGuid" valueType="REG_SZ" value="{E3E0E2F0-C9C5-11E0-8AB9-9EBC4824019B}" />
+    </registryKey>
+  </registryKeys>
+  <instrumentation xmlns:win="http://manifests.microsoft.com/win/2004/08/windows/events" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <events xmlns="http://schemas.microsoft.com/win/2004/08/events">
+      <provider guid="{54d5ac20-e14f-4fda-92da-ebf7556ff176}" message="$(string.SystemRngProviderName)" messageFileName="%SystemRoot%\System32\drivers\cng.sys" name="Microsoft-Windows-Crypto-RNG" resourceFileName="%SystemRoot%\System32\drivers\cng.sys" symbol="SYSTEM_RNG_ETW_PROVIDER">
+        <channels>
+          <channel access="O:BAG:SYD:(A;;0x7;;;BA)(A;;0x2;;;WD)" chid="AnCh" enabled="false" isolation="Custom" message="$(string.AnalyticChannel.Name)" name="Microsoft-Windows-Crypto-RNG/Analytic" type="Analytic">
+            <publishing>
+              <bufferSize>64</bufferSize>
+              <minBuffers>32</minBuffers>
+              <maxBuffers>2048</maxBuffers>
+            </publishing>
+          </channel>
+        </channels>
+      </provider>
+      <provider guid="{E3E0E2F0-C9C5-11E0-8AB9-9EBC4824019B}" message="$(string.SystemCNGProviderName)" messageFileName="%SystemRoot%\System32\drivers\cng.sys" name="Microsoft-Windows-Crypto-CNG" resourceFileName="%SystemRoot%\System32\drivers\cng.sys" symbol="ETW_LOG_CNG_PROVIDER">
+        <channels>
+          <channel access="O:BAG:SYD:(A;;0x7;;;BA)(A;;0x2;;;AU)" chid="AnCh" enabled="false" isolation="Custom" message="$(string.Channel.CNGAnalytic)" name="Microsoft-Windows-Crypto-CNG/Analytic" symbol="AnalyticChannel" type="Analytic" />
+        </channels>
+      </provider>
+      <cmi />
+    </events>
+  </instrumentation>
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string id="AnalyticChannel.Name" value="Microsoft-Windows-Crypto-RNG/Analytic" />
+        <string id="GatherEntropy.TaskMessage" value="Gather entropy for the system random number generator" />
+        <string id="Prng.TaskMessage" value="Prng" />
+        <string id="REGISTER_ENTROPY_SOURCE" value="An entropy source was registered.%n%tSource%t%1%n%tName%t%2%n%tType%t%3" />
+        <string id="UNREGISTER_ENTROPY_SOURCE" value="Entropy source %1 (%2) was unregistered." />
+        <string id="PROVIDE_ENTROPY" value="Entropy source %1 provided %2 bytes with %3 millibits of entropy%nData%t%5" />
+        <string id="ENTROPY_CALLBACK" value="Callback to source %1 returned status %2, taking time %3" />
+        <string id="BOOT_ENTROPY_RESULT" value="Boot entropy result:%n%tSource%t%1%n%tPolicy%t%2%n%tCode%t%3%n%tStatus%t%4%n%tTime%t%5%n%tBytesProvided%t%6%n%tBytes%t%8" />
+        <string id="POOL_GET" value="Pool reseed:%n%tCount%t%1%n%tType%t%2%n%tData%t%4" />
+        <string id="POOL_ADD" value="Pool add:%n%tPool%t%1%n%tData%t%3" />
+        <string id="PRNG_SEED" value="Prng (re)seed:%nAddr%t%1%nData%t%3" />
+        <string id="PRNG_OUTPUT" value="Prng output:%n%tAddr%t%1%n%tBytes%t%2%n%tData%t%4" />
+        <string id="PRNG_PROCESS_CREATED" value="New process created. Old Prng states under this proces ID are no longer valid" />
+        <string id="SystemRngEntropyTypeMap.1.Message" value="High entropy push" />
+        <string id="SystemRngEntropyTypeMap.2.Message" value="Low entropy push" />
+        <string id="SystemRngEntropyTypeMap.3.Message" value="High entropy pull" />
+        <string id="SystemRngTpmBootEntropyPolicy.0.Message" value="Default" />
+        <string id="SystemRngTpmBootEntropyPolicy.1.Message" value="ForceDisable" />
+        <string id="SystemRngTpmBootEntropyPolicy.2.Message" value="ForceEnable" />
+        <string id="SystemRngBootEntropyResult.0.Message" value="ERROR (uninitialized)" />
+        <string id="SystemRngBootEntropyResult.1.Message" value="Disabled by policy" />
+        <string id="SystemRngBootEntropyResult.2.Message" value="Source not found" />
+        <string id="SystemRngBootEntropyResult.3.Message" value="Source error" />
+        <string id="SystemRngBootEntropyResult.4.Message" value="Success" />
+        <string id="SystemRngBootEntropySourceId.0.Message" value="Unknown" />
+        <string id="SystemRngBootEntropySourceId.1.Message" value="Seed File" />
+        <string id="SystemRngBootEntropySourceId.2.Message" value="External" />
+        <string id="SystemRngBootEntropySourceId.3.Message" value="TPM" />
+        <string id="SystemRngBootEntropySourceId.4.Message" value="RDRAND" />
+        <string id="SystemRngBootEntropySourceId.5.Message" value="Time" />
+        <string id="SystemRngBootEntropySourceId.6.Message" value="Acpi-OEM0" />
+        <string id="SystemRngBootEntropySourceId.7.Message" value="UEFI" />
+        <string id="SystemRngBootEntropySourceId.8.Message" value="CNG" />
+        <string id="SystemRngBootEntropySourceId.9.Message" value="TCB-TPM" />
+        <string id="SystemRngBootEntropySourceId.10.Message" value="TCB-RDRAND" />
+        <string id="SystemRngPoolReseedType.1.Message" value="One pool" />
+        <string id="SystemRngPoolReseedType.2.Message" value="One or more pools" />
+        <string id="SystemRngPoolReseedType.3.Message" value="All pools" />
+        <string id="SYSTEMRNG_ENTROPY_REGISTRATION.KeywordMessage" value="Source registration" />
+        <string id="SYSTEMRNG_ENTROPY_DATA.KeywordMessage" value="Entropy data flow" />
+        <string id="SYSTEMRNG_PRNG.KeywordMessage" value="PRNG" />
+        <string id="SystemRngProviderName" value="Microsoft-Windows-Crypto-RNG" />
+        <string id="Channel.CNGAnalytic" value="Microsoft-Windows-Crypto-CNG/Analytic" />
+        <string id="ProviderOpenFailed" value="Open Provider Failure. %n%n Cryptographic Parameters:%n %tProvider Name:%t%1%n %tAlgorithm Name:%t%2%n %tFlags:%t%3%n Failure Information:%n %tReturn Code:%t%4%n %tFailure Type:%t%5" />
+        <string id="BcryptOpenAlgorithmProviderFailure.1.Message" value="Failed to resolve the provider." />
+        <string id="BcryptOpenAlgorithmProviderFailure.2.Message" value="Failed to load the provider." />
+        <string id="BcryptOpenAlgorithmProviderFailure.3.Message" value="Provider did not pass basic validation." />
+        <string id="BcryptOpenAlgorithmProviderFailure.4.Message" value="Failed to open the Provider." />
+        <string id="SystemCNGProviderName" value="Microsoft-Windows-Crypto-CNG" />
+      </stringTable>
+    </resources>
+  </localization>
+</assembly>

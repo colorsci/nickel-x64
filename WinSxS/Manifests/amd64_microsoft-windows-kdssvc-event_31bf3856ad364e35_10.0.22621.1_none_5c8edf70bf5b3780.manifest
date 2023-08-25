@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-KDSSVC-Event" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <instrumentation xmlns:win="http://manifests.microsoft.com/win/2004/08/windows/events" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <events xmlns="http://schemas.microsoft.com/win/2004/08/events">
+      <provider guid="{89203471-d554-47d4-bde4-7552ec219999}" message="$(string.KdsSvcProviderName)" messageFileName="%SystemRoot%\system32\KdsCli.dll" name="Microsoft-Windows-KdsSvc" resourceFileName="%SystemRoot%\system32\KdsCli.dll" symbol="KdsSvcOperational">
+        <channels>
+          <channel chid="Operational" enabled="true" isolation="System" message="$(string.operationalChannelName)" name="Microsoft-Windows-KdsSvc/Operational" type="Operational" />
+        </channels>
+      </provider>
+      <cmi />
+    </events>
+  </instrumentation>
+  <registryKeys>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\services\eventlog\Application\Microsoft-Windows-KdsSvc">
+      <registryValue name="providerGuid" valueType="REG_SZ" value="{D4BE7726-DC7A-11DF-A6E6-0902DFD72085}" />
+    </registryKey>
+  </registryKeys>
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string id="operationalChannelName" value="Microsoft-Windows-KdsSvc/Operational" />
+        <string id="KdsSvcProviderName" value="Microsoft-Windows-KdsSvc" />
+        <string id="KdsSvcStartFailed" value="Group Key Distribution Service failed to start. Status %1." />
+        <string id="KdsSvcStart" value="Group Key Distribution Service started." />
+        <string id="KdsSvcStop" value="Group Key Distribution Service stopped." />
+        <string id="KdsSvcCreateMRK" value="Group Key Distribution Service created the first master root key in AD.  The key ID is %1." />
+        <string id="KdsSvcMRKCreationFailure" value="Group Key Distribution Service failed to create the first master root key in AD.  Status %1." />
+        <string id="KdsSvcInvalidMRK" value="Group Key Distribution Service has encountered an invalid master root key.  The key ID is %1.  %2 is the name of the wrong configuration.  If this master root key is the current key in use, Group Key Distribution Service will not be able to provide any new keys.  If key generation issue is encounted, please contact administrators to generate a new valid master root key." />
+        <string id="KdsSvcADconnectionFailure" value="Group Key Distribution Service cannot connect to the domain controller on local host.  Status %1.  Group Key Distribution Service cannot be started because of the error.  Please contact administrators to resolve the issue." />
+        <string id="KdsSvcTimerEventCreationFailure" value="Group Key Distribution Service cannot start the work thread to read new data from AD periodically.  Status %1. Group Key Distribution Service cannot be started because of the error.  Please contact administrators to resolve the issue." />
+        <string id="KdsKeyGenerationFailure" value="Group Key Distribution Service failed to generate key using master root key %1.  Status %1. Please contact administrators to resolve the issue." />
+        <string id="KdsSvcInvalidSrvConfig" value="Group Key Distribution Service configuration is using some invalid value.  The invalid attribute is %1.  As a result, Group Key Distribution Service cannot generate any new key using this configuration. Please contact administrators to resolve the issue." />
+      </stringTable>
+    </resources>
+  </localization>
+</assembly>

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-TerminalServices-USBRedirectorClient" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <dependency discoverable="no" resourceType="Resources">
+    <dependentAssembly dependencyType="prerequisite">
+      <assemblyIdentity name="Microsoft-Windows-TerminalServices-USBRedirectorClient.Resources" version="10.0.22621.1" processorArchitecture="amd64" language="*" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+    </dependentAssembly>
+  </dependency>
+  <file name="TsUsbFlt.sys" destinationPath="$(runtime.drivers)\" sourceName="TsUsbFlt.sys" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>WLyMZMW0dO9gQc19JgEJ0Kh8edlW8C832ksINYIC+1E=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <memberships>
+    <categoryMembership>
+      <id name="Microsoft-Windows-TerminalServices-USBRedirectorClient" version="10.0.22621.1" publicKeyToken="31bf3856ad364e35" buildType="release" language="neutral" processorArchitecture="amd64" />
+    </categoryMembership>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories.Services" version="10.0.22621.1" publicKeyToken="31bf3856ad364e35" typeName="Service" />
+      <categoryInstance subcategory="tsusbflt">
+        <serviceData name="TsUsbFlt" displayName="@%SystemRoot%\system32\drivers\tsusbflt.sys,-1000" errorControl="normal" start="demand" type="kernelDriver" description="@%SystemRoot%\system32\drivers\tsusbflt.sys,-1000" imagePath="System32\drivers\TsUsbFlt.sys" />
+      </categoryInstance>
+    </categoryMembership>
+  </memberships>
+  <instrumentation xmlns:win="http://manifests.microsoft.com/win/2004/08/windows/events">
+    <events xmlns="http://schemas.microsoft.com/win/2004/08/events">
+      <provider guid="{6e400999-5b82-475f-b800-cef6fe361539}" message="$(string.eventProviderName)" messageFileName="%SystemRoot%\system32\drivers\tsusbflt.sys" name="Microsoft-Windows-TerminalServices-ClientUSBDevices" resourceFileName="%SystemRoot%\system32\drivers\tsusbflt.sys" symbol="USB_Redirector_Event_Provider">
+        <channels>
+          <channel chid="Admin" enabled="true" message="$(string.AdminChannelName)" name="Microsoft-Windows-TerminalServices-ClientUSBDevices/Admin" type="Admin" />
+          <channel chid="Analytic" message="$(string.AnalyticChannelName)" name="Microsoft-Windows-TerminalServices-ClientUSBDevices/Analytic" type="Analytic" />
+          <channel chid="Operational" enabled="true" message="$(string.OperationalChannelName)" name="Microsoft-Windows-TerminalServices-ClientUSBDevices/Operational" type="Operational" />
+          <channel chid="Debug" message="$(string.DebugChannelName)" name="Microsoft-Windows-TerminalServices-ClientUSBDevices/Debug" type="Debug" />
+        </channels>
+      </provider>
+      <cmi />
+    </events>
+  </instrumentation>
+  <memberships>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories" version="10.0.22621.1" publicKeyToken="31bf3856ad364e35" typeName="Service" />
+      <categoryInstance subcategory="TSUSBFLT">
+        <serviceData name="tsusbflt" errorControl="normal" start="demand" type="kernelDriver" imagePath="system32\drivers\tsusbflt.sys" />
+      </categoryInstance>
+    </categoryMembership>
+  </memberships>
+  <registryKeys>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Eventlog\System\tsusbflt">
+      <registryValue name="ProviderGuid" valueType="REG_EXPAND_SZ" value="{6e400999-5b82-475f-b800-cef6fe361539}" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows NT\Terminal Services\Client">
+      <registryValue name="fEnableUsbSelectDeviceByInterface" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="fEnableUsbBlockDeviceBySetupClass" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="fEnableUsbNoAckIsochWriteToDevice" valueType="REG_DWORD" value="0x00000050" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows NT\Terminal Services\Client\UsbSelectDeviceByInterfaces">
+      <registryValue name="1000" valueType="REG_SZ" value="{6bdd1fc6-810f-11d0-bec7-08002be2092f}" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows NT\Terminal Services\Client\UsbBlockDeviceBySetupClasses">
+      <registryValue name="1000" valueType="REG_SZ" value="{3376f4ce-ff8d-40a2-a80f-bb4359d1415c}" />
+    </registryKey>
+  </registryKeys>
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string id="event_TRACE_ALV" value="%1" />
+        <string id="event_TRACE_INF" value="%1" />
+        <string id="event_TRACE_WRN" value="%1" />
+        <string id="event_TRACE_ERR" value="%1" />
+        <string id="event_TRACE_ENT" value="%1" />
+        <string id="event_TRACE_EXIT" value="%1" />
+        <string id="event_TRACE_DUMP" value="%1" />
+        <string id="event_TRACE_FATAL" value="%1" />
+        <string id="eventProviderName" value="Microsoft-Windows-TerminalServices-ClientUSBDevices" />
+        <string id="event_EVENT_NOTIFY_USB_REDIRECTION_BLOCKED_BY_POLICY" value="Policy blocks user from using USB redirection." />
+        <string id="event_EVENT_PORT_CYCLE_FAILED" value="USB port cycle failed" />
+        <string id="event_EVENT_USB_DIAGNOSTIC_MODE_NOT_SET" value="USB Diagnostic Mode is not set." />
+        <string id="AdminChannelName" value="Admin" />
+        <string id="AnalyticChannelName" value="Analytic" />
+        <string id="OperationalChannelName" value="Operational" />
+        <string id="DebugChannelName" value="Debug" />
+        <string id="TSUSBFLT_ETW_PROVIDER.task.task_TSUSBFLT.message" value="Remote Desktop USB Hub Filter" />
+        <string id="event_EVENT_NOTIFY_DEVICE_INSTALLATION_BLOCKED_BY_POLICY" value="Device %1 installation is blocked by policy." />
+      </stringTable>
+    </resources>
+  </localization>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" description="Default SDDL for Windows Resource Protected file" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+</assembly>

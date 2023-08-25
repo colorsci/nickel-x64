@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-TerminalServices-PortRedirector" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <dependency discoverable="no" resourceType="Resources">
+    <dependentAssembly dependencyType="prerequisite">
+      <assemblyIdentity name="Microsoft-Windows-TerminalServices-PortRedirector.Resources" version="10.0.22621.1" processorArchitecture="amd64" language="*" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+    </dependentAssembly>
+  </dependency>
+  <file name="umrdp.dll" destinationPath="$(runtime.system32)\" sourceName="umrdp.dll" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>AZjV/cgiy+43yEaZt/nfHgica5DOqW9leVrYkjrwpmQ=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <instrumentation xmlns:win="http://manifests.microsoft.com/win/2004/08/windows/events">
+    <events xmlns="http://schemas.microsoft.com/win/2004/08/events">
+      <provider guid="{27a8c1e2-eb19-463e-8424-b399df27a216}" message="$(string.eventProviderName)" messageFileName="%SystemRoot%\system32\umrdp.dll" name="Microsoft-Windows-TerminalServices-PnPDevices" resourceFileName="%SystemRoot%\system32\umrdp.dll" symbol="PnP_Redirector_Event_Provider">
+        <channels>
+          <channel chid="Admin" enabled="true" message="$(string.AdminChannelName)" name="Microsoft-Windows-TerminalServices-PnPDevices/Admin" type="Admin" />
+          <channel chid="Analytic" message="$(string.AnalyticChannelName)" name="Microsoft-Windows-TerminalServices-PnPDevices/Analytic" type="Analytic" />
+          <channel chid="Operational" enabled="true" message="$(string.OperationalChannelName)" name="Microsoft-Windows-TerminalServices-PnPDevices/Operational" type="Operational" />
+          <channel chid="Debug" message="$(string.DebugChannelName)" name="Microsoft-Windows-TerminalServices-PnPDevices/Debug" type="Debug" />
+        </channels>
+      </provider>
+      <provider guid="{952773BF-C2B7-49BC-88F4-920744B82C43}" message="$(string.eventProviderName2)" messageFileName="%SystemRoot%\system32\umrdp.dll" name="Microsoft-Windows-TerminalServices-Printers" resourceFileName="%SystemRoot%\system32\umrdp.dll" symbol="S_umrdpService">
+        <channels>
+          <channel chid="Admin" enabled="true" message="$(string.AdminChannelName)" name="Microsoft-Windows-TerminalServices-Printers/Admin" type="Admin" />
+          <channel chid="Analytic" message="$(string.AnalyticChannelName)" name="Microsoft-Windows-TerminalServices-Printers/Analytic" type="Analytic" />
+          <channel chid="Operational" enabled="true" message="$(string.OperationalChannelName)" name="Microsoft-Windows-TerminalServices-Printers/Operational" type="Operational" />
+          <channel chid="Debug" message="$(string.DebugChannelName)" name="Microsoft-Windows-TerminalServices-Printers/Debug" type="Debug" />
+        </channels>
+      </provider>
+      <cmi />
+    </events>
+  </instrumentation>
+  <memberships>
+    <categoryMembership>
+      <id name="Windows.Categories.BootCritical" version="10.0.22621.1" publicKeyToken="31bf3856ad364e35" buildType="release" language="neutral" processorArchitecture="amd64" versionScope="nonSxS" />
+    </categoryMembership>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories.Services" version="10.0.22621.1" publicKeyToken="31bf3856ad364e35" typeName="Service" />
+      <categoryInstance>
+        <serviceData name="UmRdpService" displayName="@%SystemRoot%\system32\umrdp.dll,-1000" errorControl="normal" start="demand" type="win32ShareProcess" description="@%SystemRoot%\system32\umrdp.dll,-1001" dependOnService="TermService,RDPDR" imagePath="%SystemRoot%\System32\svchost.exe -k LocalSystemNetworkRestricted -p" objectName="localSystem" requiredPrivileges="SeAuditPrivilege,SeChangeNotifyPrivilege,SeCreateGlobalPrivilege,SeImpersonatePrivilege,SeIncreaseQuotaPrivilege,SeCreatePermanentPrivilege,SeLoadDriverPrivilege,SeDebugPrivilege," sidType="unrestricted">
+          <failureActions resetPeriod="0">
+            <actions>
+              <action delay="60000" type="restartService" />
+              <action delay="60000" type="restartService" />
+              <action delay="60000" type="none" />
+            </actions>
+          </failureActions>
+          <securityDescriptor name="UmRdpServiceSecurity" />
+        </serviceData>
+      </categoryInstance>
+    </categoryMembership>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories" version="1.0.0.0" publicKeyToken="365143bb27e7ac8b" typeName="SvcHost" />
+      <categoryInstance subcategory="LocalSystemNetworkRestricted">
+        <serviceGroup position="last" serviceName="UmRdpService" />
+      </categoryInstance>
+    </categoryMembership>
+  </memberships>
+  <registryKeys>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\UmRdpService\Parameters">
+      <registryValue name="ServiceDll" valueType="REG_EXPAND_SZ" value="%SystemRoot%\System32\umrdp.dll" />
+      <registryValue name="ServiceDllUnloadOnStop" valueType="REG_DWORD" value="0x00000001" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\EventLog\System\UmRdpService">
+      <registryValue name="EventMessageFile" valueType="REG_EXPAND_SZ" value="%SystemRoot%\System32\umrdp.dll" />
+      <registryValue name="providerGuid" valueType="REG_SZ" value="{952773BF-C2B7-49BC-88F4-920744B82C43}" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\SharedAccess\Parameters\FirewallPolicy\RestrictedServices\Static\System">
+      <registryValue name="UmRdpService-1" valueType="REG_SZ" value="V2.0|Action=Block|Dir=In|App=%SystemRoot%\system32\svchost.exe|Svc=UmRdpService|Name=Block any traffic to UmRdpService|" />
+      <registryValue name="UmRdpService-2" valueType="REG_SZ" value="V2.0|Action=Block|Dir=Out|App=%SystemRoot%\system32\svchost.exe|Svc=UmRdpService|Name=Block any traffic from UmRdpService|" />
+    </registryKey>
+  </registryKeys>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="WRP_REGKEY_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;CI;GA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;CI;GR;;;SY)(A;CI;GR;;;BA)(A;CI;GR;;;BU)(A;CI;GR;;;S-1-15-2-1)(A;CI;GR;;;S-1-15-3-1024-1065365936-1281604716-3511738428-1654721687-432734479-3232135806-4053264122-3456934681)" operationHint="replace" />
+          <securityDescriptorDefinition name="UmRdpServiceSecurity" sddl="D:(A;;CCLCSWRPWPDTLOCRRC;;;SY)(A;;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;BA)(A;;CCLCSWLOCRRC;;;IU)(A;;CCLCSWLOCRRC;;;SU)(A;;RPWP;;;S-1-5-80-446051430-1559341753-4161941529-1950928533-810483104)" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" description="Default SDDL for Windows Resource Protected file" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string id="event_TRACE_ALV" value="%1" />
+        <string id="event_TRACE_INF" value="%1" />
+        <string id="event_TRACE_WRN" value="%1" />
+        <string id="event_TRACE_ERR" value="%1" />
+        <string id="event_TRACE_ENT" value="%1" />
+        <string id="event_TRACE_EXIT" value="%1" />
+        <string id="event_TRACE_DUMP" value="%1" />
+        <string id="event_TRACE_FATAL" value="%1" />
+        <string id="description" value="This component implements the Remote Desktop Services Port Redirector." />
+        <string id="displayName" value="Remote Desktop Services Port Redirector" />
+        <string id="displayName2" value="Remote Desktop Services Port Redirector Driver" />
+        <string id="displayName3" value="Remote Desktop Services UserMode Port Redirector" />
+        <string id="description4" value="Enables devices that are connected to the client computer (such as printers, drives, and ports) to be redirected and made available on a remote computer when the client computer connects to the remote computer by using Remote Desktop Protocol (RDP). If this service is stopped or disabled, these client devices cannot be redirected and will be unavailable in the remote session." />
+        <string id="displayName5" value="WRP_FILE_DEFAULT_SDDL" />
+        <string id="displayName6" value="WRP_REGKEY_DEFAULT_SDDL" />
+        <string id="description7" value="Default SDDL for Windows Resource Protected file" />
+        <string id="description8" value="Default SDDL for Windows Resource Protected registry key" />
+        <string id="displayName9" value="SDDL for UmRdpService." />
+        <string id="description10" value="SDDL for UmRdpService. Allows TermService to start/stop the service" />
+        <string id="eventProviderName" value="Microsoft-Windows-TerminalServices-PnPDevices" />
+        <string id="eventProviderName2" value="Microsoft-Windows-TerminalServices-Printers" />
+        <string id="event_EVENT_NOTIFY_DELETE_PRINTER_FAILED" value="The printer %1 could not be deleted." />
+        <string id="event_EVENT_NOTIFY_DRIVER_NOT_FOUND" value="Driver %1 required for printer %2 is not installed on the server. Contact the administrator to install the driver before you log in again." />
+        <string id="event_EVENT_NOTIFY_FAILEDTOREGFOR_SETTING_NOTIFY" value="Failed to register for user printing preferences change notification.  Open the Services snap-in and confirm that the Printer Spooler service is running" />
+        <string id="event_EVENT_NOTIFY_FALLBACK_DRIVER_USED" value="The Remote Desktop Services could not find a corresponding driver called %1 for printer %2. The Remote Desktop Fallback Printer Driver %3 was used." />
+        <string id="event_EVENT_NOTIFY_INIT_FAILED" value="TS RDPDR Device Redirection failed to initialize for a single user session %1.  Serial, Parallel, Printer, and File System Redirection will be disabled.  Look in the System event log for other related errors." />
+        <string id="event_EVENT_NOTIFY_INSUFFICIENTRESOURCES" value="There is not enough memory to complete the operation. Save your work, close other programs, and then try again." />
+        <string id="event_EVENT_NOTIFY_INTERNALERROR" value="Unexpected internal error in TS RDP device redirection.  Contact technical support." />
+        <string id="event_EVENT_NOTIFY_POLICY_DOESNT_ALLOW_NON_TSPRINT" value="The printer %1 cannot be redirected by using Remote Desktop Easy Print. The client computer may not have a version of the Remote Desktop Connection client or Microsoft .NET Framework installed that supports this driver." />
+        <string id="event_EVENT_NOTIFY_PRINTER_REDIRECTION_FAILED" value="An internal communication error occurred.  Redirected printing will no longer function for a single user session.  Check the status of the Remote Desktop Device Redirector in the System folder of Device Manager." />
+        <string id="event_EVENT_NOTIFY_RESTORE_PRINTER_CONFIG_FAILED" value="Configuration information for the %1 printer could not be restored." />
+        <string id="event_EVENT_NOTIFY_SETDEFAULTPRINTER_FAILED" value="The %1 printer could not be set as the default printer." />
+        <string id="event_EVENT_NOTIFY_SPOOLERERROR" value="Error communicating with the Spooler system service.  Open the Services snap-in and confirm that the Print Spooler service is running." />
+        <string id="event_EVENT_NOTIFY_UNKNOWN_PRINTER_DRIVER" value="Driver %1 required for printer %2 is unknown. Contact the administrator to install the driver before you log in again." />
+        <string id="event_EVENT_NOTIFY_ERRORPARSINGINF" value="An error occurred during processing of %1. The file might be corrupted. Run Setup again to reinstall the file." />
+        <string id="event_EVENT_NOTIFY_SET_PRINTER_ACL_FAILED" value="Printer security information for the printer %1 could not be set." />
+        <string id="event_EVENT_NOTIFY_CREATE_PDO_FAILED" value="Failed to create Physical Device Object for device %1 in User mode bus component." />
+        <string id="event_EVENT_NOTIFY_DESTROY_PDO_FAILED" value="Failed to destroy Physical Device Object for device %1 in User mode bus component." />
+        <string id="event_EVENT_NOTIFY_DRIVER_LOAD_TIMEOUT" value="Driver for device %1 failed to load. Timeout period has expired." />
+        <string id="event_EVENT_NOTIFY_MATCHING_DEVICE_NOT_FOUND" value="Device %1 is not supported on this machine, a generic driver is loaded." />
+        <string id="event_EVENT_NOTIFY_DEVICE_REDIRECT_POLICY_DISABLED" value="Redirection of additional supported devices is disabled by policy." />
+        <string id="event_EVENT_NOTIFY_DEVICE_REDIRECT_SUCCESS" value="Device %1 is successfully installed" />
+        <string id="event_EVENT_NOTIFY_SPOOLER_ADDPRINTER_FAILED_TRYING_AGAIN" value="The Print Spooler failed to add the print queue for printer %1, port %2 because of a port error. The Print Spooler will try again." />
+        <string id="event_EVENT_NOTIFY_SPOOLER_ADDPRINTER_FAILED_GIVING_UP" value="The Print Spooler failed to add the printer %1, port %2 because of a port error. The Print Spooler will not try again to add the printer." />
+        <string id="event_EVENT_NOTIFY_SPOOLER_MAX_PRINTERS_REACHED" value="The number of printers per session limit was reached. The following print queue was not created: %n%nPrinter = %1%nPort = %2" />
+        <string id="AdminChannelName" value="Admin" />
+        <string id="AnalyticChannelName" value="Analytic" />
+        <string id="OperationalChannelName" value="Operational" />
+        <string id="DebugChannelName" value="Debug" />
+      </stringTable>
+    </resources>
+  </localization>
+</assembly>

@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PowerShellMetadata xmlns="http://schemas.microsoft.com/cmdlets-over-objects/2009/11">
+  <Class ClassName="ROOT/microsoft/ipam/MSFT_IPAM_Block" ClassVersion="1.0.0">
+    <Version>1.0.0</Version>
+    <DefaultNoun>IpamBlock</DefaultNoun>
+    <InstanceCmdlets>
+
+      <GetCmdletParameters>
+        <QueryableProperties>
+          <Property PropertyName="NetworkId">
+            <Type PSType="String" />
+            <RegularQuery AllowGlobbing="false">
+              <CmdletParameterMetadata PSName="NetworkId" Position="1" IsMandatory="true" ValueFromPipelineByPropertyName="true" CmdletParameterSets="ByKeySet" />
+            </RegularQuery>
+          </Property>
+          
+          <Property PropertyName="StartAddress">
+            <Type PSType="System.Net.IPAddress" />
+            <RegularQuery AllowGlobbing="false">
+              <CmdletParameterMetadata PSName="StartIPAddress" Position="2" IsMandatory="true" ValueFromPipelineByPropertyName="true" CmdletParameterSets="ByKeySet" />
+            </RegularQuery>
+          </Property>
+
+          <Property PropertyName="EndAddress">
+            <Type PSType="System.Net.IPAddress" />
+            <RegularQuery AllowGlobbing="false">
+              <CmdletParameterMetadata PSName="EndIPAddress" Position="3" IsMandatory="true" ValueFromPipelineByPropertyName="true" CmdletParameterSets="ByKeySet" />
+            </RegularQuery>
+          </Property>
+        </QueryableProperties>
+      </GetCmdletParameters>
+
+      <GetCmdlet>
+        <CmdletMetadata Verb="Get" />
+        <!-- We override GetCmdletParameters for Get cmdlet to allow invocation of Get without any parameters -->
+        <GetCmdletParameters>
+          <QueryableProperties>
+            <!-- by networkid, startIP, endIP 
+            -NetworkId<string>
+            -StartIPAddress<IpAddress>
+            -EndIPAddress<IpAddress>
+            -->
+            <Property PropertyName="NetworkId">
+              <Type PSType="String" />
+              <RegularQuery AllowGlobbing="false">
+                <CmdletParameterMetadata PSName="NetworkId" IsMandatory="true" ValueFromPipelineByPropertyName="true" CmdletParameterSets="ByNetworkId" />
+              </RegularQuery>
+            </Property>
+      
+            <Property PropertyName="StartAddress">
+              <Type PSType="System.Net.IPAddress" />
+              <RegularQuery AllowGlobbing="false">
+                <CmdletParameterMetadata PSName="StartIPAddress" IsMandatory="true" ValueFromPipelineByPropertyName="true" CmdletParameterSets="ByNetworkId" />
+              </RegularQuery>
+            </Property>
+      
+            <Property PropertyName="EndAddress">
+              <Type PSType="System.Net.IPAddress" />
+              <RegularQuery AllowGlobbing="false">
+                <CmdletParameterMetadata PSName="EndIPAddress" IsMandatory="true" ValueFromPipelineByPropertyName="true" CmdletParameterSets="ByNetworkId" />
+              </RegularQuery>
+            </Property>
+
+            <!-- by addressFamily and category 
+            -AddressFamily<string>{enum: IPv4/IPv6}
+            [-AddressCategory<string>]{enum:Private,Public }
+            -->
+           <Property PropertyName="AddressType">
+              <Type PSType="Ipam.AddressFamily" />
+              <RegularQuery AllowGlobbing="false">
+               <CmdletParameterMetadata PSName="AddressFamily" Position="1" IsMandatory="true" ValueFromPipelineByPropertyName="true" CmdletParameterSets="ByAddressFamily" />
+              </RegularQuery>
+            </Property>
+      
+            <Property PropertyName="AddressCategory">
+              <Type PSType="Ipam.AddressCategory" />
+              <RegularQuery AllowGlobbing="false">
+               <CmdletParameterMetadata PSName="AddressCategory" Position="2" IsMandatory="false" ValueFromPipelineByPropertyName="true" CmdletParameterSets="ByAddressFamily" />
+              </RegularQuery>
+            </Property>
+          </QueryableProperties>
+      
+          <!-- by association, get all children subBlocks -->
+          <QueryableAssociations>  
+            <Association Association="MSFT_IPAM_Block_Association" ResultRole="PartComponent" SourceRole="GroupComponent">  
+              <AssociatedInstance>  
+                <Type PSType="Microsoft.Management.Infrastructure.CimInstance" ETSType="Microsoft.Management.Infrastructure.CimInstance#root/microsoft/ipam/MSFT_IPAM_Block" />  
+                <CmdletParameterMetadata PSName="MappingToParentBlock" ValueFromPipeline="true" IsMandatory="true" CmdletParameterSets="ByParent" />  
+              </AssociatedInstance>  
+            </Association>  
+          </QueryableAssociations> 
+        </GetCmdletParameters>
+      </GetCmdlet>
+
+      <Cmdlet>
+        <CmdletMetadata Verb="Set" ConfirmImpact="Medium" />
+        <Method MethodName="cim:ModifyInstance">
+        <Parameters>
+           <!-- modify the block , we send all the keySet parameters ( prefixLength, startIP, endIP) as query options:
+            -InputObject<IpamBlock>
+            [-NewNetworkId<string>] 
+            [-NewStartIpAddress<IpAddress>] 
+            [-NewEndIpAddress<IpAddress>] 
+            [-Rir <string>] 
+            [-RirReceivedDate <DateTime>] 
+            [-Description<string>] 
+            [-LastAssignedDate <DateTime>] 
+            [-Owner<string>]
+          -->
+          <Parameter ParameterName="NetworkId">
+            <Type PSType="String" />
+            <CmdletParameterMetadata PSName="NewNetworkId" IsMandatory="false" ValueFromPipelineByPropertyName="true">
+              <ValidateNotNull />
+              <ValidateNotNullOrEmpty />
+            </CmdletParameterMetadata>
+          </Parameter>
+
+          <Parameter ParameterName="StartAddress">
+            <Type PSType="System.Net.IPAddress" />
+            <CmdletParameterMetadata PSName="NewStartIpAddress" IsMandatory="false" ValueFromPipelineByPropertyName="true">
+              <ValidateNotNull />
+              <ValidateNotNullOrEmpty />
+            </CmdletParameterMetadata>
+          </Parameter>
+
+          <Parameter ParameterName="EndAddress">
+            <Type PSType="System.Net.IPAddress" />
+            <CmdletParameterMetadata PSName="NewEndIpAddress" IsMandatory="false" ValueFromPipelineByPropertyName="true" >
+              <ValidateNotNull />
+              <ValidateNotNullOrEmpty />
+            </CmdletParameterMetadata>
+          </Parameter>
+      
+           <Parameter ParameterName="Rir">
+            <Type PSType="String" />
+            <CmdletParameterMetadata PSName="Rir" IsMandatory="false" ValueFromPipelineByPropertyName="true" >
+            </CmdletParameterMetadata>
+          </Parameter>
+      
+         <Parameter ParameterName="RirReceivedDate">
+            <Type PSType="Nullable[System.DateTime]" />
+            <CmdletParameterMetadata  PSName="RirReceivedDate" IsMandatory="false" ValueFromPipelineByPropertyName="true" >
+            </CmdletParameterMetadata>
+          </Parameter>
+      
+          <Parameter ParameterName="Description">
+            <Type PSType="String" />
+            <CmdletParameterMetadata PSName="Description" IsMandatory="false" ValueFromPipelineByPropertyName="true" >
+            </CmdletParameterMetadata>
+          </Parameter>
+      
+          <Parameter ParameterName="LastAssignedDate">
+            <Type PSType="Nullable[System.DateTime]" />
+            <CmdletParameterMetadata PSName="LastAssignedDate" IsMandatory="false" ValueFromPipelineByPropertyName="true" >
+            </CmdletParameterMetadata>
+          </Parameter>
+
+          <Parameter ParameterName="Owner">
+            <Type PSType="String" />
+            <CmdletParameterMetadata PSName="Owner" IsMandatory="false" ValueFromPipelineByPropertyName="true" >
+            </CmdletParameterMetadata>
+          </Parameter>
+
+        </Parameters>
+      </Method>
+    </Cmdlet>
+
+    <Cmdlet>
+      <CmdletMetadata Verb="Remove" ConfirmImpact="Medium" />
+      <Method MethodName="cim:DeleteInstance" >
+        <Parameters>
+    
+          <Parameter ParameterName="cim:operationOption:DeleteAssociatedSubBlocks">
+            <Type PSType="System.Management.Automation.SwitchParameter" />
+              <CmdletParameterMetadata PSName="DeleteAssociatedSubBlocks" IsMandatory="false">
+              <ValidateNotNull />
+              <ValidateNotNullOrEmpty />
+              </CmdletParameterMetadata>
+          </Parameter>
+
+          <Parameter ParameterName="cim:operationOption:Force">
+            <Type PSType="System.Management.Automation.SwitchParameter" />
+            <CmdletParameterMetadata PSName="Force">
+            </CmdletParameterMetadata>
+          </Parameter>
+
+        </Parameters>
+      </Method>
+    </Cmdlet>
+
+    </InstanceCmdlets>
+
+    <StaticCmdlets>
+      <!-- This section defines Add-IpamBlock cmdlet that wraps the intrinsic CreateInstance method -->
+      <Cmdlet>
+        <CmdletMetadata Verb="Add"  ConfirmImpact="Medium" />
+        <Method MethodName="AddIpamBlock" >
+          <Parameters>
+            <!-- -NetworkId <string> 
+            [-StartIPAddress <IpAddress>]
+            [ -EndIPAddress<IpAddress>]  
+            [-Rir <string>] 
+            [-RirReceivedDate<DateTime>] 
+            [-Description<string>] 
+            [-LastAssignedDate <DateTime>] 
+            [-Owner<string>]
+            -->
+            <Parameter ParameterName="NetworkId">
+            <Type PSType="String" />
+            <CmdletParameterMetadata PSName="NetworkId" Position="1" IsMandatory="true" ValueFromPipelineByPropertyName="true">
+              <ValidateNotNull />
+              <ValidateNotNullOrEmpty />
+            </CmdletParameterMetadata>
+          </Parameter>
+
+          <Parameter ParameterName="StartAddress">
+            <Type PSType="System.Net.IPAddress" />
+            <CmdletParameterMetadata PSName="StartIPAddress" Position="2" IsMandatory="false" ValueFromPipelineByPropertyName="true">
+            </CmdletParameterMetadata>
+          </Parameter>
+
+          <Parameter ParameterName="EndAddress">
+            <Type PSType="System.Net.IPAddress" />
+            <CmdletParameterMetadata PSName="EndIPAddress" Position="3" IsMandatory="false" ValueFromPipelineByPropertyName="true" >
+            </CmdletParameterMetadata>
+          </Parameter>
+      
+          <Parameter ParameterName="Rir">
+            <Type PSType="String" />
+            <CmdletParameterMetadata PSName="Rir" IsMandatory="false" ValueFromPipelineByPropertyName="true" >
+            </CmdletParameterMetadata>
+          </Parameter>
+      
+          <Parameter ParameterName="RirReceivedDate">
+            <Type PSType="Nullable[System.DateTime]" />
+            <CmdletParameterMetadata  PSName="RirReceivedDate" IsMandatory="false" ValueFromPipelineByPropertyName="true" >
+            </CmdletParameterMetadata>
+          </Parameter>
+      
+          <Parameter ParameterName="Description">
+            <Type PSType="String" />
+            <CmdletParameterMetadata PSName="Description" IsMandatory="false" ValueFromPipelineByPropertyName="true" >
+            </CmdletParameterMetadata>
+          </Parameter>
+      
+          <Parameter ParameterName="LastAssignedDate">
+            <Type PSType="Nullable[System.DateTime]" />
+            <CmdletParameterMetadata PSName="LastAssignedDate" IsMandatory="false" ValueFromPipelineByPropertyName="true" >
+            </CmdletParameterMetadata>
+          </Parameter>
+
+          <Parameter ParameterName="Owner">
+            <Type PSType="String" />
+            <CmdletParameterMetadata PSName="Owner" IsMandatory="false" ValueFromPipelineByPropertyName="true" >
+            </CmdletParameterMetadata>
+          </Parameter>
+
+            <Parameter ParameterName="cim:operationOption:PassThru">
+              <Type PSType="System.Management.Automation.SwitchParameter" />
+              <CmdletParameterMetadata PSName="PassThru">
+              </CmdletParameterMetadata>
+            </Parameter>
+
+            <Parameter ParameterName="output">
+              <Type PSType="Microsoft.Management.Infrastructure.CimInstance" ETSType="Microsoft.Management.Infrastructure.CimInstance#root/microsoft/ipam/MSFT_IPAM_Block" />
+              <CmdletOutputMetadata />
+            </Parameter>
+
+
+          </Parameters>
+        </Method>
+      </Cmdlet>
+    </StaticCmdlets>
+  </Class>
+  
+  <Enums>
+   <Enum EnumName="Ipam.AddressFamily" UnderlyingType="UInt16">
+      <Value Name="IPv4" Value="1" />
+      <Value Name="IPv6" Value="2" />
+    </Enum>
+ 
+    <Enum EnumName="Ipam.AddressCategory" UnderlyingType="UInt16">
+      <Value Name="Public"  Value="1" />
+      <Value Name="Private" Value="2" />
+    <Value Name="Global" Value="3" />
+    </Enum>
+
+    <Enum EnumName="Ipam.Utilization" UnderlyingType="UInt16">
+      <Value Name="None" Value="0" />
+      <Value Name="Under" Value="1" />
+      <Value Name="Optimal" Value="2" />
+      <Value Name="Over" Value="3" />
+    </Enum>
+  </Enums>
+</PowerShellMetadata>

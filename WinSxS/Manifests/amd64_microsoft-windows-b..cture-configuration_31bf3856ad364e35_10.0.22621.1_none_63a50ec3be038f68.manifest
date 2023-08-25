@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-BrokerInfrastructure-Configuration" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <registryKeys>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\System\CurrentControlSet\Services\BrokerInfrastructure\Parameters">
+      <registryValue name="EnergyBudgetRundownTarget" valueType="REG_DWORD" value="0x00000B40" />
+      <registryValue name="EnergyBudgetBgTaskPercentage" valueType="REG_DWORD" value="0x0000000F" />
+      <registryValue name="EnergyBudgetImportanceDecayPeriodDays" valueType="REG_DWORD" value="0x00000007" />
+    </registryKey>
+  </registryKeys>
+  <taskScheduler>
+    <Task xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task">
+      <RegistrationInfo>
+        <SecurityDescriptor>D:(A;;FA;;;BA)(A;;FA;;;SY)(A;;FRFX;;;LS)</SecurityDescriptor>
+        <Author>$(@%systemRoot%\System32\bisrv.dll,-102)</Author>
+        <Description>$(@%systemRoot%\System32\bisrv.dll,-103)</Description>
+        <URI>\Microsoft\Windows\BrokerInfrastructure\BgTaskRegistrationMaintenanceTask</URI>
+      </RegistrationInfo>
+      <Triggers />
+      <Settings>
+        <Enabled>true</Enabled>
+        <Hidden>false</Hidden>
+        <AllowStartOnDemand>true</AllowStartOnDemand>
+        <MultipleInstancesPolicy>IgnoreNew</MultipleInstancesPolicy>
+        <DisallowStartIfOnBatteries>true</DisallowStartIfOnBatteries>
+        <UseUnifiedSchedulingEngine>true</UseUnifiedSchedulingEngine>
+        <StopIfGoingOnBatteries>true</StopIfGoingOnBatteries>
+        <AllowHardTerminate>false</AllowHardTerminate>
+        <Priority>6</Priority>
+        <RunOnlyIfIdle>true</RunOnlyIfIdle>
+        <ExecutionTimeLimit>P0Y0M0DT0H6M</ExecutionTimeLimit>
+        <IdleSettings>
+          <Duration>PT1S</Duration>
+          <RestartOnIdle>false</RestartOnIdle>
+          <StopOnIdleEnd>true</StopOnIdleEnd>
+        </IdleSettings>
+        <MaintenanceSettings>
+          <Period>P7D</Period>
+          <Deadline>P14D</Deadline>
+          <Exclusive>false</Exclusive>
+        </MaintenanceSettings>
+      </Settings>
+      <Principals>
+        <Principal id="LocalSystem">
+          <UserId>S-1-5-18</UserId>
+          <RunLevel>HighestAvailable</RunLevel>
+        </Principal>
+      </Principals>
+      <Actions Context="LocalSystem">
+        <ComHandler>
+          <ClassId>{E984D939-0E00-4DD9-AC3A-7ACA04745521}</ClassId>
+        </ComHandler>
+      </Actions>
+    </Task>
+  </taskScheduler>
+</assembly>

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-Security-Isolation-BrokeringFileSystem" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <dependency discoverable="no" resourceType="Resources">
+    <dependentAssembly dependencyType="prerequisite">
+      <assemblyIdentity name="Microsoft-Windows-Security-Isolation-BrokeringFileSystem.Resources" version="10.0.22621.1" processorArchitecture="amd64" language="*" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+    </dependentAssembly>
+  </dependency>
+  <file name="bfs.sys" destinationPath="$(runtime.drivers)\" sourceName="bfs.sys" importPath="$(build.nttree)\" sourcePath=".\">
+    <securityDescriptor name="WRP_FILE_DEFAULT_SDDL" />
+    <asmv2:hash xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#">
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>inJIyqXCesl86vSe1pi5eEn+OcGxNHj3cRVmOyIVeS4=</dsig:DigestValue>
+    </asmv2:hash>
+  </file>
+  <memberships>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories" version="1.0.0.0" publicKeyToken="365143bb27e7ac8b" typeName="BootCritical" />
+    </categoryMembership>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories.Services" version="10.0.22621.1" publicKeyToken="31bf3856ad364e35" typeName="Service" />
+      <categoryInstance>
+        <serviceData name="bfs" displayName="@%systemroot%\system32\drivers\bfs.sys,-100" errorControl="normal" start="auto" type="fileSystemDriver" description="@%systemroot%\system32\drivers\bfs.sys,-101" dependOnService="FltMgr" group="FSFilter Virtualization" imagePath="\SystemRoot\system32\drivers\bfs.sys" />
+      </categoryInstance>
+    </categoryMembership>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories" version="1.0.0.0" publicKeyToken="365143bb27e7ac8b" typeName="BootRecovery" />
+    </categoryMembership>
+  </memberships>
+  <instrumentation xmlns:win="http://manifests.microsoft.com/win/2004/08/windows/events">
+    <events xmlns="http://schemas.microsoft.com/win/2004/08/events">
+      <provider guid="{cd8b60a0-2a19-5eb9-564f-6154e2d987f4}" message="$(string.eventProviderName)" messageFileName="%SystemRoot%\system32\drivers\bfs.sys" name="Microsoft-Windows-Security-Isolation-BrokeringFileSystem" resourceFileName="%SystemRoot%\system32\drivers\bfs.sys" symbol="bfsEventProviderId">
+        <channels>
+          <channel access="O:BAG:SYD:(A;;0x5;;;BA)" chid="Operational" enabled="true" isolation="System" message="$(string.eventChannelName)" name="Microsoft-Windows-Security-Isolation-BrokeringFileSystem/Operational" type="Operational">
+            <logging>
+              <maxSize>1048576</maxSize>
+            </logging>
+          </channel>
+        </channels>
+      </provider>
+      <cmi />
+    </events>
+  </instrumentation>
+  <registryKeys>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\bfs\Instances">
+      <registryValue name="DefaultInstance" valueType="REG_SZ" value="bfs" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\bfs\Instances\bfs">
+      <registryValue name="Altitude" valueType="REG_SZ" value="150000" />
+      <registryValue name="Flags" valueType="REG_DWORD" value="0x00000000" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\bfs\Parameters">
+      <registryValue name="ProgramData" valueType="REG_SZ" value="$(runtime.programData)" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\System\CurrentControlset\Services\bfs">
+      <registryValue name="SupportedFeatures" valueType="REG_DWORD" value="0x00000007" />
+    </registryKey>
+  </registryKeys>
+  <migration scope="Upgrade" settingsVersion="0">
+    <migXml xmlns="">
+      <rules context="System">
+        <include>
+          <objectSet>
+            <pattern type="File">%System32%\config\BFS\* [*]</pattern>
+          </objectSet>
+        </include>
+      </rules>
+    </migXml>
+    <supportedComponents>
+      <supportedComponent>
+        <assemblyIdentity name="_" version="1.0.0.0" />
+        <supportedComponentIdentity language="*" name="Microsoft-Windows-Security-Isolation-BrokeringFileSystem" processorArchitecture="*" settingsVersionRange="0" xmlns="urn:schemas-microsoft-com:asm.v3" />
+      </supportedComponent>
+    </supportedComponents>
+  </migration>
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string id="displayName" value="Brokering File System" />
+        <string id="wrpDisplayName" value="WRP_FILE_DEFAULT_SDDL" />
+        <string id="wrpDescription" value="Default SDDL for Windows Resource Protected file" />
+        <string id="eventProviderName" value="Microsoft-Windows-Security-Isolation-BrokeringFileSystem" />
+        <string id="eventChannelName" value="Microsoft-Windows-Security-Isolation-BrokeringFileSystem/Operational" />
+        <string id="filterRegistrationFailed" value="Failed to register with Filter Manager." />
+        <string id="testFlag" value="Test Flag" />
+      </stringTable>
+    </resources>
+  </localization>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="WRP_FILE_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;;FA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;;GRGX;;;BA)(A;;GRGX;;;SY)(A;;GRGX;;;BU)(A;;GRGX;;;S-1-15-2-1)(A;;GRGX;;;S-1-15-2-2)S:(AU;FASA;0x000D0116;;;WD)" operationHint="replace" description="Default SDDL for Windows Resource Protected file" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+</assembly>

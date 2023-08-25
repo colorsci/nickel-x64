@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-Spectrum-Service-Desktop" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <memberships>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories.Services" version="10.0.22621.1" publicKeyToken="31bf3856ad364e35" typeName="Service" />
+      <categoryInstance>
+        <serviceData name="spectrum" displayName="@%systemroot%\system32\spectrum.exe,-101" errorControl="normal" start="demand" type="win32OwnProcess" description="@%systemroot%\system32\spectrum.exe,-102" dependOnService="rpcss" imagePath="%systemroot%\system32\spectrum.exe" objectName="NT AUTHORITY\LocalService" sidType="unrestricted">
+          <serviceTrigger action="start" subtype="RPC_INTERFACE_EVENT" type="NetworkEndpointEvent">
+            <triggerData type="string" value="D3C1B64B-CD05-4FB2-BB2C-BB61D80C123E" />
+          </serviceTrigger>
+          <serviceTrigger action="start" subtype="RPC_INTERFACE_EVENT" type="NetworkEndpointEvent">
+            <triggerData type="string" value="E5B92378-0C65-442C-A66B-F9714D2D7B00" />
+          </serviceTrigger>
+          <failureActions command="&quot;$(runtime.system32)\Spectrum.exe&quot; -safemode" resetPeriod="60">
+            <actions>
+              <action delay="1000" type="restartService" />
+              <action delay="1000" type="restartService" />
+              <action delay="1000" type="restartService" />
+              <action delay="1000" type="restartService" />
+              <action delay="1000" type="runCommand" />
+            </actions>
+          </failureActions>
+          <securityDescriptor name="SpectrumServiceControlSddl" />
+        </serviceData>
+      </categoryInstance>
+    </categoryMembership>
+  </memberships>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="SpectrumServiceControlSddl" sddl="D:(A;;CCLCSWRPWPDTLOCRRC;;;SY)(A;;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;BA)(A;;CCLCSWLOCRRC;;;IU)(A;;CCLCSWLOCRRC;;;SU)(A;;RPLC;;;LS)S:(AU;FA;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;WD)" operationHint="replace" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+</assembly>

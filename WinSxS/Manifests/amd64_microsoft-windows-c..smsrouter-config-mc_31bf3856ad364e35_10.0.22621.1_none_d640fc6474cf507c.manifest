@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<assembly xmlns="urn:schemas-microsoft-com:asm.v3" manifestVersion="1.0" copyright="Copyright (c) Microsoft Corporation. All Rights Reserved.">
+  <assemblyIdentity name="Microsoft-Windows-CoreSystem-SmsRouter-Config-MC" version="10.0.22621.1" processorArchitecture="amd64" language="neutral" buildType="release" publicKeyToken="31bf3856ad364e35" versionScope="nonSxS" />
+  <memberships>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories.Services" version="10.0.22621.1" publicKeyToken="31bf3856ad364e35" typeName="Service" />
+      <categoryInstance>
+        <serviceData name="SmsRouter" displayName="@%SystemRoot%\System32\SmsRouterSvc.dll,-10001" errorControl="normal" start="demand" type="win32ShareProcess" description="@%SystemRoot%\System32\SmsRouterSvc.dll,-10002" dependOnService="RpcSs" imagePath="%SystemRoot%\system32\svchost.exe -k LocalServiceNetworkRestricted -p" objectName="NT Authority\LocalService" requiredPrivileges="SeChangeNotifyPrivilege,SeImpersonatePrivilege,SeAuditPrivilege" sidType="unrestricted">
+          <serviceTrigger action="start" subtype="RPC_INTERFACE_EVENT" type="NetworkEndpointEvent">
+            <triggerData type="string" value="ACD792E4-5239-48B6-8BAF-7D0A79A64AC0" />
+          </serviceTrigger>
+          <serviceTrigger action="start" subtype="RPC_INTERFACE_EVENT" type="NetworkEndpointEvent">
+            <triggerData type="string" value="6770612B-B256-4B6E-891B-2FF9936755A1:D185F1D6-A4AF-44c2-8F87-F664BE534C77" />
+          </serviceTrigger>
+          <failureActions resetPeriod="86400">
+            <actions>
+              <action delay="120000" type="restartService" />
+              <action delay="300000" type="restartService" />
+              <action delay="0" type="none" />
+            </actions>
+          </failureActions>
+          <securityDescriptor name="SmsRouterServiceSecurityDescriptor" />
+        </serviceData>
+      </categoryInstance>
+    </categoryMembership>
+    <categoryMembership>
+      <id name="Microsoft.Windows.Categories" version="1.0.0.0" publicKeyToken="365143bb27e7ac8b" typeName="SvcHost" />
+      <categoryInstance subcategory="LocalServiceNetworkRestricted">
+        <serviceGroup position="last" serviceName="SmsRouter" />
+      </categoryInstance>
+    </categoryMembership>
+  </memberships>
+  <registryKeys>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\System\CurrentControlSet\Services\SmsRouter">
+      <registryValue name="StateFlags" valueType="REG_DWORD" value="0x00000001" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\System\CurrentControlSet\Services\SmsRouter\Parameters">
+      <registryValue name="ServiceDll" valueType="REG_EXPAND_SZ" value="%SystemRoot%\system32\SmsRouterSvc.dll" />
+      <registryValue name="ServiceMain" valueType="REG_SZ" value="ServiceMain" />
+      <registryValue name="ServiceDllUnloadOnStop" valueType="REG_DWORD" value="0x00000001" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion\BackgroundModel\Brokers\{D185F1D6-A4AF-44c2-8F87-F664BE534C77}">
+      <registryValue name="ServerAuth" valueType="REG_BINARY" value="0100048000000000000000000000000014000000020030000100000000002800000000E00106000000000005500000009E68DCAF689D0A89E7FE60C6E04A0D4F5C0992B9" />
+      <registryValue name="ServerPrincipal" valueType="REG_BINARY" value="010100000000000513000000" />
+      <registryValue name="AvailabilityStateName" valueType="REG_QWORD" value="7508BCA33E039513" />
+    </registryKey>
+    <registryKey keyName="HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\WMI\Autologger\Cellcore\{A9C11050-9E93-4fa4-8FE0-7C4750A345B2}">
+      <registryValue name="LoggerName" valueType="REG_SZ" value="SmsRouter" />
+      <registryValue name="Enabled" valueType="REG_DWORD" value="0x00000001" />
+      <registryValue name="EnableLevel" valueType="REG_DWORD" value="0x00000004" />
+      <registryValue name="MatchAnyKeyword" valueType="REG_QWORD" value="0000000000000000" />
+      <registryValue name="EnableProperty" valueType="REG_DWORD" value="0x00000002" />
+      <securityDescriptor name="WRP_REGKEY_DEFAULT_SDDL" />
+    </registryKey>
+  </registryKeys>
+  <trustInfo>
+    <security>
+      <accessControl>
+        <securityDescriptorDefinitions>
+          <securityDescriptorDefinition name="SmsRouterServiceSecurityDescriptor" sddl="O:SYG:SYD:(A;;0x20085;;;AU)(A;;0xe00ff;;;SY)(A;;0xe00ff;;;BA)(A;;0x95;;;BU)S:(AU;FA;0xf00ff;;;WD)" operationHint="replace" />
+          <securityDescriptorDefinition name="WRP_REGKEY_DEFAULT_SDDL" sddl="O:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464G:S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464D:P(A;CI;GA;;;S-1-5-80-956008885-3418522649-1831038044-1853292631-2271478464)(A;CI;GR;;;SY)(A;CI;GR;;;BA)(A;CI;GR;;;BU)(A;CI;GR;;;S-1-15-2-1)(A;CI;GR;;;S-1-15-3-1024-1065365936-1281604716-3511738428-1654721687-432734479-3232135806-4053264122-3456934681)" operationHint="replace" />
+        </securityDescriptorDefinitions>
+      </accessControl>
+    </security>
+  </trustInfo>
+</assembly>
